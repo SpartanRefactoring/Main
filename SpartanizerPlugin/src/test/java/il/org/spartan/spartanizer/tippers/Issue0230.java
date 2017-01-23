@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link BodyDeclarationModifiersSort}
+/** Unit tests for {@link $BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

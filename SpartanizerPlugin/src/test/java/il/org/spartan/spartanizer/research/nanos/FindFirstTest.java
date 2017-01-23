@@ -7,8 +7,6 @@ import org.junit.*;
 
 /** @author Ori Marcovitch
  * @since 2016 */
-@Ignore
-//TODO: Ori Marco
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
@@ -30,9 +28,11 @@ public class FindFirstTest {
   }
 
   @Test public void d() {
-    trimmingOf("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.getTypeId(); return 0;")//
-        .using(EnhancedForStatement.class, new FindFirst())//
-        .gives("return EF.stream().filter($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.getTypeId()).findFirst().orElse(0);");
+    trimmingOf(
+        "for (EnhancedForStatementState $ : EnhancedForStatements) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.getTypeId(); return 0;")//
+            .using(EnhancedForStatement.class, new FindFirst())//
+            .gives(
+                "return EnhancedForStatements.stream().filter($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.getTypeId()).findFirst().orElse(0);");
   }
 
   @Test public void e() {
@@ -42,14 +42,14 @@ public class FindFirstTest {
   }
 
   @Test public void f() {
-    trimmingOf(" for (final G $ : G.values()) if ($.clazz.isAssignableFrom(¢)) return $; return null;")//
+    trimmingOf(" for (final TipperGroup $ : TipperGroup.values())    if ($.clazz.isAssignableFrom(¢))      return $; return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
-        .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
+        .gives("return TipperGroup.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 
   @Test public void g() {
-    trimmingOf(" for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
+    trimmingOf(" for (ASTNode $ = ¢; $ != null; $ = parent($))   if (iz.methodDeclaration($))      return az.methodDeclaration($);  return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
-        .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
+        .gives("return TipperGroup.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 }

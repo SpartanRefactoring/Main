@@ -75,7 +75,7 @@ public class NameGuessTest {
   }
 
   @Test public void dollar1() {
-    azzert.that(NameGuess.of(namer.return¢), is(NameGuess.DOLLAR));
+    azzert.that(NameGuess.of("$"), is(NameGuess.DOLLAR));
   }
 
   @Test public void dollar2() {
