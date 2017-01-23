@@ -63,13 +63,8 @@ public interface metrics {
     return $;
   }
 
-  static int horizontalComplexity(final int base, final List<Statement> ss) {
-    int $ = 0;
-    if (ss == null)
-      return $;
-    for (final Statement ¢ : ss)
-      $ += base + horizontalComplexity(¢);
-    return $;
+  @SuppressWarnings("boxing") static int horizontalComplexity(final int base, final List<Statement> ss) {
+    return ss == null ? 0 : ss.stream().map(¢ -> base + horizontalComplexity(¢)).reduce((x, y) -> x + y).get();
   }
 
   static int horizontalComplexity(final int base, final Statement s) {
@@ -110,11 +105,8 @@ public interface metrics {
     return nodes(¢) - internals(¢);
   }
 
-  static int length(final ASTNode... ns) {
-    int $ = 0;
-    for (final ASTNode ¢ : ns)
-      $ += (¢ + "").length();
-    return $;
+  @SuppressWarnings("boxing") static int length(final ASTNode... ns) {
+    return Arrays.asList(ns).stream().map(¢ -> (¢ + "").length()).reduce((x, y) -> x + y).get();
   }
 
   static int literacy(final ASTNode ¢) {
@@ -149,18 +141,12 @@ public interface metrics {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
   }
 
-  static int nodes(final List<Statement> ss) {
-    int $ = 0;
-    for (final Statement ¢ : ss)
-      $ += nodes(¢);
-    return $;
+  @SuppressWarnings("boxing") static int nodes(final List<Statement> ss) {
+    return ss.stream().map(metrics::nodes).reduce((x, y) -> x + y).get();
   }
 
-  static int size(final ASTNode... ns) {
-    int $ = 0;
-    for (final ASTNode ¢ : ns)
-      $ += count.nodes(¢);
-    return $;
+  @SuppressWarnings("boxing") static int size(final ASTNode... ns) {
+    return Arrays.asList(ns).stream().map(count::nodes).reduce((x, y) -> x + y).get();
   }
 
   static int tokens(final String s) {
@@ -189,11 +175,8 @@ public interface metrics {
     return $.inner;
   }
 
-  static int countStatements(final List<Statement> ss) {
-    int $ = 0;
-    for (final Statement ¢ : ss)
-      $ += countStatements(¢);
-    return $;
+  @SuppressWarnings("boxing") static int countStatements(final List<Statement> ss) {
+    return ss.stream().map(metrics::countStatements).reduce((x, y) -> x + y).get();
   }
 
   static int countStatementsOfType(final Statement s, final int type) {
@@ -207,11 +190,8 @@ public interface metrics {
     return $.inner;
   }
 
-  static int countStatementsOfType(final List<Statement> ss, final int type) {
-    int $ = 0;
-    for (final Statement ¢ : ss)
-      $ += countStatementsOfType(¢, type);
-    return $;
+  @SuppressWarnings("boxing") static int countStatementsOfType(final List<Statement> ss, final int type) {
+    return ss.stream().map(¢ -> countStatementsOfType(¢, type)).reduce((x, y) -> x + y).get();
   }
 
   static int countExpressions(final ASTNode n) {

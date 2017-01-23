@@ -38,10 +38,11 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     final IfStatement newThen = subject.pair(copy.of(¢.getThenStatement()), null)
         .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(ie))),
         $ = subject.pair(newThen, null).toIf(copy.of(az.infixExpression(¢.getExpression()).getLeftOperand()));
-    if (¢.getElseStatement() != null) {
-      newThen.setElseStatement(copy.of(¢.getElseStatement()));
+    final Statement oldElse = ¢.getElseStatement();
+    if (oldElse != null) {
+      newThen.setElseStatement(copy.of(oldElse));
       $.setThenStatement(newThen);
-      $.setElseStatement(copy.of(¢.getElseStatement()));
+      $.setElseStatement(copy.of(oldElse));
     }
     return $;
   }

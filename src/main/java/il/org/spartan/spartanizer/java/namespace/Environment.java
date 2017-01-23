@@ -182,10 +182,7 @@ public interface Environment {
   }
 
   static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
-    for (final Entry<String, Binding> $ : ss)
-      if (s.equals($.getKey()))
-        return $.getValue();
-    return null;
+    return ss.stream().filter($ -> s.equals($.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 
   static Binding getHidden(final String s) {

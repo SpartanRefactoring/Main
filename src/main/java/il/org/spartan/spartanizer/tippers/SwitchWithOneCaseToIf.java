@@ -19,10 +19,10 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * <pre>
 * switch (x) {
-*   case a: 
+*   case a:
 *      (commands)
 *      break;
-*   default: 
+*   default:
 *      (other commands)
 * }
  * </pre>
@@ -34,7 +34,8 @@ import il.org.spartan.spartanizer.tipping.*;
 *   (commands)
 * } else {
 *   (other commands)
-* }</pre>
+* }
+ * </pre>
  *
  * . Tested in {@link Issue0916}
  * @author Yuval Simon

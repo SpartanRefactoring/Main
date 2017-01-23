@@ -4,6 +4,7 @@ import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
 import java.util.regex.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -67,10 +68,10 @@ public final class SuppressWarningsLaconicOnOff {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
-        for (final String e : disabling.enablers)
+        for (final String e : disabling.enablers) // NANO
           if (s.contains(e))
             return false;
-        for (final String d : disabling.disablers)
+        for (final String d : disabling.disablers) // NANO
           if (s.contains(d))
             return true;
       }
@@ -97,11 +98,7 @@ public final class SuppressWarningsLaconicOnOff {
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
-    final Set<String> $ = new HashSet<>();
-    for (final String kw : kws) // NANO?
-      if (c.contains(kw))
-        $.add(kw);
-    return $;
+    return Arrays.asList(kws).stream().filter(c::contains).collect(Collectors.toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {

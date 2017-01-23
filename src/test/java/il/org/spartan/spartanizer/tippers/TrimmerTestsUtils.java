@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
@@ -102,8 +104,7 @@ public final class TrimmerTestsUtils {
     }
 
     @SafeVarargs public final <N extends ASTNode> Operand withTippers(final Class<N> c, final Tipper<N>... ts) {
-      for (final Tipper<N> ¢ : ts)
-        trimmer.add(c, ¢);
+      Arrays.asList(ts).forEach(¢ -> trimmer.add(c, ¢));
       return this;
     }
   }

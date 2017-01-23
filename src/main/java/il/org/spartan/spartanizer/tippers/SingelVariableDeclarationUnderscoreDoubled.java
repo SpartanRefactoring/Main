@@ -59,11 +59,8 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return $;
   }
 
-  private static boolean suppressing(final ArrayInitializer i) {
-    for (final Expression ¢ : expressions(i))
-      if (isUnused(¢))
-        return true;
-    return false;
+  private static boolean suppressing(final ArrayInitializer ¢) {
+    return expressions(¢).stream().anyMatch(SingelVariableDeclarationUnderscoreDoubled::isUnused);
   }
 
   private static boolean suppressing(final Expression ¢) {
@@ -71,12 +68,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   private static boolean suppressing(final NormalAnnotation a) {
-    if (a == null)
-      return false;
-    for (final MemberValuePair ¢ : values(a))
-      if (iz.identifier("value", ¢.getName()) && isUnused(¢.getValue()))
-        return true;
-    return false;
+    return a != null && values(a).stream().anyMatch(¢ -> iz.identifier("value", ¢.getName()) && isUnused(¢.getValue()));
   }
 
   private static boolean suppresssing(final SingleMemberAnnotation ¢) {

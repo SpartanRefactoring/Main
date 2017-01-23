@@ -7,6 +7,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -109,6 +110,10 @@ public enum az {
    *         <code><b>null</b></code> if no such down-casting is possible. */
   public static Annotation annotation(final IExtendedModifier $) {
     return !iz.annotation($) ? null : (Annotation) $;
+  }
+
+  public static <N> Stream<N> stream(final Iterable<N> ¢) {
+    return StreamSupport.stream(¢.spliterator(), false);
   }
 
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
@@ -595,7 +600,7 @@ public enum az {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
   }
 
-  static DoStatement doStatement(ASTNode $) {
+  static DoStatement doStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, DO_STATEMENT) ? null : (DoStatement) $;
   }
 }

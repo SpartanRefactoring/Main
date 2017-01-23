@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -16,6 +17,7 @@ public class switchBranch {
   private int numOfNodes;
   private int depth;
   private int sequencerLevel;
+  public static final int MAX_CASES_FOR_SPARTANIZATION = 10;
 
   public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
@@ -31,15 +33,9 @@ public class switchBranch {
     return statements;
   }
 
-  public boolean hasDefault() {
-    if (hasDefault == -1) {
-      hasDefault = 0;
-      for (final SwitchCase ¢ : cases)
-        if (¢.isDefault()) {
-          hasDefault = 1;
-          break;
-        }
-    }
+  @SuppressWarnings("boxing") public boolean hasDefault() {
+    if (hasDefault == -1)
+      hasDefault = cases.stream().filter(SwitchCase::isDefault).map(¢ -> 1).findFirst().orElse(hasDefault);
     return hasDefault == 1;
   }
 
@@ -99,16 +95,13 @@ public class switchBranch {
     return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
   }
 
-  private void addAll(final List<Statement> ss) {
-    for (final SwitchCase ¢ : cases)
-      ss.add(copy.of(¢));
-    for (final Statement ¢ : statements)
-      ss.add(copy.of(¢));
+  private void addAll(final List<Statement> ¢) {
+    ¢.addAll((cases).stream().map(copy::of).collect(Collectors.toList()));
+    ¢.addAll((statements).stream().map(copy::of).collect(Collectors.toList()));
   }
 
   private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
-    for (final switchBranch ¢ : bs)
-      ¢.addAll(ss);
+    bs.forEach(¢ -> ¢.addAll(ss));
   }
 
   public static SwitchStatement makeSwitchStatement(final List<switchBranch> bs, final Expression x, final AST t) {
@@ -156,7 +149,7 @@ public class switchBranch {
     return $;
   }
 
-  public boolean hasSameCode(final switchBranch ¢) {
+  public boolean hasSameBody(final switchBranch ¢) {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 
@@ -170,10 +163,7 @@ public class switchBranch {
   }
 
   public boolean hasFallThrough() {
-    for (final Statement ¢ : statements)
-      if (iz.switchCase(¢))
-        return true;
-    return false;
+    return statements.stream().anyMatch(iz::switchCase);
   }
 
   public static Statement removeBreakSequencer(final Statement s) {

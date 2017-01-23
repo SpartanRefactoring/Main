@@ -164,8 +164,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    for (final attribute ¢ : attribute.values()) // NANO?
-      $.put(¢, unknown);
+    Arrays.asList(attribute.values()).forEach(¢ -> $.put(¢, unknown));
     return $;
   }
 
@@ -246,11 +245,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return $;
   }
 
-  private static boolean valid(final Object... os) {
-    for (final Object ¢ : os) // NANO?
-      if (¢ == null)
-        return false;
-    return true;
+  private static boolean valid(final Object... ¢) {
+    return Arrays.asList(¢).stream().allMatch(Objects::nonNull);
   }
 
   private static void initializeProgressDialog(final ProgressMonitorDialog d) {

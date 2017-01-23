@@ -159,7 +159,7 @@ public interface ConfigurableReport {
         }
       }
 
-      @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n, final String id,
+      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, final String id,
           final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
@@ -167,8 +167,8 @@ public interface ConfigurableReport {
         }
         assert bf != null;
         assert id != null;
-        for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-          report().put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(n)));
+        Arrays.asList(ReportGenerator.Util.functions(""))
+            .forEach(¢ -> report().put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(n))));
       }
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
