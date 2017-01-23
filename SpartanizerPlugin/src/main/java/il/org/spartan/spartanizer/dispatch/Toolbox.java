@@ -206,7 +206,7 @@ public class Toolbox {
             null)
         .add(MethodDeclaration.class, //
             new AnnotationSort<>(), new MethodDeclarationRenameReturnToDollar(), //
-            new $BodyDeclarationModifiersSort<>(), //
+            new BodyDeclarationModifiersSort<>(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(),
@@ -274,17 +274,17 @@ public class Toolbox {
             new SameEvaluationConditional(), //
             new TernaryBranchesAreOppositeBooleans(), //
             new SameEvaluationConditional(), null) //
-        .add(EnumConstantDeclaration.class, new $BodyDeclarationModifiersSort<>()) //
+        .add(EnumConstantDeclaration.class, new BodyDeclarationModifiersSort<>()) //
         .add(TypeDeclaration.class, //
-            new $BodyDeclarationModifiersSort<>(), //
+            new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             new TypeDeclarationClassExtendsObject(), null) //
         .add(EnumDeclaration.class, //
-            new $BodyDeclarationModifiersSort<>(), //
+            new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null) //
         .add(FieldDeclaration.class, //
-            new $BodyDeclarationModifiersSort<>(), //
+            new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null) //
         .add(CastExpression.class, //
@@ -292,17 +292,17 @@ public class Toolbox {
             new CastToLong2Multiply1L(), //
             null) //
         .add(EnumConstantDeclaration.class, //
-            new $BodyDeclarationModifiersSort<>(), //
+            new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null) //
         .add(NormalAnnotation.class, //
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new $BodyDeclarationModifiersSort<>(), //
+        .add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null)
-        .add(AnnotationTypeMemberDeclaration.class, new $BodyDeclarationModifiersSort<>(), //
+        .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
