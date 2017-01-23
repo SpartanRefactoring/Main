@@ -60,7 +60,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
         final Block b = az.block(¢.getMatching(s, "$B"));
         if (b == null)
           continue;
-        if (!ChangedInBlock(n.getIdentifier(), b))
+        if (!ChangedInBlock(identifier(n), b))
           return true;
       }
     return false;
@@ -76,14 +76,14 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
       }
 
       @Override public boolean visit(final PrefixExpression ¢) {
-        if (iz.incrementOrDecrement(¢) && iz.simpleName(¢.getOperand()) && identifier(az.simpleName(¢.getOperand())).equals(id))
+        if (iz.incrementOrDecrement(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
           $.inner = true;
         return true;
       }
 
       @Override public boolean visit(final PostfixExpression ¢) {
-        if (("++".equals(¢.getOperator() + "") || "--".equals(¢.getOperator() + "")) && iz.simpleName(¢.getOperand())
-            && identifier(az.simpleName(¢.getOperand())).equals(id))
+        if (("++".equals(operator(¢) + "") || "--".equals(operator(¢) + "")) && iz.simpleName(operand(¢))
+            && identifier(az.simpleName(operand(¢))).equals(id))
           $.inner = true;
         return true;
       }
@@ -92,16 +92,10 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
   }
 
   @Override public Tip tip(final ForStatement x) {
-    for (final UserDefinedTipper<ForStatement> $ : tippers)
-      if ($.canTip(x))
-        return $.tip(x);
-    return null;
+    return tippers.stream().filter($ -> $.canTip(x)).map($ -> $.tip(x)).findFirst().orElse(null);
   }
 
   @Override public String description(final ForStatement x) {
-    for (final UserDefinedTipper<ForStatement> $ : tippers)
-      if ($.canTip(x))
-        return $.description(x);
-    return null;
+    return tippers.stream().filter($ -> $.canTip(x)).map($ -> $.description(x)).findFirst().orElse(null);
   }
 }

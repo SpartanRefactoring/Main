@@ -19,7 +19,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
   private static boolean checkBlock(final ASTNode n) {
     if (n != null
         && (iz.expression(n) && !sideEffects.free(az.expression(n))
-            || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())) //
+            || iz.expressionStatement(n) && !sideEffects.free(expression(az.expressionStatement(n)))) //
         || !iz.block(n) && !iz.isVariableDeclarationStatement(n) //
         || iz.variableDeclarationStatement(n) && !checkVariableDecleration(az.variableDeclrationStatement(n)))
       return false;
@@ -33,10 +33,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
-    for (final VariableDeclarationFragment ¢ : fragments(s))
-      if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))
-        return false;
-    return true;
+    return fragments(s).stream().allMatch(¢ -> initializer(¢) == null || sideEffects.free(initializer(¢)));
   }
 
   @Override public String description(final IfStatement ¢) {
@@ -46,9 +43,8 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
   @Override public ASTNode replacement(final IfStatement s) {
     if (s == null)
       return null;
-    final boolean $ = sideEffects.free(s.getExpression()), then = checkBlock(s.getThenStatement()), elze = checkBlock(s.getElseStatement());
-    return $ && then && (elze || s.getElseStatement() == null) ? s.getAST().newBlock()
-        : $ && then && !elze && s.getElseStatement() != null ? subject.pair(copy.of(s.getElseStatement()), null).toNot(copy.of(s.getExpression()))
-            : null;
+    final boolean $ = sideEffects.free(expression(s)), then = checkBlock(s.getThenStatement()), elze = checkBlock(elze(s));
+    return $ && then && (elze || elze(s) == null) ? s.getAST().newBlock()
+        : !$ || !then || elze || elze(s) == null ? null : subject.pair(copy.of(elze(s)), null).toNot(copy.of(expression(s)));
   }
 }

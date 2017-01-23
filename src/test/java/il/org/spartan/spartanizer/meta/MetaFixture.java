@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An abstract class that allows a class to apply testing on its own code.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -59,14 +60,14 @@ public abstract class MetaFixture {
 
   public static String ancestry(final ASTNode n) {
     String $ = "";
-    int i = 0;
-    for (final ASTNode p : ancestors.of(n)) // TOUGH
-      $ += "\n\t + " + i++ + ": " + trivia.gist(p) + "/" + p.getClass().getSimpleName();
+    final Int i = new Int();
+    $ = Arrays.asList(ancestors.of(n)).stream().map(p -> "\n\t + " + i.inner++ + ": " + trivia.gist(p) + "/" + p.getClass().getSimpleName())
+        .reduce((x, y) -> x + y).get();
     return $;
   }
 
   private static CompilationUnit loadAST(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from(".")) // MANUAL
+    for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = Make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);
@@ -78,7 +79,7 @@ public abstract class MetaFixture {
   }
 
   private static String loadText(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from(".")) // NANO
+    for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;

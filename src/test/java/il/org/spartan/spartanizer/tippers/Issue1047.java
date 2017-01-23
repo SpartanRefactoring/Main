@@ -11,6 +11,7 @@ import org.junit.*;
 public class Issue1047 {
   // TODO Doron Meshulam: unignore this test in {@link Issue0147} and in {@link
   // AdvancedGivesTests}
+  // TODO: Yossi Gil - raise this up in staff meeting with Doron.
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢)++¢;");//

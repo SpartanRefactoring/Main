@@ -13,6 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -254,20 +255,16 @@ final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  private void printChangeStatistics(final List<FileStats> ss) {
+  @SuppressWarnings("boxing") private void printChangeStatistics(final List<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
-    if (optIndividualStatistics)
+    if (!optIndividualStatistics)
+      range.to(optRounds).forEach(i -> System.out
+          .println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + ss.stream().map(¢ -> ¢.getRoundStat(i)).reduce((x, y) -> x + y).get()));
+    else
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
         for (int ¢ = 0; ¢ < optRounds; ++¢)
           System.out.println("    Round #" + ¢ + 1 + ": " + (¢ < 9 ? " " : "") + f.getRoundStat(¢));
-      }
-    else
-      for (int i = 0; i < optRounds; ++i) {
-        int roundSum = 0;
-        for (final FileStats ¢ : ss)
-          roundSum += ¢.getRoundStat(i);
-        System.out.println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + roundSum);
       }
   }
 

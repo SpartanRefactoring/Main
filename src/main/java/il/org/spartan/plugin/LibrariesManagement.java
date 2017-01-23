@@ -27,7 +27,7 @@ public class LibrariesManagement {
   public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
   static {
     INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
-    // TODO: Ori Rorth: update version 2.6.3 upon release. DO NOT remove this
+    // TODO: Ori Roth: update version 2.6.3 upon release. DO NOT remove this
     // todo.
     FEATURE_PATH = INSTALLATION_FOLDER.append("features/SpartanFeature_2.6.4.jar");
     LIBRARY_PATH_CONTAINER = new IClasspathContainer() {

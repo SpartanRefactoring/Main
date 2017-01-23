@@ -49,11 +49,8 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  public static int level(final List<Expression> xs) {
-    int $ = 0;
-    for (final Expression ¢ : xs) // NANO?
-      $ += minus.level(¢);
-    return $;
+  @SuppressWarnings("boxing") public static int level(final List<Expression> xs) {
+    return xs.stream().map(¢ -> minus.level(¢)).reduce((x, y) -> x + y).get();
   }
 
   private static int level(final PrefixExpression ¢) {

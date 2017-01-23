@@ -72,11 +72,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
   }
 
   static boolean noSideEffectCommands(final SwitchStatement s) {
-    final List<Statement> ll = statements(s);
-    for (final Statement ¢ : ll)
-      if (!iz.switchCase(¢) && !iz.breakStatement(¢))
-        return false;
-    return true;
+    return statements(s).stream().allMatch(¢ -> iz.switchCase(¢) || iz.breakStatement(¢));
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
