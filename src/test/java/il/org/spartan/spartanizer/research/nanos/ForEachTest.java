@@ -48,6 +48,7 @@ public class ForEachTest {
     trimmingOf("  for (final Statement k : ss)    $.append(k);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("ss.forEach(k -> $.append(k));")//
+        .gives("ss.forEach(¢ -> $.append(¢));")//
         .stays();
   }
 
