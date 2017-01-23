@@ -24,10 +24,9 @@ public final class subject {
   }
 
   public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
-    InfixExpression $ = copy.of(base);
-    for (final Expression ¢ : adds) // NANO?
-      $ = append($, ¢);
-    return $;
+    Wrapper<InfixExpression> $ = new Wrapper<>(copy.of(base));
+    adds.forEach(¢ -> $.set(append($.get(), ¢)));
+    return $.get();
   }
 
   /** Create a new Operand
