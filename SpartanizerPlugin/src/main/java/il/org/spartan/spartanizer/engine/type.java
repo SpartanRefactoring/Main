@@ -10,6 +10,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -593,10 +594,7 @@ public interface type {
 
       Uncertain(final String description, final Primitive... ps) {
         this.description = description;
-        for (final Primitive p : ps)
-          for (final Certain ¢ : p.options())
-            if (!options.contains(¢))
-              options.add(¢);
+        Arrays.asList(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(¢ -> !options.contains(¢)).collect(Collectors.toList())));
       }
 
       @Override public boolean canB(final Certain ¢) {

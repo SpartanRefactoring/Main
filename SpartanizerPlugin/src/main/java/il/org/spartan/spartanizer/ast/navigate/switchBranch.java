@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -32,15 +33,9 @@ public class switchBranch {
     return statements;
   }
 
-  public boolean hasDefault() {
-    if (hasDefault == -1) {
-      hasDefault = 0;
-      for (final SwitchCase ¢ : cases)
-        if (¢.isDefault()) {
-          hasDefault = 1;
-          break;
-        }
-    }
+  @SuppressWarnings("boxing") public boolean hasDefault() {
+    if (hasDefault == -1)
+      hasDefault = cases.stream().filter(¢ -> ¢.isDefault()).map(¢ -> 1).findFirst().orElse(hasDefault);
     return hasDefault == 1;
   }
 
@@ -101,15 +96,12 @@ public class switchBranch {
   }
 
   private void addAll(final List<Statement> ss) {
-    for (final SwitchCase ¢ : cases)
-      ss.add(copy.of(¢));
-    for (final Statement ¢ : statements)
-      ss.add(copy.of(¢));
+    ss.addAll((cases).stream().map(¢ -> copy.of(¢)).collect(Collectors.toList()));
+    ss.addAll((statements).stream().map(¢ -> copy.of(¢)).collect(Collectors.toList()));
   }
 
   private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
-    for (final switchBranch ¢ : bs)
-      ¢.addAll(ss);
+    bs.forEach(¢ -> ¢.addAll(ss));
   }
 
   public static SwitchStatement makeSwitchStatement(final List<switchBranch> bs, final Expression x, final AST t) {
@@ -171,10 +163,7 @@ public class switchBranch {
   }
 
   public boolean hasFallThrough() {
-    for (final Statement ¢ : statements)
-      if (iz.switchCase(¢))
-        return true;
-    return false;
+    return statements.stream().anyMatch(¢ -> iz.switchCase(¢));
   }
 
   public static Statement removeBreakSequencer(final Statement s) {
