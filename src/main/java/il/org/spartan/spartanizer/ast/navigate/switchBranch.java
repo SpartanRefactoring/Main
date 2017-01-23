@@ -96,8 +96,8 @@ public class switchBranch {
   }
 
   private void addAll(final List<Statement> ¢) {
-    ¢.addAll((cases).stream().map(copy::of).collect(Collectors.toList()));
-    ¢.addAll((statements).stream().map(copy::of).collect(Collectors.toList()));
+    ¢.addAll(cases.stream().map(copy::of).collect(Collectors.toList()));
+    ¢.addAll(statements.stream().map(copy::of).collect(Collectors.toList()));
   }
 
   private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {

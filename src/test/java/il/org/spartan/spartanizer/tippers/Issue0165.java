@@ -17,8 +17,7 @@ public final class Issue0165 {
   }
 
   @Test public void seriesA_02_dollar() {
-    trimmingOf(" public static boolean __final(final V $) {return (M.FINAL & $.getM()) != 0;}")
-        .stays();
+    trimmingOf(" public static boolean __final(final V $) {return (M.FINAL & $.getM()) != 0;}").stays();
   }
 
   @Test public void seriesA_03_single_underscore() {

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.utils.*;
 @SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
-    Int s = new Int();
+    final Int s = new Int();
     range.to(5).forEach(i -> ++s.inner);
     assert s.inner == 5;
   }

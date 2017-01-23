@@ -57,10 +57,17 @@ public class Issue0455 {
         .stays();
   }
 
+  // TODO: Yossi Fix this
   @Test public void nestedLambdaExpression() {
     trimmingOf("x -> y -> {return -y;}")//
         .gives("x -> y -> -y") //
         .gives("x -> ¢ -> -¢") //
+        .stays();
+  }
+
+  // TODO: Yossi Fix this
+  @Test public void nestedLambdaExpressiona() {
+    trimmingOf("x -> ¢ -> -¢") //
         .stays();
   }
 
@@ -72,14 +79,12 @@ public class Issue0455 {
   }
 
   @Test public void paransAreNotRemovedFromParams() {
-    trimmingOf("(¢) -> {return ¢;}") 
-        .gives("(¢) -> ¢")//
+    trimmingOf("(¢) -> {return ¢;}").gives("(¢) -> ¢")//
         .stays();
   }
 
   @Test public void simpleBiFunction() {
-    trimmingOf("(x,y) -> {return x + y;}")
-        .gives("(x,y) -> x + y")//
+    trimmingOf("(x,y) -> {return x + y;}").gives("(x,y) -> x + y")//
         .stays();
   }
 

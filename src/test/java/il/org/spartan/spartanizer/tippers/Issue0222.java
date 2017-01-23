@@ -20,9 +20,8 @@ public final class Issue0222 {
   }
 
   @Test public void chocolate2() {
-    trimmingOf("private boolean continue¢(final List<V> fs) {for (final V $ : fs){\n"
-        + "int b = f($);f($,b);return g($,b,f());}return true;}")//
-            .stays();
+    trimmingOf("private boolean continue¢(final List<V> fs) {for (final V $ : fs){\n" + "int b = f($);f($,b);return g($,b,f());}return true;}")//
+        .stays();
   }
 
   @Test public void chocolate3() {
@@ -34,9 +33,10 @@ public final class Issue0222 {
     trimmingOf("static List<E> o(final I x) { if (x == null) return null;\n"
         + " final List<E> $ = new ArrayList<>(); $.add(left(x)); $.add(right(x)); if (x.hasExtendedOperands())\n"
         + " $.addAll(step.eo(x)); return $;}\n")
-            .gives("static List<E> o(final I ¢) { if (¢ == null) return null;\n"
-                + " final List<E> $ = new ArrayList<>(); $.add(left(¢)); $.add(right(¢));\n"
-                + " if (¢.hasExtendedOperands()) $.addAll(step.eo(¢)); return $;}\n")
+            .gives(
+                "static List<E> o(final I ¢) { if (¢ == null) return null;\n"
+                    + " final List<E> $ = new ArrayList<>(); $.add(left(¢)); $.add(right(¢));\n"
+                    + " if (¢.hasExtendedOperands()) $.addAll(step.eo(¢)); return $;}\n")
             .stays();
   }
 }

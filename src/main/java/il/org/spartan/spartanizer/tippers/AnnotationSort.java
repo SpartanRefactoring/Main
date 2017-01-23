@@ -89,5 +89,4 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
   }
-
 }

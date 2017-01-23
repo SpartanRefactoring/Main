@@ -66,7 +66,7 @@ public enum getAll2 {
       if (iz.public¢(fd)) {
         final String[] field_splitted_to_words = (fd + "").trim().split(" ");
         if (field_splitted_to_words.length >= 1)
-          $.add(field_splitted_to_words[(field_splitted_to_words.length - 1)].replace(";", "").trim());
+          $.add(field_splitted_to_words[field_splitted_to_words.length - 1].replace(";", "").trim());
       }
     return $;
   }

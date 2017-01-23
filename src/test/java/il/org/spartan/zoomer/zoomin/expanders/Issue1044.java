@@ -45,15 +45,12 @@ public class Issue1044 extends MetaFixture {
   }
 }
 
-
 @SuppressWarnings("unused")
 class NamespaceFixture {
- /**
-  * This class' only purpose is for the testing above.
-  */
+  /** This class' only purpose is for the testing above. */
   static {
-    int i1, i2, i3;
   }
+
   int f(final int a1) {
     return a1 >>> hashCode();
   }
