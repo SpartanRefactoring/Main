@@ -266,6 +266,6 @@ public interface findFirst {
   }
 
   static ConditionalExpression conditionalArgument(final MethodInvocation ¢) {
-    return arguments(¢).stream().filter($ -> iz.conditionalExpression($)).map($ -> az.conditionalExpression($)).findFirst().orElse(null);
+    return arguments(¢).stream().filter(iz::conditionalExpression).map(az::conditionalExpression).findFirst().orElse(null);
   }
 }
