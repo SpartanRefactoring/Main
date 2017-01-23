@@ -9,6 +9,7 @@ import org.junit.*;
  * @since 2017-01-22 */
 @SuppressWarnings("static-method")
 public class Issue1089 {
+  // TODO: Tomer Dragucki - rung class normalize, and give it some input --yg
   @Test public void a() {
     trimmingOf("ToggleGroup group = new ToggleGroup();" //
         + "(new SelectAnArea()).getAllPossibleColors().forEach(c -> { " //
