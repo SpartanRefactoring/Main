@@ -32,7 +32,9 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         Assignment newHead = create.newAssignment();
         final Assignment newTail = copy.of($);
         Assignment p = newTail;
-        for (; iz.assignment(right(az.assignment(right(p)))); p = az.assignment(right(p))) {}
+        for (; iz.assignment(right(az.assignment(right(p)))); p = az.assignment(right(p))) {
+          //
+        }
         newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
