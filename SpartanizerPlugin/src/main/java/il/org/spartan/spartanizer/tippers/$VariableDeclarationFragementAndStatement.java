@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }
@@ -25,26 +25,6 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
     return forbiddenSiblings(f).stream().anyMatch(¢ -> collect.BOTH_SEMANTIC.of(¢).existIn(ns));
-  }
-
-  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
-   * fragments which are not live in the containing
-   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
-   * containing node is eliminated as well.
-   * @param f
-   * @param r
-   * @param g */
-  static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
-    if (live.isEmpty()) {
-      r.remove(parent, g);
-      return;
-    }
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    r.replace(parent, newParent, g);
   }
 
   static int eliminationSaving(final VariableDeclarationFragment f) {
@@ -74,12 +54,6 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
       if (collecting)
         $.add(brother);
     }
-    return $;
-  }
-
-  private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(copy.of(brother)));
     return $;
   }
 
