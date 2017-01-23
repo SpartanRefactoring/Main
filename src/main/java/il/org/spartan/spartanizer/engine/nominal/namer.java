@@ -20,7 +20,7 @@ public interface namer {
   String anonymous = "__";
   String current = "¢";
   String return¢ = "$";
-  String[] standardName = {namer.return¢, namer.anonymous, namer.current};
+  String[] standardNames = {namer.return¢, namer.anonymous, namer.current};
 
   @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
     {
