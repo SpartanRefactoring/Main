@@ -395,6 +395,7 @@ public final class Namespace implements Environment {
         return false;
     return true;
   }
+
   public boolean allowsCurrentRecursive() {
     for (final String key : flat.keySet())
       if (isVariable(key) && !in(key, namer.standardNames))

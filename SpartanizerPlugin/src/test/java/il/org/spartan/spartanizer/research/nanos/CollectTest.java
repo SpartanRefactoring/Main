@@ -64,8 +64,7 @@ public class CollectTest {
     trimmingOf(
         "final L<S> $ = new ArrayList<>(); for (final Element e : J.parse(d.h()).select(\"div.S\").first().children()) $.add(e.tagName()); return $;")//
             .withTippers(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-            .gives(
-                "L<S>$=(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
+            .gives("L<S>$=(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
             .gives("return(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());")//
             .gives("return(J.parse(d.h()).select(\"div.S\").first().children()).stream().map(¢->¢.tagName()).collect(Collectors.toList());")//
             .stays();

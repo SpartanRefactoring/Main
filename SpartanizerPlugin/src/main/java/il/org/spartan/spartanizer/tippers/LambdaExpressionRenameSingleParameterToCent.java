@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class LambdaExpressionRenameSingleParameterToCent extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {
-  @Override public String description(LambdaExpression ¢) {
+  @Override public String description(final LambdaExpression ¢) {
     return "Rename parameter " + onlyOne(parameters(¢)) + " to ¢ ";
   }
 
@@ -31,7 +31,7 @@ public final class LambdaExpressionRenameSingleParameterToCent extends EagerTipp
     final SimpleName $ = vd.getName();
     if (in($.getIdentifier(), namer.standardNames))
       return null;
-    Namespace n = Environment.of(x);
+    final Namespace n = Environment.of(x);
     if (n.has(namer.current) || !n.allowsCurrent())
       return null;
     if (m != null)

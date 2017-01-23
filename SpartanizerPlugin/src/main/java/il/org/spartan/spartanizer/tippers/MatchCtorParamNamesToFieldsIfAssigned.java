@@ -9,17 +9,14 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Match c'tor parameters to fields, for example: 
- * Convert:
- * class A { int x; public A(int y) {this.x = y; } } 
- * to:
- * class A { int x; public A(int x) {this.x = x; } }
+/** Match c'tor parameters to fields, for example: Convert: class A { int x;
+ * public A(int y) {this.x = y; } } to: class A { int x; public A(int x) {this.x
+ * = x; } }
  * @since 07-Dec-16
  * @author Doron Meshulam */
 @SuppressWarnings("unused")
@@ -64,7 +61,6 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       $.add(paramName);
       newNames.add(fieldName);
     }
-    
     return $.isEmpty() ? null : new Tip(description(d), d, getClass()) {
       final List<SimpleName> on = new ArrayList<>($);
       final List<SimpleName> nn = new ArrayList<>(newNames);

@@ -31,7 +31,7 @@ public class Table extends Row<Table> implements Closeable {
     Arrays.asList(rs).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch (IOException ¢) {
+      } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
@@ -97,7 +97,7 @@ public class Table extends Row<Table> implements Closeable {
         "Table header is  " + keySet() + "\n"; //
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
-    Int n = new Int();
+    final Int n = new Int();
     $ = writers.stream().map(¢ -> "\t " + ++n.inner + ". " + ¢.fileName + "\n").reduce((x, y) -> x + y).get();
     return $;
   }
