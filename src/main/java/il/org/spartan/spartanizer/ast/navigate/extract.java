@@ -293,6 +293,10 @@ public enum extract {
   public static Statement lastStatement(final EnhancedForStatement ¢) {
     return lastStatement(body(¢));
   }
+  
+  public static Statement lastStatement(final ForStatement ¢) {
+    return lastStatement(body(¢));
+  }
 
   public static Statement lastStatement(final Statement ¢) {
     return !iz.block(¢) ? ¢ : lastStatement(az.block(¢));

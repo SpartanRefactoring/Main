@@ -685,8 +685,8 @@ public interface wizard {
     return ms.stream().anyMatch(¢ -> ¢.test(m));
   }
   
-  static Statement lastStatement(final ForStatement ¢) {
-    return !iz.block(step.body(¢)) ? step.body(¢) : last(step.statements(az.block(step.body(¢))));
-  }
+//  static Statement lastStatement(final ForStatement ¢) {
+//    return !iz.block(step.body(¢)) ? step.body(¢) : last(step.statements(az.block(step.body(¢))));
+//  }
 
 }
