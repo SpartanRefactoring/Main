@@ -35,10 +35,10 @@ public interface namer {
   }
 
   static String shorten(final List<Type> ¢) {
-    for (final Type $ : ¢)
-      if ((($ + "").length() != 1 || !Character.isUpperCase(first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
-        return shorten($);
-    return null;
+    return ¢.stream()
+        .filter(
+            $ -> (($ + "").length() != 1 || !Character.isUpperCase(first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
+        .map($ -> shorten($)).findFirst().orElse(null);
   }
 
   static String shorten(final Name ¢) {
