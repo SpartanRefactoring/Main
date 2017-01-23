@@ -63,7 +63,7 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess>//
     Int $ = new Int();
     final List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
     lst.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
-    lst.stream().filter(¢ -> iz.arrayAccess(¢)).forEach(¢ -> ++$.inner);
+    lst.stream().filter(iz::arrayAccess).forEach(¢ -> ++$.inner);
     return $.inner != 1;
   }
 

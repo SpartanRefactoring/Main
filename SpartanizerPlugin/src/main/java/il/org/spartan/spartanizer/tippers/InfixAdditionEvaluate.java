@@ -28,7 +28,7 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
   @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
     try {
-      $ = xs.stream().map(¢ -> az.throwing.double¢(¢)).reduce((x, y) -> x + y).get();
+      $ = xs.stream().map(az.throwing::double¢).reduce((x, y) -> x + y).get();
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }

@@ -239,7 +239,8 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     return false;
   }
 
-  @SuppressWarnings("static-method") public void selectedNodes(@SuppressWarnings("unchecked") final Class<? extends BodyDeclaration>... ¢) {
+  @SafeVarargs
+  @SuppressWarnings("static-method") public final void selectedNodes(final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
 }
