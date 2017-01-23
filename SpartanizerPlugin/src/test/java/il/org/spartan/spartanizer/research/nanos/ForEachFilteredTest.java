@@ -28,7 +28,6 @@ public class ForEachFilteredTest {
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives("rs.stream().filter(r->U.t(r.tr())).forEach(r->{try{r.es();}catch(Throwable ¢){{l.ac(\"ma\",¢);}}});")//
         .gives("rs.stream().filter(¢->U.t(¢.tr())).forEach(¢->{try{¢.es();}catch(Throwable ¢){{l.ac(\"ma\",¢);}}});")//
-        .gives("rs.stream().filter(¢->U.t(¢.tr())).forEach(¢->{try{¢.es();}catch(Throwable ¢){{l.ac(\"ma\",¢);}}});")//
         .gives("rs.stream().filter(¢->U.t(¢.tr())).forEach(¢->{try{¢.es();}catch(Throwable ¢){l.ac(\"ma\",¢);}});")//
         .stays();
   }
