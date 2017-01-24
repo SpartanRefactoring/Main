@@ -17,6 +17,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Find if(X == null) return null; <br>
@@ -44,11 +45,12 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
       @Override @SuppressWarnings("unchecked") public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,
-            ast("holds(λ ->" + (differsInSingleAtomic(branchesExpressions(¢))
-                ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), "λ") + ")"
-                    + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
-                : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", "λ") + ")"
-                    + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
+            ast("holds(" + namer.current + " ->"
+                + (differsInSingleAtomic(branchesExpressions(¢))
+                    ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), namer.current) + ")"
+                        + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
+                    : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", namer.current) + ")"
+                        + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
             g);
       }
     };
