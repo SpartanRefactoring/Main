@@ -38,8 +38,8 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
     if (l.isEmpty())
       return null;
     // TODO Yuval Simon: move into loop --yg
-    ConditionalExpression $;
     for (int i = 0; i < l.size(); ++i) {
+      ConditionalExpression $;
       if (($ = az.conditionalExpression(l.get(i))) != null) {
         if (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
           return null;
