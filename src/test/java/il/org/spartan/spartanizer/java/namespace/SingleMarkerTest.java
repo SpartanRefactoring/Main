@@ -1,3 +1,6 @@
+/** TODO: please add a description
+ * @author
+ * @since */
 package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.azzert.*;

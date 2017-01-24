@@ -9,7 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public class ForEachSuchThat extends ForEach {
   private static final String description = "ForEachThat pattern: conevrt to fluent API";

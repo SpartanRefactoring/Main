@@ -1,3 +1,6 @@
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Jan 15, 2017 */
 package il.org.spartan.bloater;
 
 import static il.org.spartan.lisp.*;
@@ -115,11 +118,11 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private void updateListeners() {
     externalListeners.clear();
-    for (Integer i : wheelEvents) {
+    for (final Integer i : wheelEvents) {
       List<Listener> l = new LinkedList<>();
       Collections.addAll(l, text.getListeners(i.intValue()));
       TypedListener tl = null;
-      for (Listener ¢ : l)
+      for (final Listener ¢ : l)
         if (¢ instanceof TypedListener && this.equals(((TypedListener) ¢).getEventListener()))
           tl = (TypedListener) ¢;
       if (tl != null)
@@ -129,12 +132,12 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void removeListeners() {
-    for (Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
+    for (final Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
       InflateHandler.removeListeners(text, ¢.getValue(), ¢.getKey());
   }
 
   private void restoreListeners() {
-    for (Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
+    for (final Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
       InflateHandler.addListeners(text, ¢.getValue(), ¢.getKey());
   }
 }

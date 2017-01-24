@@ -26,15 +26,13 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
-  @Override double evaluateDouble(final List<Expression> xs) {
-    double $ = 1;
+  @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> $) {
     try {
-      for (final Expression ¢ : xs)
-        $ *= az.throwing.double¢(¢);
+      return $.stream().map(az.throwing::double¢).reduce(1.0, (x, y) -> x * y);
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
-    return $;
+    return 1;
   }
 
   @Override int evaluateInt(final List<Expression> xs) {

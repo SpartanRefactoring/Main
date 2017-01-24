@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *     .gives("a+b+c")
  * </pre>
 */
-/** ??
+/** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {

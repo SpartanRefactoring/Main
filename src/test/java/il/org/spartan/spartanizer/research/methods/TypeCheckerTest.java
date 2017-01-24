@@ -4,7 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
 @SuppressWarnings("static-method")
 public class TypeCheckerTest extends JavadocerTest {

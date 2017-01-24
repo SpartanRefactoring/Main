@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Ori Roth
+/** TODO: Ori Roth please add a description
+ * @author Ori Roth
  * @since 2016_12_14 */
 @Ignore // TODO Yuval: is part of your issue --or
 @SuppressWarnings("static-method")
