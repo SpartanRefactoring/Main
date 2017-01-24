@@ -7,12 +7,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO:  Yossi Gil
- please add a description 
- @author Yossi Gil
- * @since 2016 
- */
-
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
+ * @since 2016 */
 public interface disabling {
   /** A recursive scan for disabled nodes. Adds disabled property to disabled
    * nodes and their sub trees.
@@ -95,4 +92,3 @@ public interface disabling {
     return Arrays.asList(ids).stream().anyMatch(s::contains);
   }
 }
-

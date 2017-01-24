@@ -7,12 +7,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** TODO:  Alex Kopzon
- please add a description 
- @author Alex Kopzon
- * @since 2016 
- */
-
+/** TODO: Alex Kopzon please add a description
+ * @author Alex Kopzon
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class ModifiersTest {
@@ -128,4 +125,3 @@ public final class ModifiersTest {
     azzert.that(IExtendedModifiersRank.find("strictfp").compareTo(IExtendedModifiersRank.STRICTFP), is(0));
   }
 }
-

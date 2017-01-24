@@ -4,12 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO:  YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- please add a description 
- @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2017-01-17 
- */
-
+/** TODO: YuvalSimon <tt>yuvaltechnion@gmail.com</tt> please add a description
+ * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @since 2017-01-17 */
 @SuppressWarnings("static-method")
 public class Issue1067 {
   @Test public void t1() {
@@ -62,4 +59,3 @@ public class Issue1067 {
     }
   }
 }
-

@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 @SuppressWarnings("static-method")
 public class Issue1057 {
   @Ignore // TODO Yossi Gil
-
   @Test public void a() {
     trimmingOf("" //
         + "void f() {\n" //

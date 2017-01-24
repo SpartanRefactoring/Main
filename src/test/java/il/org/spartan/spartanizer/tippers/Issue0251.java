@@ -4,18 +4,15 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO:  Dor Ma'ayan
- please add a description 
- @author Dor Ma'ayan
- * @since 2016-09-26 
- */
-
+/** TODO: Dor Ma'ayan please add a description
+ * @author Dor Ma'ayan
+ * @since 2016-09-26 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0251 {
   @Test public void Issue302_test() {
     trimmingOf("if(b()){int i;}")//
         .gives("if (b()){}")//
-        ;
+    ;
   }
 
   @Test public void t01() {
@@ -52,8 +49,8 @@ public class Issue0251 {
 
   @Test public void t06() {
     trimmingOf("if(b()){int i;}")//
-    .gives("if(b()){}")//
-       ; 
+        .gives("if(b()){}")//
+    ;
   }
 
   @Test public void t07() {
@@ -96,7 +93,7 @@ public class Issue0251 {
 
   @Test public void t15() {
     trimmingOf("if(b==q()){int i;}")//
-    .gives("if(b==q()){}")//
+        .gives("if(b==q()){}")//
     ;
   }
 
@@ -109,7 +106,7 @@ public class Issue0251 {
     trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//
         .gives("while(b==q)if(tipper==q()){}")//
-       ; 
+    ;
   }
 
   @Test public void t19() {
@@ -154,4 +151,3 @@ public class Issue0251 {
         .stays();
   }
 }
-

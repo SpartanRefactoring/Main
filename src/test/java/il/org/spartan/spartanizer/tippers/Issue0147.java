@@ -10,12 +10,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO:  Kfir Marx
- please add a description 
- @author Kfir Marx
- * @since 2016-11-26 
- */
-
+/** TODO: Kfir Marx please add a description
+ * @author Kfir Marx
+ * @since 2016-11-26 */
 @SuppressWarnings("static-method")
 public class Issue0147 {
   private static final Statement INPUT = into.s("for(int i=0; i<5;++i){x.fuanc(); continue;}");
@@ -63,4 +60,3 @@ public class Issue0147 {
     assert !TIPPER.canTip(FOR1);
   }
 }
-

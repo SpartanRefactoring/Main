@@ -12,11 +12,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
 
-/**  Collects a set of metrics A wrapper for {@link CSVStatistics}
- * @author Matteo Orru' 
- * @since Nov 14, 2016
- */
-
+/** Collects a set of metrics A wrapper for {@link CSVStatistics}
+ * @author Matteo Orru'
+ * @since Nov 14, 2016 */
 // @SuppressWarnings("unused")
 public class MetricsReport implements ConfigurableReport {
   List<ASTNode> l;
@@ -92,4 +90,3 @@ public class MetricsReport implements ConfigurableReport {
     write();
   }
 }
-

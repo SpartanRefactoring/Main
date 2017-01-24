@@ -11,12 +11,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO:  Yossi Gil <tt>yossi.gil@gmail.com</tt>
- please add a description 
- @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-22 
- */
-
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2016-12-22 */
 public interface definition {
   enum Kind {
     annotation {
@@ -251,4 +248,3 @@ public interface definition {
     return !x.isInterface() ? Kind.class¢ : Kind.interface¢;
   }
 }
-

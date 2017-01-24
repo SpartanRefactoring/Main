@@ -10,12 +10,9 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class Examiner extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
@@ -33,4 +30,3 @@ public class Examiner extends JavadocMarkerNanoPattern {
     ;
   }
 }
-

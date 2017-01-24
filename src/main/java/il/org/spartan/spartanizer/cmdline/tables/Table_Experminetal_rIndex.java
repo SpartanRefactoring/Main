@@ -9,12 +9,9 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description 
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-14 
- */
-
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-14 */
 public class Table_Experminetal_rIndex extends TableReusabilityIndices {
   private static Table lWriter; // coverage
   protected static int totalMethodInvocations;
@@ -80,4 +77,3 @@ public class Table_Experminetal_rIndex extends TableReusabilityIndices {
     return totalMethodDeclarations;
   }
 }
-

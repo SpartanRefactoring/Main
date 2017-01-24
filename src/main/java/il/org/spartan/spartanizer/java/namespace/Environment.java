@@ -15,12 +15,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/**  Interface to environment. Holds all the names defined till current PC. In
- * other words the 'names Environment' at every point of the program tree. 
- * @author  Yossi Gil <yossi.gil@gmail.com>
- * @since Dec 25, 2016
- */
-
+/** Interface to environment. Holds all the names defined till current PC. In
+ * other words the 'names Environment' at every point of the program tree.
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Dec 25, 2016 */
 public interface Environment {
   /** @return true iff {@link Environment} doesn't have an entry with a given
    *         name. */

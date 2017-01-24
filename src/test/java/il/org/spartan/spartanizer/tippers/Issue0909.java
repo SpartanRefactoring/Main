@@ -14,6 +14,7 @@ public class Issue0909 {
     trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
         .gives("");
   }
+
   @Test public void b$0() {
     trimmingOf("int a = 3; try { } catch(Exception e) { return -1; } return a;")//
         .gives("int a = 3; return a;") //

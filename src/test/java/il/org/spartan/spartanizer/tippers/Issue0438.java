@@ -5,11 +5,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 
-/**  Failing (were ignored) tests of {@link TrimmerLogTest}
- * @author  Yossi Gil <yossi.gil@gmail.com>
- * @since 2016 
- */
-
+/** Failing (were ignored) tests of {@link TrimmerLogTest}
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class Issue0438 {
@@ -17,4 +15,3 @@ public class Issue0438 {
     TrimmerLog.tip(null, null);
   }
 }
-

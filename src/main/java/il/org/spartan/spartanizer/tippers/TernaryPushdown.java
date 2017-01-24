@@ -20,12 +20,10 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/**  Pushdown a ternary as far down as possible
- * @year 2015 
+/** Pushdown a ternary as far down as possible
+ * @year 2015
  * @author Yossi Gil
- * @since Sep 25, 2016
- */
-
+ * @since Sep 25, 2016 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {
   static Expression pushdown(final ConditionalExpression x) {
@@ -151,4 +149,3 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return pushdown(¢);
   }
 }
-

@@ -14,12 +14,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description 
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-02 
- */
-
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-02 */
 public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   private static final List<UserDefinedTipper<InfixExpression>> inEqualities = new ArrayList<UserDefinedTipper<InfixExpression>>() {
     static final long serialVersionUID = 1L;
@@ -83,4 +80,3 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
     return "XBetweenY₁AndY₂";
   }
 }
-

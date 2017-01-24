@@ -7,12 +7,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class TypeChecker extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     final ReturnStatement $ = az.returnStatement(onlyStatement(¢));
@@ -22,4 +19,3 @@ public class TypeChecker extends JavadocMarkerNanoPattern {
         && identifier(name(onlyParameter(¢))).equals(left(az.instanceofExpression(expression($))) + "");
   }
 }
-

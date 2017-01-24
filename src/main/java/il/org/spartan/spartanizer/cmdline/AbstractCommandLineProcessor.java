@@ -1,7 +1,6 @@
-/** TODO:  Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description 
- * @author  Matteo Orru' <matteo.orru@cs.technion.ac.il>
- * @since Jan 15, 2017
- */
+/** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
+ * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
+ * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;

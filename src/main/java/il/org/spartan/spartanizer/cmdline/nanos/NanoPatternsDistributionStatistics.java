@@ -1,7 +1,6 @@
-/** TODO:  orimarco <marcovitch.ori@gmail.com> please add a description 
- * @author  orimarco <marcovitch.ori@gmail.com>
- * @since Jan 2, 2017
- */
+/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
+ * @author orimarco <marcovitch.ori@gmail.com>
+ * @since Jan 2, 2017 */
 package il.org.spartan.spartanizer.cmdline.nanos;
 
 import java.util.*;
@@ -60,4 +59,3 @@ public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<In
     //
   }
 }
-

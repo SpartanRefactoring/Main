@@ -10,12 +10,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description 
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-12 
- */
-
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-12 */
 public class ForEachInRange extends NanoPatternTipper<ForStatement> {
   private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
@@ -52,4 +49,3 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return firstReplacement(tippers);
   }
 }
-

@@ -5,14 +5,11 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO:  David Cohen
- *  please add a description 
- @author David Cohen
+/** TODO: David Cohen please add a description
+ * @author David Cohen
  * @author Shahar Yair
  * @author Zahi Mizrahi
- * @since 16-11-6 
- */
-
+ * @since 16-11-6 */
 @SuppressWarnings("static-method")
 public class Issue0710 {
   @Test public void test01() {

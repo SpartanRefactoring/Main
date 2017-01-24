@@ -5,12 +5,9 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.methods.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description 
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-01 
- */
-
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-01 */
 @SuppressWarnings("static-method")
 public class ArgumentsTupleTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
@@ -77,4 +74,3 @@ public class ArgumentsTupleTest extends JavadocerTest {
     assert not("boolean foo(int a, int b){if(x) return foo(c,a,b,d); else foo(c,a,b,d).f(a);}");
   }
 }
-

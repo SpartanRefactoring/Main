@@ -11,11 +11,9 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/**  * @year 2016 
- @author Ori Marcovitch
- * @since Jan 8, 2017
- */
-
+/** * @year 2016
+ * @author Ori Marcovitch
+ * @since Jan 8, 2017 */
 public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   private static final NanoPatternTipper<EnhancedForStatement> rival = new Select();
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
@@ -60,4 +58,3 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
     return firstReplacement(tippers);
   }
 }
-
