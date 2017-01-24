@@ -25,7 +25,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     return subject.operands($).to(wizard.PLUS2);
   }
 
-  // TODO: Yossi Gil: this should probably be in lisp, but I can't access  its
+  // TODO: Yossi Gil: this should probably be in lisp, but I can't access its
   // source anymore
   /** swaps two elements in an indexed list in given indexes, if they are legal
    * @param ts the indexed list
