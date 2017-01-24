@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Tests {@link Aggregate}
  * @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
