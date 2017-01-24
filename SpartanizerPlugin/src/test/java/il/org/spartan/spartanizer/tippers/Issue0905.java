@@ -12,10 +12,9 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0905 {
   @Ignore // TODO Yossi Gil
-
   @Test public void t06() {
     trimmingOf("if(b()){int i;}")//
-    .gives("if(b()){}")//
+        .gives("if(b()){}")//
         .stays();
   }
 
@@ -25,15 +24,15 @@ public class Issue0905 {
         .stays() //
     ;
   }
-  @Ignore // TODO Yossi Gil
 
+  @Ignore // TODO Yossi Gil
   @Test public void t15() {
     trimmingOf("if(b==q()){int i;}")//
-    .gives("if(b==q()){}")//
+        .gives("if(b==q()){}")//
         .stays();
   }
-  @Ignore // TODO Yossi Gil
 
+  @Ignore // TODO Yossi Gil
   @Test public void t17() {
     trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//

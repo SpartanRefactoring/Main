@@ -24,12 +24,9 @@ import il.org.spartan.spartanizer.tipping.*;
  *     .gives("a+b+c")
  * </pre>
 */
-/** TODO:  Yossi Gil
- please add a description 
+/** TODO: Yossi Gil please add a description
  * @author Yossi Gil
- * @since 2016 
- */
-
+ * @since 2016 */
 public interface trim {
   /** Starting point of fluent API for @Testing:
    * <code>trimming.repeatedly.of("a+(b-c)")//
@@ -118,4 +115,3 @@ public interface trim {
     return new fluentTrimmer(clazz, ts);
   }
 }
-

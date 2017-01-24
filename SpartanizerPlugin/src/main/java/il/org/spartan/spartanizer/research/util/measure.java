@@ -7,12 +7,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since Oct 28, 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since Oct 28, 2016 */
 public enum measure {
   ;
   public static int expressions(final ASTNode n) {
@@ -89,4 +86,3 @@ public enum measure {
         .contains(¢.getClass());
   }
 }
-

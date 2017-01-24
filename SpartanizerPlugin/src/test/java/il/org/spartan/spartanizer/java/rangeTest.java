@@ -7,12 +7,9 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO:  Dor Ma'ayan
- please add a description 
- @author Dor Ma'ayan
- * @since 25-11-2016 
- */
-
+/** TODO: Dor Ma'ayan please add a description
+ * @author Dor Ma'ayan
+ * @since 25-11-2016 */
 @SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
@@ -26,12 +23,12 @@ public class rangeTest {
   }
 
   @Test public void test10() {
-    assert range.to(10).step(2).stream().map(i1 -> (range.to(10).step(2)).stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
         .reduce((x, y) -> x + y).get() == 100;
   }
 
   @Test public void test11() {
-    assert range.to(10).step(2).stream().map(i1 -> (range.to(10).step(2).inclusive()).stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).inclusive().stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
         .reduce((x, y) -> x + y).get() == 150;
   }
 
@@ -67,4 +64,3 @@ public class rangeTest {
     assert range.from(100).to(110).step(10).stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 100;
   }
 }
-

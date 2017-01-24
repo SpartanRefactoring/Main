@@ -2,18 +2,16 @@ package il.org.spartan.plugin;
 
 import java.util.*;
 
-/**  A simple stack, to be extended with more delegators, in the unlikely event
+/** A simple stack, to be extended with more delegators, in the unlikely event
  * that the need arises.
  * <p>
  * Vanilla flavor to used for quick implementation of {@link Listener}.
  * @see #push(Object...)
  * @see #pop(Object...)
  * @see #empty()
- * @year 2016 
+ * @year 2016
  * @author Yossi Gil
- * @since Oct 22, 2016
- */
-
+ * @since Oct 22, 2016 */
 public class TicksStack {
   public final Stack<Object[]> inner = new Stack<>();
 

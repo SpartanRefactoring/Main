@@ -1,7 +1,6 @@
-/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
- * @author  Yossi Gil <yossi.gil@gmail.com>
- * @since Sep 26, 2016
- */
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 26, 2016 */
 package il.org.spartan.spartanizer.tipping;
 
 public abstract class TipperFailure extends Exception {
@@ -19,4 +18,3 @@ public abstract class TipperFailure extends Exception {
     }
   }
 }
-

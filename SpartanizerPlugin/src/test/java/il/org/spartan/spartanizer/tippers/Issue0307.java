@@ -4,12 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO:  Alex Kopzon
- please add a description 
- @author Alex Kopzon
- * @since 2016 
- */
-
+/** TODO: Alex Kopzon please add a description
+ * @author Alex Kopzon
+ * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0307 {
   // p is not JD so no renaming happening
@@ -27,4 +24,3 @@ public class Issue0307 {
             .stays();
   }
 }
-

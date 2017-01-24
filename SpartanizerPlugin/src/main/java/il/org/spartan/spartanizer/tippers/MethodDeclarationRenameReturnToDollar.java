@@ -16,14 +16,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO:  Artium Nihamkin (original)
- *  please add a description 
- @author Artium Nihamkin (original)
+/** TODO: Artium Nihamkin (original) please add a description
+ * @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
  * @author Yossi Gil (v3)
- * @since 2013/01/01 
- */
-
+ * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Dollarization {
   @Override public String description(final MethodDeclaration ¢) {
@@ -137,4 +134,3 @@ class Conservative extends AbstractRenamePolicy {
     return returnStatements.stream().allMatch(¢ -> !analyze.dependencies(¢).contains(n + ""));
   }
 }
-

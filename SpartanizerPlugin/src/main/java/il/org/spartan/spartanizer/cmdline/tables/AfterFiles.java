@@ -22,12 +22,9 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since Dec 14, 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since Dec 14, 2016 */
 public class AfterFiles extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
@@ -206,4 +203,3 @@ public class AfterFiles extends FolderASTVisitor {
     return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }
-

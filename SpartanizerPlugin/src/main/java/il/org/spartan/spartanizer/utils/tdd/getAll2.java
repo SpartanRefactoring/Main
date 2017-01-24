@@ -6,18 +6,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO:  Ori Marcovitch
- *  please add a description 
- @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @author Moshe ELiasof
  * @author Netanel Felcher
  * @author Doron Meshulam
  * @author Tomer Dragucki
  * @author Shimon Azulay
  * @author Idan Atias
- * @since Nov 8, 2016 
- */
-
+ * @since Nov 8, 2016 */
 public enum getAll2 {
   ;
   // For you to implement! Let's TDD and get it on!
@@ -94,4 +91,3 @@ public enum getAll2 {
     return $;
   }
 }
-

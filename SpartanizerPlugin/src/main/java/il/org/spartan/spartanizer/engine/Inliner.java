@@ -13,12 +13,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/**  Replace a variable with an expression
- * @year 2015 
+/** Replace a variable with an expression
+ * @year 2015
  * @author Yossi Gil
- * @since Sep 13, 2016
- */
-
+ * @since Sep 13, 2016 */
 public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];

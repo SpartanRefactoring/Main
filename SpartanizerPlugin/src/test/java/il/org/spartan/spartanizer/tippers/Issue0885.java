@@ -5,12 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO:  Dan Abramovich
- please add a description 
- @author Dan Abramovich
- * @since 30-11-2016 
- */
-
+/** TODO: Dan Abramovich please add a description
+ * @author Dan Abramovich
+ * @since 30-11-2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0885 {
@@ -28,4 +25,3 @@ public class Issue0885 {
             .stays();
   }
 }
-

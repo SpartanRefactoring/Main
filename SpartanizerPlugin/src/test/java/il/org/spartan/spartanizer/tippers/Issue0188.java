@@ -4,12 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO:  Dor Ma'ayan
- please add a description 
- @author Dor Ma'ayan
- * @since 20-11-2016 
- */
-
+/** TODO: Dor Ma'ayan please add a description
+ * @author Dor Ma'ayan
+ * @since 20-11-2016 */
 @SuppressWarnings("static-method")
 public class Issue0188 {
   @Test public void test0() {
@@ -31,29 +28,26 @@ public class Issue0188 {
   }
 
   @Test public void test3() {
-    trimmingOf(
-        "try{f();}catch(E e){int a;return a;}catch(O e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-            .gives("try{f();}catch(O|E e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-            .gives("try{f();}catch(ExceptionNull|O|E e){int a;return a;}finally{return b;}")//
-            .stays();
+    trimmingOf("try{f();}catch(E e){int a;return a;}catch(O e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
+        .gives("try{f();}catch(O|E e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
+        .gives("try{f();}catch(ExceptionNull|O|E e){int a;return a;}finally{return b;}")//
+        .stays();
   }
 
   @Test public void test4() {
-    trimmingOf(
-        "try{int y;}catch(E e){int a;return a;}catch(O e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-            .gives("try{int y;}catch(O|E e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-            .gives("try{int y;}catch(ExceptionNull|O|E e){int a;return a;}finally{return b;}")//
-            .gives("try{}catch(ExceptionNull|O|E e){int a;return a;}finally{return b;}")//
-            .gives("{return b;}")//
-            .gives("return b;")//
-            .stays();
+    trimmingOf("try{int y;}catch(E e){int a;return a;}catch(O e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
+        .gives("try{int y;}catch(O|E e){int a;return a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
+        .gives("try{int y;}catch(ExceptionNull|O|E e){int a;return a;}finally{return b;}")//
+        .gives("try{}catch(ExceptionNull|O|E e){int a;return a;}finally{return b;}")//
+        .gives("{return b;}")//
+        .gives("return b;")//
+        .stays();
   }
-  @Ignore // TODO Yossi Gil
 
+  @Ignore // TODO Yossi Gil
   @Test public void test5() {
     trimmingOf("try{int y;}catch(E e){int a;return a;}catch(O e){int a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
         .gives("try{int y;}catch(E e){return a;}catch(ExceptionNull|E e){int a;return a;}finally{return b;}")//
         .stays();
   }
 }
-

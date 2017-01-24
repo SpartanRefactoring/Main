@@ -2,12 +2,9 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
-/** TODO:  Yossi Gil
- please add a description 
- @author Yossi Gil
- * @since 2016 
- */
-
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
+ * @since 2016 */
 public class Essence {
   public static void main(final String[] args) {
     for (final Scanner ¢ = new Scanner(System.in);;) {
@@ -49,4 +46,3 @@ public class Essence {
     ;
   }
 }
-

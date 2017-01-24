@@ -13,13 +13,10 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO:  Vivian Shehadeh
- *  please add a description 
- @author Vivian Shehadeh
+/** TODO: Vivian Shehadeh please add a description
+ * @author Vivian Shehadeh
  * @author Ward Mattar
- * @since 2016 
- */
-
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
@@ -82,4 +79,3 @@ public final class analyzeTest {
         is(analyze.type(first(yieldDescendants.untilClass(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} "))).getName())));
   }
 }
-

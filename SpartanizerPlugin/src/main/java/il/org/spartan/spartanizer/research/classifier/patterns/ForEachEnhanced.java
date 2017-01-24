@@ -8,12 +8,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
   final Set<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
@@ -31,4 +28,3 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
     return firstTipper(tippers, ¢).tip(¢);
   }
 }
-

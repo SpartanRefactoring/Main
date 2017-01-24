@@ -8,13 +8,10 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO:  Yossi Gil
- *  please add a description 
- @author Yossi Gil
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
  * @author Matteo Orru'
- * @since 2016 
- */
-
+ * @since 2016 */
 public class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
   public static void main(final String[] fileNames) {
@@ -84,4 +81,3 @@ public class InteractiveSpartanizer {
     return this;
   }
 }
-

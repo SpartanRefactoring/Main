@@ -12,12 +12,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
-/**  Demonstrates iteration through files.
- * @year 2015 
+/** Demonstrates iteration through files.
+ * @year 2015
  * @author Yossi Gil
- * @since Dec 20, 2016
- */
-
+ * @since Dec 20, 2016 */
 public final class TypeNamesCollector {
   static final Map<String, Integer> longNames = new TreeMap<>();
   static final Map<String, Set<String>> shortToFull = new TreeMap<>();

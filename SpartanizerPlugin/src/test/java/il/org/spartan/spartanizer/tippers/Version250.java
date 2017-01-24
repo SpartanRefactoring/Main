@@ -218,8 +218,7 @@ public final class Version250 {
 
   @Test public void issue085_86i() {
     trimmingOf("if(z){ if(true) a(); else b(); } else{ if(false) a(); else b();}")//
-    .gives("if(z)if(true) a(); else b();else if(false) a(); else b();")
-        .gives("if(z)a(); else b(); ");
+        .gives("if(z)if(true) a(); else b();else if(false) a(); else b();").gives("if(z)a(); else b(); ");
   }
 
   @Test public void issue085_86j() {

@@ -6,12 +6,9 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since Dec 14, 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since Dec 14, 2016 */
 public enum Count {
   ;
   static final Pair<Int, Int> ifStatements = newPair();

@@ -4,12 +4,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 @SuppressWarnings("static-method")
 public class ExaminerTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
@@ -53,4 +50,3 @@ public class ExaminerTest extends JavadocerTest {
     assert is("boolean checker(Object a){return (a instanceof A);}");
   }
 }
-

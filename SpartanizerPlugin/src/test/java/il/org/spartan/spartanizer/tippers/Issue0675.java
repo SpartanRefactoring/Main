@@ -8,12 +8,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
-/** TODO:  Aviad Cohen & Noam Yefet
- please add a description 
- @author Aviad Cohen & Noam Yefet
- * @since 16-11-1 
- */
-
+/** TODO: Aviad Cohen & Noam Yefet please add a description
+ * @author Aviad Cohen & Noam Yefet
+ * @since 16-11-1 */
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0675 {
   @Test public void statements_test0() {
@@ -61,4 +58,3 @@ public class Issue0675 {
     azzert.that(8, is(enumerate.statements(wizard.ast("while (true) { if (x == 0) { break; } \n else x = x - 1; continue;}"))));
   }
 }
-

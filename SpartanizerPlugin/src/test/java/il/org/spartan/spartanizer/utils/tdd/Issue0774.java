@@ -1,7 +1,6 @@
-/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
- * @author  Yossi Gil <yossi.gil@gmail.com>
- * @since Jan 15, 2017
- */
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.utils.tdd;
 
 import org.junit.*;
@@ -66,4 +65,3 @@ public class Issue0774 {
     assert determineIf.uses(wizard.ast("a.b"), "b");
   }
 }
-
