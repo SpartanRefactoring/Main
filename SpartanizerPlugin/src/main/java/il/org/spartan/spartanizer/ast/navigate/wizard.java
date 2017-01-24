@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.lisp.last;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -253,7 +252,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
    *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    return !hasNull(base, as) && Arrays.asList(as).stream().allMatch(¢ -> !(incompatible(base, ¢)));
+    return !hasNull(base, as) && Arrays.asList(as).stream().allMatch(¢ -> !incompatible(base, ¢));
   }
 
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
@@ -664,7 +663,7 @@ public interface wizard {
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
   @SuppressWarnings("boxing") static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
-    return ns1 == ns2 || (ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(¢ -> same(ns1.get(¢), ns2.get(¢))));
+    return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(¢ -> same(ns1.get(¢), ns2.get(¢)));
   }
 
   static void setBinding(final ASTParser $) {
@@ -684,9 +683,8 @@ public interface wizard {
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(¢ -> ¢.test(m));
   }
-  
-  static Statement lastStatement(final ForStatement ¢) {
-    return !iz.block(step.body(¢)) ? step.body(¢) : last(step.statements(az.block(step.body(¢))));
-  }
-
+  // static Statement lastStatement(final ForStatement ¢) {
+  // return !iz.block(step.body(¢)) ? step.body(¢) :
+  // last(step.statements(az.block(step.body(¢))));
+  // }
 }

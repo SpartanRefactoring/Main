@@ -8,8 +8,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Replace current node strategy
+ * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   public abstract ASTNode replacement(N n);
 

@@ -5,7 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class FindFirstTest {
@@ -47,6 +48,8 @@ public class FindFirstTest {
         .gives("return TipperGroup.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 
+  @Ignore
+  // TODO: Ori Marco
   @Test public void g() {
     trimmingOf(" for (ASTNode $ = ¢; $ != null; $ = parent($))   if (iz.methodDeclaration($))      return az.methodDeclaration($);  return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//

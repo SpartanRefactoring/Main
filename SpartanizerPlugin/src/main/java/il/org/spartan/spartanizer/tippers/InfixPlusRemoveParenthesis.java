@@ -31,7 +31,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    *         and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
-        || (operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(¢ -> type.of(¢) == type.Primitive.Certain.STRING));
+        || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(¢ -> type.of(¢) == type.Primitive.Certain.STRING);
   }
 
   @Override public String description() {
@@ -51,6 +51,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
+      // TODO: Dor Ma'ayan: use extract.core --yg
       if (iz.parenthesizedExpression(es.get(ii))) {
         Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
         for (; iz.parenthesizedExpression(¢);) {

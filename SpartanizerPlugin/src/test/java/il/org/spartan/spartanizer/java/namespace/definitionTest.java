@@ -123,7 +123,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a18() {
-    markers().stream().filter(a -> definition.Kind.has((a + "").substring(1))).forEach(a -> (annotees.of(a))
+    markers().stream().filter(a -> definition.Kind.has((a + "").substring(1))).forEach(a -> annotees.of(a)
         .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
   }
 
@@ -156,12 +156,12 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a25() {
-    markers().stream().filter(a -> "@for¢".equals(a + "")).forEach(a -> (annotees.of(a))
+    markers().stream().filter(a -> "@for¢".equals(a + "")).forEach(a -> annotees.of(a)
         .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
   }
 
   @Test public void a26() {
-    markers().stream().filter(a -> "@try¢".equals(a + "")).forEach(a -> (annotees.of(a))
+    markers().stream().filter(a -> "@try¢".equals(a + "")).forEach(a -> annotees.of(a)
         .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
   }
 

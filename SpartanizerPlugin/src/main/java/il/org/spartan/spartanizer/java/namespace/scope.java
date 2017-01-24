@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Yossi Gil
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
  * @since 2016-12 */
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
@@ -34,10 +35,8 @@ public interface scope {
     return $;
   }
 
-  static List<ASTNode> of(final VariableDeclarationFragment ¢) {
-    final ArrayList<ASTNode> $ = new ArrayList<>();
-    $.add(¢.getInitializer());
-    return $;
+  static List<? extends ASTNode> of(final VariableDeclarationFragment ¢) {
+    return scope.of(¢.getName());
   }
 
   static List<? extends ASTNode> of(final SimpleName ¢) {

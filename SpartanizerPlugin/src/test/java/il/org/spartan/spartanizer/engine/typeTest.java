@@ -16,8 +16,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
  * expression using {@link type.Axiom} .
+ * @Since 2016-09
  * @author Niv Shalmon
- * @Since 2016-09 */
+ * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {

@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -16,10 +17,57 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface namer {
+  String anonymous = "__";
+  String current = "¢";
+  String return¢ = "$";
+  String[] standardNames = { namer.return¢, namer.anonymous, namer.current };
+  @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
+    {
+      add("Class");
+      add("Tipper");
+      add("Map");
+    }
+  };
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
+  @SuppressWarnings("serial") Set<String> plurals = new LinkedHashSet<String>() {
+    {
+      add("ArrayList");
+      add("Collection");
+      add("HashSet");
+      add("Iterable");
+      add("LinkedHashSet");
+      add("LinkedTreeSet");
+      add("List");
+      add("Queue");
+      add("Seuence");
+      add("Set");
+      add("TreeSet");
+      add("Vector");
+    }
+  };
+
+  static String[] components(final Name ¢) {
+    return components(¢);
+  }
+
+  static String[] components(final QualifiedType ¢) {
+    return components(¢.getName());
+  }
+
+  static String[] components(final SimpleType ¢) {
+    return components(¢.getName());
+  }
 
   static String[] components(final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
+  }
+
+  static boolean isAssuming(final ParameterizedType ¢) {
+    return assuming.contains(¢.getType() + "");
+  }
+
+  static boolean isPluralizing(final ParameterizedType ¢) {
+    return plurals.contains(¢.getType() + "");
   }
 
   static String repeat(final int i, final char c) {
@@ -51,30 +99,6 @@ public interface namer {
     return shorten(¢.getName());
   }
 
-  @SuppressWarnings("serial") Set<String> plurals = new LinkedHashSet<String>() {
-    {
-      add("ArrayList");
-      add("Collection");
-      add("HashSet");
-      add("Iterable");
-      add("LinkedHashSet");
-      add("LinkedTreeSet");
-      add("List");
-      add("Queue");
-      add("Seuence");
-      add("Set");
-      add("TreeSet");
-      add("Vector");
-    }
-  };
-  @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
-    {
-      add("Class");
-      add("Tipper");
-      add("Map");
-    }
-  };
-
   static String shorten(final ParameterizedType ¢) {
     if (isPluralizing(¢))
       return shorten(first(typeArguments(¢))) + "s";
@@ -82,14 +106,6 @@ public interface namer {
       return shorten(¢.getType());
     final String $ = shorten(typeArguments(¢));
     return $ != null ? $ : shorten(¢.getType());
-  }
-
-  static boolean isAssuming(final ParameterizedType ¢) {
-    return assuming.contains(¢.getType() + "");
-  }
-
-  static boolean isPluralizing(final ParameterizedType ¢) {
-    return plurals.contains(¢.getType() + "");
   }
 
   static String shorten(final PrimitiveType ¢) {
@@ -126,5 +142,13 @@ public interface namer {
 
   static String shortName(final WildcardType ¢) {
     return ¢.getBound() == null ? "o" : shorten(¢.getBound());
+  }
+
+  static String variableName(final SimpleType t) {
+    final List<String> ss = as.list(components(t));
+    String $ = lisp.first(ss).toLowerCase();
+    for (final String ¢ : lisp.rest(ss))
+      $ += ¢;
+    return $;
   }
 }

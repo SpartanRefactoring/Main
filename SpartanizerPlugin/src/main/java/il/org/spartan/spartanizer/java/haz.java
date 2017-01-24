@@ -47,7 +47,7 @@ public enum haz {
   }
 
   public static boolean cent(final ASTNode ¢) {
-    return !Collect.usesOf("¢").inside(¢).isEmpty();
+    return !collect.usesOf("¢").inside(¢).isEmpty();
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a
@@ -61,7 +61,7 @@ public enum haz {
   }
 
   public static boolean dollar(final ASTNode ¢) {
-    return !Collect.usesOf("$").inside(¢).isEmpty();
+    return !collect.usesOf("$").inside(¢).isEmpty();
   }
 
   public static boolean dollar(final List<SimpleName> ns) {

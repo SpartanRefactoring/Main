@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since 2016 */
 public class Independent extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
@@ -22,7 +23,7 @@ public class Independent extends JavadocMarkerNanoPattern {
     for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
         $.addAll(parametersNames(az.methodDeclaration(¢)));
-    return $.stream().allMatch(¢ -> !(analyze.dependencies(body(d)).stream().map(x -> x + "").collect(Collectors.toSet()).contains(¢)));
+    return $.stream().allMatch(¢ -> !analyze.dependencies(body(d)).stream().map(x -> x + "").collect(Collectors.toSet()).contains(¢));
   }
 
   private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {

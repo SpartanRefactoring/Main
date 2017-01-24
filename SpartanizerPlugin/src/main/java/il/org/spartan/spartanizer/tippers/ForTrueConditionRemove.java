@@ -8,7 +8,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Alex Kopzon
+/** TODO: Alex Kopzon please add a description
+ * @author Alex Kopzon
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {

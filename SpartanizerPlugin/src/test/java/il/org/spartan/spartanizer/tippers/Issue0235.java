@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author kobybs
+/** TODO: kobybs please add a description
+ * @author kobybs
  * @author Dor Ma'ayan
  * @since 16-11-2016 */
 @SuppressWarnings("static-method")

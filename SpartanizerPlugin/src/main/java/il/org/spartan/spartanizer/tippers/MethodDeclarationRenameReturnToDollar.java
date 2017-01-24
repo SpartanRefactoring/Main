@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Artium Nihamkin (original)
+/** TODO: Artium Nihamkin (original) please add a description
+ * @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
  * @author Yossi Gil (v3)
  * @since 2013/01/01 */
@@ -104,7 +105,7 @@ class Aggressive extends AbstractRenamePolicy {
   }
 
   @SuppressWarnings("boxing") private static int score(final SimpleName n, final List<ReturnStatement> ss) {
-    return ss.stream().map(¢ -> Collect.BOTH_LEXICAL.of(n).in(¢).size()).reduce((x, y) -> x + y).get();
+    return ss.stream().map(¢ -> collect.BOTH_LEXICAL.of(n).in(¢).size()).reduce((x, y) -> x + y).get();
   }
 
   public Aggressive(final MethodDeclaration inner) {

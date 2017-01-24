@@ -7,9 +7,9 @@ import org.eclipse.core.runtime.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** ??
+/** * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {
     final IProgressMonitor npm = new NullProgressMonitor();
