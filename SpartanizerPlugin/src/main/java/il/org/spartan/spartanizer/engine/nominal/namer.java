@@ -20,7 +20,7 @@ public interface namer {
   String forbidden = "_";
   String anonymous = "__";
   String return¢ = "$";
-  String[] standardNames = {namer.forbidden, namer.return¢, namer.anonymous, namer.current};
+  String[] standardNames = { namer.forbidden, namer.return¢, namer.anonymous, namer.current };
   @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
     {
       add("Class");
