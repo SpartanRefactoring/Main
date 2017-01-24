@@ -5,8 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
+/** @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class FindFirstTest {
@@ -29,11 +28,9 @@ public class FindFirstTest {
   }
 
   @Test public void d() {
-    trimmingOf(
-        "for (EnhancedForStatementState $ : EnhancedForStatements) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.getTypeId(); return 0;")//
-            .using(EnhancedForStatement.class, new FindFirst())//
-            .gives(
-                "return EnhancedForStatements.stream().filter($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.getTypeId()).findFirst().orElse(0);");
+    trimmingOf("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.getTypeId(); return 0;")//
+        .using(EnhancedForStatement.class, new FindFirst())//
+        .gives("return EF.stream().filter($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.getTypeId()).findFirst().orElse(0);");
   }
 
   @Test public void e() {
@@ -43,16 +40,15 @@ public class FindFirstTest {
   }
 
   @Test public void f() {
-    trimmingOf(" for (final TipperGroup $ : TipperGroup.values())    if ($.clazz.isAssignableFrom(¢))      return $; return null;")//
+    trimmingOf(" for (final G $ : G.values()) if ($.clazz.isAssignableFrom(¢)) return $; return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
-        .gives("return TipperGroup.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
+        .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 
-  @Ignore
-  // TODO: Ori Marco
-  @Test public void g() {
-    trimmingOf(" for (ASTNode $ = ¢; $ != null; $ = parent($))   if (iz.methodDeclaration($))      return az.methodDeclaration($);  return null;")//
+  // TODO Ori Marcovitch
+  @Ignore @Test public void g() {
+    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
-        .gives("return TipperGroup.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
+        .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 }

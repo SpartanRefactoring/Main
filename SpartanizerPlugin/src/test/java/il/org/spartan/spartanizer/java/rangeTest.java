@@ -23,8 +23,8 @@ public class rangeTest {
   }
 
   @Test public void test10() {
-    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
-        .reduce((x, y) -> x + y).get() == 100;
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).stream().map(i2 -> i2).reduce((x, y) -> x + y).get()).reduce((x, y) -> x + y)
+        .get() == 100;
   }
 
   @Test public void test11() {
