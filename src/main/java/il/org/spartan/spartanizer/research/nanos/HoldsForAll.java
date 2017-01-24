@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** * @year 2016
+/** {@link HoldsForAll} Nano Pattern - holds P(c) for all c in C
  * @author Ori Marcovitch
  * @since Jan 22, 2017 */
 public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
