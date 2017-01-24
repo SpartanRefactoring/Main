@@ -6,13 +6,10 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** TODO:  Sharon Kuninin
- *  please add a description 
- @author Sharon Kuninin
+/** TODO: Sharon Kuninin please add a description
+ * @author Sharon Kuninin
  * @author Yarden Lev
- * @since Nov 12, 2016 
- */
-
+ * @since Nov 12, 2016 */
 @SuppressWarnings({ "static-method", "deprecation" })
 public class systemTest {
   @Test public void blockCommentIsRemoved() {
@@ -89,4 +86,3 @@ public class systemTest {
     azzert.that(system.wc(null), is(0));
   }
 }
-

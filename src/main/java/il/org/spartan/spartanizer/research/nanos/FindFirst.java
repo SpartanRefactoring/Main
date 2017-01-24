@@ -13,14 +13,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/**  There are actually few forms of FindFirst<br>
+/** There are actually few forms of FindFirst<br>
  * If none, can return null,some default value or throw. <br>
  * Sometimes returned value is mapped, or a filed of it is extracted. <br>
- * @year 2016 
+ * @year 2016
  * @author Ori Marcovitch
- * @since Jan 8, 2017
- */
-
+ * @since Jan 8, 2017 */
 public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
   private static final String description = "Go Fluent : FindFirst";
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
@@ -78,4 +76,3 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     return firstReplacement(tippers);
   }
 }
-

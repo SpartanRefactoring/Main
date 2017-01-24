@@ -15,12 +15,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/** TODO:  Yossi Gil <tt>yossi.gil@gmail.com</tt>
- please add a description 
- @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2017-01-01 
- */
-
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-01-01 */
 @RunWith(Parameterized.class)
 public class ScopeSizeTest extends MetaFixture {
   static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";

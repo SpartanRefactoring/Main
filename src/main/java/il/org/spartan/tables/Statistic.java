@@ -2,12 +2,9 @@ package il.org.spartan.tables;
 
 import il.org.spartan.statistics.*;
 
-/** TODO:  Yossi Gil <tt>yossi.gil@gmail.com</tt>
- please add a description 
- @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-26 
- */
-
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2016-12-26 */
 public enum Statistic {
   N {
     @Override public double of(final RealStatistics ¢) {

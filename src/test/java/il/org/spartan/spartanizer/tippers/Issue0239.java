@@ -16,11 +16,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/**  * @year 2016 
- @author Matteo Orru'
- * @since Jan 6, 2017
- */
-
+/** * @year 2016
+ * @author Matteo Orru'
+ * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public class Issue0239 {
   @Test public void a$01() {
@@ -110,4 +108,3 @@ public class Issue0239 {
     assert $VariableDeclarationFragementAndStatement.removalSaving(f) > 0;
   }
 }
-

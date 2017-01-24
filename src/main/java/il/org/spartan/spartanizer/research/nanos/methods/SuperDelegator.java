@@ -11,12 +11,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class SuperDelegator extends Delegator {
   private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
@@ -40,4 +37,3 @@ public class SuperDelegator extends Delegator {
         && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.superMethodDeclaration(s))));
   }
 }
-

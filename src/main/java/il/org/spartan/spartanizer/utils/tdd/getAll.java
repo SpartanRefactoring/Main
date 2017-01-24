@@ -10,18 +10,15 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO:  Ori Marcovitch
- *  please add a description 
- @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
  * @author Kfir Marx
  * @author Omri Ben- Shmuel
  * @author Ward Mattar
  * @author Vivian Shehadeh
- * @since Oct 31, 2016 
- */
-
+ * @since Oct 31, 2016 */
 public enum getAll {
   ;
   /** Get all the parameters that the method invocation depends on

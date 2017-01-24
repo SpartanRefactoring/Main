@@ -11,12 +11,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO:  Yossi Gil
- please add a description 
- @author Yossi Gil
- * @since 2015-07-17 
- */
-
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
+ * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class precedenceTest {
@@ -182,4 +179,3 @@ public final class precedenceTest {
     azzert.that(precedence.of(e("a^b")), is(10));
   }
 }
-

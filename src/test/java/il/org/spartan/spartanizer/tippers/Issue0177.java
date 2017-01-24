@@ -8,13 +8,10 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** TODO:  Alex
- *  please add a description 
- @author Alex
+/** TODO: Alex please add a description
+ * @author Alex
  * @author Dan
- * @since 2016 
- */
-
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0177 {
@@ -356,4 +353,3 @@ public class Issue0177 {
         .gives("a|=b&=a");
   }
 }
-

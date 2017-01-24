@@ -4,12 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO:  Sapir Bismot
- please add a description 
- @author Sapir Bismot
- * @since 2016-11-21 
- */
-
+/** TODO: Sapir Bismot please add a description
+ * @author Sapir Bismot
+ * @since 2016-11-21 */
 @SuppressWarnings("static-method")
 public class Issue0234 {
   @Test public void b$01() {
@@ -33,4 +30,3 @@ public class Issue0234 {
         .gives("int a=5; ++a;");
   }
 }
-

@@ -12,13 +12,10 @@ import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO:  Dan Greenstein
- *  please add a description 
- @author Dan Greenstein
+/** TODO: Dan Greenstein please add a description
+ * @author Dan Greenstein
  * @author Alex Kopzon
- * @since 2016 
- */
-
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "unused", "javadoc" })
 public class EnvironmentTestEngineTest {
@@ -158,4 +155,3 @@ public class EnvironmentTestEngineTest {
     s = new LinkedHashSet<>();
   }
 }
-

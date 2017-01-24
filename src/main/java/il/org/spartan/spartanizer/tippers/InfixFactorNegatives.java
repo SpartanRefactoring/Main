@@ -21,12 +21,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO:  Matteo Orrù
- please add a description 
- @author Matteo Orrù
- * @since 2016 
- */
-
+/** TODO: Matteo Orrù please add a description
+ * @author Matteo Orrù
+ * @since 2016 */
 public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Sorting {
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
@@ -82,4 +79,3 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     };
   }
 }
-

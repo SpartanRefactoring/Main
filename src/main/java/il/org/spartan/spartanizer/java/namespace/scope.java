@@ -12,12 +12,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO:  Yossi Gil
- please add a description 
- @author Yossi Gil
- * @since 2016-12 
- */
-
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
+ * @since 2016-12 */
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
     if (iz.block(¢) || iz.switchStatement(¢))
@@ -84,4 +81,3 @@ public interface scope {
     return getScopeNamespace(¢).has(identifier);
   }
 }
-

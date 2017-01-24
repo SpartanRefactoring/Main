@@ -1,7 +1,6 @@
-/** TODO:  YuvalSimon <yuvaltechnion@gmail.com> please add a description 
- * @author  YuvalSimon <yuvaltechnion@gmail.com>
- * @since Jan 15, 2017
- */
+/** TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
+ * @author YuvalSimon <yuvaltechnion@gmail.com>
+ * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
@@ -206,4 +205,3 @@ public class switchBranch {
     return !statements.isEmpty() && !iz.breakStatement(lisp.first(statements));
   }
 }
-

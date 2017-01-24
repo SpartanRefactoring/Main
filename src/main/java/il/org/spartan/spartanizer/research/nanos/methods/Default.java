@@ -9,12 +9,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description 
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-28 
- */
-
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
@@ -37,4 +34,3 @@ public class Default extends JavadocMarkerNanoPattern {
     return Category.Default;
   }
 }
-

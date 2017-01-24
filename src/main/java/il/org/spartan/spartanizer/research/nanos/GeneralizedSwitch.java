@@ -19,13 +19,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/**  Find if(X == null) return null; <br>
+/** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
- * @year 2016 
+ * @year 2016
  * @author Ori Marcovitch
- * @since Jan 8, 2017
- */
-
+ * @since Jan 8, 2017 */
 public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTipper<N> {
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "Go Fluent: Generalized Switch";
@@ -115,4 +113,3 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return "if(...) $N1($X); else if(...) $N2($X); ... else $Nk($X);";
   }
 }
-

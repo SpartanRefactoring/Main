@@ -1,7 +1,6 @@
-/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
- * @author  Yossi Gil <yossi.gil@gmail.com>
- * @since Nov 26, 2016
- */
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Nov 26, 2016 */
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
@@ -97,4 +96,3 @@ public final class extractSingletStatementTest {
     azzert.isNull(extract.singleStatement(s("a();b();")));
   }
 }
-

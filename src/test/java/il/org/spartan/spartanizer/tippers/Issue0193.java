@@ -5,12 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO:  Dor Ma'ayan
- please add a description 
- @author Dor Ma'ayan
- * @since 2016-09-25 
- */
-
+/** TODO: Dor Ma'ayan please add a description
+ * @author Dor Ma'ayan
+ * @since 2016-09-25 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0193 {
@@ -60,4 +57,3 @@ public class Issue0193 {
         .stays();
   }
 }
-

@@ -10,12 +10,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/**  This is the ?? operator
- * @year 2016 
+/** This is the ?? operator
+ * @year 2016
  * @author Ori Marcovitch
- * @since Jan 8, 2017
- */
-
+ * @since Jan 8, 2017 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
@@ -55,4 +53,3 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return Category.Default;
   }
 }
-

@@ -7,12 +7,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class Cascading {
   public static class Setter extends JavadocMarkerNanoPattern {
     private static final Setter setter = new Setter();
@@ -32,4 +29,3 @@ public class Cascading {
     }
   }
 }
-

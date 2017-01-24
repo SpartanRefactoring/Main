@@ -92,7 +92,8 @@ public class Toolbox {
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(EnhancedForStatement.class, //
-            // TODO: Doron Meshulam - why do we have two similar tippers? Perhaps the bug is here? --yg
+            // TODO: Doron Meshulam - why do we have two similar tippers?
+            // Perhaps the bug is here? --yg
             new EnhancedForRedundantContinue(), //
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //

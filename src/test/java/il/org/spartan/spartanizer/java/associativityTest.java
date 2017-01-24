@@ -5,13 +5,10 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO:  Dor Ma'yan
- *  please add a description 
- @author Dor Ma'yan
+/** TODO: Dor Ma'yan please add a description
+ * @author Dor Ma'yan
  * @author Sapir Bismot
- * @since 16-11-9 *
- */
-
+ * @since 16-11-9 * */
 @SuppressWarnings("static-method")
 public class associativityTest {
   @Test public void test0() {
@@ -62,4 +59,3 @@ public class associativityTest {
     assert !associativity.isLeftToRight(az.expression(wizard.ast("x = y == 8 ? 9 : 6")));
   }
 }
-

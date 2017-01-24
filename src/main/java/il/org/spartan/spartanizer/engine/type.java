@@ -24,14 +24,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO:  Yossi Gil
- *  please add a description 
- @author Yossi Gil
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
  * @author Dor Maayan
  * @author Niv Shalmon
- * @since 2016 
- */
-
+ * @since 2016 */
 public interface type {
   static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");

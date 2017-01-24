@@ -1,7 +1,6 @@
-/** TODO:  orimarco <marcovitch.ori@gmail.com> please add a description 
- * @author  orimarco <marcovitch.ori@gmail.com>
- * @since Dec 19, 2016
- */
+/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
+ * @author orimarco <marcovitch.ori@gmail.com>
+ * @since Dec 19, 2016 */
 package il.org.spartan.spartanizer.ast.navigate;
 
 import org.junit.*;
@@ -22,4 +21,3 @@ public class safeTest {
     assert safe.div(17, 0) == 1;
   }
 }
-

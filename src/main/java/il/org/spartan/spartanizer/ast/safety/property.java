@@ -2,12 +2,9 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO:  Yossi Gil <tt>yossi.gil@gmail.com</tt>
- please add a description 
- @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2016-12-27 
- */
-
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2016-12-27 */
 public enum property {
   ;
   public interface Attached {
@@ -74,4 +71,3 @@ public enum property {
       n.setProperty(key, null);
   }
 }
-
