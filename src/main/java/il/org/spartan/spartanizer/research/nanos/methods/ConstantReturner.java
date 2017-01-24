@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** @nano a method returns some constant
  * @author Ori Marcovitch
  * @since 2016 */
 public class ConstantReturner extends JavadocMarkerNanoPattern {
