@@ -5,7 +5,8 @@ import static il.org.spartan.external.External.Introspector.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 
 /** Simplified version of command line client that uses spartanizer applicator
- * @author Matteo Orru' */
+ * @author Matteo Orru'
+ * @since Oct 26, 2016 */
 final class CommandLineClient extends HeadlessSpartanizer {
   public static void main(final String[] args) {
     new CommandLineClient().go(args);
@@ -18,6 +19,7 @@ final class CommandLineClient extends HeadlessSpartanizer {
     }
     extract(args, this);
     ReportGenerator.generate("metrics");
+    ReportGenerator.generate("methods");
     ReportGenerator.setOutputFolder(outputFolder);
     ReportGenerator.setInputFolder(inputFolder);
     run();
