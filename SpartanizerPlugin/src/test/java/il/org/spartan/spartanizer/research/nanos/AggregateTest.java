@@ -8,8 +8,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** Tests {@link Aggregate}
- * @author Ori Marcovitch
- * @since 2016 */
+ * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore @Test public void a() {
