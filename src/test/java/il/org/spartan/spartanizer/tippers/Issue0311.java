@@ -81,25 +81,25 @@ public class Issue0311 {
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_2a() {
-    trimmingOf("public boolean check(int i) {" + "int p = i;" + "while(p <10) ++p;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i;p <10;) ++p;" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i;while(p <10) ++p;return false;}")
+        .gives("check(int i) {for(int p = i;p <10;) ++p;return false;}")//
         .stays();
   }
 
   @Test public void challenge_while_e_Modifiers_in_initializers_2b() {
-    trimmingOf("public boolean check(int i) {" + "final int p = i;" + "while(p <10) ++i;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(final int p = i;p <10;) ++i;" + "return false;" + "}")//
+    trimmingOf("check(int i) {final int p = i;while(p <10) ++i;return false;}")
+        .gives("check(int i) {for(final int p = i;p <10;) ++i;return false;}")//
         .stays();
   }
 
   @Test public void challenge_while_h() {
     trimmingOf(
-        "int i = 0;while (i <operands.size() - 1)if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)"
+        "int i = 0;while (i <operands.size() - 1)if (operands.get(i).getNodeType() != N.STRING_LITERAL || operands.get(i + 1).getNodeType() != N.STRING_LITERAL)"
             + //
             "++i;else {isChanged = true;final StringLiteral l = x.getAST().newStringLiteral();" + //
             "l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());operands.remove(i);operands.remove(i);operands.add(i, l);}")
                 .gives(
-                    "for (int i = 0;i <operands.size() - 1;)if (operands.get(i).getNodeType() != ASTNode.STRING_LITERAL || operands.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)"
+                    "for (int i = 0;i <operands.size() - 1;)if (operands.get(i).getNodeType() != N.STRING_LITERAL || operands.get(i + 1).getNodeType() != N.STRING_LITERAL)"
                         + //
                         "++i;else {isChanged = true;final StringLiteral l = x.getAST().newStringLiteral();" + //
                         "l.setLiteralValue(((StringLiteral) operands.get(i)).getLiteralValue() + ((StringLiteral) operands.get(i + 1)).getLiteralValue());operands.remove(i);operands.remove(i);operands.add(i, l);}")
@@ -190,68 +190,68 @@ public class Issue0311 {
   }
 
   @Test public void initializers_for_1() {
-    trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "for(;p != null;) {" + "if (dns.contains(p))" + "return true;" + "++i;"
-        + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;++i;" + "}"
-                + "return false;" + "}")
+    trimmingOf("check(final N n) {N p = n;for(;p != null;) {if (dns.contains(p))return true;++i;"
+        + "}return false;}")
+            .gives("check(final N n) {for (N p = n; p != null;) {if (dns.contains(p))return true;++i;}"
+                + "return false;}")
             .stays();
   }
 
   @Test public void initializers_for_2() {
-    trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(;p <10;) ++p;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i;p <10;) ++p;" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i;for(;p <10;) ++p;return false;}")
+        .gives("check(int i) {for(int p = i;p <10;) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_for_3a() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "for(;p <10;) {++p;--a;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p <10;) {++p;--a;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p <10;--a) {++p;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p <10;--a) ++p;" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i, a = 0;for(;p <10;) {++p;--a;}return false;}")
+        .gives("check(int i) {for(int p = i, a = 0;p <10;) {++p;--a;}return false;}")
+        .gives("check(int i) {for(int p = i, a = 0;p <10;--a) {++p;}return false;}")
+        .gives("check(int i) {for(int p = i, a = 0;p <10;--a) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_for_3b() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0;" + "for(;p <10;) {++p;--a;k+=p+a;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i, a = 0;p <10;) {++p;--a;k+=p+a;}" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i, a = 0;for(;p <10;) {++p;--a;k+=p+a;}return false;}")
+        .gives("check(int i) {for(int p = i, a = 0;p <10;) {++p;--a;k+=p+a;}return false;}")//
         .stays();
   }
 
   @Test public void initializers_for_4() {
-    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i; int a = 5; ++a;" + "for(;p <10;) p = p.getParent();" + "return false;" + "}")
+    trimmingOf("check(N i) {N p = i; int a = 5; ++a;for(;p <10;) p = p.getParent();return false;}")
         .stays();
   }
 
   @Test public void initializers_for_5() {
-    trimmingOf("public boolean check(int i) {" + "int p = i;" + "for(int k = 2;p <10;) {++notEntring;++p;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p=i, k = 2;p <10;) {++notEntring;++p;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p=i, k = 2;p <10;++p) {++notEntring;}" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p=i, k = 2;p <10;++p) ++notEntring;" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i;for(int k = 2;p <10;) {++notEntring;++p;}return false;}")
+        .gives("check(int i) {for(int p=i, k = 2;p <10;) {++notEntring;++p;}return false;}")
+        .gives("check(int i) {for(int p=i, k = 2;p <10;++p) {++notEntring;}return false;}")
+        .gives("check(int i) {for(int p=i, k = 2;p <10;++p) ++notEntring;return false;}")//
         .stays();
   }
 
   @Test public void initializers_while_1() {
-    trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while(p != null) {" + "if (dns.contains(p))" + "return true;" + "++i;"
-        + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {for (ASTNode p = n; p != null;) {" + "if (dns.contains(p))" + "return true;++i;" + "}"
-                + "return false;" + "}")
+    trimmingOf("check(final N n) {N p = n;while(p != null) {if (dns.contains(p))return true;++i;"
+        + "}return false;}")
+            .gives("check(final N n) {for (N p = n; p != null;) {if (dns.contains(p))return true;++i;}"
+                + "return false;}")
             .stays();
   }
 
   @Test public void initializers_while_2() {
-    trimmingOf("public boolean check(int i) {" + "int p = i;" + "while(p <10) ++p;" + "return false;" + "}")
-        .gives("public boolean check(int i) {" + "for(int p = i;p <10;) ++p;" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i;while(p <10) ++p;return false;}")
+        .gives("check(int i) {for(int p = i;p <10;) ++p;return false;}")//
         .stays();
   }
 
   // TODO: when fragments will be handled alone, change the test.
   @Test public void initializers_while_3() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}")//
+    trimmingOf("check(int i) {int p = i, a = 0; ++a;while(p <10) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_while_4() {
-    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i; int a = 5; ++a;" + "while(p <10) p = p.getParent();" + "return false;" + "}")
+    trimmingOf("check(N i) {N p = i; int a = 5; ++a;while(p <10) p = p.getParent();return false;}")
         .stays();
   }
 
@@ -263,75 +263,75 @@ public class Issue0311 {
   }
 
   @Test public void t03a() {
-    trimmingOf("private static String toPath(String groupId) {" + "final StringBuilder sb = new StringBuilder(groupId);" + "int length = sb.length();"
-        + "for (int i = 0; i <length; ++i)" + "if (sb.charAt(i) == '.')" + "sb.setCharAt(i, '/');" + "return sb + \"\";")
+    trimmingOf("private static String toPath(String groupId) {final StringBuilder sb = new StringBuilder(groupId);int length = sb.length();"
+        + "for (int i = 0; i <length; ++i)if (sb.charAt(i) == '.')sb.setCharAt(i, '/');return sb + \"\";")
             .gives(
-                "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
-                    + "for (int i = 0; i <length; ++i)" + "if ($.charAt(i) == '.')" + "$.setCharAt(i, '/');" + "return $ + \"\";")
+                "private static String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);int length = $.length();"
+                    + "for (int i = 0; i <length; ++i)if ($.charAt(i) == '.')$.setCharAt(i, '/');return $ + \"\";")
             .gives(
-                "private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);" + "int length = $.length();"
-                    + "for (int ¢ = 0; ¢ <length; ++¢)" + "if ($.charAt(¢) == '.')" + "$.setCharAt(¢, '/');" + "return $ + \"\";")
-            .gives("private static String toPath(String groupId) {" + "final StringBuilder $ = new StringBuilder(groupId);"
-                + "for (int length = $.length(), ¢ = 0; ¢ <length; ++¢)" + "if ($.charAt(¢) == '.')" + "$.setCharAt(¢, '/');" + "return $ + \"\";")
+                "private static String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);int length = $.length();"
+                    + "for (int ¢ = 0; ¢ <length; ++¢)if ($.charAt(¢) == '.')$.setCharAt(¢, '/');return $ + \"\";")
+            .gives("private static String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);"
+                + "for (int length = $.length(), ¢ = 0; ¢ <length; ++¢)if ($.charAt(¢) == '.')$.setCharAt(¢, '/');return $ + \"\";")
             .stays();
   }
 
   @Test public void t03b() {
     trimmingOf(
-        "private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "for (; $ <one;){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
+        "private static String toPath(String groupId) {int $ = 0, one = 1;for (; $ <one;){if ($ == 0)$ = 7; ++$;}return $;}")
             .stays();
   }
 
   @Test public void t03c() {
-    trimmingOf("private static String toPath(String s) {" + "int $ = 0, one = 1;" + "while ($ <one){" + "if ($ == 0)" + "$ = 7; ++$;}" + "return $;}")
-        .gives("private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (;$ <one;++$){" + "if ($ == 0)" + "$ = 7;}" + "return $;}")
-        .gives("private static String toPath(String __) {" + "int $ = 0, one = 1;" + "for (;$ <one;++$)" + "if ($ == 0)" + "$ = 7;" + "return $;}")
+    trimmingOf("private static String toPath(String s) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}return $;}")
+        .gives("private static String toPath(String __) {int $ = 0, one = 1;for (;$ <one;++$){if ($ == 0)$ = 7;}return $;}")
+        .gives("private static String toPath(String __) {int $ = 0, one = 1;for (;$ <one;++$)if ($ == 0)$ = 7;return $;}")
         .stays();
   }
 
   @Test public void t03d() {
-    trimmingOf("private static String toPath(String groupId) {" + "int $ = 0, one = 1;" + "while ($ <one){" + "if ($ == 0)" + "$ = 7; ++$;}"
+    trimmingOf("private static String toPath(String groupId) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}"
         + "return groupId;}")//
-            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ <one;)" + "{if ($ == 0)"
+            .gives("private static String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;){if ($ == 0)"
                 + "$ = 7;++$;}return groupId;}")
-            .gives("private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ <one;++$)" + "{if ($ == 0)"
+            .gives("private static String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;++$){if ($ == 0)"
                 + "$ = 7;}return groupId;}")
             .gives(
-                "private static String toPath(String groupId) {" + "for (int $ = 0, one = 1; $ <one;++$)" + "if ($ == 0)" + "$ = 7;return groupId;}")
+                "private static String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;++$)if ($ == 0)$ = 7;return groupId;}")
             .stays();
   }
 
   @Test public void t04() {
-    trimmingOf("public boolean check(final ASTNode n) {" + "ASTNode p = n;" + "while (p != null) {" + "if (dns.contains(p))" + "continue;"
-        + "p = p.getParent();" + "}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n) {" + "for (ASTNode p = n;p != null;) {" + "if (dns.contains(p))" + "continue;"
-                + "p = p.getParent();}" + "return false;" + "}")
-            .gives("public boolean check(final ASTNode n){for(ASTNode p=n;p!=null;){if(!dns.contains(p))p=p.getParent();}return false;}")
-            .gives("public boolean check(final ASTNode n){for(ASTNode p=n;p!=null;)if(!dns.contains(p))p=p.getParent();return false;}")//
+    trimmingOf("check(final N n) {N p = n;while (p != null) {if (dns.contains(p))continue;"
+        + "p = p.getParent();}return false;}")
+            .gives("check(final N n) {for (N p = n;p != null;) {if (dns.contains(p))continue;"
+                + "p = p.getParent();}return false;}")
+            .gives("check(final N n){for(N p=n;p!=null;){if(!dns.contains(p))p=p.getParent();}return false;}")
+            .gives("check(final N n){for(N p=n;p!=null;)if(!dns.contains(p))p=p.getParent();return false;}")//
             .stays();
   }
 
   @Test public void t05() {
-    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")//
+    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();while ($ instanceof IfStatement)"
+        + "$ = ((IfStatement) $).getElseStatement();return $;}")//
             .stays();
   }
 
   @Test public void t06a() {
-    trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null)f();return false;}")
-        .gives("public boolean check(final ASTNode n) {for(ASTNode p = n; p != null;)f();return false;}")//
+    trimmingOf("check(final N n){N p=n;while(p!=null)f();return false;}")
+        .gives("check(final N n) {for(N p = n; p != null;)f();return false;}")//
         .stays();
   }
 
   @Test public void t06b() {
-    trimmingOf("public boolean check(final ASTNode n){ASTNode p=n;while(p!=null){f();g();h();}return false;}")
-        .gives("public boolean check(final ASTNode n){for(ASTNode p=n;p!=null;){f();g();h();}return false;}")//
+    trimmingOf("check(final N n){N p=n;while(p!=null){f();g();h();}return false;}")
+        .gives("check(final N n){for(N p=n;p!=null;){f();g();h();}return false;}")//
         .stays();
   }
 
   @Test public void t06c() {
-    trimmingOf("public boolean check(int i){int p=i;while(p!=null){++p;--i;h(p);}return false;}")
-        .gives("public boolean check(int i) {for(int p = i; p != null;){++p;--i;h(p);}return false;}")//
+    trimmingOf("check(int i){int p=i;while(p!=null){++p;--i;h(p);}return false;}")
+        .gives("check(int i) {for(int p = i; p != null;){++p;--i;h(p);}return false;}")//
         .stays();
   }
 }
