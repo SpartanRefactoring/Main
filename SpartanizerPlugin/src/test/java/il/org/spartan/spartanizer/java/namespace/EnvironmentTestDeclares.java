@@ -11,13 +11,10 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO:  Dan Greenstein
- *  please add a description 
- @author Dan Greenstein
+/** TODO: Dan Greenstein please add a description
+ * @author Dan Greenstein
  * @author Alex Kopzon
- * @since 2016 
- */
-
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
@@ -100,4 +97,3 @@ public class EnvironmentTestDeclares {
     Environment.declaresDown(makeAST.COMPILATION_UNIT.from(new Document("int x=5;").get()));
   }
 }
-

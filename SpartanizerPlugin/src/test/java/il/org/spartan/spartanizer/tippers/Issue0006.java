@@ -5,12 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO:  Yossi Gil
- please add a description 
- @author Yossi Gil
- * @since 2016 
- */
-
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
+ * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0006 {
@@ -38,4 +35,3 @@ public class Issue0006 {
         .stays();
   }
 }
-

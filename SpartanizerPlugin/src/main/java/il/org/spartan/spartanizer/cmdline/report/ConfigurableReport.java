@@ -14,13 +14,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 
-/**  Configurable Report that uses {@link Listener.S}
- * @year 2016 
+/** Configurable Report that uses {@link Listener.S}
+ * @year 2016
  * @author Yossi Gil
  * @author Matteo Orru'
- * @since Nov 14, 2016
- */
-
+ * @since Nov 14, 2016 */
 public interface ConfigurableReport {
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
@@ -232,4 +230,3 @@ public interface ConfigurableReport {
     }
   }
 }
-

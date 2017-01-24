@@ -7,12 +7,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore @Test public void a() {
@@ -74,4 +71,3 @@ public class AggregateTest {
         .stays();
   }
 }
-

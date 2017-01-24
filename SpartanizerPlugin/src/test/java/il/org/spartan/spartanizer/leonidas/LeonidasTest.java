@@ -1,7 +1,6 @@
-/** TODO:  orimarco <marcovitch.ori@gmail.com> please add a description 
- * @author  orimarco <marcovitch.ori@gmail.com>
- * @since Sep 28, 2016
- */
+/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
+ * @author orimarco <marcovitch.ori@gmail.com>
+ * @since Sep 28, 2016 */
 package il.org.spartan.spartanizer.leonidas;
 
 import org.junit.*;
@@ -240,4 +239,3 @@ public class LeonidasTest {
     leonidasSays.tipper("if($X1 == null) $X1 = $X2; return $X1;", "", "").tips("if (instance == null) instance = allTippers(); return instance;");
   }
 }
-

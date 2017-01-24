@@ -13,11 +13,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/**  * @year 2016 
- @author Ori Marcovitch
- * @since Jan 8, 2017
- */
-
+/** * @year 2016
+ * @author Ori Marcovitch
+ * @since Jan 8, 2017 */
 public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
@@ -54,4 +52,3 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
     return firstReplacement(tippers);
   }
 }
-

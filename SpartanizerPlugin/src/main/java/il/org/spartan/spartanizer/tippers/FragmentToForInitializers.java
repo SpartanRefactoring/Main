@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -64,9 +65,8 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
-    final InfixExpression e = (az.infixExpression(extract.core(from.getExpression())));
-    return $ != null ? handleAssignmentCondition($, s)
-        : e != null ? handleInfixCondition(e, s) :  from;
+    final InfixExpression e = az.infixExpression(extract.core(from.getExpression()));
+    return $ != null ? handleAssignmentCondition($, s) : e != null ? handleInfixCondition(e, s) : from;
   }
 
   /** @param t JD

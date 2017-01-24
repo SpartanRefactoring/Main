@@ -9,12 +9,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodDeclaration> implements MethodPatternUtilitiesTrait {
   @Override public final boolean canTip(final MethodDeclaration ¢) {
     final Javadoc $ = javadoc(¢);
@@ -48,4 +45,3 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
     return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }
 }
-

@@ -4,12 +4,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 @SuppressWarnings("static-method")
 public class SuperDelegatorTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
@@ -37,4 +34,3 @@ public class SuperDelegatorTest extends JavadocerTest {
         " @Override void invokeSubscriberMethod(Object event) throws InvocationTargetException {synchronized (this) { super.invokeSubscriberMethod(event); }}");
   }
 }
-

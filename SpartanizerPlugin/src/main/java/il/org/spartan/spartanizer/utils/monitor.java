@@ -8,13 +8,11 @@ import java.util.*;
 
 import il.org.spartan.*;
 
-/**  Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
+/** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
- * @year 2016 
+ * @year 2016
  * @author Yossi Gil
- * @since Nov 13, 2016
- */
-
+ * @since Nov 13, 2016 */
 public enum monitor {
   /** Not clear why we need this */
   LOG_TO_STDOUT {
@@ -192,4 +190,3 @@ public enum monitor {
     return this;
   }
 }
-

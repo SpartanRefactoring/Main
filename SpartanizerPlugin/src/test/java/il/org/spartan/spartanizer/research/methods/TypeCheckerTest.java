@@ -4,12 +4,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description 
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-05 
- */
-
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-05 */
 @SuppressWarnings("static-method")
 public class TypeCheckerTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
@@ -56,4 +53,3 @@ public class TypeCheckerTest extends JavadocerTest {
     assert not("boolean examiner(Object a){a();}");
   }
 }
-

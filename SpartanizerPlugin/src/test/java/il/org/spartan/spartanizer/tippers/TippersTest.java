@@ -1,7 +1,6 @@
-/** TODO:  Yossi Gil <yossi.gil@gmail.com> please add a description 
- * @author  Yossi Gil <yossi.gil@gmail.com>
- * @since Oct 2, 2016
- */
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Oct 2, 2016 */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
@@ -116,4 +115,3 @@ public final class TippersTest {
     azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }
 }
-

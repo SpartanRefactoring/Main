@@ -8,13 +8,10 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO:  Yevgenia Shandalov
- *  please add a description 
- @author Yevgenia Shandalov
+/** TODO: Yevgenia Shandalov please add a description
+ * @author Yevgenia Shandalov
  * @author Osher Hajaj
- * @since 16-11-07 
- */
-
+ * @since 16-11-07 */
 @SuppressWarnings("static-method")
 public class Issue0776 {
   @Test public void checkDoBlock() {
@@ -70,4 +67,3 @@ public class Issue0776 {
         .blockTypes((MethodDeclaration) wizard.ast("public void addName(String name)" + "{try {} catch (IndexOutOfBoundsException e) {}}"))));
   }
 }
-

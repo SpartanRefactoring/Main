@@ -54,7 +54,7 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
       case ASTNode.ENHANCED_FOR_STATEMENT:
         if (!iz.simpleName(initializer) && !iz.literal(initializer))
           return null;
-        EnhancedForStatement enhancedFor = az.enhancedFor(nextStatement);
+        final EnhancedForStatement enhancedFor = az.enhancedFor(nextStatement);
         if (!(az.simpleName(enhancedFor.getExpression()) + "").equals(f.getName() + ""))
           return null;
         break;

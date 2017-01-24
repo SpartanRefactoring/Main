@@ -11,12 +11,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO:  Alex Kopzon
- please add a description 
- @author Alex Kopzon
- * @since 2016-09-23 
- */
-
+/** TODO: Alex Kopzon please add a description
+ * @author Alex Kopzon
+ * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
@@ -87,4 +84,3 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
   }
 }
-

@@ -12,12 +12,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 public class ForEachApplier extends JavadocMarkerNanoPattern {
   private static final List<UserDefinedTipper<Statement>> tippers = new ArrayList<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
@@ -34,4 +31,3 @@ public class ForEachApplier extends JavadocMarkerNanoPattern {
         && anyTips(tippers, onlyOne(statements(¢)));
   }
 }
-

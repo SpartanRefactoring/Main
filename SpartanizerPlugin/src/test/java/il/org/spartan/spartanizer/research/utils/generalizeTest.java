@@ -7,12 +7,9 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-/** TODO:  Ori Marcovitch
- please add a description 
- @author Ori Marcovitch
- * @since 2016 
- */
-
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
+ * @since 2016 */
 @SuppressWarnings("static-method")
 public class generalizeTest {
   @Test public void a() {
@@ -23,4 +20,3 @@ public class generalizeTest {
     azzert.that(generalize.code("x.y"), is("$N0.$N1"));
   }
 }
-

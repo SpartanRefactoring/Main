@@ -4,12 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO:  Tomer Dragucki
- please add a description 
- @author Tomer Dragucki
- * @since 2016 
- */
-
+/** TODO: Tomer Dragucki please add a description
+ * @author Tomer Dragucki
+ * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class issue0352 {
   @Test public void a() {
@@ -67,4 +64,3 @@ public class issue0352 {
         .gives("if (a())   return 0;" + " if (a())   return 1;" + "int b=c(5) + 7;" + "return c(b + b + b);");
   }
 }
-

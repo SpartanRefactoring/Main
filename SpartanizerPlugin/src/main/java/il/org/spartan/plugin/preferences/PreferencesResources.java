@@ -9,12 +9,9 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-/** TODO:  Daniel Mittelman 
- please add a description 
- @author Daniel Mittelman 
- * @since Jan 11, 2017
- */
-
+/** TODO: Daniel Mittelman please add a description
+ * @author Daniel Mittelman
+ * @since Jan 11, 2017 */
 public class PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartanizer plug-in";
