@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @since 2017-01-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc" })
+@Ignore // TODO Doron Meshulam --yg
 public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);
