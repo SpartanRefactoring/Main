@@ -16,10 +16,10 @@ public final class Issue0210 {
         .stays();
   }
 
-  // TODO: remove ignore after solving Issue #1067
-  @Ignore @Test public void issue210_02() {
-    trimmingOf("int zero = 0;\nint result = 8 / zero; ++result;")//
-        .gives("int result = 8 / 0; ++result;")//
+ // @Ignore 
+  @Test public void issue210_02() {
+    trimmingOf("int zero = 0; int result = 8 / zero; ++result;")//
+        .gives("int zero =0, result = 8 / zero; ++result;")//
         .stays();
   }
 
