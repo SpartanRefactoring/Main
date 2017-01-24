@@ -2,7 +2,8 @@ package il.org.spartan.spartanizer.research.util;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since 2016 */
 public class CleanerVisitor extends ASTVisitor {
   @Override public boolean visit(final Javadoc ¢) {

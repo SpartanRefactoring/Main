@@ -4,7 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since 2016 */
 @Ignore // TODO: Ori Marco
 @SuppressWarnings("static-method")

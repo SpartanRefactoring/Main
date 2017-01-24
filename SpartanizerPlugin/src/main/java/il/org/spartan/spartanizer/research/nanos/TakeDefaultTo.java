@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
 public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression> {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {

@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Dor Ma'ayan
+/** TODO: Dor Ma'ayan please add a description
+ * @author Dor Ma'ayan
  * @since 22-11-2016 */
 @SuppressWarnings("static-method")
 public class Issue0308 {

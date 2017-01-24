@@ -1,3 +1,6 @@
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
@@ -13,7 +16,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Collect.*;
+import il.org.spartan.spartanizer.engine.collect.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SearchTest {
@@ -258,7 +261,7 @@ public final class SearchTest {
     assert f != null;
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
-    azzert.that(Collect.usesOf(b).in(d).size(), is(2));
+    azzert.that(collect.usesOf(b).in(d).size(), is(2));
   }
 
   @Test public void delarationAndDoLoopInMethodWithoutTheDo() {
@@ -269,7 +272,7 @@ public final class SearchTest {
     assert f != null;
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
-    azzert.that(Collect.usesOf(b).in(d).size(), is(1));
+    azzert.that(collect.usesOf(b).in(d).size(), is(1));
   }
 
   @Test public void doLoopEmptyBody() {
@@ -308,14 +311,14 @@ public final class SearchTest {
     final Statement s = s("for (int a: as) return a; ");
     final SimpleName a = ((EnhancedForStatement) first(statements((Block) s))).getParameter().getName();
     azzert.that(a, iz("a"));
-    azzert.that(Collect.usesOf(a).in(s).size(), is(2));
+    azzert.that(collect.usesOf(a).in(s).size(), is(2));
   }
 
   @Test public void forEnhancedAsParemeterInMethod() {
     final MethodDeclaration d = d("int f() { for (int a: as) return a;}");
     final SimpleName a = ((EnhancedForStatement) first(statements(d))).getParameter().getName();
     azzert.that(a, iz("a"));
-    azzert.that(Collect.usesOf(a).in(d).size(), is(2));
+    azzert.that(collect.usesOf(a).in(d).size(), is(2));
   }
 
   @Test public void forEnhancedLoop() {
@@ -391,11 +394,11 @@ public final class SearchTest {
   }
 
   @Test public void minusMinus() {
-    azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("n--;")).size(), is(0));
+    azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("n--;")).size(), is(0));
   }
 
   @Test public void minusMinusPre() {
-    azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
+    azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
   }
 
   private int nCount(final String statement) {
@@ -403,15 +406,15 @@ public final class SearchTest {
   }
 
   @Test public void plusPlus() {
-    azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("n++;")).size(), is(0));
+    azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("n++;")).size(), is(0));
   }
 
   @Test public void plusPlusPre() {
-    azzert.that(Collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
+    azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
   }
 
   private Collector searcher() {
-    return Collect.usesOf(n);
+    return collect.usesOf(n);
   }
 
   @Test public void superMethodInocation() {

@@ -17,9 +17,10 @@ import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
+ * @year 2016
  * @author Yossi Gil
  * @author Matteo Orru'
- * @year 2016 */
+ * @since Oct 2, 2016 */
 final class BatchSpartanizer extends FolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";

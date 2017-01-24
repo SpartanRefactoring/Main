@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** see Issue0 #450 for more details This is a unit test for
- * {@link DeclarationInitializerStatementTerminatingScope, @link
+ * {@link FragmentInitializerStatementTerminatingScope, @link
  * DeclarationFragmentInlineIntoNext}
  * @author Sapir Bismot
  * @since 16-11-30 */

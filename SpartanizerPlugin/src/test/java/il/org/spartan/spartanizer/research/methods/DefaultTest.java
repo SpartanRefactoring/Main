@@ -4,7 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** Tests {@link Default}
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-28 */
 @SuppressWarnings("static-method")
 public class DefaultTest extends JavadocerTest {
@@ -29,7 +30,7 @@ public class DefaultTest extends JavadocerTest {
   }
 
   @Test public void e() {
-    assert is("int foo(){return 0L;}");
+    assert is("int foo(){return null;}");
   }
 
   @Test public void f() {

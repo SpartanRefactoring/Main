@@ -16,24 +16,38 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Converts <code>int a=3;return a;</code> into <code>return 3;</code>
+/** convert
+ *
+ * <pre>
+ * int a = 3;
+ * return a;
+ * </pre>
+ *
+ * into
+ *
+ * <pre>
+ * return 3;
+ * </pre>
+ *
  * @author Yossi Gil
- * @since 2015-08-07
- * @DisableSpartan */
-public final class DeclarationInitializerReturnAssignment extends $VariableDeclarationFragementAndStatement//
-    implements TipperCategory.Inlining {
+ * @since 2015-08-07 */
+public final class FragmentInitializerReturn extends $VariableDeclarationFragementAndStatement//
+    implements TipperCategory.Shortcircuit {
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
+    return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
-    final Assignment a = az.assignment(step.expression(az.returnStatement(nextStatement)));
-    if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
+    final ReturnStatement s = az.returnStatement(nextStatement);
+    if (s == null)
       return null;
-    final Expression newReturnValue = copy.of(from(a));
+    final Assignment a = az.assignment(step.expression(s));
+    if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
+      return null;
+    final Expression newReturnValue = make.assignmentAsExpression(a);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;

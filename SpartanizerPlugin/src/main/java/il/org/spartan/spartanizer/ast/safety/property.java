@@ -2,7 +2,8 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-27 */
 public enum property {
   ;

@@ -36,13 +36,13 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
       return null;
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName $ = d.getName();
-    if (in(identifier($), namer.return¢, "¢", "__", "_") || !JohnDoe.property(d))
+    if (in(identifier($), "$", "¢", "__", "_") || !JohnDoe.property(d))
       return null;
     final Statement body = body(s);
-    if (haz.variableDefinition(body) || haz.cent(body) || Collect.usesOf($).in(body).isEmpty())
+    if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = s.getAST().newSimpleName("¢");
-    if (m != null) 
+    if (m != null)
       m.exclude(s);
     return new Tip(description(s), s, getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

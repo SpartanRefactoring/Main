@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public class generalize {
   public static String code(final String code) {
@@ -59,7 +60,7 @@ public class generalize {
       }
 
       @Override public boolean visit(final SimpleName $) {
-        final String name = ((Name) $).getFullyQualifiedName();
+        final String name = $.getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
         r.replace($, ast.newSimpleName(renaming.get(name)), null);

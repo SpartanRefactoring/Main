@@ -6,7 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @author Moshe ELiasof
  * @author Netanel Felcher
  * @author Doron Meshulam
@@ -66,7 +67,7 @@ public enum getAll2 {
       if (iz.public¢(fd)) {
         final String[] field_splitted_to_words = (fd + "").trim().split(" ");
         if (field_splitted_to_words.length >= 1)
-          $.add(field_splitted_to_words[(field_splitted_to_words.length - 1)].replace(";", "").trim());
+          $.add(field_splitted_to_words[field_splitted_to_words.length - 1].replace(";", "").trim());
       }
     return $;
   }

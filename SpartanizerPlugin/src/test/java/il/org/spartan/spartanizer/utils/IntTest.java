@@ -1,3 +1,6 @@
+/** TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
+ * @author YuvalSimon <yuvaltechnion@gmail.com>
+ * @since Nov 13, 2016 */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
