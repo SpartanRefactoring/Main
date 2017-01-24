@@ -90,16 +90,13 @@ public class Issue0311 {
   }
 
   @Test public void h() {
-    trimmingOf(
-        "int i = 0;while (i <p7.size() - 1)if (p7.g(i).t() != N.Y || p7.g(i + 1).t() != N.Y)" + //
-            "++i;else {c = true; G l = x.getAST().newG();" + //
-            "l.u(((G) p7.g(i)).v() + ((G) p7.g(i + 1)).v());p7.v(i);p7.v(i);p7.$(i, l);}")//
-                .gives(
-                    "for (int i = 0;i <p7.size() - 1;)if (p7.g(i).t() != N.Y || p7.g(i + 1).t() != N.Y)"
-                        + //
-                        "++i;else {c = true; G l = x.getAST().newG();" + //
-                        "l.u(((G) p7.g(i)).v() + ((G) p7.g(i + 1)).v());p7.v(i);p7.v(i);p7.$(i, l);}")
-                .stays();
+    trimmingOf("int i = 0;while (i <p7.size() - 1)if (p7.g(i).t() != N.Y || p7.g(i + 1).t() != N.Y)" + //
+        "++i;else {c = true; G l = x.getAST().newG();" + //
+        "l.u(((G) p7.g(i)).v() + ((G) p7.g(i + 1)).v());p7.v(i);p7.v(i);p7.$(i, l);}")//
+            .gives("for (int i = 0;i <p7.size() - 1;)if (p7.g(i).t() != N.Y || p7.g(i + 1).t() != N.Y)" + //
+                "++i;else {c = true; G l = x.getAST().newG();" + //
+                "l.u(((G) p7.g(i)).v() + ((G) p7.g(i + 1)).v());p7.v(i);p7.v(i);p7.$(i, l);}")
+            .stays();
   }
 
   @Test public void i_initialization_expression_1() {
@@ -247,6 +244,7 @@ public class Issue0311 {
         .gives("for(int ¢ = 0;;++¢) (new int[]{1,2,3,4,5})[¢] = 0;")//
         .stays();
   }
+
   @Ignore // TODO: Yossi Gil
   @Test public void t03a() {
     trimmingOf(" S t(S g) { B sb = new B(g);int l = sb.l();for (int i = 0; i <l; ++i)if (sb.t(i) == '.')sb.s(i, '/');return sb + \"\";")
@@ -254,10 +252,12 @@ public class Issue0311 {
         .gives(" S t(S g) { B $ = new B(g);int l = $.l();for (int ¢ = 0; ¢ <l; ++¢)if ($.t(¢) == '.')$.s(¢, '/');return $ + \"\";")
         .gives(" S t(S g) { B $ = new B(g);for (int l = $.l(), ¢ = 0; ¢ <l; ++¢)if ($.t(¢) == '.')$.s(¢, '/');return $ + \"\";").stays();
   }
+
   @Ignore // TODO: Yossi Gil
   @Test public void t03b() {
     trimmingOf(" S t(S g) {int $ = 0, one = 1;for (; $ <one;){if ($ == 0)$ = 7; ++$;}return $;}").stays();
   }
+
   @Ignore // TODO: Yossi Gil
   @Test public void t03c() {
     trimmingOf(" S t(S s) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}return $;}")
