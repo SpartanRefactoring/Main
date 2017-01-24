@@ -17,10 +17,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface namer {
+  String forbidden = "_";
   String anonymous = "__";
-  String current = "¢";
   String return¢ = "$";
-  String[] standardNames = {namer.return¢, namer.anonymous, namer.current};
+  String[] standardNames = {namer.forbidden, namer.return¢, namer.anonymous, namer.current};
 
   @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
     {
@@ -48,6 +48,7 @@ public interface namer {
       add("Vector");
     }
   };
+  String current = "λ";
 
 
   static String[] components(Name ¢) {
