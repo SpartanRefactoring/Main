@@ -47,20 +47,20 @@ public class Issue0311 {
             .stays();
   }
 
-  @Test public void challenge_for_i_initialization_expression_3a() {
+  @Test public void i_initialization_expression_3ax() {
     trimmingOf("boolean b;for (;b=true;)$.append(line).append(ls);")//
         .gives("for(boolean b=true;b;)$.append(line).append(ls);").gives("for(boolean ¢=true;¢;)$.append(line).append(ls);")//
         .stays();
   }
 
-  @Test public void challenge_for_i_initialization_expression_3b() {
+  @Test public void i_initialization_expression_3bd() {
     trimmingOf("boolean b;for (;b=true;)$.append(line).append(ls);")//
         .gives("for(boolean b=true;b;)$.append(line).append(ls);") //
         .gives("for(boolean ¢=true;¢;)$.append(line).append(ls);")//
         .stays();
   }
 
-  @Test public void challenge_for_i_initialization_expression_3c() {
+  @Test public void i_initialization_expression_3c() {
     trimmingOf("boolean b;for (;(b=true);)$.append(line).append(ls);")//
         .gives("for(boolean b=true;b;)$.append(line).append(ls);").gives("for(boolean ¢=true;¢;)$.append(line).append(ls);")//
         .stays();
@@ -82,12 +82,12 @@ public class Issue0311 {
   }
 
   @Test public void e_Modifiers_in_initializers_2a() {
-    trimmingOf("check(int i) {int p = i;while(p <10) ++p;return false;}").gives("check(int i) {for(int p = i;p <10;) ++p;return false;}")//
+    trimmingOf("c(int i) {int p = i;while(p <10) ++p;return false;}").gives("c(int i) {for(int p = i;p <10;) ++p;return false;}")//
         .stays();
   }
 
   @Test public void e_Modifiers_in_initializers_2b() {
-    trimmingOf("check(int i) {final int p = i;while(p <10) ++i;return false;}").gives("check(int i) {for(final int p = i;p <10;) ++i;return false;}")//
+    trimmingOf("c(int i) {final int p = i;while(p <10) ++i;return false;}").gives("c(int i) {for(final int p = i;p <10;) ++i;return false;}")//
         .stays();
   }
 
@@ -166,59 +166,59 @@ public class Issue0311 {
   }
 
   @Test public void initializers_for_1() {
-    trimmingOf("check(final N n) {N p = n;for(;p != null;) {if (dns.contains(p))return true;++i;" + "}return false;}")
-        .gives("check(final N n) {for (N p = n; p != null;) {if (dns.contains(p))return true;++i;}" + "return false;}").stays();
+    trimmingOf("c(final N n) {N p = n;for(;p != null;) {if (dns.contains(p))return true;++i;" + "}return false;}")
+        .gives("c(final N n) {for (N p = n; p != null;) {if (dns.contains(p))return true;++i;}" + "return false;}").stays();
   }
 
   @Test public void initializers_for_2() {
-    trimmingOf("check(int i) {int p = i;for(;p <10;) ++p;return false;}").gives("check(int i) {for(int p = i;p <10;) ++p;return false;}")//
+    trimmingOf("c(int i) {int p = i;for(;p <10;) ++p;return false;}").gives("c(int i) {for(int p = i;p <10;) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_for_3a() {
-    trimmingOf("check(int i) {int p = i, a = 0;for(;p <10;) {++p;--a;}return false;}")
-        .gives("check(int i) {for(int p = i, a = 0;p <10;) {++p;--a;}return false;}")
-        .gives("check(int i) {for(int p = i, a = 0;p <10;--a) {++p;}return false;}")
-        .gives("check(int i) {for(int p = i, a = 0;p <10;--a) ++p;return false;}")//
+    trimmingOf("c(int i) {int p = i, a = 0;for(;p <10;) {++p;--a;}return false;}")
+        .gives("c(int i) {for(int p = i, a = 0;p <10;) {++p;--a;}return false;}")
+        .gives("c(int i) {for(int p = i, a = 0;p <10;--a) {++p;}return false;}")
+        .gives("c(int i) {for(int p = i, a = 0;p <10;--a) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_for_3b() {
-    trimmingOf("check(int i) {int p = i, a = 0;for(;p <10;) {++p;--a;k+=p+a;}return false;}")
-        .gives("check(int i) {for(int p = i, a = 0;p <10;) {++p;--a;k+=p+a;}return false;}")//
+    trimmingOf("c(int i) {int p = i, a = 0;for(;p <10;) {++p;--a;k+=p+a;}return false;}")
+        .gives("c(int i) {for(int p = i, a = 0;p <10;) {++p;--a;k+=p+a;}return false;}")//
         .stays();
   }
 
   @Test public void initializers_for_4() {
-    trimmingOf("check(N i) {N p = i; int a = 5; ++a;for(;p <10;) p = p.getParent();return false;}").stays();
+    trimmingOf("c(N i) {N p = i; int a = 5; ++a;for(;p <10;) p = p.getParent();return false;}").stays();
   }
 
   @Test public void initializers_for_5() {
-    trimmingOf("check(int i) {int p = i;for(int k = 2;p <10;) {++notEntring;++p;}return false;}")
-        .gives("check(int i) {for(int p=i, k = 2;p <10;) {++notEntring;++p;}return false;}")
-        .gives("check(int i) {for(int p=i, k = 2;p <10;++p) {++notEntring;}return false;}")
-        .gives("check(int i) {for(int p=i, k = 2;p <10;++p) ++notEntring;return false;}")//
+    trimmingOf("c(int i) {int p = i;for(int k = 2;p <10;) {++notEntring;++p;}return false;}")
+        .gives("c(int i) {for(int p=i, k = 2;p <10;) {++notEntring;++p;}return false;}")
+        .gives("c(int i) {for(int p=i, k = 2;p <10;++p) {++notEntring;}return false;}")
+        .gives("c(int i) {for(int p=i, k = 2;p <10;++p) ++notEntring;return false;}")//
         .stays();
   }
 
   @Test public void initializers_while_1() {
-    trimmingOf("check(final N n) {N p = n;while(p != null) {if (dns.contains(p))return true;++i;" + "}return false;}")
-        .gives("check(final N n) {for (N p = n; p != null;) {if (dns.contains(p))return true;++i;}" + "return false;}").stays();
+    trimmingOf("c(final N n) {N p = n;while(p != null) {if (dns.contains(p))return true;++i;" + "}return false;}")
+        .gives("c(final N n) {for (N p = n; p != null;) {if (dns.contains(p))return true;++i;}" + "return false;}").stays();
   }
 
   @Test public void initializers_while_2() {
-    trimmingOf("check(int i) {int p = i;while(p <10) ++p;return false;}").gives("check(int i) {for(int p = i;p <10;) ++p;return false;}")//
+    trimmingOf("c(int i) {int p = i;while(p <10) ++p;return false;}").gives("c(int i) {for(int p = i;p <10;) ++p;return false;}")//
         .stays();
   }
 
   // TODO: when fragments will be handled alone, change the test.
   @Test public void initializers_while_3() {
-    trimmingOf("check(int i) {int p = i, a = 0; ++a;while(p <10) ++p;return false;}")//
+    trimmingOf("c(int i) {int p = i, a = 0; ++a;while(p <10) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_while_4() {
-    trimmingOf("check(N i) {N p = i; int a = 5; ++a;while(p <10) p = p.getParent();return false;}").stays();
+    trimmingOf("c(N i) {N p = i; int a = 5; ++a;while(p <10) p = p.getParent();return false;}").stays();
   }
 
   @Test public void initializers_with_array_a() {
@@ -253,41 +253,41 @@ public class Issue0311 {
 
   @Ignore // TODO Yossi Gil
   @Test public void t03a() {
-    trimmingOf("private static String toPath(String groupId) {final StringBuilder sb = new StringBuilder(groupId);int length = sb.length();"
+    trimmingOf("String toPath(String groupId) {final StringBuilder sb = new StringBuilder(groupId);int length = sb.length();"
         + "for (int i = 0; i <length; ++i)if (sb.charAt(i) == '.')sb.setCharAt(i, '/');return sb + \"\";")
-            .gives("private static String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);int length = $.length();"
+            .gives("String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);int length = $.length();"
                 + "for (int i = 0; i <length; ++i)if ($.charAt(i) == '.')$.setCharAt(i, '/');return $ + \"\";")
-            .gives("private static String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);int length = $.length();"
+            .gives("String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);int length = $.length();"
                 + "for (int ¢ = 0; ¢ <length; ++¢)if ($.charAt(¢) == '.')$.setCharAt(¢, '/');return $ + \"\";")
-            .gives("private static String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);"
+            .gives("String toPath(String groupId) {final StringBuilder $ = new StringBuilder(groupId);"
                 + "for (int length = $.length(), ¢ = 0; ¢ <length; ++¢)if ($.charAt(¢) == '.')$.setCharAt(¢, '/');return $ + \"\";")
             .stays();
   }
 
   @Ignore // TODO Yossi Gil
   @Test public void t03b() {
-    trimmingOf("private static String toPath(String groupId) {int $ = 0, one = 1;for (; $ <one;){if ($ == 0)$ = 7; ++$;}return $;}").stays();
+    trimmingOf("String toPath(String groupId) {int $ = 0, one = 1;for (; $ <one;){if ($ == 0)$ = 7; ++$;}return $;}").stays();
   }
 
   @Ignore // TODO Yossi Gil
   @Test public void t03c() {
-    trimmingOf("private static String toPath(String s) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}return $;}")
-        .gives("private static String toPath(String __) {int $ = 0, one = 1;for (;$ <one;++$){if ($ == 0)$ = 7;}return $;}")
-        .gives("private static String toPath(String __) {int $ = 0, one = 1;for (;$ <one;++$)if ($ == 0)$ = 7;return $;}").stays();
+    trimmingOf("String toPath(String s) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}return $;}")
+        .gives("String toPath(String __) {int $ = 0, one = 1;for (;$ <one;++$){if ($ == 0)$ = 7;}return $;}")
+        .gives("String toPath(String __) {int $ = 0, one = 1;for (;$ <one;++$)if ($ == 0)$ = 7;return $;}").stays();
   }
 
   @Test public void t03d() {
-    trimmingOf("private static String toPath(String groupId) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}" + "return groupId;}")//
-        .gives("private static String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;){if ($ == 0)" + "$ = 7;++$;}return groupId;}")
-        .gives("private static String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;++$){if ($ == 0)" + "$ = 7;}return groupId;}")
-        .gives("private static String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;++$)if ($ == 0)$ = 7;return groupId;}").stays();
+    trimmingOf("String toPath(String groupId) {int $ = 0, one = 1;while ($ <one){if ($ == 0)$ = 7; ++$;}" + "return groupId;}")//
+        .gives("String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;){if ($ == 0)" + "$ = 7;++$;}return groupId;}")
+        .gives("String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;++$){if ($ == 0)" + "$ = 7;}return groupId;}")
+        .gives("String toPath(String groupId) {for (int $ = 0, one = 1; $ <one;++$)if ($ == 0)$ = 7;return groupId;}").stays();
   }
 
   @Test public void t04() {
-    trimmingOf("check(final N n) {N p = n;while (p != null) {if (dns.contains(p))continue;" + "p = p.getParent();}return false;}")
-        .gives("check(final N n) {for (N p = n;p != null;) {if (dns.contains(p))continue;" + "p = p.getParent();}return false;}")
-        .gives("check(final N n){for(N p=n;p!=null;){if(!dns.contains(p))p=p.getParent();}return false;}")
-        .gives("check(final N n){for(N p=n;p!=null;)if(!dns.contains(p))p=p.getParent();return false;}")//
+    trimmingOf("c(final N n) {N p = n;while (p != null) {if (dns.contains(p))continue;" + "p = p.getParent();}return false;}")
+        .gives("c(final N n) {for (N p = n;p != null;) {if (dns.contains(p))continue;" + "p = p.getParent();}return false;}")
+        .gives("c(final N n){for(N p=n;p!=null;){if(!dns.contains(p))p=p.getParent();}return false;}")
+        .gives("c(final N n){for(N p=n;p!=null;)if(!dns.contains(p))p=p.getParent();return false;}")//
         .stays();
   }
 
@@ -298,19 +298,19 @@ public class Issue0311 {
   }
 
   @Test public void t06a() {
-    trimmingOf("check(final N n){N p=n;while(p!=null)f();return false;}").gives("check(final N n) {for(N p = n; p != null;)f();return false;}")//
+    trimmingOf("c(final N n){N p=n;while(p!=null)f();return false;}").gives("c(final N n) {for(N p = n; p != null;)f();return false;}")//
         .stays();
   }
 
   @Test public void t06b() {
-    trimmingOf("check(final N n){N p=n;while(p!=null){f();g();h();}return false;}")
-        .gives("check(final N n){for(N p=n;p!=null;){f();g();h();}return false;}")//
+    trimmingOf("c(final N n){N p=n;while(p!=null){f();g();h();}return false;}")
+        .gives("c(final N n){for(N p=n;p!=null;){f();g();h();}return false;}")//
         .stays();
   }
 
   @Test public void t06c() {
-    trimmingOf("check(int i){int p=i;while(p!=null){++p;--i;h(p);}return false;}")
-        .gives("check(int i){for(int p = i; p != null;){++p;--i;h(p);}return false;}")//
+    trimmingOf("c(int i){int p=i;while(p!=null){++p;--i;h(p);}return false;}")
+        .gives("c(int i){for(int p = i; p != null;){++p;--i;h(p);}return false;}")//
         .stays();
   }
 }
