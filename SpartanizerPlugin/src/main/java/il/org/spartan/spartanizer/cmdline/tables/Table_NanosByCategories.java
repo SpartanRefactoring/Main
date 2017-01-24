@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** A class which generates a table of all Nano Patterns gathered by categories.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
 public class Table_NanosByCategories {
