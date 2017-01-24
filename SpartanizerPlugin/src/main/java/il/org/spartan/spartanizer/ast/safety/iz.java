@@ -61,7 +61,7 @@ public interface iz {
   }
 
   int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
-  List<String> defaultValues = Arrays.asList("null", "0", "false");
+  List<String> defaultValues = Arrays.asList("null", "0", "false", "0.", "0L");
 
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
