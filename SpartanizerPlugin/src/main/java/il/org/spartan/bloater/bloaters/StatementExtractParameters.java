@@ -48,7 +48,6 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final ITypeBinding b = $.resolveTypeBinding();
     if (b == null)
       return null;
-    Type t;
     final CompilationUnit u = az.compilationUnit(s.getRoot());
     if (u == null)
       return null;
@@ -58,7 +57,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       return null;
     ir.setUseContextToFilterImplicitImports(true); // solves many issues
     ir.setFilterImplicitImports(true); // along with this of course
-    t = ir.addImport(b, s.getAST());
+    final Type t = ir.addImport(b, s.getAST());
     return t == null || $ instanceof Assignment ? // TODO Ori Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
@@ -113,11 +112,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           case ASTNode.ANONYMOUS_CLASS_DECLARATION:
           case ASTNode.BLOCK:
           case ASTNode.DO_STATEMENT:
+          case ASTNode.LAMBDA_EXPRESSION:
           case ASTNode.SUPER_CONSTRUCTOR_INVOCATION:
           case ASTNode.TYPE_DECLARATION_STATEMENT:
           case ASTNode.VARIABLE_DECLARATION_STATEMENT:
           case ASTNode.WHILE_STATEMENT:
-          case ASTNode.LAMBDA_EXPRESSION:
             return false;
           case ASTNode.ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;

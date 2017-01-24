@@ -4,7 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-22 */
 @SuppressWarnings("static-method")
 public class AdjusterTest extends JavadocerTest {

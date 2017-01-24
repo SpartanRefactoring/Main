@@ -1,12 +1,25 @@
 package il.org.spartan.spartanizer.tipping;
 
+import static il.org.spartan.lisp.*;
 import static java.lang.reflect.Modifier.*;
 
 import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -19,6 +32,32 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
     implements TipperCategory {
+  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
+   * fragments which are not live in the containing
+   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
+   * containing node is eliminated as well.
+   * @param f
+   * @param r
+   * @param g */
+  public static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
+    if (live.isEmpty()) {
+      r.remove(parent, g);
+      return;
+    }
+    final VariableDeclarationStatement newParent = copy.of(parent);
+    fragments(newParent).clear();
+    fragments(newParent).addAll(live);
+    r.replace(parent, newParent, g);
+  }
+
+  protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(copy.of(brother)));
+    return $;
+  }
+
   private Class<N> myOperandsClass;
 
   /** Determine whether the parameter is "eligible" for application of this
@@ -101,5 +140,33 @@ public abstract class Tipper<N extends ASTNode> //
 
   @Override public int hashCode() {
     return super.hashCode();
+  }
+
+  public static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+    if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
+      return false;
+    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    if (iz.methodInvocation(x.getExpression())) {
+      final Expression $ = core(expression(x.getExpression()));
+      return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
+    }
+    if (!iz.fieldAccess(x.getExpression()))
+      return false;
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
+    return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
+  }
+
+  public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
+    final List<Expression> $ = hop.operands(from);
+    // TODO Raviv Rachmiel: use extract.core
+    $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
+      final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
+      final SimpleName var = az.simpleName(left(a));
+      fragments(s).stream().filter(¢ -> (name(¢) + "").equals(var + "")).forEach(¢ -> {
+        ¢.setInitializer(copy.of(right(a)));
+        $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
+      });
+    });
+    return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
 }

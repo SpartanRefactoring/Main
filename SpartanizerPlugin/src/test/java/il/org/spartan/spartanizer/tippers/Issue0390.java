@@ -7,7 +7,8 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** @author Alex Kopzon
+/** TODO: Alex Kopzon please add a description
+ * @author Alex Kopzon
  * @since 2016 */
 @SuppressWarnings("static-method")
 public class Issue0390 {

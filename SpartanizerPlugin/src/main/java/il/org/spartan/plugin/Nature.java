@@ -7,7 +7,8 @@ import org.eclipse.core.runtime.*;
 
 import il.org.spartan.spartanizer.java.*;
 
-/** @author Artium Nihamkin
+/** TODO: Artium Nihamkin please add a description
+ * @author Artium Nihamkin
  * @since 2013/07/01 */
 public final class Nature implements IProjectNature {
   /** ID of this project nature */

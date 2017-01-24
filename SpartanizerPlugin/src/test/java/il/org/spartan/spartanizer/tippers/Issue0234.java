@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Sapir Bismot
+/** TODO: Sapir Bismot please add a description
+ * @author Sapir Bismot
  * @since 2016-11-21 */
 @SuppressWarnings("static-method")
 public class Issue0234 {
@@ -20,7 +21,7 @@ public class Issue0234 {
 
   @Test public void b$03() {
     trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
-        .gives("int a;");
+        .gives("");
   }
 
   @Test public void b$04() {

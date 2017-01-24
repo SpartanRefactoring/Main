@@ -70,5 +70,4 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(extract.modifiers($));
   }
-
 }

@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Unit test for {@link DeclarationInitializerStatementTerminatingScope} for
- * the case of inlining into the expression of an enhanced for
+/** Unit test for {@link FragmentInitializerStatementTerminatingScope} for the
+ * case of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -31,7 +31,7 @@ public class Issue0295 {
   final EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
   final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
-  final DeclarationInitializerStatementTerminatingScope tipper = new DeclarationInitializerStatementTerminatingScope();
+  final FragmentInitializerStatementTerminatingScope tipper = new FragmentInitializerStatementTerminatingScope();
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
 
   /** Correct way of trimming does not change */

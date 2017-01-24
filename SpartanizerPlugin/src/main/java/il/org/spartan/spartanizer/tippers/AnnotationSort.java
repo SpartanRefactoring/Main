@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author kobybs
+/** TODO: kobybs please add a description
+ * @author kobybs
  * @author Dan Abramovich
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
@@ -89,5 +90,4 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
   }
-
 }

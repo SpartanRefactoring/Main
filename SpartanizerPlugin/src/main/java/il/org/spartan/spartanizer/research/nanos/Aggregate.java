@@ -11,8 +11,9 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** @nano all patterns of reducing a collection into one element
+ * @author Ori Marcovitch
+ * @since Jan 8, 2017 */
 public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   private static final NanoPatternTipper<EnhancedForStatement> rival = new Select();
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
@@ -38,7 +39,8 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   };
 
   @Override public boolean canTip(final EnhancedForStatement x) {
-    return anyTips(tippers, x) && rival.cantTip(x);
+    return anyTips(tippers, x)//
+        && rival.cantTip(x);
   }
 
   @Override public Tip pattern(final EnhancedForStatement x) {

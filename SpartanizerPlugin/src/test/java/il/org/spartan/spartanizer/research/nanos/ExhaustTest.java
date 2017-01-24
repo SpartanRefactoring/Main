@@ -7,15 +7,15 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
-@Ignore // TODO: Ori Marco
 @SuppressWarnings("static-method")
 public class ExhaustTest {
   @Test public void a() {
     trimmingOf("while (keyReferenceQueue.poll() != null) {}")//
         .using(WhileStatement.class, new Exhaust())//
-        .gives("exhaust(()->keyReferenceQueue.poll());")//
+        .gives("exhaust(()->keyReferenceQueue.poll()!=null);")//
         .stays();
   }
 

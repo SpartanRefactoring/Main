@@ -71,7 +71,7 @@ public final class Version250 {
   @Test public void issue070_09() {
     trimmingOf("(double) 2. * (double)5")//
         .gives("(double)5 * (double)2.")//
-        .gives("1. * 5  * 1. * 2.")//
+        .gives("1. * 5 * 1. * 2.")//
         .gives("10.0");
   }
 
@@ -173,117 +173,114 @@ public final class Version250 {
   }
 
   @Test public void issue085_86a() {
-    trimmingOf("if(true){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}")//
+    trimmingOf("if(true){ x(); } else{ y(); }")//
         .gives("{x();}")//
         .gives("x();");
   }
 
   @Test public void issue085_86b() {
-    trimmingOf("if(false){   \n" + "x(); }   \n" + "else{   \n" + "y();   \n" + "}")//
+    trimmingOf("if(false){ x(); } else{ y(); }")//
         .gives("{y();}")//
         .gives("y();");
   }
 
   @Test public void issue085_86c() {
-    trimmingOf("if(false)   \n" + "x();    \n" + "else   \n" + "y();   \n")//
+    trimmingOf("if(false) x(); else y(); ")//
         .gives("y();");
   }
 
   @Test public void issue085_86d() {
-    trimmingOf("if(false){   \n" + "x(); }   \n" + "else{   \n" + "if(false) a();   \n" + "else b();" + "}")//
+    trimmingOf("if(false){ x(); } else{ if(false) a(); else b();}")//
         .gives("{b();}")//
         .gives("b();");
   }
 
   @Test public void issue085_86e() {
-    trimmingOf("if(false){   \n" + "x(); }   \n" + "else{   \n" + "if(true) a();   \n" + "else b();" + "}")//
+    trimmingOf("if(false){ x(); } else{ if(true) a(); else b();}")//
         .gives("{a();}")//
         .gives("a();");
   }
 
   @Test public void issue085_86f() {
-    trimmingOf("if(true){   \n" + "if(true) a();   \n" + "else b(); }   \n" + "else{   \n" + "if(false) a();   \n" + "else b();" + "}")
-        .gives("{a();}")//
+    trimmingOf("if(true){ if(true) a(); else b(); } else{ if(false) a(); else b();}").gives("{a();}")//
         .gives("a();");
   }
 
   @Test public void issue085_86g() {
-    trimmingOf("if(z==k)   \n" + "x();    \n" + "else   \n" + "y();   \n")//
+    trimmingOf("if(z==k) x(); else y(); ")//
         .stays();
   }
 
   @Test public void issue085_86h() {
-    trimmingOf("if(5==5)   \n" + "x();    \n" + "else   \n" + "y();   \n")//
+    trimmingOf("if(5==5) x(); else y(); ")//
         .stays();
   }
 
   @Test public void issue085_86i() {
-    trimmingOf("if(z){   \n" + "if(true) a();   \n" + "else b(); }   \n" + "else{   \n" + "if(false) a();   \n" + "else b();" + "}")
-        .gives("if(z)\n" + "if(true) a();   \n" + "else b();\n" + "else\n" + "if(false) a();   \n" + "else b();")
-        .gives("if(z)\n" + "a(); \n" + "else \n" + "b();   \n");
+    trimmingOf("if(z){ if(true) a(); else b(); } else{ if(false) a(); else b();}")//
+        .gives("if(z)if(true) a(); else b();else if(false) a(); else b();").gives("if(z)a(); else b(); ");
   }
 
   @Test public void issue085_86j() {
-    trimmingOf("if(true){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();")//
+    trimmingOf("if(true){ if(true) a(); else b(); } else c();")//
         .gives("{a();}")//
         .gives("a();");
   }
 
   @Test public void issue085_86k() {
-    trimmingOf("if(false){ \n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n" + "else c();")//
+    trimmingOf("if(false){ if(true) a(); else b(); } else c();")//
         .gives("c();");
   }
 
   @Test public void issue085_86l() {
-    trimmingOf("if(false)" + "c();" + "else {\n" + "if(true) \n" + "a(); \n" + "else \n" + "b(); \n" + "} \n")//
+    trimmingOf("if(false)c();else {if(true) a(); else b(); } ")//
         .gives("{a();}")//
         .gives("a();");
   }
 
   @Test public void issue086_1() {
-    trimmingOf("if(false)" + "c();\n" + "int a;")//
-        .gives("{}int a;")//
-        .gives("int a;")//
+    trimmingOf("if(false)c();int a;")//
+        .gives("{}")//
+        .gives("")//
         .stays();
   }
 
   @Test public void issue086_2() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
+    trimmingOf("if(false) {c();b();a();}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void issue086_3() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
+    trimmingOf("if(false) {c();b();a();}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void issue086_4() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
+    trimmingOf("if(false) {c();b();a();}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void issue086_5() {
-    trimmingOf("if(false) {c();\nb();\na();}")//
+    trimmingOf("if(false) {c();b();a();}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void issue199() {
-    trimmingOf("void f() { \n" + "  if (a == b) {\n" + "    f();\n" + "    return;\n" + "  }\n" + "  g();\n" + "} \n")
-        .gives("void f(){if(a==b){f();}else g();}")//
+    trimmingOf("void f() { if (a == b) { f(); return; } g();} ").gives("void f(){if(a==b){f();}else g();}")//
         .gives("void f(){if(a==b)f();else g();}")//
         .stays();
   }
 
   @Test public void issue199a() {
-    trimmingOf("void f() { \n" + "  if (a == b) \n" + "    return;\n" + "  g();\n" + "} \n")//
+    trimmingOf("void f() { if (a == b) return; g();} ")//
         .gives("void f(){if(a==b);else g();}").gives("void f(){if(a!=b) g();}")//
         .stays();
   }
@@ -340,8 +337,8 @@ public final class Version250 {
   }
 
   @Test public void issue243() {
-    trimmingOf("interface x { " + "int a = 0; " + "boolean b = 0; " + "byte ba = 0; " + "short s = 0; " + "long s = 0; " + "long s1 = 2; "
-        + "double d = 0.0; " + "float f = 0.0; " + "float f1 = 1;" + "}")//
+    trimmingOf("interface x { int a = 0; boolean b = 0; byte ba = 0; short s = 0; long s = 0; long s1 = 2; "
+        + "double d = 0.0; float f = 0.0; float f1 = 1;}")//
             .stays();
   }
 

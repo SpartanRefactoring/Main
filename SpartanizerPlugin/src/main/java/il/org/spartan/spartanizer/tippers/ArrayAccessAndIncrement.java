@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
-public final class InliningPrefix extends EagerTipper<ArrayAccess>//
+public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     implements TipperCategory.Inlining {
   @Override public String description(@SuppressWarnings("unused") final ArrayAccess ¢) {
     return "Inline the prefix expression after the access to the array";
@@ -60,7 +60,7 @@ public final class InliningPrefix extends EagerTipper<ArrayAccess>//
           return true;
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
-    Int $ = new Int();
+    final Int $ = new Int();
     final List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
     lst.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
     lst.stream().filter(iz::arrayAccess).forEach(¢ -> ++$.inner);

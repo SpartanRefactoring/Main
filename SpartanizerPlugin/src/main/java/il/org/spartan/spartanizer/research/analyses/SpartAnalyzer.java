@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** @author Ori Marcovitch
+/** A Spartanizer which also applies nano patterns.
+ * @author Ori Marcovitch
  * @since Dec 15, 2016 */
 public class SpartAnalyzer extends InteractiveSpartanizer {
   public SpartAnalyzer() {

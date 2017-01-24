@@ -1,3 +1,6 @@
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;

@@ -1,3 +1,6 @@
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
@@ -16,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }
@@ -24,27 +27,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
   @Override public abstract String description(VariableDeclarationFragment f);
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    return forbiddenSiblings(f).stream().anyMatch(¢ -> Collect.BOTH_SEMANTIC.of(¢).existIn(ns));
-  }
-
-  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
-   * fragments which are not live in the containing
-   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
-   * containing node is eliminated as well.
-   * @param f
-   * @param r
-   * @param g */
-  static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
-    if (live.isEmpty()) {
-      r.remove(parent, g);
-      return;
-    }
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    r.replace(parent, newParent, g);
+    return forbiddenSiblings(f).stream().anyMatch(¢ -> collect.BOTH_SEMANTIC.of(¢).existIn(ns));
   }
 
   static int eliminationSaving(final VariableDeclarationFragment f) {
@@ -77,12 +60,6 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     return $;
   }
 
-  private static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(copy.of(brother)));
-    return $;
-  }
-
   static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final int $ = metrics.size(parent);
@@ -109,7 +86,7 @@ abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextSt
     for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
       if (!found)
         found = ff == f;
-      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+      else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
         return true;
     return false;
   }

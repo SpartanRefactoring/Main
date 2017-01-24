@@ -5,8 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @since 06-Dec-16
- * @author Doron Meshulam */
+/** TODO: Doron Meshulam please add a description
+ * @author Doron Meshulam
+ * @since 06-Dec-16 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0750 {

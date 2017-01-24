@@ -10,7 +10,8 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** @author Shimon Azulay
+/** TODO: Shimon Azulay please add a description
+ * @author Shimon Azulay
  * @author Idan Atias
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" })
