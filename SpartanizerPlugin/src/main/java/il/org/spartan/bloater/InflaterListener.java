@@ -119,11 +119,11 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private void updateListeners() {
     externalListeners.clear();
     for (final Integer i : wheelEvents) {
-      List<Listener> l = new LinkedList<>();
+      final List<Listener> l = new LinkedList<>();
       Collections.addAll(l, text.getListeners(i.intValue()));
       TypedListener tl = null;
       for (final Listener ¢ : l)
-        if (¢ instanceof TypedListener && this.equals(((TypedListener) ¢).getEventListener()))
+        if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
           tl = (TypedListener) ¢;
       if (tl != null)
         l.remove(tl);
