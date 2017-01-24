@@ -44,10 +44,11 @@ public class Issue0188 {
         .stays();
   }
 
-  @Ignore // TODO Yossi Gil
   @Test public void test5() {
-    trimmingOf("try{int y;}catch(E e){int a;return a;}catch(O e){int a;}catch(ExceptionNull e){int a;return a;}finally{return b;}")
-        .gives("try{int y;}catch(E e){return a;}catch(ExceptionNull|E e){int a;return a;}finally{return b;}")//
+    trimmingOf("try{int y;}catch(E e){int a = 3;return a;}catch(O e){int a;}catch(N e){int a;return a;}finally{return b;}")
+        .gives("try{}catch(E e){return 3;}catch(O e){}catch(N e){int a;return a;}finally{return b;}")//
+        .gives("{return b;}")//
+        .gives("return b;")//
         .stays();
   }
 }
