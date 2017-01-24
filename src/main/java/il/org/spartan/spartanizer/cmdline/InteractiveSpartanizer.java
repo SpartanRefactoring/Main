@@ -8,7 +8,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Yossi Gil
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil
  * @author Matteo Orru'
  * @since 2016 */
 public class InteractiveSpartanizer {

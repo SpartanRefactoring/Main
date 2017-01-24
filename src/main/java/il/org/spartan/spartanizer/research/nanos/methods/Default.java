@@ -9,18 +9,15 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** @nano a method which is empty or contains one statement which return a
+ *       default value of some type.
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("return;", "", ""));
-      add(patternTipper("return 0;", "", ""));
-      add(patternTipper("return false;", "", ""));
-      add(patternTipper("return 0L;", "", ""));
-      add(patternTipper("return null;", "", ""));
-      add(patternTipper("return 0.;", "", ""));
+      add(patternTipper("return $D;", "", ""));
     }
   };
 

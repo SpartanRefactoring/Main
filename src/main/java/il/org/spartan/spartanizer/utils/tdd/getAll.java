@@ -10,7 +10,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
  * @author Kfir Marx

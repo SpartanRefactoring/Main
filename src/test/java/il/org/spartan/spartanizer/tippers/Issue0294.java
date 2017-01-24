@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Unit test for {@link DeclarationInitializerStatementTerminatingScope} for
- * the case of inlining into the expression of an enhanced for
+/** Unit test for {@link FragmentInitializerStatementTerminatingScope} for the
+ * case of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

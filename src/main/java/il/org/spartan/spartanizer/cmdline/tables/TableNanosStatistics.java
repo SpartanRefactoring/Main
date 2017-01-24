@@ -18,7 +18,8 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
 public class TableNanosStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
@@ -37,19 +38,14 @@ public class TableNanosStatistics extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    //TODO Ori Marco
-    pWriter = new Table(outputFileName());
-  }
-
-  private static String outputFileName() {
-    return TableNanosStatistics.class.getSimpleName();
+    pWriter = new Table(TableNanosStatistics.class);
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
+    System.err.println("Your output is in: " + Table.temporariesFolder + pWriter.name);
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

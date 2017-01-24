@@ -15,14 +15,14 @@ public class Issue1012 {
   }
 
   @Test public void b() {
-    trimmingOf("int a; int b; f();")//
-        .gives("int a, b; f();");
+    trimmingOf("int a; int b; f(a, b);")//
+        .gives("int a, b; f(a, b);");
   }
 
   @Test public void c() {
-    trimmingOf("int a; int b = 1; int c; f(); g();")//
-        .gives("int a, b = 1; int c; f(); g();")//
-        .gives("int a, b = 1, c; f(); g();");
+    trimmingOf("int a; int b = 1; int c; f(a,b); g(d,c);")//
+        .gives("int a, b = 1; int c; f(a,b); g(d,c);")//
+        .gives("int a, b = 1, c; f(a,b); g(d,c);");
   }
 
   @Test public void d() {

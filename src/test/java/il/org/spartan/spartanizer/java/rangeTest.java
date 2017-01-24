@@ -7,12 +7,13 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Dor Ma'ayan
+/** TODO: Dor Ma'ayan please add a description
+ * @author Dor Ma'ayan
  * @since 25-11-2016 */
 @SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
-    Int s = new Int();
+    final Int s = new Int();
     range.to(5).forEach(i -> ++s.inner);
     assert s.inner == 5;
   }
@@ -22,19 +23,13 @@ public class rangeTest {
   }
 
   @Test public void test10() {
-    int sum = 0;
-    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
-      for (final Integer i2 : range.to(10).step(2))
-        sum += i2;
-    assert sum == 100;
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
+        .reduce((x, y) -> x + y).get() == 100;
   }
 
   @Test public void test11() {
-    int sum = 0;
-    for (@SuppressWarnings("unused") final Integer i1 : range.to(10).step(2))
-      for (final Integer i2 : range.to(10).step(2).inclusive())
-        sum += i2;
-    assert sum == 150;
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).inclusive().stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
+        .reduce((x, y) -> x + y).get() == 150;
   }
 
   @Test public void test2() {
@@ -42,10 +37,7 @@ public class rangeTest {
   }
 
   @Test public void test3() {
-    int counter = 0;
-    for (@SuppressWarnings("unused") final Integer i : range.to(5))
-      ++counter;
-    assert counter == 5;
+    assert range.to(5).stream().count() == 5;
   }
 
   @Test public void test4() {

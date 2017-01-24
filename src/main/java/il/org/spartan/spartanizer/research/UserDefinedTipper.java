@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since 2016 */
 import org.eclipse.jdt.core.dom.*;
 

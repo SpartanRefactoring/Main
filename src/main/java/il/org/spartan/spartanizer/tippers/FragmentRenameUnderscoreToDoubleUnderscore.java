@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */
-public final class VariableDeclarationRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
+public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends AbstractVariableDeclarationChangeName<N>//
     implements TipperCategory.Annonimization {
   @Override public String description(@SuppressWarnings("unused") final N __) {

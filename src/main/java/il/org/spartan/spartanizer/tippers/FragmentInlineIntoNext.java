@@ -32,27 +32,45 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Ori Marcovitch
  * @since 2016-11-27 */
-public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
+public final class FragmentInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into subsequent statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    if (nextStatement == null || containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+      return null;
+    final Expression initializer = f.getInitializer();
+    if (initializer == null)
+      return null;
+    switch (nextStatement.getNodeType()) {
+      case ASTNode.DO_STATEMENT:
+      case ASTNode.RETURN_STATEMENT:
+      case ASTNode.SYNCHRONIZED_STATEMENT:
+      case ASTNode.TRY_STATEMENT:
+      case ASTNode.WHILE_STATEMENT:
+        return null;
+      case ASTNode.ENHANCED_FOR_STATEMENT:
+        if (!iz.simpleName(initializer) && !iz.literal(initializer))
+          return null;
+        final EnhancedForStatement enhancedFor = az.enhancedFor(nextStatement);
+        if (!(az.simpleName(enhancedFor.getExpression()) + "").equals(f.getName() + ""))
+          return null;
+        break;
+      default:
+        if (containsClassInstanceCreation(nextStatement))
+          return null;
+    }
     final Statement parent = az.statement(f.getParent());
-    if (parent == null || iz.forStatement(parent) || nextStatement == null || iz.forStatement(nextStatement) || iz.enhancedFor(nextStatement)
-        || iz.conditionalExpression(initializer(f)) || cannotInlineInto(nextStatement) || initializer(f) == null
-        || DeclarationInitializerStatementTerminatingScope.isNotAllowedOpOnPrimitive(f, nextStatement)
-        || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
-            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(f.getName() + "") && !iz.simpleName(f.getInitializer())
-            && !iz.literal(f.getInitializer()))
+    if (parent == null || iz.forStatement(parent))
       return null;
-    final SimpleName id = peelIdentifier(nextStatement, identifier(name(f)));
-    if (id == null || anyFurtherUsage(parent, nextStatement, identifier(id)) || leftSide(nextStatement, identifier(id)) || preOrPostfix(id))
+    final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
+    if (n == null || anyFurtherUsage(parent, nextStatement, identifier(n)) || leftSide(nextStatement, identifier(n)) || preOrPostfix(n))
       return null;
-    Expression e = !iz.castExpression(initializer(f)) ? initializer(f) : subject.operand(initializer(f)).parenthesis();
+    Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     if (parent instanceof VariableDeclarationStatement)
-      e = DeclarationInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
+      e = FragmentInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
@@ -71,13 +89,8 @@ public final class DeclarationInlineIntoNext extends ReplaceToNextStatement<Vari
       }
       $.replace(parent, pn, g);
     }
-    $.replace(id, e, g);
+    $.replace(n, e, g);
     return $;
-  }
-
-  private static boolean cannotInlineInto(final Statement nextStatement) {
-    return iz.returnStatement(nextStatement) || iz.whileStatement(nextStatement) || iz.doStatement(nextStatement)
-        || iz.synchronizedStatement(nextStatement) || iz.tryStatement(nextStatement) || containsClassInstanceCreation(nextStatement);
   }
 
   private static boolean preOrPostfix(final SimpleName id) {

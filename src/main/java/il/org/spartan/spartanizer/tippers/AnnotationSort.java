@@ -16,7 +16,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author kobybs
+/** TODO: kobybs please add a description
+ * @author kobybs
  * @author Dan Abramovich
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
@@ -88,29 +89,5 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
-  }
-
-  public static final class ofAnnotation extends AnnotationSort<AnnotationTypeDeclaration> { //
-  }
-
-  public static final class ofAnnotationTypeMember extends AnnotationSort<AnnotationTypeMemberDeclaration> { //
-  }
-
-  public static final class ofEnum extends AnnotationSort<EnumDeclaration> { //
-  }
-
-  public static final class ofEnumConstant extends AnnotationSort<EnumConstantDeclaration> { //
-  }
-
-  public static final class ofField extends AnnotationSort<FieldDeclaration> { //
-  }
-
-  public static final class ofInitializer extends AnnotationSort<Initializer> { //
-  }
-
-  public static final class ofMethod extends AnnotationSort<MethodDeclaration> { //
-  }
-
-  public static final class ofType extends AnnotationSort<TypeDeclaration> { //
   }
 }

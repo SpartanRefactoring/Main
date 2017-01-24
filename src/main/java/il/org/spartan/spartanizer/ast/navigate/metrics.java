@@ -80,17 +80,15 @@ public interface metrics {
   }
 
   static int height(final List<ASTNode> ns) {
-    int $ = 0;
-    for (final ASTNode ¢ : ns)
-      $ = Integer.max($, height(¢));
-    return $;
+    final Int $ = new Int();
+    ns.forEach((¢) -> $.inner = Integer.max($.inner, height(¢)));
+    return $.inner;
   }
 
   static int height(final List<Statement> ss, @SuppressWarnings("unused") final int x) {
-    int $ = 0;
-    for (final Statement ¢ : ss)
-      $ = Integer.max($, height(¢));
-    return $;
+    final Int $ = new Int();
+    ss.forEach((¢) -> $.inner = Integer.max($.inner, height(¢)));
+    return $.inner;
   }
 
   /** @param n JD
