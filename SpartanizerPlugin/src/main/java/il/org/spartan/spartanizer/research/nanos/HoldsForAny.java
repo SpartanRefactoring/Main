@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** {@link HoldsForAny} Nano Pattern - holds P(c) for any c in C
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
 public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
