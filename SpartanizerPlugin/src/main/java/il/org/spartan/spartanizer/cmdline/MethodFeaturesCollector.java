@@ -12,8 +12,9 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Collects boolean features of methods
+ * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Dec 20, 2016 */
 public final class MethodFeaturesCollector extends FolderASTVisitor {
   static {
     clazz = MethodFeaturesCollector.class;
@@ -52,7 +53,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
         .put("empty", extract.statements(¢).isEmpty()) //
         .put("single", extract.statements(¢).size() == 1) //
         .put("double", extract.statements(¢).size() == 1) //
-        .put("side-effects-free", sideEffects.free(¢)) //
+//        .put("side-effects-free", sideEffects.free(¢)) // TODO Matteo (for himself): temporarily commented. It throws a NullPointerException
         .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
         .put("array", type != null && type.isArrayType()) //
         .put("parameterized", type != null && type.isParameterizedType()) //
@@ -89,5 +90,8 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
+//    final String spartanized = new InteractiveSpartanizer().fixedPoint(s);
+//    spartanize(input);
+//    consider(output);
   }
 }
