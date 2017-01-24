@@ -15,20 +15,20 @@ public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
     final VariableDeclarationFragment $ = hop.precidingFragmentToLastExpression(¢);
-    return $ == null || new DeclarationInitializerStatementTerminatingScope().cantTip($);
+    return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
     final VariableDeclarationFragment $ = hop.prevFragmentToLastExpression(¢);
-    return $ == null || new DeclarationInitializerStatementTerminatingScope().cantTip($);
+    return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
-    return extract.fragments(step.body(s)).stream().allMatch(¢ -> !(new DeclarationRedundantInitializer().canTip(¢)));
+    return extract.fragments(step.body(s)).stream().allMatch(¢ -> !new FragmentDeadInitializer().canTip(¢));
   }
 
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
-    return extract.fragments(step.body(s)).stream().allMatch(¢ -> !(new DeclarationRedundantInitializer().canTip(¢)));
+    return extract.fragments(step.body(s)).stream().allMatch(¢ -> !new FragmentDeadInitializer().canTip(¢));
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
@@ -37,10 +37,10 @@ public enum cantTip {
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(¢ -> !(new RemoveRedundantIf().canTip(¢)));
+    return extract.ifStatements(step.body(s)).stream().allMatch(¢ -> !new RemoveRedundantIf().canTip(¢));
   }
 
   public static boolean remvoeRedundantIf(final WhileStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(¢ -> !(new RemoveRedundantIf().canTip(¢)));
+    return extract.ifStatements(step.body(s)).stream().allMatch(¢ -> !new RemoveRedundantIf().canTip(¢));
   }
 }

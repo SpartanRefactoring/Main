@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Stav Namir
+/** TODO: Stav Namir please add a description
+ * @author Stav Namir
  * @since 2016-08-29 */
 @SuppressWarnings("static-method")
 public final class Issue0097 {

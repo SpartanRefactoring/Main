@@ -47,8 +47,7 @@ public final class FixedPointTest {
   }
 
   @Test public void commonPrefixIfBranchesInBlock() {
-    assertConvertsTo("{" + "    if (a) {\n" + "      f();\n" + "      g();\n" + "      ++i;\n" + "    } else {\n" + "      f();\n" + "      g();\n"
-        + "      --i;\n" + "    }" + "}", "   f();\n" + "   g();\n" + "    if (a) \n" + "      ++i;\n" + "    else \n" + "      --i;");
+    assertConvertsTo("{" + " if (a) { f(); g(); ++i; } else { f(); g();\n" + " --i; }" + "}", " f(); g(); if (a)  ++i; else  --i;");
   }
 
   @Test(timeout = 2000) public void desiredSimplificationOfExample() {
@@ -90,16 +89,16 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void issue37() {
-    assertConvertsTo("    int result = mockedType.hashCode();\n" + "    result = 31 * result + types.hashCode();\n" + "    return result;\n",
+    assertConvertsTo(" int result = mockedType.hashCode(); result = 31 * result + types.hashCode(); return result;\n",
         "return 31*mockedType.hashCode()+types.hashCode();");
   }
 
   @Test(timeout = 2000) public void issue37abbreviated() {
-    assertConvertsTo("    int a = 3;\n" + "    a = 31 * a;\n" + "    return a;\n", "return 93;");
+    assertConvertsTo(" int a = 3; a = 31 * a; return a;\n", "return 93;");
   }
 
   @Test public void issue43() {
-    assertConvertsTo("String tipper = Z2;  " + " tipper = tipper.f(A).f(b) + tipper.f(c);   " + "return (tipper + 3);    ",
+    assertConvertsTo("String tipper = Z2; " + " tipper = tipper.f(A).f(b) + tipper.f(c); " + "return (tipper + 3); ",
         "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
@@ -109,7 +108,7 @@ public final class FixedPointTest {
 
   @Test public void shortestIfBranchFirst02() {
     trimmingOf(
-        "void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else  if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")
+        "void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")
             .gives(
                 "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int i = 0;i <s.length();++i) if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd')$-=1; return $;}")
             .gives(
@@ -119,8 +118,8 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst03a() {
-    assertConvertsTo("  if ('a' == s.charAt(i))\n" + "          $ += 2;\n" + "        else if ('d' == s.charAt(i))\n" + "          $ -= 1;\n",
-        "  if (s.charAt(i) == 'a')\n" + "          $ += 2;\n" + "        else if (s.charAt(i) == 'd')\n" + "          --$;\n");
+    assertConvertsTo(" if ('a' == s.charAt(i)) $ += 2; else if ('d' == s.charAt(i)) $ -= 1;\n",
+        " if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd') --$;\n");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst09() {
@@ -133,17 +132,15 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst12() {
-    assertConvertsTo("if (FF() && TT()){    foo1();foo2();}else shorterFoo();", "  if (!FF() || !TT())     shorterFoo();else {foo1();foo2();}");
+    assertConvertsTo("if (FF() && TT()){ foo1();foo2();}else shorterFoo();", " if (!FF() || !TT()) shorterFoo();else {foo1();foo2();}");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst13() {
-    assertConvertsTo("    int a = 0;\n" + "    if (a> 0)\n" + "      return 6;\n" + "    else {\n" + "      int b = 9;\n" + "      b *= b;\n"
-        + "      return b;\n" + "    }\n" + "    ;", "return 0>0?6:81;");
+    assertConvertsTo(" int a = 0; if (a> 0) return 6; else { int b = 9; b *= b;\n" + " return b; } ;", "return 0>0?6:81;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst14() {
-    assertConvertsTo("    int a = 0;\n" + "    if (a> 0) {\n" + "      int b = 9;\n" + "      b *= b;\n" + "      return 6;\n" + "    } else {\n"
-        + "      int a = 5;\n" + "      return b;\n" + "    }", "return 0>0?6:b;");
+    assertConvertsTo(" int a = 0; if (a> 0) { int b = 9; b *= b; return 6; } else {\n" + " int a = 5; return b; }", "return 0>0?6:b;");
   }
 
   @Test(timeout = 2000) public void shortestOperand03() {
@@ -155,7 +152,7 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void shortestOperand07() {
-    assertConvertsTo("int y,o,g,i,s;return ( y + o + s> s + i |  g> 42);", "int y,o,g,i,s;return(g>42|o+s+y>i+s);");
+    assertConvertsTo("int y,o,g,i,s;return ( y + o + s> s + i | g> 42);", "int y,o,g,i,s;return(g>42|o+s+y>i+s);");
   }
 
   @Test(timeout = 2000) public void shortestOperand08() {
@@ -168,77 +165,74 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void shortestOperand35() {
-    assertConvertsTo("return f(a,b,c,d) * moshe; ", "   return moshe * f(a,b,c,d);");
+    assertConvertsTo("return f(a,b,c,d) * moshe; ", " return moshe * f(a,b,c,d);");
   }
 
   @Test(timeout = 2000) public void sortAddition5() {
-    assertSimplifiesTo("1 + 2  + 3 + a <3 -4", "a <-7");
+    assertSimplifiesTo("1 + 2 + 3 + a <3 -4", "a <-7");
   }
 
   @Test(timeout = 2000) public void ternarize01() {
-    assertConvertsTo("String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;else    $ = SPAM;x.y.f($);", "x.y.f(!s.equals(532)?SPAM:s+0xABBA);");
+    assertConvertsTo("String $ = s;if (s.equals(532)==true) $ = s + 0xABBA;else $ = SPAM;x.y.f($);", "x.y.f(!s.equals(532)?SPAM:s+0xABBA);");
   }
 
   @Test(timeout = 2000) public void ternarize02() {
-    assertConvertsTo("String $ = s;if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
+    assertConvertsTo("String $ = s;if (s.equals(532)==true) $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
   }
 
   @Test(timeout = 2000) public void ternarize03() {
-    assertConvertsTo("if (s.equals(532))    return 6;return 9;", " return s.equals(532) ? 6 : 9; ");
+    assertConvertsTo("if (s.equals(532)) return 6;return 9;", " return s.equals(532) ? 6 : 9; ");
   }
 
   @Test(timeout = 2000) public void ternarize04() {
-    assertConvertsTo("  int $ = 0;if (s.equals(532))    $ += 6;else    $ += 9;/*if (s.equals(532))    $ += 6;else    $ += 9;*/   return $;",
+    assertConvertsTo(" int $ = 0;if (s.equals(532)) $ += 6;else $ += 9;/*if (s.equals(532)) $ += 6;else $ += 9;*/ return $;",
         "return (s.equals(532)?6:9);");
   }
 
   @Test(timeout = 2000) public void ternarize06() {
-    assertConvertsTo("String $;$ = s;if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
+    assertConvertsTo("String $;$ = s;if (s.equals(532)==true) $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
   }
 
   @Test public void ternarize07a() {
-    assertConvertsTo("String $;" + "$ = s;   " + "if ($==true)    " + "  $ = s + 0xABBA;   " + "x.y.f($); ", "x.y.f(!s?s:s+0xABBA);");
+    assertConvertsTo("String $;" + "$ = s; " + "if ($==true) " + " $ = s + 0xABBA; " + "x.y.f($); ", "x.y.f(!s?s:s+0xABBA);");
   }
 
   @Test(timeout = 2000) public void ternarize11() {
-    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true)    $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
+    assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true) $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
   }
 
   @Test(timeout = 2000) public void ternarize17() {
-    assertConvertsTo("    int a, b;\n" + "    a = 3;\n" + "    b = 5;\n" + "    if (a == 4)\n" + "      if (b == 3)\n" + "        b = r();\n"
-        + "      else\n" + "        b = a;\n" + "    else if (b == 3)\n" + "      b = r();\n" + "    else\n" + "      b = a;", "int b=5!=3?3:r();");
+    assertConvertsTo(" int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n" + " else b = a; else if (b == 3) b = r(); else b = a;",
+        "int b=5!=3?3:r();");
   }
 
   @Test(timeout = 2000) public void ternarize18() {
-    assertConvertsTo("    String s = X;\n" + "    String $ = s;\n" + "    int a = 0;\n" + "    if (s.equals($))\n" + "      x.y.f(tH3 + $);\n"
-        + "    else\n" + "      x.y.f(h2A+ $ + a + s);", "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
+    assertConvertsTo(" String s = X; String $ = s; int a = 0; if (s.equals($)) x.y.f(tH3 + $);\n" + " else x.y.f(h2A+ $ + a + s);",
+        "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
 
   @Test(timeout = 2000) public void ternarize23() {
-    assertConvertsTo("int a=0;if (s.equals(532))   a+=y(2)+10;else a+=r(3)-6;", "int a= (s.equals(532)?y(2)+10:r(3)-6);");
+    assertConvertsTo("int a=0;if (s.equals(532)) a+=y(2)+10;else a+=r(3)-6;", "int a= (s.equals(532)?y(2)+10:r(3)-6);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {
-    assertConvertsTo("boolean c;if (s.equals(532))    c=false;else c=true;", "boolean c=!s.equals(532);");
+    assertConvertsTo("boolean c;if (s.equals(532)) c=false;else c=true;", "boolean c=!s.equals(532);");
   }
 
   @Test(timeout = 2000) public void ternarize40() {
-    assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4)     while (b == 3)     c = a;else    while (b == 3)     c = a*a;",
+    assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4) while (b == 3) c = a;else while (b == 3) c = a*a;",
         "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
   }
 
   @Test(timeout = 2000) public void ternarize49a() {
     assertConvertsTo(
-        "    int size = 17;\n" + "   if (m.equals(153)==true)\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       sum += ¢;\n"
-            + "     }\n" + "   else\n" + "     for (final Integer ¢ : range.to(size)){\n" + "       S.out.l('f',¢);\n" + "     }",
-        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;\n" + "else " + "  for(final Integer ¢ : range.to(17)) "
-            + "S.out.l('f',¢);");
+        " int size = 17; if (m.equals(153)==true) for (final Integer ¢ : range.to(size)){ sum += ¢;\n"
+            + " } else for (final Integer ¢ : range.to(size)){ S.out.l('f',¢); }",
+        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;else " + " for(final Integer ¢ : range.to(17)) " + "S.out.l('f',¢);");
   }
 
   @Test(timeout = 2000) public void ternarize54() {
-    assertConvertsTo(
-        "if (s == null)\n" + "  return Z2;\n" + "if (!s.contains(delimiter()))\n" + "  return s;\n"
-            + "return s.replaceAll(delimiter(), ABC + delimiter());",
+    assertConvertsTo("if (s == null) return Z2;if (!s.contains(delimiter())) return s;\n" + "return s.replaceAll(delimiter(), ABC + delimiter());",
         "return s==null?Z2:!s.contains(delimiter())?s:s.replaceAll(delimiter(),ABC+delimiter());");
   }
 }

@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** @author Matteo Orru'
+/** TODO: Matteo Orru' please add a description
+ * @author Matteo Orru'
  * @since 2016 */
 public class Spartanizer$Applicator extends Generic$Applicator {
   CSVStatistics spectrumStats;
@@ -239,8 +240,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     return false;
   }
 
-  @SafeVarargs
-  @SuppressWarnings("static-method") public final void selectedNodes(final Class<? extends BodyDeclaration>... ¢) {
+  @SafeVarargs @SuppressWarnings("static-method") public final void selectedNodes(final Class<? extends BodyDeclaration>... ¢) {
     selectedNodeTypes = as.list(¢);
   }
 }

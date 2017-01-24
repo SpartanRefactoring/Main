@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since Dec 6, 2016 */
 @SuppressWarnings("static-method")
 public class Issue0895 {

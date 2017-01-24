@@ -8,8 +8,9 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and
  * other conventions
+ * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Jan 5, 2017 */
 public enum NameGuess {
   CLASS_CONSTANT, //
   CLASS_NAME, //

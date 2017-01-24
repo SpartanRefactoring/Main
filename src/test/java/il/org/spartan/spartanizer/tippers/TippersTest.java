@@ -1,3 +1,6 @@
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Oct 2, 2016 */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
@@ -20,7 +23,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -36,7 +38,7 @@ public final class TippersTest {
     final SimpleName a = p.getName();
     assert a != null;
     azzert.that(a, iz("a"));
-    azzert.that(Collect.usesOf(a).in(m).size(), is(2));
+    azzert.that(collect.usesOf(a).in(m).size(), is(2));
   }
 
   @Test public void inlineExpressionWithSideEffect() {
@@ -61,7 +63,7 @@ public final class TippersTest {
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     azzert.that(sideEffects.free(initializer), is(false));
-    azzert.that(Collect.usesOf(n).in(alternateInitializer).size(), is(2));
+    azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
     azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
   }
 
@@ -91,7 +93,7 @@ public final class TippersTest {
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Tippers.rename(n, n.getAST().newSimpleName(namer.return¢), m, r, null);
+    Tippers.rename(n, n.getAST().newSimpleName("$"), m, r, null);
     r.rewriteAST(d, null).apply(d);
     final String output = Wrap.Method.off(d.get());
     assert output != null;
@@ -106,7 +108,7 @@ public final class TippersTest {
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;
     final SimpleName b = f.getName();
-    azzert.that(Collect.usesOf(b).in(m).size(), is(2));
+    azzert.that(collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     Tippers.rename(b, b.getAST().newSimpleName("c"), m, r, null);
     r.rewriteAST(d, null).apply(d);

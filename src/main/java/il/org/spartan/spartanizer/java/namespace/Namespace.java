@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -189,7 +190,7 @@ public final class Namespace implements Environment {
       @Override public boolean visit(final LambdaExpression x) {
         if (x == root)
           return true;
-        final Namespace $ = spawn(lambda + "");
+        final Namespace $ = spawn(lambda + " ");
         for (final VariableDeclaration ¢ : parameters(x))
           if (iz.singleVariableDeclaration(¢))
             $.put(az.singleVariableDeclaration(¢));
@@ -227,7 +228,7 @@ public final class Namespace implements Environment {
     n.fillScope(s.getFinally());
     final Namespace $ = n.spawn(try¢);
     resources(s).forEach($::put);
-    $.fillScope(step.body(s));
+    $.fillScope(body(s));
     resources(s).forEach($::fillScope);
     return $;
   }
@@ -390,19 +391,14 @@ public final class Namespace implements Environment {
   }
 
   public boolean allowsCurrent() {
-    for (final Namespace ¢ : children)
-      if (!¢.allowsCurrentRecursive())
-        return false;
-    return true;
+    return children.stream().allMatch(¢ -> ¢.allowsCurrentRecursive());
   }
+
   public boolean allowsCurrentRecursive() {
     for (final String key : flat.keySet())
       if (isVariable(key) && !in(key, namer.standardNames))
         return false;
-    for (final Namespace ¢ : children)
-      if (!¢.allowsCurrentRecursive())
-        return false;
-    return true;
+    return children.stream().allMatch(¢ -> ¢.allowsCurrentRecursive());
   }
 
   private static boolean isVariable(final String key) {

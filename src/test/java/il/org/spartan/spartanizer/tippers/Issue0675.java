@@ -8,7 +8,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
-/** @author Aviad Cohen & Noam Yefet
+/** TODO: Aviad Cohen & Noam Yefet please add a description
+ * @author Aviad Cohen & Noam Yefet
  * @since 16-11-1 */
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0675 {

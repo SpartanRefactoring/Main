@@ -72,7 +72,7 @@ public interface Listener {
 
     @Override public void tick(final Object... os) {
       asListener().tick(os);
-      this.forEach(¢ -> ¢.tick(os));
+      forEach(¢ -> ¢.tick(os));
     }
   }
 }

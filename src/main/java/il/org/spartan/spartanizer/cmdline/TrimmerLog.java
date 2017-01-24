@@ -12,8 +12,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Logging stuff
+ * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Sep 20, 2016 */
 public class TrimmerLog {
   private static CSVStatistics output;
   private static int maxVisitations = 30;
@@ -24,8 +25,8 @@ public class TrimmerLog {
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
   private static String fileName;
   static {
-    logToScreen = false;
-    off();
+    // logToScreen = false;
+    // off();
   }
 
   public static void off() {

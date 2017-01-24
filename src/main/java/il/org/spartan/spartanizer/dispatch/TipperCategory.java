@@ -3,13 +3,10 @@ package il.org.spartan.spartanizer.dispatch;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 
 /** Classification of tippers
+ * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Sep 28, 2016 */
 public interface TipperCategory {
-  interface EmptyCycles extends TipperCategory {
-    String toString = "churn";
-  }
-
   String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
@@ -94,6 +91,10 @@ public interface TipperCategory {
     }
   }
 
+  interface EmptyCycles extends TipperCategory {
+    String toString = "churn";
+  }
+
   interface Idiomatic extends TipperCategory {
     String toString = "Change expression to a more familiar structure (often shorter)";
 
@@ -128,10 +129,6 @@ public interface TipperCategory {
   }
 
   interface NOP extends Structural {
-    interface onNumbers extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
-    }
-
     String toString = "Eliminate an operation whose computation does nothing";
 
     @Override default String description() {
@@ -139,11 +136,15 @@ public interface TipperCategory {
     }
 
     interface onBooleans extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on booleans";
+    }
+
+    interface onNumbers extends NOP {
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on numbers";
     }
 
     interface onStrings extends NOP {
-      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing";
+      @SuppressWarnings("hiding") String toString = "Eliminate an operation whose computation does nothing on strings";
     }
   }
 
