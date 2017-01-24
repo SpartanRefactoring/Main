@@ -10,8 +10,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano a method returns some constant
- * @author Ori Marcovitch
- * @since 2016 */
+ * @author Ori Marcovitch */
 public class ConstantReturner extends JavadocMarkerNanoPattern {
   private static final JavadocMarkerNanoPattern rival = new Default();
   private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
