@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Alex Kopzon
+/** TODO: Alex Kopzon please add a description
+ * @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
@@ -48,7 +49,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
 
   public static boolean bodyDeclaresElementsOf(final ASTNode n) {
     final Block $ = az.block(n.getParent());
-    return $ != null && extract.fragments($).stream().anyMatch(¢ -> !Collect.usesOf(¢.getName()).in(n).isEmpty());
+    return $ != null && extract.fragments($).stream().anyMatch(¢ -> !collect.usesOf(¢.getName()).in(n).isEmpty());
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {

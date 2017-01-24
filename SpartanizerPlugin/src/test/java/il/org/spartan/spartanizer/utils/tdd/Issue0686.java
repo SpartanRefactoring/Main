@@ -11,9 +11,8 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-// TODO: ARIEL/ALEXANDER: TODO WARNINGS ON THIS FILE.
-
-/** @author Alexander Kaplan
+/** TODO: Alexander Kaplan please add a description
+ * @author Alexander Kaplan
  * @author Ariel Kolikant
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

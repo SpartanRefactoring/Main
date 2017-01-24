@@ -8,7 +8,8 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** @author Yevgenia Shandalov
+/** TODO: Yevgenia Shandalov please add a description
+ * @author Yevgenia Shandalov
  * @author Osher Hajaj
  * @since 16-11-07 */
 @SuppressWarnings("static-method")

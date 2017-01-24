@@ -9,8 +9,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Ori Marcovitch
- * @year 2016 */
+/** * @year 2016
+ * @author Ori Marcovitch
+ * @since Oct 12, 2016 */
 public final class BlockInlineStatementIntoNext extends CarefulTipper<Block>//
     implements TipperCategory.Inlining {
   private static final UserDefinedTipper<Block> tipper = patternTipper("$X = $X.$N1($A1); $X = $X.$N2($A2);", "$X = $X.$N1($A1).$N2($A2);",

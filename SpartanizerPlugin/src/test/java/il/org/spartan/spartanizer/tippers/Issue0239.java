@@ -16,8 +16,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** @author Matteo Orru'
- * @year 2016 */
+/** * @year 2016
+ * @author Matteo Orru'
+ * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public class Issue0239 {
   @Test public void a$01() {
@@ -98,12 +99,12 @@ public class Issue0239 {
     assert name != null;
     assert f.getInitializer() != null;
     assert !sideEffects.free(f.getInitializer());
-    final List<SimpleName> uses = Collect.usesOf(name).in(nextStatement);
+    final List<SimpleName> uses = collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);
     assert use != null;
     assert !haz.unknownNumberOfEvaluations(use, nextStatement);
-    assert !DeclarationInitializerStatementTerminatingScope.never(name, nextStatement);
+    assert !FragmentInitializerStatementTerminatingScope.never(name, nextStatement);
     assert $VariableDeclarationFragementAndStatement.removalSaving(f) > 0;
   }
 }

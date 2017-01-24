@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Matteo Orrù
+/** TODO: Matteo Orrù please add a description
+ * @author Matteo Orrù
  * @since 2016 */
 public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Sorting {

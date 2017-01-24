@@ -9,8 +9,9 @@ import java.util.*;
  * @see #push(Object...)
  * @see #pop(Object...)
  * @see #empty()
+ * @year 2016
  * @author Yossi Gil
- * @year 2016 */
+ * @since Oct 22, 2016 */
 public class TicksStack {
   public final Stack<Object[]> inner = new Stack<>();
 
