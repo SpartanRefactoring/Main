@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since 2016 */
 public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");

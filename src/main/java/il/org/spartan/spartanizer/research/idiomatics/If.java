@@ -2,7 +2,8 @@ package il.org.spartan.spartanizer.research.idiomatics;
 
 import java.util.function.*;
 
-/** @author Ori Marcovitch
+/** TODO: Ori Marcovitch please add a description
+ * @author Ori Marcovitch
  * @since Dec 6, 2016 */
 public enum If {
   ;

@@ -1,3 +1,6 @@
+/** TODO: Ori Roth <ori.rothh@gmail.com> please add a description
+ * @author Ori Roth <ori.rothh@gmail.com>
+ * @since Dec 14, 2016 */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.lisp.*;
@@ -26,7 +29,7 @@ public class LogToTest {
       return;
     }
     final File[] fs = d.listFiles();
-    Int fc = new Int();
+    final Int fc = new Int();
     Arrays.asList(fs).stream().filter(element -> element.isFile() && element.getName().startsWith("log_spartan")).forEach(element -> ++fc.inner);
     if (fc.inner == 0) {
       System.out.println("First run some tests to create a log file.");

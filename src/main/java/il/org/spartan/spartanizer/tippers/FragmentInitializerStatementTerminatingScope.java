@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert <code>int a=3;b=a;</code> into <code>b = a;</code>
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class DeclarationInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement
-    //
+public final class FragmentInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement //
     implements TipperCategory.Inlining {
   private static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
     return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(ancestor -> iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION));
@@ -46,7 +46,7 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer)
-        || isNotAllowedOpOnPrimitive(f, nextStatement) || isArrayInitWithUnmatchingTypes(f))
+        || Tipper.frobiddenOpOnPrimitive(f, nextStatement) || isArrayInitWithUnmatchingTypes(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
@@ -55,15 +55,15 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     for (final VariableDeclarationFragment ff : fragments(currentStatement))
       if (!found)
         found = ff == f;
-      else if (!Collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+      else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
         return null;
     final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);
-    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !Collect.definitionsOf(n).in(nextStatement).isEmpty())
+    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
-    final List<SimpleName> uses = Collect.usesOf(n).in(nextStatement);
+    final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {
       final SimpleName use = onlyOne(uses);
       if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
@@ -81,20 +81,6 @@ public final class DeclarationInitializerStatementTerminatingScope extends $Vari
     i.inlineInto(newStatement);
     remove(f, $, g);
     return $;
-  }
-
-  static boolean isNotAllowedOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
-    if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
-      return false;
-    final ExpressionStatement x = (ExpressionStatement) nextStatement;
-    if (iz.methodInvocation(x.getExpression())) {
-      final Expression $ = core(expression(x.getExpression()));
-      return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
-    }
-    if (!iz.fieldAccess(x.getExpression()))
-      return false;
-    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
-    return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
   public static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {

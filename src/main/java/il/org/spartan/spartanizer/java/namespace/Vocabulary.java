@@ -6,7 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-18 */
 public class Vocabulary extends HashMap<String, MethodDeclaration> {
   private static final long serialVersionUID = 1L;

@@ -1764,7 +1764,7 @@ public final class Version230 {
   }
 
   @Test public void issue54WhileScopeDoesNotInclude() {
-    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new DeclarationInitializerStatementTerminatingScope());
+    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new FragmentInitializerStatementTerminatingScope());
   }
 
   @Test public void issue62a() {

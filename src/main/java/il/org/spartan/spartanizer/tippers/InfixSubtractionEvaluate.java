@@ -30,9 +30,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
     try {
-      $ = az.throwing.double¢(first(xs));
-      for (final Expression ¢ : rest(xs))
-        $ -= az.throwing.double¢(¢);
+      $ = az.throwing.double¢(first(xs)) - az.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }

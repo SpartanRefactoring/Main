@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** @nano first element in collection, lisp style.
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-20 */
 public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> {
   private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
@@ -29,7 +30,7 @@ public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> 
   }
 
   @Override public Category category() {
-    return Category.Functional;
+    return Category.Iterative;
   }
 
   @Override public String description() {

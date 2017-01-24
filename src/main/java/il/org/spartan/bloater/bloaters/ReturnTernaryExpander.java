@@ -44,6 +44,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
   @Override protected boolean prerequisite(final ReturnStatement $) {
     if ($ == null)
       return false;
+    // TODO: Raviv Rachmiel: use extract.core --yg
     final Expression e = expression($);
     return (iz.block($.getParent()) || iz.switchStatement($.getParent()))
         && (iz.conditionalExpression(e) || iz.parenthesizedExpression(e) && iz.conditionalExpression(expression(az.parenthesizedExpression(e))));
