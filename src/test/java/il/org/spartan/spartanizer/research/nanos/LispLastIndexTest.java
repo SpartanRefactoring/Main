@@ -26,7 +26,7 @@ public class LispLastIndexTest {
   @Test public void c() {
     trimmingOf("li.get(li.size()-1);")//
         .using(InfixExpression.class, new LispLastIndex())//
-        .using(MethodInvocation.class, new LispLastElement())//
+        .using(MethodInvocation.class, new Last())//
         .gives("last(li);")//
         .stays();
   }
