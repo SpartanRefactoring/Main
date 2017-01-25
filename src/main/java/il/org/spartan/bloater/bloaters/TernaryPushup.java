@@ -33,7 +33,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
-    Expression l = extract.core(left(x)), r = extract.core(right(x));
+    final Expression l = extract.core(left(x)), r = extract.core(right(x));
     if (conditionalExpression(r)) {
       final ConditionalExpression $ = az.conditionalExpression(r);
       return subject.pair(subject.pair(l, then($)).to(operator(x)), subject.pair(l, elze($)).to(operator(x))).toCondition(expression($));
@@ -45,7 +45,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
   @Override protected boolean prerequisite(final InfixExpression x) {
     if (x == null)
       return false;
-    Expression $ = extract.core(left(x)), r = extract.core(right(x));
+    final Expression $ = extract.core(left(x)), r = extract.core(right(x));
     return conditionalExpression(r) && !haz.sideEffects(expression(az.conditionalExpression(r)))
         || conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
   }
