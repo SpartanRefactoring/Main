@@ -5,8 +5,10 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** Tests {@link FindFirst} and {@link ForLoop.FindFirst}
- * @author Ori Marcovitch */
+/**  Tests {@link FindFirst} and {@link ForLoop.FindFirst}
+ * @author Ori Marcovitch 
+ * @since Jan 18, 2017
+ */
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
