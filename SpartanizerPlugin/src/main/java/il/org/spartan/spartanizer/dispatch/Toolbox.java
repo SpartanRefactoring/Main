@@ -22,8 +22,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
-  public static void main(String[] args) {
-    Toolbox t = freshCopyOfAllTippers();
+  public static void main(final String[] args) {
+    final Toolbox t = freshCopyOfAllTippers();
     System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
   }
 
