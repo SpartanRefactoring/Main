@@ -12,7 +12,6 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -116,15 +115,6 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
             null)//
-        .add(EnhancedForStatement.class, //
-            new Aggregate(), //
-            new Collect(), //
-            new FindFirst(), //
-            new ForEach(), //
-            new ForEachSuchThat(), //
-            new HoldsForAll(), //
-            new HoldsForAny(), //
-            null) //
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
