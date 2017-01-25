@@ -72,7 +72,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
-    return !collect.usesOf(n).in(condition(s),body(s)).isEmpty();
+    return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -81,17 +81,17 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
-        if (f == null || $ == null || nextStatement == null || exclude == null)
-          return null;
-        final VariableDeclarationStatement vds = parent(f);
-        if (vds == null)
-          return null;
-        final WhileStatement s = az.whileStatement(nextStatement);
-        if (s == null || !fitting(vds, s))
-          return null;
-        exclude.excludeAll(fragments(vds));
-        $.remove(vds, g);
-        $.replace(s, buildForStatement(f, s), g);
-        return $;
-      }
+    if (f == null || $ == null || nextStatement == null || exclude == null)
+      return null;
+    final VariableDeclarationStatement vds = parent(f);
+    if (vds == null)
+      return null;
+    final WhileStatement s = az.whileStatement(nextStatement);
+    if (s == null || !fitting(vds, s))
+      return null;
+    exclude.excludeAll(fragments(vds));
+    $.remove(vds, g);
+    $.replace(s, buildForStatement(f, s), g);
+    return $;
+  }
 }
