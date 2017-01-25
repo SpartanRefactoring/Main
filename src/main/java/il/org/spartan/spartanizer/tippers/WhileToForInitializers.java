@@ -60,7 +60,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     // TODO Dor: use extract.core
-    return iz.infix(from) ? Tipper.handleInfixCondition(copy.of(az.infixExpression(from)), s)
+    return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? FragmentToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
@@ -72,7 +72,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
-    return !collect.usesOf(n).in(condition(s)).isEmpty() || !collect.usesOf(n).in(body(s)).isEmpty();
+    return !collect.usesOf(n).in(condition(s),body(s)).isEmpty();
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -81,19 +81,17 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
       final ExclusionManager exclude) {
-    if (f == null || $ == null || nextStatement == null || exclude == null)
-      return null;
-    final VariableDeclarationStatement vds = parent(f);
-    if (vds == null)
-      return null;
-    final WhileStatement s = az.whileStatement(nextStatement);
-    if (s == null)
-      return null;
-    exclude.excludeAll(fragments(vds));
-    if (!fitting(vds, s))
-      return null;
-    $.remove(vds, g);
-    $.replace(s, buildForStatement(f, s), g);
-    return $;
-  }
+        if (f == null || $ == null || nextStatement == null || exclude == null)
+          return null;
+        final VariableDeclarationStatement vds = parent(f);
+        if (vds == null)
+          return null;
+        final WhileStatement s = az.whileStatement(nextStatement);
+        if (s == null || !fitting(vds, s))
+          return null;
+        exclude.excludeAll(fragments(vds));
+        $.remove(vds, g);
+        $.replace(s, buildForStatement(f, s), g);
+        return $;
+      }
 }
