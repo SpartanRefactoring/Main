@@ -45,8 +45,8 @@ public class FindFirstTest {
         .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 
-  // TODO Ori Marcovitch
-  @Ignore @Test public void g() {
+  @Ignore // TODO: Ori Marcovitch
+  @Test public void g() {
     trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
