@@ -87,11 +87,10 @@ public class HoldsForAnyTest {
         .stays();
   }
 
-  // TODO Ori Marchovitch
   @Ignore @Test public void j() {
     trimmingOf(" for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
-        .gives("return os.stream().anyMatch(¢->¢==(omg?yes:no));")//
         .using(EnhancedForStatement.class, new HoldsForAny())//
+        .gives("return os.stream().anyMatch(¢->¢==(omg?yes:no));")//
         .stays();
   }
 }
