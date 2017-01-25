@@ -54,7 +54,7 @@ public class FindFirstTest {
 
   @Test public void h() {
     trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
-        .withTippers(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
+        .using(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
         .gives(
             "return from(¢).step(($)->$!=null).to(($)->$=parent($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
   }
