@@ -16,10 +16,11 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Generates a table for analyzing loops distribution and nano pattern applied
+ * to loops.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-21 */
-public class Table_Loops extends FolderASTVisitor {
+public class Table_Iteratives extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final InteractiveSpartanizer iSpartanayzer = new InteractiveSpartanizer();
   private static final LoopsStatistics statistics = new LoopsStatistics();
@@ -28,7 +29,7 @@ public class Table_Loops extends FolderASTVisitor {
   private static Table rawWriter;
   private static Table summaryWriter;
   static {
-    clazz = Table_Loops.class;
+    clazz = Table_Iteratives.class;
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
