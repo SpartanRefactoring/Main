@@ -22,6 +22,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
+  public static void main(String[] args) {
+    Toolbox t = freshCopyOfAllTippers();
+    System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
+  }
+
   @SuppressWarnings("rawtypes") private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
     static final long serialVersionUID = 1L;
     {
@@ -85,12 +90,14 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<>()) //
-        .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
+        .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
+        .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(EnhancedForStatement.class, //
             // TODO: Doron Meshulam - why do we have two similar tippers?
             // Perhaps the bug is here? --yg
@@ -98,6 +105,8 @@ public class Toolbox {
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
             null)//
+        .add(ReturnStatement.class, new ReturnLastInMethod(), //
+            new SequencerNotLastInBlock<>()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
@@ -106,9 +115,6 @@ public class Toolbox {
             new ModifierFinalAbstractMethodRedundant(), //
             new ModifierFinalTryResourceRedundant(), //
             null)//
-        .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
@@ -325,9 +331,6 @@ public class Toolbox {
             new FragmentToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
-        .add(VariableDeclarationStatement.class, //
-            new TwoDeclarationsIntoOne(), //
-            null) //
     //
     //
     ;
@@ -437,6 +440,14 @@ public class Toolbox {
     for (final List<?> ¢ : implementation)
       if (¢ != null)
         $ += ¢.size();
+    return $;
+  }
+
+  public int nodesTypeCount() {
+    int $ = 0;
+    for (final List<?> ¢ : implementation)
+      if (¢ != null)
+        $ += 1; 
     return $;
   }
 
