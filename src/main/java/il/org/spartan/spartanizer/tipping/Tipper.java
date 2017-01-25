@@ -156,7 +156,7 @@ public abstract class Tipper<N extends ASTNode> //
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
+  public static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
     // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
