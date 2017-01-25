@@ -4,7 +4,10 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.text.edits.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -61,7 +64,7 @@ public class Table_Iteratives extends FolderASTVisitor {
       final ASTNode n = into.s(spartanize(parent(¢)));
       log(extract.singleStatement(findFirst.statement(n)));
       npStatistics.logMethod(intoMethod(spartanalyze(n)));
-    } catch (@SuppressWarnings("unused") final AssertionError __) {
+    } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
       System.out.print("X");
     }
     return false;
@@ -105,14 +108,17 @@ public class Table_Iteratives extends FolderASTVisitor {
 
   public static void summarize(final String path) {
     initializeWritersIfNeeded();
+    final int enhancedForLoops = statistics.enhancedForLoops();
+    final int totalLoops = statistics.totalLoops();
+    final int definites = statistics.definites();
     rawWriter//
         .col("Project", path)//
-        .col("EnhancedForLoops", statistics.enhancedForLoops())//
+        .col("EnhancedForLoops", enhancedForLoops)//
         .col("ForLoops", statistics.forLoops())//
         .col("WhileLoops", statistics.whileLoops())//
         .col("DoWhileLoops", statistics.doWhileLoops())//
-        .col("Total Loops", statistics.totalLoops())//
-        .col("Definites", statistics.definites())//
+        .col("Total Loops", totalLoops)//
+        .col("Definites", definites)//
         //
         //// .col("Simple Coverage", simpleCoverage())//
         .col("Simple EnhancedForLoops", simpleStatistics.enhancedForLoops())//
@@ -124,21 +130,18 @@ public class Table_Iteratives extends FolderASTVisitor {
     ;
     summaryWriter//
         .col("Project", path)//
-        .col("Coverage", format.decimal(100 * npStatistics.coverage(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))//
-        .col("EnhancedForLoops", statistics.enhancedForLoops())//
-        .col("ForLoops", statistics.forLoops())//
-        .col("WhileLoops", statistics.whileLoops())//
-        .col("DoWhileLoops", statistics.doWhileLoops())//
-        .col("Total Loops", statistics.totalLoops())//
-        .col("Definites", statistics.definites())//
-        //
-        //// .col("Simple Coverage", simpleCoverage())//
-        .col("Simple EnhancedForLoops", simpleStatistics.enhancedForLoops())//
-        .col("Simple ForLoops", simpleStatistics.forLoops())//
-        .col("Simple While Loops", simpleStatistics.whileLoops())//
-        .col("Simple DoWhileLoops", simpleStatistics.doWhileLoops())//
-        .col("Simple Total Loops", simpleStatistics.totalLoops())//
-        .col("Simple Definites", simpleStatistics.definites())//
+        .col("Coverage", coverage())//
+        .col("EnhancedForLoops", fraction(enhancedForLoops, totalLoops))//
+        .col("Simple Loops", fraction(simpleStatistics.totalLoops(), totalLoops))//
+        .col("Definites", fraction(definites, totalLoops))//
+    // //
+    // //// .col("Simple Coverage", simpleCoverage())//
+    // .col("Simple EnhancedForLoops", simpleStatistics.enhancedForLoops())//
+    // .col("Simple ForLoops", simpleStatistics.forLoops())//
+    // .col("Simple While Loops", simpleStatistics.whileLoops())//
+    // .col("Simple DoWhileLoops", simpleStatistics.doWhileLoops())//
+    // .col("Simple Total Loops", simpleStatistics.totalLoops())//
+    // .col("Simple Definites", simpleStatistics.definites())//
     ;
     //
     final HashMap<String, Int> hist = npStatistics.nanoHistogram(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT));
@@ -146,5 +149,13 @@ public class Table_Iteratives extends FolderASTVisitor {
         format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
     hist.keySet().forEach(¢ -> rawWriter.col(¢, hist.get(¢).inner));
     rawWriter.nl();
+  }
+
+  private static double fraction(int enhancedForLoops, int totalLoops) {
+    return format.decimal(100 * safe.div(enhancedForLoops, totalLoops));
+  }
+
+  private static double coverage() {
+    return format.decimal(100 * npStatistics.coverage(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT)));
   }
 }
