@@ -9,11 +9,15 @@ import org.eclipse.jdt.core.dom.*;
  * @author Matteo Orru'
  * @since 2016 */
 public interface FeatureCollector<T> {
+  
   default NamedFunction<ASTNode, Object> m(final String name, final Function<ASTNode, Object> r) {
     return new NamedFunction<>(name, r);
   }
 
   NamedFunction<ASTNode, T>[] functions();
+  
+  NamedFunction<ASTNode, T>[] functions(final String id);
+
 
   @SuppressWarnings("hiding")
   class NamedFunction<ASTNode, T> {
