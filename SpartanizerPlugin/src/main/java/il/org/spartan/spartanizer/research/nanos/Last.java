@@ -10,14 +10,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @nano first element in collection, lisp style.
+/** @nano last element in collection, lisp style.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-20 */
-public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> {
+public final class Last extends NanoPatternTipper<MethodInvocation> {
   private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$X.get(0)", "first($X)", "lisp: first"));
+      add(patternTipper("$X.get($X.size()-1) ", "last($X)", "lisp: last"));
     }
   };
 
@@ -34,7 +34,7 @@ public final class LispFirstElement extends NanoPatternTipper<MethodInvocation> 
   }
 
   @Override public String description() {
-    return "First element in collection";
+    return "Last element in collection";
   }
 
   @Override public String example() {
