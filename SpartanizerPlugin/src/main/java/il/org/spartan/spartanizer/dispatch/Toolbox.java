@@ -447,7 +447,7 @@ public class Toolbox {
     int $ = 0;
     for (final List<?> ¢ : implementation)
       if (¢ != null)
-        $ += 1; 
+        $ += 1;
     return $;
   }
 
