@@ -59,14 +59,12 @@ public class Issue1005 {
         .stays();
   }
 
-  @Ignore // see bug on #996
   @Test public void t11() {
     bloatingOf("int x = ++y;")//
         .gives("int x; x=++y;")//
         .stays();
   }
 
-  @Ignore // see bug on #996
   @Test public void t12() {
     bloatingOf("int x = ++y + 1;")//
         .gives("int x; x=++y + 1;")//
