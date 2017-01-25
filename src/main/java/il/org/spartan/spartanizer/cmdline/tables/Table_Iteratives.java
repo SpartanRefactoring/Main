@@ -8,7 +8,6 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -72,14 +71,14 @@ public class Table_Iteratives extends FolderASTVisitor {
   private static boolean analyze(final ASTNode ¢) {
     // ¢.accept(new CleanerVisitor());
     try {
-      logNode(intoMethod(spartanalyze(into.s(spartanize(parent(¢))))));
+      logNode(intoMethod(spartanalyze(parent(¢))));
     } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
       System.out.print("X");
     }
     return false;
   }
 
-  private static void logNode(final MethodDeclaration ¢) {
+  private static void logNode(final Statement ¢) {
     statistics.logNode(¢);
     if (iz.simpleLoop(¢))
       simpleStatistics.logNode(¢);
@@ -87,16 +86,12 @@ public class Table_Iteratives extends FolderASTVisitor {
       definites.logNode(¢);
   }
 
-  private static MethodDeclaration intoMethod(final String ¢) {
-    return findFirst.methodDeclaration(into.m(¢));
+  private static Statement intoMethod(final String ¢) {
+    return into.s(¢);
   }
 
   private static String spartanalyze(final ASTNode ¢) {
     return spartanalyzer.fixedPoint(Wrap.Statement.on(¢ + ""));
-  }
-
-  private static String spartanize(final ASTNode ¢) {
-    return Wrap.Statement.off(iSpartanayzer.fixedPoint(Wrap.Statement.on(¢ + "")));
   }
 
   @Override protected void done(final String path) {
