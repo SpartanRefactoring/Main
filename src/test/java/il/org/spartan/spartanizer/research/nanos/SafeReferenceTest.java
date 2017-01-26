@@ -54,12 +54,12 @@ public class SafeReferenceTest {
 
   @Test public void respect() {
     trimmingOf("return x ==null ? null : x.field;")//
-        .withTippers(ConditionalExpression.class, //
+        .using(ConditionalExpression.class, //
             new Unless(), //
             new DefaultsTo(), //
             new SafeReference())//
         .gives("return safe(x).get(()->x.field);")//
-        .withTippers(ConditionalExpression.class, //
+        .using(ConditionalExpression.class, //
             new Unless(), //
             new DefaultsTo(), //
             new SafeReference())//

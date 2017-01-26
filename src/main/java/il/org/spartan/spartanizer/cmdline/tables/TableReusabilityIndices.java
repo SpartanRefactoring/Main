@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.omg.Messaging.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -101,8 +102,9 @@ public class TableReusabilityIndices extends FolderASTVisitor {
                 .nl());
         writer.col(category, rindex(ranks(map)));
         System.err.println("Your output is in: " + t.description());
-        addLineToGlobalStatistcs();
       }
+      addLineToGlobalStatistcs();
+      writer.nl();
     }
   }
 

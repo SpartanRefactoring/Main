@@ -106,7 +106,7 @@ public final class TrimmerTestsUtils {
       return this;
     }
 
-    @SafeVarargs public final <N extends ASTNode> Operand withTippers(final Class<N> c, final Tipper<N>... ts) {
+    @SafeVarargs public final <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N>... ts) {
       Arrays.asList(ts).forEach(¢ -> trimmer.add(c, ¢));
       return this;
     }
