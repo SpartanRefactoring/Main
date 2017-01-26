@@ -25,7 +25,7 @@ public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
-    Arrays.asList(ns).forEach(¢ -> $[i.inner++] = new Wrapper<>(¢));
+    Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
     return $;
   }
 
@@ -48,11 +48,11 @@ public final class Inliner {
   }
 
   public static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
-    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(ancestor -> iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION));
+    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeEquals(λ, ANONYMOUS_CLASS_DECLARATION));
   }
 
   public static boolean never(final SimpleName n, final Statement s) {
-    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(¢ -> iz.nodeTypeIn(¢, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
+    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
   public static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
@@ -145,7 +145,7 @@ public final class Inliner {
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      Arrays.asList(ns).forEach(¢ -> inlineintoSingleton(get(), ¢));
+      Arrays.asList(ns).forEach(λ -> inlineintoSingleton(get(), λ));
     }
 
     private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {
@@ -153,7 +153,7 @@ public final class Inliner {
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
       collect.usesOf(name).in(newExpression).forEach(
-          use -> rewriter.replace(use, !iz.expression(use) ? replacement : make.plant((Expression) replacement).into(use.getParent()), editGroup));
+          λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
     private List<SimpleName> unsafeUses(final ASTNode... ¢) {

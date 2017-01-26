@@ -54,12 +54,12 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    return fragments(vds).stream().allMatch(¢ -> Inliner.variableUsedInFor(s, name(¢)) && Inliner.variableNotUsedAfterStatement(s, name(¢)));
+    return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
-    fragments(s).stream().filter(¢ -> (name(¢) + "").equals(az.simpleName(left(from)) + ""))
-        .forEachOrdered(¢ -> ¢.setInitializer(copy.of(right(from))));
+    fragments(s).stream().filter(λ -> (name(λ) + "").equals(az.simpleName(left(from)) + ""))
+        .forEachOrdered(λ -> λ.setInitializer(copy.of(right(from))));
     return copy.of(left(from));
   }
 

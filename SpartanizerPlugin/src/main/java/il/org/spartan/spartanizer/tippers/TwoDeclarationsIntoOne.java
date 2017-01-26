@@ -38,7 +38,7 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     if (!canTip(s, nextStatement))
       return null;
     final VariableDeclarationStatement sc = copy.of(s);
-    fragments(az.variableDeclarationStatement(nextStatement)).forEach(¢ -> fragments(sc).add(copy.of(¢)));
+    fragments(az.variableDeclarationStatement(nextStatement)).forEach(λ -> fragments(sc).add(copy.of(λ)));
     $.replace(s, sc, g);
     $.remove(nextStatement, g);
     return $;
@@ -57,6 +57,6 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
   }
 
   private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
-    return l1.size() == l2.size() && l1.stream().allMatch(¢ -> (¢ + "").equals(l2.get(l1.indexOf(¢)) + ""));
+    return l1.size() == l2.size() && l1.stream().allMatch(λ -> (λ + "").equals(l2.get(l1.indexOf(λ)) + ""));
   }
 }

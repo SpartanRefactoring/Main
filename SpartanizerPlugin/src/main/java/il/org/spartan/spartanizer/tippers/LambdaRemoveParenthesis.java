@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-07 */
 public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.Inlining {
   @Override protected boolean prerequisite(final LambdaExpression ¢) {
-    return ¢.hasParentheses() && az.variableDeclrationFragment(¢) != null; 
+    return ¢.hasParentheses() && az.variableDeclrationFragment(onlyOne(parameters(¢))) != null; 
   }
 
   @Override public String description(final LambdaExpression ¢) {

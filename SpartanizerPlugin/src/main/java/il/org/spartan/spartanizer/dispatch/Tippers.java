@@ -95,7 +95,7 @@ public enum Tippers {
 
   public static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
-    what.forEach(¢ -> $.insertBefore(¢, where, g));
+    what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
   }
 

@@ -77,7 +77,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
-    return allOperands.stream().anyMatch($ -> wizard.same(op, $));
+    return allOperands.stream().anyMatch(λ -> wizard.same(op, λ));
   }
 
   @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
@@ -121,34 +121,34 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)
       return replacement(az.infixExpression(first(xs)), az.infixExpression(second(xs)));
-    final List<Expression> common = new ArrayList<>(), different = new ArrayList<>();
+    final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
       temp = removeFirstElement(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
-            addCommon(op, common);
+            addCommon(op, $);
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          extract.allOperands(az.infixExpression(first(temp))).stream().filter($ -> !isIn($, common)).forEach($ -> addDifferent($, different));
-        removeElFromList(different, common);
+          extract.allOperands(az.infixExpression(first(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
+        removeElFromList(different, $);
       }
     }
     Expression addition = null;
     for (final Integer ¢ : range.from(0).to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     Expression multiplication = null;
-    if (common.isEmpty())
+    if ($.isEmpty())
       return addition;
-    if (common.size() == 1)
-      return subject.pair(first(common), addition).to(Operator.TIMES);
-    if (common.size() <= 1)
+    if ($.size() == 1)
+      return subject.pair(first($), addition).to(Operator.TIMES);
+    if ($.size() <= 1)
       return null;
-    for (int ¢ = 0; ¢ < common.size() - 1;) {
+    for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
-      multiplication = (multiplication == null ? subject.pair(common.get(¢), common.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1)))
+      multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1)))
           .to(Operator.TIMES);
     }
     return subject.pair(multiplication, addition).to(Operator.TIMES);

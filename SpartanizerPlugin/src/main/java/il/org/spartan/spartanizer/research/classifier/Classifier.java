@@ -61,7 +61,7 @@ public class Classifier extends ASTVisitor {
   private void summarize() {
     for (final String k : forLoops.keySet()) {
       System.out.println("****" + k + "****");
-      forLoops.get(k).forEach(p -> System.out.println(tipperize(p, k)));
+      forLoops.get(k).forEach(λ -> System.out.println(tipperize(λ, k)));
     }
   }
 
@@ -104,11 +104,11 @@ public class Classifier extends ASTVisitor {
   }
 
   private static boolean anyTips(final EnhancedForStatement ¢) {
-    return enhancedForKnownPatterns.stream().anyMatch(p -> p.canTip(¢));
+    return enhancedForKnownPatterns.stream().anyMatch(λ -> λ.canTip(¢));
   }
 
   private static boolean anyTips(final ForStatement ¢) {
-    return forKnownPatterns.stream().anyMatch(p -> p.canTip(¢));
+    return forKnownPatterns.stream().anyMatch(λ -> λ.canTip(¢));
   }
 
   /** @param ¢ to classify */

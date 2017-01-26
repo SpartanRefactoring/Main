@@ -84,8 +84,8 @@ public class Table_NanosDistribution extends FolderASTVisitor {
           .col("coverage", format.decimal(100 * npStatistics.coverage(type)))//
       ;
       final HashMap<String, Int> hist = npStatistics.nanoHistogram(type);
-      hist.keySet().forEach(¢ -> writer.col(¢ + " perc.", format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(type)))));
-      hist.keySet().forEach(¢ -> writer.col(¢, hist.get(¢).inner));
+      hist.keySet().forEach(λ -> writer.col(λ + " perc.", format.decimal(100 * safe.div(hist.get(λ).inner, npStatistics.count(type)))));
+      hist.keySet().forEach(λ -> writer.col(λ, hist.get(λ).inner));
       writer.nl();
     }
     npStatistics.clear();

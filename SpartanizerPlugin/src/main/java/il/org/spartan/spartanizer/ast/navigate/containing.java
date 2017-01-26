@@ -25,7 +25,7 @@ public interface containing {
    *         type and null otherwise */
   static ASTNode typeDeclaration(final ASTNode ¢) {
     return az.stream(hop.ancestors(parent(¢)))
-        .filter($ -> iz.nodeTypeIn($ //
+        .filter(λ -> iz.nodeTypeIn(λ
             , ANONYMOUS_CLASS_DECLARATION //
             , ANNOTATION_TYPE_DECLARATION //
             , ENUM_DECLARATION //

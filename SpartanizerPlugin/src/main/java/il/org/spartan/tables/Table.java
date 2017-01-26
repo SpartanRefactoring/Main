@@ -98,12 +98,12 @@ public class Table extends Row<Table> implements Closeable {
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
     final Int n = new Int();
-    $ = writers.stream().map(¢ -> "\t " + ++n.inner + ". " + ¢.fileName + "\n").reduce((x, y) -> x + y).get();
+    $ = writers.stream().map(λ -> "\t " + ++n.inner + ". " + λ.fileName + "\n").reduce((x, y) -> x + y).get();
     return $;
   }
 
   RealStatistics getRealStatistics(final String key) {
-    stats.computeIfAbsent(key, k -> new RealStatistics());
+    stats.computeIfAbsent(key, λ -> new RealStatistics());
     return stats.get(key);
   }
 
@@ -112,7 +112,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   public void nl() {
-    writers.forEach(¢ -> ¢.write(this));
+    writers.forEach(λ -> λ.write(this));
     reset();
   }
 
@@ -138,7 +138,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   @Override protected Table reset() {
-    keySet().forEach(¢ -> put(¢, ""));
+    keySet().forEach(λ -> put(λ, ""));
     put((String) null, ++length + "");
     return this;
   }

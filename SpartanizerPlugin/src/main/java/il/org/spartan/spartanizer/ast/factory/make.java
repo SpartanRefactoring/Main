@@ -141,7 +141,7 @@ public enum make {
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
-    $.addAll(az.stream(rest(xs)).map(¢ -> minusOf(¢)).collect(Collectors.toList()));
+    $.addAll(az.stream(rest(xs)).map(λ -> minusOf(λ)).collect(Collectors.toList()));
     return $;
   }
 

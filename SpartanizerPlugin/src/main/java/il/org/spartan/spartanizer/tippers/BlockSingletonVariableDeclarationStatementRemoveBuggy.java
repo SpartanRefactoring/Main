@@ -37,7 +37,7 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
         return null;
     return new Tip(description(), n, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        $.forEach(¢ -> r.remove(¢, g));
+        $.forEach(λ -> r.remove(λ, g));
       }
     };
   }
