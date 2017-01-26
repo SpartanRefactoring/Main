@@ -91,20 +91,20 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
   @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
     return as.array(//
         m("length", ¢ -> (¢ + "").length()), //
-        m("essence", (¢) -> Essence.of(¢ + "").length()), //
-        m("tokens", (¢) -> metrics.tokens(¢ + "")), //
-        m("nodes", (¢) -> count.nodes((ASTNode) ¢)), //
-        m("body", (¢) -> metrics.bodySize((ASTNode) ¢)),
+        m("essence", ¢ -> Essence.of(¢ + "").length()), //
+        m("tokens", ¢ -> metrics.tokens(¢ + "")), //
+        m("nodes", ¢ -> count.nodes((ASTNode) ¢)), //
+        m("body", ¢ -> metrics.bodySize((ASTNode) ¢)),
         m("methodDeclaration",
-            (¢) -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()),
-        m("tide", (¢) -> clean(¢ + "").length()), //
-        m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)), //
-        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), //
-        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)), //
-        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), //
-        m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)), //
-        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), //
-        m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)));
+            ¢ -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()),
+        m("tide", ¢ -> clean(¢ + "").length()), //
+        m("abstract", ¢ -> iz.abstract¢((BodyDeclaration) ¢)), //
+        m("default", ¢ -> iz.default¢((BodyDeclaration) ¢)), //
+        m("final", ¢ -> iz.final¢((BodyDeclaration) ¢)), //
+        m("private", ¢ -> iz.private¢((BodyDeclaration) ¢)), //
+        m("protected", ¢ -> iz.protected¢((BodyDeclaration) ¢)), //
+        m("public", ¢ -> iz.public¢((BodyDeclaration) ¢)), //
+        m("static", ¢ -> iz.static¢((BodyDeclaration) ¢)));
   }
 
   @Override public NamedFunction[] functions(final String id) {
