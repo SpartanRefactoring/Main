@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -70,7 +71,7 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     if (parent instanceof VariableDeclarationStatement)
-      e = FragmentInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
+      e = Inliner.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
