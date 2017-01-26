@@ -37,10 +37,10 @@ public class ReportGenerator implements ConfigurableReport {
 
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
-          m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
-          m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-          m("tide" + id, (¢) -> clean(¢ + "").length()));//
+      return as.array(m("length" + id, ¢ -> (¢ + "").length()), m("essence" + id, ¢ -> Essence.of(¢ + "").length()),
+          m("tokens" + id, ¢ -> metrics.tokens(¢ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+          m("methodDeclaration" + id, ¢ -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
+          m("tide" + id, ¢ -> clean(¢ + "").length()));//
     }
 
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
@@ -48,11 +48,11 @@ public class ReportGenerator implements ConfigurableReport {
       $.put("metrics", functions(""));
       $.put("methods",
           as.array(m("N. of Nodes", count::nodes), //
-              m("Average Depth", (¢) -> -1000), // (¢) -> Essence.of(¢ +
+              m("Average Depth", ¢ -> -1000), // (¢) -> Essence.of(¢ +
                                                 // "").length()), //
-              m("Average Uncle Depth", (¢) -> -1000), // (¢) -> Essence.of(¢ +
+              m("Average Uncle Depth", ¢ -> -1000), // (¢) -> Essence.of(¢ +
                                                       // "").length()), //
-              m("Character Length", (¢) -> -1000) // Essence.of(¢ +
+              m("Character Length", ¢ -> -1000) // Essence.of(¢ +
                                                   // "").length()) //
           // Report Halstead Metrics
           )); //

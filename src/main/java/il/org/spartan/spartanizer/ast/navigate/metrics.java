@@ -43,7 +43,7 @@ public interface metrics {
       return 0;
     final Recurser<Integer> $ = new Recurser<>(n, 0);
     final Set<Integer> nodesTypeSet = new HashSet<>();
-    return $.preVisit((x) -> {
+    return $.preVisit(x -> {
       if (nodesTypeSet.contains(x.getRoot().getNodeType()))
         return x.getCurrent();
       nodesTypeSet.add(x.getRoot().getNodeType());
@@ -81,20 +81,20 @@ public interface metrics {
 
   static int height(final List<ASTNode> ns) {
     final Int $ = new Int();
-    ns.forEach((¢) -> $.inner = Integer.max($.inner, height(¢)));
+    ns.forEach(¢ -> $.inner = Integer.max($.inner, height(¢)));
     return $.inner;
   }
 
   static int height(final List<Statement> ss, @SuppressWarnings("unused") final int x) {
     final Int $ = new Int();
-    ss.forEach((¢) -> $.inner = Integer.max($.inner, height(¢)));
+    ss.forEach(¢ -> $.inner = Integer.max($.inner, height(¢)));
     return $.inner;
   }
 
   /** @param n JD
    * @return The total number of internal nodes in the AST */
   @SuppressWarnings("boxing") static int internals(final ASTNode n) {
-    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> Recurser.children(x.getRoot()).isEmpty() ? x.getCurrent() : x.getCurrent() + 1);
+    return n == null ? 0 : new Recurser<>(n, 0).preVisit(x -> Recurser.children(x.getRoot()).isEmpty() ? x.getCurrent() : x.getCurrent() + 1);
   }
 
   /** @param pattern JD
@@ -136,7 +136,7 @@ public interface metrics {
   /** @param n JD
    * @return The total number of nodes in the AST */
   @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
-    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
+    return n == null ? 0 : new Recurser<>(n, 0).preVisit(x -> (1 + x.getCurrent()));
   }
 
   @SuppressWarnings("boxing") static int nodes(final List<Statement> ss) {
