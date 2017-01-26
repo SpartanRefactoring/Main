@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 8-12-16 */
 public enum InflaterUtilities {
   ;
-
   /** Main function of the application.
    * @param r JD
    * @param ns list of statements and expression in the selected code which for

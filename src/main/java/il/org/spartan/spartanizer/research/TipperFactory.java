@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.research.Matcher.*;
  * @since 2016 */
 public enum TipperFactory {
   ;
-
   public static UserDefinedTipper<Block> statementsPattern(final String _pattern, final String _replacement, final String description,
       final Option... os) {
     return newSubBlockTipper(_pattern, _replacement, description, os);

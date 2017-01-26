@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 enum EliminateConditionalContinueAux {
   ;
-
   @SuppressWarnings("rawtypes") public static Tip actualReplacement(final Block b, final Statement s, final Class<? extends Tipper> c) {
     if (b == null || step.statements(b).size() < 2)
       return null;

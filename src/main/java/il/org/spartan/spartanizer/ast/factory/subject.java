@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.java.*;
  * @since Oct 7, 2016 */
 public enum subject {
   ;
-
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = copy.of(base);
     extendedOperands($).add(make.plant(copy.of(add)).into($));
