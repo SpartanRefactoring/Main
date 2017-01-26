@@ -280,7 +280,7 @@ public interface iz {
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
-   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_AND} */
+   *         {@link InfixExpression.Operator#CONDITIONAL_AND} */
   static boolean conditionalAnd(final InfixExpression ¢) {
     return ¢.getOperator() == CONDITIONAL_AND;
   }
@@ -300,7 +300,7 @@ public interface iz {
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
-   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
+   *         {@link InfixExpression.Operator#CONDITIONAL_OR} */
   static boolean conditionalOr(final Expression ¢) {
     return conditionalOr(az.infixExpression(¢));
   }
@@ -309,7 +309,7 @@ public interface iz {
    * @param x JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
    *         whose operator is
-   *         {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#CONDITIONAL_OR} */
+   *         {@link InfixExpression.Operator#CONDITIONAL_OR} */
   static boolean conditionalOr(final InfixExpression ¢) {
     return ¢ != null && ¢.getOperator() == CONDITIONAL_OR;
   }
