@@ -162,8 +162,8 @@ public class Issue0455 {
 
   @Test public void singleSwitchCaseStatementShouldntTip() {
     trimmingOf("x -> {switch(x){ case 0: ++x; break; default: --x;}}") //
-        .gives("x->{{if(x==0) ++x; else --x;}}") //
-        .gives("x->{if(x==0)++x;else--x;}") //
+        .gives("λ->{{if(λ==0) ++λ; else --λ;}}") //
+        .gives("λ->{if(λ==0)++λ;else--λ;}") //
         .stays();
   }
 
@@ -182,7 +182,6 @@ public class Issue0455 {
   @Test public void singleTryFinallyStatementShouldntTip() {
     trimmingOf("x -> {try {throw new Error();}finally{}}") //
         .gives("x -> {{throw new Error();}}") //
-        .gives("x -> {throw new Error();}") //
         .gives("λ -> {throw new Error();}") //
         .stays();
   }
