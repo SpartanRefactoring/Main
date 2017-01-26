@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitialiazerUpdateAssignment extends $VariableDeclarationFragementAndStatement//
+public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
