@@ -44,7 +44,7 @@ public class SingleFlater {
 
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
-   * @return this flater */
+   * @return <code><b>this</b></code> flater */
   public SingleFlater from(final OperationsProvider ¢) {
     operationsProvider = ¢;
     return this;
@@ -52,7 +52,7 @@ public class SingleFlater {
 
   /** Sets text selection limits for this flater.
    * @param ¢ JD
-   * @return this flater */
+   * @return <code><b>this</b></code> flater */
   @Deprecated public SingleFlater limit(final TextSelection ¢) {
     textSelection = ¢;
     return this;
@@ -60,14 +60,14 @@ public class SingleFlater {
 
   /** Sets text selection limits of window to this flater.
    * @param ¢ JD
-   * @return this flater */
+   * @return <code><b>this</b></code> flater */
   public SingleFlater limit(final WindowInformation ¢) {
     windowInformation = ¢;
     return this;
   }
 
   /** Set disabling for this flater.
-   * @return this flater */
+   * @return <code><b>this</b></code> flater */
   public SingleFlater usesDisabling(final boolean ¢) {
     usesDisabling = ¢;
     return this;
