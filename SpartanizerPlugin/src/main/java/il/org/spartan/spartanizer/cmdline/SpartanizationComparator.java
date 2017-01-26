@@ -149,7 +149,7 @@ public class SpartanizationComparator {
         m("tokens" + id, λ -> metrics.tokens(λ + "")), //
         m("nodes" + id, count::nodes), //
         m("body" + id, metrics::bodySize), //
-        m("methodDeclaration" + id, λ -> iz.methodDeclaration(λ) == false ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+        m("methodDeclaration" + id, λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
         m("tide" + id, λ -> clean(λ + "").length()));//
   }
 

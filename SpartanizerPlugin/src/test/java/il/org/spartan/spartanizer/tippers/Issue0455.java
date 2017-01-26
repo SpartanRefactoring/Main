@@ -20,8 +20,7 @@ public class Issue0455 {
 
   @Test public void blockStatementShouldntTip() {
     trimmingOf("x -> {{}}") //
-        .gives("x -> {}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .gives("λ -> {}") //
         .stays();
   }
 
@@ -170,11 +169,13 @@ public class Issue0455 {
 
   @Test public void singleSynchronizedStatementShouldntTip() {
     trimmingOf("x -> {synchronized (System.in){}}") //
+    .gives("λ -> {synchronized (System.in){}}") //
         .stays();
   }
 
   @Test public void singleThrowStatementShouldntTip() {
     trimmingOf("x -> {throw new Error();}") //
+        .gives("λ -> {throw new Error();}") //
         .stays();
   }
 
@@ -182,6 +183,7 @@ public class Issue0455 {
     trimmingOf("x -> {try {throw new Error();}finally{}}") //
         .gives("x -> {{throw new Error();}}") //
         .gives("x -> {throw new Error();}") //
+        .gives("λ -> {throw new Error();}") //
         .stays();
   }
 
