@@ -70,9 +70,9 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
     if (n == null || anyFurtherUsage(parent, nextStatement, identifier(n)) || leftSide(nextStatement, identifier(n)) || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
-    if (parent instanceof VariableDeclarationStatement)
-      e = Inliner.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    if (pp != null)
+      e = Inliner.protect(e, pp);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {
