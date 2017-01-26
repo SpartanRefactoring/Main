@@ -5,8 +5,10 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** @author Ori Marcovitch
- * @since 2016 */
+/**  Tests {@link FindFirst} and {@link ForLoop.FindFirst}
+ * @author Ori Marcovitch 
+ * @since Jan 18, 2017
+ */
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
@@ -45,10 +47,17 @@ public class FindFirstTest {
         .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
   }
 
-  @Ignore // TODO: Ori Marcovitch
   @Test public void g() {
     trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
-        .using(EnhancedForStatement.class, new FindFirst())//
-        .gives("return G.values().stream().filter($->$.clazz.isAssignableFrom(¢)).findFirst().orElse(null);");
+        .using(ForStatement.class, new ForLoop.FindFirst())//
+        .gives(
+            "return from(¢).step(($)->$!=null).to(($)->$=parent($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
+  }
+
+  @Test public void h() {
+    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
+        .using(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
+        .gives(
+            "return from(¢).step(($)->$!=null).to(($)->$=parent($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
   }
 }

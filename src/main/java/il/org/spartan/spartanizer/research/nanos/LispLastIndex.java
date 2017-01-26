@@ -23,7 +23,7 @@ public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
       add(patternTipper("$X.size()-1", "lastIndex($X)", "lisp: lastIndex"));
     }
   };
-  static final LispLastElement rival = new LispLastElement();
+  static final Last rival = new Last();
 
   @Override public boolean canTip(final InfixExpression ¢) {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));

@@ -51,6 +51,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new HoldsForAny(), //
             null) //
         .add(ForStatement.class, //
+            new ForLoop.FindFirst(), //
             new ForEachInRange(), //
             null) //
         .add(IfStatement.class, //
@@ -68,8 +69,8 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new Infix.SafeReference(), //
             null)//
         .add(MethodInvocation.class, //
-            new LispFirstElement(), //
-            new LispLastElement(), //
+            new First(), //
+            new Last(), //
             null) //
         .add(ReturnStatement.class, //
             new ReturnPrevious(), //
