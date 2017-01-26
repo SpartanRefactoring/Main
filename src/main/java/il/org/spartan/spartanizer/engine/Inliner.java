@@ -1,10 +1,14 @@
 package il.org.spartan.spartanizer.engine;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -41,6 +45,44 @@ public final class Inliner {
 
   public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
+  }
+
+  public static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
+    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(ancestor -> iz.nodeTypeEquals(ancestor, ANONYMOUS_CLASS_DECLARATION));
+  }
+
+  public static boolean never(final SimpleName n, final Statement s) {
+    return az.stream(yieldAncestors.until(s).ancestors(n))
+        .anyMatch( ¢ -> iz.nodeTypeIn( ¢, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
+  }
+
+  public static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
+    if (!(f.getParent() instanceof VariableDeclarationStatement))
+      return false;
+    final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
+    if (!(f.getInitializer() instanceof ArrayCreation))
+      return false;
+    final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
+    return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
+  }
+
+  public static String getElTypeNameFromArrayType(final Type t) {
+    if (!(t instanceof ArrayType))
+      return null;
+    final Type et = ((ArrayType) t).getElementType();
+    if (!(et instanceof SimpleType))
+      return null;
+    final Name $ = ((SimpleType) et).getName();
+    return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
+  }
+
+  public static Expression fixArrayInitializer(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+    if (!iz.arrayInitializer(initializer))
+      return initializer;
+    final ArrayCreation $ = initializer.getAST().newArrayCreation();
+    $.setType(az.arrayType(copy.of(type(currentStatement))));
+    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
+    return $;
   }
 
   /** Determines whether a specific SimpleName was used in a
