@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitialiazerAssignment extends $VariableDeclarationFragementAndStatement//
+public final class FragmentInitialiazerAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";

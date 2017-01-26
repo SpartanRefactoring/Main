@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }
