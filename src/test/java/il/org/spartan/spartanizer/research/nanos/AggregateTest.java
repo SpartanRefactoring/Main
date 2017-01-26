@@ -57,10 +57,10 @@ public class AggregateTest {
   }
 
   @Test public void f() {
-    trimmingOf("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();"//
-    )//
+    trimmingOf("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();")//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("$+=implementation.stream().filter(¢->¢!=null).map(¢->¢.size()).reduce((x,y)->x+y).get();")//
+        .gives("$+=implementation.stream().filter(λ->λ!=null).map(λ->λ.size()).reduce((x,y)->x+y).get();")//
         .stays();
   }
 

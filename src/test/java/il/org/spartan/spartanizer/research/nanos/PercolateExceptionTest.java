@@ -21,6 +21,7 @@ public class PercolateExceptionTest {
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){percolate(i);}")//
+        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){percolate(i);}")//
         .stays()//
     ;
   }

@@ -21,6 +21,7 @@ public class SupressExceptionTest {
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
+        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){ignore();}")//
         .stays()//
     ;
   }
