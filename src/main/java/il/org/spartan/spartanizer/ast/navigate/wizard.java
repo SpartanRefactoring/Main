@@ -252,7 +252,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
    *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    return !hasNull(base, as) && Arrays.asList(as).stream().allMatch(¢ -> !incompatible(base, ¢));
+    return !hasNull(base, as) && Arrays.asList(as).stream().allMatch(λ -> !incompatible(base, λ));
   }
 
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
@@ -264,7 +264,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all the operator are the same
    *         or false otherwise */
   static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
-    return !hasNull(o, os) && Arrays.asList(os).stream().allMatch(¢ -> ¢ != null && ¢ == o);
+    return !hasNull(o, os) && Arrays.asList(os).stream().allMatch(λ -> λ != null && λ == o);
   }
 
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
@@ -299,7 +299,7 @@ public interface wizard {
    *         operator. false if none of them are or if the given parameter is
    *         null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
-    return ns != null && Arrays.asList(ns).stream().anyMatch(¢ -> ¢ != null && iz.incrementOrDecrement(¢));
+    return ns != null && Arrays.asList(ns).stream().anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
   }
 
   static InfixExpression.Operator convertToInfix(final Operator ¢) {
@@ -347,7 +347,7 @@ public interface wizard {
    * @return first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
   static Expression find(final boolean b, final List<Expression> xs) {
-    return xs.stream().filter($ -> iz.booleanLiteral($) && b == az.booleanLiteral($).booleanValue()).findFirst().orElse(null);
+    return xs.stream().filter(λ -> iz.booleanLiteral(λ) && b == az.booleanLiteral(λ).booleanValue()).findFirst().orElse(null);
   }
 
   /** Gets two lists of expressions and returns the idx of the only expression
@@ -384,7 +384,7 @@ public interface wizard {
   }
 
   static boolean hasSafeVarags(final MethodDeclaration d) {
-    return extract.annotations(d).stream().anyMatch(¢ -> iz.identifier("SafeVarargs", ¢.getTypeName()));
+    return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
@@ -465,11 +465,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(¢ -> test(¢, ms)).map(¢ -> (Modifier) ¢).collect(Collectors.toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(λ -> (Modifier) λ).collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    return ms.stream().filter(¢ -> test(¢, ps)).map(¢ -> (Modifier) ¢).collect(Collectors.toSet());
+    return ms.stream().filter(λ -> test(λ, ps)).map(λ -> (Modifier) λ).collect(Collectors.toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
@@ -654,7 +654,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all names are the same (string
    *         wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
-    return Arrays.asList(xs).stream().allMatch(¢ -> same(¢, x));
+    return Arrays.asList(xs).stream().allMatch(λ -> same(λ, x));
   }
 
   /** Determine whether two lists of nodes are the same, in the sense that their
@@ -663,7 +663,7 @@ public interface wizard {
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
   @SuppressWarnings("boxing") static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
-    return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(¢ -> same(ns1.get(¢), ns2.get(¢)));
+    return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(λ -> same(ns1.get(λ), ns2.get(λ)));
   }
 
   static void setBinding(final ASTParser $) {
@@ -681,7 +681,7 @@ public interface wizard {
   }
 
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
-    return ms.stream().anyMatch(¢ -> ¢.test(m));
+    return ms.stream().anyMatch(λ -> λ.test(m));
   }
   // static Statement lastStatement(final ForStatement ¢) {
   // return !iz.block(step.body(¢)) ? step.body(¢) :

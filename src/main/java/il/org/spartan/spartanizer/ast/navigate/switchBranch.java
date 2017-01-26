@@ -38,7 +38,7 @@ public class switchBranch {
 
   @SuppressWarnings("boxing") public boolean hasDefault() {
     if (hasDefault == -1)
-      hasDefault = cases.stream().filter(SwitchCase::isDefault).map(¢ -> 1).findFirst().orElse(hasDefault);
+      hasDefault = cases.stream().filter(SwitchCase::isDefault).map(λ -> 1).findFirst().orElse(hasDefault);
     return hasDefault == 1;
   }
 
@@ -104,7 +104,7 @@ public class switchBranch {
   }
 
   private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
-    bs.forEach(¢ -> ¢.addAll(ss));
+    bs.forEach(λ -> λ.addAll(ss));
   }
 
   public static SwitchStatement makeSwitchStatement(final List<switchBranch> bs, final Expression x, final AST t) {

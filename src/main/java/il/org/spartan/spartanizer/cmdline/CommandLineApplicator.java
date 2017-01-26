@@ -26,7 +26,7 @@ public class CommandLineApplicator extends Applicator {
    * @return this applicator */
   @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
-      Arrays.asList(os).forEach(¢ -> System.out.print(¢ + " "));
+      Arrays.asList(os).forEach(λ -> System.out.print(λ + " "));
       System.out.println();
     });
     return this;
@@ -59,7 +59,7 @@ public class CommandLineApplicator extends Applicator {
    * @return this */
   private CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
-    setRunAction(u -> Integer.valueOf(new Spartanizer$Applicator().apply(u, selection()) ? 1 : 0));
+    setRunAction(λ -> Integer.valueOf(new Spartanizer$Applicator().apply(λ, selection()) ? 1 : 0));
     return this;
   }
 
@@ -81,7 +81,7 @@ public class CommandLineApplicator extends Applicator {
    * @param a JD
    * @return this applicator */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
-    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;
   }
@@ -93,7 +93,7 @@ public class CommandLineApplicator extends Applicator {
    * @return this applicator */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
     CommandLine$Applicator.startingTime = new Date().getTime();
-    setRunAction(u -> Integer.valueOf(a.apply(u, selection()) ? 1 : 0));
+    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;
   }
@@ -161,16 +161,16 @@ public class CommandLineApplicator extends Applicator {
   }
 
   private enum message {
-    run_start(1, inp -> "Spartanizing " + printableAt(inp, 0)), //
-    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
-    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
-    visit_cu(3, inp -> wizard.nth(printableAt(inp, 0), printableAt(inp, 1)) + "\tSpartanizing " + printableAt(inp, 2)), //
-    run_finish(2, inp -> "Done spartanizing " + printableAt(inp, 0) + "\nTips accepted: " + printableAt(inp, 1)),
+    run_start(1, λ -> "Spartanizing " + printableAt(λ, 0)), //
+    run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
+    run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
+    visit_cu(3, λ -> wizard.nth(printableAt(λ, 0), printableAt(λ, 1)) + "\tSpartanizing " + printableAt(λ, 2)), //
+    run_finish(2, λ -> "Done spartanizing " + printableAt(λ, 0) + "\nTips accepted: " + printableAt(λ, 1)),
     // report
-    report_start(1, inp -> "Start reporting " + printableAt(inp, 0)), //
-    report_stop(1, inp -> "Stop reporting " + printableAt(inp, 0)), //
-    report_metrics(1, inp -> "Report metrics " + printableAt(inp, 0)), //
-    report_spectrum(1, inp -> "Report Spectrum " + printableAt(inp, 0)),//
+    report_start(1, λ -> "Start reporting " + printableAt(λ, 0)), //
+    report_stop(1, λ -> "Stop reporting " + printableAt(λ, 0)), //
+    report_metrics(1, λ -> "Report metrics " + printableAt(λ, 0)), //
+    report_spectrum(1, λ -> "Report Spectrum " + printableAt(λ, 0)),//
     ;
     private final int inputCount;
     private final Function<Object[], String> printing;
@@ -186,7 +186,7 @@ public class CommandLineApplicator extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.unknownIfNull(os, xs -> xs[index]);
+      return Linguistic.unknownIfNull(os, λ -> λ[index]);
     }
   }
 }

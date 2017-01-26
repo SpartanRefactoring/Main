@@ -293,7 +293,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   static boolean conditionalExpression(final Expression... xs) {
-    return Arrays.asList(xs).stream().anyMatch(¢ -> nodeTypeEquals(extract.core(¢), CONDITIONAL_EXPRESSION));
+    return Arrays.asList(xs).stream().anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
   }
 
   /** Check whether an expression is a "conditional or" (||)
@@ -335,14 +335,14 @@ public interface iz {
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
     return ¢ != null
-        && new Recurser<>(¢, 0).postVisit(x -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
+        && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
 
   /** @param n ASTNode that contains the identifier
    * @param x Expression to search the identifier in it
    * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final ASTNode x) {
-    return !yieldDescendants.untilClass(SimpleName.class).suchThat(t -> step.identifier(t).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
+    return !yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
   }
 
   static boolean containsOperator(final ASTNode ¢) {

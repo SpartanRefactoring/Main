@@ -92,10 +92,10 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
   }
 
   @Override public Tip tip(final ForStatement x) {
-    return tippers.stream().filter($ -> $.canTip(x)).map($ -> $.tip(x)).findFirst().orElse(null);
+    return tippers.stream().filter(λ -> λ.canTip(x)).map(λ -> λ.tip(x)).findFirst().orElse(null);
   }
 
   @Override public String description(final ForStatement x) {
-    return tippers.stream().filter($ -> $.canTip(x)).map($ -> $.description(x)).findFirst().orElse(null);
+    return tippers.stream().filter(λ -> λ.canTip(x)).map(λ -> λ.description(x)).findFirst().orElse(null);
   }
 }

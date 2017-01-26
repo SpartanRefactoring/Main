@@ -43,7 +43,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
   /** Apply spartanization to marked code. */
   private final IMarkerResolution apply = quickFix("Apply",
-      ¢ -> new GUIBatchLaconizer().defaultSettings().defaultRunAction(getSpartanizer(¢)).passes(1).selection(Selection.Util.by(¢)).go());
+      λ -> new GUIBatchLaconizer().defaultSettings().defaultRunAction(getSpartanizer(λ)).passes(1).selection(Selection.Util.by(λ)).go());
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
     final AbstractGUIApplicator g = getSpartanizer(¢);
@@ -61,22 +61,22 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   });
   /** Spartanize current file. */
   private final IMarkerResolution laconizeFile = quickFix("Laconize file",
-      ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+      λ -> defaultApplicator().defaultRunAction(getSpartanizer(λ)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(λ)).go());
   /** Spartanize current function. */
-  private final IMarkerResolution laconizeFunction = quickFix("Laconize function", ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢))
-      .defaultPassesMany().selection(Selection.Util.expand(¢, MethodDeclaration.class)).go());
+  private final IMarkerResolution laconizeFunction = quickFix("Laconize function", λ -> defaultApplicator().defaultRunAction(getSpartanizer(λ))
+      .defaultPassesMany().selection(Selection.Util.expand(λ, MethodDeclaration.class)).go());
   /** Spartanize current class. */
-  private final IMarkerResolution laconizeClass = quickFix("Laconize class", ¢ -> defaultApplicator().defaultRunAction(getSpartanizer(¢))
-      .defaultPassesMany().selection(Selection.Util.expand(¢, AbstractTypeDeclaration.class)).go());
+  private final IMarkerResolution laconizeClass = quickFix("Laconize class", λ -> defaultApplicator().defaultRunAction(getSpartanizer(λ))
+      .defaultPassesMany().selection(Selection.Util.expand(λ, AbstractTypeDeclaration.class)).go());
   /** Apply tipper to current function. */
-  private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", ¢ -> defaultApplicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.expand(¢, MethodDeclaration.class)).go());
+  private final IMarkerResolution singleTipperFunction = quickFix("Apply to enclosing function", λ -> defaultApplicator()
+      .defaultRunAction(SingleTipper.getApplicator(λ)).defaultPassesMany().selection(Selection.Util.expand(λ, MethodDeclaration.class)).go());
   /** Apply tipper to current file. */
-  private final IMarkerResolution singleTipperFile = quickFix("Apply to compilation unit", ¢ -> defaultApplicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(¢)).go());
+  private final IMarkerResolution singleTipperFile = quickFix("Apply to compilation unit", λ -> defaultApplicator()
+      .defaultRunAction(SingleTipper.getApplicator(λ)).defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit(λ)).go());
   /** Apply tipper to entire project. */
-  private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", ¢ -> SpartanizationHandler.applicator()
-      .defaultRunAction(SingleTipper.getApplicator(¢)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(¢)).go());
+  private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", λ -> SpartanizationHandler.applicator()
+      .defaultRunAction(SingleTipper.getApplicator(λ)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(λ)).go());
   /** Disable spartanization in function. */
   private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
   /** Disable spartanization in class. */

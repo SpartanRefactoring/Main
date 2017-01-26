@@ -164,7 +164,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    Arrays.asList(attribute.values()).forEach(¢ -> $.put(¢, unknown));
+    Arrays.asList(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
   }
 

@@ -33,7 +33,7 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static boolean checkVariableDecleration(final VariableDeclarationStatement s) {
-    return fragments(s).stream().allMatch(¢ -> initializer(¢) == null || sideEffects.free(initializer(¢)));
+    return fragments(s).stream().allMatch(λ -> initializer(λ) == null || sideEffects.free(initializer(λ)));
   }
 
   @Override public String description(final IfStatement ¢) {

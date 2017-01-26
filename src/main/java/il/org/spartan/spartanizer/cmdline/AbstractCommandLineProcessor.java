@@ -22,6 +22,6 @@ abstract class AbstractCommandLineProcessor {
     if (args.length == 0)
       new BatchSpartanizer(".", "current-working-directory").fire();
     else
-      Arrays.asList(args).forEach(¢ -> new BatchSpartanizer(¢).fire());
+      Arrays.asList(args).forEach(λ -> new BatchSpartanizer(λ).fire());
   }
 }

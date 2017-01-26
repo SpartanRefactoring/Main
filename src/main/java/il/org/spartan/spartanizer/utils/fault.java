@@ -46,7 +46,7 @@ public interface fault {
   }
 
   static String specifically(final String explanation, final Object... os) {
-    return dump("\n " + explanation) + Arrays.asList(os).stream().map(¢ -> dump(¢.getClass().getSimpleName(), ¢)).reduce((x, y) -> x + y).get()
+    return dump("\n " + explanation) + Arrays.asList(os).stream().map(λ -> dump(λ.getClass().getSimpleName(), λ)).reduce((x, y) -> x + y).get()
         + done();
   }
 

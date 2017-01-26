@@ -69,7 +69,7 @@ public class PreferencesResources {
     }
 
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
-      return Arrays.asList(TipperGroup.values()).stream().filter($ -> $.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
+      return Arrays.asList(TipperGroup.values()).stream().filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
     private final Class<? extends TipperCategory> clazz;

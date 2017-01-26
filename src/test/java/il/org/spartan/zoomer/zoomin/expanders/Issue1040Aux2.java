@@ -23,10 +23,10 @@ public class Issue1040Aux2 extends MetaFixture {
   }
 
   @SuppressWarnings("boxing") void toTest() {
-    total = Arrays.asList(arr).stream().map(k -> total(1)).reduce((x, y) -> x + y).get().intValue();
+    total = Arrays.asList(arr).stream().map(λ -> total(1)).reduce((x, y) -> x + y).get().intValue();
   }
 
   @SuppressWarnings("boxing") void toTest2() {
-    total2 = Arrays.asList(arr).stream().map(k -> total2(1)).reduce((x, y) -> x + y).get();
+    total2 = Arrays.asList(arr).stream().map(λ -> total2(1)).reduce((x, y) -> x + y).get();
   }
 }

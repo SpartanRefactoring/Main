@@ -114,7 +114,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        marked {@link External}
    * @return the parameter */
   public <T> T extract(final T $) {
-    External.Introspector.toOrderedMap($).entrySet().forEach(¢ -> col(¢.getKey(), ¢.getValue()));
+    External.Introspector.toOrderedMap($).entrySet().forEach(λ -> col(λ.getKey(), λ.getValue()));
     return $;
   }
 

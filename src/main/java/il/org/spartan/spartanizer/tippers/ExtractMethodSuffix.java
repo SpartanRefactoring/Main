@@ -77,7 +77,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(copy.of(d.getName()));
     fixName(i, equalParams);
-    ds.forEach(¢ -> step.arguments(i).add(copy.of(name(¢))));
+    ds.forEach(λ -> step.arguments(i).add(copy.of(name(λ))));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
@@ -98,7 +98,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     statements(body(dx)).clear();
-    statements(body(d)).forEach(¢ -> statements(dx).add(az.statement(r.createCopyTarget(¢))));
+    statements(body(d)).forEach(λ -> statements(dx).add(az.statement(r.createCopyTarget(λ))));
   }
 
   private static void fixName(final MethodDeclaration d2, final boolean equalParams) {
@@ -125,7 +125,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(copy.of(v.getName()));
         sv.setType(copy.of(p.getType()));
-        extendedModifiers(p).forEach(md -> extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) md)));
+        extendedModifiers(p).forEach(λ -> extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) λ)));
         parameters(d2).add(sv);
       }
   }
@@ -135,7 +135,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (j == null)
       return;
     final List<TagElement> ts = step.tags(j);
-    final List<String> ns = ds.stream().map(¢ -> ¢.getName() + "").collect(Collectors.toList());
+    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(Collectors.toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
     final List<TagElement> xs = new ArrayList<>();
@@ -228,7 +228,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("boxing") private void setUsesMapping(final VariableDeclaration d, final int starting) {
-      range.from(starting).to(statements.size()).forEach(¢ -> setUsesMapping(d, statements.get(¢)));
+      range.from(starting).to(statements.size()).forEach(λ -> setUsesMapping(d, statements.get(λ)));
     }
 
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {

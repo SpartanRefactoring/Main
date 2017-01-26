@@ -27,7 +27,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   @Override public abstract String description(VariableDeclarationFragment f);
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    return forbiddenSiblings(f).stream().anyMatch(¢ -> collect.BOTH_SEMANTIC.of(¢).existIn(ns));
+    return forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
 
   static int eliminationSaving(final VariableDeclarationFragment f) {

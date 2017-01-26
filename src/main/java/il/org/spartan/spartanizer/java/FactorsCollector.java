@@ -130,13 +130,13 @@ final class FactorsCollector {
 
   private Void collectDividersFactors(final Iterable<Expression> xs) {
     assert xs != null;
-    xs.forEach(¢ -> collectDividerFactor(core(¢)));
+    xs.forEach(λ -> collectDividerFactor(core(λ)));
     return null;
   }
 
   private Void collectMultiplierFactors(final Iterable<Expression> xs) {
     assert xs != null;
-    xs.forEach(¢ -> addMultiplierFactor(core(¢)));
+    xs.forEach(λ -> addMultiplierFactor(core(λ)));
     return null;
   }
 

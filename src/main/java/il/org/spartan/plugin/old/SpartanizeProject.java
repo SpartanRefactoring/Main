@@ -42,14 +42,14 @@ public final class SpartanizeProject extends BaseHandler {
     final Int $ = new Int();
     final AbstractGUIApplicator a = new Trimmer();
     try {
-      eclipse.progressMonitorDialog(true).run(true, true, pm -> {
-        pm.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
+      eclipse.progressMonitorDialog(true).run(true, true, λ -> {
+        λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
         a.setMarker(null);
         a.setICompilationUnit(first(todo));
         $.addAndGet(a.countTips());
-        if (pm.isCanceled())
+        if (λ.isCanceled())
           $.set(0);
-        pm.done();
+        λ.done();
       });
     } catch (InvocationTargetException | InterruptedException ¢) {
       ¢.printStackTrace();

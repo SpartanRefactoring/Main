@@ -50,7 +50,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
   private static boolean arePseudoAtomic(final List<Expression> arguments, final List<String> parametersNames) {
     return arguments.stream()//
         .allMatch(//
-            ¢ -> iz.name(¢) || iz.methodInvocation(¢) && safeContains(parametersNames, ¢)//
+            λ -> iz.name(λ) || iz.methodInvocation(λ) && safeContains(parametersNames, λ)//
     );
   }
 

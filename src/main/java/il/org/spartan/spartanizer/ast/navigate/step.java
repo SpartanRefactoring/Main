@@ -413,7 +413,7 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(final CompilationUnit ¢) {
     return ¢ == null ? null
-        : ((List<ImportDeclaration>) ¢.imports()).stream().map(x -> (!x.isStatic() ? "" : "static ") + x.getName() + (!x.isOnDemand() ? "" : ".*"))
+        : ((List<ImportDeclaration>) ¢.imports()).stream().map(λ -> (!λ.isStatic() ? "" : "static ") + λ.getName() + (!λ.isOnDemand() ? "" : ".*"))
             .collect(Collectors.toList());
   }
 
@@ -444,7 +444,7 @@ public enum step {
   }
 
   public static List<Initializer> initializersInstance(final ASTNode n) {
-    return Arrays.asList(initializers(n).stream().filter(c -> !iz.static¢(c)).toArray(Initializer[]::new));
+    return Arrays.asList(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
   }
 
   /** @param ¢ JD
@@ -515,14 +515,14 @@ public enum step {
   /** @param d JD
    * @return */
   private static List<String> methodNames(final AbstractTypeDeclaration d) {
-    return d == null ? null : methods(d).stream().map(m -> identifier(name(m))).collect(Collectors.toList());
+    return d == null ? null : methods(d).stream().map(λ -> identifier(name(λ))).collect(Collectors.toList());
   }
 
   public static List<String> methodNames(final CompilationUnit u) {
     if (u == null)
       return null;
     final List<String> $ = new ArrayList<>();
-    types(u).forEach(t -> $.addAll(methodNames(t)));
+    types(u).forEach(λ -> $.addAll(methodNames(λ)));
     return $;
   }
 
@@ -532,7 +532,7 @@ public enum step {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(d -> iz.methodDeclaration(az.astNode(d))).collect(Collectors.toList()) : null;
+                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(Collectors.toList()) : null;
   }
 
   /** @param ¢ JD
@@ -554,7 +554,7 @@ public enum step {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
-    types(u).forEach(t -> $.addAll(methods(t)));
+    types(u).forEach(λ -> $.addAll(methods(λ)));
     return $;
   }
 
@@ -595,7 +595,7 @@ public enum step {
   }
 
   private static List<String> names(final FieldDeclaration d) {
-    return d == null ? null : fragments(d).stream().map(x -> identifier(name(x))).collect(Collectors.toList());
+    return d == null ? null : fragments(d).stream().map(λ -> identifier(name(λ))).collect(Collectors.toList());
   }
 
   public static int nodeType(final ASTNode ¢) {
@@ -646,7 +646,7 @@ public enum step {
    * @param d JD
    * @return */
   public static List<String> parametersNames(final MethodDeclaration d) {
-    return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(x -> x.getName() + "").collect(Collectors.toList()));
+    return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(λ -> λ.getName() + "").collect(Collectors.toList()));
   }
 
   /** Expose the list of parameters types in a {@link MethodDeclaration}

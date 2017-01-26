@@ -19,10 +19,10 @@ public class TopMenuHandlers extends AbstractHandler {
         SpartanizationHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
       put("il.org.spartan.LaconizeCurrent",
-          e -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit()).go());
+          λ -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit()).go());
       put("il.org.spartan.LaconizeAll",
-          e -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits()).go());
-      put("il.org.spartan.ZoomTool", e -> {
+          λ -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits()).go());
+      put("il.org.spartan.ZoomTool", λ -> {
         if (InflateHandler.active.get() || showZoomToolMessage())
           InflateHandler.goWheelAction();
       });
@@ -34,7 +34,7 @@ public class TopMenuHandlers extends AbstractHandler {
           InflateHandler.goWheelAction();
       });
       put("il.org.spartan.ZoomAll",
-          e -> InflateHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits().setUseBinding()).go());
+          λ -> InflateHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits().setUseBinding()).go());
     }
   };
 

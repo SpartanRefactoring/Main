@@ -20,7 +20,9 @@ public interface namer {
   String forbidden = "_";
   String anonymous = "__";
   String return¢ = "$";
-  String[] standardNames = { namer.forbidden, namer.return¢, namer.anonymous, namer.current };
+  String current = "¢";
+  String lambda = "λ";
+  String[] standardNames = { namer.forbidden, namer.return¢, namer.anonymous, namer.current, namer.lambda };
   @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
     {
       add("Class");
@@ -45,7 +47,6 @@ public interface namer {
       add("Vector");
     }
   };
-  String current = "λ";
 
   static String[] components(final Name ¢) {
     return components(¢);
@@ -86,7 +87,7 @@ public interface namer {
   static String shorten(final List<Type> ¢) {
     return ¢.stream()
         .filter(
-            $ -> (($ + "").length() != 1 || !Character.isUpperCase(first($ + ""))) && (!iz.wildcardType($) || az.wildcardType($).getBound() != null))
+            λ -> ((λ + "").length() != 1 || !Character.isUpperCase(first(λ + ""))) && (!iz.wildcardType(λ) || az.wildcardType(λ).getBound() != null))
         .map(namer::shorten).findFirst().orElse(null);
   }
 

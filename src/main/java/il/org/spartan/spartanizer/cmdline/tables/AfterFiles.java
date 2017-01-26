@@ -80,9 +80,9 @@ public class AfterFiles extends FolderASTVisitor {
     Count.print();
     System.err.println("Generating output files...");
     writeFile(new File(makeFile("after.java")),
-        methods.values().stream().map(li -> li.stream().map(x -> format.code(x.after + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
+        methods.values().stream().map(li -> li.stream().map(λ -> format.code(λ.after + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(
-        li -> li.stream().map(m -> m.after).filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y))
+        li -> li.stream().map(λ -> λ.after).filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y))
         .reduce("", (x, y) -> x + y));
     summarizeSortedMethodStatistics(path);
     summarizeNPStatistics();
@@ -133,7 +133,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
-    return safe.div(rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), rs.size());
+    return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
   }
 
   private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final List<MethodRecord> rs) {
@@ -145,7 +145,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
-    return safe.div(rs.stream().map(x -> min(1, safe.div(x.numNPStatements, x.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
@@ -181,13 +181,13 @@ public class AfterFiles extends FolderASTVisitor {
         .sorted((k1, k2) -> npStatistics.get(k1).occurences < npStatistics.get(k2).occurences ? 1
             : npStatistics.get(k1).occurences > npStatistics.get(k2).occurences ? -1 : 0)
         .map(npStatistics::get)//
-        .forEach(n -> {
+        .forEach(λ -> {
           report //
-              .put("Name", n.name) //
-              .put("Type", n.className) //
-              .put("occurences", n.occurences) //
-              .put("Statements", n.numNPStatements) //
-              .put("Expressions", n.numNPExpressions) //
+              .put("Name", λ.name) //
+              .put("Type", λ.className) //
+              .put("occurences", λ.occurences) //
+              .put("Statements", λ.numNPStatements) //
+              .put("Expressions", λ.numNPExpressions) //
           ;
           report.nl();
         });

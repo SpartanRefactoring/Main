@@ -42,7 +42,7 @@ public class SingleMarkerTest extends MetaFixture {
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       final String key = (a + "").substring(1);
       if (definition.Kind.has(key))
-        annotees.of(a).forEach(¢ -> $.add(as.array(definition.Kind.valueOf(key), ¢)));
+        annotees.of(a).forEach(λ -> $.add(as.array(definition.Kind.valueOf(key), λ)));
     }
     return $;
   }
