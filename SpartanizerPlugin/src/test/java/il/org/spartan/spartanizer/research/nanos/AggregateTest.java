@@ -4,12 +4,14 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /** Tests {@link Aggregate}
  * @author Ori Marcovitch
  * @since Jan 18, 2017 */
+
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore // TODO: Ori Marcovitch
