@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 
@@ -29,7 +28,7 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   }
 
   public double coverage() {
-    return format.decimal(safe.div(covered(), total()));
+    return format.perc(covered(), total());
   }
 
   public int totalDoWhile() {

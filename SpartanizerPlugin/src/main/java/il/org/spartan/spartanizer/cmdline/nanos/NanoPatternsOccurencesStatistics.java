@@ -1,16 +1,16 @@
-/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
- * @author orimarco <marcovitch.ori@gmail.com>
- * @since Jan 2, 2017 */
 package il.org.spartan.spartanizer.cmdline.nanos;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
+/** Collects statistics about nano occurrences
+ * @author orimarco <marcovitch.ori@gmail.com>
+ * @since Jan 2, 2017 */
 public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int, HashMap<String, Int>>> {
   private static final long serialVersionUID = 1L;
   private final ASTVisitor typesDistributionCounter = new ASTVisitor() {
@@ -55,11 +55,10 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   }
 
   public double coverage(final int type) {
-    return safe.div(covered(type), total(type));
+    return format.perc(covered(type), total(type) + covered(type));
   }
 
   public void fillAbsents() {
-    // new SpartAnalyzer().getAllPatterns().stream().forEach(p -> );
     //
   }
 }
