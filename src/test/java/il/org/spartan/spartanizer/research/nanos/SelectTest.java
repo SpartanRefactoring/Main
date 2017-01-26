@@ -24,14 +24,14 @@ public class SelectTest {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
         .using(EnhancedForStatement.class, new Select())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).map(¢->peel(¢)).collect(Collectors.toList()));")//
-        .stays();
+    ;
   }
 
   @Test public void respect() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(Collectors.toList()));")//
-        .stays();
+    ;
   }
 
   @Test public void test() {
