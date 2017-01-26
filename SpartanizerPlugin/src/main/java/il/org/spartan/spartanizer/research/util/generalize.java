@@ -14,7 +14,9 @@ import il.org.spartan.utils.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
-public class generalize {
+public enum generalize {
+  ;
+
   public static String code(final String code) {
     finish();
     return generalizeIdentifiers(code);

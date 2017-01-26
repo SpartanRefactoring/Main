@@ -18,7 +18,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public final class TrimmerTestsUtils {
+public enum TrimmerTestsUtils {
+  ;
+
   public static class Operand extends Wrapper<String> {
     private final Trimmer trimmer;
 

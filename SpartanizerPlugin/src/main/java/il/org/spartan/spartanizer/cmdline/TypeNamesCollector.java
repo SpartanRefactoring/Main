@@ -16,7 +16,8 @@ import il.org.spartan.utils.*;
  * @year 2015
  * @author Yossi Gil
  * @since Dec 20, 2016 */
-public final class TypeNamesCollector {
+public enum TypeNamesCollector {
+  ;
   static final Map<String, Integer> longNames = new TreeMap<>();
   static final Map<String, Set<String>> shortToFull = new TreeMap<>();
 

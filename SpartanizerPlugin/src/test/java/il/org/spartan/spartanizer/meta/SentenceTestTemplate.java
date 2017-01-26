@@ -22,7 +22,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** A demo on testing with a {!@link {@link MetaFixture}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
-public class SentenceTestTemplate {
+public enum SentenceTestTemplate {
+  ;
   public static final Trimmer trimmer = new Trimmer();
 
   static List<List<MethodDeclaration>> allSentences() {
