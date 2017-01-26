@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>int a=3;b=a;</code> into <code>b = a;</code>
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitializerStatementTerminatingScope extends $VariableDeclarationFragementAndStatement //
+public final class FragmentInitializerStatementTerminatingScope extends $FragementAndStatement //
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";

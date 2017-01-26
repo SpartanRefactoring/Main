@@ -7,7 +7,7 @@ import org.junit.*;
 
 /** TODO: Oren Afek please add a description
  * @author Oren Afek
- * @since 2016 Testing {@link LambdaExpressionRemoveRedundantCurlyBraces } */
+ * @since 2016 Testing {@link LambdaRemoveRedundantCurlyBraces } */
 @SuppressWarnings("static-method")
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {
@@ -37,8 +37,9 @@ public class Issue0455 {
   }
 
   @Test public void emptyReturnStatement() {
-    trimmingOf("(x) -> {return;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x) -> {return;}").using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("(x) -> {}")//
+        .gives("x -> {}")//
         .stays();
   }
 
@@ -63,19 +64,20 @@ public class Issue0455 {
   }
 
   @Test public void paransAreNotAddedToParams() {
-    trimmingOf("x -> {return x;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("x -> {return x;}").using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("x -> x")//
         .stays();
   }
 
   @Test public void paransAreNotRemovedFromParams() {
-    trimmingOf("(x) -> {return x;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x) -> {return x;}").using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("(x) -> x")//
+        .gives("x -> x")//
         .stays();
   }
 
   @Test public void simpleBiFunction() {
-    trimmingOf("(x,y) -> {return x + y;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("(x,y) -> {return x + y;}").using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("(x,y) -> x + y")//
         .stays();
   }
@@ -87,7 +89,7 @@ public class Issue0455 {
   }
 
   @Test public void simpleProducer() {
-    trimmingOf("()->{return 42;}").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("()->{return 42;}").using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("()->42")//
         .stays();
   }
@@ -116,6 +118,7 @@ public class Issue0455 {
   @Test public void singleNonReturnStatement() {
     trimmingOf("Consumer<Integer> x = (x) -> {System.out.println(x);};") //
         .gives("Consumer<Integer> x = (x) -> System.out.println(x);") //
+        .gives("Consumer<Integer> x = x -> System.out.println(x);") //
         .stays();
   }
 
@@ -125,7 +128,7 @@ public class Issue0455 {
   }
 
   @Test public void singleReturnStatementAndSingleParameterd() {
-    trimmingOf("new ArrayList<Integer>().map(x->{return x+1;});").using(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces())//
+    trimmingOf("new ArrayList<Integer>().map(x->{return x+1;});").using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("new ArrayList<Integer>().map(x -> x+1);")//
         .stays();
   }
