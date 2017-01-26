@@ -19,4 +19,11 @@ public class Issue1119 {
         .stays()//
     ;
   }
+
+  @Test public void b() {
+    trimmingOf("(final int x)->x")//
+        .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
+        .stays()//
+    ;
+  }
 }
