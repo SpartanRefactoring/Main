@@ -56,7 +56,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Arrays.asList(ns).forEach(¢ -> ¢.accept(declarationsCollector($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
         return $;
       }
     };
@@ -66,7 +66,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Arrays.asList(ns).forEach(¢ -> ¢.accept(definitionsCollector($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
         return $;
       }
     };
@@ -80,7 +80,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Arrays.asList(ns).forEach(¢ -> ¢.accept(new UsesCollectorIgnoreDefinitions($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
         return $;
       }
     };
@@ -94,7 +94,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Arrays.asList(ns).forEach(¢ -> ¢.accept(new UnsafeUsesCollector($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
         return $;
       }
     };
@@ -110,7 +110,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(¢ -> ¢.accept(new UsesCollector($, name)));
+        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
         return $;
       }
     };
@@ -124,7 +124,7 @@ public enum collect {
 
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
-        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(¢ -> ¢.accept(new StringCollector($, stringName)));
+        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
         return $;
       }
     };
@@ -172,7 +172,7 @@ public enum collect {
        * the {@VariableDeclarationFragment}s given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        fs.forEach(¢ -> add(step.name(¢)));
+        fs.forEach(λ -> add(step.name(λ)));
       }
 
       /** Tries to add to the list provided by the closure (into) the
@@ -184,7 +184,7 @@ public enum collect {
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
       boolean consider(final List<? extends Expression> xs) {
-        xs.forEach(¢ -> addFragments(fragments(az.variableDeclarationExpression(¢))));
+        xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
     };
@@ -238,7 +238,7 @@ public enum collect {
       }
 
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        fs.forEach(¢ -> add(step.name(¢)));
+        fs.forEach(λ -> add(step.name(λ)));
       }
 
       /** ThiWs function is needed cause a definition can be not in a
@@ -252,7 +252,7 @@ public enum collect {
       }
 
       boolean consider(final List<? extends Expression> initializers) {
-        initializers.forEach(¢ -> addFragments(fragments(az.variableDeclarationExpression(¢))));
+        initializers.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
     };
@@ -298,7 +298,7 @@ public enum collect {
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration d) {
-        return getFieldsOfClass(d).stream().allMatch(¢ -> !step.name(¢).subtreeMatch(matcher, what));
+        return getFieldsOfClass(d).stream().allMatch(λ -> !step.name(λ).subtreeMatch(matcher, what));
       }
 
       @Override public boolean visit(final Assignment ¢) {
@@ -339,7 +339,7 @@ public enum collect {
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
-        return parameters(d).stream().allMatch(¢ -> !step.name(¢).subtreeMatch(matcher, what));
+        return parameters(d).stream().allMatch(λ -> !step.name(λ).subtreeMatch(matcher, what));
       }
 
       @Override public boolean visit(final MethodInvocation ¢) {
@@ -433,7 +433,7 @@ public enum collect {
    * @return list of uses */
   List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
-    Arrays.asList(ns).forEach(n -> Arrays.asList(collectors(what, $)).forEach(n::accept));
+    Arrays.asList(ns).forEach(λ -> Arrays.asList(collectors(what, $)).forEach(λ::accept));
     removeDuplicates($);
     $.sort(Comparator.comparingInt(ASTNode::getStartPosition));
     return $;

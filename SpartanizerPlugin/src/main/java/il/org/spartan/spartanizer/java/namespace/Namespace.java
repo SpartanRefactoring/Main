@@ -56,7 +56,7 @@ public final class Namespace implements Environment {
 
   protected Namespace addConstants(final EnumDeclaration d, final List<EnumConstantDeclaration> ds) {
     @knows("¢") final type t = type.bring(d.getName() + "");
-    ds.forEach(¢ -> put(step.name(¢) + "", new Binding(t)));
+    ds.forEach(λ -> put(step.name(λ) + "", new Binding(t)));
     return this;
   }
 
@@ -86,7 +86,7 @@ public final class Namespace implements Environment {
 
   public String description(final String indent) {
     return indent + name + "" + flat + (children.isEmpty() ? ""
-        : ":\n" + separate.these(children.stream().map(x -> x.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
+        : ":\n" + separate.these(children.stream().map(λ -> λ.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
   }
 
   /** @return <code><b>true</b></code> <em>iff</em> {@link Environment} is
@@ -224,7 +224,7 @@ public final class Namespace implements Environment {
   static Namespace spawnAndFill(final Namespace n, final TryStatement s) {
     if (s == null)
       return n;
-    catchClauses(s).forEach(¢ -> n.spawn(catch¢).put(exception(¢)).fillScope(¢));
+    catchClauses(s).forEach(λ -> n.spawn(catch¢).put(exception(λ)).fillScope(λ));
     n.fillScope(s.getFinally());
     final Namespace $ = n.spawn(try¢);
     resources(s).forEach($::put);
@@ -271,7 +271,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final FieldDeclaration d) {
-    fragments(d).forEach(¢ -> put(step.name(¢), d.getType()));
+    fragments(d).forEach(λ -> put(step.name(λ), d.getType()));
     return this;
   }
 
@@ -316,7 +316,7 @@ public final class Namespace implements Environment {
   }
 
   protected Namespace put(final VariableDeclarationExpression x) {
-    fragments(x).forEach(¢ -> put(step.name(¢), type(x)));
+    fragments(x).forEach(λ -> put(step.name(λ), type(x)));
     return this;
   }
 
@@ -350,7 +350,7 @@ public final class Namespace implements Environment {
   }
 
   public boolean allows(final String identifier) {
-    return has(identifier) || children.stream().anyMatch(¢ -> ¢.allows(identifier));
+    return has(identifier) || children.stream().anyMatch(λ -> λ.allows(identifier));
   }
 
   public static Iterable<String> namesGenerator(final SimpleType t) {
@@ -390,15 +390,15 @@ public final class Namespace implements Environment {
     return put(s, t);
   }
 
-  public boolean allowsCurrent() {
-    return children.stream().allMatch(¢ -> ¢.allowsCurrentRecursive());
+  public boolean hasChildren() {
+    return !children.isEmpty();
   }
 
   public boolean allowsCurrentRecursive() {
     for (final String key : flat.keySet())
       if (isVariable(key) && !in(key, namer.standardNames))
         return false;
-    return children.stream().allMatch(¢ -> ¢.allowsCurrentRecursive());
+    return children.stream().allMatch(λ -> λ.allowsCurrentRecursive());
   }
 
   private static boolean isVariable(final String key) {

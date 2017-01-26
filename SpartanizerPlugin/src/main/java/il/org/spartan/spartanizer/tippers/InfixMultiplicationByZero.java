@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
   private static boolean containsZero(final InfixExpression x) {
-    return extract.allOperands(x).stream().anyMatch(¢ -> iz.numberLiteral(¢) && "0".equals(az.numberLiteral(¢).getToken()));
+    return extract.allOperands(x).stream().anyMatch(λ -> iz.numberLiteral(λ) && "0".equals(az.numberLiteral(λ).getToken()));
   }
 
   private static boolean isContainsSideEffect(final InfixExpression x) {
-    return extract.allOperands(x).stream().anyMatch(¢ -> !sideEffects.free(¢));
+    return extract.allOperands(x).stream().anyMatch(λ -> !sideEffects.free(λ));
   }
 
   @Override public String description(final InfixExpression ¢) {

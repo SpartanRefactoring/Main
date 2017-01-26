@@ -68,7 +68,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   private static boolean suppressing(final NormalAnnotation a) {
-    return a != null && values(a).stream().anyMatch(¢ -> iz.identifier("value", ¢.getName()) && isUnused(¢.getValue()));
+    return a != null && values(a).stream().anyMatch(λ -> iz.identifier("value", λ.getName()) && isUnused(λ.getValue()));
   }
 
   private static boolean suppresssing(final SingleMemberAnnotation ¢) {
@@ -97,7 +97,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))
       return null;
     if (m != null)
-      parameters(method).stream().filter(¢ -> !$.equals(¢)).forEach(m::exclude);
+      parameters(method).stream().filter(λ -> !$.equals(λ)).forEach(m::exclude);
     return replace($);
   }
 }

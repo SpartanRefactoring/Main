@@ -108,7 +108,7 @@ public class Matcher {
   }
 
   private boolean containsOption(final Option o) {
-    return Arrays.asList(options).stream().anyMatch(¢ -> ¢.equals(o));
+    return Arrays.asList(options).stream().anyMatch(λ -> λ.equals(o));
   }
 
   private static boolean blockMatches(final ASTNode p, final Block n) {
@@ -422,7 +422,7 @@ public class Matcher {
     final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>();
     $.set(replacement);
-    enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
+    enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
@@ -446,7 +446,7 @@ public class Matcher {
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
     final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
-    enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(¢ -> $.set($.get().replace(¢, enviroment.get(¢) + "")));
+    enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
@@ -467,7 +467,7 @@ public class Matcher {
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
-    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(x -> x + "").reduce("", (x, y) -> x + y);
+    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(λ -> λ + "").reduce("", (x, y) -> x + y);
   }
 
   public ASTNode getMatching(final ASTNode n, final String s) {

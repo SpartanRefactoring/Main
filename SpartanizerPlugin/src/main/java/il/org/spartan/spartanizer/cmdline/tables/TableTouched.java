@@ -54,6 +54,6 @@ public class TableTouched extends TableNanosCoverage {
   }
 
   private static double totalMethodsTouched(final List<MethodRecord> rs) {
-    return rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count();
+    return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
   }
 }

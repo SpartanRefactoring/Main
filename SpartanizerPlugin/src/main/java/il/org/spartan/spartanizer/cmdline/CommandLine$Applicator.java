@@ -59,12 +59,12 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   private static String[] removeExcludedNanoPatterns(final String[] tipperGroups, final String[] excludedNanoPatterns) {
     return Arrays.asList(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {})).stream()
-        .filter(¢ -> !as.list(excludedNanoPatterns).contains(¢)).collect(Collectors.toList()).toArray(new String[] {});
+        .filter(λ -> !as.list(excludedNanoPatterns).contains(λ)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String[] excludedTipperGroups) {
     return Arrays.asList(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {})).stream()
-        .filter(¢ -> !as.list(excludedTipperGroups).contains(¢)).collect(Collectors.toList()).toArray(new String[] {});
+        .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
   private void go(final CompilationUnit u) {

@@ -43,7 +43,7 @@ public class Logger {
   }
 
   public static void logNP(final ASTNode n, final String np) {
-    subscribers.forEach(¢ -> ¢.accept(n, np));
+    subscribers.forEach(λ -> λ.accept(n, np));
   }
 
   private static Integer hashMethod(final MethodDeclaration ¢) {
@@ -65,7 +65,7 @@ public class Logger {
    * @param u compilation unit */
   public static void logType(final AbstractTypeDeclaration d) {
     currentType.push(d);
-    final List<MethodDeclaration> ms = step.methods(d).stream().filter(m -> enumerate.statements(m) != 0 && !m.isConstructor())
+    final List<MethodDeclaration> ms = step.methods(d).stream().filter(λ -> enumerate.statements(λ) != 0 && !λ.isConstructor())
         .collect(Collectors.toList());
     ms.forEach(Logger::logMethodInfo);
     numMethods += ms.size();

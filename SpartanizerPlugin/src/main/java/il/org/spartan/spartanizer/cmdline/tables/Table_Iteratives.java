@@ -149,13 +149,12 @@ public class Table_Iteratives extends FolderASTVisitor {
         .col("Definites Coverage", definites.coverage())//
     ;
     //
-    final HashMap<String, Int> hist = statistics.nanoHistogram(Integer.valueOf(ENHANCED));
-    // hist.keySet().forEach(¢ -> rawWriter.col(¢ + " perc.",
-    // format.decimal(100 * safe.div(hist.get(¢).inner,
-    // statistics.coverage(ENHANCED)));
-    hist.keySet().forEach(¢ -> rawWriter.col(¢, hist.get(¢).inner));
+    final HashMap<String, Int> hist = statistics.nanoHistogram(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT));
+    // hist.keySet().forEach(λ -> rawWriter.col(λ + " perc.",
+    // format.decimal(100 * safe.div(hist.get(λ).inner,
+    // statistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
+    hist.keySet().forEach(λ -> rawWriter.col(λ, hist.get(λ).inner));
     rawWriter.nl();
-    summaryWriter.nl();
   }
 
   private static double coverage() {

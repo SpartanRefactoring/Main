@@ -104,8 +104,8 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private void fullBuild() {
     try {
-      getProject().accept(r -> {
-        addMarkers(r);
+      getProject().accept(λ -> {
+        addMarkers(λ);
         return true; // to continue visiting children.
       });
     } catch (final CoreException ¢) {

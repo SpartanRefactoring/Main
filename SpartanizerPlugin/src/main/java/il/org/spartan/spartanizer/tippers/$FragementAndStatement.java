@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-public abstract class $VariableDeclarationFragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }
@@ -27,7 +27,7 @@ public abstract class $VariableDeclarationFragementAndStatement extends ReplaceT
   @Override public abstract String description(VariableDeclarationFragment f);
 
   static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    return forbiddenSiblings(f).stream().anyMatch(¢ -> collect.BOTH_SEMANTIC.of(¢).existIn(ns));
+    return forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
 
   static int eliminationSaving(final VariableDeclarationFragment f) {
