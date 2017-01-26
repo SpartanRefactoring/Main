@@ -29,7 +29,6 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public enum Analyze {
   ;
-
   static {
     set("outputDir", "/tmp");
   }

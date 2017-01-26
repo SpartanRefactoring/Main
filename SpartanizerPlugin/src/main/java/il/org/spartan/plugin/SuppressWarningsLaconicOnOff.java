@@ -26,7 +26,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Ori Roth */
 public enum SuppressWarningsLaconicOnOff {
   ;
-
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
    * @param pm progress monitor for the operation

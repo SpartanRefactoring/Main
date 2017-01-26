@@ -123,8 +123,7 @@ public class Toolbox {
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new SingleVariableDeclarationEnhancedForRenameParameterToCent(),
-            null)//
+            new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //

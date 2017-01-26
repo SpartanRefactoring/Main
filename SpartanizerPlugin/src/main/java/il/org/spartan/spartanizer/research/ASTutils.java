@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @since 2016 */
 public enum ASTutils {
   ;
-
   public static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:

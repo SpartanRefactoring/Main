@@ -7,7 +7,6 @@ import java.util.*;
  * @since 2016 */
 public enum Essence {
   ;
-
   public static void main(final String[] args) {
     for (final Scanner ¢ = new Scanner(System.in);;) {
       System.out.print("Enter some code: ");

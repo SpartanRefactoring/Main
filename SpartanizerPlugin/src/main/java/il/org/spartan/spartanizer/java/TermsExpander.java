@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-08 */
 public enum TermsExpander {
   ;
-
   public static Expression simplify(final InfixExpression ¢) {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
