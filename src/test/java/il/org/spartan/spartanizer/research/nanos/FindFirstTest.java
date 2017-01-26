@@ -48,16 +48,16 @@ public class FindFirstTest {
   }
 
   @Test public void g() {
-    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
+    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
         .using(ForStatement.class, new ForLoop.FindFirst())//
         .gives(
-            "return from(¢).step(($)->$!=null).to(($)->$=parent($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
+            "return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
   }
 
   @Test public void h() {
-    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = parent($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
+    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.methodDeclaration($)) return az.methodDeclaration($); return null;")//
         .using(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
         .gives(
-            "return from(¢).step(($)->$!=null).to(($)->$=parent($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
+            "return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.methodDeclaration($)).map(($)->az.methodDeclaration($)).orElse(null);");
   }
 }
