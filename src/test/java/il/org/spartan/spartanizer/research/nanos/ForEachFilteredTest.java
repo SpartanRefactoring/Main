@@ -27,29 +27,29 @@ public class ForEachFilteredTest {
   }
 
   @Test public void c() {
-    trimmingOf("for (A r : rs) if (u(r.tr())) try { r.um(); } catch (Throwable ¢) { logger.trace(\"resumeAll\",¢); }")//
+    trimmingOf("for (A r : rs) if (u(r.tr())) try { r.um(); } catch (Throwable ¢) { g.tr(\"ra\",¢); }")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
-        .gives("rs.stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){{logger.trace(\"resumeAll\",λ);}}});")//
-        .gives("rs.stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){logger.trace(\"resumeAll\",λ);}});")//
+        .gives("rs.stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){{g.tr(\"ra\",λ);}}});")//
+        .gives("rs.stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){g.tr(\"ra\",λ);}});")//
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("for (A r : (B)rs) if (u(r.tr())) try { r.um(); } catch (Throwable ¢) { logger.trace(\"resumeAll\",¢); }")//
+    trimmingOf("for (A r : (B)rs) if (u(r.tr())) try { r.um(); } catch (Throwable ¢) { g.tr(\"ra\",¢); }")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives(
-            "((B)rs).stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){{logger.trace(\"resumeAll\",λ);}}});")//
+            "((B)rs).stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){{g.tr(\"ra\",λ);}}});")//
         .gives(
-            "((B)rs).stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){logger.trace(\"resumeAll\",λ);}});")//
+            "((B)rs).stream().filter(λ->u(λ.tr())).forEach(λ->{try{λ.um();}catch(Throwable λ){g.tr(\"ra\",λ);}});")//
         .stays();
   }
 
   @Test public void e() {
     trimmingOf(
-        "for (final M ¢ : methods(reflection)) if (!¢.isCtr() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢)) put(mangle(¢), ¢);")//
+        "for (final M ¢ : methods(ref)) if (!¢.isCtr() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢)) put(mangle(¢), ¢);")//
             .using(EnhancedForStatement.class, new ForEachSuchThat())//
             .gives(
-                "(methods(reflection)).stream().filter(λ->!λ.isCtr()&&!iz.static¢(¢)&&!iz.final¢(¢)&&!iz.private¢(¢)).forEach(¢->put(mangle(¢),¢));")//
+                "(methods(ref)).stream().filter(λ->!λ.isCtr()&&!iz.static¢(λ)&&!iz.final¢(λ)&&!iz.private¢(λ)).forEach(λ->put(mangle(λ),λ));")//
             .stays();
   }
 }
