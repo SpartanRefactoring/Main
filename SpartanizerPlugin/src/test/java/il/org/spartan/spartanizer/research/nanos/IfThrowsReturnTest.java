@@ -18,7 +18,7 @@ public class IfThrowsReturnTest {
             " catch (  B i) {" + //
             "    return null;}"//
     ) //
-.using(CatchClause.class, new IfThrowsReturn())//
+        .using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();")//
@@ -40,7 +40,7 @@ public class IfThrowsReturnTest {
             " catch (  B i) {" + //
             "    return;}"//
     ) //
-.using(CatchClause.class, new IfThrowsReturn())//
+        .using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();")//

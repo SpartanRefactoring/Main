@@ -46,14 +46,14 @@ public class CollectTest {
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("for(L<M>st:aS())$.addAll((st).stream().filter(¢->d.sD(¢)).map(¢->x(¢)).collect(Collectors.toList()));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        ;
+    ;
   }
 
   @Test public void e0() {
     trimmingOf("for (S s : as()) for (M ¢ : s) if (a.b(¢)) $.add(x(¢));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("for(S s:as())$.addAll((s).stream().filter(¢->a.b(¢)).map(¢->x(¢)).collect(Collectors.toList()));")//
-        ;
+    ;
   }
 
   @Test public void f() {

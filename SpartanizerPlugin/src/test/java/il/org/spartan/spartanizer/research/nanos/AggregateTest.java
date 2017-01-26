@@ -7,17 +7,17 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /** Tests {@link Aggregate}
  * @author Ori Marcovitch
  * @since Jan 18, 2017 */
-
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore // TODO: Ori Marcovitch
   @Test public void a() {
     trimmingOf("for (int ¢ = 1; ¢ < arr.length; ++¢)  if (arr[¢] < min)   min = arr[¢];") //
-.using(EnhancedForStatement.class, new Aggregate())//
+        .using(EnhancedForStatement.class, new Aggregate())//
         .gives("StatsAccumulator $=Create.a(StatsAccumulator.class).from(values);");
   }
 
@@ -33,7 +33,7 @@ public class AggregateTest {
         .gives("int $ = 0; $+=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("int $ = 0 + bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("int $ = bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
-        ;
+    ;
   }
 
   @Test public void d() {
@@ -72,6 +72,6 @@ public class AggregateTest {
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("int $=init;$+=ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
         .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
-        ;
+    ;
   }
 }
