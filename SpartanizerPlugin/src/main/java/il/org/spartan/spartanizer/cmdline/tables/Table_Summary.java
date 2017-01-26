@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
 public class Table_Summary extends TableReusabilityIndices {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
-  private static final NanoPatternsDistributionStatistics npDistributionStatistics = new NanoPatternsDistributionStatistics();
+  private static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Table writer;
   private static int totalStatements;
@@ -59,7 +59,7 @@ public class Table_Summary extends TableReusabilityIndices {
       statementsCoverageStatistics.get(key).add(m);
       final MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
-        npDistributionStatistics.logMethod(d);
+        npDistributionStatistics.logNode(d);
     } catch (final AssertionError __) {
       ___.unused(__);
     }

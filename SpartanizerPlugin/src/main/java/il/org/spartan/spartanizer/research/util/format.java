@@ -7,7 +7,9 @@ import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-/** TODO: Ori Marcovitch please add a description
+import il.org.spartan.spartanizer.ast.safety.*;
+
+/** Fluet API library for formatting things
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public enum format {
@@ -25,9 +27,13 @@ public enum format {
     return $.get();
   }
 
-  static final NumberFormat numberFormatter = new DecimalFormat("#0.00");
+  private static final NumberFormat numberFormatter = new DecimalFormat("#0.00");
 
   public static double decimal(final double ¢) {
     return Double.valueOf(numberFormatter.format(¢)).doubleValue();
+  }
+
+  public static double perc(int a, int b) {
+    return decimal(100 * safe.div(a, b));
   }
 }
