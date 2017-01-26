@@ -33,8 +33,8 @@ public class AlphabeticallySortedSentence extends MetaFixture {
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
-      step.methods(reflection).stream().filter(¢ -> !¢.isConstructor() && !iz.static¢(¢) && !iz.final¢(¢) && !iz.private¢(¢))
-          .forEach(¢ -> put(mangle(¢), ¢));
+      step.methods(reflection).stream().filter(λ -> !λ.isConstructor() && !iz.static¢(λ) && !iz.final¢(λ) && !iz.private¢(λ))
+          .forEach(λ -> put(mangle(λ), λ));
     }
   };
 

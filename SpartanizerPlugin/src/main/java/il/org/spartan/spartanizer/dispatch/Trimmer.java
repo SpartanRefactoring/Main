@@ -104,7 +104,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final String fileName = Linguistic.unknownIfNull(az.compilationUnit(n.getRoot()),
-            u -> u.getJavaElement() == null ? Linguistic.UNKNOWN : u.getJavaElement().getElementName());
+            λ -> λ.getJavaElement() == null ? Linguistic.UNKNOWN : λ.getJavaElement().getElementName());
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
@@ -146,12 +146,22 @@ public class Trimmer extends AbstractGUIApplicator {
     return toolbox.firstTipper(¢);
   }
 
-  boolean changed;
+  boolean firstAddition = true;
 
-  @SafeVarargs public final <N extends ASTNode> Trimmer add(final Class<N> c, final Tipper<N>... ts) {
-    if (!changed)
-      toolbox = Toolbox.mutableDefaultInstance();
-    changed = true;
+  @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
+    if (firstAddition) {
+      firstAddition = false;
+      toolbox = new Toolbox();
+    }
+    toolbox.add(c, ts);
+    return this;
+  }
+
+  @SafeVarargs public final <N extends ASTNode> Trimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
+    if (firstAddition) {
+      firstAddition = false;
+      toolbox = new Toolbox();
+    }
     toolbox.add(c, ts);
     return this;
   }

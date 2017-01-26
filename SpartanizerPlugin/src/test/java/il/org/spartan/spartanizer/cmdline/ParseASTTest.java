@@ -20,7 +20,7 @@ public class ParseASTTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        return extendedModifiers(d).stream().anyMatch(¢ -> ¢ instanceof MarkerAnnotation && (¢ + "").contains("@Test") && (¢ + "").contains("@Test"));
+        return extendedModifiers(d).stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
       }
 
       /* (non-Javadoc)

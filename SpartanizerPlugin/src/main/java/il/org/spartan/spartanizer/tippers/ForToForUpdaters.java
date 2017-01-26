@@ -49,7 +49,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
 
   public static boolean bodyDeclaresElementsOf(final ASTNode n) {
     final Block $ = az.block(n.getParent());
-    return $ != null && extract.fragments($).stream().anyMatch(¢ -> !collect.usesOf(¢.getName()).in(n).isEmpty());
+    return $ != null && extract.fragments($).stream().anyMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {
@@ -65,7 +65,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
     return step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)))).stream()
-        .anyMatch(¢ -> (¢.getName() + "").equals(n + ""));
+        .anyMatch(λ -> (λ.getName() + "").equals(n + ""));
   }
 
   private static Expression updaterFromBody(final ForStatement ¢) {

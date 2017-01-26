@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
  * its body has only one statement.
  * @author Oren Afek
  * @since 2016-11-17 */
-public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
+public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
     implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
@@ -35,7 +35,7 @@ public class LambdaExpressionRemoveRedundantCurlyBraces extends CarefulTipper<La
       return null;
     final Statement s = first(statements(x));
     final LambdaExpression $ = x.getAST().newLambdaExpression();
-    parameters(x).forEach(¢ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(¢, g));
+    parameters(x).forEach(λ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(λ, g));
     r.replace(body($), iz.expressionStatement(s) ? expression(s)
         : expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : expression(az.returnStatement(s)), g);
     $.setParentheses(x.hasParentheses());

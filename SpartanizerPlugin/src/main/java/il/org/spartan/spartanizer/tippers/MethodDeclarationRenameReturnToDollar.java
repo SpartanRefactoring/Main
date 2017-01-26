@@ -101,11 +101,11 @@ class Aggressive extends AbstractRenamePolicy {
   }
 
   private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
-    return ns.stream().allMatch(rival -> rival == candidate || score(rival, ss) < score(candidate, ss));
+    return ns.stream().allMatch(λ -> λ == candidate || score(λ, ss) < score(candidate, ss));
   }
 
   @SuppressWarnings("boxing") private static int score(final SimpleName n, final List<ReturnStatement> ss) {
-    return ss.stream().map(¢ -> collect.BOTH_LEXICAL.of(n).in(¢).size()).reduce((x, y) -> x + y).get();
+    return ss.stream().map(λ -> collect.BOTH_LEXICAL.of(n).in(λ).size()).reduce((x, y) -> x + y).get();
   }
 
   public Aggressive(final MethodDeclaration inner) {
@@ -127,10 +127,10 @@ class Conservative extends AbstractRenamePolicy {
       if (unused($.next()))
         $.remove();
     return !localVariables.isEmpty() ? first(localVariables)
-        : parameters.stream().filter(¢ -> !unused(¢.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
+        : parameters.stream().filter(λ -> !unused(λ.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 
   private boolean unused(final SimpleName n) {
-    return returnStatements.stream().allMatch(¢ -> !analyze.dependencies(¢).contains(n + ""));
+    return returnStatements.stream().allMatch(λ -> !analyze.dependencies(λ).contains(n + ""));
   }
 }

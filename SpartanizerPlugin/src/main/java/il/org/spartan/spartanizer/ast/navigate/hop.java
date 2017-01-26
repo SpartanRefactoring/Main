@@ -58,7 +58,7 @@ public interface hop {
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
-    return fs.stream().filter($ -> wizard.same(¢, $.getName())).findFirst().orElse(null);
+    return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {

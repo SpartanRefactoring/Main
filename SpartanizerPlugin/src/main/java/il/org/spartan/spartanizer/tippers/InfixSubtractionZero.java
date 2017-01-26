@@ -30,9 +30,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return cons(minus(first(prune)), chop(prune));
   }
 
-  private static List<Expression> prune(final List<Expression> xs) {
-    final List<Expression> $ = xs.stream().filter(¢ -> !iz.literal0(¢)).collect(Collectors.toList());
-    return $.size() != xs.size() ? $ : null;
+  private static List<Expression> prune(final List<Expression> ¢) {
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
+    return $.size() != ¢.size() ? $ : null;
   }
 
   private static ASTNode replacement(final List<Expression> xs) {

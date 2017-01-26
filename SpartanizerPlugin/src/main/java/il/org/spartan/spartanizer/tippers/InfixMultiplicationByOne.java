@@ -21,7 +21,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
     implements TipperCategory.NOP.onNumbers {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    $.addAll(xs.stream().filter(¢ -> !iz.literal1(¢)).collect(Collectors.toList()));
+    $.addAll(xs.stream().filter(λ -> !iz.literal1(λ)).collect(Collectors.toList()));
     return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 

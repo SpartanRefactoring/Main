@@ -74,7 +74,7 @@ public interface ExpanderCategory {
     }
 
     private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
-      return Arrays.asList(ExpanderGroup.values()).stream().filter($ -> $.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
+      return Arrays.asList(ExpanderGroup.values()).stream().filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
     private final Class<? extends ExpanderCategory> clazz;

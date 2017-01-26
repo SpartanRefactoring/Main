@@ -37,6 +37,6 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
   }
 
   private void printMap(final Map<Integer, T> m) {
-    m.keySet().forEach(k -> System.out.println(k.intValue() + " : " + tidy(enumElement(m.get(k)))));
+    m.keySet().forEach(λ -> System.out.println(λ.intValue() + " : " + tidy(enumElement(m.get(λ)))));
   }
 }

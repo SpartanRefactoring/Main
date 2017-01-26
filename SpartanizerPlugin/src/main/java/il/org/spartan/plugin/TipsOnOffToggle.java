@@ -23,9 +23,9 @@ public final class TipsOnOffToggle extends AbstractHandler {
       if (Nature.NATURE_ID.equals(natures[i])) {
         description.setNatureIds(delete(natures, i));
         p.setDescription(description, null);
-        p.accept(r -> {
-          if (r instanceof IFile && r.getName().endsWith(".java"))
-            Builder.deleteMarkers((IFile) r);
+        p.accept(λ -> {
+          if (λ instanceof IFile && λ.getName().endsWith(".java"))
+            Builder.deleteMarkers((IFile) λ);
           return true;
         });
       }

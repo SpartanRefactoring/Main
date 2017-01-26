@@ -31,7 +31,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    *         and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
-        || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(¢ -> type.of(¢) == type.Primitive.Certain.STRING);
+        || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
 
   @Override public String description() {

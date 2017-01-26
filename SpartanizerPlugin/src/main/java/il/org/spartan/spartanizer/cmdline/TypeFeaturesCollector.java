@@ -88,29 +88,26 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
     FolderASTVisitor.main(args);
   }
 
-  @Override @SuppressWarnings({ "boxing", "unchecked" }) 
-  public NamedFunction<ASTNode, Object>[] functions() {
+  @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
     return as.array(//
-        m("length", (¢) -> (¢ + "").length()), //
-        m("essence", (¢) -> Essence.of(¢ + "").length()), //
-        m("tokens", (¢) -> metrics.tokens(¢ + "")), //
-        m("nodes", (¢) -> count.nodes((ASTNode) ¢)), //
-        m("body", (¢) -> metrics.bodySize((ASTNode) ¢)),
+        m("length", λ -> (λ + "").length()), //
+        m("essence", λ -> Essence.of(λ + "").length()), //
+        m("tokens", λ -> metrics.tokens(λ + "")), //
+        m("nodes", λ -> count.nodes((ASTNode) λ)), //
+        m("body", λ -> metrics.bodySize((ASTNode) λ)),
         m("methodDeclaration",
-            (¢) -> az.methodDeclaration((ASTNode) ¢) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) ¢).getBody()).size()),
-        m("tide", (¢) -> clean(¢ + "").length()), //
-        m("abstract", (¢) -> iz.abstract¢((BodyDeclaration) ¢)), //
-        m("default", (¢) -> iz.default¢((BodyDeclaration) ¢)), //
-        m("final", (¢) -> iz.final¢((BodyDeclaration) ¢)), //
-        m("private", (¢) -> iz.private¢((BodyDeclaration) ¢)), //
-        //
-        m("protected", (¢) -> iz.protected¢((BodyDeclaration) ¢)), //
-        m("public", (¢) -> iz.public¢((BodyDeclaration) ¢)), //
-        //
-        m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)));
+            λ -> az.methodDeclaration((ASTNode) λ) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) λ).getBody()).size()),
+        m("tide", λ -> clean(λ + "").length()), //
+        m("abstract", λ -> iz.abstract¢((BodyDeclaration) λ)), //
+        m("default", λ -> iz.default¢((BodyDeclaration) λ)), //
+        m("final", λ -> iz.final¢((BodyDeclaration) λ)), //
+        m("private", λ -> iz.private¢((BodyDeclaration) λ)), //
+        m("protected", λ -> iz.protected¢((BodyDeclaration) λ)), //
+        m("public", λ -> iz.public¢((BodyDeclaration) λ)), //
+        m("static", λ -> iz.static¢((BodyDeclaration) λ)));
   }
 
-  @Override public NamedFunction[] functions(String id) {
+  @Override public NamedFunction[] functions(final String id) {
     // TODO Auto-generated method stub
     return null;
   }
