@@ -13,7 +13,8 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0856 {
   @Test public void a() {
-    trimmingOf("A a(){A b=\"one expression\";B.d(b);return \"and another\";}").using(VariableDeclarationFragment.class, new FragmentInlineIntoNext()) //
+    trimmingOf("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
+.using(VariableDeclarationFragment.class, new FragmentInlineIntoNext()) //
         .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
         .stays();
   }
