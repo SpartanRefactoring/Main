@@ -18,23 +18,21 @@ public class ForEachTest {
   }
 
   @Test public void b() {
-    trimmingOf("for (Entry<U, O> entry : overrideContentType.entrySet()) {  types.getDefaultOrOverride().add(entry.getValue());}")//
+    trimmingOf("for (Entry<U, O> entry : eCT.yS()) {  types.gDo().add(entry.getValue());}")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("for(Entry<U,O>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
+        .gives("for(Entry<U,O>¢:eCT.yS())types.gDo().add(entry.getValue());")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("for (Class i : interceptors) try { " //
-        + " l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));} " //
+    trimmingOf("for (Class i : is) try { " //
+        + " l.add((A)f.newClassInstance(H.class,i));} " //
         + "catch (Throwable ¢) {" //
         + "logger.warn(\"\",¢);" //
         + "}")//
             .using(EnhancedForStatement.class, new ForEach())//
-            .gives(
-                "interceptors.forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
-            .gives(
-                "interceptors.forEach(i->{try{l.add((AtmosphereInterceptor)f.newClassInstance(AtmosphereHandler.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
+            .gives("is.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
+            .gives("is.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
             .stays();
   }
 
