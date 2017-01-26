@@ -123,7 +123,7 @@ public class Toolbox {
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
+            new SingleVariableDeclarationEnhancedForRenameParameterToCent(),
             null)//
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
@@ -366,10 +366,6 @@ public class Toolbox {
   /** Implementation */
   @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
-
-  public Toolbox() {
-    // Nothing to do
-  }
 
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.

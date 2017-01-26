@@ -190,6 +190,7 @@ public interface idiomatic {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
+  @FunctionalInterface
   interface Holder<T> extends Supplier<T> {
     /** Return value when condition is <code><b>true</b></code>
      * @param unless condition on which value is returned

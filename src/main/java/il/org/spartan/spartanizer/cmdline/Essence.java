@@ -5,7 +5,9 @@ import java.util.*;
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2016 */
-public class Essence {
+public enum Essence {
+  ;
+
   public static void main(final String[] args) {
     for (final Scanner ¢ = new Scanner(System.in);;) {
       System.out.print("Enter some code: ");

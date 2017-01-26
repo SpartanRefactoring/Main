@@ -7,6 +7,7 @@ import il.org.spartan.*;
 /** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
+@FunctionalInterface
 public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {

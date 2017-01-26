@@ -6,6 +6,7 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
  * @year 2016
  * @author Yossi Gil
  * @since Sep 28, 2016 */
+@FunctionalInterface
 public interface TipperCategory {
   String description();
 
@@ -91,6 +92,7 @@ public interface TipperCategory {
     }
   }
 
+  @FunctionalInterface
   interface EmptyCycles extends TipperCategory {
     String toString = "churn";
   }

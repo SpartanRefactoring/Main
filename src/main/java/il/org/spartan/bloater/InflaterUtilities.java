@@ -18,7 +18,9 @@ import il.org.spartan.spartanizer.utils.*;
 /** Helper functions for the inflater
  * @author Raviv Rachmiel
  * @since 8-12-16 */
-public class InflaterUtilities {
+public enum InflaterUtilities {
+  ;
+
   /** Main function of the application.
    * @param r JD
    * @param ns list of statements and expression in the selected code which for
