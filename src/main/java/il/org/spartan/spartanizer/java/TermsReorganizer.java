@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016 */
 public enum TermsReorganizer {
   ;
-
   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }

@@ -8,7 +8,6 @@ import java.util.*;
  * @since Nov 25, 2016 */
 enum Collateral {
   ;
-
   public static void ₡(final Runnable... collateralStatements) {
     if (collateralStatements == null)
       throw new IllegalArgumentException();
