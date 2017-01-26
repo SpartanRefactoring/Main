@@ -61,7 +61,7 @@ public abstract class MetaFixture {
   public static String ancestry(final ASTNode n) {
     String $ = "";
     final Int i = new Int();
-    $ = Arrays.asList(ancestors.of(n)).stream().map(p -> "\n\t + " + i.inner++ + ": " + trivia.gist(p) + "/" + p.getClass().getSimpleName())
+    $ = Arrays.asList(ancestors.of(n)).stream().map(λ -> "\n\t + " + i.inner++ + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
     return $;
   }
@@ -110,7 +110,7 @@ public abstract class MetaFixture {
   }
 
   private static String[] values(final List<Expression> xs) {
-    return xs.stream().map(¢ -> az.stringLiteral(¢).getLiteralValue()).toArray(String[]::new);
+    return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
   protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //

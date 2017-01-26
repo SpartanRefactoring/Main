@@ -60,7 +60,7 @@ public class SentenceTestTemplate {
 
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
-      allSentences().forEach(sentence -> $.addAll(sentence.stream().filter(disabling::specificallyDisabled)
+      allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled)
           .map((Function<MethodDeclaration, Object[]>) Changes::____).collect(Collectors.toList())));
       return $;
     }
@@ -138,7 +138,7 @@ public class SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(
-          sentence -> $.addAll(sentence.stream().filter(¢ -> !disabling.specificallyDisabled(¢)).map(Stays::____).collect(Collectors.toList())));
+          sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(Collectors.toList())));
       return $;
     }
 

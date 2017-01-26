@@ -52,7 +52,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
   }
 
   private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
-    xs.forEach(¢ -> gather(¢, $));
+    xs.forEach(λ -> gather(λ, $));
     return $;
   }
 
@@ -72,7 +72,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first($);
-        $.stream().filter(¢ -> ¢ != first && minus.level(¢) > 0).forEach(¢ -> r.replace(¢, plant(copy.of(minus.peel(¢))).into(¢.getParent()), g));
+        $.stream().filter(λ -> λ != first && minus.level(λ) > 0).forEach(λ -> r.replace(λ, plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)
           r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }

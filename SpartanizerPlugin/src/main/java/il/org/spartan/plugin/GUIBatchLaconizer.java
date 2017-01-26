@@ -80,8 +80,8 @@ public class GUIBatchLaconizer extends Applicator {
    * printing to console.
    * @return this applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
-    listener(os -> {
-      Arrays.asList(os).forEach(System.out::print);
+    listener(λ -> {
+      Arrays.asList(λ).forEach(System.out::print);
       System.out.println();
     });
     return this;
@@ -133,7 +133,7 @@ public class GUIBatchLaconizer extends Applicator {
    * @param a JD
    * @return this applicator */
   public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
-    setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
+    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection())));
     name(a.getName());
     return this;
   }
@@ -161,13 +161,13 @@ public class GUIBatchLaconizer extends Applicator {
    * @author Ori Roth
    * @since 2.6 */
   private enum message {
-    run_start(2, inp -> printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1)), //
-    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
-    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
+    run_start(2, inp -> printableAt(inp, 0, λ -> ((Linguistic.Activity) λ).getIng()) + " " + printableAt(inp, 1)), //
+    run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
+    run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
     visit_cu(6,
-        inp -> wizard.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
+        inp -> wizard.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((Linguistic.Activity) λ).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
-    run_finish(3, inp -> "Done " + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
+    run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((Linguistic.Activity) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));
     private final int inputCount;
     private final Function<Object[], String> printing;
@@ -183,11 +183,11 @@ public class GUIBatchLaconizer extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.unknownIfNull(os, xs -> xs[index]);
+      return Linguistic.unknownIfNull(os, λ -> λ[index]);
     }
 
     private static String printableAt(final Object[] os, final int index, final Function<Object, String> operation) {
-      return Linguistic.unknownIfNull(os, xs -> operation.apply(xs[index]));
+      return Linguistic.unknownIfNull(os, λ -> operation.apply(λ[index]));
     }
   }
 

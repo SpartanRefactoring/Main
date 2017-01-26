@@ -25,7 +25,7 @@ public class SpartanizerTest {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
         return $.stream()
-            .anyMatch(modifier -> modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"));
+            .anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
       }
 
       /* (non-Javadoc)
@@ -319,7 +319,7 @@ public class SpartanizerTest {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
         return $.stream()
-            .anyMatch(modifier -> modifier instanceof MarkerAnnotation && (modifier + "").contains("@Test") && (modifier + "").contains("@Test"));
+            .anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
       }
 
       @Override public boolean visit(final MethodDeclaration node) {

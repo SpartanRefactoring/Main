@@ -221,7 +221,7 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(¢ -> extract.fragmentsInto(az.variableDeclrationStatement(¢), $));
+    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(λ -> extract.fragmentsInto(az.variableDeclrationStatement(λ), $));
     return $;
   }
 
@@ -231,7 +231,7 @@ public enum extract {
   }
 
   private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
-    step.statements(b).forEach(¢ -> ifsInto(¢, $));
+    step.statements(b).forEach(λ -> ifsInto(λ, $));
     return $;
   }
 
@@ -365,7 +365,7 @@ public enum extract {
   }
 
   @SuppressWarnings("boxing") private static Statement next(final Statement s, final List<Statement> ss) {
-    return range.to(ss.size() - 1).stream().filter($ -> ss.get($) == s).map($ -> ss.get($ + 1)).findFirst().orElse(null);
+    return range.to(ss.size() - 1).stream().filter(λ -> ss.get(λ) == s).map(λ -> ss.get(λ + 1)).findFirst().orElse(null);
   }
 
   /** Find the {@link Assignment} that follows a given node.
@@ -440,7 +440,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
-    return step.fragments(¢).stream().filter($ -> !iz.identifier("$", $.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
+    return step.fragments(¢).stream().filter(λ -> !iz.identifier("$", λ.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
@@ -501,7 +501,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    step.statements(b).forEach(¢ -> statementsInto(¢, $));
+    step.statements(b).forEach(λ -> statementsInto(λ, $));
     return $;
   }
 

@@ -72,7 +72,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
   }
 
   static boolean noSideEffectCommands(final SwitchStatement s) {
-    return statements(s).stream().allMatch(¢ -> iz.switchCase(¢) || iz.breakStatement(¢));
+    return statements(s).stream().allMatch(λ -> iz.switchCase(λ) || iz.breakStatement(λ));
   }
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {

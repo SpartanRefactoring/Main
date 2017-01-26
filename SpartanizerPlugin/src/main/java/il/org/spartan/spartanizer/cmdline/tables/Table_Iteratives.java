@@ -143,9 +143,9 @@ public class Table_Iteratives extends FolderASTVisitor {
     ;
     //
     final HashMap<String, Int> hist = npStatistics.nanoHistogram(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT));
-    hist.keySet().forEach(¢ -> rawWriter.col(¢ + " perc.",
-        format.decimal(100 * safe.div(hist.get(¢).inner, npStatistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
-    hist.keySet().forEach(¢ -> rawWriter.col(¢, hist.get(¢).inner));
+    hist.keySet().forEach(λ -> rawWriter.col(λ + " perc.",
+        format.decimal(100 * safe.div(hist.get(λ).inner, npStatistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
+    hist.keySet().forEach(λ -> rawWriter.col(λ, hist.get(λ).inner));
     rawWriter.nl();
   }
 

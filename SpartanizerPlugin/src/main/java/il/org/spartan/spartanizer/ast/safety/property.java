@@ -16,7 +16,7 @@ public enum property {
   }
 
   public static Attached attach(final Object o) {
-    return ¢ -> ¢.setProperty(key(o.getClass()), o);
+    return λ -> λ.setProperty(key(o.getClass()), o);
   }
 
   /** Get property from node.
@@ -42,7 +42,7 @@ public enum property {
   }
 
   @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> c) {
-    return ¢ -> (N) ¢.getProperty(key(c));
+    return λ -> (N) λ.getProperty(key(c));
   }
 
   /** Sets a binary flag true.

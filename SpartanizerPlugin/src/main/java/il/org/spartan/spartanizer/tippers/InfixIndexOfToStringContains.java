@@ -34,7 +34,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
   /** Indicates if the infix expression contains two strings with string
    * operation between them */
   @Override public boolean canTip(final InfixExpression x) {
-    return tippers.stream().anyMatch(¢ -> ¢.canTip(x) && stringOperands(¢.getMatching(x, "$X1"), ¢.getMatching(x, "$X2")));
+    return tippers.stream().anyMatch(λ -> λ.canTip(x) && stringOperands(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
   }
 
   private static boolean stringOperands(final ASTNode n1, final ASTNode n2) {
@@ -51,11 +51,11 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
 
   /** Operates the first tip that can be implemented. */
   @Override public Tip tip(final InfixExpression ¢) {
-    return tippers.stream().filter($ -> $.canTip(¢)).map($ -> $.tip(¢)).findFirst().orElse(null);
+    return tippers.stream().filter(λ -> λ.canTip(¢)).map(λ -> λ.tip(¢)).findFirst().orElse(null);
   }
 
   /** @return the first description of tip that can be implemented. */
   @Override public String description(final InfixExpression ¢) {
-    return tippers.stream().filter($ -> $.canTip(¢)).map($ -> $.description(¢)).findFirst().orElse(null);
+    return tippers.stream().filter(λ -> λ.canTip(¢)).map(λ -> λ.description(¢)).findFirst().orElse(null);
   }
 }

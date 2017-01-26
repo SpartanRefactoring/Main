@@ -52,7 +52,7 @@ public final class MethodExplorer {
       }
 
       boolean add(final List<? extends Expression> xs) {
-        xs.forEach(¢ -> addFragments(fragments(az.variableDeclarationExpression(¢))));
+        xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
 
@@ -62,7 +62,7 @@ public final class MethodExplorer {
       }
 
       void addFragments(final List<VariableDeclarationFragment> fs) {
-        fs.forEach(¢ -> $.add(¢.getName()));
+        fs.forEach(λ -> $.add(λ.getName()));
       }
     });
     return $;

@@ -52,7 +52,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(d.getType()));
-    $.addAll(fragments(d).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
+    $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
     return $;
   }
 
@@ -63,14 +63,14 @@ final class EnvironmentVisitor extends ASTVisitor {
   @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(x.getType()));
-    $.addAll(fragments(x).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
+    $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
     return $;
   }
 
   @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(s.getType()));
-    $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(fullName(¢.getName()), createInformation(¢, t))).collect(Collectors.toList()));
+    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
     return $;
   }
 
@@ -158,7 +158,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
-    return ss.stream().filter(¢ -> s.equals(¢.getKey())).map(Entry::getValue).findFirst().orElse(null);
+    return ss.stream().filter(λ -> s.equals(λ.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 
   /** Returns the {@link Binding} of the declaration the current declaration is

@@ -30,7 +30,7 @@ public class LogToTest {
     }
     final File[] fs = d.listFiles();
     final Int fc = new Int();
-    Arrays.asList(fs).stream().filter(element -> element.isFile() && element.getName().startsWith("log_spartan")).forEach(element -> ++fc.inner);
+    Arrays.asList(fs).stream().filter(λ -> λ.isFile() && λ.getName().startsWith("log_spartan")).forEach(λ -> ++fc.inner);
     if (fc.inner == 0) {
       System.out.println("First run some tests to create a log file.");
       return;
@@ -110,7 +110,7 @@ public class LogToTest {
             + "@SuppressWarnings(\"static-method\")\n" //
             + "@Ignore\n" //
             + "public class " + fileName + " {\n");
-    ss.forEach(¢ -> $.append(¢).append("\n"));
+    ss.forEach(λ -> $.append(λ).append("\n"));
     return format.code($.append("}\n") + "");
   }
 }
