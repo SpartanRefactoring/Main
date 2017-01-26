@@ -10,7 +10,7 @@ import org.junit.runners.*;
  * @since Jan 23, 2017 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })
-public class Issue1119 {
+public class Issue1117 {
   @Test public void a() {
     trimmingOf("(x)->x")//
         .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
