@@ -1,9 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
