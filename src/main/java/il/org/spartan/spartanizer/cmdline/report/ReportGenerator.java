@@ -49,11 +49,11 @@ public class ReportGenerator implements ConfigurableReport {
       $.put("methods",
           as.array(m("N. of Nodes", count::nodes), //
               m("Average Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
-                                                // "").length()), //
+                                              // "").length()), //
               m("Average Uncle Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
-                                                      // "").length()), //
+                                                    // "").length()), //
               m("Character Length", λ -> -1000) // Essence.of(¢ +
-                                                  // "").length()) //
+                                                // "").length()) //
           // Report Halstead Metrics
           )); //
       return $;

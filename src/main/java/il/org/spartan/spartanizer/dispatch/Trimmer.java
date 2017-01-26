@@ -145,7 +145,7 @@ public class Trimmer extends AbstractGUIApplicator {
   protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
-  
+
   boolean firstAddition = true;
 
   @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
@@ -156,7 +156,6 @@ public class Trimmer extends AbstractGUIApplicator {
     toolbox.add(c, ts);
     return this;
   }
-
 
   @SafeVarargs public final <N extends ASTNode> Trimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
