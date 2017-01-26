@@ -91,9 +91,7 @@ public class GUIBatchLaconizer extends Applicator {
    * listener.
    * @return this applicator */
   public GUIBatchLaconizer defaultListenerSilent() {
-    listener((final Object... __) -> {
-      //
-    });
+    listener((final Object... __) -> {});
     return this;
   }
 

@@ -29,11 +29,11 @@ public class CleanerVisitorTest {
   }
 
   private static Predicate<ASTNode> createImportPredicate() {
-    return (p) -> p instanceof ImportDeclaration;
+    return p -> p instanceof ImportDeclaration;
   }
 
   private static Predicate<ASTNode> createJavadocPredicate() {
-    return (p) -> p instanceof Javadoc;
+    return p -> p instanceof Javadoc;
   }
 
   private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {

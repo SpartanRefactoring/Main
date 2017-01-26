@@ -67,13 +67,13 @@ public class MetricsReport implements ConfigurableReport {
   }
 
   @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-    return as.array(m("length" + id, (¢) -> (¢ + "").length()), //
-        m("essence" + id, (¢) -> Essence.of(¢ + "").length()), //
-        m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), //
+    return as.array(m("length" + id, ¢ -> (¢ + "").length()), //
+        m("essence" + id, ¢ -> Essence.of(¢ + "").length()), //
+        m("tokens" + id, ¢ -> metrics.tokens(¢ + "")), //
         m("nodes" + id, count::nodes), //
         m("body" + id, metrics::bodySize), //
-        m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()), //
-        m("tide" + id, (¢) -> clean(¢ + "").length())); //
+        m("methodDeclaration" + id, ¢ -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()), //
+        m("tide" + id, ¢ -> clean(¢ + "").length())); //
   }
 
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
