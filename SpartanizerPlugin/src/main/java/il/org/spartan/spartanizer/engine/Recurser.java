@@ -134,16 +134,16 @@ public final class Recurser<T> {
 
   public T preVisit(final Function<Recurser<T>, T> r) {
     current = r.apply(this);
-    final List<? extends ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
-      return this.current;
+      return current;
     final List<Recurser<T>> $ = new ArrayList<>();
     children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
-      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
+      current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
       ++index;
     }
-    return $.isEmpty() ? this.current : $.get(index - 1).getCurrent();
+    return $.isEmpty() ? current : $.get(index - 1).getCurrent();
   }
 }

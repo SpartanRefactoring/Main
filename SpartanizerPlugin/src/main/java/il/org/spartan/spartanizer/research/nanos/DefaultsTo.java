@@ -49,7 +49,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override public il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Default;
   }
 }
