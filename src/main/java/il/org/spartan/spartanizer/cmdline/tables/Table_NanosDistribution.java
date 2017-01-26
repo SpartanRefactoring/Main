@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
 
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -25,7 +26,7 @@ import il.org.spartan.tables.*;
 public class Table_NanosDistribution extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final Map<Integer, Table> writers = new HashMap<>();
-  private static final NanoPatternsDistributionStatistics npStatistics = new NanoPatternsDistributionStatistics();
+  private static final NanoPatternsOccurencesStatistics npStatistics = new NanoPatternsOccurencesStatistics();
   private static final CleanerVisitor cleanerVisitor = new CleanerVisitor();
   static {
     clazz = Table_NanosDistribution.class;
@@ -46,7 +47,7 @@ public class Table_NanosDistribution extends FolderASTVisitor {
   @Override public boolean visit(final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
-        npStatistics.logMethod(findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
+        npStatistics.logNode(findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
@@ -73,18 +74,19 @@ public class Table_NanosDistribution extends FolderASTVisitor {
 
   public static void summarize(final String path) {
     npStatistics.fillAbsents();
-    for (final Integer type : npStatistics.keySet()) {
-      if (!writers.containsKey(type))
-        initializeWriter(type.intValue());
-      @SuppressWarnings("resource") final Table writer = writers.get(type);
+    for (final Integer boxedType : npStatistics.keySet()) {
+      if (!writers.containsKey(boxedType))
+        initializeWriter(boxedType.intValue());
+      @SuppressWarnings("resource") final Table writer = writers.get(boxedType);
+      int type = Unbox.it(boxedType);
       writer//
           .col("Project", path)//
-          .col("count", npStatistics.count(type))//
-          .col("nanos count", npStatistics.countNanos(type))//
+          .col("count", npStatistics.total(type))//
+          .col("nanos count", npStatistics.covered(type))//
           .col("coverage", format.decimal(100 * npStatistics.coverage(type)))//
       ;
-      final HashMap<String, Int> hist = npStatistics.nanoHistogram(type);
-      hist.keySet().forEach(λ -> writer.col(λ + " perc.", format.decimal(100 * safe.div(hist.get(λ).inner, npStatistics.count(type)))));
+      final HashMap<String, Int> hist = npStatistics.nanoHistogram(boxedType);
+      hist.keySet().forEach(λ -> writer.col(λ + " perc.", format.decimal(100 * safe.div(hist.get(λ).inner, npStatistics.total(type)))));
       hist.keySet().forEach(λ -> writer.col(λ, hist.get(λ).inner));
       writer.nl();
     }

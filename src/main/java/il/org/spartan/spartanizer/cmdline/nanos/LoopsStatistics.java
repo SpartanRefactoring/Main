@@ -1,65 +1,49 @@
-/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
- * @author orimarco <marcovitch.ori@gmail.com>
- * @since Jan 21, 2017 */
 package il.org.spartan.spartanizer.cmdline.nanos;
 
 import java.util.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.safety.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.utils.*;
 
-public class LoopsStatistics extends HashMap<Integer, Int> {
+/** Collects statistics of loops, including hits by nano patterns.
+ * @author orimarco <marcovitch.ori@gmail.com>
+ * @since Jan 21, 2017 */
+public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   private static final long serialVersionUID = 1L;
-  private int total;
-  private int definites;
+  @SuppressWarnings("boxing") private static final List<Integer> loopTypes = Arrays
+      .asList(new Integer[] { ASTNode.WHILE_STATEMENT, ASTNode.FOR_STATEMENT, ASTNode.ENHANCED_FOR_STATEMENT, ASTNode.DO_STATEMENT });
 
   @Override public void clear() {
-    total = definites = 0;
     super.clear();
   }
 
-  public LoopsStatistics log(final ASTNode ¢) {
-    ++total;
-    if (iz.definiteLoop(¢))
-      ++definites;
-    return log(Integer.valueOf(nodeType(¢)));
+  public int total() {
+    return loopTypes.stream().mapToInt(t -> total(Unbox.it(t))).sum();
   }
 
-  private LoopsStatistics log(final Integer nodeType) {
-    putIfAbsent(nodeType, new Int());
-    ++get(nodeType).inner;
-    return this;
+  public int covered() {
+    return loopTypes.stream().mapToInt(t -> covered(Unbox.it(t))).sum();
   }
 
-  public int whileLoops() {
-    return nodeStatistics(ASTNode.WHILE_STATEMENT);
+  public double coverage() {
+    return format.perc(covered(), total());
   }
 
-  public int forLoops() {
-    return nodeStatistics(ASTNode.FOR_STATEMENT);
+  public int totalDoWhile() {
+    return total(ASTNode.DO_STATEMENT);
   }
 
-  public int enhancedForLoops() {
-    return nodeStatistics(ASTNode.ENHANCED_FOR_STATEMENT);
+  public int totalWhile() {
+    return total(ASTNode.WHILE_STATEMENT);
   }
 
-  private int nodeStatistics(final int nodeType) {
-    return !containsKey(Integer.valueOf(nodeType)) ? 0 : get(Integer.valueOf(nodeType)).inner;
+  public int totalFor() {
+    return total(ASTNode.FOR_STATEMENT);
   }
 
-  public int totalLoops() {
-    return total;
-  }
-
-  public int doWhileLoops() {
-    return nodeStatistics(ASTNode.DO_STATEMENT);
-  }
-
-  public int definites() {
-    return definites;
+  public int totalEnhanced() {
+    return total(ASTNode.ENHANCED_FOR_STATEMENT);
   }
 }
