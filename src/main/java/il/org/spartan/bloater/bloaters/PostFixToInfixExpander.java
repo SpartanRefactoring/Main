@@ -36,7 +36,7 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
         .pair(x.getOperand(),
             x.getOperator() == Operator.DECREMENT ? subject.pair(x.getOperand(), one).to(InfixExpression.Operator.MINUS)
                 : x.getOperator() == Operator.INCREMENT ? subject.pair(x.getOperand(), one).to(InfixExpression.Operator.PLUS) : null)
-        .to(org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN);
+        .to(Assignment.Operator.ASSIGN);
     return !needWrap(x) ? $ : subject.operand($).parenthesis();
   }
 
