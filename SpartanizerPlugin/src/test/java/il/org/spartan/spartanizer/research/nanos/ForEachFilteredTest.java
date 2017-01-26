@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */

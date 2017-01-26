@@ -85,7 +85,6 @@ public class Issue0413 {
   }
 
   @Test public void idempotent() {
-    Arrays.asList(new String[] { "This", "This 'is'", "This \"is" })
-        .forEach(λ -> azzert.that(Essence.stringRemove(Essence.stringRemove(λ)), iz(λ)));
+    Arrays.asList(new String[] { "This", "This 'is'", "This \"is" }).forEach(λ -> azzert.that(Essence.stringRemove(Essence.stringRemove(λ)), iz(λ)));
   }
 }

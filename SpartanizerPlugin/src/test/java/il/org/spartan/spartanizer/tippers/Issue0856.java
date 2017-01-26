@@ -14,7 +14,7 @@ import org.junit.runners.*;
 public class Issue0856 {
   @Test public void a() {
     trimmingOf("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
-.using(VariableDeclarationFragment.class, new FragmentInlineIntoNext()) //
+        .using(VariableDeclarationFragment.class, new FragmentInlineIntoNext()) //
         .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
         .stays();
   }
