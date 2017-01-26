@@ -4,10 +4,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/**  Tests {@link ConstantReturner}
- * @author Ori Marcovitch 
- * @since Dec 13, 2016
- */
+/** Tests {@link ConstantReturner}
+ * @author Ori Marcovitch
+ * @since Dec 13, 2016 */
 @SuppressWarnings("static-method")
 public class ConstantReturnerTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

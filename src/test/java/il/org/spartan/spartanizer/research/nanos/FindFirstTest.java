@@ -5,10 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/**  Tests {@link FindFirst} and {@link ForLoop.FindFirst}
- * @author Ori Marcovitch 
- * @since Jan 18, 2017
- */
+/** Tests {@link FindFirst} and {@link ForLoop.FindFirst}
+ * @author Ori Marcovitch
+ * @since Jan 18, 2017 */
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
@@ -50,14 +49,12 @@ public class FindFirstTest {
   @Test public void g() {
     trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($); return null;")//
         .using(ForStatement.class, new ForLoop.FindFirst())//
-        .gives(
-            "return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
+        .gives("return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
   }
 
   @Test public void h() {
     trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($); return null;")//
         .using(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
-        .gives(
-            "return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
+        .gives("return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
   }
 }

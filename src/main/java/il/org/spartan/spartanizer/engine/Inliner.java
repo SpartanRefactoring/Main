@@ -52,8 +52,7 @@ public final class Inliner {
   }
 
   public static boolean never(final SimpleName n, final Statement s) {
-    return az.stream(yieldAncestors.until(s).ancestors(n))
-        .anyMatch( ¢ -> iz.nodeTypeIn( ¢, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
+    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(¢ -> iz.nodeTypeIn(¢, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
   public static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
