@@ -34,7 +34,7 @@ public class CommandLineApplicator extends Applicator {
 
   /** @return this */
   private CommandLineApplicator defaultListenerSilent() {
-    listener((final Object... __) -> {});
+    listener((final Object... __) -> {/**/});
     return this;
   }
 
