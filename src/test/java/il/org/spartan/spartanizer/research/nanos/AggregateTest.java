@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 public class AggregateTest {
   @Ignore // TODO: Ori Marcovitch
   @Test public void a() {
-    trimmingOf("for (int ¢ = 1; ¢ < arr.length; ++¢)  if (arr[¢] < min)   min = arr[¢];").using(EnhancedForStatement.class, new Aggregate())//
+    trimmingOf("for (int ¢ = 1; ¢ < arr.length; ++¢)  if (arr[¢] < min)   min = arr[¢];") //
+.using(EnhancedForStatement.class, new Aggregate())//
         .gives("StatsAccumulator $=Create.a(StatsAccumulator.class).from(values);");
   }
 
@@ -30,22 +31,22 @@ public class AggregateTest {
         .gives("int $ = 0; $+=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("int $ = 0 + bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("int $ = bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
-        .stays();
+        ;
   }
 
   @Test public void d() {
-    trimmingOf("for(B d : (B)bs) $ += f();"//
-    )//
+    trimmingOf("for(B d : (B)bs) $ += f();")//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("$ += ((B)bs).stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .using(EnhancedForStatement.class, new Aggregate())//
         .stays();
   }
 
   @Test public void e() {
-    trimmingOf("for(B d : omg ? yes : no) $ += f();"//
-    )//
+    trimmingOf("for(B d : omg ? yes : no) $ += f();")//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("$+=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .using(EnhancedForStatement.class, new Aggregate())//
         .stays();
   }
 
@@ -69,6 +70,6 @@ public class AggregateTest {
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("int $=init;$+=ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
         .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
-        .stays();
+        ;
   }
 }

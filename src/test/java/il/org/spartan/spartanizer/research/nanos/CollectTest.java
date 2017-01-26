@@ -14,7 +14,7 @@ public class CollectTest {
     trimmingOf("final List<SimpleName> $ = new ArrayList<>();    for (final VariableDeclarationFragment ¢ : fs)      $.add(¢.getName());")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("List<SimpleName>$=(fs).stream().map(¢->¢.getName()).collect(Collectors.toList());")//
-        .stays();
+        ;
   }
 
   @Test public void b() {
@@ -22,7 +22,7 @@ public class CollectTest {
         "final List<SimpleName> $ = new ArrayList<>();    for (final VariableDeclarationFragment ¢ : fs)  if(iLikeTo(a))    $.add(¢.getName());")//
             .using(EnhancedForStatement.class, new ForEachSuchThat(), new ForEach(), new Collect())//
             .gives("List<SimpleName>$=(fs).stream().filter(¢->iLikeTo(a)).map(¢->¢.getName()).collect(Collectors.toList());")//
-            .stays();
+            ;
   }
 
   @Test public void c() {
