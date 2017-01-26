@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /** Tests {@link FindFirst} and {@link ForLoop.FindFirst}
  * @author Ori Marcovitch

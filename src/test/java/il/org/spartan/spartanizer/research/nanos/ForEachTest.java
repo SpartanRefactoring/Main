@@ -14,13 +14,13 @@ public class ForEachTest {
     trimmingOf("  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
-        .stays();
+    ;
   }
 
   @Test public void b() {
-    trimmingOf("for (Entry<URI, CTOverride> entry : overrideContentType.entrySet()) {  types.getDefaultOrOverride().add(entry.getValue());}")//
+    trimmingOf("for (Entry<U, O> entry : overrideContentType.entrySet()) {  types.getDefaultOrOverride().add(entry.getValue());}")//
         .using(EnhancedForStatement.class, new ForEach())//
-        .gives("for(Entry<URI,CTOverride>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
+        .gives("for(Entry<U,O>¢:overrideContentType.entrySet())types.getDefaultOrOverride().add(entry.getValue());")//
         .stays();
   }
 
@@ -42,20 +42,20 @@ public class ForEachTest {
     trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
-        .stays();
+    ;
   }
 
   @Test public void e() {
     trimmingOf("  for (final Statement k : ss)    $.append(k);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("ss.forEach(k -> $.append(k));")//
-        .stays();
+    ;
   }
 
   @Test public void f() {
     trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("us.forEach(¢->scanCompilationUnit(¢,eclipse.newSubMonitor(progressMonitor)));")//
-        .stays();
+    ;
   }
 }

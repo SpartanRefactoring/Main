@@ -108,7 +108,7 @@ public class Toolbox {
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
             new SequencerNotLastInBlock<>()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
-        .add(LambdaExpression.class,//
+        .add(LambdaExpression.class, //
             new LambdaRemoveRedundantCurlyBraces(), //
             new LambdaRemoveParenthesis(), //
             new LambdaRenameSingleParameterToLambda(), //

@@ -176,9 +176,8 @@ public interface TableRenderer {
     final Separator s = new Separator(recordSeparator());
     values.forEach(λ -> $.append(s)
         .append(λ instanceof Object[] ? cellArray((Object[]) λ)
-            : λ instanceof Integer ? cellInt(Long.valueOf(((Integer) λ).intValue()))
-                : λ instanceof Long ? cellInt((Long) λ) //
-                    : λ instanceof Double ? cellReal((Double) λ) : λ));
+            : λ instanceof Integer ? cellInt(Long.valueOf(((Integer) λ).intValue())) : λ instanceof Long ? cellInt((Long) λ) //
+                : λ instanceof Double ? cellReal((Double) λ) : λ));
     return $ + recordEnd();
   }
 

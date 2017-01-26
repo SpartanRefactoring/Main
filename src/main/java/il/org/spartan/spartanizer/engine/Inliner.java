@@ -152,8 +152,8 @@ public final class Inliner {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(n.get());
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
-      collect.usesOf(name).in(newExpression).forEach(
-          λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
+      collect.usesOf(name).in(newExpression)
+          .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
     private List<SimpleName> unsafeUses(final ASTNode... ¢) {
