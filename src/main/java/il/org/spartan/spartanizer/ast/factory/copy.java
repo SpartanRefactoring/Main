@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public enum copy {
   ;
   static List<Expression> adjust(final Operator o, final List<Expression> xs) {
-    return o != wizard.MINUS2 ? xs : xs.stream().map(¢ -> subject.operand(¢).to(wizard.MINUS1)).collect(Collectors.toList());
+    return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(Collectors.toList());
   }
 
   /** Duplicate all {@link ASTNode} objects found in a given list into another
@@ -27,7 +27,7 @@ public enum copy {
    * @param from JD
    * @param into JD */
   public static <N extends ASTNode> void into(final List<N> from, final List<N> into) {
-    from.forEach(¢ -> into(¢, into));
+    from.forEach(λ -> into(λ, into));
   }
 
   /** Duplicate a {@link Statement} into another list.
@@ -56,7 +56,7 @@ public enum copy {
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
-    return ¢s.stream().map(cent -> (¢) copySubtree(cent.getAST(), cent)).collect(Collectors.toList());
+    return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(Collectors.toList());
   }
 
   public static Expression ofWhileExpression(final WhileStatement ¢) {

@@ -259,7 +259,7 @@ final class Application implements IApplication {
     System.out.println("\nTotal changes made: ");
     if (!optIndividualStatistics)
       range.to(optRounds).forEach(i -> System.out
-          .println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + ss.stream().map(¢ -> ¢.getRoundStat(i)).reduce((x, y) -> x + y).get()));
+          .println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + ss.stream().map(λ -> λ.getRoundStat(i)).reduce((x, y) -> x + y).get()));
     else
       for (final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());

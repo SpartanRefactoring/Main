@@ -77,7 +77,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(x -> "@Test".equals(x + ""));
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -122,11 +122,11 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
-    return safe.div(rs.stream().map(x -> min(1, safe.div(x.numNPStatements, x.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
   private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
-    return safe.div(rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count(), rs.size());
+    return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
   }
 
   private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final List<MethodRecord> rs) {
@@ -138,7 +138,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final List<MethodRecord> rs) {
-    return rs.stream().map(x -> x.numNPStatements).reduce((x, y) -> x + y).get();
+    return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
   }
 
   private static double min(final double a, final double d) {

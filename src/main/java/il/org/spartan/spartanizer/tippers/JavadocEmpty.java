@@ -21,7 +21,7 @@ public final class JavadocEmpty extends RemovingTipper<Javadoc>//
   }
 
   private static boolean empty(final TagElement e) {
-    return fragments(e).stream().allMatch(¢ -> ¢ == null || ¢ instanceof SimpleName || !(¢ instanceof TextElement) || empty((TextElement) ¢));
+    return fragments(e).stream().allMatch(λ -> λ == null || λ instanceof SimpleName || !(λ instanceof TextElement) || empty((TextElement) λ));
   }
 
   private static boolean empty(final TextElement ¢) {

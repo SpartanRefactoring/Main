@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.meta.*;
  * @since 2017-01-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc" })
-@Ignore // TODO Doron Meshulam --yg
 public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);
@@ -46,15 +45,16 @@ public class Issue1044 extends MetaFixture {
   }
 }
 
+/** This class' only purpose is for the testing above.
+ * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
+ * @since 2017-01-26 */
 class NamespaceFixture {
-  // TODO: Doron: convert this into a javadoc of the class. Initializers do not
-  // take javadoc
-  /** This class' only purpose is for the testing above. */
-  // TODO: Doron, this poses a problem. When it is spartanized, the test breaks.
-  // You may want to add a print statement so that the code is immune do
-  // spartanization --yg
   static {
-    // TODO: Doron fix this
+    int i1 = 0, i2 = 0, i3 = 0;
+    ++i1;
+    ++i2;
+    ++i3;
+    System.out.println(i1 + i2 + i3);
   }
 
   int f(final int a1) {

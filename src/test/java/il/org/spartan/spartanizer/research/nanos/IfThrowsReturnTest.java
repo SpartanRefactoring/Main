@@ -17,10 +17,11 @@ public class IfThrowsReturnTest {
             "  }" + //
             " catch (  B i) {" + //
             "    return null;}"//
-    ).using(CatchClause.class, new IfThrowsReturn())//
+    ) //
+        .using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();")//
-        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnNull();")//
+        .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returnNull();")//
         .stays()//
     ;
   }
@@ -38,10 +39,11 @@ public class IfThrowsReturnTest {
             "  }" + //
             " catch (  B i) {" + //
             "    return;}"//
-    ).using(CatchClause.class, new IfThrowsReturn())//
+    ) //
+        .using(CatchClause.class, new IfThrowsReturn())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
-        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();")//
+        .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returns();")//
         .stays()//
     ;
   }

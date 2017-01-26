@@ -52,13 +52,13 @@ public enum find {
 
   public static <N extends ASTNode> List<String> singleAtomicDifferences(final List<N> ¢) {
     final List<String> $ = new ArrayList<>();
-    ¢.forEach(x -> $.add(x != first(¢) ? singleAtomicDifference(x, first(¢)) : singleAtomicDifference(first(¢), second(¢))));
+    ¢.forEach(λ -> $.add(λ != first(¢) ? singleAtomicDifference(λ, first(¢)) : singleAtomicDifference(first(¢), second(¢))));
     return $;
   }
 
   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
     final List<Expression> $ = new ArrayList<>();
-    ¢.forEach(x -> $.add(x != first(¢) ? singleExpressionDifference(x, first(¢)) : singleExpressionDifference(first(¢), second(¢))));
+    ¢.forEach(λ -> $.add(λ != first(¢) ? singleExpressionDifference(λ, first(¢)) : singleExpressionDifference(first(¢), second(¢))));
     return $;
   }
 

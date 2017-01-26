@@ -22,12 +22,17 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
+  public static void main(final String[] args) {
+    final Toolbox t = freshCopyOfAllTippers();
+    System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
+  }
+
   @SuppressWarnings("rawtypes") private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
     static final long serialVersionUID = 1L;
     {
       final Toolbox t = freshCopyOfAllTippers();
       assert t.implementation != null;
-      Arrays.asList(t.implementation).stream().filter(Objects::nonNull).forEach(ts -> ts.forEach(¢ -> put(¢.getClass(), ¢.tipperGroup())));
+      Arrays.asList(t.implementation).stream().filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
   /** The default instance of this class */
@@ -80,17 +85,19 @@ public class Toolbox {
   }
 
   @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
-    return Arrays.asList(ts).stream().filter($ -> $.canTip(n)).findFirst().orElse(null);
+    return Arrays.asList(ts).stream().filter(λ -> λ.canTip(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(ReturnStatement.class, new ReturnLastInMethod(), new SequencerNotLastInBlock<>()) //
-        .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
+        .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
+        .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
+        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(EnhancedForStatement.class, //
             // TODO: Doron Meshulam - why do we have two similar tippers?
             // Perhaps the bug is here? --yg
@@ -98,22 +105,25 @@ public class Toolbox {
             new EliminateConditionalContinueInEnhancedFor(), //
             new EnhancedForParameterRenameToCent(), //
             null)//
+        .add(ReturnStatement.class, new ReturnLastInMethod(), //
+            new SequencerNotLastInBlock<>()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
-        .add(LambdaExpression.class, new LambdaExpressionRemoveRedundantCurlyBraces()) //
+        .add(LambdaExpression.class, //
+            new LambdaRemoveRedundantCurlyBraces(), //
+            new LambdaRemoveParenthesis(), //
+            new LambdaRenameSingleParameterToLambda(), //
+            null) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
             new ModifierRedundant(), //
             new ModifierFinalAbstractMethodRedundant(), //
             new ModifierFinalTryResourceRedundant(), //
             null)//
-        .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
-        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
-        .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
+            // new SingleVariableDeclarationEnhancedForRenameParameterToCent(),
             null)//
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
@@ -316,9 +326,6 @@ public class Toolbox {
             new FragmentToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
-        .add(VariableDeclarationStatement.class, //
-            new TwoDeclarationsIntoOne(), //
-            null) //
     //
     //
     ;
@@ -353,7 +360,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
-    return ts.stream().filter($ -> ((Tipper<N>) $).canTip(n)).map($ -> (Tipper<N>) $).findFirst().orElse(null);
+    return ts.stream().filter(λ -> ((Tipper<N>) λ).canTip(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
   /** Implementation */
@@ -404,7 +411,7 @@ public class Toolbox {
   }
 
   public void disable(final Class<? extends TipperCategory> c) {
-    Arrays.asList(implementation).stream().filter(Objects::nonNull).forEach(¢ -> disable(c, ¢));
+    Arrays.asList(implementation).stream().filter(Objects::nonNull).forEach(λ -> disable(c, λ));
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -420,7 +427,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("boxing") public int hooksCount() {
-    return Arrays.asList(implementation).stream().map(¢ -> as.bit(¢ != null && !¢.isEmpty())).reduce((x, y) -> x + y).get();
+    return Arrays.asList(implementation).stream().map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
   }
 
   public int tippersCount() {
@@ -428,6 +435,14 @@ public class Toolbox {
     for (final List<?> ¢ : implementation)
       if (¢ != null)
         $ += ¢.size();
+    return $;
+  }
+
+  public int nodesTypeCount() {
+    int $ = 0;
+    for (final List<?> ¢ : implementation)
+      if (¢ != null)
+        $ += 1;
     return $;
   }
 
@@ -450,7 +465,7 @@ public class Toolbox {
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
     Arrays.asList(t.implementation).stream().filter(Objects::nonNull)
-        .forEach(element -> $.addAll(element.stream().filter(p -> ¢.equals(p.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
+        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
     return $;
   }
 

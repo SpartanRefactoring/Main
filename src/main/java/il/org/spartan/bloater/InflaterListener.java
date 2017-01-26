@@ -25,8 +25,8 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 
 public class InflaterListener implements MouseWheelListener, KeyListener {
-  private static final Function<Device, Color> INFLATE_COLOR = d -> new Color(d, 200, 200, 255);
-  private static final Function<Device, Color> DEFLATE_COLOR = d -> new Color(d, 200, 255, 200);
+  private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
+  private static final Function<Device, Color> DEFLATE_COLOR = λ -> new Color(λ, 200, 255, 200);
   private static final Integer[] wheelEvents = { Integer.valueOf(SWT.MouseHorizontalWheel), Integer.valueOf(SWT.MouseVerticalWheel),
       Integer.valueOf(SWT.MouseWheel) };
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;

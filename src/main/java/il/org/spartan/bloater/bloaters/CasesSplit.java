@@ -51,7 +51,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
-        $.forEach(¢ -> l.insertBefore(copy.of(¢), n, g));
+        $.forEach(λ -> l.insertBefore(copy.of(λ), n, g));
         if (!iz.sequencerComplex($.get($.size() - 1)))
           l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }

@@ -49,8 +49,8 @@ public class KnowsTest extends MetaFixture {
   }
 
   public static Double g(final double y) {
-    final DoubleFunction<Double> $ = x -> Double.valueOf(Math.sin(x * new Object() {
-      @Override @knows({ "$", "g/1", "f/1", "x", "y" }) public int hashCode() {
+    final DoubleFunction<Double> $ = ¢ -> Double.valueOf(Math.sin(¢ * new Object() {
+      @Override @knows({ "$", "g/1", "f/1", "y" }) public int hashCode() {
         return g(y).hashCode();
       }
     }.hashCode()));

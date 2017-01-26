@@ -126,7 +126,7 @@ public class InflaterUtilities {
   /** @param ns ASTNodes in compilation unit which might be relevant
    * @return list of selected ASTNodes */
   static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
-    return ns.stream().filter(¢ -> intervalsIntersect(¢.getStartPosition(), ¢.getLength(), Selection.Util.current().textSelection.getOffset(),
+    return ns.stream().filter(λ -> intervalsIntersect(λ.getStartPosition(), λ.getLength(), Selection.Util.current().textSelection.getOffset(),
         Selection.Util.current().textSelection.getLength())).collect(Collectors.toList());
   }
 

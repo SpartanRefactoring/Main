@@ -114,7 +114,7 @@ public abstract class ENVTestEngineAbstract {
   }
 
   private static boolean testSetContainsVarName(final String s) {
-    return testSet.stream().anyMatch(¢ -> ¢.getKey().equals(s));
+    return testSet.stream().anyMatch(λ -> λ.getKey().equals(s));
   }
 
   static void testSetsReset() {
@@ -151,7 +151,7 @@ public abstract class ENVTestEngineAbstract {
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */
       void checkAnnotations(final List<Annotation> as) {
-        as.forEach(¢ -> handler(¢));
+        as.forEach(λ -> handler(λ));
       }
 
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {

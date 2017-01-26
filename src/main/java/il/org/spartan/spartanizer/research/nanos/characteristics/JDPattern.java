@@ -84,7 +84,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     $.inner = false;
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName n) {
-        ss.stream().filter(p -> (n + "").equals(p) && !nullCheckExpression(az.infixExpression(parent(n)))).forEach(p -> $.inner = true);
+        ss.stream().filter(λ -> (n + "").equals(λ) && !nullCheckExpression(az.infixExpression(parent(n)))).forEach(λ -> $.inner = true);
         return false;
       }
     });

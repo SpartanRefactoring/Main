@@ -79,9 +79,9 @@ public class TableNanosStatistics extends FolderASTVisitor {
       initializeWriter();
     pWriter.col("Project", path);
     npStatistics.keySet().stream()//
-        .sorted(Comparator.comparing(k -> npStatistics.get(k).name))//
+        .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
         .map(npStatistics::get)//
-        .forEach(n -> pWriter.col(n.name, n.occurences));
+        .forEach(λ -> pWriter.col(λ.name, λ.occurences));
     fillAbsents();
     pWriter.nl();
     npStatistics.clear();
@@ -89,12 +89,12 @@ public class TableNanosStatistics extends FolderASTVisitor {
 
   private static void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//
-        .map(p -> p.getClass().getSimpleName())//
-        .filter(n -> !npStatistics.keySet().contains(n))//
-        .forEach(n -> pWriter.col(n, 0));
+        .map(λ -> λ.getClass().getSimpleName())//
+        .filter(λ -> !npStatistics.keySet().contains(λ))//
+        .forEach(λ -> pWriter.col(λ, 0));
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(t -> t.canTip(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
   }
 }

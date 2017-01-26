@@ -11,12 +11,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0711 {
   @Test public void test0() {
-    trimmingOf("int oneLarger(int x) {" + "Function<Integer, Integer> $ = i -> i + 1;" + "return $.eval(x);" + "}")//
+    trimmingOf("int oneLarger(int x) {Function<Integer, Integer> $ = i -> i + 1;return $.eval(x);}")//
+        .gives("int oneLarger(int x) {Function<Integer, Integer> $ = λ -> λ + 1;return $.eval(x);}")//
         .stays();
   }
 
   @Test public void test1() {
-    trimmingOf("Consumer<Integer> x = (i->i+1); use(f);" + "x.accept(6);")//
+    trimmingOf("Consumer<Integer> x = (i->i+1); use(f);x.accept(6);")//
+        .gives("Consumer<Integer> x = (λ->λ+1); use(f);x.accept(6);")//
         .stays();
   }
 }

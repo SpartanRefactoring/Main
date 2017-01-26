@@ -155,7 +155,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       if (dead.isEmpty() || composite == null)
         return null;
       final ListDialog d = new ListDialog(composite.getShell());
-      d.setContentProvider(inputElement -> dead.toArray(new String[dead.size()]));
+      d.setContentProvider(λ -> dead.toArray(new String[dead.size()]));
       d.setLabelProvider(new ILabelProvider() {
         @Override public void removeListener(final ILabelProviderListener __) {/* empty */}
 

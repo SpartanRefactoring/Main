@@ -16,10 +16,12 @@ public class SupressExceptionTest {
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
             " catch (  B i) {}"//
-    ).using(CatchClause.class, new SupressException())//
+    ) //
+        .using(CatchClause.class, new SupressException())//
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
+        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){ignore();}")//
         .stays()//
     ;
   }

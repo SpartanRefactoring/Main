@@ -91,7 +91,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(x -> "@Test".equals(x + ""));
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -163,7 +163,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static double totalMethodsTouched(final List<MethodRecord> rs) {
-    return rs.stream().filter(x -> x.numNPStatements > 0 || x.numNPExpressions > 0).count();
+    return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
   }
 
   private static double coverage() {
@@ -182,7 +182,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final List<MethodRecord> rs) {
-    return rs.stream().map(x -> x.numNPStatements).reduce((x, y) -> x + y).get();
+    return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {

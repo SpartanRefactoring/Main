@@ -51,7 +51,7 @@ public abstract class Applicator {
 
   /** Determines run context for this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator runContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
     return this;
@@ -64,7 +64,7 @@ public abstract class Applicator {
 
   /** Determines run action for this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
@@ -77,7 +77,7 @@ public abstract class Applicator {
 
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator passes(final int ¢) {
     passes = ¢;
     return this;
@@ -90,7 +90,7 @@ public abstract class Applicator {
 
   /** Initialize the listener of this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator listener(final Listener ¢) {
     listener = ¢;
     return this;
@@ -103,7 +103,7 @@ public abstract class Applicator {
 
   /** Initialize the selection of this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator selection(final Selection ¢) {
     selection = ¢;
     return this;
@@ -112,7 +112,7 @@ public abstract class Applicator {
   /** Initialize the selection of this applicator using AbstractSelection.
    * @param ¢ JD
    * @author Matteo Orru'
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   protected Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
@@ -125,7 +125,7 @@ public abstract class Applicator {
 
   /** Name this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator name(final String ¢) {
     name = ¢;
     return this;
@@ -138,7 +138,7 @@ public abstract class Applicator {
 
   /** Name this applicator.
    * @param ¢ JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public Applicator operationName(final Linguistic.Activity ¢) {
     operationName = ¢;
     return this;

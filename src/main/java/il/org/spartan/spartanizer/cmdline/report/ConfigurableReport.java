@@ -43,10 +43,10 @@ public interface ConfigurableReport {
     }
 
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
-          m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
-          m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-          m("tide" + id, (¢) -> clean(¢ + "").length()));//
+      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
+          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+          m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+          m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
@@ -169,7 +169,7 @@ public interface ConfigurableReport {
         assert bf != null;
         assert id != null;
         Arrays.asList(ReportGenerator.Util.functions(""))
-            .forEach(¢ -> report().put(id + ¢.name(), bf.apply(¢.function().run(i), ¢.function().run(n))));
+            .forEach(λ -> report().put(id + λ.name(), bf.apply(λ.function().run(i), λ.function().run(n))));
       }
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
