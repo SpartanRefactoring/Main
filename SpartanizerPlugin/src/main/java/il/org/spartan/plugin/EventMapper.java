@@ -50,7 +50,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
   /** Expend this EventMapper by adding a recorder.
    * @param ¢ JD
-   * @return this EventMapper */
+   * @return <code><b>this</b></code> EventMapper */
   @SuppressWarnings("unchecked") public EventMapper<E> expand(@SuppressWarnings("rawtypes") final EventFunctor ¢) {
     recorders.put((E) ¢.domain, ¢);
     return this;
@@ -166,7 +166,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Determines initialization value for this functor. Conducts casting.
      * @param ¢ JD
-     * @return this functor. */
+     * @return <code><b>this</b></code> functor. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWith(final X ¢) {
       final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
@@ -177,7 +177,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     /** Determines initialization value for this functor using a supplier.
      * Conducts casting.
      * @param ¢ JD
-     * @return this functor. */
+     * @return <code><b>this</b></code> functor. */
     @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWithSupplyOf(final Supplier<X> ¢) {
       final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
@@ -187,7 +187,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Setting biconsumer for this functor. May join with existing biconsumer.
      * @param ¢ JD
-     * @return this functor. */
+     * @return <code><b>this</b></code> functor. */
     public EventMapperFunctor<E, P, O> does(final BiConsumer<P, O> ¢) {
       biConsumer = biConsumer == null ? ¢ : biConsumer.andThen(¢);
       return this;
@@ -196,7 +196,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     /** Setting consumer for this functor. May join with existing
      * consumer/biconsumer.
      * @param ¢ JD
-     * @return this functor. */
+     * @return <code><b>this</b></code> functor. */
     public EventMapperFunctor<E, P, O> does(final Consumer<P> ¢) {
       consumer = consumer == null ? ¢ : consumer.andThen(¢);
       biConsumer = biConsumer == null ? null : biConsumer.andThen((final P p, final O __) -> ¢.accept(p));
@@ -205,7 +205,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Setting bifunction for this functor.
      * @param ¢ JD
-     * @return this functor. */
+     * @return <code><b>this</b></code> functor. */
     public EventMapperFunctor<E, P, O> does(final BiFunction<P, O, P> ¢) {
       biFunction = ¢;
       return this;
@@ -213,7 +213,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Setting function for this functor.
      * @param ¢ JD
-     * @return this functor. */
+     * @return <code><b>this</b></code> functor. */
     public EventMapperFunctor<E, P, O> does(final Function<P, O> ¢) {
       function = ¢;
       return this;

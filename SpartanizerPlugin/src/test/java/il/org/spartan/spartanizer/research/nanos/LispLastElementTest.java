@@ -26,7 +26,7 @@ public class LispLastElementTest {
 
   @Test public void c() {
     trimmingOf("omg(li.get(0), li.get(li.size()-1));")//
-        .using(MethodInvocation.class, new First()) //
+        .using(MethodInvocation.class, new First())//
         .using(MethodInvocation.class, new Last())//
         .gives("omg(first(li),last(li));")//
         .stays();

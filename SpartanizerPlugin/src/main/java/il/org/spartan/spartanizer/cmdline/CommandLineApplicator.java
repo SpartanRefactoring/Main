@@ -23,7 +23,7 @@ public class CommandLineApplicator extends Applicator {
 
   // private final CommandLine$Applicator a = new CommandLine$Applicator();
   /** Default listener configuration. Simple printing to console.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       Arrays.asList(os).forEach(λ -> System.out.print(λ + " "));
@@ -32,20 +32,20 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return this */
+  /** @return <code><b>this</b></code> */
   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
 
-  /** @return this */
+  /** @return <code><b>this</b></code> */
   private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration, with many passes.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
@@ -56,7 +56,7 @@ public class CommandLineApplicator extends Applicator {
   // Added a quick fix to your code. Also I do not understand why you wrote this
   // - we will inspect it once we meet. --or
   /** Applies {@link Spartanizer$Applicator} by default.
-   * @return this */
+   * @return <code><b>this</b></code> */
   private CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
     setRunAction(λ -> Integer.valueOf(new Spartanizer$Applicator().apply(λ, selection()) ? 1 : 0));
@@ -68,7 +68,7 @@ public class CommandLineApplicator extends Applicator {
   // Spartanize the
   // * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
   // * @param a JD
-  // * @return this applicator */
+  // * @return <code><b>this</b></code> applicator */
   // public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
   // setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
   // name(a.getName());
@@ -79,7 +79,7 @@ public class CommandLineApplicator extends Applicator {
    * method are going to die (as well as Spartanize$Applicator)
    * {@link Spartanizer$Applicator}.
    * @param a JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
@@ -90,7 +90,7 @@ public class CommandLineApplicator extends Applicator {
    * Spartanize the {@link CompilationUnit} using received
    * {@link CommandLine$Applicator}.
    * @param a JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
     CommandLine$Applicator.startingTime = new Date().getTime();
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
@@ -98,13 +98,13 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return this */
+  /** @return <code><b>this</b></code> */
   private CommandLineApplicator defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
 
-  /** @return this */
+  /** @return <code><b>this</b></code> */
   private CommandLineApplicator defaultSelection() {
     // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
@@ -117,7 +117,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return this */
+  /** @return <code><b>this</b></code> */
   private CommandLineApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
