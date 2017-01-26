@@ -38,6 +38,6 @@ public class ForEachInRangeTest {
     trimmingOf("for (int ¢= thingy().f.g; ¢ < 7; ++¢) $[¢]=ls.elementAt(¢);")//
         .using(ForStatement.class, new ForEachInRange())//
         .gives("range.from(thingy().f.g).to(7).forEach(¢->$[¢]=ls.elementAt(¢));")//
-        ;
+    ;
   }
 }
