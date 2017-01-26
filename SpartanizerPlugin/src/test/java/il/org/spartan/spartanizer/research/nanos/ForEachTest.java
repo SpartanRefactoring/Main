@@ -19,7 +19,6 @@ public class ForEachTest {
 
   @Test public void b() {
     trimmingOf("for (Entry<U, O> entry : eCT.yS()) {  types.gDo().add(entry.getValue());}")//
-        .using(EnhancedForStatement.class, new ForEach())//
         .gives("for(Entry<U,O>¢:eCT.yS())types.gDo().add(entry.getValue());")//
         .stays();
   }
