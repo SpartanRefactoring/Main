@@ -5,10 +5,10 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class ForEachFilteredTest {
   @Test public void a() {
@@ -31,15 +31,15 @@ public class ForEachFilteredTest {
     trimmingOf("for (A r : rs) if (u(r.tr())) try { r.um(); } catch (Tr ¢) { g.tr(\"ra\",¢); }")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives("rs.stream().filter(r->u(r.tr())).forEach(r->{try{r.um();}catch(Tr ¢){{g.tr(\"ra\",¢);}}});")//
-        .gives("rs.stream().filter(r->u(r.tr())).forEach(r->{try{r.um();}catch(Tr ¢){g.tr(\"ra\",¢);}});")//
+        .gives("rs.stream().filter(λ->u(λ.tr())).forEach(r->{try{r.um();}catch(Tr ¢){g.tr(\"ra\",¢);}});")//
         .stays();
   }
 
   @Test public void d() {
     trimmingOf("for (A r : (B)rs) if (u(r.tr())) try { r.um(); } catch (Tr ¢) { g.tr(\"ra\",¢); }")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
-        .gives("((B)rs).stream().filter(r->u(r.tr())).forEach(r->{try{r.um();}catch(Tr r){{g.tr(\"ra\",r);}}});")
-        .gives("((B)rs).stream().filter(r->u(r.tr())).forEach(r->{try{r.um();}catch(Tr r){g.tr(\"ra\",r);}});")//
+        .gives("((B)rs).stream().filter(r->u(r.tr())).forEach(r->{try{r.um();}catch(Tr ¢){{g.tr(\"ra\",¢);}}});")
+        .gives("((B)rs).stream().filter(λ->u(λ.tr())).forEach(r->{try{r.um();}catch(Tr ¢){g.tr(\"ra\",¢);}});")//
         .stays();
   }
 
@@ -47,6 +47,7 @@ public class ForEachFilteredTest {
     trimmingOf("for (M ¢ : mt(ref)) if (!¢.isCtr() && !iz.st¢(¢) && !iz.¢(¢) && !iz.pr¢(¢)) put(gl(¢), ¢);")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives("(mt(ref)).stream().filter(¢->!¢.isCtr()&&!iz.st¢(¢)&&!iz.¢(¢)&&!iz.pr¢(¢)).forEach(¢->put(gl(¢),¢));")//
+        .gives("(mt(ref)).stream().filter(λ->!λ.isCtr()&&!iz.st¢(λ)&&!iz.¢(λ)&&!iz.pr¢(λ)).forEach(λ->put(gl(λ),λ));")//
         .stays();
   }
 }
