@@ -108,9 +108,7 @@ public class Table_Iteratives extends FolderASTVisitor {
 
   public static void summarize(final String path) {
     initializeWritersIfNeeded();
-    final int enhancedForLoops = statistics.enhancedForLoops();
-    final int totalLoops = statistics.totalLoops();
-    final int definites = statistics.definites();
+    final int enhancedForLoops = statistics.enhancedForLoops(), totalLoops = statistics.totalLoops(), definites = statistics.definites();
     rawWriter//
         .col("Project", path)//
         .col("EnhancedForLoops", enhancedForLoops)//

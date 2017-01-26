@@ -28,7 +28,7 @@ public class SpartanizationComparator {
   static int methodNesting;
   static MethodDeclaration lastNode;
   protected static Dotter dotter = new Dotter();
-  private final static CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
+  private static final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
   protected static String makeFile(final String fileName) {
     return outputFolder + "/" + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
@@ -52,8 +52,7 @@ public class SpartanizationComparator {
     try {
       final String input = FileUtils.read(f);
       collect(input, "before");
-      final String output = new InteractiveSpartanizer().fixedPoint(input);
-      collect(output, "after");
+      collect(new InteractiveSpartanizer().fixedPoint(input), "after");
     } catch (final IOException ¢) {
       System.err.println(¢.getMessage());
     }
@@ -88,10 +87,6 @@ public class SpartanizationComparator {
   }
 
   protected static String presentFile;
-
-  private static void collect(final CompilationUnit ¢) {
-    collect(¢, "");
-  }
 
   @SuppressWarnings({ "rawtypes", "unchecked" }) protected static void consider2(final MethodDeclaration ¢) {
     writer.put("File", presentFile).put("Name", ¢.getName()).put("Path", presentSourcePath);
