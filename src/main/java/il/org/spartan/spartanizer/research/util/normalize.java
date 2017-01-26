@@ -14,7 +14,9 @@ import il.org.spartan.spartanizer.research.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
-public class normalize {
+public enum normalize {
+  ;
+
   public static String testcase(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }

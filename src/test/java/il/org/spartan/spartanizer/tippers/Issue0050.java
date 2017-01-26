@@ -186,16 +186,14 @@ public class Issue0050 {
   }
 
   @Test public void a$50g_enum() {
-    trimmingOf("static abstract enum a{x,y,z;void f(){}}")//
-        .gives("abstract static enum a{x,y,z;void f(){}}")//
+    trimmingOf("static enum a{x,y,z;void f(){}}")//
         .gives("enum a{x,y,z;void f(){}}")//
         .stays() //
     ;
   }
 
   @Test public void a$50h_enum() {
-    trimmingOf("static abstract final enum a{x,y,z;void f(){}}")//
-        .gives("abstract static final enum a{x,y,z;void f(){}}") //
+    trimmingOf("static enum a{x,y,z;void f(){}}")//
         .gives("enum a{x,y,z;void f(){}}") //
         .stays();
   }

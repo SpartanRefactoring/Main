@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 /** Selection useful to deal with projects using the command line
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLineSelection extends AbstractSelection<CommandLineSelection> {
+public final class CommandLineSelection extends AbstractSelection<CommandLineSelection> {
   private List<WrappedCompilationUnit> compilationUnits;
 
   private CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
@@ -38,7 +38,8 @@ public class CommandLineSelection extends AbstractSelection<CommandLineSelection
     return new CommandLineSelection(null, null);
   }
 
-  public static class Util {
+  public enum Util {
+    ;
     private static String presentSourcePath = "."; // default input path
 
     public static String getPresentSourcePath() {

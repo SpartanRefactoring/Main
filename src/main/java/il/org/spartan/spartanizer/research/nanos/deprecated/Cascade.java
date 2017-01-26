@@ -47,7 +47,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
     return Matcher.matcher(x).createsThenUses(idx);
   }
 
-  static class Matcher {
+  static final class Matcher {
     private final List<Statement> ss;
     public String name;
     static final UserDefinedTipper<Expression> creation = patternTipper("$T1 $N = new $T2()", "$T $N = with(new $T2())", "");

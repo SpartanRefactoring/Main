@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.utils.*;
  * Users Libraries feature.
  * @author Ori Roth
  * @since Nov 25, 2016 */
-public class LibrariesManagement {
+public enum LibrariesManagement {
+  ;
   /** Absolute path of the spartan feature. */
   public static final IPath FEATURE_PATH;
   /** Eclipse's installation outputFolder absolute path. */

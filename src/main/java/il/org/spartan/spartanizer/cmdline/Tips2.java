@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 /** TODO: Matteo Orru' please add a description
  * @author Matteo Orru'
  * @since 2016 */
-public class Tips2 {
+public final class Tips2 {
   private static final AbstractGUIApplicator[] all = { //
       new Trimmer(), //
   };
