@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -39,7 +40,12 @@ public class Table_Iteratives extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
+    closeWriters();
+  }
+
+  private static void closeWriters() {
     rawWriter.close();
+    summaryWriter.close();
   }
 
   public static void logNPInfo(final ASTNode n, final String np) {
@@ -71,7 +77,7 @@ public class Table_Iteratives extends FolderASTVisitor {
   private static boolean analyze(final ASTNode ¢) {
     // ¢.accept(new CleanerVisitor());
     try {
-      logNode(intoMethod(spartanalyze(parent(¢))));
+      logNode(extract.singleStatement(intoStatement(spartanalyze(parent(¢)))));
     } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
       System.out.print("X");
     }
@@ -86,7 +92,7 @@ public class Table_Iteratives extends FolderASTVisitor {
       definites.logNode(¢);
   }
 
-  private static Statement intoMethod(final String ¢) {
+  private static Statement intoStatement(final String ¢) {
     return into.s(¢);
   }
 
@@ -103,6 +109,7 @@ public class Table_Iteratives extends FolderASTVisitor {
   private static void clearAll() {
     statistics.clear();
     simpleStatistics.clear();
+    definites.clear();
   }
 
   private static void initializeWritersIfNeeded() {
@@ -132,26 +139,23 @@ public class Table_Iteratives extends FolderASTVisitor {
     summaryWriter//
         .col("Project", path)//
         .col("Coverage", coverage())//
-        .col("Simple", fraction(simpleStatistics.total(), statistics.total()))//
+        .col("Simple", format.perc(simpleStatistics.total(), statistics.total()))//
         .col("Simple Coverage", simpleStatistics.coverage())//
-        .col("Enhanced", fraction(statistics.totalEnhanced(), statistics.total()))//
+        .col("Enhanced", format.perc(statistics.totalEnhanced(), statistics.total()))//
         .col("Enhanced Coverage", statistics.coverage(ENHANCED))//
-        .col("Simple Enhanced", fraction(simpleStatistics.totalEnhanced(), simpleStatistics.total()))//
+        .col("Simple Enhanced", format.perc(simpleStatistics.totalEnhanced(), simpleStatistics.total()))//
         .col("Simple Enhanced Coverage", simpleStatistics.coverage(ENHANCED))//
-        .col("Definites", fraction(definites.total(), statistics.total()))//
+        .col("Definites", format.perc(definites.total(), statistics.total()))//
         .col("Definites Coverage", definites.coverage())//
     ;
     //
     final HashMap<String, Int> hist = statistics.nanoHistogram(Integer.valueOf(ENHANCED));
     // hist.keySet().forEach(¢ -> rawWriter.col(¢ + " perc.",
     // format.decimal(100 * safe.div(hist.get(¢).inner,
-    // statistics.enhancedForLoops()));
+    // statistics.coverage(ENHANCED)));
     hist.keySet().forEach(¢ -> rawWriter.col(¢, hist.get(¢).inner));
     rawWriter.nl();
-  }
-
-  private static double fraction(int enhancedForLoops, int totalLoops) {
-    return format.decimal(100 * safe.div(enhancedForLoops, totalLoops));
+    summaryWriter.nl();
   }
 
   private static double coverage() {

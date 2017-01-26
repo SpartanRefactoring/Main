@@ -22,7 +22,7 @@ public class Table extends Row<Table> implements Closeable {
     this(classToNormalizedFileName(c));
   }
 
-  private Table(final String name) {
+  public Table(final String name) {
     this(name, TableRenderer.builtin.values());
   }
 
