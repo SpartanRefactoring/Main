@@ -151,7 +151,7 @@ public class Table_Iteratives extends FolderASTVisitor {
     rawWriter.nl();
   }
 
-  private static double fraction(int enhancedForLoops, int totalLoops) {
+  private static double fraction(final int enhancedForLoops, final int totalLoops) {
     return format.decimal(100 * safe.div(enhancedForLoops, totalLoops));
   }
 
