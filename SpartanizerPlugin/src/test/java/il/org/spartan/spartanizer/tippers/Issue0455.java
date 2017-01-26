@@ -20,6 +20,7 @@ public class Issue0455 {
 
   @Test public void blockStatementShouldntTip() {
     trimmingOf("x -> {{}}") //
+        .gives("λ -> {{}}") //
         .gives("λ -> {}") //
         .stays();
   }
@@ -46,7 +47,6 @@ public class Issue0455 {
     trimmingOf("(x) -> {return;}")//
         .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("(x) -> {}")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("x -> {}")//
         .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .stays();
@@ -54,9 +54,8 @@ public class Issue0455 {
 
   @Test public void emptyStatementShouldTip() {
     trimmingOf("x -> {;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
-        .gives("x -> {}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .gives("λ -> {;}") //
+        .gives("λ -> {}") //
         .stays();
   }
 
@@ -144,6 +143,7 @@ public class Issue0455 {
         .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("Consumer<Integer> x = (x) -> System.out.println(x);") //
         .gives("Consumer<Integer> x = x -> System.out.println(x);") //
+        .gives("Consumer<Integer> x = λ -> System.out.println(λ);") //
         .stays();
   }
 
@@ -157,11 +157,13 @@ public class Issue0455 {
     trimmingOf("new ArrayList<Integer>().map(x->{return x+1;});") //
         .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("new ArrayList<Integer>().map(x -> x+1);")//
+        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .stays();
   }
 
   @Test public void singleSwitchCaseStatementShouldntTip() {
     trimmingOf("x -> {switch(x){ case 0: ++x; break; default: --x;}}") //
+    .gives("λ -> {switch(λ){ case 0: ++λ; break; default: --λ;}}") //
         .gives("λ->{{if(λ==0) ++λ; else --λ;}}") //
         .gives("λ->{if(λ==0)++λ;else--λ;}") //
         .stays();
@@ -182,6 +184,7 @@ public class Issue0455 {
   @Test public void singleTryFinallyStatementShouldntTip() {
     trimmingOf("x -> {try {throw new Error();}finally{}}") //
         .gives("x -> {{throw new Error();}}") //
+        .gives("λ -> {{throw new Error();}}") //
         .gives("λ -> {throw new Error();}") //
         .stays();
   }
