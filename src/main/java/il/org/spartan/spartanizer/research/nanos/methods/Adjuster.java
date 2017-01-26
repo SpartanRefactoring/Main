@@ -45,11 +45,11 @@ public class Adjuster extends JavadocMarkerNanoPattern {
 
   private static boolean arePseudoAtomic(final List<Expression> arguments, final List<String> parametersNames) {
     return arguments.stream()
-        .allMatch(¢ -> iz.name(¢)//
-            || iz.methodInvocation(¢)//
-                && (safeContainsCallee(parametersNames, ¢)//
-                    || parametersContainAllArguments(parametersNames, ¢))//
-    ) && arguments.stream().anyMatch(¢ -> helps(parametersNames, ¢));
+        .allMatch(λ -> iz.name(λ)//
+            || iz.methodInvocation(λ)//
+                && (safeContainsCallee(parametersNames, λ)//
+                    || parametersContainAllArguments(parametersNames, λ))//
+    ) && arguments.stream().anyMatch(λ -> helps(parametersNames, λ));
   }
 
   private static boolean helps(final List<String> parametersNames, final Expression ¢) {
@@ -59,7 +59,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
   }
 
   private static boolean parametersContainAllArguments(final List<String> parametersNames, final Expression ¢) {
-    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(a -> a + "").collect(Collectors.toList()));
+    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(λ -> λ + "").collect(Collectors.toList()));
   }
 
   private static boolean safeContainsCallee(final List<String> parametersNames, final Expression ¢) {

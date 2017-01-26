@@ -54,7 +54,7 @@ public abstract class Tipper<N extends ASTNode> //
 
   protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    fs.stream().filter(brother -> brother != null && brother != f && brother.getInitializer() != null).forEach(brother -> $.add(copy.of(brother)));
+    fs.stream().filter(λ -> λ != null && λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }
 
@@ -156,14 +156,14 @@ public abstract class Tipper<N extends ASTNode> //
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  public static Expression handleInfixCondition(final InfixExpression from, final VariableDeclarationStatement s) {
+  public static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
     // TODO Raviv Rachmiel: use extract.core
-    $.stream().filter(x -> iz.parenthesizedExpression(x) && iz.assignment(az.parenthesizedExpression(x).getExpression())).forEachOrdered(x -> {
+    $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(left(a));
-      fragments(s).stream().filter(¢ -> (name(¢) + "").equals(var + "")).forEach(¢ -> {
-        ¢.setInitializer(copy.of(right(a)));
+      fragments(s).stream().filter(λ -> (name(λ) + "").equals(var + "")).forEach(λ -> {
+        λ.setInitializer(copy.of(right(a)));
         $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
       });
     });

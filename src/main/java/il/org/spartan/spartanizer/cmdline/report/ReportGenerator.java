@@ -37,10 +37,10 @@ public class ReportGenerator implements ConfigurableReport {
 
   public static class Util {
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, (¢) -> (¢ + "").length()), m("essence" + id, (¢) -> Essence.of(¢ + "").length()),
-          m("tokens" + id, (¢) -> metrics.tokens(¢ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
-          m("methodDeclaration" + id, (¢) -> az.methodDeclaration(¢) == null ? -1 : extract.statements(az.methodDeclaration(¢).getBody()).size()),
-          m("tide" + id, (¢) -> clean(¢ + "").length()));//
+      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
+          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+          m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+          m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
@@ -48,12 +48,12 @@ public class ReportGenerator implements ConfigurableReport {
       $.put("metrics", functions(""));
       $.put("methods",
           as.array(m("N. of Nodes", count::nodes), //
-              m("Average Depth", (¢) -> -1000), // (¢) -> Essence.of(¢ +
-                                                // "").length()), //
-              m("Average Uncle Depth", (¢) -> -1000), // (¢) -> Essence.of(¢ +
-                                                      // "").length()), //
-              m("Character Length", (¢) -> -1000) // Essence.of(¢ +
-                                                  // "").length()) //
+              m("Average Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
+                                              // "").length()), //
+              m("Average Uncle Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
+                                                    // "").length()), //
+              m("Character Length", λ -> -1000) // Essence.of(¢ +
+                                                // "").length()) //
           // Report Halstead Metrics
           )); //
       return $;
@@ -69,7 +69,7 @@ public class ReportGenerator implements ConfigurableReport {
     }
 
     @SuppressWarnings({ "unchecked" }) public static NamedFunction<ASTNode> find(final String ¢) {
-      return Arrays.asList(ReportGenerator.Util.functions("")).stream().filter($ -> Objects.equals($.name(), ¢)).findFirst().orElse(null);
+      return Arrays.asList(ReportGenerator.Util.functions("")).stream().filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
     }
   }
 
@@ -105,13 +105,13 @@ public class ReportGenerator implements ConfigurableReport {
   @SuppressWarnings({ "boxing", "unchecked" }) public static void write(final ASTNode input, final ASTNode output, final String id,
       final BiFunction<Integer, Integer> i) {
     Arrays.asList(ReportGenerator.Util.functions(""))
-        .forEach(¢ -> ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(input), ¢.function().run(output))));
+        .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), i.apply(λ.function().run(input), λ.function().run(output))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
     Arrays.asList(ReportGenerator.Util.functions(""))
-        .forEach(¢ -> ReportGenerator.Util.report("metrics").put(id + ¢.name(), (int) i.apply(¢.function().run(n1), ¢.function().run(n2))));
+        .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), (int) i.apply(λ.function().run(n1), λ.function().run(n2))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,

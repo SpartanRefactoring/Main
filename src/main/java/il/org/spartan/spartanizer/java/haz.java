@@ -57,7 +57,7 @@ public enum haz {
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
     return ¢ != null
-        && new Recurser<>(¢, 0).postVisit((x) -> x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1) > 0;
+        && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
 
   public static boolean dollar(final ASTNode ¢) {
@@ -65,7 +65,7 @@ public enum haz {
   }
 
   public static boolean dollar(final List<SimpleName> ns) {
-    return ns.stream().anyMatch(¢ -> "$".equals(identifier(¢)));
+    return ns.stream().anyMatch(λ -> "$".equals(identifier(λ)));
   }
 
   /** @param ¢ JD
@@ -75,7 +75,7 @@ public enum haz {
   }
 
   public static boolean final¢(final List<IExtendedModifier> ms) {
-    return ms.stream().anyMatch(¢ -> IExtendedModifiersRank.find(¢) == IExtendedModifiersRank.FINAL);
+    return ms.stream().anyMatch(λ -> IExtendedModifiersRank.find(λ) == IExtendedModifiersRank.FINAL);
   }
 
   static boolean hasAnnotation(final List<IExtendedModifier> ¢) {
@@ -99,7 +99,7 @@ public enum haz {
       }
 
       boolean ¢(final List<Expression> xs) {
-        return xs.stream().anyMatch(¢ -> iz.variableDeclarationExpression(¢) && ¢(az.variableDeclarationExpression(¢)));
+        return xs.stream().anyMatch(λ -> iz.variableDeclarationExpression(λ) && ¢(az.variableDeclarationExpression(λ)));
       }
 
       boolean ¢(final SimpleName ¢) {
@@ -202,7 +202,7 @@ public enum haz {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
       boolean continue¢(final List<VariableDeclarationFragment> fs) {
-        return fs.stream().anyMatch(¢ -> continue¢(step.name(¢)));
+        return fs.stream().anyMatch(λ -> continue¢(step.name(λ)));
       }
 
       boolean continue¢(final SimpleName ¢) {

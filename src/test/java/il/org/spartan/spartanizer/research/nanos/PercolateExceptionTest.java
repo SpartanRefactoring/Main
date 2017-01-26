@@ -16,10 +16,12 @@ public class PercolateExceptionTest {
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
             " catch (  B i) { throw i;}"//
-    ).using(CatchClause.class, new PercolateException())//
+    ) //
+        .using(CatchClause.class, new PercolateException())//
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){percolate(i);}")//
+        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){percolate(i);}")//
         .stays()//
     ;
   }

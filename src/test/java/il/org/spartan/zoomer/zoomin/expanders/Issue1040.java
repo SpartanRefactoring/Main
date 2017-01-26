@@ -67,11 +67,11 @@ public class Issue1040 {
 
     @SuppressWarnings("boxing") void toTest() {
       total = 0;
-      total = Arrays.asList(arr).stream().map(k -> total(1)).reduce((x, y) -> x + y).get().intValue();
+      total = Arrays.asList(arr).stream().map(λ -> total(1)).reduce((x, y) -> x + y).get().intValue();
     }
 
     @SuppressWarnings("boxing") void toTest2() {
-      total2 = Arrays.asList(arr).stream().map(k -> total2(1)).reduce((x, y) -> x + y).get();
+      total2 = Arrays.asList(arr).stream().map(λ -> total2(1)).reduce((x, y) -> x + y).get();
     }
   }
 }

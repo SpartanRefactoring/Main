@@ -26,7 +26,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
     implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
-    $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
+    $.setExpression(removeInitializersFromExpression(copy.of(extract.core(expression(¢))), s));
     setInitializers($, copy.of(s));
     return $;
   }
@@ -54,19 +54,19 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    return fragments(vds).stream().allMatch(¢ -> Inliner.variableUsedInFor(s, name(¢)) && Inliner.variableNotUsedAfterStatement(s, name(¢)));
+    return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
-    fragments(s).stream().filter(¢ -> (name(¢) + "").equals(az.simpleName(left(from)) + ""))
-        .forEachOrdered(¢ -> ¢.setInitializer(copy.of(right(from))));
+    fragments(s).stream().filter(λ -> (name(λ) + "").equals(az.simpleName(left(from)) + ""))
+        .forEachOrdered(λ -> λ.setInitializer(copy.of(right(from))));
     return copy.of(left(from));
   }
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
-    final InfixExpression e = az.infixExpression(extract.core(from.getExpression()));
-    return $ != null ? handleAssignmentCondition($, s) : e != null ? handleInfixCondition(e, s) : from;
+    final InfixExpression e = az.infixExpression(extract.core(from));
+    return $ != null ? handleAssignmentCondition($, s) : e != null ? goInfix(e, s) : from;
   }
 
   /** @param t JD
@@ -75,9 +75,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? handleInfixCondition(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from) ? handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+    return iz.infix(from) ? goInfix(az.infixExpression(from), s) : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {

@@ -5,11 +5,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** TODO:  orimarco <tt>marcovitch.ori@gmail.com</tt>
- please add a description
- @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-05 
- */
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2017-01-05 */
 @SuppressWarnings("static-method")
 public class HoldsForAnyTest {
   @Test public void _a() {
@@ -90,11 +88,10 @@ public class HoldsForAnyTest {
         .stays();
   }
 
-  // TODO Ori Marchovitch
   @Ignore @Test public void j() {
     trimmingOf(" for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
-        .gives("return os.stream().anyMatch(¢->¢==(omg?yes:no));")//
         .using(EnhancedForStatement.class, new HoldsForAny())//
+        .gives("return os.stream().anyMatch(¢->¢==(omg?yes:no));")//
         .stays();
   }
 }

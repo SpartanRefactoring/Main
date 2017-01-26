@@ -49,7 +49,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       if (defaultDir) {
         // spartanizeDir(".");
         new BatchSpartanizer(".", "current-working-directory").fire();
-        Arrays.asList(args).forEach(¢ -> new BatchSpartanizer(¢).fire());
+        Arrays.asList(args).forEach(λ -> new BatchSpartanizer(λ).fire());
       }
     }
   }
@@ -255,7 +255,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
-      new FilesGenerator(".java").from(presentSourcePath).forEach(¢ -> collect(¢));
+      new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> collect(λ));
     } catch (final IOException ¢) {
       ¢.printStackTrace();
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");

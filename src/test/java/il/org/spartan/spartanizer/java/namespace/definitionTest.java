@@ -37,7 +37,7 @@ public class definitionTest extends MetaFixture {
       put("@class¢", null);
       put("@enum¢", null);
       put("@interface¢", null);
-      Arrays.asList(definition.Kind.values()).forEach(¢ -> put("@" + ¢, null));
+      Arrays.asList(definition.Kind.values()).forEach(λ -> put("@" + λ, null));
     }
     @field static final long serialVersionUID = 1L;
   };
@@ -86,7 +86,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a11() {
-    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     for (final String ¢ : annotations.keySet())
       assert annotations.get(¢) != null : "Annotation " + ¢ + " not used; what I saw was: \n" + markers();
   }
@@ -98,33 +98,33 @@ public class definitionTest extends MetaFixture {
   }
 
   @ScopeSize(41) @Test public void a13() {
-    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@try¢") != null;
   }
 
   @Test @method public void a14() {
-    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@catch¢") != null;
   }
 
   @Test public void a15() {
-    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@field") != null;
   }
 
   @Test @method public void a16() {
-    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@Ignore") != null;
   }
 
   @Test @method public void a17() {
-    markers().forEach(¢ -> annotations.put(¢ + "", ¢));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@enumConstant") != null;
   }
 
   @Test public void a18() {
-    markers().stream().filter(a -> definition.Kind.has((a + "").substring(1))).forEach(a -> annotees.of(a)
-        .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
+    markers().stream().filter(λ -> definition.Kind.has((λ + "").substring(1))).forEach(a -> annotees.of(a)
+        .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
   @Test @method public void a19() {
@@ -156,13 +156,13 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a25() {
-    markers().stream().filter(a -> "@for¢".equals(a + "")).forEach(a -> annotees.of(a)
-        .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
+    markers().stream().filter(λ -> "@for¢".equals(λ + "")).forEach(a -> annotees.of(a)
+        .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
   @Test public void a26() {
-    markers().stream().filter(a -> "@try¢".equals(a + "")).forEach(a -> annotees.of(a)
-        .forEach(¢ -> azzert.that(a + "\n\t" + ¢ + "/" + ¢.getClass() + ":\n\t" + definition.kind(¢), "@" + definition.kind(¢), is(a + ""))));
+    markers().stream().filter(λ -> "@try¢".equals(λ + "")).forEach(a -> annotees.of(a)
+        .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
   @Test @method public void a27() {
@@ -389,10 +389,10 @@ class ZZZ___Fixture_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object o) -> o + "",
-                something = (@ScopeSize(1) @lambda final Object o) -> {
-                  o.getClass();
-                  return o + "";
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
+                something = (@ScopeSize(1) @lambda final Object ¢) -> {
+                  ¢.getClass();
+                  return ¢ + "";
                 };
             for (@ScopeSize(1) @foreach final char ¢ : (this + "").toCharArray())
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);

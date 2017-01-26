@@ -22,9 +22,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  private static ASTNode replacement(final List<Expression> xs) {
-    final List<Expression> $ = xs.stream().filter(¢ -> !iz.literal0(¢)).collect(Collectors.toList());
-    return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
+  private static ASTNode replacement(final List<Expression> ¢) {
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
+    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
   }
 
   @Override public String description(final InfixExpression ¢) {

@@ -44,7 +44,7 @@ public enum flatten {
   }
 
   private static List<Expression> into(final Operator o, final List<Expression> xs, final List<Expression> $) {
-    xs.forEach(¢ -> into(o, ¢, $));
+    xs.forEach(λ -> into(o, λ, $));
     return $;
   }
 }

@@ -81,9 +81,9 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
     final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
     pWriter.put("Project", path);
     npStatistics.keySet().stream()//
-        .sorted(Comparator.comparing(k -> npStatistics.get(k).name))//
+        .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
         .map(npStatistics::get)//
-        .forEach(n -> pWriter.put(n.name, n.occurences > rMethod ? "M" : n.occurences > rInternal ? "I" : n.occurences > rExternal ? "X" : "-"));
+        .forEach(λ -> pWriter.put(λ.name, λ.occurences > rMethod ? "M" : λ.occurences > rInternal ? "I" : λ.occurences > rExternal ? "X" : "-"));
     fillAbsents();
     pWriter.nl();
     npStatistics.clear();
@@ -91,12 +91,12 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
 
   private static void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//
-        .map(p -> p.getClass().getSimpleName())//
-        .filter(n -> !npStatistics.keySet().contains(n))//
-        .forEach(n -> pWriter.put(n, "-"));
+        .map(λ -> λ.getClass().getSimpleName())//
+        .filter(λ -> !npStatistics.keySet().contains(λ))//
+        .forEach(λ -> pWriter.put(λ, "-"));
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(t -> t.canTip(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
   }
 }

@@ -77,7 +77,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   static boolean azMethodExist(final CastExpression ¢) {
     return step.methods(containingType(¢)).stream()
-        .filter(m -> azMethodName(¢).equals(m.getName() + "") && typesEqual(step.returnType(m), step.type(¢))).count() != 0;
+        .filter(λ -> azMethodName(¢).equals(λ.getName() + "") && typesEqual(step.returnType(λ), step.type(¢))).count() != 0;
   }
 
   private static boolean typesEqual(final Type returnType, final Type t) {
@@ -137,7 +137,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   private static AbstractTypeDeclaration getType(final File x) {
     return az.abstractTypeDeclaration(
-        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(t -> "az".equals(t.getName() + "")).findFirst().get());
+        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
 
   private static String getProperty(final String property) {

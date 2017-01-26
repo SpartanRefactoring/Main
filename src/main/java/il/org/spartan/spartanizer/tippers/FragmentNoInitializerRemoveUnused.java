@@ -34,8 +34,8 @@ public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<Varia
         };
   }
 
-  @Override protected boolean prerequisite(final VariableDeclarationFragment f) {
-    return iz.variableDeclarationStatement(parent(f)) && f.getInitializer() == null && !haz.annotation(f)
-        && collect.usesOf(f.getName()).in(scope.of(f)).isEmpty();
+  @Override protected boolean prerequisite(final VariableDeclarationFragment ¢) {
+    return iz.variableDeclarationStatement(parent(¢)) && ¢.getInitializer() == null && !haz.annotation(¢)
+        && collect.usesOf(¢.getName()).in(scope.of(¢)).isEmpty();
   }
 }

@@ -51,7 +51,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   }
 
   @SuppressWarnings("boxing") public int covered(final int type) {
-    return nanoHistogram(type).values().stream().map(x -> x.inner).reduce(0, (x, y) -> x + y).intValue();
+    return nanoHistogram(type).values().stream().map(λ -> λ.inner).reduce(0, (x, y) -> x + y).intValue();
   }
 
   public double coverage(final int type) {

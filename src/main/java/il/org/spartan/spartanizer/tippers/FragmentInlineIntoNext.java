@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -69,9 +70,9 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
     if (n == null || anyFurtherUsage(parent, nextStatement, identifier(n)) || leftSide(nextStatement, identifier(n)) || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
-    if (parent instanceof VariableDeclarationStatement)
-      e = FragmentInitializerStatementTerminatingScope.fixArrayInitializer(e, (VariableDeclarationStatement) parent);
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    if (pp != null)
+      e = Inliner.protect(e, pp);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {
@@ -135,6 +136,6 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
   }
 
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
-    return yieldDescendants.untilClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from($);
+    return yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

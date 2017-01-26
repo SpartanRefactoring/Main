@@ -36,7 +36,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
     final int $[] = new int[m.size()];
-    m.values().forEach(¢ -> $[n.inner++] = ¢.intValue());
+    m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
 
@@ -73,10 +73,10 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
 
   void addMissingKeys() {
-    wizard.classToNodeType.keySet().forEach(¢ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(¢)));
-    Arrays.asList(wizard.assignmentOperators).forEach(¢ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(¢)));
-    Arrays.asList(wizard.prefixOperators).forEach(¢ -> addIfNecessary("PREFIX", Vocabulary.mangle(¢)));
-    Arrays.asList(wizard.postfixOperators).forEach(¢ -> addIfNecessary("POSTFIX", Vocabulary.mangle(¢)));
+    wizard.classToNodeType.keySet().forEach(λ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(λ)));
+    Arrays.asList(wizard.assignmentOperators).forEach(λ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(λ)));
+    Arrays.asList(wizard.prefixOperators).forEach(λ -> addIfNecessary("PREFIX", Vocabulary.mangle(λ)));
+    Arrays.asList(wizard.postfixOperators).forEach(λ -> addIfNecessary("POSTFIX", Vocabulary.mangle(λ)));
     for (final Operator ¢ : wizard.infixOperators)
       for (int arity = 2; arity <= maxArity; ++arity)
         addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));
@@ -92,12 +92,12 @@ public class TableReusabilityIndices extends FolderASTVisitor {
         final Map<String, Integer> map = usage.get(category);
         final Int n = new Int(), m = new Int();
         map.keySet()
-            .forEach(key -> t//
+            .forEach(λ -> t//
                 .col("N", ++n.inner)//
                 .col("M", ++m.inner)//
                 .col("Category", category)//
-                .col("Key", '"' + key + '"')//
-                .col("Count", map.get(key))//
+                .col("Key", '"' + λ + '"')//
+                .col("Count", map.get(λ))//
                 .nl());
         writer.col(category, rindex(ranks(map)));
         System.err.println("Your output is in: " + t.description());
@@ -128,7 +128,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   protected int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    new ArrayList<>($.keySet()).stream().filter(k -> !defined.contains(k)).forEach($::remove);
+    new ArrayList<>($.keySet()).stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
     return rindex(ranks($));
   }
 

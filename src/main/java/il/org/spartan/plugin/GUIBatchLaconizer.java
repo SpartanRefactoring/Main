@@ -78,10 +78,10 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
    * printing to console.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
-    listener(os -> {
-      Arrays.asList(os).forEach(System.out::print);
+    listener(λ -> {
+      Arrays.asList(λ).forEach(System.out::print);
       System.out.println();
     });
     return this;
@@ -89,17 +89,15 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default listener configuration of {@link GUIBatchLaconizer}. Silent
    * listener.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultListenerSilent() {
-    listener((final Object... __) -> {
-      //
-    });
+    listener((final Object... __) -> {/**/});
     return this;
   }
 
   /** Default selection configuration of {@link GUIBatchLaconizer}. Normal
    * eclipse user selection.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultSelection() {
     selection(Selection.Util.current());
     return this;
@@ -107,7 +105,7 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default passes configuration of {@link GUIBatchLaconizer}, with few
    * passes.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
@@ -115,7 +113,7 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default passes configuration of {@link GUIBatchLaconizer}, with many
    * passes.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
@@ -123,7 +121,7 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default run context configuration of {@link GUIBatchLaconizer}. Simply
    * runs the {@link Runnable} in the current thread.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultRunContext() {
     runContext(Runnable::run);
     return this;
@@ -133,22 +131,22 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize
    * the {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
-    setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
+    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection())));
     name(a.getName());
     return this;
   }
 
   /** Default operation name.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultOperationName() {
     operationName(Linguistic.Activity.simple(DEFAULT_OPERATION_NAME));
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
-   * @return this applicator */
+   * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer()).defaultOperationName();
   }
@@ -163,13 +161,13 @@ public class GUIBatchLaconizer extends Applicator {
    * @author Ori Roth
    * @since 2.6 */
   private enum message {
-    run_start(2, inp -> printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1)), //
-    run_pass(1, inp -> "Pass #" + printableAt(inp, 0)), //
-    run_pass_finish(1, inp -> "Pass #" + printableAt(inp, 0) + " finished"), //
+    run_start(2, inp -> printableAt(inp, 0, λ -> ((Linguistic.Activity) λ).getIng()) + " " + printableAt(inp, 1)), //
+    run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
+    run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
     visit_cu(6,
-        inp -> wizard.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " "
+        inp -> wizard.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((Linguistic.Activity) λ).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
-    run_finish(3, inp -> "Done " + printableAt(inp, 0, x -> ((Linguistic.Activity) x).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
+    run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((Linguistic.Activity) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));
     private final int inputCount;
     private final Function<Object[], String> printing;
@@ -185,11 +183,11 @@ public class GUIBatchLaconizer extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.unknownIfNull(os, xs -> xs[index]);
+      return Linguistic.unknownIfNull(os, λ -> λ[index]);
     }
 
     private static String printableAt(final Object[] os, final int index, final Function<Object, String> operation) {
-      return Linguistic.unknownIfNull(os, xs -> operation.apply(xs[index]));
+      return Linguistic.unknownIfNull(os, λ -> operation.apply(λ[index]));
     }
   }
 

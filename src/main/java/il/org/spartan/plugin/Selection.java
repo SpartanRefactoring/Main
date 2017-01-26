@@ -35,7 +35,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    return inner.stream().map(¢ -> ¢.descriptor).collect(Collectors.toList());
+    return inner.stream().map(λ -> λ.descriptor).collect(Collectors.toList());
   }
 
   /** Factory method.
@@ -93,7 +93,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   /** Extends text selection to include overlapping markers.
-   * @return this selection */
+   * @return <code><b>this</b></code> selection */
   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;
@@ -395,7 +395,7 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.log(¢);
         return empty();
       }
-      Arrays.asList(rs).forEach(¢ -> $.unify(by(¢)));
+      Arrays.asList(rs).forEach(λ -> $.unify(by(λ)));
       return $.setName(p.getElementName());
     }
 
@@ -404,8 +404,8 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        Arrays.asList(r.getChildren()).stream().filter(¢ -> ¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
-            .forEach(¢ -> $.unify(by((IPackageFragment) ¢)));
+        Arrays.asList(r.getChildren()).stream().filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+            .forEach(λ -> $.unify(by((IPackageFragment) λ)));
       } catch (final JavaModelException ¢) {
         monitor.log(¢);
         return empty();
@@ -476,7 +476,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static String getMultiSelectionName(final List<MarkerItem> is, final List<IJavaProject> ps, final List<IPackageFragmentRoot> rs,
         final List<IPackageFragment> hs, final List<ICompilationUnit> us, final List<IMember> ms) {
       final List<String> $ = new LinkedList<>();
-      ps.forEach(¢ -> $.add(¢.getElementName()));
+      ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())
         $.add(Linguistic.plurals("root package", rs.size()));
       if (!hs.isEmpty())

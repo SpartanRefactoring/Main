@@ -43,11 +43,11 @@ public interface metrics {
       return 0;
     final Recurser<Integer> $ = new Recurser<>(n, 0);
     final Set<Integer> nodesTypeSet = new HashSet<>();
-    return $.preVisit((x) -> {
-      if (nodesTypeSet.contains(x.getRoot().getNodeType()))
-        return x.getCurrent();
-      nodesTypeSet.add(x.getRoot().getNodeType());
-      return x.getCurrent() + 1;
+    return $.preVisit(λ -> {
+      if (nodesTypeSet.contains(λ.getRoot().getNodeType()))
+        return λ.getCurrent();
+      nodesTypeSet.add(λ.getRoot().getNodeType());
+      return λ.getCurrent() + 1;
     });
   }
 
@@ -64,7 +64,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int horizontalComplexity(final int base, final List<Statement> ss) {
-    return ss == null ? 0 : ss.stream().map(¢ -> base + horizontalComplexity(¢)).reduce((x, y) -> x + y).get();
+    return ss == null ? 0 : ss.stream().map(λ -> base + horizontalComplexity(λ)).reduce((x, y) -> x + y).get();
   }
 
   static int horizontalComplexity(final int base, final Statement s) {
@@ -81,20 +81,20 @@ public interface metrics {
 
   static int height(final List<ASTNode> ns) {
     final Int $ = new Int();
-    ns.forEach((¢) -> $.inner = Integer.max($.inner, height(¢)));
+    ns.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
 
   static int height(final List<Statement> ss, @SuppressWarnings("unused") final int x) {
     final Int $ = new Int();
-    ss.forEach((¢) -> $.inner = Integer.max($.inner, height(¢)));
+    ss.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
 
   /** @param n JD
    * @return The total number of internal nodes in the AST */
   @SuppressWarnings("boxing") static int internals(final ASTNode n) {
-    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> Recurser.children(x.getRoot()).isEmpty() ? x.getCurrent() : x.getCurrent() + 1);
+    return n == null ? 0 : new Recurser<>(n, 0).preVisit(λ -> Recurser.children(λ.getRoot()).isEmpty() ? λ.getCurrent() : λ.getCurrent() + 1);
   }
 
   /** @param pattern JD
@@ -104,7 +104,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int length(final ASTNode... ns) {
-    return Arrays.asList(ns).stream().map(¢ -> (¢ + "").length()).reduce((x, y) -> x + y).get();
+    return Arrays.asList(ns).stream().map(λ -> (λ + "").length()).reduce((x, y) -> x + y).get();
   }
 
   static int literacy(final ASTNode ¢) {
@@ -136,7 +136,7 @@ public interface metrics {
   /** @param n JD
    * @return The total number of nodes in the AST */
   @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
-    return n == null ? 0 : new Recurser<>(n, 0).preVisit((x) -> (1 + x.getCurrent()));
+    return n == null ? 0 : new Recurser<>(n, 0).preVisit(λ -> (1 + λ.getCurrent()));
   }
 
   @SuppressWarnings("boxing") static int nodes(final List<Statement> ss) {
@@ -189,7 +189,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int countStatementsOfType(final List<Statement> ss, final int type) {
-    return ss.stream().map(¢ -> countStatementsOfType(¢, type)).reduce((x, y) -> x + y).get();
+    return ss.stream().map(λ -> countStatementsOfType(λ, type)).reduce((x, y) -> x + y).get();
   }
 
   static int countExpressions(final ASTNode n) {

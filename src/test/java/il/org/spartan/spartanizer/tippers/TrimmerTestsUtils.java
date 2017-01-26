@@ -27,7 +27,6 @@ public final class TrimmerTestsUtils {
       trimmer = new Trimmer();
     }
 
-    /** [[SuppressWarningsSpartan]] */
     void checkExpected(final String expected) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
@@ -41,8 +40,7 @@ public final class TrimmerTestsUtils {
       assertSimilar(expected, peeled);
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    public void checkSame() {
+    public void stays() {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
@@ -52,7 +50,6 @@ public final class TrimmerTestsUtils {
         assertSimilar(get(), peeled);
     }
 
-    /** [[SuppressWarningsSpartan]] */
     public Operand gives(final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
@@ -91,10 +88,6 @@ public final class TrimmerTestsUtils {
       return null;
     }
 
-    public void stays() {
-      checkSame();
-    }
-
     public void doesNotCrash() {
       final Wrap w = Wrap.find(get());
       assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()),
@@ -102,12 +95,12 @@ public final class TrimmerTestsUtils {
     }
 
     public <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N> ¢) {
-      trimmer.add(c, ¢);
+      trimmer.fix(c, ¢);
       return this;
     }
 
     @SafeVarargs public final <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N>... ts) {
-      Arrays.asList(ts).forEach(¢ -> trimmer.add(c, ¢));
+      Arrays.asList(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
       return this;
     }
   }

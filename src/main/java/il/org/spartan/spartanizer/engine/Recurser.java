@@ -97,7 +97,7 @@ public final class Recurser<T> {
       return;
     }
     final List<Recurser<T>> rs = new ArrayList<>();
-    children.forEach(¢ -> rs.add(new Recurser<>(¢)));
+    children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
       ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
@@ -112,7 +112,7 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return this.current = $.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
-    children.forEach(¢ -> rs.add(new Recurser<>(¢)));
+    children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
       this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
@@ -128,8 +128,8 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return;
     final List<Recurser<T>> rs = new ArrayList<>();
-    children.forEach(child -> rs.add(new Recurser<>(child)));
-    rs.forEach(¢ -> ¢.preVisit(f));
+    children.forEach(λ -> rs.add(new Recurser<>(λ)));
+    rs.forEach(λ -> λ.preVisit(f));
   }
 
   public T preVisit(final Function<Recurser<T>, T> r) {
@@ -138,7 +138,7 @@ public final class Recurser<T> {
     if (children == null || children.isEmpty())
       return this.current;
     final List<Recurser<T>> $ = new ArrayList<>();
-    children.forEach(child -> $.add(new Recurser<>(child)));
+    children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
       this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);

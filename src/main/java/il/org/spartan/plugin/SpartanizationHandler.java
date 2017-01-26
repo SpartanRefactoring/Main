@@ -171,7 +171,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         }).does(¢ -> {
           if (openDialog.get())
             Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root))
-                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), c -> Integer.valueOf(c.size())) + " files" + " in "
+                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files" + " in "
                 + plurales("pass", (Int) ¢.get(event.run_pass))).open();
         })));
     $.runContext(r -> {
@@ -190,9 +190,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @author Ori Roth
    * @since 2.6 */
   private enum message {
-    title(1, inp -> inp[0] + ""), //
-    passes(3, inp -> inp[0] + " " + inp[1] + " compilation units in " + Linguistic.plurales("pass", (Integer) inp[2])), //
-    time(1, inp -> "Run time " + inp[0] + " seconds");
+    title(1, λ -> λ[0] + ""), //
+    passes(3, λ -> λ[0] + " " + λ[1] + " compilation units in " + Linguistic.plurales("pass", (Integer) λ[2])), //
+    time(1, λ -> "Run time " + λ[0] + " seconds");
     private final int inputCount;
     private final Function<Object[], String> printing;
 

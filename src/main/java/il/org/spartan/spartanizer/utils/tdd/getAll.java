@@ -150,7 +150,7 @@ public enum getAll {
     return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))
-          $.addAll(fragments(d).stream().map(¢ -> step.name(¢) + "").collect(Collectors.toList()));
+          $.addAll(fragments(d).stream().map(λ -> step.name(λ) + "").collect(Collectors.toList()));
         return true;
       }
     };
@@ -180,14 +180,14 @@ public enum getAll {
    * @author yonzarecki
    * @author rodedzats
    * @author zivizhar */
-  public static List<String> privateFields(final TypeDeclaration ¢) {
+  public static List<String> privateFields(final TypeDeclaration d) {
     final List<String> $ = new ArrayList<>();
-    if (¢ == null)
+    if (d == null)
       return $;
-    ¢.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @Override public boolean visit(final FieldDeclaration d) {
-        if (d.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
-          $.addAll(fragments(d).stream().map(df -> df.getName().getIdentifier()).collect(Collectors.toList()));
+    d.accept(new ASTVisitor() { // traverse all FieldDeclaration
+      @Override public boolean visit(final FieldDeclaration current) {
+        if (current.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
+          $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList()));
         return true;
       }
     });

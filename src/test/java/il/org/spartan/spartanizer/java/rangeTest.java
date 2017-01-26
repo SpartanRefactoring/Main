@@ -14,26 +14,26 @@ import il.org.spartan.spartanizer.utils.*;
 public class rangeTest {
   @Test public void test0() {
     final Int s = new Int();
-    range.to(5).forEach(i -> ++s.inner);
+    range.to(5).forEach(λ -> ++s.inner);
     assert s.inner == 5;
   }
 
   @Test public void test1() {
-    assert range.from(3).to(5).stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 7;
+    assert range.from(3).to(5).stream().map(λ -> λ).reduce((x, y) -> x + y).get() == 7;
   }
 
   @Test public void test10() {
-    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).stream().map(i2 -> i2).reduce((x, y) -> x + y).get()).reduce((x, y) -> x + y)
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).stream().map(λ -> λ).reduce((x, y) -> x + y).get()).reduce((x, y) -> x + y)
         .get() == 100;
   }
 
   @Test public void test11() {
-    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).inclusive().stream().map(i2 -> i2).reduce((x, y) -> x + y).get())
+    assert range.to(10).step(2).stream().map(i1 -> range.to(10).step(2).inclusive().stream().map(λ -> λ).reduce((x, y) -> x + y).get())
         .reduce((x, y) -> x + y).get() == 150;
   }
 
   @Test public void test2() {
-    assert range.from(3).to(5).inclusive().stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 12;
+    assert range.from(3).to(5).inclusive().stream().map(λ -> λ).reduce((x, y) -> x + y).get() == 12;
   }
 
   @Test public void test3() {
@@ -41,26 +41,26 @@ public class rangeTest {
   }
 
   @Test public void test4() {
-    assert range.from(3).to(5).inclusive().exclusive().stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 7;
+    assert range.from(3).to(5).inclusive().exclusive().stream().map(λ -> λ).reduce((x, y) -> x + y).get() == 7;
   }
 
   @Test public void test5() {
-    azzert.that(range.from(0).to(10).step(2).inclusive().stream().map(¢ -> ¢).reduce((x, y) -> x + y).get(), is(30));
+    azzert.that(range.from(0).to(10).step(2).inclusive().stream().map(λ -> λ).reduce((x, y) -> x + y).get(), is(30));
   }
 
   @Test public void test6() {
-    azzert.that(range.to(5).exclusive().stream().map(¢ -> ¢).reduce((x, y) -> x + y).get(), is(10));
+    azzert.that(range.to(5).exclusive().stream().map(λ -> λ).reduce((x, y) -> x + y).get(), is(10));
   }
 
   @Test public void test7() {
-    assert range.to(5).exclusive().stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 10;
+    assert range.to(5).exclusive().stream().map(λ -> λ).reduce((x, y) -> x + y).get() == 10;
   }
 
   @Test public void test8() {
-    assert range.to(5).step(3).stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 3;
+    assert range.to(5).step(3).stream().map(λ -> λ).reduce((x, y) -> x + y).get() == 3;
   }
 
   @Test public void test9() {
-    assert range.from(100).to(110).step(10).stream().map(¢ -> ¢).reduce((x, y) -> x + y).get() == 100;
+    assert range.from(100).to(110).step(10).stream().map(λ -> λ).reduce((x, y) -> x + y).get() == 100;
   }
 }
