@@ -7,8 +7,10 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** Tests {@link Aggregate}
- * @author Ori Marcovitch */
+/**  Tests {@link Aggregate}
+ * @author Ori Marcovitch 
+ * @since Jan 18, 2017
+ */
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore // TODO: Ori Marcovitch
@@ -51,7 +53,7 @@ public class AggregateTest {
 
   @Test public void respect() {
     trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
-        .withTippers(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
+        .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
   }
 

@@ -19,6 +19,7 @@ final class CommandLineClient extends HeadlessSpartanizer {
     }
     extract(args, this);
     ReportGenerator.generate("metrics");
+    ReportGenerator.generate("methods");
     ReportGenerator.setOutputFolder(outputFolder);
     ReportGenerator.setInputFolder(inputFolder);
     run();
