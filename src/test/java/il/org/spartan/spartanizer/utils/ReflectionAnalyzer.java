@@ -34,7 +34,7 @@ public enum ReflectionAnalyzer {
     }
     dump.go(int[].class);
     dump.go(void.class);
-    dump.go(java.lang.Object[].class);
+    dump.go(Object[].class);
     dump.go(ReflectionAnalyzer.class);
     dump.go(InnerClass.class);
     dump.go(StaticInnerClass.class);

@@ -90,7 +90,7 @@ public enum precedence {
   }
 
   /** Determine the precedence of an
-   * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator}
+   * {@link InfixExpression.Operator}
    * @param o JD
    * @return precedence of the parameter */
   public static int of(final InfixExpression.Operator ¢) {
@@ -120,7 +120,7 @@ public enum precedence {
   }
 
   /** Determine the precedence of an
-   * {@link org.eclipse.jdt.core.dom.Assignment.Operator}
+   * {@link Assignment.Operator}
    * @param o JD
    * @return precedence of the parameter */
   private static int of(final Assignment.Operator ¢) {

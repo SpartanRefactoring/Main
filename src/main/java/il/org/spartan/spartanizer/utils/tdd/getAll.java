@@ -186,7 +186,7 @@ public enum getAll {
       return $;
     d.accept(new ASTVisitor() { // traverse all FieldDeclaration
       @Override public boolean visit(final FieldDeclaration current) {
-        if (current.getModifiers() == org.eclipse.jdt.core.dom.Modifier.PRIVATE)
+        if (current.getModifiers() == Modifier.PRIVATE)
           $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList()));
         return true;
       }
