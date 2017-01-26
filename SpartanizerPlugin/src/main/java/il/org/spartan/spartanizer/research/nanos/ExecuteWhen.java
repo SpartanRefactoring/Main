@@ -67,7 +67,7 @@ public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
     return firstPattern(tippers);
   }
 
-  @Override public il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Conditional;
   }
 
