@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.research.*;
  * @since 2016 */
 public enum normalize {
   ;
-
   public static String testcase(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }

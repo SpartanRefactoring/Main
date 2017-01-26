@@ -27,7 +27,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum leonidasSays {
   ;
-
   public static class blockTurns {
     final Tipper<Block> tipper;
     final String string;

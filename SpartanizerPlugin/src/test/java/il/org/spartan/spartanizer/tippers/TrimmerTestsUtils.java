@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.utils.*;
 
 public enum TrimmerTestsUtils {
   ;
-
   public static class Operand extends Wrapper<String> {
     private final Trimmer trimmer;
 

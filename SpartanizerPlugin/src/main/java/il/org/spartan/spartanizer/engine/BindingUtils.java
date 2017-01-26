@@ -11,7 +11,6 @@ import org.eclipse.jdt.internal.corext.dom.*;
 @SuppressWarnings("restriction")
 public enum BindingUtils {
   ;
-
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {

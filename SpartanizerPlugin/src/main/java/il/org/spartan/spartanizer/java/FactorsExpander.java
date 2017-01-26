@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @since 2016-08 */
 enum FactorsExpander {
   ;
-
   public static Expression simplify(final InfixExpression ¢) {
     return base(new FactorsCollector(¢));
   }

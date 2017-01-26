@@ -78,7 +78,7 @@ public class Table_NanosDistribution extends FolderASTVisitor {
       if (!writers.containsKey(boxedType))
         initializeWriter(boxedType.intValue());
       @SuppressWarnings("resource") final Table writer = writers.get(boxedType);
-      int type = Unbox.it(boxedType);
+      final int type = Unbox.it(boxedType);
       writer//
           .col("Project", path)//
           .col("count", npStatistics.total(type))//

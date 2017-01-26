@@ -16,7 +16,6 @@ import il.org.spartan.utils.*;
  * @since Nov 13, 2016 */
 public enum generalize {
   ;
-
   public static String code(final String code) {
     finish();
     return generalizeIdentifiers(code);
