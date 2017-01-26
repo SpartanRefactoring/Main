@@ -25,7 +25,7 @@ public class TrimmerLog {
   private static String outputDir = "/tmp/trimmerlog-output.CSV";
   private static String fileName;
   static {
-    logToScreen = false;
+    logToScreen = true;
   }
 
   public static void off() {
@@ -104,11 +104,11 @@ public class TrimmerLog {
     if (!logToScreen)
       return;
     System.out.println("        File: " + fileName);
-    System.out.println("       Tipper: " + clazz(w));
+    System.out.println("      Tipper: " + clazz(w));
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.tipperGroup());
     System.out.println("   Described: " + w.description(n));
-    System.out.println(" Can tip: " + w.canTip(n));
+    System.out.println("     Can tip: " + w.canTip(n));
     System.out.println("    Suggests: " + w.tip(n));
   }
 
