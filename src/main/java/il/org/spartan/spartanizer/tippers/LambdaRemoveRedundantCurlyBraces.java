@@ -35,7 +35,7 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
       return null;
     final Statement s = first(statements(x));
     final LambdaExpression $ = x.getAST().newLambdaExpression();
-    parameters(x).forEach(¢ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(¢, g));
+    parameters(x).forEach(λ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(λ, g));
     r.replace(body($), iz.expressionStatement(s) ? expression(s)
         : expression(az.returnStatement(s)) == null ? x.getAST().newBlock() : expression(az.returnStatement(s)), g);
     $.setParentheses(x.hasParentheses());

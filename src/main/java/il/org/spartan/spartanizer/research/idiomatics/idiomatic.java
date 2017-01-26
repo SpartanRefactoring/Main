@@ -362,7 +362,7 @@ public interface idiomatic {
       before.add(1);
       before.add(2);
       before.add(3);
-      final List<Integer> after = on(before).filter(x -> x % 2 == 1);
+      final List<Integer> after = on(before).filter(λ -> λ % 2 == 1);
       azzert.that(first(after).intValue(), is(1));
       azzert.that(after.get(1).intValue(), is(3));
     }
@@ -498,7 +498,7 @@ public interface idiomatic {
     }
 
     @SuppressWarnings("unchecked") private <I> Function<I, Collection<R>> castingIdentity() {
-      return i -> (Collection<R>) i;
+      return λ -> (Collection<R>) λ;
     }
 
     @Override @SuppressWarnings("unchecked") public Supplier<Collection<R>> supplier() {

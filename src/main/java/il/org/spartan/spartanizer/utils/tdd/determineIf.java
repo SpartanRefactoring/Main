@@ -65,7 +65,7 @@ public enum determineIf {
    * @param m
    * @return true iff the class contains only final fields */
   public static boolean isImmutable(final TypeDeclaration m) {
-    return m == null || Arrays.asList(fields(m)).stream().allMatch(f -> modifiers(f).stream().anyMatch(¢ -> ((Modifier) ¢).isFinal()));
+    return m == null || Arrays.asList(fields(m)).stream().allMatch(f -> modifiers(f).stream().anyMatch(λ -> ((Modifier) λ).isFinal()));
   }
 
   // For you to implement! Let's TDD and get it on!
@@ -132,7 +132,7 @@ public enum determineIf {
         return true;
       }
     });
-    return $.stream().anyMatch(¢ -> ¢.getClass().equals(ReturnStatement.class) && ¢.getExpression().getClass().equals(NullLiteral.class));
+    return $.stream().anyMatch(λ -> λ.getClass().equals(ReturnStatement.class) && λ.getExpression().getClass().equals(NullLiteral.class));
   }
 
   /** see issue #774 for more details

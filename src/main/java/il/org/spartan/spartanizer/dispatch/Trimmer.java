@@ -104,7 +104,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final String fileName = Linguistic.unknownIfNull(az.compilationUnit(n.getRoot()),
-            u -> u.getJavaElement() == null ? Linguistic.UNKNOWN : u.getJavaElement().getElementName());
+            λ -> λ.getJavaElement() == null ? Linguistic.UNKNOWN : λ.getJavaElement().getElementName());
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;

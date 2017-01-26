@@ -28,14 +28,14 @@ public final class analyzeTest {
   }
 
   @Test public void b() {
-    final List<String> s = analyze.dependencies(wizard.ast("public void m(){return x + y;}")).stream().map(x -> x + "").collect(Collectors.toList());
+    final List<String> s = analyze.dependencies(wizard.ast("public void m(){return x + y;}")).stream().map(λ -> λ + "").collect(Collectors.toList());
     assert s.contains("x");
     assert s.contains("y");
     azzert.that(s.size(), is(2));
   }
 
   @Test public void c() {
-    final List<String> s = analyze.dependencies(wizard.ast("public void m(){a.b.c(x,y,\"g\");}")).stream().map(x -> x + "")
+    final List<String> s = analyze.dependencies(wizard.ast("public void m(){a.b.c(x,y,\"g\");}")).stream().map(λ -> λ + "")
         .collect(Collectors.toList());
     assert s.contains("x");
     assert s.contains("y");

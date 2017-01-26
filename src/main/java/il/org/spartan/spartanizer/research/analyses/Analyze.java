@@ -129,7 +129,7 @@ public class Analyze {
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
-        for (final MethodDeclaration ¢ : methods(t).stream().filter(m -> !excludeMethod(m)).collect(Collectors.toList()))
+        for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(Collectors.toList()))
           try {
             Count.before(¢);
             final MethodDeclaration after = findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
@@ -142,9 +142,9 @@ public class Analyze {
       });
     }
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
-    writeFile(new File(outputDir() + "/after.java"), methods.stream().map(x -> format.code(x + "")).reduce("", (x, y) -> x + y));
+    writeFile(new File(outputDir() + "/after.java"), methods.stream().map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
     writeFile(new File(outputDir() + "/notTagged.java"),
-        methods.stream().filter(m -> !(javadoc(m) + "").contains("[[")).map(x -> format.code(x + "")).reduce("", (x, y) -> x + y));
+        methods.stream().filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
     // Logger.summarizeSortedMethodStatistics(outputDir());
     // Logger.summarizeNPStatistics(outputDir());
     Count.print();
@@ -164,7 +164,7 @@ public class Analyze {
 
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
-    new Classifier().analyze(getCompilationUnit(inputFiles().stream().map(¢ -> spartanize(compilationUnit(¢))).reduce((x, y) -> x + y).get()));
+    new Classifier().analyze(getCompilationUnit(inputFiles().stream().map(λ -> spartanize(compilationUnit(λ))).reduce((x, y) -> x + y).get()));
   }
 
   /** analyze nano patterns in code. */
@@ -199,11 +199,11 @@ public class Analyze {
         .forEach(f -> types(az.compilationUnit(compilationUnit(f))).stream()//
             .filter(haz::methods)
             .forEach(t -> methods(t).stream()//
-                .filter(m -> !m.isConstructor())//
+                .filter(λ -> !λ.isConstructor())//
                 .collect(Collectors.toList())//
                 .forEach(¢ -> {
                   try {
-                    analyses.values().forEach(a -> a.logMethod(¢,
+                    analyses.values().forEach(λ -> λ.logMethod(¢,
                         findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
                   } catch (final AssertionError __) {
                     ___.unused(__);

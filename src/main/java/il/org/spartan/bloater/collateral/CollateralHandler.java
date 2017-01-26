@@ -18,7 +18,7 @@ class CollateralHandler extends AbstractHandler {
 
   private static BloatApplicator applicator() {
     final BloatApplicator $ = BloatApplicator.defaultApplicator();
-    $.setRunAction(¢ -> new Augmenter().commitChanges(¢, $.selection()));
+    $.setRunAction(λ -> new Augmenter().commitChanges(λ, $.selection()));
     $.defaultRunContext();
     return $;
   }

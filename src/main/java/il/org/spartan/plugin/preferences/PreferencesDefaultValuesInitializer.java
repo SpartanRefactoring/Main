@@ -18,6 +18,6 @@ public final class PreferencesDefaultValuesInitializer extends AbstractPreferenc
     final IPreferenceStore s = store();
     // s.setDefault(PLUGIN_STARTUP_BEHAVIOR_ID, "remember");
     s.setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
-    Arrays.asList(TipperGroup.values()).forEach(¢ -> s.setDefault(¢.id, true));
+    Arrays.asList(TipperGroup.values()).forEach(λ -> s.setDefault(λ.id, true));
   }
 }

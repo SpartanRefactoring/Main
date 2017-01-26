@@ -129,7 +129,7 @@ public enum sideEffects {
   }
 
   public static boolean free(final Iterable<? extends Expression> xs) {
-    return xs == null || az.stream(xs).allMatch(¢ -> sideEffects.free(az.expression(¢)));
+    return xs == null || az.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
   }
 
   public static boolean free(final MethodDeclaration ¢) {
@@ -141,10 +141,10 @@ public enum sideEffects {
   }
 
   private static boolean free(final VariableDeclarationExpression x) {
-    return fragments(x).stream().allMatch(¢ -> sideEffects.free(initializer(¢)));
+    return fragments(x).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
   }
 
   public static boolean free(final VariableDeclarationStatement s) {
-    return fragments(s).stream().allMatch(¢ -> sideEffects.free(initializer(¢)));
+    return fragments(s).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
   }
 }

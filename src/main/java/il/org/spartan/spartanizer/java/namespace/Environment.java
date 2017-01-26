@@ -154,7 +154,7 @@ public interface Environment {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(type(s)));
     final String path = fullName(s);
-    $.addAll(fragments(s).stream().map(¢ -> new MapEntry<>(path + "." + ¢.getName(), makeBinding(¢, t))).collect(Collectors.toList()));
+    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(Collectors.toList()));
     return $;
   }
 
@@ -169,7 +169,7 @@ public interface Environment {
   /** Gets declarations made in ASTNode's Ancestors */
   static LinkedHashSet<Entry<String, Binding>> declaresUp(final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
-      statements(PB).forEach(¢ -> upEnv.addAll(declarationsOf(¢)));
+      statements(PB).forEach(λ -> upEnv.addAll(declarationsOf(λ)));
     return upEnv;
   }
 
@@ -184,7 +184,7 @@ public interface Environment {
   }
 
   static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
-    return ss.stream().filter($ -> s.equals($.getKey())).map(Entry::getValue).findFirst().orElse(null);
+    return ss.stream().filter(λ -> s.equals(λ.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 
   static Binding getHidden(final String s) {

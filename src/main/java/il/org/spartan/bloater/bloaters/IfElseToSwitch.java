@@ -32,7 +32,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       final SwitchCase sc = create.newSwitchCase();
       sc.setExpression(copy.of(step.right(az.comparison(x))));
       ss.add(sc);
-      statements(bs.get(i)).forEach(s -> ss.add(copy.of(s)));
+      statements(bs.get(i)).forEach(λ -> ss.add(copy.of(λ)));
       ss.add(create.newBreakStatement());
       ++i;
     }
@@ -41,7 +41,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       final SwitchCase sc = create.newSwitchCase();
       sc.setExpression(null);
       ss.add(sc);
-      statements(bs.get(i)).forEach(s -> ss.add(copy.of(s)));
+      statements(bs.get(i)).forEach(λ -> ss.add(copy.of(λ)));
       ss.add(create.newBreakStatement());
     }
     return $;

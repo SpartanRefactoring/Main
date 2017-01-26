@@ -65,19 +65,19 @@ public class InflateHandler extends AbstractHandler {
     final List<Listener> ls = Arrays.asList(t.getListeners(SWT.MouseWheel));
     if (ls == null)
       return $;
-    $.addAll(ls.stream().filter(¢ -> ¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener)
+    $.addAll(ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener)
         .collect(Collectors.toList()));
     return $;
   }
 
   protected static void addListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
-      Arrays.asList(types).forEach(i -> ls.forEach(¢ -> t.addListener(i.intValue(), ¢)));
+      Arrays.asList(types).forEach(i -> ls.forEach(λ -> t.addListener(i.intValue(), λ)));
   }
 
   protected static void removeListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
-      ls.forEach(¢ -> Arrays.asList(types).forEach(i -> t.removeListener(i.intValue(), ¢)));
+      ls.forEach(¢ -> Arrays.asList(types).forEach(λ -> t.removeListener(λ.intValue(), ¢)));
   }
 
   protected static IEditorPart getEditorPart() {
@@ -109,7 +109,7 @@ public class InflateHandler extends AbstractHandler {
     return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
         ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-            return l -> l;
+            return λ -> λ;
           }
         }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng())
         .operationName(OPERATION_ACTIVITY);
@@ -184,7 +184,7 @@ public class InflateHandler extends AbstractHandler {
       }
     // TODO: Ori Roth seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
-    ls.forEach(¢ -> text.removeKeyListener((KeyListener) ((TypedListener) ¢).getEventListener()));
+    ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 
   private static List<ITextEditor> getOpenedEditors() {

@@ -71,7 +71,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
             v.setType(tt);
             final Statement ns = copy.of(s);
-            s.subtreeMatch(new ASTMatcherSpecific($, ne -> r.replace(ne, s.getAST().newSimpleName(nn), g)), ns);
+            s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, s.getAST().newSimpleName(nn), g)), ns);
             if (!(s.getParent() instanceof Block))
               goNonBlockParent(s.getParent(), v, ns, r, g);
             else
@@ -144,7 +144,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       }
 
       void consider(final List<Expression> $, final List<Expression> xs) {
-        xs.forEach(¢ -> consider($, ¢));
+        xs.forEach(λ -> consider($, λ));
       }
     });
     return $;

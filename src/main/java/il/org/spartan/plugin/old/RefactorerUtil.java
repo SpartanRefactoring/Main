@@ -53,11 +53,11 @@ public class RefactorerUtil {
     if (us.isEmpty())
       return null;
     final Trimmer $ = new Trimmer();
-    return pm -> {
-      pm.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
+    return λ -> {
+      λ.beginTask("Counting tips in " + first(us).getResource().getProject().getName(), IProgressMonitor.UNKNOWN);
       $.setICompilationUnit(first(us));
       m.put(a, Integer.valueOf($.countTips()));
-      pm.done();
+      λ.done();
     };
   }
 }

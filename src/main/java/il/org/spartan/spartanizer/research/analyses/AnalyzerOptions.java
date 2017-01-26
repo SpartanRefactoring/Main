@@ -18,7 +18,7 @@ public enum AnalyzerOptions {
   }
 
   static void set(final String cls, final String property, final String value) {
-    options.computeIfAbsent(cls, k -> new HashMap<>());
+    options.computeIfAbsent(cls, λ -> new HashMap<>());
     options.get(cls).put(property, value);
   }
 

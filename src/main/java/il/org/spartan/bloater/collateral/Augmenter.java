@@ -61,7 +61,7 @@ public class Augmenter implements Application {
           $.add(statements(b));
         else {
           final List<Statement> l = new ArrayList<>();
-          l.addAll(statements(b).stream().filter(¢ -> inRange(¢, s)).collect(Collectors.toList()));
+          l.addAll(statements(b).stream().filter(λ -> inRange(λ, s)).collect(Collectors.toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
@@ -134,7 +134,7 @@ public class Augmenter implements Application {
    * @return true iff the compilation unit already uses that import
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
-    return imports(u).stream().anyMatch(¢ -> identifier(name(¢)).equals(s));
+    return imports(u).stream().anyMatch(λ -> identifier(name(λ)).equals(s));
   }
 
   // TODO Ori Roth move to utility

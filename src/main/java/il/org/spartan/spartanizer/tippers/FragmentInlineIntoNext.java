@@ -136,6 +136,6 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
   }
 
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
-    return yieldDescendants.untilClass(SimpleName.class).suchThat(x -> identifier(x).equals(id)).from($);
+    return yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

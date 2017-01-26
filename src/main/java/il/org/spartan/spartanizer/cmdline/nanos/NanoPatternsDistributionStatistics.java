@@ -47,7 +47,7 @@ public class NanoPatternsDistributionStatistics extends HashMap<Integer, Pair<In
   }
 
   @SuppressWarnings("boxing") public int countNanos(final Integer type) {
-    return nanoHistogram(type).values().stream().map(x -> x.inner).reduce(0, (x, y) -> x + y).intValue();
+    return nanoHistogram(type).values().stream().map(λ -> λ.inner).reduce(0, (x, y) -> x + y).intValue();
   }
 
   public double coverage(final Integer type) {
