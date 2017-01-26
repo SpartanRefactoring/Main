@@ -25,7 +25,9 @@ import il.org.spartan.spartanizer.utils.*;
  * tippers from patterns.
  * @author Ori Marcovitch
  * @since 2016 */
-public class leonidasSays {
+public enum leonidasSays {
+  ;
+
   public static class blockTurns {
     final Tipper<Block> tipper;
     final String string;

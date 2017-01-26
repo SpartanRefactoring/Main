@@ -158,7 +158,8 @@ public class Selection extends AbstractSelection<Selection> {
     return "(" + ¢.getOffset() + "," + ¢.getLength() + ")";
   }
 
-  public static class Util {
+  public enum Util {
+    ;
     /** Default name for marker selections. */
     private static final String MARKER_NAME = "marker";
     /** Default name for text selections. */

@@ -7,10 +7,12 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-12-27 */
 public enum property {
   ;
+  @FunctionalInterface
   public interface Attached {
     void to(ASTNode n);
   }
 
+  @FunctionalInterface
   public interface Obtainer<N> {
     N from(ASTNode n);
   }

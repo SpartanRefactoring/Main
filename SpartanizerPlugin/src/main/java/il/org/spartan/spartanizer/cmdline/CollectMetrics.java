@@ -19,7 +19,8 @@ import il.org.spartan.utils.*;
  * @year 2016
  * @author Yossi Gil
  * @since Oct 3, 2016 */
-final class CollectMetrics {
+enum CollectMetrics {
+  ;
   private static final String OUTPUT = "/tmp/test.csv";
   private static final String OUTPUT_Tips = "/tmp/tips.csv";
   private static final CSVStatistics output = init(OUTPUT, "property");

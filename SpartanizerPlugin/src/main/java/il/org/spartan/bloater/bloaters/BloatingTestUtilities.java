@@ -22,7 +22,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** Testing utils for expanders Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
-public class BloatingTestUtilities {
+public enum BloatingTestUtilities {
+  ;
   static final TextEditGroup textEditGroup = new TextEditGroup("");
   static int counter; // a counter for the renaming function
 

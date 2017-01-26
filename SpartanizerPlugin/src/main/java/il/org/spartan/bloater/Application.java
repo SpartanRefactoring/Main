@@ -6,6 +6,7 @@ import il.org.spartan.plugin.*;
  * {@link Applicator}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
+@FunctionalInterface
 public interface Application {
   /** Commits changes to a compilation unit from a selection.
    * @param u compilation unit wrapper

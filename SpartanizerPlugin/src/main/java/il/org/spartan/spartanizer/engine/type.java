@@ -189,7 +189,8 @@ public interface type {
     }
   }
 
-  class inner {
+  enum inner {
+    ;
     private static final String propertyName = "spartan type";
     /** All type that were ever born , as well as all primitive types */
     static final Map<String, implementation> types = new LinkedHashMap<>();
