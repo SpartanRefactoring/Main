@@ -14,7 +14,7 @@ public class Issue1117 {
   @Test public void a() {
     trimmingOf("(x)->x")//
         .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
-        .gives("(x)->x")//
+        .gives("x->x")//
         .gives("λ->λ")//
         .stays()//
     ;
