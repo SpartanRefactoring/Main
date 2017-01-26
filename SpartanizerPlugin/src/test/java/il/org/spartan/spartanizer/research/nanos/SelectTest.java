@@ -29,7 +29,7 @@ public class SelectTest {
 
   @Test public void respect() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
-        .withTippers(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
+        .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(Collectors.toList()));")//
         .stays();
   }
