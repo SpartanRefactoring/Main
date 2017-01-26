@@ -88,8 +88,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
     FolderASTVisitor.main(args);
   }
 
-  @Override @SuppressWarnings({ "boxing", "unchecked" }) 
-  public NamedFunction<ASTNode, Object>[] functions() {
+  @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
     return as.array(//
         m("length", (¢) -> (¢ + "").length()), //
         m("essence", (¢) -> Essence.of(¢ + "").length()), //
@@ -110,7 +109,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
         m("static", (¢) -> iz.static¢((BodyDeclaration) ¢)));
   }
 
-  @Override public NamedFunction[] functions(String id) {
+  @Override public NamedFunction[] functions(final String id) {
     // TODO Auto-generated method stub
     return null;
   }
