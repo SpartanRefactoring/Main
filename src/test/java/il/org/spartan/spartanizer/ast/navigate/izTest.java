@@ -38,7 +38,7 @@ public final class izTest {
   @Test public void astNodeTest() {
     assert !iz.astNode(null);
     assert !iz.astNode(Integer.valueOf(5));
-    assert !iz.astNode(String.valueOf("AAA"));
+    assert !iz.astNode("AAA");
     assert iz.astNode(wizard.ast("int x = 5;"));
   }
 

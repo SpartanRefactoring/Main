@@ -24,11 +24,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
    * @return */
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
-    this//
-        // .add(Assignment.class, //
-        // new LazyInitializer(), // R.I.P
-        // null) //
-        .add(CatchClause.class, //
+    add(CatchClause.class, //
             new IfThrowsReturn(), //
             new SupressException(), //
             // new PercolateException(), // R.I.P
