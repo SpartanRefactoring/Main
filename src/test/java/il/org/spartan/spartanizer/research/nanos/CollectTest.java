@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -28,6 +29,7 @@ public class CollectTest {
   @Test public void c() {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment ¢ : fs) if(iLikeTo(a))  $.add(¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
+        .gives("L<SimpleName>$=(fs).stream().filter(¢->iLikeTo(a)).collect(Collectors.toList());")//
         .gives("L<SimpleName>$=(fs).stream().filter(λ->iLikeTo(a)).collect(Collectors.toList());")//
         .stays();
   }
@@ -40,33 +42,34 @@ public class CollectTest {
   }
 
   @Test public void e() {
-    trimmingOf("for (L<M> sentence : allSentences()) for (M ¢ : sentence)  if (disabling.specificallyDisabled(¢))   $.add(x(¢));")//
+    trimmingOf("for (L<M> st : aS()) for (M ¢ : st)  if (d.sD(¢))   $.add(x(¢));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        .gives(
-            "for(L<M>sentence:allSentences())$.addAll((sentence).stream().filter(¢->disabling.specificallyDisabled(¢)).map(¢->x(¢)).collect(Collectors.toList()));")//
+        .gives("for(L<M>st:aS())$.addAll((st).stream().filter(¢->d.sD(¢)).map(¢->x(¢)).collect(Collectors.toList()));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        .stays();
+        ;
   }
 
   @Test public void e0() {
     trimmingOf("for (S s : as()) for (M ¢ : s) if (a.b(¢)) $.add(x(¢));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("for(S s:as())$.addAll((s).stream().filter(¢->a.b(¢)).map(¢->x(¢)).collect(Collectors.toList()));")//
-        .stays();
+        ;
   }
 
   @Test public void f() {
     trimmingOf("Set<Modifier> $ = new H<>(); for (IExtendedModifier ¢ : ms)  if (test(¢, ps))   $.add((Modifier) ¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("Set<Modifier>$=(ms).stream().filter(¢->test(¢,ps)).map(¢->(Modifier)¢).collect(Collectors.toList());")//
+        .gives("Set<Modifier>$=(ms).stream().filter(λ->test(λ,ps)).map(λ->(Modifier)λ).collect(Collectors.toList());")//
         .stays();
   }
 
   @Test public void g() {
-    trimmingOf("L<S> $ = new A<>(); for (E e : J.parse(d.getHtml()).select(\"dS\").first().children())  $.add(e.tagName()); return $;")//
+    trimmingOf("L<S> $ = new A<>(); for (E e : J.parse(d.gH()).select(\"dS\").first().children())  $.add(e.gN()); return $;")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
-        .gives("L<S>$=(J.parse(d.getHtml()).select(\"dS\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());return $;")//
-        .gives("return(J.parse(d.getHtml()).select(\"dS\").first().children()).stream().map(e->e.tagName()).collect(Collectors.toList());")//
+        .gives("L<S>$=(J.parse(d.gH()).select(\"dS\").first().children()).stream().map(e->e.gN()).collect(Collectors.toList());return $;")//
+        .gives("return(J.parse(d.gH()).select(\"dS\").first().children()).stream().map(e->e.gN()).collect(Collectors.toList());")//
+        .gives("return(J.parse(d.gH()).select(\"dS\").first().children()).stream().map(λ->λ.gN()).collect(Collectors.toList());")//
         .stays();
   }
 }
