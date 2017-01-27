@@ -21,7 +21,14 @@ public class Issue1089 {
                 + "});");
   }
 
-  @Ignore @Test public void b() {
-    trimmingOf("Object o = new Object();" + "l.forEach(c -> a(o));").stays();
+  @Test public void b() {
+    trimmingOf("Object o = new Object();" + "l.forEach(λ -> a(o));").stays();
+  }
+
+  @Test public void c() {
+    trimmingOf("" //
+        + " final Int n = new Int();" //
+        + "        $ = Arrays.asList(u.getProblems()).stream().map(λ -> ++n.inner).reduce((x, y) -> x + y).get();")//
+            .stays();
   }
 }
