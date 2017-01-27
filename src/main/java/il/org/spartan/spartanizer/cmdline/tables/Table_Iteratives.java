@@ -6,13 +6,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -58,47 +54,17 @@ public class Table_Iteratives extends FolderASTVisitor {
       definites.logNPInfo(n, np);
   }
 
-  @Override public boolean visit(final EnhancedForStatement ¢) {
-    return analyze(¢);
-  }
-
-  @Override public boolean visit(final ForStatement ¢) {
-    return analyze(¢);
-  }
-
-  @Override public boolean visit(final WhileStatement ¢) {
-    return analyze(¢);
-  }
-
-  @Override public boolean visit(final DoStatement ¢) {
-    return analyze(¢);
-  }
-
-  private static boolean analyze(final ASTNode ¢) {
-    // ¢.accept(new CleanerVisitor());
+  @Override public boolean visit(final MethodDeclaration ¢) {
     try {
-      String spartanalyze = spartanalyze(parent(¢));
-      Statement intoStatement = findFirst.statement(into.cu(spartanalyze));
-      Statement singleStatement = extract.singleStatement(intoStatement);
-      if(singleStatement == null)
-        System.out.println();
-      logNode(singleStatement);
+      spartanalyze(¢);
     } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
       System.out.print("X");
     }
     return false;
   }
 
-  private static void logNode(final Statement ¢) {
-    statistics.logNode(¢);
-    if (iz.simpleLoop(¢))
-      simpleStatistics.logNode(¢);
-    if (iz.definiteLoop(¢))
-      definites.logNode(¢);
-  }
-
   private static String spartanalyze(final ASTNode ¢) {
-    return spartanalyzer.fixedPoint(Wrap.Statement.on(¢ + ""));
+    return spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
   }
 
   @Override protected void done(final String path) {
