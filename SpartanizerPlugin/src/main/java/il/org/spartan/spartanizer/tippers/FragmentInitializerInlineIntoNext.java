@@ -40,14 +40,15 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-    if (nextStatement == null || containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+    if (nextStatement == null //
+        || containsClassInstanceCreation(nextStatement) //
+        || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
-    final Expression initializer = f.getInitializer();
+    final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:
-      case ASTNode.LAMBDA_EXPRESSION:
       case ASTNode.RETURN_STATEMENT:
       case ASTNode.SYNCHRONIZED_STATEMENT:
       case ASTNode.TRY_STATEMENT:
@@ -63,7 +64,10 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     if (parent == null || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
-    if (n == null || anyFurtherUsage(parent, nextStatement, identifier(n)) || leftSide(nextStatement, identifier(n)) || preOrPostfix(n))
+    if (n == null//
+        || anyFurtherUsage(parent, nextStatement, identifier(n))//
+        || leftSide(nextStatement, identifier(n))//
+        || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
