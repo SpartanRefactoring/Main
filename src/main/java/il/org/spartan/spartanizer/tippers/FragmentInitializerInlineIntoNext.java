@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** convert
@@ -37,7 +38,7 @@ public final class FragmentInitializerInlineIntoNext extends $FragementInitializ
   }
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement next,
       final TextEditGroup g) {
-    if (Inliner.forbiddenOperationOnPrimitive(f, next))
+    if (InliningUtilties.forbiddenOperationOnPrimitive(f, next))
       return null;
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent))
@@ -48,7 +49,7 @@ public final class FragmentInitializerInlineIntoNext extends $FragementInitializ
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
-      e = Inliner.protect(e, pp);
+      e = InliningUtilties.protect(e, pp);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {

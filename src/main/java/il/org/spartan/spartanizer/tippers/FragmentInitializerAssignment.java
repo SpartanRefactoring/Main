@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.engine.Inliner.InliningUtilties.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -43,7 +43,7 @@ public final class FragmentInitializerAssignment extends $FragementInitializerSt
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
-    if (Inliner.doesUseForbiddenSiblings(f, newInitializer))
+    if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
