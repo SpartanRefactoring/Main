@@ -31,6 +31,10 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
     return format.perc(covered(), total());
   }
 
+  @Override public void logNode(final ASTNode ¢) {
+    countNode(¢);
+  }
+
   public int totalDoWhile() {
     return total(ASTNode.DO_STATEMENT);
   }
