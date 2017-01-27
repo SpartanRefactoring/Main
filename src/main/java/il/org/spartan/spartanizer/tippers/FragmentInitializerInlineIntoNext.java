@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Ori Marcovitch
  * @since 2016-11-27 */
-public final class FragmentInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
+public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
@@ -89,7 +89,7 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
     return $;
   }
 
-  private boolean containsLambda(final Statement nextStatement) {
+  private static boolean containsLambda(final Statement nextStatement) {
     return !yieldDescendants.untilClass(LambdaExpression.class).from(nextStatement).isEmpty();
   }
 

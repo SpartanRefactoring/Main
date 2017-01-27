@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
+  private static final ASTNode AST = wizard.ast("public void m(int y){ y=5;}");
+
   @Test public void a() {
     final List<String> s = analyze.dependencies(wizard.ast("return x + y;")).stream().collect(Collectors.toList());
     assert s.contains("x");
@@ -45,6 +47,10 @@ public final class analyzeTest {
     azzert.that(s.size(), is(5));
   }
 
+  @Test public void findFirst() {
+    azzert.that(find.first(VariableDeclaration.class).under(AST).getName(), iz("int"));
+  }
+
   @Test public void testFindDeclarationInMethod0() {
     azzert.isNull(analyze.type(az.name(wizard.ast("x"))));
   }
@@ -55,8 +61,7 @@ public final class analyzeTest {
   }
 
   @Test public void testFindDeclarationInType0() {
-    azzert.that("int",
-        is(analyze.type(first(yieldDescendants.untilClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ y=5;}"))).getName())));
+    azzert.that("int", is(analyze.type(first(yieldDescendants.untilClass(VariableDeclaration.class).from(AST)).getName())));
   }
 
   @Test public void testFindDeclarationInType1() {
