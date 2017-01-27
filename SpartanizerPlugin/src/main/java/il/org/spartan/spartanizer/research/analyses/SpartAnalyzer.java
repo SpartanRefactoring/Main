@@ -40,6 +40,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         .add(EnhancedForStatement.class, //
             new Aggregate(), //
             new Collect(), //
+            new CountIf(), //
             new FindFirst(), //
             new ForEach(), //
             new ForEachSuchThat(), //
@@ -69,8 +70,8 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             new Last(), //
             null) //
         .add(ReturnStatement.class, //
-            new ReturnPrevious(), //
-            null) //
+                new ReturnPrevious(), //
+                null) //
     // new CopyCollection(), // R.I.P
     // .add(WhileStatement.class, //
     // new Exhaust(), // R.I.P
