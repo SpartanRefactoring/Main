@@ -9,11 +9,11 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** @nano for(A a : B ) if(X) S;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public class ForEachSuchThat extends ForEach {
-  private static final String description = "ForEachThat pattern: conevrt to fluent API";
+  private static final String description = "ForEachSuchThat pattern: conevrt to fluent API";
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
@@ -27,7 +27,8 @@ public class ForEachSuchThat extends ForEach {
   };
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
-    return anyTips(tippers, ¢) && nonTips(rivals, ¢);
+    return anyTips(tippers, ¢)//
+        && nonTips(rivals, ¢);
   }
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
