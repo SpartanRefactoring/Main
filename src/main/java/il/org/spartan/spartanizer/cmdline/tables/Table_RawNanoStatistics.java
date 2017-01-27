@@ -1,39 +1,30 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Generates a table that shows how many times each nano occurred in each
+ * project
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public class Table_NanosStatistics extends FolderASTVisitor {
+public class Table_RawNanoStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
-  private static final Set<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(new HashCodeMethod());
-      add(new ToStringMethod());
-    }
-  };
   static {
-    clazz = Table_NanosStatistics.class;
+    clazz = Table_RawNanoStatistics.class;
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
@@ -42,7 +33,7 @@ public class Table_NanosStatistics extends FolderASTVisitor {
   }
 
   private static String outputFileName() {
-    return Table_NanosStatistics.class.getSimpleName();
+    return Table_RawNanoStatistics.class.getSimpleName();
   }
 
   public static void main(final String[] args)
@@ -74,10 +65,6 @@ public class Table_NanosStatistics extends FolderASTVisitor {
     System.err.println(" " + path + " Done");
   }
 
-  private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || anyTips(excluded, ¢);
-  }
-
   public static void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
@@ -96,9 +83,5 @@ public class Table_NanosStatistics extends FolderASTVisitor {
         .map(λ -> λ.getClass().getSimpleName())//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.col(λ, 0));
-  }
-
-  private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
   }
 }
