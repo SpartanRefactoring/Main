@@ -22,16 +22,13 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
 
   void countNode(final ASTNode n) {
     final Integer type = Integer.valueOf(nodeType(n));
-    if (!containsKey(type))
-      put(type, new Pair<Int, HashMap<String, Int>>(new Int(), new HashMap<>()));
-    if (containsKey(type))
-      ++typeHistogram(type).inner;
+    putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
+    ++typeHistogram(type).inner;
   }
 
   public void logNPInfo(final ASTNode n, final String np) {
     final Integer type = Integer.valueOf(nodeType(n));
-    if (!containsKey(type))
-      put(type, new Pair<Int, HashMap<String, Int>>(new Int(), new HashMap<>()));
+    putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
     ++typeHistogram(type).inner;
     nanoHistogram(type).putIfAbsent(np, new Int());
     ++nanoHistogram(type).get(np).inner;
@@ -42,7 +39,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   }
 
   public HashMap<String, Int> nanoHistogram(final Integer type) {
-    return get(type) == null ? new HashMap<>() : get(type).second;
+    return get(type).second;
   }
 
   public void logNode(final ASTNode ¢) {
