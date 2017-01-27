@@ -22,6 +22,8 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
 
   void countNode(final ASTNode n) {
     final Integer type = Integer.valueOf(nodeType(n));
+    if (!containsKey(type))
+      put(type, new Pair<Int, HashMap<String, Int>>(new Int(), new HashMap<>()));
     if (containsKey(type))
       ++typeHistogram(type).inner;
   }
