@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {
   @Override public String description(final Assignment ¢) {
-    return "Inline assignment to " + to(¢) + " with its subsequent 'return'";
+    return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
