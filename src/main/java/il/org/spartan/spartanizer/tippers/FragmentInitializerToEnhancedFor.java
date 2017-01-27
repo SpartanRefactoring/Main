@@ -32,14 +32,14 @@ implements TipperCategory.Inlining {
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
-    final EnhancedForStatement s = (az.enhancedFor(nextStatement));
+    final EnhancedForStatement s = az.enhancedFor(nextStatement);
     if (s == null)
       return null;
-    Statement body = s.getBody();
+    final Statement body = s.getBody();
     if (containsClassInstanceCreation(nextStatement) || containsLambda(nextStatement))
       return null;
-    SingleVariableDeclaration z = s.getParameter();
-    Expression zz = s.getExpression();
+    final SingleVariableDeclaration z = s.getParameter();
+    final Expression zz = s.getExpression();
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent))
       return null;
