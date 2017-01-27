@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-01-10 */
-public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
+public class StatementExtractParameters<S extends Statement> extends $CarefulTipper<S>//
     implements TipperCategory.Bloater {
   protected static final List<Integer> COMPLEX_TYPES = Arrays.asList(Integer.valueOf(ASTNode.CLASS_INSTANCE_CREATION),
       Integer.valueOf(ASTNode.METHOD_INVOCATION), Integer.valueOf(ASTNode.INFIX_EXPRESSION), Integer.valueOf(ASTNode.ASSIGNMENT),

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * the block: <code> {int a=0;} </code>
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
-public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends CarefulTipper<Block>//
+public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends $CarefulTipper<Block>//
     implements TipperCategory.Deadcode {
   @Override public String description() {
     return "Remove the block";

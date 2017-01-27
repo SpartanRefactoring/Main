@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <code><b>interface</b> a{}</code>, etc.
  * @author Yossi Gil
  * @since 2015-07-29 */
-public final class ModifierRedundant extends CarefulTipper<Modifier>//
+public final class ModifierRedundant extends $CarefulTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
   @Override public String description(final Modifier ¢) {
     return "Remove redundant [" + ¢ + "] modifier";
