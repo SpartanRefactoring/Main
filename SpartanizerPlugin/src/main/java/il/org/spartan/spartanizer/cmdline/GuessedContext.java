@@ -129,8 +129,7 @@ public enum GuessedContext {
   private static String problems(final CompilationUnit u) {
     String $ = "";
     final Int n = new Int();
-    $ = Arrays.asList(u.getProblems()).stream().map(λ -> "\n\t\t\t" + ++n.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
-    return $;
+    return $ = Arrays.asList(u.getProblems()).stream().map(λ -> "\n\t\t\t" + ++n.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
   private final String before;
