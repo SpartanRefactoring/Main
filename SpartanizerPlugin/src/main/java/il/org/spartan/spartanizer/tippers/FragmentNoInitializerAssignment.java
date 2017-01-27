@@ -38,11 +38,11 @@ public final class FragmentNoInitializerAssignment extends $ReplaceToNextStateme
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(ASTRewrite $, VariableDeclarationFragment f, Statement nextStatement, TextEditGroup g) {
-    Expression initializer = f.getInitializer();
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    final Expression initializer = f.getInitializer();
     if (initializer != null)
       return null;
-    SimpleName n = f.getName();
+    final SimpleName n = f.getName();
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;

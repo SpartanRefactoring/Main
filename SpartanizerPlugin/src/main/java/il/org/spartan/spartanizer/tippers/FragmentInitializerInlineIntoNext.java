@@ -35,8 +35,8 @@ public final class FragmentInitializerInlineIntoNext extends $FragementInitializ
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
-  @Override protected ASTRewrite go(ASTRewrite $, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement next,
-      TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement next,
+      final TextEditGroup g) {
     if (Inliner.forbiddenOperationOnPrimitive(f, next))
       return null;
     final Statement parent = az.statement(f.getParent());
