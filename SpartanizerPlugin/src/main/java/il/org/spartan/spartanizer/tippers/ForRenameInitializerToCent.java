@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -43,7 +44,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !JohnDoe.property(x.getType(), n))
       return null;
     final Statement body = $.getBody();
-    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
+    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !InliningUtilties.variableUsedInFor($, n))
       return null;
     if (m != null) {
       m.exclude(body);

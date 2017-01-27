@@ -35,7 +35,7 @@ public final class FragmentInitializerReturnAssignment extends $FragementInitial
       return null;
     final Expression newReturnValue = copy.of(from(a));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - Inliner.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - InliningUtilties.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);

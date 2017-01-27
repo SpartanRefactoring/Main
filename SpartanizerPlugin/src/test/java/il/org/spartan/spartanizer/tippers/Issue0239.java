@@ -14,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** * @year 2016
@@ -104,7 +105,7 @@ public class Issue0239 {
     final SimpleName use = onlyOne(uses);
     assert use != null;
     assert !haz.unknownNumberOfEvaluations(use, nextStatement);
-    assert !Inliner.never(name, nextStatement);
+    assert !InliningUtilties.never(name, nextStatement);
     assert $FragementInitializerStatement.removalSaving(f) > 0;
   }
 }

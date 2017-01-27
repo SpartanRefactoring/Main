@@ -31,7 +31,7 @@ public final class FragmentInitializerReturnExpression extends $FragementInitial
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
-        || i.replacedSize(newReturnValue) - Inliner.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+        || i.replacedSize(newReturnValue) - InliningUtilties.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(s.getExpression(), newReturnValue, g);
     i.inlineInto(newReturnValue);
