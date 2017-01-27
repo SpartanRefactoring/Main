@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitialiazerAssignment extends $FragementAndStatement//
+public final class FragmentInitializerAssignment extends $FragementInitializerStatement//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
@@ -43,7 +43,7 @@ public final class FragmentInitialiazerAssignment extends $FragementAndStatement
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
-    if (doesUseForbiddenSiblings(f, newInitializer))
+    if (Inliner.doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)

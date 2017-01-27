@@ -13,23 +13,23 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0856 {
   @Test public void a() {
-    trimmingOf("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
+    trimmingOf("A a(){A b=One;B.d(b);return Two;}") //
         .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext()) //
-        .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
+        .gives("A a(){B.d(One);return Two;}")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("A foo(){A a=\"one expression\";C c=B.d(a);print(c);return \"and another\";}")
+    trimmingOf("A foo(){A a=One;C c=B.d(a);print(c);return Two;}")
         .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
-        .gives("A foo(){C c=B.d(\"one expression\");print(c);return \"and another\";}")
+        .gives("A foo(){C c=B.d(One);print(c);return Two;}")
         .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
-        .gives("A foo(){print(B.d(\"one expression\"));return \"and another\";}")//
+        .gives("A foo(){print(B.d(One));return Two;}")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("A a(){A b=\"one expression\";B.d(b);print(b);return \"and another\";}")
+    trimmingOf("A a(){A b=One;B.d(b);print(b);return Two;}")
         .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())//
         .stays();
   }

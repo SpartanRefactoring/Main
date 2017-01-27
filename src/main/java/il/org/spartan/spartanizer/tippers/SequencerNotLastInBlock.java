@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert <code>throw X;statement;</code> to <code>throw X;</code>.
  * @author Yossi Gil
  * @since 2016 */
-public final class SequencerNotLastInBlock<S extends Statement> extends ReplaceToNextStatement<S>//
+public final class SequencerNotLastInBlock<S extends Statement> extends $ReplaceToNextStatement<S>//
     implements TipperCategory.Deadcode {
   @Override public String description(final S ¢) {
     return "Remove dead statement after " + ¢;

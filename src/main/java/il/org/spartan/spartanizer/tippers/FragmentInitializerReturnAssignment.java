@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2015-08-07
  * @DisableSpartan */
-public final class FragmentInitializerReturnAssignment extends $FragementAndStatement//
+public final class FragmentInitializerReturnAssignment extends $FragementInitializerStatement//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
@@ -35,7 +35,7 @@ public final class FragmentInitializerReturnAssignment extends $FragementAndStat
       return null;
     final Expression newReturnValue = copy.of(from(a));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - Inliner.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);

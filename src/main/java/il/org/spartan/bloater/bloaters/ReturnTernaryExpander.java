@@ -18,7 +18,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel
  * @author Yuval Simon
  * @since 03-12-16 */
-public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
+public class ReturnTernaryExpander extends $CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
   @Override public Tip tip(final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {

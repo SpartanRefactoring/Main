@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement>//
+public final class IfThrowNoElseThrow extends $ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
   static Expression getThrowExpression(final Statement ¢) {
     final ThrowStatement $ = extract.throwStatement(¢);
