@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** see Issue0 #450 for more details This is a unit test for
@@ -11,11 +12,26 @@ import org.junit.*;
  * @since 16-11-30 */
 @SuppressWarnings("static-method")
 public class Issue0450 {
+  private static final String SEPARATOR_CASE = "final Separator s = new Separator(\", \");" //
+      + "for (final String a : args)" //
+      + "System.out.print(s + a);"//
+  ;
+
   @Test public void test0() {
-    trimmingOf("final Separator s = new Separator(\", \");" //
-        + "for (final String a : args)" //
-        + "System.out.print(s + a);")//
-            .stays();
+    trimmingOf(SEPARATOR_CASE)//
+        .stays();
+  }
+
+  @Test public void test0a() {
+    trimmingOf(SEPARATOR_CASE)//
+        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope())//
+        .stays();
+  }
+
+  @Test public void test0b() {
+    trimmingOf(SEPARATOR_CASE)//
+        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
+        .stays();
   }
 
   @Test public void test1() {

@@ -103,8 +103,7 @@ public final class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    final List<Operation<?>> $ = operationsProvider.getFunction().apply(operations);
-    for (final Operation o : $)
+    for (final Operation o : operationsProvider.getFunction().apply(operations))
       try {
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {

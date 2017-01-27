@@ -18,47 +18,28 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert
- *
- * <pre>
- * a = 3;
- * whatever(a);
- * </pre>
- *
- * to
- *
- * <pre>
- * whatever(3);
- * </pre>
- *
- * @author Ori Marcovitch
- * @since 2016-11-27 */
-public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
-    implements TipperCategory.Inlining {
+/** convert <code>int a=E;for(e: C(a)) S;</code> to 
+ * <code>for(e: C(E)) S;</code> to <code>for(int a=3;p;) {++i;}</code>
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-01-27 */
+public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStatement<VariableDeclarationFragment> //
+implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-    if (nextStatement == null || containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
-      return null;
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
-    switch (nextStatement.getNodeType()) {
-      case ASTNode.DO_STATEMENT:
-      case ASTNode.ENHANCED_FOR_STATEMENT:
-      case ASTNode.RETURN_STATEMENT:
-      case ASTNode.SYNCHRONIZED_STATEMENT:
-      case ASTNode.TRY_STATEMENT:
-      case ASTNode.WHILE_STATEMENT:
-        return null;
-      default:
-        if (containsClassInstanceCreation(nextStatement))
-          return null;
-        if (containsLambda(nextStatement))
-          return null;
-    }
+    final EnhancedForStatement s = (az.enhancedFor(nextStatement));
+    if (s == null)
+      return null;
+    Statement body = s.getBody();
+    if (containsClassInstanceCreation(nextStatement) || containsLambda(nextStatement))
+      return null;
+    SingleVariableDeclaration z = s.getParameter();
+    Expression zz = s.getExpression();
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent))
       return null;
