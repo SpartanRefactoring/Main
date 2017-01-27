@@ -14,23 +14,23 @@ import org.junit.runners.*;
 public class Issue0856 {
   @Test public void a() {
     trimmingOf("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
-        .using(VariableDeclarationFragment.class, new FragmentInlineIntoNext()) //
+        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext()) //
         .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("A foo(){A a=\"one expression\";C c=B.d(a);print(c);return \"and another\";}")
-        .using(VariableDeclarationFragment.class, new FragmentInlineIntoNext())
+        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
         .gives("A foo(){C c=B.d(\"one expression\");print(c);return \"and another\";}")
-        .using(VariableDeclarationFragment.class, new FragmentInlineIntoNext())
+        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
         .gives("A foo(){print(B.d(\"one expression\"));return \"and another\";}")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("A a(){A b=\"one expression\";B.d(b);print(b);return \"and another\";}")
-        .using(VariableDeclarationFragment.class, new FragmentInlineIntoNext())//
+        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())//
         .stays();
   }
 
