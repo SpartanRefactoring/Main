@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code>
@@ -47,7 +48,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return step.fragments(vds).stream()
-        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
+        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && InliningUtilties.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
