@@ -33,10 +33,10 @@ import il.org.spartan.spartanizer.utils.*;
  *
  * @author Ori Marcovitch
  * @since 2016-11-27 */
-public final class FragmentInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
+public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Inline assignment to " + name(¢) + " into subsequent statement";
+    return "Inline assignment to " + name(¢) + " into next statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
@@ -52,15 +52,10 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
       case ASTNode.TRY_STATEMENT:
       case ASTNode.WHILE_STATEMENT:
         return null;
-      case ASTNode.ENHANCED_FOR_STATEMENT:
-        if (!iz.simpleName(initializer) && !iz.literal(initializer))
-          return null;
-        final EnhancedForStatement enhancedFor = az.enhancedFor(nextStatement);
-        if (!(az.simpleName(enhancedFor.getExpression()) + "").equals(f.getName() + ""))
-          return null;
-        break;
       default:
         if (containsClassInstanceCreation(nextStatement))
+          return null;
+        if (containsLambda(nextStatement))
           return null;
     }
     final Statement parent = az.statement(f.getParent());
@@ -92,6 +87,10 @@ public final class FragmentInlineIntoNext extends ReplaceToNextStatement<Variabl
     }
     $.replace(n, e, g);
     return $;
+  }
+
+  private static boolean containsLambda(final Statement nextStatement) {
+    return !yieldDescendants.untilClass(LambdaExpression.class).from(nextStatement).isEmpty();
   }
 
   private static boolean preOrPostfix(final SimpleName id) {
