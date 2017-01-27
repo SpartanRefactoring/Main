@@ -163,7 +163,7 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             // new CachingPattern(), // v 2.7
-            new BlockInlineStatementIntoNext(), //
+            // new BlockInlineStatementIntoNext(), //
             // new BlockRemoveDeadVariables(), // v 2.7
             // new FindFirst(),
             null) //
