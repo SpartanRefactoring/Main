@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Collects statistics about nano occurrences
  * @author orimarco <marcovitch.ori@gmail.com>
@@ -20,13 +21,13 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   };
 
   void countNode(final ASTNode n) {
-    final Integer type = Integer.valueOf(n.getNodeType());
+    final Integer type = Integer.valueOf(nodeType(n));
     if (containsKey(type))
       ++typeHistogram(type).inner;
   }
 
   public void logNPInfo(final ASTNode n, final String np) {
-    final Integer type = Integer.valueOf(n.getNodeType());
+    final Integer type = Integer.valueOf(nodeType(n));
     if (!containsKey(type))
       put(type, new Pair<Int, HashMap<String, Int>>(new Int(), new HashMap<>()));
     ++typeHistogram(type).inner;
