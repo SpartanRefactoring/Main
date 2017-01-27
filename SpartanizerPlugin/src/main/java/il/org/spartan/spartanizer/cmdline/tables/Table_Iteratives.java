@@ -77,7 +77,12 @@ public class Table_Iteratives extends FolderASTVisitor {
   private static boolean analyze(final ASTNode ¢) {
     // ¢.accept(new CleanerVisitor());
     try {
-      logNode(extract.singleStatement(intoStatement(spartanalyze(parent(¢)))));
+      String spartanalyze = spartanalyze(parent(¢));
+      Statement intoStatement = findFirst.statement(into.cu(spartanalyze));
+      Statement singleStatement = extract.singleStatement(intoStatement);
+      if(singleStatement == null)
+        System.out.println();
+      logNode(singleStatement);
     } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
       System.out.print("X");
     }
@@ -90,10 +95,6 @@ public class Table_Iteratives extends FolderASTVisitor {
       simpleStatistics.logNode(¢);
     if (iz.definiteLoop(¢))
       definites.logNode(¢);
-  }
-
-  private static Statement intoStatement(final String ¢) {
-    return into.s(¢);
   }
 
   private static String spartanalyze(final ASTNode ¢) {
