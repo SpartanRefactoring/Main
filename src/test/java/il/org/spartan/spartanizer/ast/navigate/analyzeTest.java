@@ -48,7 +48,7 @@ public final class analyzeTest {
   }
 
   @Test public void findFirst() {
-    azzert.that(find.first(VariableDeclaration.class).under(AST).getName(), iz("int"));
+    azzert.that(find.first(VariableDeclaration.class).under(AST).getName(), iz("y"));
   }
 
   @Test public void testFindDeclarationInMethod0() {
