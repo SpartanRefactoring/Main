@@ -6,12 +6,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link ForEachSuchThat}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
-public class ForEachFilteredTest {
+public class ForEachSuchThatTest {
   @Test public void a() {
     trimmingOf("for ( A ¢ : is? thiz : theReal) if (life) justFantasy();")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
@@ -46,6 +46,14 @@ public class ForEachFilteredTest {
 
   @Test public void e() {
     trimmingOf("for (M ¢ : mt(ref)) if (!¢.isCtr() && !iz.st¢(¢) && !iz.¢(¢) && !iz.pr¢(¢)) put(gl(¢), ¢);")//
+        .using(EnhancedForStatement.class, new ForEachSuchThat())//
+        .gives("(mt(ref)).stream().filter(¢->!¢.isCtr()&&!iz.st¢(¢)&&!iz.¢(¢)&&!iz.pr¢(¢)).forEach(¢->put(gl(¢),¢));")//
+        .gives("(mt(ref)).stream().filter(λ->!λ.isCtr()&&!iz.st¢(λ)&&!iz.¢(λ)&&!iz.pr¢(λ)).forEach(λ->put(gl(λ),λ));")//
+        .stays();
+  }
+
+  @Test public void f() {
+    trimmingOf("for (M ¢ : mt(ref)) if (!¢.isCtr()) ++a;")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//
         .gives("(mt(ref)).stream().filter(¢->!¢.isCtr()&&!iz.st¢(¢)&&!iz.¢(¢)&&!iz.pr¢(¢)).forEach(¢->put(gl(¢),¢));")//
         .gives("(mt(ref)).stream().filter(λ->!λ.isCtr()&&!iz.st¢(λ)&&!iz.¢(λ)&&!iz.pr¢(λ)).forEach(λ->put(gl(λ),λ));")//
