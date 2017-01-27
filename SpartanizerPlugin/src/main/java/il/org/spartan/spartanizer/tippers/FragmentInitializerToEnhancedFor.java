@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -49,7 +50,7 @@ implements TipperCategory.Inlining {
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
-      e = Inliner.protect(e, pp);
+      e = InliningUtilties.protect(e, pp);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {

@@ -34,7 +34,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer)
-        || Inliner.forbiddenOperationOnPrimitive(f, nextStatement) || Inliner.isArrayInitWithUnmatchingTypes(f))
+        || InliningUtilties.forbiddenOperationOnPrimitive(f, nextStatement) || InliningUtilties.isArrayInitWithUnmatchingTypes(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     if (currentStatement == null)
@@ -58,9 +58,9 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
         return null;
     }
     for (final SimpleName use : uses)
-      if (Inliner.never(use, nextStatement) || Inliner.isPresentOnAnonymous(use, nextStatement))
+      if (InliningUtilties.never(use, nextStatement) || InliningUtilties.isPresentOnAnonymous(use, nextStatement))
         return null;
-    final Expression v = Inliner.protect(initializer, currentStatement);
+    final Expression v = InliningUtilties.protect(initializer, currentStatement);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)

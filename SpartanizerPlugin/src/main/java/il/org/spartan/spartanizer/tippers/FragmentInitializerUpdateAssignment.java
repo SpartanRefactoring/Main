@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+import static il.org.spartan.spartanizer.engine.Inliner.InliningUtilties.*;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -41,7 +42,7 @@ public final class FragmentInitializerUpdateAssignment extends $FragementInitial
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || Inliner.doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
