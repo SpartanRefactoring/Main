@@ -77,9 +77,7 @@ public class Table_Iteratives extends FolderASTVisitor {
   private static boolean analyze(final ASTNode ¢) {
     // ¢.accept(new CleanerVisitor());
     try {
-      String spartanalyze = spartanalyze(parent(¢));
-      Statement intoStatement = findFirst.statement(into.cu(spartanalyze));
-      Statement singleStatement = extract.singleStatement(intoStatement);
+      Statement intoStatement = findFirst.statement(into.cu(spartanalyze(parent(¢)))), singleStatement = extract.singleStatement(intoStatement);
       if(singleStatement == null)
         System.out.println();
       logNode(singleStatement);

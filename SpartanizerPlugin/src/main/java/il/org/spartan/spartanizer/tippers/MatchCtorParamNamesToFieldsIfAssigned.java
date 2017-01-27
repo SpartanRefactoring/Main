@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 // TODO Doron - I gave you some tips on fixing this class in one of the issues.
 // Please follow up.
 @SuppressWarnings("unused")
-public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration>//
+public class MatchCtorParamNamesToFieldsIfAssigned extends $CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
   @Override protected boolean prerequisite(final MethodDeclaration __) {
     return false;

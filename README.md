@@ -267,7 +267,7 @@ The project is available under the **[MIT License]**
 |121 | Canonicalization | DeclarationInitializerReturnAssignment | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |
 |122 | Inlining | DeclarationInitializerReturn | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |
 |123 | Inlining | DeclarationInitializerStatementTerminatingScope | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |
-|124 | Canonicalization | DeclarationInitialiazerAssignment | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |
+|124 | Canonicalization | DeclarationInitializerAssignment | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |
 |125 | Canonicalization | DeclarationInlineIntoNext | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |
 |126 | Annonimaization | VariableDeclarationRenameUnderscoreToDoubleUnderscore | 59 | VariableDeclarationFragment | ??? | VariableDeclaration |
 |127 | Canonicalization | ForToForInitializers | 59 | VariableDeclarationFragment | VariableDeclarationFragment | VariableDeclarationFragment |

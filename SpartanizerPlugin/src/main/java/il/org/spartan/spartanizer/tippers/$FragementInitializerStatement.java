@@ -18,46 +18,17 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
-public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $FragementInitializerStatement extends $ReplaceToNextStatement<VariableDeclarationFragment> {
   @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }
 
   @Override public abstract String description(VariableDeclarationFragment f);
 
-  static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    return forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
-  }
-
-  static int eliminationSaving(final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
-    final int $ = metrics.size(parent);
-    if (live.isEmpty())
-      return $;
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
-  }
-
   protected static boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
     return initializer == null || haz.annotation(f);
-  }
-
-  private static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    boolean collecting = false;
-    for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
-      if (brother == f) {
-        collecting = true;
-        continue;
-      }
-      if (collecting)
-        $.add(brother);
-    }
-    return $;
   }
 
   static int removalSaving(final VariableDeclarationFragment f) {
@@ -91,15 +62,56 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
     return false;
   }
 
-  protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
+  static boolean containsLambda(final Statement next) {
+    return !yieldDescendants.untilClass(LambdaExpression.class).from(next).isEmpty();
+  }
+
+  static boolean containsClassInstanceCreation(final Statement next) {
+    return !yieldDescendants.untilClass(ClassInstanceCreation.class).from(next).isEmpty();
+  }
+
+  protected static boolean anyFurtherUsage(final Statement originalStatement, final Statement next, final String id) {
+    final Bool $ = new Bool();
+    final ASTNode parent = next.getParent();
+    parent.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (parent.equals(¢))
+          return true;
+        if (!¢.equals(next) && !¢.equals(originalStatement) && iz.statement(¢) && !occurencesOf(az.statement(¢), id).isEmpty())
+          $.inner = true;
+        return false;
+      }
+    });
+    return $.inner;
+  }
+
+  protected static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+    return yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
+  }
+
+  protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement next,
       TextEditGroup g);
 
-  @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
-      final TextEditGroup g) {
-    if (!iz.variableDeclarationStatement(f.getParent()))
+  @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement next, final TextEditGroup g) {
+    if (forbiddenTarget(next))
+      return null;
+    final Expression x = getFrom(f);
+    if (x == null || Inliner.forbiddenOperationOnPrimitive(f, next))
       return null;
     final SimpleName $ = f.getName();
-    return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
+    return $ == null ? null : go(r, f, $, x, next, g);
+  }
+
+  static Expression getFrom(final VariableDeclarationFragment f) {
+    final VariableDeclarationStatement s = az.variableDeclarationStatement(f.getParent());
+    if (s == null || haz.annotation(s))
+      return null;
+    final Expression $ = f.getInitializer();
+    return $ == null || haz.sideEffects($) ? null : null;
+  }
+
+  static boolean forbiddenTarget(final Statement target) {
+    return target == null || containsClassInstanceCreation(target) || containsLambda(target) || false;
   }
 
   @Override public final Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {

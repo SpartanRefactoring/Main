@@ -105,6 +105,6 @@ public class Issue0239 {
     assert use != null;
     assert !haz.unknownNumberOfEvaluations(use, nextStatement);
     assert !Inliner.never(name, nextStatement);
-    assert $FragementAndStatement.removalSaving(f) > 0;
+    assert $FragementInitializerStatement.removalSaving(f) > 0;
   }
 }

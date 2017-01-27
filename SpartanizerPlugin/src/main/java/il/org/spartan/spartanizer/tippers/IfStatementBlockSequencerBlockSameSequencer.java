@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Tested by {@link Issue1105}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-22 */
-public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
+public class IfStatementBlockSequencerBlockSameSequencer extends $CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
   @Override public Tip tip(final IfStatement s) {
     return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

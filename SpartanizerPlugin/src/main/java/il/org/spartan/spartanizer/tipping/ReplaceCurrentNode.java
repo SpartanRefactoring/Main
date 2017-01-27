@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @year 2016
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
+public abstract class ReplaceCurrentNode<N extends ASTNode> extends $CarefulTipper<N> {
   public abstract ASTNode replacement(N n);
 
   @Override public final Tip tip(final N n) {
