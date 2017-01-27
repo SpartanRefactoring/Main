@@ -59,11 +59,9 @@ public abstract class MetaFixture {
   }
 
   public static String ancestry(final ASTNode n) {
-    String $ = "";
-    final Int i = new Int();
-    $ = Arrays.asList(ancestors.of(n)).stream().map(λ -> "\n\t + " + i.inner++ + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
+    final Int $ = new Int();
+    return Arrays.asList(ancestors.of(n)).stream().map(λ -> "\n\t + " + $.inner++ + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
-    return $;
   }
 
   private static CompilationUnit loadAST(final String fileName) {
