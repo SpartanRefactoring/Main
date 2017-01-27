@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -9,6 +11,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -22,10 +25,9 @@ import il.org.spartan.tables.*;
 public class Table_Iteratives extends FolderASTVisitor {
   private static final int ENHANCED = ASTNode.ENHANCED_FOR_STATEMENT;
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  static final InteractiveSpartanizer iSpartanayzer = new InteractiveSpartanizer();
-  private static final LoopsStatistics statistics = new LoopsStatistics();
-  private static final LoopsStatistics simpleStatistics = new LoopsStatistics();
-  private static final LoopsStatistics definites = new LoopsStatistics();
+  static final LoopsStatistics statistics = new LoopsStatistics();
+  static final LoopsStatistics simpleStatistics = new LoopsStatistics();
+  static final LoopsStatistics definites = new LoopsStatistics();
   private static Table rawWriter;
   private static Table summaryWriter;
   static {
@@ -55,16 +57,31 @@ public class Table_Iteratives extends FolderASTVisitor {
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
-    try {
-      spartanalyze(¢);
-    } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
-      System.out.print("X");
-    }
+    if (!excludeMethod(¢))
+      try {
+        log(spartanalyze(¢ + ""));
+      } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
+        System.out.print("X");
+      }
     return false;
   }
 
-  private static String spartanalyze(final ASTNode ¢) {
-    return spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
+  private static void log(final String spartanized) {
+    into.cu(spartanized).accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if (!iz.loop(¢))
+          return;
+        statistics.logNode(¢);
+        if (iz.simpleLoop(¢))
+          simpleStatistics.logNode(¢);
+        if (iz.definiteLoop(¢))
+          definites.logNode(¢);
+      }
+    });
+  }
+
+  private static String spartanalyze(final String ¢) {
+    return spartanalyzer.fixedPoint(Wrap.Method.on(¢));
   }
 
   @Override protected void done(final String path) {
