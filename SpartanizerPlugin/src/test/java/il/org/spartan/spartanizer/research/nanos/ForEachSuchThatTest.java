@@ -51,12 +51,4 @@ public class ForEachSuchThatTest {
         .gives("(mt(ref)).stream().filter(λ->!λ.isCtr()&&!iz.st¢(λ)&&!iz.¢(λ)&&!iz.pr¢(λ)).forEach(λ->put(gl(λ),λ));")//
         .stays();
   }
-
-  @Test public void f() {
-    trimmingOf("for (M ¢ : mt(ref)) if (!¢.isCtr()) ++a;")//
-        .using(EnhancedForStatement.class, new ForEachSuchThat())//
-        .gives("(mt(ref)).stream().filter(¢->!¢.isCtr()&&!iz.st¢(¢)&&!iz.¢(¢)&&!iz.pr¢(¢)).forEach(¢->put(gl(¢),¢));")//
-        .gives("(mt(ref)).stream().filter(λ->!λ.isCtr()&&!iz.st¢(λ)&&!iz.¢(λ)&&!iz.pr¢(λ)).forEach(λ->put(gl(λ),λ));")//
-        .stays();
-  }
 }
