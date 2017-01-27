@@ -139,6 +139,7 @@ public class Table_Iteratives extends FolderASTVisitor {
     // statistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
     hist.keySet().forEach(λ -> rawWriter.col(λ, hist.get(λ).inner));
     rawWriter.nl();
+    summaryWriter.nl();
   }
 
   private static double coverage() {
