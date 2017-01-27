@@ -20,11 +20,11 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   }
 
   public int total() {
-    return loopTypes.stream().mapToInt(t -> total(Unbox.it(t))).sum();
+    return loopTypes.stream().mapToInt(λ -> total(Unbox.it(λ))).sum();
   }
 
   public int covered() {
-    return loopTypes.stream().mapToInt(t -> covered(Unbox.it(t))).sum();
+    return loopTypes.stream().mapToInt(λ -> covered(Unbox.it(λ))).sum();
   }
 
   public double coverage() {
