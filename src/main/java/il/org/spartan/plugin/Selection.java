@@ -208,6 +208,7 @@ public class Selection extends AbstractSelection<Selection> {
       final ISelection s = getSelection();
       if (s == null || s instanceof ITextSelection || !(s instanceof ITreeSelection))
         return getProject();
+      // TODO Ori Roth is there  a better way of dealing with these many types
       final Object o = ((ITreeSelection) s).getFirstElement();
       if (o == null)
         return getProject();
