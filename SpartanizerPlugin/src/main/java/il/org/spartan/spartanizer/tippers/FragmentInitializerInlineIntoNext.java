@@ -47,6 +47,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
       return null;
     switch (nextStatement.getNodeType()) {
       case ASTNode.DO_STATEMENT:
+      case ASTNode.ENHANCED_FOR_STATEMENT:
       case ASTNode.RETURN_STATEMENT:
       case ASTNode.SYNCHRONIZED_STATEMENT:
       case ASTNode.TRY_STATEMENT:
