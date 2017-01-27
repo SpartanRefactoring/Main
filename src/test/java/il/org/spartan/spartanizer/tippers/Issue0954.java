@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
-/** A test case for {@link FragmentInlineIntoNext}. See issue #954.
+/** A test case for {@link FragmentInitializerInlineIntoNext}. See issue #954.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-01-20 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")

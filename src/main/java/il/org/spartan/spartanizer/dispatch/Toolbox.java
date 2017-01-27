@@ -319,7 +319,7 @@ public class Toolbox {
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
-            new FragmentInlineIntoNext(), //
+            new FragmentInitializerInlineIntoNext(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
             new FragmentToForInitializers(), //
