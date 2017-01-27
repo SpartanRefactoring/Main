@@ -177,7 +177,7 @@ public enum haz {
     for (final ASTNode ancestor : hop.ancestors(n)) {
       if (s == n)
         break;
-      if (iz.nodeTypeIn(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION))
+      if (iz.nodeTypeIn(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION, LAMBDA_EXPRESSION))
         return true;
       if (iz.expressionOfEnhancedFor(child, ancestor))
         continue;
