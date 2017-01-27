@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//
+public final class FragmentInitializerUpdateAssignment extends $FragementInitializerStatement//
     implements TipperCategory.Unite {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
@@ -41,7 +41,7 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementAndSta
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.same(n, to(a)) || Inliner.doesUseForbiddenSiblings(f, from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

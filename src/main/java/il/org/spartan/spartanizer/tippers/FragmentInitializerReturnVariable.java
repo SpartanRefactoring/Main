@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.java.*;
  * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitializerReturnVariable extends $FragementAndStatement//
+public final class FragmentInitializerReturnVariable extends $FragementInitializerStatement//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";

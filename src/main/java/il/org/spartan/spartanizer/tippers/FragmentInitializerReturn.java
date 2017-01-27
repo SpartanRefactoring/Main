@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.java.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitializerReturn extends $FragementAndStatement//
+public final class FragmentInitializerReturn extends $FragementInitializerStatement//
     implements TipperCategory.Shortcircuit {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
@@ -49,7 +49,7 @@ public final class FragmentInitializerReturn extends $FragementAndStatement//
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - Inliner.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);

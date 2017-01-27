@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * in order to preserve original code formatting.
  * @author Ori Roth
  * @since 2016 */
-public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
+public abstract class ListReplaceCurrentNode<N extends ASTNode> extends $CarefulTipper<N> {
   public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
 
   /** @return child list property descriptor of the parent of the node we are
