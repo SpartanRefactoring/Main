@@ -398,6 +398,13 @@ public class Toolbox {
     return this;
   }
 
+  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, final Tipper<N>... ts) {
+    final Integer nodeType = wizard.classToNodeType.get(c);
+    for (final Tipper<N> ¢ : ts)
+      get(nodeType.intValue()).remove(¢);
+    return this;
+  }
+
   public List<Tipper<? extends ASTNode>> getAllTippers() {
     final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)

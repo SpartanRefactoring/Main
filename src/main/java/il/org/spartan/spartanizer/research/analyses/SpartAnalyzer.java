@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
@@ -78,6 +79,18 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     // new Exhaust(), // R.I.P
     // null)//
     ;
+    remove(SwitchStatement.class, //
+        new SwitchEmpty(), //
+        new MergeSwitchBranches(), //
+        new RemoveRedundantSwitchReturn(), //
+        new RemoveRedundantSwitchContinue(), //
+        new SwitchWithOneCaseToIf(), //
+        new SwitchBranchSort(), //
+        null)//
+            .remove(SwitchCase.class, //
+                new RemoveRedundantSwitchCases(), //
+                new SwitchCaseLocalSort(), //
+                null);
     return this;
   }
 
