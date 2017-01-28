@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -99,7 +100,7 @@ public abstract class ENVTestEngineAbstract {
     final File f = new File(rOOT + from);
     assert f != null;
     assert f.exists() : f;
-    final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
+    final ASTNode $ = makeAST1.COMPILATION_UNIT.from(f);
     assert $ != null;
     return $;
   }

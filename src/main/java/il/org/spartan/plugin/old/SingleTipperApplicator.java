@@ -18,6 +18,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -46,7 +47,7 @@ public final class SingleTipperApplicator {
       final Type t, //
       final Tipper<?> w, //
       final IFile f) {
-    return createRewrite(pm, f != null ? (CompilationUnit) makeAST.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm),
+    return createRewrite(pm, f != null ? (CompilationUnit) makeAST1.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm),
         m, t, w);
   }
 
@@ -69,9 +70,9 @@ public final class SingleTipperApplicator {
       goProject(pm, m);
       return;
     }
-    final ICompilationUnit u = makeAST.iCompilationUnit(m);
+    final ICompilationUnit u = makeAST1.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
     if (w == null)
       return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
@@ -94,7 +95,7 @@ public final class SingleTipperApplicator {
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
     // XXX Roth: find a better way to get tipper from marker
-    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
       pm.done();
       return;

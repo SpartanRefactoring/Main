@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -143,7 +143,7 @@ public enum GuessedContext {
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
+    return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(on(codeFragment));
   }
 
   /** Guess a given code fragment, and converts it into a {@link Document}

@@ -6,8 +6,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link haz}
@@ -19,7 +19,7 @@ public class Issue0810 {
   private static final String HELLO_JAVA = "Hello.java";
   public static final String ROOT = "./src/test/resources/";
   private final File f = new File(ROOT + HELLO_JAVA);
-  final ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
+  final ASTNode ast = makeAST1.COMPILATION_UNIT.from(f);
 
   @Test public void test0() {
     assert !haz.ContinueStatement(ast);

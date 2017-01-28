@@ -11,9 +11,9 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -223,7 +223,7 @@ final class BatchSpartanizerApplication implements IApplication {
     final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length(), tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
         wordCount = system.wc(Essence.of(out + ""));
-    final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
+    final ASTNode from = makeAST1.COMPILATION_UNIT.from(out);
     final int nodes2 = count.nodes(from), body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);
