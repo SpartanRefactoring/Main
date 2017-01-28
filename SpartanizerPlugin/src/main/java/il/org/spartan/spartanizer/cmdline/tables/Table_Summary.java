@@ -51,6 +51,7 @@ public class Table_Summary extends TableReusabilityIndices {
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
+    // System.out.println(¢);
     try {
       final Integer key = Integer.valueOf(measure.statements(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
@@ -134,8 +135,8 @@ public class Table_Summary extends TableReusabilityIndices {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
-  @SuppressWarnings("boxing") private static double getNodeCoverage(final int type) {
-    return Double.valueOf(format.decimal(100 * npDistributionStatistics.coverage(type)));
+  private static double getNodeCoverage(final int type) {
+    return npDistributionStatistics.coverage(type);
   }
 
   private static double fIteratives() {
@@ -150,16 +151,15 @@ public class Table_Summary extends TableReusabilityIndices {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
-  /** [[SuppressWarningsSpartan]] */
   private long adopted() {
     final int $ = rMethod();
     return npStatistics.keySet().stream()//
         .map(npStatistics::get)//
-        .filter(n -> n.occurences > $).count();
+        .filter(λ -> λ.occurences > $).count();
   }
 
   private static double touched() {
-    return format.decimal(100 * safe.div(totalMethodsTouched, totalMethods));
+    return format.perc(totalMethodsTouched, totalMethods);
   }
 
   private static double totalMethodsTouched(final List<MethodRecord> rs) {
@@ -167,7 +167,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static double coverage() {
-    return format.decimal(100 * safe.div(totalStatementsCovered, totalStatements));
+    return format.perc(totalStatementsCovered, totalStatements);
   }
 
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
