@@ -56,6 +56,21 @@ public class issue0352 {
                 + "            if (upperBoundOnLowerBounds.isLessThan(nextRange.lowerBound))" + "                return endOfData();"
                 + "            nextRange = nextRange.intersection(restriction);"
                 + "            return Maps.immutableEntry(nextRange.lowerBound, nextRange);" + "        }" + "      };")
+            .gives("@Override" + "    Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {" + "      if (restriction.isEmpty())"
+                + "        return Iterators.emptyIterator();" + "      final Iterator<Range<C>> $;"
+                + "      if (lowerBoundWindow.upperBound.isLessThan(restriction.lowerBound))" + "        return Iterators.emptyIterator();" + "    "
+                + "        $ = (lowerBoundWindow.lowerBound.isLessThan(restriction.lowerBound)"
+                + "                ? rangesByUpperBound.tailMap(restriction.lowerBound, false)"
+                + "                : rangesByLowerBound.tailMap(lowerBoundWindow.lowerBound.endpoint(),"
+                + "                        lowerBoundWindow.lowerBoundType() == BoundType.CLOSED)).values().iterator();"
+                + "      final Cut<Cut<C>> upperBoundOnLowerBounds =" + "          Ordering.natural()"
+                + "              .min(lowerBoundWindow.upperBound, Cut.belowValue(restriction.upperBound));"
+                + "      return new AbstractIterator<Entry<Cut<C>, Range<C>>>() {" + "        @Override"
+                + "        protected Entry<Cut<C>, Range<C>> computeNext() {" + "            if (!$.hasNext())"
+                + "                return endOfData();" + "            Range<C> nextRange = $.next();"
+                + "            if (upperBoundOnLowerBounds.isLessThan(nextRange.lowerBound))" + "                return endOfData();"
+                + "            nextRange = nextRange.intersection(restriction);"
+                + "            return Maps.immutableEntry(nextRange.lowerBound, nextRange);" + "        }" + "      };")
             .stays();
   }
 

@@ -13,7 +13,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** ((x)) to (x)
+/** ((x)) to (x) <br>
+ * (x); to x; <br>
+ * (x).y to x.y
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
@@ -31,8 +33,21 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   }
 
   @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {
+    return doubleParenthesis(¢)//
+        || fluental(¢);
+  }
+
+  private static boolean doubleParenthesis(final ParenthesizedExpression ¢) {
     return iz.parenthesizedExpression(parent(¢))//
         || iz.methodInvocation(parent(¢))//
             && arguments(az.methodInvocation(parent(¢))).contains(¢);
+  }
+
+  private static boolean fluental(final ParenthesizedExpression ¢) {
+    return iz.methodInvocation(parent(¢))//
+        && expression(az.methodInvocation(parent(¢))) == ¢//
+        && (iz.methodInvocation(expression(¢))//
+            || iz.name(expression(¢))//
+            || iz.literal(expression(¢)));
   }
 }

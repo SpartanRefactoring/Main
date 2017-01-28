@@ -74,10 +74,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             .add(ReturnStatement.class, //
                 new ReturnPrevious(), //
                 null) //
-    // new CopyCollection(), // R.I.P
-    // .add(WhileStatement.class, //
-    // new Exhaust(), // R.I.P
-    // null)//
+            // new CopyCollection(), // R.I.P
+            .add(WhileStatement.class, //
+                new While.CountIf(), //
+                // new Exhaust(), // R.I.P
+                null)//
     ;
     remove(SwitchStatement.class, //
         new SwitchEmpty(), //
