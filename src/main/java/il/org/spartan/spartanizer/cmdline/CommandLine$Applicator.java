@@ -11,6 +11,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
@@ -90,7 +91,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     ReportGenerator.report("metrics").put("File", presentFileName);
     ReportGenerator.report("methods").put("File", presentFileName);
     final String output = fixedPoint(input);
-    final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
+    final ASTNode outputASTNode = makeAST1.COMPILATION_UNIT.from(output); // instead
                                                                          // of
                                                                          // CLASS_BODY_DECLARATIONS
     // ReportGenerator.report("tips").put("ClassLOCAfter",
@@ -140,7 +141,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST1.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

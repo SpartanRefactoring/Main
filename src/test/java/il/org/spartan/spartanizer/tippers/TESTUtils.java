@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -22,7 +23,7 @@ public enum TESTUtils {
   static final String WHITES = "(?m)\\s+";
 
   static String apply(final Trimmer t, final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit $ = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
     assert $ != null;
     final Document d = new Document(from);
     assert d != null;
@@ -34,7 +35,7 @@ public enum TESTUtils {
   }
 
   static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
     azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
 
@@ -43,7 +44,7 @@ public enum TESTUtils {
   }
 
   static void assertOneOpportunity(final AbstractGUIApplicator a, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
     assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
   }
@@ -69,7 +70,7 @@ public enum TESTUtils {
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(final String statement) {
     assert statement != null;
-    final ASTNode $ = makeAST.STATEMENTS.from(statement);
+    final ASTNode $ = makeAST1.STATEMENTS.from(statement);
     assert $ != null;
     return extract.singleStatement($);
   }

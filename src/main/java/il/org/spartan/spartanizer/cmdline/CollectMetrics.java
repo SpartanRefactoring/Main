@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -58,7 +59,7 @@ enum CollectMetrics {
 
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
-    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    final CompilationUnit before = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
     collectTips(javaCode, before);
     final CompilationUnit after = spartanize(javaCode);
@@ -118,6 +119,6 @@ enum CollectMetrics {
   private static CompilationUnit spartanize(final String javaCode) {
     final String $ = new Trimmer().fixed(javaCode);
     output.put("Characters", $.length());
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
+    return (CompilationUnit) makeAST1.COMPILATION_UNIT.from($);
   }
 }

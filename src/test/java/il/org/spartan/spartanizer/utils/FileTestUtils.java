@@ -5,6 +5,7 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** An abstract representation of our test suite, which is represented in
@@ -165,7 +166,7 @@ public abstract class FileTestUtils {
 
   /** Makes an Input file out of a Test file */
   protected static File makeInFile(final File ¢) {
-    return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
+    return createTempFile(deleteTestKeyword(makeAST1.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
   static AbstractGUIApplicator makeLaconizationObject(final File ¢) {
@@ -182,7 +183,7 @@ public abstract class FileTestUtils {
 
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
-    final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
+    final StringBuilder $ = makeAST1.COMPILATION_UNIT.builder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);
