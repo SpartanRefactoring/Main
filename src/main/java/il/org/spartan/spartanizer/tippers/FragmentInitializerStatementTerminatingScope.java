@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.engine.OldInliner.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Convert <code>int a=3;b=a;</code> into <code>b = a;</code>
@@ -63,7 +63,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
       if (InliningUtilties.never(use, nextStatement) || InliningUtilties.isPresentOnAnonymous(use, nextStatement))
         return null;
     final Expression v = InliningUtilties.protect(initializer, currentStatement);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
+    final InlinerWithValue i = new OldInliner(n, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;
