@@ -68,7 +68,7 @@ public class Table_Iteratives extends FolderASTVisitor {
 
   private static void log(final String spartanized) {
     into.cu(spartanized).accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (!iz.loop(¢))
           return;
         statistics.logNode(¢);

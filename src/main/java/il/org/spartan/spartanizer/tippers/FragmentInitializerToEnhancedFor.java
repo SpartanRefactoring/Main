@@ -18,12 +18,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert <code>int a=E;for(e: C(a)) S;</code> to 
- * <code>for(e: C(E)) S;</code> to <code>for(int a=3;p;) {++i;}</code>
+/** convert <code>int a=E;for(e: C(a)) S;</code> to <code>for(e: C(E)) S;</code>
+ * to <code>for(int a=3;p;) {++i;}</code>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-27 */
 public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStatement<VariableDeclarationFragment> //
-implements TipperCategory.Inlining {
+    implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
@@ -32,14 +32,14 @@ implements TipperCategory.Inlining {
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
-    final EnhancedForStatement s = (az.enhancedFor(nextStatement));
+    final EnhancedForStatement s = az.enhancedFor(nextStatement);
     if (s == null)
       return null;
-    Statement body = s.getBody();
+    s.getBody();
     if (containsClassInstanceCreation(nextStatement) || containsLambda(nextStatement))
       return null;
-    SingleVariableDeclaration z = s.getParameter();
-    Expression zz = s.getExpression();
+    s.getParameter();
+    s.getExpression();
     final Statement parent = az.statement(f.getParent());
     if (parent == null || iz.forStatement(parent))
       return null;

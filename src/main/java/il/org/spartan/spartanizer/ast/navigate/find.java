@@ -27,11 +27,9 @@ public enum find {
     };
   }
 
-  /**
-   * @param <N> JD
+  /** @param <N> JD
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
-   * @since 2017-01-27
-   */
+   * @since 2017-01-27 */
   public abstract static class Operand<N extends ASTNode> {
     public abstract N under(ASTNode n);
   }
