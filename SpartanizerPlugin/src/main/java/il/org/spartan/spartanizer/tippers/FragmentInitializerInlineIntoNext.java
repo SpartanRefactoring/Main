@@ -35,8 +35,9 @@ public final class FragmentInitializerInlineIntoNext extends $FragementInitializ
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer, final Statement next,
-      final TextEditGroup g) {
+
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement next, final TextEditGroup g) {
     if (InliningUtilties.forbiddenOperationOnPrimitive(f, next))
       return null;
     final Statement parent = az.statement(f.getParent());
@@ -75,7 +76,6 @@ public final class FragmentInitializerInlineIntoNext extends $FragementInitializ
     return iz.prefixExpression($) || iz.postfixExpression($);
   }
 
-
   private static boolean leftSide(final Statement next, final String id) {
     final Bool $ = new Bool();
     next.accept(new ASTVisitor() {
@@ -92,5 +92,4 @@ public final class FragmentInitializerInlineIntoNext extends $FragementInitializ
     final List<SimpleName> $ = occurencesOf(s, id);
     return $.size() != 1 ? null : first($);
   }
-
 }
