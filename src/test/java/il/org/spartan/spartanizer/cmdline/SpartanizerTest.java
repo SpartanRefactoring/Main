@@ -8,7 +8,6 @@ import org.junit.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** Test for the GUIBatchLaconizer class
