@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.Utils.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
