@@ -5,10 +5,12 @@ package il.org.spartan.spartanizer.ast.safety;
  * @since 2016-12-27 */
 public enum property {
   ;
+  @FunctionalInterface
   public interface Attached {
     void to(ASTNode n);
   }
 
+  @FunctionalInterface
   public interface Obtainer<N> {
     N from(ASTNode n);
   }

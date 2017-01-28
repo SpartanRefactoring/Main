@@ -76,7 +76,7 @@ public final class Recurser<T> {
   }
 
   public Recurser<T> from(final T value) {
-    this.current = value;
+    current = value;
     return this;
   }
 
@@ -89,7 +89,7 @@ public final class Recurser<T> {
   }
 
   public void postVisit(final Consumer<Recurser<T>> f) {
-    final List<? extends ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty()) {
       f.accept(this);
       return;
@@ -101,28 +101,28 @@ public final class Recurser<T> {
       ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
-    this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
+    current = index == 0 ? current : rs.get(index - 1).getCurrent();
     f.accept(this);
   }
 
   public T postVisit(final Function<Recurser<T>, T> $) {
-    final List<? extends ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
-      return this.current = $.apply(this);
+      return current = $.apply(this);
     final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
-      this.current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
+      current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
       ++index;
     }
-    this.current = index == 0 ? current : rs.get(index - 1).getCurrent();
-    return this.current = $.apply(this);
+    current = index == 0 ? current : rs.get(index - 1).getCurrent();
+    return current = $.apply(this);
   }
 
   public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
-    final List<? extends ASTNode> children = children(this.root);
+    final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return;
     final List<Recurser<T>> rs = new ArrayList<>();
@@ -131,17 +131,17 @@ public final class Recurser<T> {
   }
 
   public T preVisit(final Function<Recurser<T>, T> r) {
-    this.current = r.apply(this);
-    final List<? extends ASTNode> children = children(this.root);
+    current = r.apply(this);
+    final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
-      return this.current;
+      return current;
     final List<Recurser<T>> $ = new ArrayList<>();
     children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
-      this.current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
+      current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
       ++index;
     }
-    return $.isEmpty() ? this.current : $.get(index - 1).getCurrent();
+    return $.isEmpty() ? current : $.get(index - 1).getCurrent();
   }
 }

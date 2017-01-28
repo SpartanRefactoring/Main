@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -16,6 +17,23 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-12-22 */
 public enum find {
   ;
+  public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
+    return new Operand<N>() {
+      @Override public N under(final ASTNode ¢) {
+        return lisp.first(yieldDescendants.untilClass(c).from(¢));
+      }
+    };
+  }
+
+  /**
+   * @param <N> JD
+   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @since 2017-01-27
+   */
+  public abstract static class Operand<N extends ASTNode> {
+    public abstract N under(ASTNode n);
+  }
+
   public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> ns) {
     Expression $;
     if (ns.size() < 2 || ($ = singleExpressionDifference(ns.get(0), ns.get(1))) == null)
@@ -50,13 +68,13 @@ public enum find {
 
   public static <N extends ASTNode> List<String> singleAtomicDifferences(final List<N> ¢) {
     final List<String> $ = new ArrayList<>();
-    ¢.forEach(λ -> $.add(λ != first(¢) ? singleAtomicDifference(λ, first(¢)) : singleAtomicDifference(first(¢), second(¢))));
+    ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleAtomicDifference(λ, lisp.first(¢)) : singleAtomicDifference(lisp.first(¢), second(¢))));
     return $;
   }
 
   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
     final List<Expression> $ = new ArrayList<>();
-    ¢.forEach(λ -> $.add(λ != first(¢) ? singleExpressionDifference(λ, first(¢)) : singleExpressionDifference(first(¢), second(¢))));
+    ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleExpressionDifference(λ, lisp.first(¢)) : singleExpressionDifference(lisp.first(¢), second(¢))));
     return $;
   }
 
@@ -75,7 +93,7 @@ public enum find {
     final List<ASTNode> children1 = Recurser.allChildren(n1), children2 = Recurser.allChildren(n2);
     if (children1.size() != children2.size())
       return null;
-    String $ = singleAtomicDifference(first(children1), first(children2));
+    String $ = singleAtomicDifference(lisp.first(children1), lisp.first(children2));
     $ = $ != null ? $ : "";
     for (int i = 1; i < children1.size(); ++i) {
       final String diff = singleAtomicDifference(children1.get(i), children2.get(i));
@@ -96,7 +114,7 @@ public enum find {
   public static <N extends ASTNode> String singleAtomicDifference(final List<N> ns) {
     if (ns.size() < 2)
       return null;
-    String $ = singleAtomicDifference(first(ns), second(ns));
+    String $ = singleAtomicDifference(lisp.first(ns), second(ns));
     if ($ == null)
       return null;
     for (int i = 2; i < ns.size(); ++i) {

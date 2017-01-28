@@ -120,8 +120,7 @@ public class Toolbox {
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new SingleVariableDeclarationEnhancedForRenameParameterToCent(), //
-            null)//
+            new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
@@ -161,7 +160,7 @@ public class Toolbox {
             new BlockSimplify(), //
             new BlockSingleton(), //
             // new CachingPattern(), // v 2.7
-            new BlockInlineStatementIntoNext(), //
+            // new BlockInlineStatementIntoNext(), //
             // new BlockRemoveDeadVariables(), // v 2.7
             // new FindFirst(),
             null) //
@@ -317,7 +316,7 @@ public class Toolbox {
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
-            new FragmentInlineIntoNext(), //
+            new FragmentInitializerInlineIntoNext(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
             new FragmentToForInitializers(), //
@@ -363,10 +362,6 @@ public class Toolbox {
   /** Implementation */
   @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
-
-  public Toolbox() {
-    // Nothing to do
-  }
 
   /** Associate a bunch of{@link Tipper} with a given sub-class of
    * {@link ASTNode}.

@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.*;
  * @see TicksStack
  * @see StringBuilderListener demo implementation
  * @since 2.6 */
+@FunctionalInterface
 public interface Listener {
   AtomicLong eventId = new AtomicLong();
 

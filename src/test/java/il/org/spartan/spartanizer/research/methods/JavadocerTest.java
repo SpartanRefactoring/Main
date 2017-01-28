@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 18, 2016 */
-public class JavadocerTest {
+public abstract class JavadocerTest {
   protected static JavadocMarkerNanoPattern JAVADOCER; // Descendants must
                                                        // initialize
   static final SpartAnalyzer spartanizer = new SpartAnalyzer();

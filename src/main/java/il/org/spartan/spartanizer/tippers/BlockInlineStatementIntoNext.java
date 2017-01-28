@@ -7,8 +7,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** * @year 2016
- * @author Ori Marcovitch
+/** @author Ori Marcovitch
  * @since Oct 12, 2016 */
 public final class BlockInlineStatementIntoNext extends CarefulTipper<Block>//
     implements TipperCategory.Inlining {

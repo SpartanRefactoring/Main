@@ -25,7 +25,7 @@ public class NanoInstancesCollector extends FolderASTVisitor {
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
       @Override
       @Override public Tip pattern(final EnhancedForStatement ¢) {
-        return new Tip("", ¢, this.getClass()) {
+        return new Tip("", ¢, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
             nano.tip(¢).go(r, g);

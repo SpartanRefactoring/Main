@@ -496,7 +496,7 @@ public interface wizard {
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a
-   *         {@link il.org.spartan.spartanizer.ast.factory.copy#duplicate(Expression)}
+   *         {@link copy#duplicate(Expression)}
    *         of the parameter wrapped in parenthesis. */
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
@@ -557,7 +557,7 @@ public interface wizard {
       $.add(isFinal);
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))
       $.remove(isFinal);
-    final ASTNode container = il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(¢);
+    final ASTNode container = containing.typeDeclaration(¢);
     if (container == null)
       return $;
     if (iz.annotationTypeDeclaration(container))
@@ -590,7 +590,7 @@ public interface wizard {
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
-      if (iz.enumConstantDeclaration(il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(container)))
+      if (iz.enumConstantDeclaration(containing.typeDeclaration(container)))
         $.add(isProtected);
     }
     if (iz.methodDeclaration(¢) && hasSafeVarags(az.methodDeclaration(¢)))

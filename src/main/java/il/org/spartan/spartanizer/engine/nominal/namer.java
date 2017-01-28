@@ -15,36 +15,20 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface namer {
-  String forbidden = "_";
-  String anonymous = "__";
-  String return¢ = "$";
-  String current = "¢";
-  String lambda = "λ";
-  String[] standardNames = { namer.forbidden, namer.return¢, namer.anonymous, namer.current, namer.lambda };
-  @SuppressWarnings("serial") Set<String> assuming = new LinkedHashSet<String>() {
-    {
-      add("Class");
-      add("Tipper");
-      add("Map");
-    }
-  };
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
-  @SuppressWarnings("serial") Set<String> plurals = new LinkedHashSet<String>() {
-    {
-      add("ArrayList");
-      add("Collection");
-      add("HashSet");
-      add("Iterable");
-      add("LinkedHashSet");
-      add("LinkedTreeSet");
-      add("List");
-      add("Queue");
-      add("Seuence");
-      add("Set");
-      add("TreeSet");
-      add("Vector");
-    }
-  };
+  String forbidden = "_", //
+      anonymous = "__", //
+      return¢ = "$", //
+      current = "¢", //
+      lambda = "λ", //
+      standardNames[] = { forbidden, return¢, anonymous, current, lambda };
+  GenericsCategory //
+  yielding = new GenericsCategory("Supplier", "Iterator"), //
+      assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
+      plurals = new GenericsCategory(//
+          "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
+          "LinkedTreeSet", "List", "Queue", "Seuence", "Set", //
+          "TreeSet", "Vector");
 
   static String[] components(final Name ¢) {
     return components(¢);
@@ -60,14 +44,6 @@ public interface namer {
 
   static String[] components(final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
-  }
-
-  static boolean isAssuming(final ParameterizedType ¢) {
-    return assuming.contains(¢.getType() + "");
-  }
-
-  static boolean isPluralizing(final ParameterizedType ¢) {
-    return plurals.contains(¢.getType() + "");
   }
 
   static String repeat(final int i, final char c) {
@@ -100,9 +76,11 @@ public interface namer {
   }
 
   static String shorten(final ParameterizedType ¢) {
-    if (isPluralizing(¢))
+    if (yielding.contains(¢))
+      return shorten(first(typeArguments(¢)));
+    if (plurals.contains(¢))
       return shorten(first(typeArguments(¢))) + "s";
-    if (isAssuming(¢))
+    if (assuming.contains(¢))
       return shorten(¢.getType());
     final String $ = shorten(typeArguments(¢));
     return $ != null ? $ : shorten(¢.getType());
@@ -150,5 +128,17 @@ public interface namer {
     for (final String ¢ : lisp.rest(ss))
       $ += ¢;
     return $;
+  }
+
+  class GenericsCategory {
+    public final Set<String> set;
+
+    public GenericsCategory(String... names) {
+      set = new LinkedHashSet<>(Arrays.asList(names));
+    }
+
+    public boolean contains(ParameterizedType ¢) {
+      return set.contains(¢.getType() + "");
+    }
   }
 }

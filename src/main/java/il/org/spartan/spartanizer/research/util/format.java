@@ -2,10 +2,22 @@ package il.org.spartan.spartanizer.research.util;
 
 import java.text.*;
 
+<<<<<<< HEAD
 /** TODO: Ori Marcovitch please add a description
+=======
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.formatter.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+
+import il.org.spartan.spartanizer.ast.safety.*;
+
+/** Fluet API library for formatting things
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
-public class format {
+public enum format {
+  ;
   public static String code(final String code) {
     final TextEdit textEdit = ToolFactory.createCodeFormatter(null).format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     final IDocument $ = new Document(code);
@@ -18,9 +30,13 @@ public class format {
     return $.get();
   }
 
-  static final NumberFormat numberFormatter = new DecimalFormat("#0.00");
+  private static final NumberFormat numberFormatter = new DecimalFormat("#0.00");
 
   public static double decimal(final double ¢) {
     return Double.valueOf(numberFormatter.format(¢)).doubleValue();
+  }
+
+  public static double perc(final int a, final int b) {
+    return decimal(100 * safe.div(a, b));
   }
 }

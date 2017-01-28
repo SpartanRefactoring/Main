@@ -6,6 +6,6 @@ package il.org.spartan.spartanizer.tipping;
  * @since Sep 26, 2016 */
 public abstract class EagerTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
-    return this.tip(¢) != null;
+    return tip(¢) != null;
   }
 }

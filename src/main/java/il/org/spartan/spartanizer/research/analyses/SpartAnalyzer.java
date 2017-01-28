@@ -22,57 +22,55 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
    * @return */
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
-    this//
-        // .add(Assignment.class, //
-        // new LazyInitializer(), // R.I.P
-        // null) //
-        .add(CatchClause.class, //
-            new IfThrowsReturn(), //
-            new SupressException(), //
-            // new PercolateException(), // R.I.P
-            null)//
-        .add(ConditionalExpression.class, //
-            new AsBit(), //
-            new DefaultsTo(), //
-            new GeneralizedSwitch<>(), //
-            new Unless(), //
-            new SafeReference(), //
-            new TakeDefaultTo(), //
-            null) //
-        .add(EnhancedForStatement.class, //
-            new Aggregate(), //
-            new Collect(), //
-            new FindFirst(), //
-            new ForEach(), //
-            new ForEachSuchThat(), //
-            new HoldsForAll(), //
-            new HoldsForAny(), //
-            null) //
-        .add(ForStatement.class, //
-            new ForLoop.FindFirst(), //
-            new ForEachInRange(), //
-            null) //
-        .add(IfStatement.class, //
-            new NotNullOrThrow(), //
-            new AssertNotNull(), //
-            new CachingPattern(), //
-            new ExecuteWhen(), //
-            new GeneralizedSwitch<>(), //
-            // new PutIfAbsent(), // R.I.P
-            new PreconditionNotNull(), //
-            new NotHoldsOrThrow(), //
-            null) //
-        .add(InfixExpression.class, //
-            new LispLastIndex(), //
-            new Infix.SafeReference(), //
-            null)//
-        .add(MethodInvocation.class, //
-            new First(), //
-            new Last(), //
-            null) //
-        .add(ReturnStatement.class, //
-            new ReturnPrevious(), //
-            null) //
+    add(CatchClause.class, //
+        new IfThrowsReturn(), //
+        new SupressException(), //
+        // new PercolateException(), // R.I.P
+        null)//
+            .add(ConditionalExpression.class, //
+                new AsBit(), //
+                new DefaultsTo(), //
+                new GeneralizedSwitch<>(), //
+                new Unless(), //
+                new SafeReference(), //
+                new TakeDefaultTo(), //
+                null) //
+            .add(EnhancedForStatement.class, //
+                new Aggregate(), //
+                new Collect(), //
+                new CountIf(), //
+                new FindFirst(), //
+                new ForEach(), //
+                new ForEachSuchThat(), //
+                new HoldsForAll(), //
+                new HoldsForAny(), //
+                null) //
+            .add(ForStatement.class, //
+                new ForLoop.FindFirst(), //
+                new ForEachInRange(), //
+                null) //
+            .add(IfStatement.class, //
+                new NotNullOrThrow(), //
+                new AssertNotNull(), //
+                new CachingPattern(), //
+                new ExecuteWhen(), //
+                new GeneralizedSwitch<>(), //
+                // new PutIfAbsent(), // R.I.P
+                new PreconditionNotNull(), //
+                new NotHoldsOrThrow(), //
+                null) //
+            .add(InfixExpression.class, //
+                new LispLastIndex(), //
+                new Infix.SafeReference(), //
+                new Singleton(), //
+                null)//
+            .add(MethodInvocation.class, //
+                new First(), //
+                new Last(), //
+                null) //
+            .add(ReturnStatement.class, //
+                new ReturnPrevious(), //
+                null) //
     // new CopyCollection(), // R.I.P
     // .add(WhileStatement.class, //
     // new Exhaust(), // R.I.P

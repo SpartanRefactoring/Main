@@ -52,7 +52,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (uses.isEmpty())
       return null;
     if (m != null)
-      m.exclude(d);
+      m.exclude(body);
     final SimpleName ¢ = d.getAST().newSimpleName("¢");
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

@@ -18,13 +18,13 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table_Summary extends TableReusabilityIndices {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
-  private static final NanoPatternsDistributionStatistics npDistributionStatistics = new NanoPatternsDistributionStatistics();
+  private static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Table writer;
   private static int totalStatements;
@@ -58,7 +58,7 @@ public class Table_Summary extends TableReusabilityIndices {
       statementsCoverageStatistics.get(key).add(m);
       final MethodDeclaration d = findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
-        npDistributionStatistics.logMethod(d);
+        npDistributionStatistics.logNode(d);
     } catch (final AssertionError __) {
       ___.unused(__);
     }

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-20 */
-public class SingleFlater {
+public final class SingleFlater {
   private ASTNode root;
   private OperationsProvider operationsProvider;
   @Deprecated private TextSelection textSelection;
@@ -91,8 +91,7 @@ public class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    final List<Operation<?>> $ = operationsProvider.getFunction().apply(operations);
-    for (final Operation o : $)
+    for (final Operation o : operationsProvider.getFunction().apply(operations))
       try {
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
@@ -161,7 +160,7 @@ public class SingleFlater {
    * @param <N> JD
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2016-12-20 */
-  protected static class Operation<N extends ASTNode> {
+  protected static final class Operation<N extends ASTNode> {
     public final N node;
     public final Tipper<N> tipper;
 

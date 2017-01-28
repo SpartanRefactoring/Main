@@ -6,7 +6,8 @@ import static il.org.spartan.idiomatic.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
 @SuppressWarnings("restriction")
-public final class BindingUtils {
+public enum BindingUtils {
+  ;
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {

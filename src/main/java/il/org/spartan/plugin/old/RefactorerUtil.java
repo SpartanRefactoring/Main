@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since 2016 */
 @Deprecated
-public class RefactorerUtil {
+public enum RefactorerUtil {
+  ;
   public static final int MANY_PASSES = 20;
 
   @SuppressWarnings("unchecked") public static String getTipperName(final Map<attribute, Object> $) {

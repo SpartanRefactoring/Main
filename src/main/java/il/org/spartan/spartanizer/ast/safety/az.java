@@ -90,8 +90,8 @@ public enum az {
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is either {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#AND} or
-   * {@link org.eclipse.jdt.core.dom.InfixExpression.Operator#OR}.
+   * is either {@link InfixExpression.Operator#AND} or
+   * {@link InfixExpression.Operator#OR}.
    * @param $ result
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */

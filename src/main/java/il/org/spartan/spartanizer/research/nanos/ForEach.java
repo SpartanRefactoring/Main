@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** @nano Appply statement for each element in collection
  * @author Ori Marcovitch
  * @since 2016 */
 public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
@@ -31,9 +31,10 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   protected static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(new Select());
       add(new Aggregate());
       add(new Collect.defender());
+      add(new Select());
+      add(new CountIf());
     }
   };
 

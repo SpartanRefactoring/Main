@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
  * @since 2016 */
-public final class TermsReorganizer {
+public enum TermsReorganizer {
+  ;
   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }

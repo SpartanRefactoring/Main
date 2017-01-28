@@ -5,12 +5,12 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link ForEachSuchThat}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
-public class ForEachFilteredTest {
+public class ForEachSuchThatTest {
   @Test public void a() {
     trimmingOf("for ( A ¢ : is? thiz : theReal) if (life) justFantasy();")//
         .using(EnhancedForStatement.class, new ForEachSuchThat())//

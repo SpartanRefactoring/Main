@@ -2,7 +2,12 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.Utils.*;
 
+<<<<<<< HEAD
 import java.util.*;
+=======
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -124,10 +129,8 @@ public enum GuessedContext {
   }
 
   private static String problems(final CompilationUnit u) {
-    String $ = "";
-    final Int n = new Int();
-    $ = Arrays.asList(u.getProblems()).stream().map(λ -> "\n\t\t\t" + ++n.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
-    return $;
+    final Int $ = new Int();
+    return as.list(u.getProblems()).stream().map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
   private final String before;

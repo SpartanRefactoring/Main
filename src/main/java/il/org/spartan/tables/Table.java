@@ -22,7 +22,7 @@ public class Table extends Row<Table> implements Closeable {
     this(classToNormalizedFileName(c));
   }
 
-  private Table(final String name) {
+  public Table(final String name) {
     this(name, TableRenderer.builtin.values());
   }
 
@@ -98,8 +98,7 @@ public class Table extends Row<Table> implements Closeable {
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
     final Int n = new Int();
-    $ = writers.stream().map(λ -> "\t " + ++n.inner + ". " + λ.fileName + "\n").reduce((x, y) -> x + y).get();
-    return $;
+    return $ += writers.stream().map(λ -> "\t " + ++n.inner + ". " + λ.fileName + "\n").reduce((x, y) -> x + y).get();
   }
 
   RealStatistics getRealStatistics(final String key) {

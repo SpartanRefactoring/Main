@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link ForEach}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
@@ -14,12 +14,6 @@ public class ForEachTest {
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
     ;
-  }
-
-  @Test public void b() {
-    trimmingOf("for (Entry<U, O> entry : eCT.yS()) {  types.gDo().add(entry.getValue());}")//
-        .gives("for(Entry<U,O>¢:eCT.yS())types.gDo().add(entry.getValue());")//
-        .stays();
   }
 
   @Test public void c() {

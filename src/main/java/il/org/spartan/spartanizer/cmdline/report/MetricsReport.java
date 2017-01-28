@@ -30,8 +30,6 @@ public class MetricsReport implements ConfigurableReport {
     settings.getAction().initialize();
   }
 
-  public MetricsReport() {}
-
   public static Settings getSettings() {
     return settings;
   }
@@ -56,11 +54,11 @@ public class MetricsReport implements ConfigurableReport {
     }
 
     public String name() {
-      return this.name;
+      return name;
     }
 
     public ToInt<R> function() {
-      return this.f;
+      return f;
     }
   }
 

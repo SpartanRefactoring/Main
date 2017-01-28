@@ -33,7 +33,8 @@ public class ReportGenerator implements ConfigurableReport {
     return metricsMap;
   }
 
-  public static class Util {
+  public enum Util {
+    ;
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
           m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),

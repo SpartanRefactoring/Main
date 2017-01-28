@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @year 2016
  * @author Yossi Gil
  * @since Sep 20, 2016 */
-public class TrimmerLog {
+public enum TrimmerLog {
+  ;
   private static CSVStatistics output;
   private static int maxVisitations = 30;
   private static int maxTips = 20;

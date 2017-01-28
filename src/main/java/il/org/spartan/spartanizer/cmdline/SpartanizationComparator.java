@@ -18,17 +18,18 @@ import il.org.spartan.utils.*;
 /** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
  * @since Jan 21, 2017 */
-public class SpartanizationComparator {
-  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
-  protected static String presentSourcePath;
-  protected static String presentSourceName;
+public enum SpartanizationComparator {
+  ;
+  @External(alias = "i", value = "input folder") static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") static String outputFolder = "/tmp";
+  static String presentSourcePath;
+  static String presentSourceName;
   static int methodNesting;
   static MethodDeclaration lastNode;
-  protected static Dotter dotter = new Dotter();
+  static Dotter dotter = new Dotter();
   private static final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
-  protected static String makeFile(final String fileName) {
+  static String makeFile(final String fileName) {
     return outputFolder + "/" + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
@@ -70,7 +71,7 @@ public class SpartanizationComparator {
     });
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) protected static void consider(final MethodDeclaration ¢, final String id) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider(final MethodDeclaration ¢, final String id) {
     ¢.getStartPosition();
     System.out.println(¢.getName());
     //
@@ -84,17 +85,24 @@ public class SpartanizationComparator {
     writer.nl();
   }
 
-  protected static String presentFile;
+  static String presentFile;
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) protected static void consider2(final MethodDeclaration ¢) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider2(final MethodDeclaration ¢) {
     writer.put("File", presentFile).put("Name", ¢.getName()).put("Path", presentSourcePath);
     for (final NamedFunction f : functions())
       writer.put(f.name(), f.function().run(¢));
     writer.nl();
   }
 
-  @SuppressWarnings("rawtypes") public static NamedFunction[] functions() {
-    return functions("");
+  public static NamedFunction<?>[] functions() {
+    return as.array(//
+        m("length - ", λ -> (λ + "").length()), //
+        m("essence - ", λ -> Essence.of(λ + "").length()), //
+        m("tokens - ", λ -> metrics.tokens(λ + "")), //
+        m("nodes - ", count::nodes), //
+        m("body - ", metrics::bodySize), //
+        m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
+        m("tide - ", λ -> clean(λ + "").length()));//
   }
 
   static void consider(final MethodDeclaration ¢) {
@@ -139,22 +147,6 @@ public class SpartanizationComparator {
     writer.nl();
   }
 
-  @SuppressWarnings({ "rawtypes" }) public static NamedFunction[] functions(String id) {
-    id = format(id);
-    return as.array(//
-        m("length" + id, λ -> (λ + "").length()), //
-        m("essence" + id, λ -> Essence.of(λ + "").length()), //
-        m("tokens" + id, λ -> metrics.tokens(λ + "")), //
-        m("nodes" + id, count::nodes), //
-        m("body" + id, metrics::bodySize), //
-        m("methodDeclaration" + id, λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-        m("tide" + id, λ -> clean(λ + "").length()));//
-  }
-
-  private static String format(final String id) {
-    return " - " + id;
-  }
-
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
@@ -174,11 +166,11 @@ public class SpartanizationComparator {
     }
 
     public String name() {
-      return this.name;
+      return name;
     }
 
     public ToInt<R> function() {
-      return this.f;
+      return f;
     }
   }
 }

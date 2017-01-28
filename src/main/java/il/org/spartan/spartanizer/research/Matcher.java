@@ -41,7 +41,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @since 2016 */
-public class Matcher {
+public final class Matcher {
   private static final String $X_pattern = "\\$X\\d*\\(\\)"; // Expression
   private static final String $T_pattern = "\\$T\\d*"; // Type
   private static final String $A = "$A"; // Arguments

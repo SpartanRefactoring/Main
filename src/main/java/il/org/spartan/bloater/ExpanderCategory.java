@@ -7,6 +7,7 @@ import il.org.spartan.plugin.*;
 /** Classification of Expanders
  * @author Raviv Rachmiel
  * @since 24-12-16 */
+@FunctionalInterface
 public interface ExpanderCategory {
   String description();
 
@@ -28,6 +29,7 @@ public interface ExpanderCategory {
   }
 
   // TODO: Roth, to preferences?
+  @FunctionalInterface
   interface Nominal extends ExpanderCategory {
     String label = "Nominal";
   }

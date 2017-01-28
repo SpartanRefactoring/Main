@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.engine.*;
  * textual, implemented as a JavaDoc comment that can be read by
  * {@link DisabledChecker}.
  * @author Ori Roth */
-public final class SuppressWarningsLaconicOnOff {
+public enum SuppressWarningsLaconicOnOff {
+  ;
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
    * @param pm progress monitor for the operation

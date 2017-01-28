@@ -3,12 +3,9 @@ package il.org.spartan.spartanizer.research.nanos;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Tests {@link DefaultsTo}
+ * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
 public class DefaultsToTest {
   @Test public void basic() {

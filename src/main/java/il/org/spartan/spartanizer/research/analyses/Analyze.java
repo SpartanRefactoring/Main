@@ -25,7 +25,8 @@ import il.org.spartan.utils.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
-public class Analyze {
+public enum Analyze {
+  ;
   static {
     set("outputDir", "/tmp");
   }

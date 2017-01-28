@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** This is the ?? operator
- * @year 2016
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
@@ -47,7 +46,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override public il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Default;
   }
 }

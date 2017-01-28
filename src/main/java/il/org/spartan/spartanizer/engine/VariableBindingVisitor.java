@@ -18,7 +18,7 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
    * {@link ASTNode#accept(ASTVisitor)} on this object, it conducts a
    * preliminary full visit of the tree, starting from its root, collecting the
    * binding information.
-   * @see org.eclipse.jdt.core.dom.ASTVisitor#preVisit(org.eclipse.jdt.core.dom.ASTNode) */
+   * @see ASTVisitor#preVisit(ASTNode) */
   @Override public final void preVisit(final ASTNode ¢) {
     if (!seen(¢))
       collect(¢);

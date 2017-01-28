@@ -9,7 +9,8 @@ import il.org.spartan.spartanizer.research.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
-public class normalize {
+public enum normalize {
+  ;
   public static String testcase(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
@@ -45,7 +46,7 @@ public class normalize {
             : "z".equals(old) ? "x1"
                 : "Z".equals(old) ? "X1"
                     : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
-                        : String.valueOf(old.charAt(0)) + String.valueOf(old.charAt(1) + 1);
+                        : String.valueOf(old.charAt(0)) + (old.charAt(1) + 1);
   }
 
   /** Separate the string to lines

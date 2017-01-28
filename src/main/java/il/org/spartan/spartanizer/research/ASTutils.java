@@ -7,7 +7,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
-public class ASTutils {
+public enum ASTutils {
+  ;
   public static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
