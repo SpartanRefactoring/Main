@@ -136,7 +136,7 @@ public interface namer {
     public final Set<String> set;
 
     public GenericsCategory(final String... names) {
-      set = new LinkedHashSet<>(Arrays.asList(names));
+      set = new LinkedHashSet<>(as.list(names));
     }
 
     public boolean contains(final ParameterizedType ¢) {

@@ -3,6 +3,7 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 
@@ -20,7 +21,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   public Self col(final Accumulator... ¢) {
-    Arrays.asList(¢).forEach(this::col);
+    as.list(¢).forEach(this::col);
     return self();
   }
 

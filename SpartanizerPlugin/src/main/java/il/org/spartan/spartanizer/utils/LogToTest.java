@@ -10,6 +10,7 @@ import java.text.*;
 import java.util.*;
 import java.util.function.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.util.*;
 
@@ -31,7 +32,7 @@ public enum LogToTest {
     }
     final File[] fs = d.listFiles();
     final Int fc = new Int();
-    Arrays.asList(fs).stream().filter(λ -> λ.isFile() && λ.getName().startsWith("log_spartan")).forEach(λ -> ++fc.inner);
+    as.list(fs).stream().filter(λ -> λ.isFile() && λ.getName().startsWith("log_spartan")).forEach(λ -> ++fc.inner);
     if (fc.inner == 0) {
       System.out.println("First run some tests to create a log file.");
       return;

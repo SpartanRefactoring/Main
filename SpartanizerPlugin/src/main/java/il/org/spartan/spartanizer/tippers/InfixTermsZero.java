@@ -8,13 +8,14 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Replace <code>0+X</code>, <code>X+0</code>
  * @author Alex Kopzon

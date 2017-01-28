@@ -32,7 +32,7 @@ public class Toolbox {
     {
       final Toolbox t = freshCopyOfAllTippers();
       assert t.implementation != null;
-      Arrays.asList(t.implementation).stream().filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
+      as.list(t.implementation).stream().filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
   /** The default instance of this class */
@@ -85,7 +85,7 @@ public class Toolbox {
   }
 
   @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
-    return Arrays.asList(ts).stream().filter(λ -> λ.canTip(n)).findFirst().orElse(null);
+    return as.list(ts).stream().filter(λ -> λ.canTip(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
@@ -406,7 +406,7 @@ public class Toolbox {
   }
 
   public void disable(final Class<? extends TipperCategory> c) {
-    Arrays.asList(implementation).stream().filter(Objects::nonNull).forEach(λ -> disable(c, λ));
+    as.list(implementation).stream().filter(Objects::nonNull).forEach(λ -> disable(c, λ));
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -422,7 +422,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("boxing") public int hooksCount() {
-    return Arrays.asList(implementation).stream().map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
+    return as.list(implementation).stream().map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
   }
 
   public int tippersCount() {
@@ -459,7 +459,7 @@ public class Toolbox {
       return $;
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
-    Arrays.asList(t.implementation).stream().filter(Objects::nonNull)
+    as.list(t.implementation).stream().filter(Objects::nonNull)
         .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
     return $;
   }

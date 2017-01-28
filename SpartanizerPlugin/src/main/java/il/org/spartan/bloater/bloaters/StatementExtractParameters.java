@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,9 +31,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends $CarefulTipper<S>//
     implements TipperCategory.Bloater {
-  protected static final List<Integer> COMPLEX_TYPES = Arrays.asList(Integer.valueOf(ASTNode.CLASS_INSTANCE_CREATION),
-      Integer.valueOf(ASTNode.METHOD_INVOCATION), Integer.valueOf(ASTNode.INFIX_EXPRESSION), Integer.valueOf(ASTNode.ASSIGNMENT),
-      Integer.valueOf(ASTNode.CONDITIONAL_EXPRESSION), Integer.valueOf(ASTNode.LAMBDA_EXPRESSION));
+  protected static final List<Integer> COMPLEX_TYPES = as.list(ASTNode.CLASS_INSTANCE_CREATION,
+      ASTNode.METHOD_INVOCATION, ASTNode.INFIX_EXPRESSION, ASTNode.ASSIGNMENT,
+      ASTNode.CONDITIONAL_EXPRESSION, ASTNode.LAMBDA_EXPRESSION);
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
@@ -159,9 +160,9 @@ public class StatementExtractParameters<S extends Statement> extends $CarefulTip
   static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
     final List<String> idns = new LinkedList<>();
     if (r.getAddedImports() != null)
-      idns.addAll(Arrays.asList(r.getAddedImports()));
+      idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)
-      idns.addAll(Arrays.asList(r.getAddedStaticImports()));
+      idns.addAll(as.list(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
       // TODO Ori Roth: do it better
       for (final ImportDeclaration oid : step.imports(u)) // Tough

@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.research.util;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -41,7 +40,7 @@ public enum measure {
   }
 
   static boolean excluded(final Statement ¢) {
-    return Arrays.asList(//
+    return as.list(//
         Block.class, //
         // BreakStatement.class, //
         // ContinueStatement.class, //
@@ -55,7 +54,7 @@ public enum measure {
   }
 
   static boolean excluded(final Expression ¢) {
-    return Arrays.asList(//
+    return as.list(//
         Annotation.class, //
         ArrayAccess.class, //
         ArrayCreation.class, //

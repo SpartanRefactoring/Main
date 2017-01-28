@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+import static il.org.spartan.spartanizer.engine.Inliner.InliningUtilties.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -31,7 +32,7 @@ public final class FragmentInitializerReturnExpression extends $FragementInitial
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
-        || i.replacedSize(newReturnValue) - InliningUtilties.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+        || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(s.getExpression(), newReturnValue, g);
     i.inlineInto(newReturnValue);
