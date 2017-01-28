@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.meta;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
 
 import java.io.*;
 import java.util.*;
@@ -29,6 +31,21 @@ public abstract class MetaFixture {
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
 
+  public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
+    final String name = name();
+    final Vocabulary $ = new Vocabulary();
+    for (final BodyDeclaration bd : bodyDeclarations(cd)) {
+      assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
+      final MethodDeclaration md = (MethodDeclaration) bd;
+      $.put(name + "::" + mangle(md) + "", md);
+    }
+    return $;
+  }
+
+  public String name() {
+    return extract.name(types(reflectedCompilationUnit()).stream().filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get());
+  }
+
   public final CompilationUnit reflectedCompilationUnit() {
     final Class<? extends MetaFixture> c = getClass();
     final CompilationUnit $ = classToASTCompilationUnit.get(c);
@@ -38,7 +55,7 @@ public abstract class MetaFixture {
     return classToASTCompilationUnit.get(c);
   }
 
-  public final String myClassText() {
+  public final String reflectedCompilationUnitText() {
     final Class<? extends MetaFixture> c = getClass();
     final String $ = classToText.get(c);
     if ($ != null)
