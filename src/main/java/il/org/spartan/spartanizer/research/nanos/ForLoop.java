@@ -35,6 +35,11 @@ public final class ForLoop {
             "return from($X1).step(($N)->$X2).to(($N)->$X3).findFirst($N -> $X4).map(($N)->$X5).orElseThrow(()->$X6);", description));
         add(statementsPattern("for ($T $N1 = $X1; $X2; $X3) if ($X4) {$N2 = $X5; break;}", //
             "$N2 = from($X1).step(($N)->$X2).to(($N)->$X3).findFirst($N -> $X4).map(($N)->$X5).orElse($N2);", description));
+        //
+        add(statementsPattern("for ($T $N = $X1; $X2; $X3) if ($X4) return $N", //
+            "returnFirstIfAny(from($X1).step(($N)->$X2).to(($N)->$X3)).matches($N -> $X4);", description));
+        add(statementsPattern("for ($T $N = $X1; $X2; $X3) if ($X4) return $X5;", //
+            "returnFirstIfAny(from($X1).step(($N)->$X2).to(($N)->$X3)).matches($N -> $X4).map($X5);", description));
       }
     };
 

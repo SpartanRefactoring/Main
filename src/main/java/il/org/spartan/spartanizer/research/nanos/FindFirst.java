@@ -35,6 +35,10 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
           "$N2 = $X1.stream().filter($N1 -> $X2).findFirst().orElse($N2);", description));
       add(statementsPattern("for($T $N1 : $X1) if($X2) {$N2 = $X3; break;}",
           "$N2 = $X1.stream().filter($N1 -> $X2).map($N1 -> $X3).findFirst().orElse($N2);", description));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $N;", //
+          "returnFirstIfAny($X1).matches($N -> $X2);", description));
+      add(statementsPattern("for($T $N : $X1) if($X2) return $X3;", //
+          "returnFirstIfAny($X1).matches($N -> $X2).map($N -> $X3);", description));
     }
   };
   private static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
