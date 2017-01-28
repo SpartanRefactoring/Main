@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table_Summary extends TableReusabilityIndices {
