@@ -4,10 +4,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Sorts switch branches according to the metrics: 1. Depth - height of ast 2.
  * Length measured in statements 3. Length measured in nodes 4. Sequencer level

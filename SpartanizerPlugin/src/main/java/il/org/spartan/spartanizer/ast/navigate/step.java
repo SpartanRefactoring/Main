@@ -5,6 +5,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -174,7 +175,7 @@ public enum step {
   }
 
   public static List<MethodDeclaration> constructors(final ASTNode ¢) {
-    return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
+    return as.list(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
   }
 
   @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
@@ -429,7 +430,7 @@ public enum step {
   }
 
   public static List<Initializer> initializers(final ASTNode ¢) {
-    return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
+    return as.list(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}
@@ -440,11 +441,11 @@ public enum step {
   }
 
   public static List<Initializer> initializersClass(final ASTNode ¢) {
-    return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
+    return as.list(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
   }
 
   public static List<Initializer> initializersInstance(final ASTNode n) {
-    return Arrays.asList(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
+    return as.list(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
   }
 
   /** @param ¢ JD
@@ -530,7 +531,7 @@ public enum step {
    * @return */
   @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
-        : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
+        : iz.typeDeclaration(¢) ? as.list(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
                 .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(Collectors.toList()) : null;
   }

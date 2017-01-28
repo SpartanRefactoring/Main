@@ -52,7 +52,7 @@ public class Generic$Applicator {
   }
 
   protected static List<String> setAllTipperGroups() {
-    return Arrays.asList(TipperGroup.values()).stream().map(Enum::name).collect(Collectors.toList());
+    return as.list(TipperGroup.values()).stream().map(Enum::name).collect(Collectors.toList());
   }
 
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {

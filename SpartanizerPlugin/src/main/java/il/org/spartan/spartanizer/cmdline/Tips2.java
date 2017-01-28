@@ -29,7 +29,7 @@ public final class Tips2 {
   private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
     static final long serialVersionUID = -8921699276699040030L;
     {
-      Arrays.asList(all).forEach(λ -> put(λ.getName(), λ));
+      as.list(all).forEach(λ -> put(λ.getName(), λ));
     }
   };
 
@@ -52,7 +52,7 @@ public final class Tips2 {
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends AbstractGUIApplicator> T findInstance(final Class<? extends T> ¢) {
-    return Arrays.asList(all).stream().filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
+    return as.list(all).stream().filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
   }
 
   /** @param name the name of the applicator
@@ -67,6 +67,6 @@ public final class Tips2 {
    * eclipse. */
   public static void reset() {
     map.clear();
-    Arrays.asList(all).forEach(λ -> map.put(λ.getName(), λ));
+    as.list(all).forEach(λ -> map.put(λ.getName(), λ));
   }
 }

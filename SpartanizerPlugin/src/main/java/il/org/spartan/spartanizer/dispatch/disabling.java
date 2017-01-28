@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -89,6 +88,6 @@ public interface disabling {
   }
 
   static boolean contains(final String s, final String[] ids) {
-    return Arrays.asList(ids).stream().anyMatch(s::contains);
+    return as.list(ids).stream().anyMatch(s::contains);
   }
 }

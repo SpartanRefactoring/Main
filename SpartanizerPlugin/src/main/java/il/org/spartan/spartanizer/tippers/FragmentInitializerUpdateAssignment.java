@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.engine.Inliner.InliningUtilties.*;
-
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;

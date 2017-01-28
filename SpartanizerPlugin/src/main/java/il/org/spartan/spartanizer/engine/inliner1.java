@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @year 2015
  * @author Yossi Gil
  * @since Sep 13, 2016 */
-public final class Inliner {
+public final class inliner1 {
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
@@ -37,11 +37,11 @@ public final class Inliner {
 
   final ASTRewrite rewriter;
 
-  public Inliner(final SimpleName n) {
+  public inliner1(final SimpleName n) {
     this(n, null, null);
   }
 
-  public Inliner(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
+  public inliner1(final SimpleName name, final ASTRewrite rewriter, final TextEditGroup editGroup) {
     this.name = name;
     this.rewriter = rewriter;
     this.editGroup = editGroup;
