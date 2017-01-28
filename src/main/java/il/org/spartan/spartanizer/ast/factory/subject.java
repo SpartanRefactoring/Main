@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.factory;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -110,7 +111,7 @@ public enum subject {
      * @see #rebase
      * @see copy#duplicate */
     Expression claim(final Expression ¢) {
-      return wizard.rebase(copy.of(extract.core(¢)), ast);
+      return wizard.rebase(copy.of(core(¢)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
@@ -119,7 +120,7 @@ public enum subject {
      * @see rebase
      * @see copy */
     Statement claim(final Statement ¢) {
-      final Statement $ = extract.core(¢);
+      final Statement $ = core(¢);
       return $ == null ? null : wizard.rebase(copy.of($), ast);
     }
   }

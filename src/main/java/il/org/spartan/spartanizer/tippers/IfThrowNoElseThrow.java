@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -32,7 +33,7 @@ public final class IfThrowNoElseThrow extends $ReplaceToNextStatement<IfStatemen
     implements TipperCategory.Ternarization {
   static Expression getThrowExpression(final Statement ¢) {
     final ThrowStatement $ = extract.throwStatement(¢);
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

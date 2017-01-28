@@ -2,8 +2,7 @@ package il.org.spartan.spartanizer.utils;
 
 import java.io.*;
 import java.nio.charset.*;
-
-import il.org.spartan.*;
+import java.util.stream.*;
 
 /** Fluent API
  * @author Yossi Gil
@@ -47,7 +46,7 @@ public interface fault {
   }
 
   static String specifically(final String explanation, final Object... os) {
-    return dump("\n " + explanation) + as.list(os).stream().map(λ -> dump(λ.getClass().getSimpleName(), λ)).reduce((x, y) -> x + y).get()
+    return dump("\n " + explanation) + Stream.of(os).map(λ -> dump(λ.getClass().getSimpleName(), λ)).reduce((x, y) -> x + y).get()
         + done();
   }
 

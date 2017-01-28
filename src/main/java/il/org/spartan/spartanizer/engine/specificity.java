@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.engine;
-
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 
@@ -50,7 +50,7 @@ public final class specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
+        return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
@@ -103,7 +103,7 @@ public final class specificity implements Comparator<Expression> {
     }
 
     static int of(final Expression ¢) {
-      return ofCore(extract.core(¢));
+      return ofCore(core(¢));
     }
 
     private static int ofCore(final Expression ¢) {
