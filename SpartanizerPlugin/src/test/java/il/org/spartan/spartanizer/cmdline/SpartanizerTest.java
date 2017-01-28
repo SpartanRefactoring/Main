@@ -7,7 +7,7 @@ import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;
 
 /** Test for the GUIBatchLaconizer class
@@ -17,7 +17,7 @@ public class SpartanizerTest {
   private static int nMethods;
 
   public static void main(final String[] args) {
-    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+    final ASTNode u = makeAST1.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
         + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}");
     assert u != null;
@@ -189,7 +189,7 @@ public class SpartanizerTest {
   }
 
   @Test public void testMethodWithAnnotation_01() {
-    final ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1), u2 = makeAST.COMPILATION_UNIT.from(test2);
+    final ASTNode u1 = makeAST1.COMPILATION_UNIT.from(test1), u2 = makeAST1.COMPILATION_UNIT.from(test2);
     assert u1 != null;
     assert u2 != null;
     visitASTNode(u1);
@@ -200,14 +200,14 @@ public class SpartanizerTest {
 
   @Test public void testSpartanizerCheckMethod_01() {
     print(test1);
-    final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
+    final ASTNode u = makeAST1.COMPILATION_UNIT.from(test2);
     print(u.getClass());
     assert u != null;
   }
 
   @Test public void testSpartanizerCheckMethod_02() {
     print(test1);
-    final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
+    final ASTNode u = makeAST1.COMPILATION_UNIT.from(test2);
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
@@ -247,7 +247,7 @@ public class SpartanizerTest {
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n" + " public void method1(){\n " + "   int i = 1;\n"
         + "   assert (i>0);\n" + " }\n" + "}";
     print(test4);
-    final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
+    final ASTNode u = makeAST1.COMPILATION_UNIT.from(test4);
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean storeMethodName(final SimpleName ¢) {

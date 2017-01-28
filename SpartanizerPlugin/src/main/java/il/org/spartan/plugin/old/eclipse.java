@@ -160,7 +160,7 @@ public enum eclipse {
   }
 
   private static ASTNode createAST(final ICompilationUnit ¢) {
-    return Make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
+    return make1.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
 
   private static int int¢(final IMarker m, final String name) throws CoreException {

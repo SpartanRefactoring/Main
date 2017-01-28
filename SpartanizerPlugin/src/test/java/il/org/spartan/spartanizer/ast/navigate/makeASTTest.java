@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 
 public final class makeASTTest {
   private static final String HELLO_JAVA = "Hello.java";
@@ -23,7 +23,7 @@ public final class makeASTTest {
     assert f != null;
     assert f.exists();
     assert f.exists();
-    final ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
+    final ASTNode ast = makeAST1.COMPILATION_UNIT.from(f);
     assert ast != null;
     azzert.that(ast, instanceOf(CompilationUnit.class));
   }

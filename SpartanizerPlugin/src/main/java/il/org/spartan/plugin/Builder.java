@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -75,7 +76,7 @@ public final class Builder extends IncrementalProjectBuilder {
   private static void addMarkers(final IFile ¢) throws CoreException {
     Tips.reset();
     deleteMarkers(¢);
-    addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+    addMarkers(¢, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(¢));
   }
 
   private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
