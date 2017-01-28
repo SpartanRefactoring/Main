@@ -32,15 +32,15 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
-    final EnhancedForStatement s = az.enhancedFor(nextStatement);
+    final EnhancedForStatement s = (az.enhancedFor(nextStatement));
     if (s == null)
       return null;
-    s.getBody();
+    Statement body = body(s);
     if (containsClassInstanceCreation(nextStatement) || containsLambda(nextStatement))
       return null;
-    s.getParameter();
-    s.getExpression();
-    final Statement parent = az.statement(f.getParent());
+    SingleVariableDeclaration z = s.getParameter();
+    Expression zz = expression(s);
+    final Statement parent = az.statement(parent(f));
     if (parent == null || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
@@ -86,7 +86,7 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    final ASTNode parent = nextStatement.getParent();
+    final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (parent.equals(¢))
