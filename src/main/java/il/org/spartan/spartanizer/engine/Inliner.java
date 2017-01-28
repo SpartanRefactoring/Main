@@ -31,10 +31,9 @@ public final class Inliner {
     as.list(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
     return $;
   }
+
   final TextEditGroup editGroup;
-
   final SimpleName name;
-
   final ASTRewrite rewriter;
 
   public Inliner(final SimpleName n) {
@@ -109,7 +108,6 @@ public final class Inliner {
   }
 
   public static class InliningUtilties {
-
     public static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
       return InliningUtilties.forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
     }
@@ -185,7 +183,8 @@ public final class Inliner {
     }
 
     public static boolean never(final SimpleName n, final Statement s) {
-      return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
+      return az.stream(yieldAncestors.until(s).ancestors(n))
+          .anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
     }
 
     public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
@@ -220,6 +219,5 @@ public final class Inliner {
     public static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
       return !collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !collect.usesOf(n).in(step.updaters(s)).isEmpty();
     }
-    
   }
 }

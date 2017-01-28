@@ -20,17 +20,14 @@ public class Issue0856 {
   }
 
   @Test public void b() {
-    trimmingOf("A foo(){A a=One;C c=B.d(a);print(c);return Two;}")
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
-        .gives("A foo(){C c=B.d(One);print(c);return Two;}")
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
+    trimmingOf("A foo(){A a=One;C c=B.d(a);print(c);return Two;}").using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
+        .gives("A foo(){C c=B.d(One);print(c);return Two;}").using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
         .gives("A foo(){print(B.d(One));return Two;}")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("A a(){A b=One;B.d(b);print(b);return Two;}")
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())//
+    trimmingOf("A a(){A b=One;B.d(b);print(b);return Two;}").using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())//
         .stays();
   }
 
