@@ -3,9 +3,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;

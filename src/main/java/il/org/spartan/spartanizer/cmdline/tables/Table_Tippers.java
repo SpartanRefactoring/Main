@@ -15,7 +15,7 @@ public class Table_Tippers {
 
   public void go() {
     try (Table r = new Table(this)) {
-      for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
+      for (final int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
             if (¢ != null && !(¢ instanceof TipperCategory.Bloater))

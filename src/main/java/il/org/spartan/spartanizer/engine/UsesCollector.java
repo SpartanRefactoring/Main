@@ -7,8 +7,6 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -114,6 +112,7 @@ class UnsafeUsesCollector extends UsesCollector {
     super(result, focus);
   }
 
+  @Override
   @Override void consider(final SimpleName n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (unsafe(p)) {
@@ -189,6 +188,7 @@ class UsesCollector extends HidingDepth {
     return fragments(¢).stream().anyMatch(this::declaredIn);
   }
 
+  @Override
   @Override boolean go(final AbstractTypeDeclaration ¢) {
     ingore(¢.getName());
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
@@ -199,10 +199,12 @@ class UsesCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
+  @Override
   @Override boolean go(final AnonymousClassDeclaration ¢) {
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
+  @Override
   @Override boolean go(final EnhancedForStatement $) {
     final SimpleName name = $.getParameter().getName();
     if (name == focus || !declaredBy(name))
@@ -353,6 +355,7 @@ class StringCollector extends HidingDepth {
     return fragments(¢).stream().anyMatch(this::declaredIn);
   }
 
+  @Override
   @Override boolean go(final AbstractTypeDeclaration ¢) {
     ingore(¢.getName());
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
@@ -363,10 +366,12 @@ class StringCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
+  @Override
   @Override boolean go(final AnonymousClassDeclaration ¢) {
     return !declaredIn(¢) && recurse(bodyDeclarations(¢));
   }
 
+  @Override
   @Override boolean go(final EnhancedForStatement $) {
     final String name = $.getParameter().getName() + "";
     if (Objects.equals(name, focus) || !declaredBy(name))

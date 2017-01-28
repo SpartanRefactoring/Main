@@ -8,8 +8,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.utils.*;
 
 public class LoopsStatistics extends HashMap<Integer, Int> {
@@ -27,12 +25,6 @@ public class LoopsStatistics extends HashMap<Integer, Int> {
     if (iz.definiteLoop(¢))
       ++definites;
     return log(Integer.valueOf(nodeType(¢)));
-  }
-
-  private LoopsStatistics log(final Integer nodeType) {
-    putIfAbsent(nodeType, new Int());
-    ++get(nodeType).inner;
-    return this;
   }
 
   public int whileLoops() {

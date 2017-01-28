@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** A class to search in the descendants of a given node. Based on
  * {@link yieldAncestors}
  * @author Ori Marcovitch

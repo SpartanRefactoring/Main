@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;

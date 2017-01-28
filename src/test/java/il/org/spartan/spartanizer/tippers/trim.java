@@ -1,8 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.ltk.core.refactoring.*;
 import org.junit.*;
 
 import il.org.spartan.plugin.*;

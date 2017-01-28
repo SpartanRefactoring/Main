@@ -3,7 +3,6 @@
  * @since */
 package il.org.spartan.spartanizer.cmdline;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

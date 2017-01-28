@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;

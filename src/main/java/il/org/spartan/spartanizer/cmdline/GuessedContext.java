@@ -4,9 +4,6 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -170,17 +167,5 @@ public enum GuessedContext {
    * @return wrapped phrase */
   public String on(final String codeFragment) {
     return before + codeFragment + after;
-  }
-
-  private boolean accurateContains(final String wrap, final String inner) {
-    final String off = off(wrap), $ = trivia.accurateEssence(inner), essence2 = trivia.accurateEssence(off);
-    assert essence2 != null;
-    return essence2.contains($);
-  }
-
-  private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
-    assert essence2 != null;
-    return essence2.contains($);
   }
 }

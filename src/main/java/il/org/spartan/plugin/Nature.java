@@ -2,9 +2,6 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-
 import il.org.spartan.spartanizer.java.*;
 
 /** TODO: Artium Nihamkin please add a description

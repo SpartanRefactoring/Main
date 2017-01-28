@@ -4,9 +4,6 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -431,7 +428,7 @@ public class Toolbox {
   }
 
   public int tippersCount() {
-    int $ = 0;
+    final int $ = 0;
     for (final List<?> ¢ : implementation)
       if (¢ != null)
         $ += ¢.size();
@@ -439,7 +436,7 @@ public class Toolbox {
   }
 
   public int nodesTypeCount() {
-    int $ = 0;
+    final int $ = 0;
     for (final List<?> ¢ : implementation)
       if (¢ != null)
         $ += 1;

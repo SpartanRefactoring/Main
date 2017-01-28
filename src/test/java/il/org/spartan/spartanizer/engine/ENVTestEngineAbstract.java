@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

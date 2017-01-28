@@ -3,9 +3,6 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.spartanizer.engine.*;

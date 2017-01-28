@@ -2,11 +2,6 @@ package il.org.spartan.spartanizer.research.util;
 
 import java.text.*;
 
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.formatter.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */

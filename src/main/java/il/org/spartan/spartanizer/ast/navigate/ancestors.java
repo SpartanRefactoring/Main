@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** {@link Iterable} over the ancestors of a given node.

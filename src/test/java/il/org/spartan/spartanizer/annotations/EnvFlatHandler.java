@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.annotations;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -62,6 +60,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
     return null;
   }
 
+  @Override
   @Override protected void handler(final Annotation ¢) {
     handler(az.singleMemberAnnotation(¢));
   }

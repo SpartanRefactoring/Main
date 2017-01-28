@@ -6,8 +6,6 @@ package il.org.spartan.spartanizer.utils;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.utils.Wrap.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;

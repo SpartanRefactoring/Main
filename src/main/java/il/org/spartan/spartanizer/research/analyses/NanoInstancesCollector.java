@@ -6,10 +6,6 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.io.*;
 import java.lang.reflect.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
@@ -27,6 +23,7 @@ public class NanoInstancesCollector extends FolderASTVisitor {
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
+      @Override
       @Override public Tip pattern(final EnhancedForStatement ¢) {
         return new Tip("", ¢, this.getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -36,10 +33,12 @@ public class NanoInstancesCollector extends FolderASTVisitor {
         };
       }
 
+      @Override
       @Override public boolean canTip(final EnhancedForStatement ¢) {
         return nano.canTip(¢);
       }
 
+      @Override
       @Override public String description(final EnhancedForStatement ¢) {
         return nano.description(¢);
       }

@@ -1,12 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.lisp.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
@@ -17,7 +15,7 @@ public class TableTippers {
 
   public void go() {
     try (Table r = new Table(this)) {
-      for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
+      for (final int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
             if (¢ != null)

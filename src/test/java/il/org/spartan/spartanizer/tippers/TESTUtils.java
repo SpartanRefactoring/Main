@@ -2,10 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

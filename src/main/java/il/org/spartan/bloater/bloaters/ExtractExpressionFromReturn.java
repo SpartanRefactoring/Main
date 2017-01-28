@@ -1,9 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -23,6 +19,7 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
 
   @Override public Tip tip(final ReturnStatement s) {
     return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
+      @Override
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Assignment a = az.assignment(expression(s));
         final ExpressionStatement exp = r.getAST().newExpressionStatement(copy.of(expression(s)));

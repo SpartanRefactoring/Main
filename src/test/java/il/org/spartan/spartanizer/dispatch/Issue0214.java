@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.dispatch;
 
 import static il.org.spartan.azzert.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -26,6 +25,7 @@ public final class Issue0214 {
       return null;
     }
 
+    @Override
     @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
       return null;
     }

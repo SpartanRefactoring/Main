@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tipping;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** A {@link Tipper} in which only the tip has to be implemented.
  * @year 2016
  * @author Yossi Gil

@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -29,9 +27,5 @@ public enum associativity {
 
   static boolean isLeftToRight(final Expression ¢) {
     return !isRightToLeft(precedence.of(¢));
-  }
-
-  private static boolean isRightToLeft(final int precedence) {
-    return intIsIn(precedence, 2, 3, 14, 15);
   }
 }

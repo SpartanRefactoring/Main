@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 

@@ -3,12 +3,6 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.List;
 
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.preference.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;

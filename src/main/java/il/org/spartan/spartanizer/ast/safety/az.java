@@ -3,13 +3,8 @@ package il.org.spartan.spartanizer.ast.safety;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.utils.Unbox.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
 import java.util.*;
 import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 

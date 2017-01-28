@@ -2,10 +2,6 @@ package il.org.spartan.plugin;
 
 import java.util.*;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.internal.core.*;
-
 import il.org.spartan.spartanizer.utils.*;
 
 /** A utility class to manage libraries at the users side, in front of the

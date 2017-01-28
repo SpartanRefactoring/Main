@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -18,11 +16,6 @@ public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
 
   @Override @SuppressWarnings("boxing") public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
     getSafe(histogram, measure.statements(before)).add(Int.valueOf(metric(before) < metric(after) ? 0 : 1));
-  }
-
-  private static List<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
-    m.putIfAbsent(i, new ArrayList<>());
-    return m.get(i);
   }
 
   @Override @SuppressWarnings("boxing") public void printComparison() {

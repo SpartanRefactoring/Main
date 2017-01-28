@@ -7,15 +7,6 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
 
-import org.eclipse.jface.preference.*;
-import org.eclipse.jface.util.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.dialogs.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.old.*;

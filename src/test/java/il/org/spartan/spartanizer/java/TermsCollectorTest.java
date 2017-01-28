@@ -6,7 +6,6 @@ package il.org.spartan.spartanizer.java;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

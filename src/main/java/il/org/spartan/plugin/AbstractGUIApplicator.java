@@ -6,18 +6,6 @@ import static il.org.spartan.spartanizer.utils.fault.*;
 import java.util.*;
 import java.util.List;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.ltk.ui.refactoring.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.text.edits.*;
-import org.eclipse.ui.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;

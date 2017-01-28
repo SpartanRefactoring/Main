@@ -1,10 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -34,66 +30,79 @@ public final class specificity implements Comparator<Expression> {
 
   enum Level {
     NULL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.nullLiteral(¢);
       }
     },
     BOOLEAN {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.booleanLiteral(¢);
       }
     },
     LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal(¢);
       }
     },
     CONSTANT {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
     THIS {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.thisLiteral(¢);
       }
     },
     ZERO_LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal0(¢);
       }
     },
     ONE_LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal1(¢);
       }
     },
     ZERO_DOUBLE_LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal(¢, 0.0);
       }
     },
     ONE_DOUBLE_LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.literal(¢, 1.0);
       }
     },
     EMPTY_STRING {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return iz.emptyStringLiteral(¢);
       }
     },
     TRUE_LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return literal.true¢(¢);
       }
     },
     FALSE_LITERAL {
+      @Override
       @Override boolean includes(final ASTNode ¢) {
         return literal.false¢(¢);
       }

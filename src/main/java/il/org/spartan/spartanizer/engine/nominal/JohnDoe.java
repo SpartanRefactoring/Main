@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Fluent API.

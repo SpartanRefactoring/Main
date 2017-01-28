@@ -4,15 +4,6 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.List;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.operation.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 

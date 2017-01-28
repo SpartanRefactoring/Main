@@ -2,10 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
@@ -40,6 +36,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
       m.exclude(c);
     final SimpleName ¢ = c.getAST().newSimpleName("¢");
     return new Tip("Rename paraemter " + $ + " to ¢ ", c, getClass()) {
+      @Override
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, c, r, g);
       }

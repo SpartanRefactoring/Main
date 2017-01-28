@@ -5,8 +5,6 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;

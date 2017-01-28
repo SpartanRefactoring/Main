@@ -3,10 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import java.util.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
@@ -75,6 +71,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     myCopy.addAll($);
     myCopy.sort(comp);
     return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
+      @Override
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < $.size(); ++i) {

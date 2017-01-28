@@ -1,10 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -38,6 +33,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
   @Override public Tip tip(final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), ¢, getClass()) {
+      @Override
       @Override @SuppressWarnings({ "unused" }) public void go(final ASTRewrite __, final TextEditGroup g) {
         // final ListRewrite l = r.getListRewrite(¢, Expression.);
         // l.insertAfter(¢, x1, g);

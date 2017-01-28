@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.engine.nominal;
 
 import java.util.regex.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** A utility parser that resolves a variable's short name, and determines
  * whether a pre-existing name is a generic variation of the type's name.
  * <p>

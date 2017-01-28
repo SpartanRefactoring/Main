@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.engine;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** Enhances {@link ASTVisitor} with information on variable definition and
  * binding. To use, extend as usual, except that the {@link #preVisit(ASTNode)}
  * function is now <code><b>final</b></code>. If you must, override

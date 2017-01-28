@@ -4,11 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 import static org.junit.Assert.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;

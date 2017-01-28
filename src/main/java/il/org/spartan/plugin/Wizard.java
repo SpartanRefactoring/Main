@@ -1,8 +1,5 @@
 package il.org.spartan.plugin;
 
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.ltk.ui.refactoring.*;
-
 import il.org.spartan.utils.*;
 
 /** TODO: Artium Nihamkin please add a description

@@ -3,8 +3,6 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.core.commands.*;
-
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.utils.*;
 

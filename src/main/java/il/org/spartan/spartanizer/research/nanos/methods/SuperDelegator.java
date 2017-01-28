@@ -4,8 +4,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,6 +21,7 @@ public class SuperDelegator extends Delegator {
     }
   };
 
+  @Override
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
         && (superDelegator(¢, onlyStatement(¢))//

@@ -2,8 +2,6 @@ package il.org.spartan.bloater;
 
 import java.util.*;
 
-import org.eclipse.jface.preference.*;
-
 import il.org.spartan.plugin.*;
 
 /** Classification of Expanders

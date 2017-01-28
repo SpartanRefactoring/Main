@@ -4,10 +4,6 @@ import il.org.spartan.spartanizer.ast.navigate.wizard;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;

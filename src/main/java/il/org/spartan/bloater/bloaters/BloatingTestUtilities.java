@@ -5,11 +5,6 @@ import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.factory.*;

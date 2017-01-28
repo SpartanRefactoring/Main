@@ -4,13 +4,6 @@ import static il.org.spartan.plugin.GUIBatchLaconizer.*;
 
 import java.util.function.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.ltk.ui.refactoring.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.plugin.old.*;

@@ -4,8 +4,6 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
@@ -21,12 +19,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public enum collect {
   /** collects semantic (multiple uses for loops) uses of an variable */
   USES_SEMANTIC {
+    @Override
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n));
     }
   },
   /** collects assignments of an variable */
   DEFINITIONS {
+    @Override
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(definitionsCollector(into, n));
     }
@@ -34,6 +34,7 @@ public enum collect {
   /** collects assignments AND semantic (multiple uses for loops) uses of a
    * variable */
   BOTH_SEMANTIC {
+    @Override
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
@@ -41,6 +42,7 @@ public enum collect {
   /** collects assignments AND lexical (single use for loops) uses of an
    * expression */
   BOTH_LEXICAL {
+    @Override
     @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
       return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
@@ -54,6 +56,7 @@ public enum collect {
    *         identifier within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
+      @Override
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         Arrays.asList(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
@@ -64,6 +67,7 @@ public enum collect {
 
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
+      @Override
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         Arrays.asList(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
@@ -78,6 +82,7 @@ public enum collect {
    *         definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
+      @Override
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         Arrays.asList(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
@@ -92,6 +97,7 @@ public enum collect {
    * @return a gUIBatchLaconizer with all unsafe uses of the identifier (n) */
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
+      @Override
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         Arrays.asList(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
@@ -108,6 +114,7 @@ public enum collect {
    *         function.. */
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
+      @Override
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
@@ -118,10 +125,12 @@ public enum collect {
 
   public static Collector usesOf(final String s) {
     return new Collector(s) {
+      @Override
       @Override public List<SimpleName> in(@SuppressWarnings("unused") final ASTNode... __) {
         return null;
       }
 
+      @Override
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
         Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
@@ -412,6 +421,7 @@ public enum collect {
    *         given location */
   public Of of(final SimpleName n) {
     return new Of() {
+      @Override
       @Override public List<SimpleName> in(final ASTNode... ¢) {
         return uses(n, ¢);
       }

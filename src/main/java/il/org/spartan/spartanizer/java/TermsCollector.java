@@ -4,8 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;

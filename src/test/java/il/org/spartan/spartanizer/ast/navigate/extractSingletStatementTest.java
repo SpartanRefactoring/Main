@@ -8,7 +8,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 

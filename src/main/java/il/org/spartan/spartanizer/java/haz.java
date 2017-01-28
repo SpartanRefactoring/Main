@@ -1,11 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
 import java.util.function.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

@@ -1,9 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -22,6 +18,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
   @Override public Tip tip(final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {
+      @Override
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression ee = expression(x);
         final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));

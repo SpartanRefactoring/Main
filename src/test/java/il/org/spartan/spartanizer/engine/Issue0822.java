@@ -6,8 +6,6 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;

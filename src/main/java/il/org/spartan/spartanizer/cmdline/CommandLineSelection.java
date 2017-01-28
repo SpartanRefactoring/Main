@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;

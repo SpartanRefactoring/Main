@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.text.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */

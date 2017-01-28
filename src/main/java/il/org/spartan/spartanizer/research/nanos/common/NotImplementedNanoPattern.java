@@ -3,8 +3,6 @@
  * @since Jan 8, 2017 */
 package il.org.spartan.spartanizer.research.nanos.common;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTipper<N> {

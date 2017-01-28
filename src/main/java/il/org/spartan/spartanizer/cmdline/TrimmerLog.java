@@ -2,9 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;

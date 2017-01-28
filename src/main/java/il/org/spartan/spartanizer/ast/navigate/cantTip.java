@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
 

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 /** Information about a variable in the environment - its {@link ASTNode}, its

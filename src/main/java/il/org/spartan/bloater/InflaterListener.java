@@ -11,16 +11,6 @@ import java.util.Map.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.*;
-import org.eclipse.ui.texteditor.*;
-
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 

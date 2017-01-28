@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 

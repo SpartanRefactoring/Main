@@ -1,12 +1,5 @@
 package il.org.spartan.plugin;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.core.runtime.jobs.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.plugin.*;
-import org.osgi.framework.*;
-
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.*;
 import il.org.spartan.spartanizer.utils.*;

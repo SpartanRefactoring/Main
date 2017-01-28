@@ -4,10 +4,6 @@ import static il.org.spartan.Utils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -64,6 +60,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
         after.add(¢);
       }
       return s.getParent() == null || prev.isEmpty() ? null : new Tip("Rename parameters", s, getClass()) {
+        @Override
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
           for (final SimpleName ¢ : prev) {

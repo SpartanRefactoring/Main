@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -48,6 +46,7 @@ public class Table_Summary extends TableReusabilityIndices {
     writer.close();
   }
 
+  @Override
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;

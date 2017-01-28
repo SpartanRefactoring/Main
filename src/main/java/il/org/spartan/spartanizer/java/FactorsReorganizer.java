@@ -4,11 +4,7 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.lisp.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 

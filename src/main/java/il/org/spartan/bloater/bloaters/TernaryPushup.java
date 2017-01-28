@@ -2,8 +2,6 @@ package il.org.spartan.bloater.bloaters;
 
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.expression;
 
