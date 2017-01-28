@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -63,7 +64,7 @@ public enum TypeNamesCollector {
   }
 
   private static void collect(final String javaCode) {
-    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
   }
 
   private static void collect(final String[] where) {

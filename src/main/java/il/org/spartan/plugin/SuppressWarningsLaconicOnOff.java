@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 
 import il.org.spartan.plugin.old.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -33,7 +34,7 @@ public enum SuppressWarningsLaconicOnOff {
    * @param tipper deactivation {@link Type} */
   public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
-    final ICompilationUnit u = makeAST.iCompilationUnit(m);
+    final ICompilationUnit u = makeAST1.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
@@ -125,7 +126,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
-    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
+    return createRewrite(pm, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, t);
   }
 
   private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {

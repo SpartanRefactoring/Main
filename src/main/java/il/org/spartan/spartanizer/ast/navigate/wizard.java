@@ -172,7 +172,7 @@ public interface wizard {
     try {
       final String str = readFromFile(fileName);
       final Document d = new Document(str);
-      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST1.COMPILATION_UNIT.from(d));
       final ASTRewrite r = ASTRewrite.create(t.getAST());
       wizard.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
@@ -268,11 +268,11 @@ public interface wizard {
   }
 
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
+    return (CompilationUnit) makeAST1.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
   static CompilationUnit compilationUnitWithBinding(final String ¢) {
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
+    return (CompilationUnit) makeAST1.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
   static <T> String completionIndex(final List<T> ts, final T t) {
@@ -477,7 +477,7 @@ public interface wizard {
   }
 
   static MethodDeclaration methodWithBinding(final String m) {
-    return findFirst.methodDeclaration(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
+    return findFirst.methodDeclaration(makeAST1.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
   }
 
   /** Determine whether a node is an infix expression whose operator is

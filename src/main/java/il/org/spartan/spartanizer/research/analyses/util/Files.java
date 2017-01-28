@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -92,13 +93,13 @@ public enum Files {
   /** @param ¢ file
    * @return compilation unit out of file */
   private static ASTNode getCompilationUnit(final File ¢) {
-    return makeAST.COMPILATION_UNIT.from(¢);
+    return makeAST1.COMPILATION_UNIT.from(¢);
   }
 
   /** @param ¢ string
    * @return compilation unit out of string */
   public static ASTNode getCompilationUnit(final String ¢) {
-    return makeAST.COMPILATION_UNIT.from(¢);
+    return makeAST1.COMPILATION_UNIT.from(¢);
   }
 
   /** Get all java files contained in outputFolder recursively. <br>

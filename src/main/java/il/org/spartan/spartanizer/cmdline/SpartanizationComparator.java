@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -60,7 +61,7 @@ public enum SpartanizationComparator {
   }
 
   private static void collect(final String javaCode, final String id) {
-    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
+    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode), id);
   }
 
   private static void collect(final CompilationUnit u, final String id) {

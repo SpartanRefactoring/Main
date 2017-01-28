@@ -15,6 +15,7 @@ import org.junit.runners.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -3632,9 +3633,9 @@ public final class Version230 {
 
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+        (CompilationUnit) makeAST1.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+        (CompilationUnit) makeAST1.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
   }
 
   @Test public void unsafeBlockSimlify() {
