@@ -8,7 +8,6 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should

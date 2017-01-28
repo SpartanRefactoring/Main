@@ -12,7 +12,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.engine.*;
 
 public final class makeASTTest {
   private static final String HELLO_JAVA = "Hello.java";

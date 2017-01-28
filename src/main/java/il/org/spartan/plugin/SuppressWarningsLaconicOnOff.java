@@ -17,7 +17,6 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 
 /** A utility class used to add enablers/disablers to code automatically, with
  * AST scan based recursive algorithms. The automatic disabling mechanism is
