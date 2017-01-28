@@ -87,8 +87,8 @@ public abstract class AbstractStringProperties {
     CSV {
       /** Wraps values in a CSV line. Occurrences of this character in field
        * content are escaped by typing it twice. */
-      public static final String QUOTE = '"' + "";
-      public static final String DELIMETER = ",";
+      static final String QUOTE = '"' + "";
+      static final String DELIMETER = ",";
 
       @Override @NotNull public String headerEnd() {
         return "";
@@ -119,8 +119,8 @@ public abstract class AbstractStringProperties {
       }
     },
     MATRIX {
-      public static final String DELIMETER = " ";
-      public static final int WIDTH = 3;
+      static final String DELIMETER = " ";
+      static final int WIDTH = 3;
 
       @Override @NotNull String allBottom() {
         return "";

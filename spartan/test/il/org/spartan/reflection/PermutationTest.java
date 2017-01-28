@@ -37,8 +37,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testIsPermutationLarge() {
-    final int N = 1000;
-    @NotNull final int a[] = Permutation.random(N);
+    @NotNull
+    final int N = 1000, a[] = Permutation.random(N);
     Arrays.sort(a);
     for (int ¢ = 0; ¢ < N; ++¢)
       azzert.that(Arrays.binarySearch(a, ¢), is(¢));

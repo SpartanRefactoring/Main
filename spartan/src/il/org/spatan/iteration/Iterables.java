@@ -204,8 +204,7 @@ public class Iterables {
 
   public static <T> int[] indices(@NotNull final Collection<? extends T> ts, @NotNull final Condition<T> t) {
     @NotNull final int[] $ = new int[ts.size()];
-    int i = 0;
-    int position = 0;
+    int i = 0, position = 0;
     for (final T ¢ : ts) {
       if (t.holds(¢))
         $[i++] = position;

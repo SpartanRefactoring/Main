@@ -30,8 +30,7 @@ public enum Significance {
   @NotNull public static Significance signifcance(@NotNull final Kendall.Charectristics c) {
     if (c.n > 10)
       return signifcance(c.z);
-    double $;
-    double thresholdB;
+    double $, thresholdB;
     switch (c.n) {
       case 5:
         $ = 1;

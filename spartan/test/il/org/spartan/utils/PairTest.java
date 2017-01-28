@@ -9,8 +9,9 @@ import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class PairTest {
   @Test public void testSymmetry() {
-    @NotNull final Pair<Integer, Integer> p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017));
-    @NotNull final Pair<Integer, Integer> p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
+    @NotNull final Pair<Integer, Integer> //
+    p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017)),
+        p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
     azzert.that(p2.equals(p1), is(p1.equals(p2)));
   }
 
