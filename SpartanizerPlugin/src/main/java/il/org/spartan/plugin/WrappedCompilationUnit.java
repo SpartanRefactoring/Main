@@ -42,14 +42,14 @@ public class WrappedCompilationUnit {
 
   public WrappedCompilationUnit build() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) (!useBinding ? Make.COMPILATION_UNIT.parser(descriptor)
-          : Make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
+      compilationUnit = (CompilationUnit) (!useBinding ? make1.COMPILATION_UNIT.parser(descriptor)
+          : make1.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
     return this;
   }
 
   public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) Make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
+      compilationUnit = (CompilationUnit) make1.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
 

@@ -13,6 +13,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -67,7 +68,7 @@ public final class extractSingletStatementTest {
   }
 
   @Test public void peelIf() {
-    final ASTNode n = makeAST.STATEMENTS.from("{if (a) return b; else return c;}");
+    final ASTNode n = makeAST1.STATEMENTS.from("{if (a) return b; else return c;}");
     assert n != null;
     final List<Statement> ss = extract.statements(n);
     assert ss != null;
@@ -76,7 +77,7 @@ public final class extractSingletStatementTest {
   }
 
   @Test public void peelIPlusPlus() {
-    final ASTNode n = makeAST.STATEMENTS.from("{i++;}");
+    final ASTNode n = makeAST1.STATEMENTS.from("{i++;}");
     assert n != null;
     final List<Statement> ss = extract.statements(n);
     assert ss != null;

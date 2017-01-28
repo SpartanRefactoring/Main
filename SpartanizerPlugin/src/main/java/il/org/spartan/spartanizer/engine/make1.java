@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -12,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum Make {
+public enum make1 {
   /** Strategy for conversion into a compilation unit */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT), //
   /** Strategy for conversion into an expression */
@@ -21,20 +22,20 @@ public enum Make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link makeAST} value to its corresponding {@link Make} enum
+  /** Converts the {@link makeAST1} value to its corresponding {@link make1} enum
    * value
-   * @param tipper The {@link makeAST} type
-   * @return corresponding {@link Make} value to the argument */
-  public static Make from(final makeAST ¢) {
+   * @param tipper The {@link makeAST1} type
+   * @return corresponding {@link make1} value to the argument */
+  public static make1 from(final makeAST1 ¢) {
     switch (¢) {
       case CLASS_BODY_DECLARATIONS:
-        return Make.CLASS_BODY_DECLARATIONS;
+        return make1.CLASS_BODY_DECLARATIONS;
       case COMPILATION_UNIT:
-        return Make.COMPILATION_UNIT;
+        return make1.COMPILATION_UNIT;
       case EXPRESSION:
-        return Make.EXPRESSION;
+        return make1.EXPRESSION;
       case STATEMENTS:
-        return Make.STATEMENTS;
+        return make1.STATEMENTS;
       default:
         return null;
     }
@@ -42,7 +43,7 @@ public enum Make {
 
   private final int kind;
 
-  Make(final int kind) {
+  make1(final int kind) {
     this.kind = kind;
   }
 
@@ -94,7 +95,7 @@ public enum Make {
    * @param m JD
    * @return created parser */
   public ASTParser parser(final IMarker ¢) {
-    return parser(makeAST.iCompilationUnit(¢));
+    return parser(makeAST1.iCompilationUnit(¢));
   }
 
   /** Creates a no-binding parser for a given text
