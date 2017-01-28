@@ -91,8 +91,7 @@ public class InliningUtilties {
   }
 
   public static boolean never(final SimpleName n, final Statement s) {
-    return az.stream(yieldAncestors.until(s).ancestors(n))
-        .anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
+    return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
   public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {

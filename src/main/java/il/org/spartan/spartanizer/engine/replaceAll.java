@@ -14,11 +14,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Replace a variable with an expression
+/** Replace an occurrence of a {@link SimpleName} with an {@link Expression} in
+ * an array of
  * @year 2015
  * @author Yossi Gil
  * @since Sep 13, 2016 */
-public interface inliner {
+public interface replaceAll {
   static Inner in(final ASTNode... ¢) {
     return new Inner().in(¢);
   }
@@ -27,12 +28,8 @@ public interface inliner {
     return new Inner().of(¢);
   }
 
-  static Inner replacing(final Expression ¢) {
-    return new Inner().replacing(¢);
-  }
-
-  static ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {
-    return new Inner().go(g, r);
+  static Inner with(final Expression ¢) {
+    return new Inner().with(¢);
   }
 
   static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
@@ -46,9 +43,9 @@ public interface inliner {
     private TextEditGroup editGroup;
     private SimpleName name;
     private ASTNode[] range;
-    private Expression replacement;
+    private Expression with;
     private ASTRewrite rewrite;
-    private List<SimpleName> uses;
+    private List<SimpleName> occurrences;
 
     ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {
       return g != null && canGo() ? r : null;
@@ -61,13 +58,13 @@ public interface inliner {
      *         of {@link #name} in the operands, and the size of the
      *         replacement. */
     public int addedSize() {
-      return uses.size() * (metrics.size(replacement) - 1);
+      return occurrences.size() * (metrics.size(with) - 1);
     }
 
     public boolean canGo() {
-      if (replacement == null || uses.isEmpty())
+      if (with == null || occurrences.isEmpty())
         return false;
-      switch (replacement.getNodeType()) {
+      switch (with.getNodeType()) {
         case BOOLEAN_LITERAL:
         case CHARACTER_LITERAL:
         case FIELD_ACCESS:
@@ -81,16 +78,19 @@ public interface inliner {
         case TYPE_LITERAL:
           return true;
       }
-      final SimpleName $ = lisp.onlyOne(uses);
-      return $ == null ? false : sideEffects.free(replacement) ? true : false;
+      if (!sideEffects.free(with))
+        return false;
+      final SimpleName $ = lisp.onlyOne(occurrences);
+      return executions.in($).of($) == executions.coupling.together && sideEffects.free(with) ? true : false;
     }
 
     boolean noHiding() {
+      noHiding();
       return collect.definitionsOf(name).in().isEmpty();
     }
 
     public Inner in(final ASTNode[] ¢) {
-      uses = collect.usesOf(name).in(range = ¢);
+      occurrences = collect.usesOf(name).in(range = ¢);
       return null;
     }
 
@@ -106,12 +106,11 @@ public interface inliner {
       final ASTNode oldNode = n.get(), newNode = copy.of(oldNode);
       n.set(newNode);
       rewrite.replace(oldNode, newNode, editGroup);
-      collect.usesOf(name).in(newNode)
-          .forEach(λ -> rewrite.replace(λ, !iz.expression(λ) ? replacement : make.plant(replacement).into(λ.getParent()), editGroup));
+      collect.usesOf(name).in(newNode).forEach(λ -> rewrite.replace(λ, !iz.expression(λ) ? with : make.plant(with).into(λ.getParent()), editGroup));
     }
 
     public Inner of(final SimpleName ¢) {
-      uses = collect.usesOf(name = ¢).in(range);
+      occurrences = collect.usesOf(name = ¢).in(range);
       return null;
     }
 
@@ -120,11 +119,11 @@ public interface inliner {
      *         parameters, the number of occurrences of {@link #name} in the
      *         operands, and the size of the replacement. */
     public int replacedSize() {
-      return metrics.size(range) + uses.size() * (metrics.size(get()) - 1);
+      return metrics.size(range) + occurrences.size() * (metrics.size(get()) - 1);
     }
 
-    public Inner replacing(final Expression ¢) {
-      replacement = ¢;
+    public Inner with(final Expression ¢) {
+      with = ¢;
       return null;
     }
 

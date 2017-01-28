@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -73,15 +74,14 @@ public enum sideEffects {
   }
 
   private static boolean free(final ArrayCreation ¢) {
-    return free(step.dimensions(¢)) && free(step.expressions(¢.getInitializer()));
+    return free(dimensions(¢)) && free(expressions(¢.getInitializer()));
   }
 
   public static boolean free(final ASTNode ¢) {
     return ¢ == null || //
         (iz.expression(¢) ? sideEffects.free(az.expression(¢))
-            : iz.expressionStatement(¢) ? sideEffects.free(step.expression(az.expressionStatement(¢)))
-                : iz.isVariableDeclarationStatement(¢) ? sideEffects.free(az.variableDeclrationStatement(¢))
-                    : iz.block(¢) && sideEffects.free(az.block(¢)));
+            : iz.expressionStatement(¢) ? sideEffects.free(expression(az.expressionStatement(¢)))
+                : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢)) : iz.block(¢) && free(az.block(¢)));
   }
 
   public static boolean free(final Block ¢) {
@@ -107,17 +107,17 @@ public enum sideEffects {
       case ARRAY_CREATION:
         return free((ArrayCreation) ¢);
       case ARRAY_INITIALIZER:
-        return free(step.expressions(az.arrayInitializer(¢)));
+        return free(expressions(az.arrayInitializer(¢)));
       case ARRAY_ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
       case CAST_EXPRESSION:
-        return sideEffects.free(step.expression(¢));
+        return sideEffects.free(expression(¢));
       case INFIX_EXPRESSION:
         return free(extract.allOperands(az.infixExpression(¢)));
       case PARENTHESIZED_EXPRESSION:
-        return sideEffects.free(core(¢));
+        return free(core(¢));
       case INSTANCEOF_EXPRESSION:
-        return sideEffects.free(left(az.instanceofExpression(¢)));
+        return free(left(az.instanceofExpression(¢)));
       default:
         monitor.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
         return false;
@@ -128,8 +128,12 @@ public enum sideEffects {
     return Stream.of(¢).allMatch(sideEffects::free);
   }
 
-  public static boolean free(final Iterable<? extends Expression> xs) {
-    return xs == null || az.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
+  public static boolean free(final Iterable<? extends Expression> ¢) {
+    return ¢ == null || az.stream(¢).allMatch(sideEffects::free);
+  }
+
+  static boolean free(final List<VariableDeclarationFragment> fs) {
+    return fs.stream().map(λ -> initializer(λ)).allMatch(λ -> free(λ));
   }
 
   public static boolean free(final MethodDeclaration ¢) {
@@ -137,14 +141,14 @@ public enum sideEffects {
   }
 
   private static boolean free(final PrefixExpression ¢) {
-    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && sideEffects.free(step.operand(¢));
+    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && free(operand(¢));
   }
 
-  private static boolean free(final VariableDeclarationExpression x) {
-    return fragments(x).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
+  private static boolean free(final VariableDeclarationExpression ¢) {
+    return free(fragments(¢));
   }
 
-  public static boolean free(final VariableDeclarationStatement s) {
-    return fragments(s).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
+  public static boolean free(final VariableDeclarationStatement ¢) {
+    return free(fragments(¢));
   }
 }
