@@ -14,9 +14,4 @@ public class Issue0731 {
     trimmingOf("Integer i = 0; i.toString();")//
         .stays();
   }
-
-  @Test public void b() {
-    trimmingOf("Integer i = 0; (i).toString();")//
-        .stays();
-  }
 }
