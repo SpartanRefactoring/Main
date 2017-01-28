@@ -6,8 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 
@@ -51,7 +50,7 @@ public final class specificity implements Comparator<Expression> {
     },
     CONSTANT {
       @Override boolean includes(final ASTNode ¢) {
-        return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(core(((PrefixExpression) ¢).getOperand()));
+        return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
@@ -104,7 +103,7 @@ public final class specificity implements Comparator<Expression> {
     }
 
     static int of(final Expression ¢) {
-      return ofCore(core(¢));
+      return ofCore(extract.core(¢));
     }
 
     private static int ofCore(final Expression ¢) {

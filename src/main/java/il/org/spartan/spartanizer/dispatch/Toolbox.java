@@ -32,7 +32,7 @@ public class Toolbox {
     {
       final Toolbox t = freshCopyOfAllTippers();
       assert t.implementation != null;
-      Stream.of(t.implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
+      Arrays.asList(t.implementation).stream().filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
   /** The default instance of this class */
@@ -85,7 +85,7 @@ public class Toolbox {
   }
 
   @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
-    return Stream.of(ts).filter(λ -> λ.canTip(n)).findFirst().orElse(null);
+    return Arrays.asList(ts).stream().filter(λ -> λ.canTip(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
@@ -310,7 +310,7 @@ public class Toolbox {
         .add(VariableDeclarationFragment.class, //
             new FragmentDeadInitializer(), //
             new FragmentNoInitializerAssignment(), //
-            new FragmentInitializerUpdateAssignment(), //
+            new FragmentInitialiazerUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
             new FragmentInitializerIfUpdateAssignment(), //
             new FragmentInitializerReturnVariable(), //
@@ -318,7 +318,7 @@ public class Toolbox {
             new FragmentInitializerReturnAssignment(), //
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
-            new FragmentInitializerAssignment(), //
+            new FragmentInitialiazerAssignment(), //
             new FragmentInitializerInlineIntoNext(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
@@ -398,6 +398,13 @@ public class Toolbox {
     return this;
   }
 
+  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, final Tipper<N>... ts) {
+    final Integer nodeType = wizard.classToNodeType.get(c);
+    for (final Tipper<N> ¢ : ts)
+      get(nodeType.intValue()).remove(¢);
+    return this;
+  }
+
   public List<Tipper<? extends ASTNode>> getAllTippers() {
     final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
@@ -406,7 +413,7 @@ public class Toolbox {
   }
 
   public void disable(final Class<? extends TipperCategory> c) {
-    Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> disable(c, λ));
+    Arrays.asList(implementation).stream().filter(Objects::nonNull).forEach(λ -> disable(c, λ));
   }
 
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
@@ -422,7 +429,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("boxing") public int hooksCount() {
-    return Stream.of(implementation).map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
+    return Arrays.asList(implementation).stream().map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
   }
 
   public int tippersCount() {
@@ -459,7 +466,7 @@ public class Toolbox {
       return $;
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
-    Stream.of(t.implementation).filter(Objects::nonNull)
+    Arrays.asList(t.implementation).stream().filter(Objects::nonNull)
         .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
     return $;
   }

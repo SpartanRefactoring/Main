@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
  * to <code>for(int a=3;p;) {++i;}</code>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-27 */
-public final class FragmentInitializerToEnhancedFor extends $ReplaceToNextStatement<VariableDeclarationFragment> //
+public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStatement<VariableDeclarationFragment> //
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
@@ -32,15 +32,15 @@ public final class FragmentInitializerToEnhancedFor extends $ReplaceToNextStatem
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
-    final EnhancedForStatement s = az.enhancedFor(nextStatement);
+    final EnhancedForStatement s = (az.enhancedFor(nextStatement));
     if (s == null)
       return null;
-    s.getBody();
+    Statement body = body(s);
     if (containsClassInstanceCreation(nextStatement) || containsLambda(nextStatement))
       return null;
-    s.getParameter();
-    s.getExpression();
-    final Statement parent = az.statement(f.getParent());
+    SingleVariableDeclaration z = s.getParameter();
+    Expression zz = expression(s);
+    final Statement parent = az.statement(parent(f));
     if (parent == null || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
@@ -49,7 +49,7 @@ public final class FragmentInitializerToEnhancedFor extends $ReplaceToNextStatem
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
-      e = InliningUtilties.protect(e, pp);
+      e = Inliner.protect(e, pp);
     if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {
@@ -86,7 +86,7 @@ public final class FragmentInitializerToEnhancedFor extends $ReplaceToNextStatem
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    final ASTNode parent = nextStatement.getParent();
+    final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (parent.equals(¢))

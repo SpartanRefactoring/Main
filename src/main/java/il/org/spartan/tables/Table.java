@@ -28,7 +28,7 @@ public class Table extends Row<Table> implements Closeable {
 
   @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
-    as.list(rs).forEach(r -> {
+    Arrays.asList(rs).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
       } catch (final IOException ¢) {

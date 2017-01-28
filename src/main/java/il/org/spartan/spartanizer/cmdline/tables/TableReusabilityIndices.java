@@ -6,7 +6,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -37,7 +36,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
     final int $[] = new int[m.size()];
-    m.values().forEach(λ -> $[n.next()] = λ.intValue());
+    m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
 
@@ -75,9 +74,9 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   void addMissingKeys() {
     wizard.classToNodeType.keySet().forEach(λ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(λ)));
-    as.list(wizard.assignmentOperators).forEach(λ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(λ)));
-    as.list(wizard.prefixOperators).forEach(λ -> addIfNecessary("PREFIX", Vocabulary.mangle(λ)));
-    as.list(wizard.postfixOperators).forEach(λ -> addIfNecessary("POSTFIX", Vocabulary.mangle(λ)));
+    Arrays.asList(wizard.assignmentOperators).forEach(λ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(λ)));
+    Arrays.asList(wizard.prefixOperators).forEach(λ -> addIfNecessary("PREFIX", Vocabulary.mangle(λ)));
+    Arrays.asList(wizard.postfixOperators).forEach(λ -> addIfNecessary("POSTFIX", Vocabulary.mangle(λ)));
     for (final Operator ¢ : wizard.infixOperators)
       for (int arity = 2; arity <= maxArity; ++arity)
         addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));

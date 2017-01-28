@@ -18,7 +18,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel
  * @author Yuval Simon
  * @since 03-12-16 */
-public class ReturnTernaryExpander extends $CarefulTipper<ReturnStatement>//
+public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
   @Override public Tip tip(final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {
@@ -44,7 +44,7 @@ public class ReturnTernaryExpander extends $CarefulTipper<ReturnStatement>//
   @Override protected boolean prerequisite(final ReturnStatement $) {
     if ($ == null)
       return false;
-    // TODO: Raviv Rachmiel: use core --yg
+    // TODO: Raviv Rachmiel: use extract.core --yg
     final Expression e = expression($);
     return (iz.block($.getParent()) || iz.switchStatement($.getParent()))
         && (iz.conditionalExpression(e) || iz.parenthesizedExpression(e) && iz.conditionalExpression(expression(az.parenthesizedExpression(e))));

@@ -9,7 +9,6 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -71,7 +70,7 @@ public class ReportGenerator implements ConfigurableReport {
     }
 
     @SuppressWarnings({ "unchecked" }) public static NamedFunction<ASTNode> find(final String ¢) {
-      return Stream.of(ReportGenerator.Util.functions("")).filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
+      return Arrays.asList(ReportGenerator.Util.functions("")).stream().filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
     }
   }
 
@@ -106,13 +105,13 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void write(final ASTNode input, final ASTNode output, final String id,
       final BiFunction<Integer, Integer> i) {
-    as.list(ReportGenerator.Util.functions(""))
+    Arrays.asList(ReportGenerator.Util.functions(""))
         .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), i.apply(λ.function().run(input), λ.function().run(output))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    as.list(ReportGenerator.Util.functions(""))
+    Arrays.asList(ReportGenerator.Util.functions(""))
         .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), (int) i.apply(λ.function().run(n1), λ.function().run(n2))));
   }
 

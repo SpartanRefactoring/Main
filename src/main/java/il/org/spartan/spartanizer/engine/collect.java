@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.Utils.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -57,7 +56,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        as.list(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
         return $;
       }
     };
@@ -67,7 +66,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        as.list(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
         return $;
       }
     };
@@ -81,7 +80,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        as.list(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
         return $;
       }
     };
@@ -95,7 +94,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        as.list(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
+        Arrays.asList(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
         return $;
       }
     };
@@ -111,7 +110,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
+        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
         return $;
       }
     };
@@ -125,7 +124,7 @@ public enum collect {
 
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
-        Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
+        Arrays.asList(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
         return $;
       }
     };
@@ -434,7 +433,7 @@ public enum collect {
    * @return list of uses */
   List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
-    as.list(ns).forEach(λ -> as.list(collectors(what, $)).forEach(λ::accept));
+    Arrays.asList(ns).forEach(λ -> Arrays.asList(collectors(what, $)).forEach(λ::accept));
     removeDuplicates($);
     $.sort(Comparator.comparingInt(ASTNode::getStartPosition));
     return $;

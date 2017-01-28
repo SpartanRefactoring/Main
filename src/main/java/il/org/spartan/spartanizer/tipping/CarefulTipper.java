@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
  * @year 2016
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public abstract class $CarefulTipper<N extends ASTNode> extends Tipper<N> {
+public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   @Override public final boolean canTip(final N ¢) {
     return prerequisite(¢) && tip(¢) != null;
   }

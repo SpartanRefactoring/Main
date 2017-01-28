@@ -47,7 +47,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return step.fragments(vds).stream()
-        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && InliningUtilties.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
+        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
@@ -59,7 +59,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    // TODO Dor: use core
+    // TODO Dor: use extract.core
     return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? FragmentToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;

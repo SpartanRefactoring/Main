@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } <br/>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteWhile extends $CarefulTipper<WhileStatement>//
+public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement>//
     implements TipperCategory.Shortcircuit {
   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;

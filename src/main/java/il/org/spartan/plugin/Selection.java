@@ -14,7 +14,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -76,7 +75,7 @@ public class Selection extends AbstractSelection<Selection> {
    * @param ¢ JD
    * @return selection by compilation units */
   public static Selection of(final ICompilationUnit[] ¢) {
-    final List<ICompilationUnit> $ = as.list(¢);
+    final List<ICompilationUnit> $ = Arrays.asList(¢);
     return new Selection(WrappedCompilationUnit.of($), null, getName($));
   }
 
@@ -209,7 +208,7 @@ public class Selection extends AbstractSelection<Selection> {
       final ISelection s = getSelection();
       if (s == null || s instanceof ITextSelection || !(s instanceof ITreeSelection))
         return getProject();
-      // TODO Ori Roth is there a better way of dealing with these many types
+      // TODO Ori Roth is there  a better way of dealing with these many types
       final Object o = ((ITreeSelection) s).getFirstElement();
       if (o == null)
         return getProject();
@@ -398,7 +397,7 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.log(¢);
         return empty();
       }
-      as.list(rs).forEach(λ -> $.unify(by(λ)));
+      Arrays.asList(rs).forEach(λ -> $.unify(by(λ)));
       return $.setName(p.getElementName());
     }
 
@@ -407,7 +406,8 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        Stream.of(r.getChildren()).filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT).forEach(λ -> $.unify(by((IPackageFragment) λ)));
+        Arrays.asList(r.getChildren()).stream().filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+            .forEach(λ -> $.unify(by((IPackageFragment) λ)));
       } catch (final JavaModelException ¢) {
         monitor.log(¢);
         return empty();
