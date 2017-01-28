@@ -41,7 +41,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * . Tested in {@link Issue0880}
  * @author Yuval Simon
  * @since 2016-11-27 */
-public class RemoveRedundantSwitchCases extends $CarefulTipper<SwitchCase>//
+public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     implements TipperCategory.SyntacticBaggage {
   @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));

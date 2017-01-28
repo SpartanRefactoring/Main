@@ -37,7 +37,7 @@ public class definitionTest extends MetaFixture {
       put("@class¢", null);
       put("@enum¢", null);
       put("@interface¢", null);
-      as.list(definition.Kind.values()).forEach(λ -> put("@" + λ, null));
+      Arrays.asList(definition.Kind.values()).forEach(λ -> put("@" + λ, null));
     }
     @field static final long serialVersionUID = 1L;
   };

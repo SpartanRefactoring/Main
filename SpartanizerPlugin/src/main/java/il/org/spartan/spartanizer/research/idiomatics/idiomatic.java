@@ -244,7 +244,7 @@ public interface idiomatic {
     }
 
     /** <code>unless</code>
-     * @param unless condition n which executions occurs. */
+     * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
     }

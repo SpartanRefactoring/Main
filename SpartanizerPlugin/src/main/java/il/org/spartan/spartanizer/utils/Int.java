@@ -47,20 +47,11 @@ public final class Int {
     this.inner = inner;
   }
 
-  public int incrementAndGet() {
+  public void incrementAndGet() {
     getAndIncrement();
-    return inner;
   }
 
   @Override public String toString() {
     return inner + "";
-  }
-
-  public int next() {
-    return ++inner;
-  }
-
-  public void advance() {
-    ++inner;
   }
 }

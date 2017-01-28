@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.spartanizer.ast.factory.make.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -24,6 +23,6 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {
-    return plant(core(¢.getThenExpression())).into(¢.getParent());
+    return plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }
 }

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -30,11 +28,11 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class IfThrowNoElseThrow extends $ReplaceToNextStatement<IfStatement>//
+public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
   static Expression getThrowExpression(final Statement ¢) {
     final ThrowStatement $ = extract.throwStatement(¢);
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

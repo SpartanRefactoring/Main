@@ -9,10 +9,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
-import static il.org.spartan.spartanizer.ast.navigate.step.name;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,7 +26,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
     implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
-    $.setExpression(removeInitializersFromExpression(copy.of(core(expression(¢))), s));
+    $.setExpression(removeInitializersFromExpression(copy.of(extract.core(expression(¢))), s));
     setInitializers($, copy.of(s));
     return $;
   }
@@ -58,8 +54,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    return fragments(vds).stream()
-        .allMatch(λ -> InliningUtilties.variableUsedInFor(s, name(λ)) && InliningUtilties.variableNotUsedAfterStatement(s, name(λ)));
+    return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
@@ -70,7 +65,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
-    final InfixExpression e = az.infixExpression(core(from));
+    final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? goInfix(e, s) : from;
   }
 

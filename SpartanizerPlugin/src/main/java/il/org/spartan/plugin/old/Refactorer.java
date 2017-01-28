@@ -3,7 +3,6 @@ package il.org.spartan.plugin.old;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.List;
-import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -14,7 +13,6 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -30,7 +28,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   enum attribute {
     EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER, UNKNOWN
   }
-  // public static final String unknown = "???";
+  // public static final String UNKNOWN = "???";
 
   /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a
    *         handler */
@@ -166,7 +164,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    as.list(attribute.values()).forEach(λ -> $.put(λ, unknown));
+    Arrays.asList(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
   }
 
@@ -248,7 +246,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private static boolean valid(final Object... ¢) {
-    return Stream.of(¢).allMatch(Objects::nonNull);
+    return Arrays.asList(¢).stream().allMatch(Objects::nonNull);
   }
 
   private static void initializeProgressDialog(final ProgressMonitorDialog d) {

@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.leonidas;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
+import static org.junit.Assert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;

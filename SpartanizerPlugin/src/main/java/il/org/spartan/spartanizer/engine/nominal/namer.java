@@ -135,11 +135,11 @@ public interface namer {
   class GenericsCategory {
     public final Set<String> set;
 
-    public GenericsCategory(final String... names) {
-      set = new LinkedHashSet<>(as.list(names));
+    public GenericsCategory(String... names) {
+      set = new LinkedHashSet<>(Arrays.asList(names));
     }
 
-    public boolean contains(final ParameterizedType ¢) {
+    public boolean contains(ParameterizedType ¢) {
       return set.contains(¢.getType() + "");
     }
   }

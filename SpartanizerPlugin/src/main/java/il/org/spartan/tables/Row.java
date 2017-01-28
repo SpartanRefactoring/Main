@@ -3,7 +3,6 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
-import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 
@@ -21,7 +20,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   public Self col(final Accumulator... ¢) {
-    as.list(¢).forEach(this::col);
+    Arrays.asList(¢).forEach(this::col);
     return self();
   }
 
@@ -49,7 +48,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Adds a key and a <code><b>double</b><code> value to this instance <br/>
-        * @param key The key to be added; must not be <code><b>null</b></code>
+      * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
   public Self col(final String key, final double value) {

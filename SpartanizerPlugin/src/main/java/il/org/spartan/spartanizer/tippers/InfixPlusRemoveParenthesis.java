@@ -8,8 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -17,6 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating <br/>
@@ -52,7 +51,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
-      // TODO: Dor Ma'ayan: use core --yg
+      // TODO: Dor Ma'ayan: use extract.core --yg
       if (iz.parenthesizedExpression(es.get(ii))) {
         Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
         for (; iz.parenthesizedExpression(¢);) {

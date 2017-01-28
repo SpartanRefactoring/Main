@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -11,7 +9,6 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -64,7 +61,7 @@ public interface iz {
   }
 
   int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
-  List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
+  List<String> defaultValues = Arrays.asList("null", "0", "false", "0.", "0L");
 
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
@@ -91,7 +88,7 @@ public interface iz {
   }
 
   static boolean anyOperator(final ASTNode ¢) {
-    return as.list(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
   }
 
@@ -131,7 +128,7 @@ public interface iz {
                         : null);
   }
 
-  /** Ceck if an ASTNode is an Array Access
+  /** Ceck if an ASTNode is an Array Acess
    * @param ¢ JD
    * @return */
   static boolean arrayAccess(final ASTNode ¢) {
@@ -296,7 +293,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   static boolean conditionalExpression(final Expression... xs) {
-    return Stream.of(xs).anyMatch(λ -> nodeTypeEquals(core(λ), CONDITIONAL_EXPRESSION));
+    return Arrays.asList(xs).stream().anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
   }
 
   /** Check whether an expression is a "conditional or" (||)
@@ -324,7 +321,7 @@ public interface iz {
    *         "specific" */
   static boolean constant(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
-        || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(core(((PrefixExpression) ¢).getOperand()));
+        || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
   }
 
   static boolean constructor(final ASTNode ¢) {
@@ -704,9 +701,10 @@ public interface iz {
     return left(az.assignment(¢.getParent())).equals(¢);
   }
 
-  /** @return <code><b>true</b></code> <i>iff</i> the parameter is literal */
+  /** @param pattern Expression node
+   * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
   static boolean literal(final ASTNode ¢) {
-    return ¢ != null && iz.nodeTypeIn(¢, NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return ¢ != null && Utils.intIsIn(nodeType(¢), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {

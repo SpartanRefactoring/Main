@@ -12,6 +12,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -37,7 +41,7 @@ public abstract class Tipper<N extends ASTNode> //
    * @param g */
   public static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = InliningUtilties.live(f, fragments(parent));
+    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     if (live.isEmpty()) {
       r.remove(parent, g);
       return;
@@ -46,6 +50,12 @@ public abstract class Tipper<N extends ASTNode> //
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
     r.replace(parent, newParent, g);
+  }
+
+  protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    fs.stream().filter(λ -> λ != null && λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
+    return $;
   }
 
   private Class<N> myOperandsClass;
@@ -132,9 +142,23 @@ public abstract class Tipper<N extends ASTNode> //
     return super.hashCode();
   }
 
+  public static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+    if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
+      return false;
+    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    if (iz.methodInvocation(x.getExpression())) {
+      final Expression $ = core(expression(x.getExpression()));
+      return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
+    }
+    if (!iz.fieldAccess(x.getExpression()))
+      return false;
+    final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
+    return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
+  }
+
   public static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
-    // TODO Raviv Rachmiel: use core
+    // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(left(a));
