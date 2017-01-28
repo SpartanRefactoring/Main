@@ -559,11 +559,9 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       if (!(o instanceof Map.Entry))
         return false;
       @NotNull @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
-      final Object k1 = getKey();
-      final Object k2 = e.getKey();
+      final Object k1 = getKey(), k2 = e.getKey();
       if (k1 == k2 || k1 != null && k1.equals(k2)) {
-        final Object v1 = getValue();
-        final Object v2 = e.getValue();
+        final Object v1 = getValue(), v2 = e.getValue();
         if (v1 == v2 || v1 != null && v1.equals(v2))
           return true;
       }

@@ -18,9 +18,7 @@ public class Hamlet implements Environment {
     @Nullable final Boolean first = $.¢();
     azzert.notNull(first);
     azzert.notNull($.cache);
-    @Nullable final Boolean second = $.get();
-    @Nullable final Boolean third = $.get();
-    @Nullable final Boolean fourth = $.get();
+    @Nullable final Boolean second = $.get(), third = $.get(), fourth = $.get();
     azzert.that(first + "", is("false"));
     azzert.that(second + "", is("true"));
     azzert.that(third + "", is("false"));

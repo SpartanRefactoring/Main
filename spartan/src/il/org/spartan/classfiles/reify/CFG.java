@@ -82,21 +82,21 @@ public class CFG {
       long targetOffset;
       switch (i.opCode) {
         case IFEQ:
-        case IFNE:
-        case IFLT:
         case IFGE:
         case IFGT:
         case IFLE:
+        case IFLT:
+        case IFNE:
+        case IFNONNULL:
+        case IFNULL:
+        case IF_ACMPEQ:
+        case IF_ACMPNE:
         case IF_ICMPEQ:
-        case IF_ICMPNE:
-        case IF_ICMPLT:
         case IF_ICMPGE:
         case IF_ICMPGT:
         case IF_ICMPLE:
-        case IF_ACMPEQ:
-        case IF_ACMPNE:
-        case IFNULL:
-        case IFNONNULL:
+        case IF_ICMPLT:
+        case IF_ICMPNE:
           targetOffset = unsigned2signed(offset + (i.args()[1] | i.args()[0] << 8));
           jumps2targets.put(offset, targetOffset);
           jumps2targets.put(offset, offset + 1 + i.size());
@@ -132,8 +132,8 @@ public class CFG {
           }
           retsFromSubroutine.add(offset + i.size());
           break;
-        case TABLESWITCH:
         case LOOKUPSWITCH:
+        case TABLESWITCH:
           jumps2targets.put(offset, unsigned2signed_w(offset + i.defaultOffset));
           for (final int o : i.offsets)
             jumps2targets.put(offset, unsigned2signed_w(offset + o));

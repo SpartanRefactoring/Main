@@ -16,8 +16,7 @@ import il.org.spartan.streotypes.*;
   }
 
   @Test public void test1() {
-    @NotNull final String s = "abc,def\r\n\tg\\m";
-    @NotNull final String t = CSV.escape(s);
+    @NotNull final String s = "abc,def\r\n\tg\\m", t = CSV.escape(s);
     @Nullable final String u = CSV.unescape(t);
     azzert.that(t, is("abc\\.def\\r\\n\\tg\\\\m"));
     azzert.that(u, is(s));
@@ -25,8 +24,8 @@ import il.org.spartan.streotypes.*;
   }
 
   @Test public void testCombineSplit() {
-    @NotNull final String[] parts = { "abc", "", "def", "gh\n,", ",", "\r", "\ta", null, "a\t", "\rz", "o\np", "qwerty", ",,,,", ",1,2,3,4" };
-    @NotNull final String[] t = CSV.split(CSV.combine(parts));
+    @NotNull final String[] parts = { "abc", "", "def", "gh\n,", ",", "\r", "\ta", null, "a\t", "\rz", "o\np", "qwerty", ",,,,", ",1,2,3,4" },
+        t = CSV.split(CSV.combine(parts));
     azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }

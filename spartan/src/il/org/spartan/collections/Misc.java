@@ -15,8 +15,7 @@ public class Misc {
         return false;
       if (!actual.hasNext())
         return true;
-      @NotNull final String a = actual.nextLine().trim();
-      @NotNull final String b = expected.nextLine().trim();
+      @NotNull final String a = actual.nextLine().trim(), b = expected.nextLine().trim();
       if (!a.equals(b)) {
         System.err.println("a=" + a);
         System.err.println("b=" + b);
