@@ -704,10 +704,9 @@ public interface iz {
     return left(az.assignment(¢.getParent())).equals(¢);
   }
 
-  /** @param pattern Expression node
-   * @return <code><b>true</b></code> <i>iff</i> the Expression is literal */
+  /** @return <code><b>true</b></code> <i>iff</i> the parameter is literal */
   static boolean literal(final ASTNode ¢) {
-    return ¢ != null && Utils.intIsIn(nodeType(¢), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return ¢ != null && iz.nodeTypeIn(¢, NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
 
   static boolean literal(final ASTNode ¢, final boolean b) {

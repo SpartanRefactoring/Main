@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.engine.OldInliner.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** convert
@@ -48,7 +48,7 @@ public final class FragmentInitializerReturn extends $FragementInitializerStatem
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new OldInliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - metrics.size(newReturnValue) - InliningUtilties.eliminationSaving(f) > 0)
       return null;
     $.replace(a, newReturnValue, g);
