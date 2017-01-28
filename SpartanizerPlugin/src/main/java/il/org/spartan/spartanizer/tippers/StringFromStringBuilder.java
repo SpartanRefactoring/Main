@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -10,7 +11,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -104,6 +104,6 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    *         list, so making it a part of infix expression require additional
    *         parenthesis */
   private boolean isParethesisNeeded(final Expression x) {
-    return as.list(np).stream().anyMatch(λ -> λ.isInstance(x));
+    return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
   }
 }

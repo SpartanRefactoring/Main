@@ -1,5 +1,7 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
+import java.util.stream.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.meta.*;
 
@@ -22,10 +24,10 @@ public class Issue1040Aux2 extends MetaFixture {
   }
 
   @SuppressWarnings("boxing") void toTest() {
-    total = as.list(arr).stream().map(λ -> total(1)).reduce((x, y) -> x + y).get().intValue();
+    total = Stream.of(arr).map(λ -> total(1)).reduce((x, y) -> x + y).get().intValue();
   }
 
   @SuppressWarnings("boxing") void toTest2() {
-    total2 = as.list(arr).stream().map(λ -> total2(1)).reduce((x, y) -> x + y).get();
+    total2 = Stream.of(arr).map(λ -> total2(1)).reduce((x, y) -> x + y).get();
   }
 }

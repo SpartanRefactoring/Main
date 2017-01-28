@@ -135,7 +135,7 @@ public abstract class Tipper<N extends ASTNode> //
 
   public static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
-    // TODO Raviv Rachmiel: use extract.core
+    // TODO Raviv Rachmiel: use core
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(left(a));

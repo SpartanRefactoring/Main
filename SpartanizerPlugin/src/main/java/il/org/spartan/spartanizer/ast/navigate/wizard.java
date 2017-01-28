@@ -264,7 +264,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all the operator are the same
    *         or false otherwise */
   static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
-    return !hasNull(o, os) && as.list(os).stream().allMatch(λ -> λ != null && λ == o);
+    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
   }
 
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
@@ -299,7 +299,7 @@ public interface wizard {
    *         operator. false if none of them are or if the given parameter is
    *         null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
-    return ns != null && as.list(ns).stream().anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
+    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
   }
 
   static InfixExpression.Operator convertToInfix(final Operator ¢) {
@@ -654,7 +654,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all names are the same (string
    *         wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
-    return as.list(xs).stream().allMatch(λ -> same(λ, x));
+    return Stream.of(xs).allMatch(λ -> same(λ, x));
   }
 
   /** Determine whether two lists of nodes are the same, in the sense that their

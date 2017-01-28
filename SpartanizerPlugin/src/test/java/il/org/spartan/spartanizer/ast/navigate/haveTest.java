@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Tests for {@link have} , regarding issue #807
@@ -58,7 +57,7 @@ public final class haveTest {
   }
 
   public List<Expression> ExpressionListMaker(final String[] exps) {
-    return as.list(exps).stream().map(into::e).collect(Collectors.toList());
+    return Stream.of(exps).map(into::e).collect(Collectors.toList());
   }
 
   @Test public void hasLiteralTestFalse() {
