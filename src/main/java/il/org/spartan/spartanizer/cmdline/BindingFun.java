@@ -13,7 +13,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** An {@link IApplication} extension entry point, allowing executions of ***
+/** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 final class BindingFun implements IApplication {

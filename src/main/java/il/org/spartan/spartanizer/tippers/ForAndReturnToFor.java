@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code>
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
-public class ForAndReturnToFor extends $ReplaceToNextStatement<ForStatement>//
+public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
   @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (s == null || $ == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))

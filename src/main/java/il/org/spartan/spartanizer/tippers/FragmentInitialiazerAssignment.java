@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.engine.InliningUtilties.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -13,7 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.OldInliner.*;
+import il.org.spartan.spartanizer.engine.Inliner.*;
 
 /** convert
  *
@@ -30,7 +29,7 @@ import il.org.spartan.spartanizer.engine.OldInliner.*;
  *
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class FragmentInitializerAssignment extends $FragementInitializerStatement//
+public final class FragmentInitialiazerAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
@@ -46,7 +45,7 @@ public final class FragmentInitializerAssignment extends $FragementInitializerSt
     final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
-    final InlinerWithValue i = new OldInliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);

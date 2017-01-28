@@ -7,9 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.expression;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
@@ -34,7 +33,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
-    final Expression l = core(left(x)), r = core(right(x));
+    final Expression l = extract.core(left(x)), r = extract.core(right(x));
     if (conditionalExpression(r)) {
       final ConditionalExpression $ = az.conditionalExpression(r);
       return subject.pair(subject.pair(l, then($)).to(operator(x)), subject.pair(l, elze($)).to(operator(x))).toCondition(expression($));
@@ -46,7 +45,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
   @Override protected boolean prerequisite(final InfixExpression x) {
     if (x == null)
       return false;
-    final Expression $ = core(left(x)), r = core(right(x));
+    final Expression $ = extract.core(left(x)), r = extract.core(right(x));
     return conditionalExpression(r) && !haz.sideEffects(expression(az.conditionalExpression(r)))
         || conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
   }

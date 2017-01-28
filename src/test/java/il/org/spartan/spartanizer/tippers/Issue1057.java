@@ -1,8 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-
 import org.junit.*;
+import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 /** Test class for issue #1057, see {@link FragmentToForInitializers}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

@@ -5,9 +5,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -53,10 +50,6 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final DoStatement ¢) {
-    return ¢ == null ? null : ¢.getBody();
-  }
-
   public static Statement body(final EnhancedForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
@@ -75,15 +68,6 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final Statement ¢) {
-    assert ¢ != null;
-    return ¢ instanceof WhileStatement ? ((WhileStatement) ¢).getBody()
-        : ¢ instanceof EnhancedForStatement ? ((EnhancedForStatement) ¢).getBody() //
-            : ¢ instanceof ForStatement ? ((ForStatement) ¢).getBody() //
-                : ¢ instanceof DoStatement ? ((DoStatement) ¢).getBody() //
-                    : null;
-  }
-
   /** @param ¢ JD
    * @return */
   private static Block body(final SynchronizedStatement ¢) {
@@ -95,6 +79,10 @@ public enum step {
   }
 
   public static Statement body(final WhileStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
+  public static Statement body(final DoStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -186,7 +174,7 @@ public enum step {
   }
 
   public static List<MethodDeclaration> constructors(final ASTNode ¢) {
-    return as.list(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
+    return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
   }
 
   @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
@@ -209,10 +197,6 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
     return ¢ == null ? null : ¢.enumConstants();
-  }
-
-  public static SingleVariableDeclaration exception(final CatchClause ¢) {
-    return ¢ == null ? null : ¢.getException();
   }
 
   /** @param n a node to extract an expression from
@@ -258,23 +242,23 @@ public enum step {
   }
 
   public static Expression expression(final CastExpression $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ClassInstanceCreation $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ConditionalExpression ¢) {
-    return ¢ == null ? null : core(¢.getExpression());
+    return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ExpressionStatement $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final FieldAccess ¢) {
@@ -286,7 +270,7 @@ public enum step {
   }
 
   public static Expression expression(final IfStatement $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final ParenthesizedExpression $) {
@@ -294,7 +278,7 @@ public enum step {
   }
 
   public static Expression expression(final ReturnStatement $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final SwitchCase ¢) {
@@ -306,7 +290,7 @@ public enum step {
   }
 
   public static Expression expression(final ThrowStatement $) {
-    return $ == null ? null : core($.getExpression());
+    return $ == null ? null : extract.core($.getExpression());
   }
 
   public static Expression expression(final WhileStatement ¢) {
@@ -357,10 +341,6 @@ public enum step {
       x.addAll(y);
       return x;
     });
-  }
-
-  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
-    return ¢ == null ? null : ¢.getFields();
   }
 
   /** Expose the list of fragments in a {@link FieldDeclaration}
@@ -449,7 +429,7 @@ public enum step {
   }
 
   public static List<Initializer> initializers(final ASTNode ¢) {
-    return as.list(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
+    return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}
@@ -460,11 +440,11 @@ public enum step {
   }
 
   public static List<Initializer> initializersClass(final ASTNode ¢) {
-    return as.list(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
+    return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
   }
 
   public static List<Initializer> initializersInstance(final ASTNode n) {
-    return as.list(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
+    return Arrays.asList(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
   }
 
   /** @param ¢ JD
@@ -550,7 +530,7 @@ public enum step {
    * @return */
   @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
-        : iz.typeDeclaration(¢) ? as.list(az.typeDeclaration(¢).getMethods())
+        : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
                 .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(Collectors.toList()) : null;
   }
@@ -578,27 +558,11 @@ public enum step {
     return $;
   }
 
-  public static List<?> modifiers(final FieldDeclaration ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static List<?> modifiers(final MethodDeclaration ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
   public static SimpleName name(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static SimpleName name(final EnumConstantDeclaration ¢) {
+  public static Name name(final ImportDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -608,19 +572,11 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static Name name(final ImportDeclaration ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
   public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
   public static SimpleName name(final MethodInvocation ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static SimpleName name(final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -647,11 +603,11 @@ public enum step {
   }
 
   public static Expression operand(final PostfixExpression ¢) {
-    return ¢ == null ? null : core(¢.getOperand());
+    return ¢ == null ? null : extract.core(¢.getOperand());
   }
 
   public static Expression operand(final PrefixExpression ¢) {
-    return ¢ == null ? null : core(¢.getOperand());
+    return ¢ == null ? null : extract.core(¢.getOperand());
   }
 
   public static Assignment.Operator operator(final Assignment ¢) {
@@ -708,7 +664,7 @@ public enum step {
   }
 
   public static Expression receiver(final MethodInvocation ¢) {
-    return ¢ == null ? null : core(¢.getExpression());
+    return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
   /** Expose the list of resources contained in a {@link TryStatement}
@@ -931,5 +887,37 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  public static SimpleName name(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SingleVariableDeclaration exception(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getException();
+  }
+
+  public static SimpleName name(final EnumConstantDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static List<?> modifiers(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final FieldDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getFields();
   }
 }

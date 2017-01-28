@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
-public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends $CarefulTipper<N> {
+public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
   @Override public boolean prerequisite(final N current) {
     final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null, new ExclusionManager()) != null;

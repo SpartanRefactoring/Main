@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** removes continue in for loop if it's last statement in the loop.
  * @author Doron Meshulam
  * @since 2016-11-26 */
-public class ForRedundantContinue extends $CarefulTipper<ForStatement>//
+public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   @Override public String description(final ForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);

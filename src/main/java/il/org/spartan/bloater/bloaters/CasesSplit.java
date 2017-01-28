@@ -39,7 +39,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * </code> Test file: {@link Issue0977}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
-public class CasesSplit extends $CarefulTipper<SwitchStatement>//
+public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";

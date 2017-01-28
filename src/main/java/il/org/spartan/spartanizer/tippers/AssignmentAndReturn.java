@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class AssignmentAndReturn extends $ReplaceToNextStatement<Assignment>//
+public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {
   @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";

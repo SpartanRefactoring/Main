@@ -32,7 +32,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
-public class OutlineArrayAccess extends $CarefulTipper<ArrayAccess>//
+public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
@@ -61,7 +61,8 @@ public class OutlineArrayAccess extends $CarefulTipper<ArrayAccess>//
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
     final Statement b = extract.containingStatement(a);
-    if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.incrementOrDecrement(e) || iz.assignment(e))
+    if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.incrementOrDecrement(e)
+        || iz.assignment(e))
       return false;
     final SimpleName $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
     if ($ == null)

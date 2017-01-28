@@ -40,7 +40,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
    * @param x JD
    * @return simplified parameter */
   public static Expression simplifyNot(final PrefixExpression ¢) {
-    return pushdownNot(az.not(core(¢)));
+    return pushdownNot(az.not(extract.core(¢)));
   }
 
   static Expression notOfLiteral(final BooleanLiteral ¢) {

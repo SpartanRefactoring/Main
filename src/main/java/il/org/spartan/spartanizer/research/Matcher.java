@@ -4,7 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -109,7 +108,7 @@ public final class Matcher {
   }
 
   private boolean containsOption(final Option o) {
-    return Stream.of(options).anyMatch(λ -> λ.equals(o));
+    return Arrays.asList(options).stream().anyMatch(λ -> λ.equals(o));
   }
 
   private static boolean blockMatches(final ASTNode p, final Block n) {

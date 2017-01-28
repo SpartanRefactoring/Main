@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
 import java.util.*;
 import java.util.stream.*;
 
+import il.org.spartan.spartanizer.java.IExtendedModifiersRank;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -12,7 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in

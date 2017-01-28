@@ -89,7 +89,8 @@ public enum precedence {
     }
   }
 
-  /** Determine the precedence of an {@link InfixExpression.Operator}
+  /** Determine the precedence of an
+   * {@link InfixExpression.Operator}
    * @param o JD
    * @return precedence of the parameter */
   public static int of(final InfixExpression.Operator ¢) {
@@ -118,7 +119,8 @@ public enum precedence {
     return of(¢.getOperator());
   }
 
-  /** Determine the precedence of an {@link Assignment.Operator}
+  /** Determine the precedence of an
+   * {@link Assignment.Operator}
    * @param o JD
    * @return precedence of the parameter */
   private static int of(final Assignment.Operator ¢) {
