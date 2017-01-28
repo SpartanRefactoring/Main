@@ -13,8 +13,8 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -161,13 +161,13 @@ public enum TrimmerTestsUtils {
   }
 
   static String apply(final Tipper<? extends ASTNode> t, final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit $ = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
     assert $ != null;
     return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   public static String applyTrimmer(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = TESTUtils.rewrite(t, u, new Document(from));
     assert $ != null;
