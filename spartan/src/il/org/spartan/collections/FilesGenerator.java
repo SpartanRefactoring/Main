@@ -58,7 +58,7 @@ public class FilesGenerator {
         for (;;) {
           if (!$.hasNext())
             return false;
-          final String name = $.next();
+          @SuppressWarnings("null") final String name = $.next();
           if (name == null)
             continue;
           next = new File(directory, name);
@@ -138,7 +138,7 @@ public class FilesGenerator {
         stack.push(i);
       }
 
-      @Override public boolean hasNext() {
+      @Override @SuppressWarnings("null") public boolean hasNext() {
         for (;;) {
           if (stack.isEmpty())
             return false;

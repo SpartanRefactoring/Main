@@ -133,7 +133,7 @@ import il.org.spartan.utils.Separate.*;
 
   /** Add a key and a <code><b>double</b><code> value to this instance
                      *
-                     * &#64;param key
+                     * @param key
                      *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param ss Which (if any) aggregate statistics should be produced for this

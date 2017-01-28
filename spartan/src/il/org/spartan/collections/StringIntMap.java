@@ -20,7 +20,7 @@ public class StringIntMap extends HashMap<String, Integer> {
     return super.containsKey(key);
   }
 
-  public int get(final String key) {
+  @SuppressWarnings("null") public int get(final String key) {
     return super.get(key).intValue();
   }
 

@@ -7,19 +7,19 @@ import org.jetbrains.annotations.*;
 
 public class MapUtil {
   @SuppressWarnings("boxing") //
-  public static <@Nullable K> void addToValue(@NotNull final Map<K, Integer> k, final K key, final int val) {
-    k.put(key, (k.get(key) != null ? k.get(key) : Integer.valueOf(0)) + val);
+  public static <@Nullable K> void addToValue(@NotNull final Map<K, Integer> m, final K key, final int val) {
+    m.put(key, (m.get(key) != null ? m.get(key) : Integer.valueOf(0)) + val);
   }
 
-  @NotNull public static <K, V> Iterator<K> keysIterator(@NotNull final Map<K, V> k) {
+  @NotNull public static <K, V> Iterator<K> keysIterator(@NotNull final Map<K, V> m) {
     return new Iterator<K>() {
-      @NotNull Iterator<Map.Entry<K, V>> inner = k.entrySet().iterator();
+      @NotNull Iterator<Map.Entry<K, V>> inner = m.entrySet().iterator();
 
       @Override public boolean hasNext() {
         return inner.hasNext();
       }
 
-      @Override public K next() {
+      @Override @SuppressWarnings("null") public K next() {
         return inner.next().getKey();
       }
 
@@ -29,8 +29,8 @@ public class MapUtil {
     };
   }
 
-  @NotNull public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValue(@NotNull final Map<K, V> k) {
-    @NotNull final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
+  @NotNull public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValue(@NotNull final Map<K, V> m) {
+    @NotNull final List<Map.Entry<K, V>> list = new ArrayList<>(m.entrySet());
     Collections.sort(list, (o1, o2) -> o1.getValue().compareTo(o2.getValue()));
     @NotNull final Map<K, V> $ = new LinkedHashMap<>();
     for (@NotNull final Map.Entry<K, V> ¢ : list)
@@ -38,8 +38,8 @@ public class MapUtil {
     return $;
   }
 
-  @NotNull public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValueReverse(@NotNull final Map<K, V> k) {
-    @NotNull final List<Map.Entry<K, V>> list = new ArrayList<>(k.entrySet());
+  @NotNull public static <@Nullable K, @Nullable V extends Comparable<? super V>> Map<K, V> sortByValueReverse(@NotNull final Map<K, V> m) {
+    @NotNull final List<Map.Entry<K, V>> list = new ArrayList<>(m.entrySet());
     Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
     @NotNull final Map<K, V> $ = new LinkedHashMap<>();
     for (@NotNull final Map.Entry<K, V> ¢ : list)
