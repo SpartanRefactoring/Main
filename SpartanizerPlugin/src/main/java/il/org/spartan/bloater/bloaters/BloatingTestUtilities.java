@@ -210,6 +210,6 @@ public enum BloatingTestUtilities {
   }
 
   public static Operand bloatingOf(final MetaFixture ¢) {
-    return new Operand(¢.reflectedCompilationUnit(), ¢.myClassText());
+    return new Operand(¢.reflectedCompilationUnit(), ¢.reflectedCompilationUnitText());
   }
 }
