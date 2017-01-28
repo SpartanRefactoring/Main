@@ -49,7 +49,7 @@ public final class FragmentInitializerReturn extends $FragementInitializerStatem
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - InliningUtilties.eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - metrics.size(newReturnValue) - InliningUtilties.eliminationSaving(f) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);

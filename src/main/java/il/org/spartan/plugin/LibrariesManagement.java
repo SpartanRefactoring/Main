@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.internal.core.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** A utility class to manage libraries at the users side, in front of the
@@ -52,7 +53,7 @@ public enum LibrariesManagement {
 
   /** @return true iff the spartan library exists within eclipse. */
   public static boolean libraryExists() {
-    @SuppressWarnings("restriction") final List<String> $ = Arrays.asList(new UserLibraryManager().getUserLibraryNames());
+    @SuppressWarnings("restriction") final List<String> $ = as.list(new UserLibraryManager().getUserLibraryNames());
     return $.contains(LIBRARY_NAME);
   }
 
@@ -86,7 +87,7 @@ public enum LibrariesManagement {
       return false;
     }
     if (es != null)
-      nes.addAll(Arrays.asList(es));
+      nes.addAll(as.list(es));
     nes.add(JavaCore.newContainerEntry(LIBRARY_PATH_CONTAINER.getPath(), null, null, false));
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);

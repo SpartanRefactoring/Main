@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -104,7 +105,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int length(final ASTNode... ns) {
-    return Arrays.asList(ns).stream().map(λ -> (λ + "").length()).reduce((x, y) -> x + y).get();
+    return as.list(ns).stream().map(λ -> (λ + "").length()).reduce((x, y) -> x + y).get();
   }
 
   static int literacy(final ASTNode ¢) {
@@ -144,7 +145,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int size(final ASTNode... ns) {
-    return Arrays.asList(ns).stream().map(count::nodes).reduce((x, y) -> x + y).get();
+    return as.list(ns).stream().map(count::nodes).reduce((x, y) -> x + y).get();
   }
 
   static int tokens(final String s) {

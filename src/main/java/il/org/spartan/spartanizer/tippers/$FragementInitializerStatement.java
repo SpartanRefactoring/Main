@@ -112,7 +112,7 @@ public abstract class $FragementInitializerStatement extends $ReplaceToNextState
   }
 
   static boolean forbiddenTarget(final Statement target) {
-    return target == null || containsClassInstanceCreation(target) || containsLambda(target) || false;
+    return target == null || containsClassInstanceCreation(target) || containsLambda(target);
   }
 
   @Override public final Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {

@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -75,7 +76,7 @@ public class Selection extends AbstractSelection<Selection> {
    * @param ¢ JD
    * @return selection by compilation units */
   public static Selection of(final ICompilationUnit[] ¢) {
-    final List<ICompilationUnit> $ = Arrays.asList(¢);
+    final List<ICompilationUnit> $ = as.list(¢);
     return new Selection(WrappedCompilationUnit.of($), null, getName($));
   }
 
@@ -397,7 +398,7 @@ public class Selection extends AbstractSelection<Selection> {
         monitor.log(¢);
         return empty();
       }
-      Arrays.asList(rs).forEach(λ -> $.unify(by(λ)));
+      as.list(rs).forEach(λ -> $.unify(by(λ)));
       return $.setName(p.getElementName());
     }
 
@@ -406,7 +407,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        Arrays.asList(r.getChildren()).stream().filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+        as.list(r.getChildren()).stream().filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             .forEach(λ -> $.unify(by((IPackageFragment) λ)));
       } catch (final JavaModelException ¢) {
         monitor.log(¢);

@@ -19,6 +19,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
 
+import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
@@ -62,7 +63,7 @@ public class InflateHandler extends AbstractHandler {
     final ArrayList<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
-    final List<Listener> ls = Arrays.asList(t.getListeners(SWT.MouseWheel));
+    final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
     if (ls == null)
       return $;
     $.addAll(ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener)
@@ -72,12 +73,12 @@ public class InflateHandler extends AbstractHandler {
 
   protected static void addListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
-      Arrays.asList(types).forEach(i -> ls.forEach(λ -> t.addListener(i.intValue(), λ)));
+      as.list(types).forEach(i -> ls.forEach(λ -> t.addListener(i.intValue(), λ)));
   }
 
   protected static void removeListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
-      ls.forEach(¢ -> Arrays.asList(types).forEach(λ -> t.removeListener(λ.intValue(), ¢)));
+      ls.forEach(¢ -> as.list(types).forEach(λ -> t.removeListener(λ.intValue(), ¢)));
   }
 
   protected static IEditorPart getEditorPart() {

@@ -6,8 +6,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
@@ -101,7 +99,7 @@ public enum TrimmerTestsUtils {
     }
 
     @SafeVarargs public final <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N>... ts) {
-      Arrays.asList(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
+      as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
       return this;
     }
   }

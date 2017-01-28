@@ -2,10 +2,10 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.Listener.*;
 
-import java.util.*;
-
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.Separator;
 
 /** A kind of {@link Listener} that records a long string of the message it got.
  * @author Yossi Gil
@@ -30,7 +30,7 @@ public class StringBuilderListener implements Listener {
 
   @Override public void tick(final Object... os) {
     $.append(newId()).append(": ");
-    Arrays.asList(os).forEach(λ -> $.append(new Separator(", ")).append(trivia.gist(λ)));
+    as.list(os).forEach(λ -> $.append(new Separator(", ")).append(trivia.gist(λ)));
     $.append('\n');
   }
 }
