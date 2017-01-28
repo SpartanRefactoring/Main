@@ -19,9 +19,7 @@ import il.org.spartan.statistics.*;
 public class CSVStatistics extends CSVLine.Ordered {
   private static final String SUMMARY_EXTENSION = ".summary";
 
-  /** @param baseName
-   * @return */
-  private static String removeExtension(@NotNull final String baseName) {
+  @SuppressWarnings("null") private static String removeExtension(@NotNull final String baseName) {
     return baseName.replaceFirst("\\.csv$", "");
   }
 
@@ -50,7 +48,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     for (final String key : stats.keySet()) {
       @NotNull final CSVLine l = new CSVLine.Ordered.Separated("%");
       l.put(keysHeader, key);
-      final ImmutableStatistics s = stats.get(key);
+      @SuppressWarnings("null") final ImmutableStatistics s = stats.get(key);
       l//
           .put("$N$", s.n()) //
           .put("\\emph{n/a}", s.missing())//
