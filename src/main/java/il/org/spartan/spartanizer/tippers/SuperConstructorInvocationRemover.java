@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -24,6 +20,7 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
 
   @Override public Tip tip(final SuperConstructorInvocation i) {
     return new Tip(description(i), i, getClass()) {
+      @Override
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }

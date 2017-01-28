@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.java.namespace.Environment.*;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.jface.text.*;
 import org.junit.*;
 import org.junit.runners.*;
 

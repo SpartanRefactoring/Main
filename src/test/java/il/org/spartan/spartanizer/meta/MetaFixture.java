@@ -5,9 +5,6 @@ import static il.org.spartan.lisp.*;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

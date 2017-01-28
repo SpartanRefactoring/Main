@@ -4,13 +4,6 @@ import static il.org.spartan.plugin.old.RefactorerUtil.*;
 
 import java.util.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.operation.*;
-import org.eclipse.jface.text.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -121,6 +114,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
           + ¢.get(attribute.TIPS_AFTER);
     }
 
+    @Override
     @Override public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
         final ICompilationUnit currentCompilationUnit) {
       return wizard.completionIndex(currentCompilationUnits, currentCompilationUnit) + " : " + currentCompilationUnit.getElementName();

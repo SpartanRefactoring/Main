@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.analyses.util;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;

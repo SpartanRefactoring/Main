@@ -4,11 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jface.operation.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.old.Refactorer.*;
 import il.org.spartan.spartanizer.dispatch.*;

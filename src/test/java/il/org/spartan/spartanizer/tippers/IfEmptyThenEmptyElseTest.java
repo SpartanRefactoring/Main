@@ -5,10 +5,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
 import org.junit.*;
 import org.junit.runners.*;
 

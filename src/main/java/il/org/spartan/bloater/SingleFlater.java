@@ -3,18 +3,6 @@ package il.org.spartan.bloater;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.ui.javaeditor.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.jface.text.source.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.swt.custom.*;
-import org.eclipse.text.edits.*;
-import org.eclipse.ui.texteditor.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.Matcher.*;

@@ -7,8 +7,6 @@ import java.io.*;
 import java.lang.annotation.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Annotation;
 import org.junit.*;
 import org.junit.runners.*;
 

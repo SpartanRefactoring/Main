@@ -1,12 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.lisp.*;
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-
 import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 

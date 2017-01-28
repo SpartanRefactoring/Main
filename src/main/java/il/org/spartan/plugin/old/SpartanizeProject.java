@@ -6,12 +6,6 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.progress.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -57,6 +51,7 @@ public final class SpartanizeProject extends BaseHandler {
     return $.get();
   }
 
+  @Override
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();

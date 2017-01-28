@@ -2,10 +2,6 @@ package il.org.spartan.spartanizer.tipping;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 /** Used to replace a node with multiple replacements, taking its place in the

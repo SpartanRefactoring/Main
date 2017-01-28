@@ -4,8 +4,6 @@ import static il.org.spartan.idiomatic.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 
 /** A class to search in the ancestry line of a given node.

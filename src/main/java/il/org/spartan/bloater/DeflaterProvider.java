@@ -3,8 +3,6 @@ package il.org.spartan.bloater;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;

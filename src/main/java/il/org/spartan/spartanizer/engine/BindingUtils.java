@@ -2,9 +2,6 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.idiomatic.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.corext.dom.*;
-
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */

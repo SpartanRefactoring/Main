@@ -7,7 +7,6 @@ import static il.org.spartan.azzert.*;
 
 import java.io.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;

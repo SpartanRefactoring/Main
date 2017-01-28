@@ -5,7 +5,6 @@ package il.org.spartan.spartanizer.ast.engine;
 
 import static il.org.spartan.spartanizer.engine.into.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 

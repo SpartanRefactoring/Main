@@ -2,8 +2,6 @@ package il.org.spartan.plugin;
 
 import java.util.*;
 
-import org.eclipse.jface.text.*;
-
 /** An abstract selection, containing files and possible text selection.
  * @author Ori Roth
  * @since 2.6 */

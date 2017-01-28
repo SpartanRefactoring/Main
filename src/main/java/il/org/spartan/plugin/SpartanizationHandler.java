@@ -7,13 +7,6 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;

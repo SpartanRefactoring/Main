@@ -3,8 +3,6 @@ package il.org.spartan.plugin.preferences;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-import org.eclipse.jface.preference.*;
-
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;

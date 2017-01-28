@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.tide.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 

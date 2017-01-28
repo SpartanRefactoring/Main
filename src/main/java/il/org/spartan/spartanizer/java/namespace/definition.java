@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
@@ -17,45 +15,53 @@ import il.org.spartan.spartanizer.utils.*;
 public interface definition {
   enum Kind {
     annotation {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     annotationMemberDeclaration {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(¢)));
       }
     },
     catch¢ {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final CatchClause $ = az.catchClause(parent(parent(¢)));
         return as.list($.getBody());
       }
     },
     class¢ {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     enum¢ {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     enumConstant {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(¢)));
       }
     },
     field {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(parent(¢))));
       }
     },
     for¢ {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final List<ASTNode> $ = new ArrayList<>();
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
@@ -73,18 +79,21 @@ public interface definition {
       }
     },
     foreach {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final EnhancedForStatement $ = az.enhancedFor(parent(parent(¢)));
         return as.list($.getBody());
       }
     },
     interface¢ {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     lambda {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
         final SingleVariableDeclaration d = az.singleVariableDeclaration(parent(n));
         assert d != null;
@@ -94,6 +103,7 @@ public interface definition {
       }
     },
     local {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final List<ASTNode> $ = new ArrayList<>();
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
@@ -115,17 +125,20 @@ public interface definition {
       }
     },
     method {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(¢)));
       }
     },
     parameter {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final MethodDeclaration $ = az.methodDeclaration(parent(parent(¢)));
         return $.getBody() == null ? new ArrayList<>() : as.list($.getBody());
       }
     },
     try¢ {
+      @Override
       @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));

@@ -3,9 +3,12 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 import java.util.*;
 
+<<<<<<< HEAD
+=======
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.namespace.*;

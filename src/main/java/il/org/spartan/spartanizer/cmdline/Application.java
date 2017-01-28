@@ -3,12 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.equinox.app.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.old.*;

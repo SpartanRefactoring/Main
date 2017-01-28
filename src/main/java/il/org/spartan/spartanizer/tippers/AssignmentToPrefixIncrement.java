@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;

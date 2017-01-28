@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.collateral;
 
-import org.eclipse.core.commands.*;
-
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 

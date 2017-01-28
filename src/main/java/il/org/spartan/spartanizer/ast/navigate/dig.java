@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2016-10-07 */

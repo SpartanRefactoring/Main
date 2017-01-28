@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -127,10 +123,6 @@ public enum precedence {
 
   private static int of(final InfixExpression ¢) {
     return of(¢.getOperator());
-  }
-
-  private static int of(final String key) {
-    return !of.containsKey(key) ? UNDEFINED : of.get(key);
   }
 
   /** *An empty <code><b>enum</b></code> for fluent programming. The name should

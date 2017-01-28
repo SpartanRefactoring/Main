@@ -1,12 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.Utils.*;
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
 import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;

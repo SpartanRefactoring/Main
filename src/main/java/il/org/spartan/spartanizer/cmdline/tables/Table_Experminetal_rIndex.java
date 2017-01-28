@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;

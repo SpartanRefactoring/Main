@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.research;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
@@ -29,6 +25,7 @@ public enum TipperFactory {
       final Option[] os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
+      @Override
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -37,10 +34,12 @@ public enum TipperFactory {
         };
       }
 
+      @Override
       @Override protected boolean prerequisite(final Block ¢) {
         return $.blockMatches(¢);
       }
 
+      @Override
       @Override public String description(@SuppressWarnings("unused") final Block __) {
         return description;
       }

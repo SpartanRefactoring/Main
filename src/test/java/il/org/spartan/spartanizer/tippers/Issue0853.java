@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** TODO: Dan Abramovich please add a description

@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

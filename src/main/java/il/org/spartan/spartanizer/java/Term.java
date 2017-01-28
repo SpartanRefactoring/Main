@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An additive term, which might be either negative or positive

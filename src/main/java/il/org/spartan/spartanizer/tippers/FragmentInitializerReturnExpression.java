@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -15,6 +11,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnExpression extends $FragementAndStatement//
     implements TipperCategory.Inlining {
+  @Override
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }

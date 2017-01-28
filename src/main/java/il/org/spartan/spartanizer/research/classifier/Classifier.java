@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.classifier;
 import java.util.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.patterns.*;
 import il.org.spartan.spartanizer.research.nanos.*;

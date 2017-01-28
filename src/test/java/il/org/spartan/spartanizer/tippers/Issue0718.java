@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;

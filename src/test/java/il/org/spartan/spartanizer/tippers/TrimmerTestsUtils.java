@@ -8,9 +8,6 @@ import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;

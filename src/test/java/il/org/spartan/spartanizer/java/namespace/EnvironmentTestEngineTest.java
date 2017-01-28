@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.util.*;
 import java.util.Map.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
 import org.junit.*;
 import org.junit.runners.*;
 

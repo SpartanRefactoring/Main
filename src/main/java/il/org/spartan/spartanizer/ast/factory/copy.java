@@ -1,12 +1,7 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
 import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

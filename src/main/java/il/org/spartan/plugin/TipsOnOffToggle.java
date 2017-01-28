@@ -2,10 +2,6 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.core.commands.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 

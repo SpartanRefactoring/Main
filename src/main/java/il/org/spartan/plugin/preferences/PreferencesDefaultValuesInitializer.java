@@ -4,9 +4,6 @@ import static il.org.spartan.plugin.preferences.PreferencesResources.TipperGroup
 
 import java.util.*;
 
-import org.eclipse.core.runtime.preferences.*;
-import org.eclipse.jface.preference.*;
-
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 
 /** This class is called by Eclipse when the plugin is first loaded and has no

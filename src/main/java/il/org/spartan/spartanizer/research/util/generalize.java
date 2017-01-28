@@ -2,11 +2,6 @@ package il.org.spartan.spartanizer.research.util;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;

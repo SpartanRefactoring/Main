@@ -5,7 +5,6 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;

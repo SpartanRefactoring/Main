@@ -2,10 +2,14 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 
 import java.util.*;
 
+<<<<<<< HEAD
+import il.org.spartan.spartanizer.utils.*;
+=======
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
 
 /** Collects statistics of loops, including hits by nano patterns.
  * @author orimarco <marcovitch.ori@gmail.com>
@@ -19,12 +23,24 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
     super.clear();
   }
 
+<<<<<<< HEAD
+  public LoopsStatistics log(final ASTNode ¢) {
+    ++total;
+    if (iz.definiteLoop(¢))
+      ++definites;
+    return log(Integer.valueOf(nodeType(¢)));
+  }
+
+  public int whileLoops() {
+    return nodeStatistics(ASTNode.WHILE_STATEMENT);
+=======
   public int total() {
     return loopTypes.stream().mapToInt(λ -> total(Unbox.it(λ))).sum();
   }
 
   public int covered() {
     return loopTypes.stream().mapToInt(λ -> covered(Unbox.it(λ))).sum();
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
   }
 
   public double coverage() {

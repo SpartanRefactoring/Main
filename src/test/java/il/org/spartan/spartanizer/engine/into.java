@@ -5,8 +5,6 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;

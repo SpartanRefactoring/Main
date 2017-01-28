@@ -3,10 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
@@ -103,16 +99,6 @@ enum CollectMetrics {
     output.put(prefix + "Literacy", metrics.literacy(¢));
     output.put(prefix + "Imports", count.imports(¢));
     output.put(prefix + "No Imports", count.noimports(¢));
-  }
-
-  private static void reportTips(final List<Tip> ¢) {
-    for (final Tip $ : ¢) {
-      Tips.put("description", $.description);
-      Tips.put("from", $.from);
-      Tips.put("to", $.to);
-      Tips.put("linenumber", $.lineNumber);
-      Tips.nl();
-    }
   }
 
   private static CompilationUnit spartanize(final String javaCode) {

@@ -7,9 +7,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 public class TrackerSelection extends Selection {

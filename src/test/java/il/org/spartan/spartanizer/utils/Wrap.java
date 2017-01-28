@@ -2,9 +2,6 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -70,12 +67,6 @@ public enum Wrap {
   Wrap(final String before, final String after) {
     this.before = before;
     this.after = after;
-  }
-
-  private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap), $ = essence(inner), essence2 = essence(off);
-    assert essence2 != null;
-    return essence2.contains($);
   }
 
   /** Wrap a given code fragment, and then parse it, converting it into a

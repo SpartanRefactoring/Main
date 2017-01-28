@@ -5,10 +5,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -25,10 +21,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerStatementTerminatingScope extends $FragementAndStatement //
     implements TipperCategory.Inlining {
+  @Override
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
+  @Override
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)

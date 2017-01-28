@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;

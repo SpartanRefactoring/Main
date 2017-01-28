@@ -7,8 +7,6 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.junit.*;
 
 import il.org.spartan.*;

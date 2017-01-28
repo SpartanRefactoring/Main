@@ -5,9 +5,15 @@ import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*
 import java.lang.reflect.*;
 import java.util.*;
 
+<<<<<<< HEAD
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
+=======
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;

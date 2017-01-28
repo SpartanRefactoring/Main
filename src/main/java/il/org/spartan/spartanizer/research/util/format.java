@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.research.util;
 
 import java.text.*;
 
+<<<<<<< HEAD
+/** TODO: Ori Marcovitch please add a description
+=======
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
@@ -10,6 +13,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Fluet API library for formatting things
+>>>>>>> 5b347591b1b436bc5a80ab0375a7d706a2cb12b5
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public enum format {

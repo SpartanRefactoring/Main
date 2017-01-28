@@ -4,8 +4,6 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
