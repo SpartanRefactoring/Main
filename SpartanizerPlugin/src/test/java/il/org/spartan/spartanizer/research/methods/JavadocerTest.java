@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -19,7 +20,7 @@ public abstract class JavadocerTest {
   }
 
   private static String spartanized(final String ¢) {
-    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
+    return spartanizer.fixedPoint(makeAST1.COMPILATION_UNIT.from(¢) + "");
   }
 
   protected static void setNano(final JavadocMarkerNanoPattern ¢) {

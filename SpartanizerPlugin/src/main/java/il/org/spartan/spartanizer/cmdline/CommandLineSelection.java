@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -86,7 +87,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     @SuppressWarnings("synthetic-access") public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(
         final String path) {
       return new CommandLineSelection(az.stream(new FilesGenerator(".java").from(path)).filter(λ -> !system.isTestFile(λ))
-          .map(λ -> WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(λ), λ.getName(), λ.getAbsolutePath()))
+          .map(λ -> WrappedCompilationUnit.of((CompilationUnit) makeAST1.COMPILATION_UNIT.from(λ), λ.getName(), λ.getAbsolutePath()))
           .collect(Collectors.toList()), "selection");
     }
 
@@ -104,7 +105,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
 
     public static void getCompilationUnit(final File f, final List<CompilationUnit> $) {
       try {
-        $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
+        $.add((CompilationUnit) makeAST1.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {
         monitor.log(¢);
         ¢.printStackTrace();
@@ -116,7 +117,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     System.err.println("Loading selection ...");
     cuList.addAll(az.stream(new FilesGenerator(".java").from(presentSourcePath))
-        .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(Collectors.toList()));
+        .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST1.COMPILATION_UNIT.from(λ)))).collect(Collectors.toList()));
     // compilationUnits = cuList;
     inner = cuList;
     System.err.println("Loading selection: done!");

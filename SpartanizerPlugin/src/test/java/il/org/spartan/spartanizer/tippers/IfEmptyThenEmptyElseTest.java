@@ -13,6 +13,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -48,7 +49,7 @@ public final class IfEmptyThenEmptyElseTest {
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
     final Document d = new Document(input);
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(d.get());
     final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -57,7 +58,7 @@ public final class IfEmptyThenEmptyElseTest {
     assert e != null;
     azzert.that(e.getChildren().length, greaterThan(0));
     e.apply(d);
-    azzert.isNull(findFirst.ifStatement(makeAST.COMPILATION_UNIT.from(d.get())));
+    azzert.isNull(findFirst.ifStatement(makeAST1.COMPILATION_UNIT.from(d.get())));
   }
 
   @Test public void scopeIncludes() {

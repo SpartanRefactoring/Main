@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -52,7 +53,7 @@ public enum Wrap {
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
       final String on = w.on(codeFragment);
-      final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
+      final ASTNode n = makeAST1.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
       $.append("\n* I = <").append(essence(on)).append(">;");
       $.append("\n* O = <").append(essence(n + "")).append(">;");
@@ -84,7 +85,7 @@ public enum Wrap {
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
+    return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(on(codeFragment));
   }
 
   /** Wrap a given code fragment, and converts it into a {@link Document}

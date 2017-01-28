@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -137,7 +138,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   private static AbstractTypeDeclaration getType(final File x) {
     return az.abstractTypeDeclaration(
-        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
+        step.types(az.compilationUnit(makeAST1.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
 
   private static String getProperty(final String property) {
