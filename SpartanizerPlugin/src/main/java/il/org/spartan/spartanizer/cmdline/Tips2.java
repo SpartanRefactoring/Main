@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
-import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -30,7 +29,7 @@ public final class Tips2 {
   private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
     static final long serialVersionUID = -8921699276699040030L;
     {
-      as.list(all).forEach(λ -> put(λ.getName(), λ));
+      Arrays.asList(all).forEach(λ -> put(λ.getName(), λ));
     }
   };
 
@@ -53,7 +52,7 @@ public final class Tips2 {
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends AbstractGUIApplicator> T findInstance(final Class<? extends T> ¢) {
-    return Stream.of(all).filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
+    return Arrays.asList(all).stream().filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
   }
 
   /** @param name the name of the applicator
@@ -68,6 +67,6 @@ public final class Tips2 {
    * eclipse. */
   public static void reset() {
     map.clear();
-    as.list(all).forEach(λ -> map.put(λ.getName(), λ));
+    Arrays.asList(all).forEach(λ -> map.put(λ.getName(), λ));
   }
 }

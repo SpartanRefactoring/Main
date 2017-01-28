@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.lisp.first;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 import java.util.*;

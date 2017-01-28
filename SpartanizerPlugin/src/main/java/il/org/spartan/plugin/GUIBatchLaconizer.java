@@ -1,5 +1,6 @@
 package il.org.spartan.plugin;
 
+import il.org.spartan.spartanizer.ast.navigate.wizard;
 import java.util.*;
 import java.util.function.*;
 
@@ -7,8 +8,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -82,7 +81,7 @@ public class GUIBatchLaconizer extends Applicator {
    * @return <code><b>this</b></code> applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
     listener(λ -> {
-      as.list(λ).forEach(System.out::print);
+      Arrays.asList(λ).forEach(System.out::print);
       System.out.println();
     });
     return this;

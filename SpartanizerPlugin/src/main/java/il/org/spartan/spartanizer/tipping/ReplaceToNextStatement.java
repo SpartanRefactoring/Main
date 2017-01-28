@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
-public abstract class $ReplaceToNextStatement<N extends ASTNode> extends $CarefulTipper<N> {
+public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   @Override public boolean prerequisite(final N current) {
     final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;
@@ -26,7 +26,7 @@ public abstract class $ReplaceToNextStatement<N extends ASTNode> extends $Carefu
       exclude.exclude($);
     return new Tip(description(n), n, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        $ReplaceToNextStatement.this.go(r, n, $, g);
+        ReplaceToNextStatement.this.go(r, n, $, g);
       }
     };
   }

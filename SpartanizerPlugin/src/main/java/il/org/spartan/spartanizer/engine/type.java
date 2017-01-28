@@ -596,7 +596,7 @@ public interface type {
 
       Uncertain(final String description, final Primitive... ps) {
         this.description = description;
-        as.list(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(λ -> !options.contains(λ)).collect(Collectors.toList())));
+        Arrays.asList(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(λ -> !options.contains(λ)).collect(Collectors.toList())));
       }
 
       @Override public boolean canB(final Certain ¢) {

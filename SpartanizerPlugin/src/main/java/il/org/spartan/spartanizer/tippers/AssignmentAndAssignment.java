@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -32,10 +31,10 @@ import il.org.spartan.spartanizer.tipping.*;
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
-public final class AssignmentAndAssignment extends $ReplaceToNextStatement<Assignment>//
+public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
   private static Expression extractRight(final Assignment ¢) {
-    final Expression $ = core(from(¢));
+    final Expression $ = extract.core(from(¢));
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
  * multiple nodes (or a single node).
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
-public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends $CarefulTipper<N> {
+public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   public abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
 
   @Override public boolean prerequisite(final N ¢) {

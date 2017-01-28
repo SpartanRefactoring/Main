@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -48,7 +49,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       if (defaultDir) {
         // spartanizeDir(".");
         new BatchSpartanizer(".", "current-working-directory").fire();
-        as.list(args).forEach(λ -> new BatchSpartanizer(λ).fire());
+        Arrays.asList(args).forEach(λ -> new BatchSpartanizer(λ).fire());
       }
     }
   }
