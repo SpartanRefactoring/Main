@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
@@ -9,6 +10,7 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -293,7 +295,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   static boolean conditionalExpression(final Expression... xs) {
-    return as.list(xs).stream().anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
+    return Stream.of(xs).anyMatch(λ -> nodeTypeEquals(core(λ), CONDITIONAL_EXPRESSION));
   }
 
   /** Check whether an expression is a "conditional or" (||)
@@ -321,7 +323,7 @@ public interface iz {
    *         "specific" */
   static boolean constant(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
-        || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
+        || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(core(((PrefixExpression) ¢).getOperand()));
   }
 
   static boolean constructor(final ASTNode ¢) {

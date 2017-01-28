@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -100,7 +99,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
-    return as.list(kws).stream().filter(c::contains).collect(Collectors.toSet());
+    return Stream.of(kws).filter(c::contains).collect(Collectors.toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {

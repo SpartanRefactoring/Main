@@ -60,7 +60,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
   }
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    // TODO Dor: use extract.core
+    // TODO Dor: use core
     return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from) ? FragmentToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;

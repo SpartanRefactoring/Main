@@ -9,6 +9,7 @@ import static il.org.spartan.tide.*;
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -70,7 +71,7 @@ public class ReportGenerator implements ConfigurableReport {
     }
 
     @SuppressWarnings({ "unchecked" }) public static NamedFunction<ASTNode> find(final String ¢) {
-      return as.list(ReportGenerator.Util.functions("")).stream().filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
+      return Stream.of(ReportGenerator.Util.functions("")).filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
     }
   }
 

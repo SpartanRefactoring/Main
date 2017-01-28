@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
+import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -42,7 +43,7 @@ public final class Tips {
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
   public static <T extends AbstractGUIApplicator> T findInstance(final Class<? extends T> ¢) {
-    return as.list(all).stream().filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
+    return Stream.of(all).filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
   }
 
   /** @param name the name of the applicator

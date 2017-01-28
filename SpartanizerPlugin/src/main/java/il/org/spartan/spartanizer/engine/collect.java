@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.Utils.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -110,7 +111,7 @@ public enum collect {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
-        as.list(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
+        Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
         return $;
       }
     };
@@ -124,7 +125,7 @@ public enum collect {
 
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
-        as.list(ns).stream().filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
+        Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
         return $;
       }
     };
