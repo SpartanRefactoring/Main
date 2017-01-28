@@ -34,7 +34,6 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
 
   @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {
     return doubleParenthesis(¢)//
-        || expressionStatement(¢)//
         || fluental(¢);
   }
 
@@ -42,10 +41,6 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
     return iz.parenthesizedExpression(parent(¢))//
         || iz.methodInvocation(parent(¢))//
             && arguments(az.methodInvocation(parent(¢))).contains(¢);
-  }
-
-  private static boolean expressionStatement(final ParenthesizedExpression ¢) {
-    return iz.expressionStatement(parent(¢));
   }
 
   private static boolean fluental(final ParenthesizedExpression ¢) {
