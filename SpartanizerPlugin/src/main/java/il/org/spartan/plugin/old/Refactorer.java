@@ -30,7 +30,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   enum attribute {
     EVENT, MARKER, CU, APPLICATOR, PASSES, CHANGES, TIPS_COMMITED, TIPS_BEFORE, TIPS_AFTER, TOTAL_TIPS, TIPPER, UNKNOWN
   }
-  // public static final String UNKNOWN = "???";
+  // public static final String unknown = "???";
 
   /** @return <code><b>true</b></code> <em>iff</em> the refactorer is a
    *         handler */

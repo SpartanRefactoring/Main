@@ -398,7 +398,7 @@ public final class Namespace implements Environment {
     for (final String key : flat.keySet())
       if (isVariable(key) && !in(key, namer.standardNames))
         return false;
-    return children.stream().allMatch(λ -> λ.allowsCurrentRecursive());
+    return children.stream().allMatch(Namespace::allowsCurrentRecursive);
   }
 
   private static boolean isVariable(final String key) {

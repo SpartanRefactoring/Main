@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** An {@link IApplication} extension entry point, allowing execution of this
+/** An {@link IApplication} extension entry point, allowing executions of this
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
@@ -269,7 +269,7 @@ final class Application implements IApplication {
   }
 
   /** Data structure designed to hold and compute information about a single
-   * file, in order to produce statistics when completed execution */
+   * file, in order to produce statistics when completed executions */
   private class FileStats {
     final File file;
     final int linesBefore;
