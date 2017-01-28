@@ -402,9 +402,9 @@ public interface idiomatic {
    * @since 2016 */
   interface Trigger {
     /** @param <T> JD
-     * @param s JD
+     * @param t JD
      * @return */
-    <T> T eval(Supplier<T> s);
+    <T> T eval(Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD
