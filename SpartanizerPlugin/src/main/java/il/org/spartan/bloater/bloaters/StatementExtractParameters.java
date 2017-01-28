@@ -31,9 +31,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends $CarefulTipper<S>//
     implements TipperCategory.Bloater {
-  protected static final List<Integer> COMPLEX_TYPES = as.list(ASTNode.CLASS_INSTANCE_CREATION,
-      ASTNode.METHOD_INVOCATION, ASTNode.INFIX_EXPRESSION, ASTNode.ASSIGNMENT,
-      ASTNode.CONDITIONAL_EXPRESSION, ASTNode.LAMBDA_EXPRESSION);
+  protected static final List<Integer> COMPLEX_TYPES = as.list(ASTNode.CLASS_INSTANCE_CREATION, ASTNode.METHOD_INVOCATION, ASTNode.INFIX_EXPRESSION,
+      ASTNode.ASSIGNMENT, ASTNode.CONDITIONAL_EXPRESSION, ASTNode.LAMBDA_EXPRESSION);
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";

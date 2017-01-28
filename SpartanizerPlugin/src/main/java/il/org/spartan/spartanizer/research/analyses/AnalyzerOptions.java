@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.analyses;
+
 import java.util.*;
 
 import il.org.spartan.*;

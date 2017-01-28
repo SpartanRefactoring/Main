@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
+
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import static il.org.spartan.Utils.*;

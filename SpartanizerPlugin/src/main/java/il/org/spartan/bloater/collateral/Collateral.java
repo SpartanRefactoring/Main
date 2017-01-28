@@ -1,4 +1,5 @@
 package il.org.spartan.bloater.collateral;
+
 import il.org.spartan.*;
 
 /** Implementation of the collateral function: ₡. An identical copy of this
