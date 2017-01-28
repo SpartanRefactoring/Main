@@ -22,7 +22,7 @@ public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);
   private final Namespace functionF = fixtureClass.getChild(1);
-  private final Namespace classX = fixtureClass.getChild(2);
+  private final Namespace clazz = fixtureClass.getChild(2);
 
   @Test public void test1a() {
     azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5)"))))), is("i4"));
@@ -41,7 +41,7 @@ public class Issue1044 extends MetaFixture {
   }
 
   @Test public void test3a() {
-    azzert.that(classX.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new X();"))))), is("x3"));
+    azzert.that(clazz.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new X();"))))), is("x3"));
   }
 }
 
