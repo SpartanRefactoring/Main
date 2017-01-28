@@ -61,7 +61,7 @@ public interface iz {
   }
 
   int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
-  List<String> defaultValues = Arrays.asList("null", "0", "false", "0.", "0L");
+  List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
 
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
@@ -88,7 +88,7 @@ public interface iz {
   }
 
   static boolean anyOperator(final ASTNode ¢) {
-    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+    return as.list(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
   }
 
@@ -293,7 +293,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   static boolean conditionalExpression(final Expression... xs) {
-    return Arrays.asList(xs).stream().anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
+    return as.list(xs).stream().anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
   }
 
   /** Check whether an expression is a "conditional or" (||)

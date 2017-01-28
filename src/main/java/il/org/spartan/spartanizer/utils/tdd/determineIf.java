@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -65,7 +66,7 @@ public enum determineIf {
    * @param m
    * @return true iff the class contains only final fields */
   public static boolean isImmutable(final TypeDeclaration m) {
-    return m == null || Arrays.asList(fields(m)).stream().allMatch(f -> modifiers(f).stream().anyMatch(λ -> ((Modifier) λ).isFinal()));
+    return m == null || as.list(fields(m)).stream().allMatch(f -> modifiers(f).stream().anyMatch(λ -> ((Modifier) λ).isFinal()));
   }
 
   // For you to implement! Let's TDD and get it on!

@@ -6,8 +6,6 @@ package il.org.spartan.spartanizer.ast.engine;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
-import java.util.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -47,39 +45,39 @@ public final class findTest {
   }
 
   @Test public void i() {
-    azzert.that(singleAtomicDifference(Arrays.asList(ast("bools(a == 0)"), ast("bools(a == 1)"), ast("bools(a == 2)"))), is("0"));
+    azzert.that(singleAtomicDifference(as.list(ast("bools(a == 0)"), ast("bools(a == 1)"), ast("bools(a == 2)"))), is("0"));
   }
 
   @Test public void j() {
-    azzert.isNull(singleAtomicDifference(Arrays.asList(ast("a + b"), ast("a * b"))));
+    azzert.isNull(singleAtomicDifference(as.list(ast("a + b"), ast("a * b"))));
   }
 
   @Test public void e0() {
-    azzert.that(singleExpressionDifference(Arrays.asList(ast("a + b"), ast("a * b"))) + "", is("a + b"));
+    azzert.that(singleExpressionDifference(as.list(ast("a + b"), ast("a * b"))) + "", is("a + b"));
   }
 
   @Test public void e1() {
-    azzert.isNull(singleExpressionDifference(Arrays.asList(ast("a + b"), ast("a + b"))));
+    azzert.isNull(singleExpressionDifference(as.list(ast("a + b"), ast("a + b"))));
   }
 
   @Test public void e2() {
-    azzert.that(singleExpressionDifference(Arrays.asList(ast("x == a + b"), ast("y == a + b"))) + "", is("x"));
+    azzert.that(singleExpressionDifference(as.list(ast("x == a + b"), ast("y == a + b"))) + "", is("x"));
   }
 
   @Test public void e3() {
-    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == a + b"))) + "", is("x(f,g + 1)"));
+    azzert.that(singleExpressionDifference(as.list(ast("x(f,g + 1) == a + b"), ast("y == a + b"))) + "", is("x(f,g + 1)"));
   }
 
   @Test public void e4() {
-    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) == a + b"), ast("y == x(f,g + 1) + b"))) + "", is("x(f,g + 1) == a + b"));
+    azzert.that(singleExpressionDifference(as.list(ast("x(f,g + 1) == a + b"), ast("y == x(f,g + 1) + b"))) + "", is("x(f,g + 1) == a + b"));
   }
 
   @Test public void e5() {
-    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g2 + 1) * 6 == a + b"))) + "",
+    azzert.that(singleExpressionDifference(as.list(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g2 + 1) * 6 == a + b"))) + "",
         is("x(f,g + 1) * 6 > a + b"));
   }
 
   @Test public void e6() {
-    azzert.that(singleExpressionDifference(Arrays.asList(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))) + "", is("f"));
+    azzert.that(singleExpressionDifference(as.list(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))) + "", is("f"));
   }
 }

@@ -4,8 +4,6 @@ import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -14,6 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -125,7 +124,7 @@ public enum sideEffects {
   }
 
   private static boolean free(final Expression... ¢) {
-    return Arrays.asList(¢).stream().allMatch(sideEffects::free);
+    return as.list(¢).stream().allMatch(sideEffects::free);
   }
 
   public static boolean free(final Iterable<? extends Expression> xs) {

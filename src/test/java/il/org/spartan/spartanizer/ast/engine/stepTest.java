@@ -39,7 +39,7 @@ public final class stepTest {
   }
 
   @Test public void importsNames2() {
-    final List<String> li = step.importDeclarationsNames(cu("import a.b.c; import static f.g.*; import java.util.*; class c{}"));
+    final List<String> li = step.importDeclarationsNames(cu("import a.b.c; import static f.g.*; import java.util.*; import il.org.spartan.as; class c{}"));
     azzert.that(li.size(), is(3));
     azzert.that(first(li), is("a.b.c"));
     azzert.that(li.get(1), is("static f.g.*"));
