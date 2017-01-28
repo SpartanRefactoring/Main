@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -26,7 +26,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
     implements TipperCategory.Unite {
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
-    $.setExpression(removeInitializersFromExpression(copy.of(extract.core(expression(¢))), s));
+    $.setExpression(removeInitializersFromExpression(copy.of(core(expression(¢))), s));
     setInitializers($, copy.of(s));
     return $;
   }
@@ -65,7 +65,7 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
 
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
-    final InfixExpression e = az.infixExpression(extract.core(from));
+    final InfixExpression e = az.infixExpression(core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? goInfix(e, s) : from;
   }
 

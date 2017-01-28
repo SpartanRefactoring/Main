@@ -1,8 +1,8 @@
 package il.org.spartan.bloater;
+import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 
 /** Classification of Expanders
@@ -75,7 +75,7 @@ public interface ExpanderCategory {
     }
 
     private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
-      return as.list(ExpanderGroup.values()).stream().filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
+      return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
     private final Class<? extends ExpanderCategory> clazz;

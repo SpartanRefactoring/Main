@@ -407,7 +407,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IPackageFragmentRoot r) {
       final Selection $ = empty();
       try {
-        as.list(r.getChildren()).stream().filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
+        Stream.of(r.getChildren()).filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT)
             .forEach(λ -> $.unify(by((IPackageFragment) λ)));
       } catch (final JavaModelException ¢) {
         monitor.log(¢);

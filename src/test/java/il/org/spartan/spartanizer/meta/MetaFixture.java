@@ -4,6 +4,7 @@ import static il.org.spartan.lisp.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -60,7 +61,7 @@ public abstract class MetaFixture {
 
   public static String ancestry(final ASTNode n) {
     final Int $ = new Int();
-    return as.list(ancestors.of(n)).stream().map(λ -> "\n\t + " + $.inner++ + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
+    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.inner++ + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
 

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -243,23 +243,23 @@ public enum step {
   }
 
   public static Expression expression(final CastExpression $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final ClassInstanceCreation $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final ConditionalExpression ¢) {
-    return ¢ == null ? null : extract.core(¢.getExpression());
+    return ¢ == null ? null : core(¢.getExpression());
   }
 
   public static Expression expression(final DoStatement $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final ExpressionStatement $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final FieldAccess ¢) {
@@ -271,7 +271,7 @@ public enum step {
   }
 
   public static Expression expression(final IfStatement $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final ParenthesizedExpression $) {
@@ -279,7 +279,7 @@ public enum step {
   }
 
   public static Expression expression(final ReturnStatement $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final SwitchCase ¢) {
@@ -291,7 +291,7 @@ public enum step {
   }
 
   public static Expression expression(final ThrowStatement $) {
-    return $ == null ? null : extract.core($.getExpression());
+    return $ == null ? null : core($.getExpression());
   }
 
   public static Expression expression(final WhileStatement ¢) {
@@ -604,11 +604,11 @@ public enum step {
   }
 
   public static Expression operand(final PostfixExpression ¢) {
-    return ¢ == null ? null : extract.core(¢.getOperand());
+    return ¢ == null ? null : core(¢.getOperand());
   }
 
   public static Expression operand(final PrefixExpression ¢) {
-    return ¢ == null ? null : extract.core(¢.getOperand());
+    return ¢ == null ? null : core(¢.getOperand());
   }
 
   public static Assignment.Operator operator(final Assignment ¢) {
@@ -665,7 +665,7 @@ public enum step {
   }
 
   public static Expression receiver(final MethodInvocation ¢) {
-    return ¢ == null ? null : extract.core(¢.getExpression());
+    return ¢ == null ? null : core(¢.getExpression());
   }
 
   /** Expose the list of resources contained in a {@link TryStatement}
