@@ -9,8 +9,8 @@ import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -87,7 +87,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   void collect(final String javaCode) {
-    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
   }
 
   void visit(final File f) {

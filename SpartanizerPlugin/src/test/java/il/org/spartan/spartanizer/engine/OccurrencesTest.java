@@ -11,6 +11,7 @@ import org.junit.runners.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -22,7 +23,7 @@ import il.org.spartan.spartanizer.utils.*;
 public final class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
-  private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+  private final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap);
   private final SimpleName a = findFirst.variableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclarationFragment) ab.fragments().get(1)).getName();

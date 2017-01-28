@@ -12,8 +12,8 @@ import org.junit.runners.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 
 /** Test for analyze.type
  * @author Ori Marcovitch
@@ -27,7 +27,7 @@ public class Issue0777 {
 
   private String addMethodToType(final String type, final String method) throws BadLocationException {
     final Document $ = new Document(type);
-    final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
+    final TypeDeclaration d = findFirst.typeDeclaration(makeAST1.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
     wizard.addMethodToType(d, az.methodDeclaration(ast(method)), r, null);
     r.rewriteAST($, null).apply($);

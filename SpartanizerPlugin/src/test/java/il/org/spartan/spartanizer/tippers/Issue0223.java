@@ -13,6 +13,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -180,7 +181,7 @@ public final class Issue0223 {
   @Test public void vanilla03() {
     final Operand a = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(a.get()).on(a.get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
     assert d != null;
@@ -193,7 +194,7 @@ public final class Issue0223 {
   @Test public void vanilla04() {
     final Operand o = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(o.get()).on(o.get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
     assert d != null;
@@ -211,7 +212,7 @@ public final class Issue0223 {
   @Test public void vanilla05() {
     final Operand o = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(o.get()).on(o.get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final Document d = new Document(wrap);
     assert d != null;
