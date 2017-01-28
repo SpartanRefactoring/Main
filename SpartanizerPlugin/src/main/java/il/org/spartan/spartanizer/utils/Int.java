@@ -54,4 +54,8 @@ public final class Int {
   @Override public String toString() {
     return inner + "";
   }
+
+  public int next() {
+    return ++inner;
+  }
 }
