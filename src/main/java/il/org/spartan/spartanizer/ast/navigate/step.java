@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -52,6 +53,10 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
+  public static Statement body(final DoStatement ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
   public static Statement body(final EnhancedForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
@@ -70,6 +75,15 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
+  public static Statement body(final Statement ¢) {
+    assert ¢ != null;
+    return ¢ instanceof WhileStatement ? ((WhileStatement) ¢).getBody()
+        : ¢ instanceof EnhancedForStatement ? ((EnhancedForStatement) ¢).getBody() //
+            : ¢ instanceof ForStatement ? ((ForStatement) ¢).getBody() //
+                : ¢ instanceof DoStatement ? ((DoStatement) ¢).getBody() //
+                    : null;
+  }
+
   /** @param ¢ JD
    * @return */
   private static Block body(final SynchronizedStatement ¢) {
@@ -81,10 +95,6 @@ public enum step {
   }
 
   public static Statement body(final WhileStatement ¢) {
-    return ¢ == null ? null : ¢.getBody();
-  }
-
-  public static Statement body(final DoStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -199,6 +209,10 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
     return ¢ == null ? null : ¢.enumConstants();
+  }
+
+  public static SingleVariableDeclaration exception(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getException();
   }
 
   /** @param n a node to extract an expression from
@@ -343,6 +357,10 @@ public enum step {
       x.addAll(y);
       return x;
     });
+  }
+
+  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getFields();
   }
 
   /** Expose the list of fragments in a {@link FieldDeclaration}
@@ -560,11 +578,27 @@ public enum step {
     return $;
   }
 
+  public static List<?> modifiers(final FieldDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
   public static SimpleName name(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static Name name(final ImportDeclaration ¢) {
+  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final EnumConstantDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -574,11 +608,19 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final ImportDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
   public static SimpleName name(final MethodInvocation ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -889,37 +931,5 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
-  }
-
-  public static SimpleName name(final QualifiedName ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static SingleVariableDeclaration exception(final CatchClause ¢) {
-    return ¢ == null ? null : ¢.getException();
-  }
-
-  public static SimpleName name(final EnumConstantDeclaration ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static List<?> modifiers(final MethodDeclaration ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static List<?> modifiers(final FieldDeclaration ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
-    return ¢ == null ? null : ¢.getFields();
   }
 }

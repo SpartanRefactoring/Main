@@ -131,7 +131,7 @@ public interface iz {
                         : null);
   }
 
-  /** Ceck if an ASTNode is an Array Acess
+  /** Ceck if an ASTNode is an Array Access
    * @param ¢ JD
    * @return */
   static boolean arrayAccess(final ASTNode ¢) {
