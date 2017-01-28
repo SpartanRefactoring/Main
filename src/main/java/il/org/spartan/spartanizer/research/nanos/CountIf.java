@@ -18,8 +18,8 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("for($T $N1 : $N2) if($X1) ++$N3;", "$N3 += $N2.stream().filter($N1 -> $X1).count();", description));
       add(patternTipper("for($T $N1 : $X1) if($X2) ++$N3;", "$N3 += ($X1).stream().filter($N1 -> $X2).count();", description));
+      add(patternTipper("for($T $N1 : $X1) ++$N3;", "$N3 += ($X1).stream().count();", description));
     }
   };
 
