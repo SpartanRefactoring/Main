@@ -508,9 +508,8 @@ public interface wizard {
 
   /** Parenthesize an expression (if necessary).
    * @param x JD
-   * @return a
-   *         {@link copy#duplicate(Expression)}
-   *         of the parameter wrapped in parenthesis. */
+   * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
+   *         parenthesis. */
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
