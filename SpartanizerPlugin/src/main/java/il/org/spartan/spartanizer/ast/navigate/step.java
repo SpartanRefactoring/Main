@@ -667,6 +667,10 @@ public enum step {
     return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
+  public static Expression expression(final MethodInvocation ¢) {
+    return ¢ == null ? null : ¢.getExpression();
+  }
+
   /** Expose the list of resources contained in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of resources contained in the argument */

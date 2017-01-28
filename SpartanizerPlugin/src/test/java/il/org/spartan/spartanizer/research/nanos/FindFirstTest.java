@@ -59,4 +59,22 @@ public class FindFirstTest {
         .using(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
         .gives("return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
   }
+
+  @Test public void i() {
+    trimmingOf("for(Object i : is) if(i.isN()) return i;")//
+        .using(EnhancedForStatement.class, new FindFirst())//
+        .gives("returnFirstIfAny(is).matches(i->i.isN());");
+  }
+
+  @Test public void j() {
+    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($);")//
+        .using(ForStatement.class, new ForLoop.FindFirst())//
+        .gives("returnFirstIfAny(from(¢).step(($)->$!=null).to(($)->$=p($))).matches($->iz.m($)).map(az.m($));");
+  }
+
+  @Test public void k() {
+    trimmingOf("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.gI();")//
+        .using(EnhancedForStatement.class, new FindFirst())//
+        .gives("returnFirstIfAny(EF).matches($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.gI());");
+  }
 }
