@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
 
 /** Like {@link AssertNotNull} but in the beginning of a method.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

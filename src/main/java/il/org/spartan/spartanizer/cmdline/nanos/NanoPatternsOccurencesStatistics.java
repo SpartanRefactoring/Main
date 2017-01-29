@@ -39,6 +39,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   }
 
   public HashMap<String, Int> nanoHistogram(final Integer type) {
+    putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
     return get(type).second;
   }
 
@@ -55,7 +56,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   }
 
   public double coverage(final int type) {
-    return format.perc(covered(type), total(type) + covered(type));
+    return format.perc(covered(type), total(type));
   }
 
   public void fillAbsents() {
