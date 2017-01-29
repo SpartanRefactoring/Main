@@ -31,8 +31,8 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return atomic(¢.getLabel());
   }
 
-  protected R map(final ConstructorInvocation i) {
-    return reduceExpressions(step.arguments(i));
+  protected R map(final ConstructorInvocation ¢) {
+    return reduceExpressions(step.arguments(¢));
   }
 
   protected R map(final ContinueStatement ¢) {
@@ -130,8 +130,8 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   protected R reduceExpressions(final List<Expression> xs) {
     R $ = reduce();
     if (xs != null)
-    for (final Expression ¢ : xs)
-      $ = reduce($, map(¢));
+      for (final Expression ¢ : xs)
+        $ = reduce($, map(¢));
     return $;
   }
 
@@ -150,12 +150,12 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
 
   protected R reduceResources(final TryStatement s) {
     R $ = reduce();
-    for (final VariableDeclarationExpression x : resources(s))
-      $ = reduce($, map(x));
+    for (final VariableDeclarationExpression ¢ : resources(s))
+      $ = reduce($, map(¢));
     return $;
   }
 
-  public R map( final VariableDeclarationExpression x) {
+  public R map(final VariableDeclarationExpression x) {
     R $ = reduce();
     for (final VariableDeclarationFragment ¢ : fragments(x))
       $ = reduce($, map(¢.getInitializer()));
@@ -180,15 +180,15 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return null;
   }
 
-  protected R map(final WhileStatement s) {
-    return reduce(map(s.getExpression()), map(s.getBody()));
+  protected R map(final WhileStatement ¢) {
+    return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 
   protected R atom() {
     return reduce();
   }
 
-  protected R atomic(final Expression... xs) {
-    return reduce(atom(), reduceExpressions(as.list(xs)));
+  protected R atomic(final Expression... ¢) {
+    return reduce(atom(), reduceExpressions(as.list(¢)));
   }
 }

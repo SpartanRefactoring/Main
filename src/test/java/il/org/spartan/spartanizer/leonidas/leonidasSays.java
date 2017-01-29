@@ -202,10 +202,10 @@ public enum leonidasSays {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
         return u;
-      case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.instanceOf(MethodDeclaration.class).in(u));
       case METHOD_LOOK_ALIKE:
         return findSecond(MethodDeclaration.class, u);
+      case EXPRESSION_LOOK_ALIKE:
+        return findSecond(Expression.class, findFirst.instanceOf(MethodDeclaration.class).in(u));
       case STATEMENTS_LOOK_ALIKE:
         return extractStatementIfOne(findFirst.instanceOf(Block.class).in(u));
       default:

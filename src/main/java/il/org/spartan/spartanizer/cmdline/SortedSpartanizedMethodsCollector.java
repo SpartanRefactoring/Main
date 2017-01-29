@@ -47,7 +47,8 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       methods.get(key).add(m);
-      final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
+          .in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
     } catch (final AssertionError __) {

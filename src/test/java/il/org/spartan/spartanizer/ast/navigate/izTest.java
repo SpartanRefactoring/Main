@@ -49,7 +49,8 @@ public final class izTest {
   @Test public void bodyDeclarationTest() {
     assert !iz.bodyDeclaration(null);
     assert !iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(wizard.ast("int x;")));
-    assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(wizard.ast("public enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }")));
+    assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class)
+        .in(wizard.ast("public enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }")));
     assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(wizard.ast("public static void main() { }")));
   }
 
