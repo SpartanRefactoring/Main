@@ -22,6 +22,10 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(ConstructorInvocation ¢) {
+    return ¢ == null ? null : ¢.arguments();
+  }
+
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
@@ -928,9 +932,4 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
   }
-  @SuppressWarnings("unchecked")
-  public static List<Expression> arguments(ConstructorInvocation i) {
-    return i == null ? null : i.arguments();
-  }
-  }
-
+}
