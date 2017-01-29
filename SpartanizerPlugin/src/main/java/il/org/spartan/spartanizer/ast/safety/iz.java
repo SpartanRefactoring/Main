@@ -409,8 +409,8 @@ public interface iz {
     return deterministic(¢.stream());
   }
 
-  static boolean deterministic(final Stream<Expression> xs) {
-    return xs.allMatch(iz::deterministic);
+  static boolean deterministic(final Stream<Expression> ¢) {
+    return ¢.allMatch(iz::deterministic);
   }
 
   static boolean doStatement(final ASTNode ¢) {

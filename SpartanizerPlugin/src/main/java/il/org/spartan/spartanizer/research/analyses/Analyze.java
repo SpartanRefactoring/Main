@@ -133,7 +133,8 @@ public enum Analyze {
         for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(Collectors.toList()))
           try {
             Count.before(¢);
-            final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+            final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
+                .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
           } catch (@SuppressWarnings("unused") final AssertionError __) {
@@ -204,8 +205,8 @@ public enum Analyze {
                 .collect(Collectors.toList())//
                 .forEach(¢ -> {
                   try {
-                    analyses.values().forEach(λ -> λ.logMethod(¢,
-                        findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
+                    analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
+                        .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
                   } catch (final AssertionError __) {
                     ___.unused(__);
                     //

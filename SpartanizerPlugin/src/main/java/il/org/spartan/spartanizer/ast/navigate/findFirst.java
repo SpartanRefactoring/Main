@@ -122,7 +122,7 @@ public interface findFirst {
   }
 
   interface In<N extends ASTNode> {
-    N in(final ASTNode n);
+    N in(ASTNode n);
   }
 
   static <N extends ASTNode> In<N> instanceOf(final Class<N> c) {

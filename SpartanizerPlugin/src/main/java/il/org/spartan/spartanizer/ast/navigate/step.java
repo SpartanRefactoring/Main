@@ -22,7 +22,7 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(ConstructorInvocation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final ConstructorInvocation ¢) {
     return ¢ == null ? null : ¢.arguments();
   }
 
@@ -122,7 +122,7 @@ public enum step {
     ConditionalExpression s = ¢;
     final List<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
-    for (; iz.conditionalExpression(elze(s));)
+    while (iz.conditionalExpression(elze(s)))
       $.add(s = az.conditionalExpression(elze(s)));
     return $;
   }
@@ -146,7 +146,7 @@ public enum step {
     IfStatement s = ¢;
     final List<IfStatement> $ = new ArrayList<>();
     $.add(s);
-    for (; iz.ifStatement(elze(s));)
+    while (iz.ifStatement(elze(s)))
       $.add(s = az.ifStatement(elze(s)));
     return $;
   }
@@ -483,7 +483,7 @@ public enum step {
     if (¢ == null)
       return null;
     ConditionalExpression $ = ¢;
-    for (; iz.conditionalExpression(elze($));)
+    while (iz.conditionalExpression(elze($)))
       $ = az.conditionalExpression(elze($));
     return elze($);
   }
@@ -496,7 +496,7 @@ public enum step {
     if (¢ == null)
       return null;
     IfStatement $ = ¢;
-    for (; iz.ifStatement(elze($));)
+    while (iz.ifStatement(elze($)))
       $ = az.ifStatement(elze($));
     return elze($);
   }

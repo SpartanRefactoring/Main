@@ -58,7 +58,8 @@ public class Table_Summary extends TableReusabilityIndices {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      final MethodDeclaration d = findFirst.instanceOf(MethodDeclaration.class).in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      final MethodDeclaration d = findFirst.instanceOf(MethodDeclaration.class)
+          .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
         npDistributionStatistics.logNode(d);
     } catch (final AssertionError __) {
