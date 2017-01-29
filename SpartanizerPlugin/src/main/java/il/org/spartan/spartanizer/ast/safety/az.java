@@ -63,7 +63,7 @@ public enum az {
     return !iz.anonymousClassDeclaration($) ? null : (AnonymousClassDeclaration) $;
   }
 
-  static ArrayAccess arrayAccess(Expression ¢) {
+  static ArrayAccess arrayAccess(final Expression ¢) {
     return !iz.nodeTypeEquals(¢, ARRAY_ACCESS) ? null : (ArrayAccess) ¢;
   }
 
@@ -180,7 +180,7 @@ public enum az {
     return !iz.nodeTypeEquals($, DO_STATEMENT) ? null : (DoStatement) $;
   }
 
-  public static EmptyStatement emptyStatement(Statement $) {
+  public static EmptyStatement emptyStatement(final Statement $) {
     return !iz.nodeTypeEquals($, EMPTY_STATEMENT) ? null : (EmptyStatement) $;
   }
 

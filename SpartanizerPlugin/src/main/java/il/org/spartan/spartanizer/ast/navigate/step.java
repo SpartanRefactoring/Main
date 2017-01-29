@@ -29,8 +29,7 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked")
-  public static List<Expression> arguments(SuperConstructorInvocation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperConstructorInvocation ¢) {
     return ¢.arguments();
   }
 

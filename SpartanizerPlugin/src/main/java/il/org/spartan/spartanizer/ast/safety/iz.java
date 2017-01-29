@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
+
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
@@ -338,7 +339,7 @@ public interface iz {
     return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
-  static boolean deterministic(MethodInvocation ¢) {
+  static boolean deterministic(final MethodInvocation ¢) {
     return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
         iz.deterministic(step.arguments(¢));
   }
@@ -364,51 +365,51 @@ public interface iz {
   }
 
   static boolean deterministic(final Expression ¢) {
-      if (haz.sideEffects(¢))
+    if (haz.sideEffects(¢))
+      return false;
+    switch (¢.getNodeType()) {
+      case PREFIX_EXPRESSION:
+        return deterministic(az.prefixExpression(¢));
+      case INFIX_EXPRESSION:
+        return deterministic(extract.allOperands(az.infixExpression(¢)));
+      case CONDITIONAL_EXPRESSION:
+        return deterministic(az.conditionalExpression(¢));
+      case INSTANCEOF_EXPRESSION:
+        return deterministic(step.expression(az.instanceofExpression(¢)));
+      case ARRAY_ACCESS:
+        return deterministic(az.arrayAccess(¢));
+      case PARENTHESIZED_EXPRESSION:
+        return deterministic(extract.core(¢));
+      case ASSIGNMENT:
+        return deterministic(az.assignment(¢));
+      case ARRAY_INITIALIZER:
+        return deterministic(az.arrayAccess(¢).getArray()) && iz.deterministic(step.expressions(az.arrayInitializer(¢)));
+      case ARRAY_CREATION:
+      case CLASS_INSTANCE_CREATION:
+      case POSTFIX_EXPRESSION:
         return false;
-      switch (¢.getNodeType()) {
-        case PREFIX_EXPRESSION:
-          return deterministic(az.prefixExpression(¢));
-        case INFIX_EXPRESSION:
-          return deterministic(extract.allOperands(az.infixExpression(¢)));
-        case CONDITIONAL_EXPRESSION: 
-          return deterministic(az.conditionalExpression(¢));
-        case INSTANCEOF_EXPRESSION:
-          return deterministic(step.expression(az.instanceofExpression(¢)));
-        case ARRAY_ACCESS:
-          return deterministic(az.arrayAccess(¢));
-        case PARENTHESIZED_EXPRESSION:
-          return deterministic(extract.core(¢));
-        case ASSIGNMENT:
-          return deterministic(az.assignment(¢));
-        case ARRAY_INITIALIZER:
-          return deterministic(az.arrayAccess(¢).getArray()) && iz.deterministic(step.expressions(az.arrayInitializer(¢)));
-        case ARRAY_CREATION:
-        case CLASS_INSTANCE_CREATION:
-        case POSTFIX_EXPRESSION:
-          return false;
-        case METHOD_INVOCATION: 
-          return deterministic(az.methodInvocation(¢));  
-        case SUPER_METHOD_INVOCATION: 
-          return deterministic(az.superMethodInvocation(¢));  
-           default:
-            return true;
+      case METHOD_INVOCATION:
+        return deterministic(az.methodInvocation(¢));
+      case SUPER_METHOD_INVOCATION:
+        return deterministic(az.superMethodInvocation(¢));
+      default:
+        return true;
     }
   }
 
-  static boolean deterministic(PrefixExpression ¢) {
+  static boolean deterministic(final PrefixExpression ¢) {
     return !in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE) && deterministic(¢.getOperand());
   }
 
-  static boolean deterministic(SuperMethodInvocation ¢) {
+  static boolean deterministic(final SuperMethodInvocation ¢) {
     return deterministic(arguments(¢));
   }
 
-  static boolean deterministic(List<Expression> ¢) {
+  static boolean deterministic(final List<Expression> ¢) {
     return deterministic(¢.stream());
   }
 
-  static boolean deterministic(Stream<Expression> xs) {
+  static boolean deterministic(final Stream<Expression> xs) {
     return xs.allMatch(iz::deterministic);
   }
 

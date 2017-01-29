@@ -687,10 +687,10 @@ public interface wizard {
   // last(step.statements(az.block(step.body(¢))));
   // }
 
-  static ASTNode commonAncestor(ASTNode n1, ASTNode n2) {
-    List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
+  static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
+    final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
     final int last = Math.min(ns1.size(), ns2.size()) - 1;
-    ASTNode $ = null;
+    final ASTNode $ = null;
     for (int ¢ = 0; ¢ <= last; ++¢)
       if (ns1.get(¢) != ns2.get(¢))
         break;
