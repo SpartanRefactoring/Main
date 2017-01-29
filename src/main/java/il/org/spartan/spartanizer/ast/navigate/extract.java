@@ -144,7 +144,7 @@ public enum extract {
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
   public static Statement containingStatement(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = $.getParent())
+    for (ASTNode $ = ¢; $ != null; $ = parent($))
       if (iz.statement($))
         return az.statement($);
     return null;
