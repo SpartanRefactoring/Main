@@ -47,7 +47,7 @@ public class Table_NanosDistribution extends FolderASTVisitor {
   @Override public boolean visit(final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
-        npStatistics.logNode(findFirst.methodDeclaration(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
+        npStatistics.logNode(findFirst.instanceOf(MethodDeclaration.class).in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final NullPointerException ¢) {

@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0294 {
   final Statement s = into.s("A a=new A();for (A b: g.f(a,true))sum+=b;");
-  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, s);
-  final BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class, s);
+  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class).in(s);
+  final BooleanLiteral truex = findFirst.instanceOf(BooleanLiteral.class).in(s);
 
   /** Correct way of trimming does not change */
   @Test public void a() {

@@ -17,13 +17,13 @@ public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
   @Override @SuppressWarnings("boxing") public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
     final int statements = metrics.countStatements(before);
     getSafe(beforeHistogram, statements).add(Int.valueOf(metric(before)));
-    getSafe(afterHistogram, statements).add(Int.valueOf(metric(findFirst.methodDeclaration(after))));
-    if (metric(before) >= metric(findFirst.methodDeclaration(after)))
+    getSafe(afterHistogram, statements).add(Int.valueOf(metric(findFirst.instanceOf(MethodDeclaration.class).in(after))));
+    if (metric(before) >= metric(findFirst.instanceOf(MethodDeclaration.class).in(after)))
       return;
-    System.out.println(metric(before) + " : " + metric(findFirst.methodDeclaration(after)));
+    System.out.println(metric(before) + " : " + metric(findFirst.instanceOf(MethodDeclaration.class).in(after)));
     System.out.println("****************OMG anomaly***************");
     System.out.println(before);
-    System.out.println(findFirst.methodDeclaration(after));
+    System.out.println(findFirst.instanceOf(MethodDeclaration.class).in(after));
     System.out.println("****************   Finito  ***************");
   }
 

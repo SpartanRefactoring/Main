@@ -94,6 +94,6 @@ public final class FuncsTest {
   }
 
   private Type t(final String codeFragment) {
-    return findFirst.type(s(codeFragment));
+    return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 }
