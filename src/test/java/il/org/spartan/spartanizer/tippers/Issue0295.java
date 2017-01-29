@@ -13,7 +13,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Unit test for {@link FragmentInitializerStatementTerminatingScope} for the
@@ -50,7 +49,7 @@ public class Issue0295 {
   }
 
   @Test public void A$e() {
-    assert !haz.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
+    assert !Coupling.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
   }
 
   @Test public void B08() {
@@ -68,25 +67,25 @@ public class Issue0295 {
   }
 
   @Test public void B10() {
-    assert !haz.unknownNumberOfEvaluations(one, forr);
+    assert !Coupling.unknownNumberOfEvaluations(one, forr);
   }
 
   @Test public void B11() {
     final ASTNode parent = one.getParent();
     assert parent != null;
-    assert !haz.unknownNumberOfEvaluations(parent, forr);
+    assert !Coupling.unknownNumberOfEvaluations(parent, forr);
   }
 
   @Test public void B12() {
     final ASTNode parent = one.getParent().getParent();
     assert parent != null;
-    assert !haz.unknownNumberOfEvaluations(parent, forr);
+    assert !Coupling.unknownNumberOfEvaluations(parent, forr);
   }
 
   @Test public void B13() {
     final ASTNode parent = one.getParent().getParent().getParent();
     assert parent != null;
-    assert !haz.unknownNumberOfEvaluations(parent, forr);
+    assert !Coupling.unknownNumberOfEvaluations(parent, forr);
   }
 
   @Test public void B14() {
@@ -96,7 +95,7 @@ public class Issue0295 {
   @Test public void B15() {
     final Expression es = expression(forr);
     assert es != null;
-    assert !haz.unknownNumberOfEvaluations(es, forr);
+    assert !Coupling.unknownNumberOfEvaluations(es, forr);
   }
 
   @Test public void B16() {

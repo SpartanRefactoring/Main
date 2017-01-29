@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @year 2016
  * @author Yossi Gil
  * @since Jan 5, 2017 */
-public enum NameGuess {
+public enum guessName {
   CLASS_CONSTANT, //
   CLASS_NAME, //
   SETTTER_METHOD, //
@@ -32,32 +32,32 @@ public enum NameGuess {
     return of(e) == CLASS_NAME;
   }
 
-  public static NameGuess of(final String nameOfSomething) {
+  public static guessName of(final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.length() == 0)
       return null;
     if (nameOfSomething.matches("[_]+")) //
-      return NameGuess.ANONYMOUS;
+      return guessName.ANONYMOUS;
     if (nameOfSomething.matches("[$]*")) //
-      return NameGuess.DOLLAR;
+      return guessName.DOLLAR;
     if (nameOfSomething.matches("¢*")) //
-      return NameGuess.CENT;
+      return guessName.CENT;
     if (nameOfSomething.matches("[_$¢]+")) //
-      return NameGuess.WEIRDO;
+      return guessName.WEIRDO;
     if (nameOfSomething.matches("[A-Z][_A-Z0-9]*")) //
-      return NameGuess.CLASS_CONSTANT;
+      return guessName.CLASS_CONSTANT;
     if (nameOfSomething.matches("is[A-Z][A-Z0-9_]*")) //
-      return NameGuess.IS_METHOD;
+      return guessName.IS_METHOD;
     if (nameOfSomething.matches("set[A-Z][a-zA-Z0-9]*")) //
-      return NameGuess.SETTTER_METHOD;
+      return guessName.SETTTER_METHOD;
     if (nameOfSomething.matches("get[A-Z][a-zA-Z0-9]*")) //
-      return NameGuess.GETTER_METHOD;
+      return guessName.GETTER_METHOD;
     if (nameOfSomething.matches("[$A-Z][a-zA-Z0-9]*")) //
-      return NameGuess.CLASS_NAME;
+      return guessName.CLASS_NAME;
     if (nameOfSomething.matches("[a-z_][_a-zA-Z0-9]*")) //
-      return NameGuess.METHOD_OR_VARIABLE;
+      return guessName.METHOD_OR_VARIABLE;
     assert fault.unreachable() : fault.dump() + //
         "\n nameOfSomething=" + nameOfSomething + //
         fault.done();
-    return NameGuess.UNKNOWN;
+    return guessName.UNKNOWN;
   }
 }

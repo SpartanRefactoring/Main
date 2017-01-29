@@ -139,12 +139,12 @@ public enum SpartanizationComparator {
         .put("binary", ¢.parameters().size() == 2) //
         .put("no-exceptions", ¢.thrownExceptionTypes().isEmpty())//
         .put("one-exception", ¢.thrownExceptionTypes().size() == 1) //
-        .put("getter", NameGuess.of(¢.getName() + "") == NameGuess.GETTER_METHOD) //
-        .put("setter", NameGuess.of(¢.getName() + "") == NameGuess.SETTTER_METHOD) //
-        .put("isMethod", NameGuess.of(¢.getName() + "") == NameGuess.IS_METHOD) //
-        .put("method", NameGuess.of(¢.getName() + "") == NameGuess.METHOD_OR_VARIABLE) //
-        .put("unknonwn", NameGuess.of(¢.getName() + "") == NameGuess.UNKNOWN) //
-        .put("weirdo", NameGuess.of(¢.getName() + "") == NameGuess.WEIRDO) //
+        .put("getter", guessName.of(¢.getName() + "") == guessName.GETTER_METHOD) //
+        .put("setter", guessName.of(¢.getName() + "") == guessName.SETTTER_METHOD) //
+        .put("isMethod", guessName.of(¢.getName() + "") == guessName.IS_METHOD) //
+        .put("method", guessName.of(¢.getName() + "") == guessName.METHOD_OR_VARIABLE) //
+        .put("unknonwn", guessName.of(¢.getName() + "") == guessName.UNKNOWN) //
+        .put("weirdo", guessName.of(¢.getName() + "") == guessName.WEIRDO) //
     ;
     writer.nl();
   }

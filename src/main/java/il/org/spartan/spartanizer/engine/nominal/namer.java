@@ -29,7 +29,7 @@ public interface namer {
       assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
       plurals = new GenericsCategory(//
           "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
-          "LinkedTreeSet", "List", "Queue", "Seuence", "Set", //
+          "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //
           "TreeSet", "Vector");
 
   static String[] components(final Name ¢) {
