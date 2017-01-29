@@ -508,9 +508,8 @@ public interface wizard {
 
   /** Parenthesize an expression (if necessary).
    * @param x JD
-   * @return a
-   *         {@link copy#duplicate(Expression)}
-   *         of the parameter wrapped in parenthesis. */
+   * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
+   *         parenthesis. */
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
@@ -687,4 +686,14 @@ public interface wizard {
   // return !iz.block(step.body(¢)) ? step.body(¢) :
   // last(step.statements(az.block(step.body(¢))));
   // }
+
+  static ASTNode commonAncestor(ASTNode n1, ASTNode n2) {
+    List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
+    final int last = Math.min(ns1.size(), ns2.size()) - 1;
+    ASTNode $ = null;
+    for (int ¢ = 0; ¢ <= last; ++¢)
+      if (ns1.get(¢) != ns2.get(¢))
+        break;
+    return $;
+  }
 }

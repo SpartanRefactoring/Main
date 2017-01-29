@@ -9,7 +9,6 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** Unit test for {@link FragmentInitializerStatementTerminatingScope} for the
  * case of inlining into the expression of an enhanced for
@@ -48,7 +47,7 @@ public class Issue0294 {
   }
 
   @Test public void e() {
-    assert !haz.unknownNumberOfEvaluations(truex, s);
+    assert !Coupling.unknownNumberOfEvaluations(truex, s);
   }
 
   @Test public void f() {

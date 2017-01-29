@@ -34,10 +34,9 @@ public abstract class MetaFixture {
   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
     final Vocabulary $ = new Vocabulary();
-    for (final BodyDeclaration bd : bodyDeclarations(cd)) {
-      assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
-      final MethodDeclaration md = (MethodDeclaration) bd;
-      $.put(name + "::" + mangle(md) + "", md);
+    for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
+      assert ¢ instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(¢), ¢);
+      $.put(name + "::" + mangle((MethodDeclaration) ¢) + "", (MethodDeclaration) ¢);
     }
     return $;
   }

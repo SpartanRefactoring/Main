@@ -103,7 +103,7 @@ public class Issue0239 {
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);
     assert use != null;
-    assert !haz.unknownNumberOfEvaluations(use, nextStatement);
+    assert !Coupling.unknownNumberOfEvaluations(use, nextStatement);
     assert !Inliner.never(name, nextStatement);
     assert $FragementAndStatement.removalSaving(f) > 0;
   }
