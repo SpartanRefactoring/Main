@@ -190,7 +190,7 @@ public enum leonidasSays {
         actual = d.get().substring(9, d.get().length() - 2);
         break;
       case STATEMENTS_LOOK_ALIKE:
-        actual = extractStatementIfOne(findFirst.statement(wizard.ast(d.get()))) + "";
+        actual = extractStatementIfOne(findFirst.instanceOf(Statement.class).in(wizard.ast(d.get()))) + "";
         break;
       default:
         azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
@@ -203,11 +203,11 @@ public enum leonidasSays {
       case OUTER_TYPE_LOOKALIKE:
         return u;
       case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.methodDeclaration(u));
+        return findSecond(Expression.class, findFirst.instanceOf(MethodDeclaration.class).in(u));
       case METHOD_LOOK_ALIKE:
         return findSecond(MethodDeclaration.class, u);
       case STATEMENTS_LOOK_ALIKE:
-        return extractStatementIfOne(findFirst.instanceOf(Block.class, u));
+        return extractStatementIfOne(findFirst.instanceOf(Block.class).in(u));
       default:
         return null;
     }

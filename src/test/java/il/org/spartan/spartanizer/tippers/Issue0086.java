@@ -36,7 +36,8 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void A$03_FindFocus() {
     A$02_CreateContext();
-    focus = findFirst.throwStatement(context);
+    final ASTNode ¢ = context;
+    focus = findFirst.instanceOf(ThrowStatement.class).in(¢);
     assert focus != null;
   }
 
@@ -53,7 +54,8 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$02findFirstThrow() {
     A$04_init();
-    azzert.that(findFirst.throwStatement(context), instanceOf(ThrowStatement.class));
+    final ASTNode ¢ = context;
+    azzert.that(findFirst.instanceOf(ThrowStatement.class).in(¢), instanceOf(ThrowStatement.class));
   }
 
   @Test public void B$03canSuggest() {

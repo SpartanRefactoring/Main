@@ -52,7 +52,7 @@ public class Table1To3Statements extends FolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      findFirst.methodDeclaration(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
       ___.unused(__);
     }

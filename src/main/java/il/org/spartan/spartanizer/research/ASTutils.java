@@ -18,11 +18,11 @@ public enum ASTutils {
       case OUTER_TYPE_LOOKALIKE:
         return u;
       case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.methodDeclaration(u));
+        return findSecond(Expression.class, findFirst.instanceOf(MethodDeclaration.class).in(u));
       case METHOD_LOOK_ALIKE:
-        return findFirst.instanceOf(MethodDeclaration.class, u);
+        return findFirst.instanceOf(MethodDeclaration.class).in(u);
       case STATEMENTS_LOOK_ALIKE:
-        return findFirst.instanceOf(Block.class, u);
+        return findFirst.instanceOf(Block.class).in(u);
       default:
     }
     return null;
