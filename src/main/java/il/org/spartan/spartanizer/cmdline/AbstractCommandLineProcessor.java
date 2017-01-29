@@ -9,7 +9,8 @@ import il.org.spartan.external.*;
 
 abstract class AbstractCommandLineProcessor {
   @External(alias = "i", value = "input folder") String inputFolder = ".";
-  @External(alias = "o", value = "output folder") String outputFolder = "/tmp";
+  @External(alias = "o", value = "output folder")
+  final String outputFolder = "/tmp";
   private String presentSourceName;
 
   public abstract void apply();

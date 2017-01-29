@@ -219,7 +219,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           return super.visit($);
         stop = true;
         final ASTNode p = $.getParent();
-        if (p == null || !(p instanceof Type))
+        if (!(p instanceof Type))
           return false;
         final Type pt = (Type) $.getParent();
         // TODO Ori Roth: more cases?
