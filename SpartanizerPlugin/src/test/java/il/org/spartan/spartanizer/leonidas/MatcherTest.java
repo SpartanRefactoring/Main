@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.leonidas;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.research.Matcher.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
@@ -38,31 +39,31 @@ public class MatcherTest {
   }
 
   @Test public void f() {
-    assert patternMatcher("return $N($A);", "").matches(findFirst.returnStatement(ast("return a();")));
+    assert patternMatcher("return $N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a();")));
   }
 
   @Test public void g() {
-    assert patternMatcher("return $N($A);", "").matches(findFirst.returnStatement(ast("return a(b);")));
+    assert patternMatcher("return $N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a(b);")));
   }
 
   @Test public void h() {
-    assert patternMatcher("return $N($A);", "").matches(findFirst.returnStatement(ast("return a(b,c,d());")));
+    assert patternMatcher("return $N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a(b,c,d());")));
   }
 
   @Test public void i() {
-    assert patternMatcher("return $N.$N2($A);", "").matches(findFirst.returnStatement(ast("return a.b();")));
+    assert patternMatcher("return $N.$N2($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a.b();")));
   }
 
   @Test public void j() {
-    assert patternMatcher("return $N2.$N($A);", "").matches(findFirst.returnStatement(ast("return a.b(c);")));
+    assert patternMatcher("return $N2.$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a.b(c);")));
   }
 
   @Test public void k() {
-    assert patternMatcher("return $N2.$N($A);", "").matches(findFirst.returnStatement(ast("return g.h.j.a.b(c(h,i,u));")));
+    assert patternMatcher("return $N2.$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return g.h.j.a.b(c(h,i,u));")));
   }
 
   @Test public void l() {
-    assert patternMatcher("return ($T)a;", "").matches(findFirst.returnStatement(ast("return (Object)a;")));
+    assert patternMatcher("return ($T)a;", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return (Object)a;")));
   }
 
   @Test public void m() {
@@ -70,11 +71,11 @@ public class MatcherTest {
   }
 
   @Test public void n() {
-    assert patternMatcher("--$N", "").matches(findFirst.prefixExpression(ast("--x")));
+    assert patternMatcher("--$N", "").matches(findFirst.instanceOf(PrefixExpression.class).in(ast("--x")));
   }
 
   @Test public void o() {
-    assert !patternMatcher("--$N", "").matches(findFirst.prefixExpression(ast("¢-=2")));
+    assert !patternMatcher("--$N", "").matches(findFirst.instanceOf(PrefixExpression.class).in(ast("¢-=2")));
   }
 
   @Test public void p() {
@@ -82,15 +83,15 @@ public class MatcherTest {
   }
 
   @Test public void q() {
-    assert patternMatcher("return $N1().$N($A);", "").matches(findFirst.returnStatement(ast("return a().b();")));
+    assert patternMatcher("return $N1().$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a().b();")));
   }
 
   @Test public void r() {
-    assert patternMatcher("return $N1().$N($A);", "").matches(findFirst.returnStatement(ast("return a().b(a,b,c());")));
+    assert patternMatcher("return $N1().$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a().b(a,b,c());")));
   }
 
   @Test public void s() {
-    assert !patternMatcher("return $N1().$N($A);", "").matches(findFirst.returnStatement(ast("return a(c).b();")));
+    assert !patternMatcher("return $N1().$N($A);", "").matches(findFirst.instanceOf(ReturnStatement.class).in(ast("return a(c).b();")));
   }
 
   @Test public void t() {

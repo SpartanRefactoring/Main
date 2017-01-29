@@ -21,7 +21,7 @@ public interface findFirst {
   /** @param ¢ JD
    * @return */
   static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
-    return instanceOf(AbstractTypeDeclaration.class, ¢);
+    return instanceOf(AbstractTypeDeclaration.class).in(¢);
   }
 
   /** Search for an {@link AssertStatement} in the tree rooted at an
@@ -30,19 +30,19 @@ public interface findFirst {
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode ¢) {
-    return instanceOf(AssertStatement.class, ¢);
+    return instanceOf(AssertStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static ASTNode assignment(final ASTNode ¢) {
-    return instanceOf(Assignment.class, ¢);
+    return instanceOf(Assignment.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static ASTNode castExpression(final ASTNode ¢) {
-    return instanceOf(CastExpression.class, ¢);
+    return instanceOf(CastExpression.class).in(¢);
   }
 
   /** Find the first {@link ConditionalExpression}, under a given node, as found
@@ -71,7 +71,7 @@ public interface findFirst {
   /** @param ¢ JD
    * @return */
   static ASTNode enhancedForStatement(final ASTNode ¢) {
-    return instanceOf(EnhancedForStatement.class, ¢);
+    return instanceOf(EnhancedForStatement.class).in(¢);
   }
 
   /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
@@ -79,7 +79,7 @@ public interface findFirst {
    * @return first {@link Expression} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static Expression expression(final ASTNode ¢) {
-    return findFirst.instanceOf(Expression.class, ¢);
+    return findFirst.instanceOf(Expression.class).in(¢);
   }
 
   /** Search for an {@link ForStatement} in the tree rooted at an
@@ -88,7 +88,7 @@ public interface findFirst {
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static ForStatement forStatement(final ASTNode ¢) {
-    return instanceOf(ForStatement.class, ¢);
+    return instanceOf(ForStatement.class).in(¢);
   }
 
   /** Search for an {@link IfStatement} in the tree rooted at an
@@ -97,7 +97,7 @@ public interface findFirst {
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static IfStatement ifStatement(final ASTNode ¢) {
-    return instanceOf(IfStatement.class, ¢);
+    return instanceOf(IfStatement.class).in(¢);
   }
 
   /** Find the first {@link InfixExpression} representing an addition, under a
@@ -121,86 +121,34 @@ public interface findFirst {
     return $.get();
   }
 
-  static <N extends ASTNode> N instanceOf(final Class<N> c, final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<N> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
+  interface In<N extends ASTNode> {
+    N in(final ASTNode n);
+  }
+
+  static <N extends ASTNode> In<N> instanceOf(final Class<N> c) {
+    return n -> {
+      if (n == null)
+        return null;
+      final Wrapper<N> $ = new Wrapper<>();
+      n.accept(new ASTVisitor() {
+        @Override public boolean preVisit2(final ASTNode ¢) {
+          if ($.get() != null)
+            return false;
+          if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
+            return true;
+          $.set((N) ¢);
+          assert $.get() == ¢;
           return false;
-        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
-          return true;
-        $.set((N) ¢);
-        assert $.get() == ¢;
-        return false;
-      }
-    });
-    return $.get();
-  }
-
-  /** Search for an {@link MethodDeclaration} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param pattern JD
-   * @return first {@link MethodDeclaration} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static MethodDeclaration methodDeclaration(final ASTNode ¢) {
-    return instanceOf(MethodDeclaration.class, ¢);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static ASTNode methodInvocation(final ASTNode ¢) {
-    return instanceOf(MethodInvocation.class, ¢);
-  }
-
-  /** Search for a {@link PrefixExpression} in the tree rooted at an
-   * {@link ASTNode}.
-   * @param pattern JD
-   * @return first {@link PrefixExpression} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
-  static PostfixExpression postfixExpression(final ASTNode ¢) {
-    return instanceOf(PostfixExpression.class, ¢);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static ASTNode prefixExpression(final ASTNode ¢) {
-    return instanceOf(PrefixExpression.class, ¢);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static ASTNode returnStatement(final ASTNode ¢) {
-    return instanceOf(ReturnStatement.class, ¢);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static Statement statement(final ASTNode ¢) {
-    return instanceOf(Statement.class, ¢);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static SuperMethodInvocation superMethodDeclaration(final ASTNode ¢) {
-    return instanceOf(SuperMethodInvocation.class, ¢);
-  }
-
-  static ThrowStatement throwStatement(final ASTNode ¢) {
-    return instanceOf(ThrowStatement.class, ¢);
-  }
-
-  /** @param ¢ JD
-   * @return */
-  static Type type(final ASTNode ¢) {
-    return instanceOf(Type.class, ¢);
+        }
+      });
+      return $.get();
+    };
   }
 
   /** @param ¢ JD
    * @return */
   static TypeDeclaration typeDeclaration(final ASTNode ¢) {
-    return instanceOf(TypeDeclaration.class, ¢);
+    return instanceOf(TypeDeclaration.class).in(¢);
   }
 
   /** Return the first {@link VariableDeclarationFragment} encountered in a
@@ -209,7 +157,7 @@ public interface findFirst {
    * @return first such node encountered in a visit of the tree rooted a the
    *         parameter, or <code><b>null</b></code> */
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
-    return instanceOf(VariableDeclarationFragment.class, ¢);
+    return instanceOf(VariableDeclarationFragment.class).in(¢);
   }
 
   /** Search for an {@link WhileStatement} in the tree rooted at an
@@ -218,51 +166,51 @@ public interface findFirst {
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
    *         <code><b>null</b> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
-    return instanceOf(WhileStatement.class, ¢);
+    return instanceOf(WhileStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static ExpressionStatement expressionStatement(final ASTNode ¢) {
-    return instanceOf(ExpressionStatement.class, ¢);
+    return instanceOf(ExpressionStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static Block block(final ASTNode ¢) {
-    return instanceOf(Block.class, ¢);
+    return instanceOf(Block.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static InfixExpression infixExpression(final ASTNode ¢) {
-    return instanceOf(InfixExpression.class, ¢);
+    return instanceOf(InfixExpression.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static TryStatement tryStatement(final ASTNode ¢) {
-    return instanceOf(TryStatement.class, ¢);
+    return instanceOf(TryStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static BooleanLiteral booleanLiteral(final ASTNode ¢) {
-    return instanceOf(BooleanLiteral.class, ¢);
+    return instanceOf(BooleanLiteral.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
   static FieldAccess fieldAccess(final ASTNode ¢) {
-    return instanceOf(FieldAccess.class, ¢);
+    return instanceOf(FieldAccess.class).in(¢);
   }
 
   static Name name(final ASTNode ¢) {
-    return instanceOf(Name.class, ¢);
+    return instanceOf(Name.class).in(¢);
   }
 
   static ASTNode variableDeclarationStatement(final ASTNode ¢) {
-    return instanceOf(VariableDeclarationStatement.class, ¢);
+    return instanceOf(VariableDeclarationStatement.class).in(¢);
   }
 
   static ConditionalExpression conditionalArgument(final MethodInvocation ¢) {

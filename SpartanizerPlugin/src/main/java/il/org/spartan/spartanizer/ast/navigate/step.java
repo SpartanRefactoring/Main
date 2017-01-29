@@ -838,7 +838,7 @@ public enum step {
         }
       }
     $ = $.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
-    return findFirst.type(wizard.ast("class d{" + $.replaceAll("extends .+", "") + " x; }"));
+    return findFirst.instanceOf(Type.class).in(wizard.ast("class d{" + $.replaceAll("extends .+", "") + " x; }"));
   }
 
   /** Shorthand for {@link CastExpression#getType()}
