@@ -496,7 +496,7 @@ public enum extract {
    * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
     final List<Statement> $ = new ArrayList<>();
-    return ¢ == null || !(¢ instanceof Statement) ? $ : //
+    return !(¢ instanceof Statement) ? $ : //
         extract.statementsInto((Statement) ¢, $);
   }
 
