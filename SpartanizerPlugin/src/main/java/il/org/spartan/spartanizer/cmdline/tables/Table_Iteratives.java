@@ -24,9 +24,10 @@ import il.org.spartan.tables.*;
  * @since 2017-01-21 */
 public class Table_Iteratives extends FolderASTVisitor {
   private static final int ENHANCED = ASTNode.ENHANCED_FOR_STATEMENT;
+  private static final int WHILE = ASTNode.WHILE_STATEMENT;
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  static final LoopsStatistics statistics = new LoopsStatistics();
-  static final LoopsStatistics simpleStatistics = new LoopsStatistics();
+  static final LoopsStatistics all = new LoopsStatistics();
+  static final LoopsStatistics simple = new LoopsStatistics();
   static final LoopsStatistics definites = new LoopsStatistics();
   private static Table rawWriter;
   private static Table summaryWriter;
@@ -49,9 +50,9 @@ public class Table_Iteratives extends FolderASTVisitor {
   public static void logNPInfo(final ASTNode n, final String np) {
     if (!iz.loop(n))
       return;
-    statistics.logNPInfo(n, np);
+    all.logNPInfo(n, np);
     if (iz.simpleLoop(n))
-      simpleStatistics.logNPInfo(n, np);
+      simple.logNPInfo(n, np);
     if (iz.definiteLoop(n))
       definites.logNPInfo(n, np);
   }
@@ -71,9 +72,9 @@ public class Table_Iteratives extends FolderASTVisitor {
       @Override public void preVisit(ASTNode ¢) {
         if (!iz.loop(¢))
           return;
-        statistics.logNode(¢);
+        all.logNode(¢);
         if (iz.simpleLoop(¢))
-          simpleStatistics.logNode(¢);
+          simple.logNode(¢);
         if (iz.definiteLoop(¢))
           definites.logNode(¢);
       }
@@ -91,8 +92,8 @@ public class Table_Iteratives extends FolderASTVisitor {
   }
 
   private static void clearAll() {
-    statistics.clear();
-    simpleStatistics.clear();
+    all.clear();
+    simple.clear();
     definites.clear();
   }
 
@@ -107,44 +108,43 @@ public class Table_Iteratives extends FolderASTVisitor {
     initializeWritersIfNeeded();
     rawWriter//
         .col("Project", path)//
-        .col("EnhancedForLoops", statistics.totalEnhanced())//
-        .col("ForLoops", statistics.totalFor())//
-        .col("WhileLoops", statistics.totalWhile())//
-        .col("DoWhileLoops", statistics.totalDoWhile())//
-        .col("Total Loops", statistics.total())//
+        .col("EnhancedForLoops", all.totalEnhanced())//
+        .col("ForLoops", all.totalFor())//
+        .col("WhileLoops", all.totalWhile())//
+        .col("DoWhileLoops", all.totalDoWhile())//
+        .col("Total Loops", all.total())//
         .col("Definites", definites.total())//
         //
-        .col("Simple EnhancedForLoops", simpleStatistics.totalEnhanced())//
-        .col("Simple ForLoops", simpleStatistics.totalFor())//
-        .col("Simple While Loops", simpleStatistics.totalWhile())//
-        .col("Simple DoWhileLoops", simpleStatistics.totalDoWhile())//
-        .col("Simple Total Loops", simpleStatistics.total())//
+        .col("hitss", all.covered(ENHANCED))//
+        .col("Simple EnhancedForLoops", simple.totalEnhanced())//
+        .col("Simple ForLoops", simple.totalFor())//
+        .col("Simple While Loops", simple.totalWhile())//
+        .col("Simple DoWhileLoops", simple.totalDoWhile())//
+        .col("Simple Total Loops", simple.total())//
     ;
     summaryWriter//
         .col("Project", path)//
-        .col("Coverage", coverage())//
-        .col("Simple", format.perc(simpleStatistics.total(), statistics.total()))//
-        .col("Simple Coverage", simpleStatistics.coverage())//
-        .col("Enhanced", format.perc(statistics.totalEnhanced(), statistics.total()))//
-        .col("Enhanced Coverage", statistics.coverage(ENHANCED))//
-        .col("Simple Enhanced", format.perc(simpleStatistics.totalEnhanced(), simpleStatistics.total()))//
-        .col("Simple Enhanced Coverage", simpleStatistics.coverage(ENHANCED))//
-        .col("Definites", format.perc(definites.total(), statistics.total()))//
+        .col("Coverage", all.coverage())//
+        .col("Simple / All", format.perc(simple.total(), all.total()))//
+        .col("Simple Coverage", simple.coverage())//
+        .col("Enhanced / All", format.perc(all.totalEnhanced(), all.total()))//
+        .col("Enhanced Coverage", all.coverage(ENHANCED))//
+        .col("Simple Enhanced / Simple", format.perc(simple.totalEnhanced(), simple.total()))//
+        .col("Simple Enhanced Coverage", simple.coverage(ENHANCED))//
+        .col("While / All", format.perc(all.totalWhile(), all.total()))//
+        .col("While coverage", all.coverage(WHILE))//
+        .col("Simple While / Simple", format.perc(simple.totalWhile(), simple.total()))//
+        .col("While coverage", simple.coverage(WHILE))//
+        .col("Definites / All", format.perc(definites.total(), all.total()))//
         .col("Definites Coverage", definites.coverage())//
     ;
     //
-    final HashMap<String, Int> hist = statistics.nanoHistogram(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT));
+    final HashMap<String, Int> hist = all.nanoHistogram(Integer.valueOf(ENHANCED));
     // hist.keySet().forEach(λ -> rawWriter.col(λ + " perc.",
     // format.decimal(100 * safe.div(hist.get(λ).inner,
     // statistics.count(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT))))));
     hist.keySet().forEach(λ -> rawWriter.col(λ, hist.get(λ).inner));
     rawWriter.nl();
     summaryWriter.nl();
-  }
-
-  private static double coverage() {
-    return statistics.coverage();//
-    // format.decimal(100 *
-    // npStatistics.coverage(Integer.valueOf(ASTNode.ENHANCED_FOR_STATEMENT)));
   }
 }
