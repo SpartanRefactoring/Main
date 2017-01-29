@@ -92,8 +92,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
     ReportGenerator.report("methods").put("File", presentFileName);
     final String output = fixedPoint(input);
     final ASTNode outputASTNode = makeAST1.COMPILATION_UNIT.from(output); // instead
-                                                                         // of
-                                                                         // CLASS_BODY_DECLARATIONS
+                                                                          // of
+                                                                          // CLASS_BODY_DECLARATIONS
     // ReportGenerator.report("tips").put("ClassLOCAfter",
     // count.lines(outputASTNode));
     // ReportGenerator.report("tips").put("ClassTokenAfter",
