@@ -477,7 +477,7 @@ public interface wizard {
   }
 
   static MethodDeclaration methodWithBinding(final String m) {
-    return findFirst.methodDeclaration(makeAST1.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
+    return findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
   }
 
   /** Determine whether a node is an infix expression whose operator is

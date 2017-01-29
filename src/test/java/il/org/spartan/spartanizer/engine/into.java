@@ -57,7 +57,7 @@ public enum into {
    *         parameter. */
   public static MethodDeclaration d(final String methodDelclaration) {
     assert methodDelclaration != null;
-    return findFirst.methodDeclaration(Wrap.Method.intoCompilationUnit(methodDelclaration));
+    return findFirst.instanceOf(MethodDeclaration.class).in(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
 
   /** Convert a given {@link String} into an {@link Expression}, or fail the
@@ -89,7 +89,7 @@ public enum into {
   }
 
   public static MethodDeclaration m(final String p) {
-    return findFirst.methodDeclaration(makeAST1.CLASS_BODY_DECLARATIONS.from(p));
+    return findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.CLASS_BODY_DECLARATIONS.from(p));
   }
 
   /** Convert a given {@link String} into an {@link PrefixExpression}, or fail
@@ -115,7 +115,7 @@ public enum into {
   }
 
   public static Type t(final String codeFragment) {
-    return findFirst.type(s(codeFragment));
+    return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 
   /** @param p a {@link String} that represents a Java Compilation unit

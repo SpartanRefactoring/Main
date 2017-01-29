@@ -23,14 +23,14 @@ public class issue0411 {
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
   private static final String OUTPUT1 = "boolean f(){for(A b:f(1))if(b.a)return true;return false;}";
   final MethodDeclaration input1 = into.d(INPUT1);
-  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class, input1);
-  NumberLiteral one = findFirst.instanceOf(NumberLiteral.class, input1);
+  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class).in(input1);
+  NumberLiteral one = findFirst.instanceOf(NumberLiteral.class).in(input1);
   final Statement seriesA$step1 = into.s(INPUT);
-  EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
-  final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class, seriesA$step1);
-  EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class, seriesA$step1);
+  EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
+  final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class).in(seriesA$step1);
+  EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
   final FragmentInitializerStatementTerminatingScope tipper = new FragmentInitializerStatementTerminatingScope();
-  final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class, input1);
+  final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
 
   @Test public void A$c() {
     assert seriesA$step3 != null;

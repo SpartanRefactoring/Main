@@ -140,7 +140,7 @@ public final class Issue0223 {
   }
 
   private ClassInstanceCreation findMe(final Statement c) {
-    return findFirst.instanceOf(SUBJECT_CLASS, c);
+    return findFirst.instanceOf(SUBJECT_CLASS).in(c);
   }
 
   private ClassInstanceCreationValueTypes makeTipper() {
