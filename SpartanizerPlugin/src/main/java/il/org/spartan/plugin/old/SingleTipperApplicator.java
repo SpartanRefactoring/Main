@@ -47,7 +47,7 @@ public final class SingleTipperApplicator {
       final Type t, //
       final Tipper<?> w, //
       final IFile f) {
-    return createRewrite(pm, f != null ? (CompilationUnit) makeAST1.COMPILATION_UNIT.from(f) : (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm),
+    return createRewrite(pm, (CompilationUnit) (f != null ? makeAST1.COMPILATION_UNIT.from(f) : makeAST1.COMPILATION_UNIT.from(m, pm)),
         m, t, w);
   }
 

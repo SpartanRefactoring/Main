@@ -38,11 +38,11 @@ public interface iz {
   }
 
   static boolean abstractTypeDeclaration(final ASTNode ¢) {
-    return ¢ != null && ¢ instanceof AbstractTypeDeclaration;
+    return ¢ instanceof AbstractTypeDeclaration;
   }
 
   static boolean annotation(final IExtendedModifier ¢) {
-    return ¢ != null && ¢ instanceof Annotation;
+    return ¢ instanceof Annotation;
   }
 
   static boolean annotationTypeDeclaration(final ASTNode ¢) {
@@ -82,7 +82,7 @@ public interface iz {
   }
 
   static boolean astNode(final Object ¢) {
-    return ¢ != null && ¢ instanceof ASTNode;
+    return ¢ instanceof ASTNode;
   }
 
   /** @param ¢ JD
@@ -145,7 +145,7 @@ public interface iz {
   }
 
   static boolean bodyDeclaration(final ASTNode ¢) {
-    return ¢ != null && ¢ instanceof BodyDeclaration;
+    return ¢ instanceof BodyDeclaration;
   }
 
   /** Determine whether a node is a boolean literal
@@ -166,7 +166,7 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean booleanType(final Type ¢) {
-    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
+    return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
   }
 
   static boolean breakStatement(final Statement ¢) {
@@ -176,7 +176,7 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean castExpression(final ASTNode ¢) {
-    return ¢ != null && ¢ instanceof CastExpression;
+    return ¢ instanceof CastExpression;
   }
 
   static boolean catchClause(final ASTNode ¢) {
@@ -409,7 +409,7 @@ public interface iz {
   }
 
   static boolean deterministic(Stream<Expression> xs) {
-    return xs.allMatch(λ -> iz.deterministic(λ));
+    return xs.allMatch(iz::deterministic);
   }
 
   static boolean doStatement(final ASTNode ¢) {
@@ -459,7 +459,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> the parameter is an
    *         {@link ExpressionStatement} statement */
   static boolean expression(final ASTNode ¢) {
-    return ¢ != null && ¢ instanceof Expression;
+    return ¢ instanceof Expression;
   }
 
   static boolean expressionOfEnhancedFor(final ASTNode child, final ASTNode parent) {
@@ -628,7 +628,7 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean instanceofExpression(final Expression ¢) {
-    return ¢ != null && ¢ instanceof InstanceofExpression;
+    return ¢ instanceof InstanceofExpression;
   }
 
   /** @param ¢ JD
@@ -643,7 +643,7 @@ public interface iz {
   }
 
   static boolean intType(final Type ¢) {
-    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
+    return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
   }
 
   /** @param ¢ JD
@@ -957,7 +957,7 @@ public interface iz {
   /** @param ¢ JD
    * @return */
   static boolean primitiveType(final Type ¢) {
-    return ¢ != null && ¢ instanceof PrimitiveType;
+    return ¢ instanceof PrimitiveType;
   }
 
   /** Determine whether a declaration is private
