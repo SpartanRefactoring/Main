@@ -38,7 +38,7 @@ public interface NanoPatternUtil {
   }
 
   static boolean nullComparisonIncremental(final Expression ¢) {
-    return nullComparison.canTip(¢);
+    return nullComparisonOr.canTip(¢);
   }
 
   UserDefinedTipper<Expression> nullComparison = patternTipper("$X == null", "", "");
@@ -50,20 +50,14 @@ public interface NanoPatternUtil {
       add(patternTipper("return null;", "", ""));
     }
   };
-  List<UserDefinedTipper<Statement>> returns = new ArrayList<UserDefinedTipper<Statement>>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("return;", "", ""));
-      add(patternTipper("return null;", "", ""));
-    }
-  };
+  UserDefinedTipper<Statement> returns = patternTipper("return $X;", "", "");
 
   static boolean returnsDefault(final Statement ¢) {
     return anyTips(defaultReturns, ¢);
   }
 
-  static boolean returns(final Statement ¢) {
-    return anyTips(returns, ¢);
+  static ASTNode returnee(final Statement ¢) {
+    return returns.getMatching(¢, "$X");
   }
 
   static List<String> nullCheckees(final IfStatement ¢) {
