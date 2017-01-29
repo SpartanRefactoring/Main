@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
 import java.util.function.*;
 
@@ -172,28 +170,11 @@ public enum haz {
     return ¢ != null && !sideEffects.free(¢);
   }
 
-  public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
-    ASTNode child = n;
-    for (final ASTNode ancestor : hop.ancestors(n)) {
-      if (s == n)
-        break;
-      if (iz.nodeTypeIn(ancestor, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION, LAMBDA_EXPRESSION))
-        return true;
-      if (iz.expressionOfEnhancedFor(child, ancestor))
-        continue;
-      if (iz.nodeTypeEquals(ancestor, FOR_STATEMENT) && (yieldAncestors.untilOneOf(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
-          || yieldAncestors.untilNode(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
-        return true;
-      child = ancestor;
-    }
-    return false;
-  }
-
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block body = body(d);
     if (body != null)
       for (final Statement ¢ : statements(body))
-        if (haz.unknownNumberOfEvaluations(d, ¢))
+        if (Coupling.unknownNumberOfEvaluations(d, ¢))
           return true;
     return false;
   }
