@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO Yossi Gil: document class {@link }
@@ -16,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-01-29 */
 public abstract class StatementBottomUp<R> extends Reducer<R> {
   protected R map(final AssertStatement ¢) {
-    return atomic(¢, ¢.getExpression(), ¢.getMessage());
+    return atomic(¢.getExpression(), ¢.getMessage());
   }
 
   protected R map(final Block b) {
@@ -27,23 +28,23 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   }
 
   protected R map(final BreakStatement ¢) {
-    return atomic(¢, ¢.getLabel());
+    return atomic(¢.getLabel());
   }
 
-  protected R map(final ConstructorInvocation ¢) {
-    return atomic(¢);
+  protected R map(final ConstructorInvocation i) {
+    return reduceExpressions(step.arguments(i));
   }
 
   protected R map(final ContinueStatement ¢) {
-    return atomic(¢);
+    return atomic(¢.getLabel());
   }
 
   protected R map(final DoStatement ¢) {
     return map(¢.getBody());
   }
 
-  protected R map(final EmptyStatement ¢) {
-    return atomic(¢);
+  protected R map(@SuppressWarnings("unused") final EmptyStatement __) {
+    return atomic();
   }
 
   protected R map(final EnhancedForStatement ¢) {
@@ -55,7 +56,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   }
 
   protected R map(final ExpressionStatement ¢) {
-    return atomic(¢);
+    return atomic(¢.getExpression());
   }
 
   protected R map(final IfStatement ¢) {
@@ -67,7 +68,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   }
 
   protected R map(final ReturnStatement ¢) {
-    return atomic(¢, ¢.getExpression());
+    return atomic(¢.getExpression());
   }
 
   public final R map(final Statement ¢) {
@@ -128,6 +129,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
 
   protected R reduceExpressions(final List<Expression> xs) {
     R $ = reduce();
+    if (xs != null)
     for (final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
@@ -149,8 +151,14 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   protected R reduceResources(final TryStatement s) {
     R $ = reduce();
     for (final VariableDeclarationExpression x : resources(s))
-      for (final VariableDeclarationFragment ¢ : fragments(x))
-        $ = reduce($, map(¢.getInitializer()));
+      $ = reduce($, map(x));
+    return $;
+  }
+
+  public R map( final VariableDeclarationExpression x) {
+    R $ = reduce();
+    for (final VariableDeclarationFragment ¢ : fragments(x))
+      $ = reduce($, map(¢.getInitializer()));
     return $;
   }
 
@@ -162,10 +170,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   }
 
   protected R atomic(final TypeDeclarationStatement ¢) {
-    // TODO Yossi Gil Auto-generated method stub for map
-    if (new Object().hashCode() != 0)
-      throw new AssertionError("Method 'StatementBottomUp::map' not implemented yet by yossi");
-    return null;
+    return reduce();
   }
 
   protected R map(final VariableDeclarationStatement ¢) {
@@ -175,18 +180,15 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return null;
   }
 
-  protected R map(final WhileStatement ¢) {
-    // TODO Yossi Gil Auto-generated method stub for map
-    if (new Object().hashCode() != 0)
-      throw new AssertionError("Method 'StatementBottomUp::map' not implemented yet by yossi");
-    return null;
+  protected R map(final WhileStatement s) {
+    return reduce(map(s.getExpression()), map(s.getBody()));
   }
 
-  protected R atom(@SuppressWarnings("unused") final Statement __) {
+  protected R atom() {
     return reduce();
   }
 
-  protected R atomic(final Statement s, final Expression... xs) {
-    return reduce(atom(s), reduceExpressions(as.list(xs)));
+  protected R atomic(final Expression... xs) {
+    return reduce(atom(), reduceExpressions(as.list(xs)));
   }
 }
