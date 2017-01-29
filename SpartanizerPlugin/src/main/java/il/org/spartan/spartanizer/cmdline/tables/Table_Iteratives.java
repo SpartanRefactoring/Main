@@ -134,7 +134,7 @@ public class Table_Iteratives extends FolderASTVisitor {
         .col("While / All", format.perc(all.totalWhile(), all.total()))//
         .col("While coverage", all.coverage(WHILE))//
         .col("Simple While / Simple", format.perc(simple.totalWhile(), simple.total()))//
-        .col("While coverage", simple.coverage(WHILE))//
+        .col("Simple While coverage", simple.coverage(WHILE))//
         .col("Definites / All", format.perc(definites.total(), all.total()))//
         .col("Definites Coverage", definites.coverage())//
     ;
