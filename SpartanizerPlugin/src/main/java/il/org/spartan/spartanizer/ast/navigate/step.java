@@ -928,4 +928,9 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
   }
-}
+  @SuppressWarnings("unchecked")
+  public static List<Expression> arguments(ConstructorInvocation i) {
+    return i == null ? null : i.arguments();
+  }
+  }
+
