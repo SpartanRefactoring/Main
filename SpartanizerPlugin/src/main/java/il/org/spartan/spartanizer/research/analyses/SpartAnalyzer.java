@@ -58,6 +58,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new CachingPattern(), //
                 new ExecuteWhen(), //
                 new GeneralizedSwitch<>(), //
+                new GetOrElseThrow(),
                 // new PutIfAbsent(), // R.I.P
                 new PreconditionNotNull(), //
                 new NotHoldsOrThrow(), //
