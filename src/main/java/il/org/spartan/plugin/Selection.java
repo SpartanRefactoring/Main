@@ -325,7 +325,7 @@ public class Selection extends AbstractSelection<Selection> {
      * @param ¢ JD
      * @return selection by file */
     private static Selection by(final IResource ¢) {
-      return ¢ == null || !(¢ instanceof IFile) || !((IFile) ¢).getName().endsWith(".java") ? empty() : by((IFile) ¢);
+      return !(¢ instanceof IFile) || !((IFile) ¢).getName().endsWith(".java") ? empty() : by((IFile) ¢);
     }
 
     /** @param ¢ JD

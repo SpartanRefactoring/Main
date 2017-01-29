@@ -95,14 +95,14 @@ public class InflateHandler extends AbstractHandler {
 
   protected static ITextEditor getTextEditor() {
     final IEditorPart $ = getEditorPart();
-    return $ == null || !($ instanceof ITextEditor) ? null : (ITextEditor) $;
+    return !($ instanceof ITextEditor) ? null : (ITextEditor) $;
   }
 
   protected static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
     final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);
-    return $ == null || !($ instanceof StyledText) ? null : (StyledText) $;
+    return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 
   public static GUIBatchLaconizer applicator() {
@@ -162,7 +162,7 @@ public class InflateHandler extends AbstractHandler {
     if (text == null)
       return;
     final IEditorInput i = ¢.getEditorInput();
-    if (i == null || !(i instanceof FileEditorInput))
+    if (!(i instanceof FileEditorInput))
       return;
     final IFile f = ((FileEditorInput) i).getFile();
     if (f == null)
@@ -193,7 +193,7 @@ public class InflateHandler extends AbstractHandler {
     if (p != null)
       for (final IEditorReference r : p.getEditorReferences()) {
         final IEditorPart ep = r.getEditor(false);
-        if (ep != null && ep instanceof ITextEditor)
+        if (ep instanceof ITextEditor)
           $.add((ITextEditor) ep);
       }
     return $;
