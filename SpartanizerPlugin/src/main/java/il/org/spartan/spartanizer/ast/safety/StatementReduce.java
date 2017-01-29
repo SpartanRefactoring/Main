@@ -16,176 +16,176 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
-  protected T map(ArrayAccess ¢) {
+  protected T map(final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  protected T map(ArrayCreation ¢) {
+  protected T map(final ArrayCreation ¢) {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  private T reduce(List<Expression> xs) {
+  private T reduce(final List<Expression> xs) {
     T $ = neutralElement();
-    for (Expression ¢ : xs)
+    for (final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
 
-  protected T map(AssertStatement ¢) {
+  protected T map(final AssertStatement ¢) {
     return mapAtomic(¢);
   }
 
-  protected T map(Assignment ¢) {
+  protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
-  protected T map(Block b) {
+  protected T map(final Block b) {
     T $ = neutralElement();
-    for (Statement ¢ : statements(b))
+    for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
 
-  protected T map(BreakStatement ¢) {
+  protected T map(final BreakStatement ¢) {
     return mapAtomic(¢);
   }
 
-  protected T map(ClassInstanceCreation ¢) {
+  protected T map(final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduce(arguments(¢)));
   }
 
-  protected T map(ConditionalExpression ¢) {
+  protected T map(final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  protected T map(ConstructorInvocation ¢) {
+  protected T map(final ConstructorInvocation ¢) {
     return mapAtomic(¢);
   }
 
-  protected T map(ContinueStatement ¢) {
+  protected T map(final ContinueStatement ¢) {
     return mapAtomic(¢);
   }
 
-  protected T map(DoStatement ¢) {
+  protected T map(final DoStatement ¢) {
     return map(¢.getBody());
   }
 
-  protected T map(EmptyStatement ¢) {
+  protected T map(final EmptyStatement ¢) {
     return mapAtomic(¢);
   }
 
-  protected T map(EnhancedForStatement ¢) {
+  protected T map(final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
 
   T map(final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
-        return map((PrefixExpression) (¢));
+        return map((PrefixExpression) ¢);
       case INFIX_EXPRESSION:
-        return reduce(extract.allOperands((InfixExpression) (¢)));
+        return reduce(extract.allOperands((InfixExpression) ¢));
       case CONDITIONAL_EXPRESSION:
-        return map((ConditionalExpression) (¢));
+        return map((ConditionalExpression) ¢);
       case INSTANCEOF_EXPRESSION:
-        return map((InstanceofExpression) (¢));
+        return map((InstanceofExpression) ¢);
       case ARRAY_ACCESS:
-        return map((ArrayAccess) (¢));
+        return map((ArrayAccess) ¢);
       case PARENTHESIZED_EXPRESSION:
         return map(extract.core(¢));
       case ASSIGNMENT:
-        return map((Assignment) (¢));
+        return map((Assignment) ¢);
       case ARRAY_INITIALIZER:
-        return map((ArrayAccess) (¢));
+        return map((ArrayAccess) ¢);
       case ARRAY_CREATION:
-        return map((ArrayCreation) (¢));
+        return map((ArrayCreation) ¢);
       case CLASS_INSTANCE_CREATION:
         return map((ClassInstanceCreation) ¢);
       case POSTFIX_EXPRESSION:
         return map((PostfixExpression) ¢);
       case METHOD_INVOCATION:
-        return map((MethodInvocation) (¢));
+        return map((MethodInvocation) ¢);
       case SUPER_METHOD_INVOCATION:
-        return map((SuperMethodInvocation) (¢));
+        return map((SuperMethodInvocation) ¢);
       default:
         return null;
     }
   }
 
-  protected T map(InstanceofExpression ¢) {
+  protected T map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 
-  protected T map(ExpressionStatement ¢) {
+  protected T map(final ExpressionStatement ¢) {
     return mapAtomic(¢);
   }
 
-  protected T map(IfStatement ¢) {
+  protected T map(final IfStatement ¢) {
     return reduceIfStatement(expression(¢), then(¢), elze(¢));
   }
 
-  protected T map(LabeledStatement ¢) {
+  protected T map(final LabeledStatement ¢) {
     return map(¢.getBody());
   }
 
-  protected T map(MethodInvocation ¢) {
+  protected T map(final MethodInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-  protected T map(PostfixExpression ¢) {
+  protected T map(final PostfixExpression ¢) {
     return map(step.expression(¢));
   }
 
-  protected T map(PrefixExpression ¢) {
+  protected T map(final PrefixExpression ¢) {
     return map(step.expression(¢));
   }
 
-  protected T map(ReturnStatement ¢) {
+  protected T map(final ReturnStatement ¢) {
     return mapAtomic(¢);
   }
 
-  public final T map(Statement ¢) {
+  public final T map(final Statement ¢) {
     switch (¢.getNodeType()) {
       case ASSERT_STATEMENT:
-        return map((AssertStatement) (¢));
+        return map((AssertStatement) ¢);
       case BLOCK:
-        return map((Block) (¢));
+        return map((Block) ¢);
       case BREAK_STATEMENT:
-        return map((BreakStatement) (¢));
+        return map((BreakStatement) ¢);
       case CONSTRUCTOR_INVOCATION:
-        return map((ConstructorInvocation) (¢));
+        return map((ConstructorInvocation) ¢);
       case CONTINUE_STATEMENT:
-        return map((ContinueStatement) (¢));
+        return map((ContinueStatement) ¢);
       case DO_STATEMENT:
-        return map((DoStatement) (¢));
+        return map((DoStatement) ¢);
       case EMPTY_STATEMENT:
-        return map((EmptyStatement) (¢));
+        return map((EmptyStatement) ¢);
       case ENHANCED_FOR_STATEMENT:
-        return map((EnhancedForStatement) (¢));
+        return map((EnhancedForStatement) ¢);
       case EXPRESSION_STATEMENT:
-        return map((ExpressionStatement) (¢));
+        return map((ExpressionStatement) ¢);
       case IF_STATEMENT:
-        return map((IfStatement) (¢));
+        return map((IfStatement) ¢);
       case LABELED_STATEMENT:
-        return map((LabeledStatement) (¢));
+        return map((LabeledStatement) ¢);
       case RETURN_STATEMENT:
-        return map((ReturnStatement) (¢));
+        return map((ReturnStatement) ¢);
       case SUPER_CONSTRUCTOR_INVOCATION:
-        return map((SuperConstructorInvocation) (¢));
+        return map((SuperConstructorInvocation) ¢);
       default:
         assert fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", ¢.getClass().getSimpleName()));
         return null;
     }
   }
 
-  protected T map(SuperConstructorInvocation ¢) {
+  protected T map(final SuperConstructorInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-  protected T map(SuperMethodInvocation ¢) {
+  protected T map(final SuperMethodInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-  protected T mapAtomic(Statement i) {
+  protected T mapAtomic(final Statement i) {
     ___.______unused(i);
     return neutralElement();
   }
@@ -196,14 +196,14 @@ public abstract class StatementReduce<T> {
 
   protected abstract T reduce(T t1, T t2);
 
-  @SafeVarargs protected final T reduce(T t1, T t2, T... ts) {
+  @SafeVarargs protected final T reduce(final T t1, final T t2, final T... ts) {
     T $ = reduce(t1, t2);
-    for (T ¢ : ts)
+    for (final T ¢ : ts)
       $ = reduce($, ¢);
     return $;
   }
 
-  protected T reduceIfStatement(Expression x, Statement then, Statement elze) {
+  protected T reduceIfStatement(final Expression x, final Statement then, final Statement elze) {
     return reduce(map(x), reduce(map(then), map(elze)));
   }
 }

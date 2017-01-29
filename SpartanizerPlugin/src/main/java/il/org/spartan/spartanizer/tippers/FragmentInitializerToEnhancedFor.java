@@ -32,14 +32,14 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
-    final EnhancedForStatement s = (az.enhancedFor(nextStatement));
+    final EnhancedForStatement s = az.enhancedFor(nextStatement);
     if (s == null)
       return null;
-    Statement body = body(s);
+    body(s);
     if (containsClassInstanceCreation(nextStatement) || containsLambda(nextStatement))
       return null;
-    SingleVariableDeclaration z = s.getParameter();
-    Expression zz = expression(s);
+    s.getParameter();
+    expression(s);
     final Statement parent = az.statement(parent(f));
     if (parent == null || iz.forStatement(parent))
       return null;

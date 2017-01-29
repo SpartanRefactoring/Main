@@ -67,7 +67,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   }
 
   protected R map(final ReturnStatement ¢) {
-    return atomic(¢,¢.getExpression());
+    return atomic(¢, ¢.getExpression());
   }
 
   public final R map(final Statement ¢) {
@@ -107,7 +107,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
       case TRY_STATEMENT:
         return map((TryStatement) ¢);
       case TYPE_DECLARATION_STATEMENT:
-        return map((TypeDeclarationStatement) ¢);
+        return map(¢);
       case VARIABLE_DECLARATION_STATEMENT:
         return map((VariableDeclarationStatement) ¢);
       case WHILE_STATEMENT:

@@ -11,12 +11,13 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 2016-12-23 */
 public interface ancestors {
   static List<ASTNode> path(final ASTNode n) {
-    List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = new ArrayList<>();
     for (ASTNode parent = n; parent != null; parent = n.getParent())
       $.add(parent);
-    Collections.reverse($); 
+    Collections.reverse($);
     return $;
   }
+
   static Iterable<ASTNode> of(final ASTNode n) {
     return () -> new Iterator<ASTNode>() {
       ASTNode next = n;

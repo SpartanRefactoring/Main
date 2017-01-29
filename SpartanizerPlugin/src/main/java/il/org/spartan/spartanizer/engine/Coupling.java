@@ -10,13 +10,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 public enum Coupling {
-  DETERMININSTIC,
-  ONEORMORE,
-  UNKNOWN,
-  ;
-  public static Inner of(ASTNode ¢) {
+  DETERMININSTIC, ONEORMORE, UNKNOWN,;
+  public static Inner of(final ASTNode ¢) {
     return new Inner(¢);
   }
+
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {
@@ -33,18 +31,12 @@ public enum Coupling {
     }
     return false;
   }
+
   static class Inner {
+    public Inner(final ASTNode n) {}
 
-    private final ASTNode from;
-
-    public Inner(ASTNode n) {
-      from = n;
-    }
-    
-    public Coupling withRespectTo(ASTNode to) {
+    public Coupling withRespectTo(final ASTNode to) {
       return null;
     }
-    
   }
 }
-
