@@ -7,8 +7,6 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -33,7 +31,7 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      yieldDescendants.untilClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(λ -> !iz.block(body(λ)))
+      yieldDescendants.untilClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(λ -> iz.simpleLoop(λ))
           .forEach(λ -> appendFile(out, λ + ""));
     } catch (@SuppressWarnings("unused") final AssertionError __) {
       System.err.print("X");
