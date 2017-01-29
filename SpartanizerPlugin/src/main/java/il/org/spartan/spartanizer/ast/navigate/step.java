@@ -29,6 +29,11 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
+  @SuppressWarnings("unchecked")
+  public static List<Expression> arguments(SuperConstructorInvocation ¢) {
+    return ¢.arguments();
+  }
+
   /** Expose the list of arguments in a {@link SuperMethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
@@ -47,6 +52,10 @@ public enum step {
   }
 
   public static Block body(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getBody();
+  }
+
+  public static Statement body(final DoStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -79,10 +88,6 @@ public enum step {
   }
 
   public static Statement body(final WhileStatement ¢) {
-    return ¢ == null ? null : ¢.getBody();
-  }
-
-  public static Statement body(final DoStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
@@ -199,6 +204,10 @@ public enum step {
     return ¢ == null ? null : ¢.enumConstants();
   }
 
+  public static SingleVariableDeclaration exception(final CatchClause ¢) {
+    return ¢ == null ? null : ¢.getException();
+  }
+
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
@@ -273,6 +282,10 @@ public enum step {
     return $ == null ? null : extract.core($.getExpression());
   }
 
+  public static Expression expression(final MethodInvocation ¢) {
+    return ¢ == null ? null : ¢.getExpression();
+  }
+
   public static Expression expression(final ParenthesizedExpression $) {
     return $ == null ? null : $.getExpression();
   }
@@ -341,6 +354,10 @@ public enum step {
       x.addAll(y);
       return x;
     });
+  }
+
+  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
+    return ¢ == null ? null : ¢.getFields();
   }
 
   /** Expose the list of fragments in a {@link FieldDeclaration}
@@ -558,11 +575,27 @@ public enum step {
     return $;
   }
 
+  public static List<?> modifiers(final FieldDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final MethodDeclaration ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
+  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
+    return ¢ == null ? null : ¢.modifiers();
+  }
+
   public static SimpleName name(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static Name name(final ImportDeclaration ¢) {
+  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final EnumConstantDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -572,11 +605,19 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final ImportDeclaration ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   public static SimpleName name(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
   public static SimpleName name(final MethodInvocation ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static SimpleName name(final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -665,10 +706,6 @@ public enum step {
 
   public static Expression receiver(final MethodInvocation ¢) {
     return ¢ == null ? null : extract.core(¢.getExpression());
-  }
-
-  public static Expression expression(final MethodInvocation ¢) {
-    return ¢ == null ? null : ¢.getExpression();
   }
 
   /** Expose the list of resources contained in a {@link TryStatement}
@@ -891,37 +928,5 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
-  }
-
-  public static SimpleName name(final QualifiedName ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static SingleVariableDeclaration exception(final CatchClause ¢) {
-    return ¢ == null ? null : ¢.getException();
-  }
-
-  public static SimpleName name(final EnumConstantDeclaration ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static List<?> modifiers(final MethodDeclaration ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static List<?> modifiers(final FieldDeclaration ¢) {
-    return ¢ == null ? null : ¢.modifiers();
-  }
-
-  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
-    return ¢ == null ? null : ¢.getFields();
   }
 }

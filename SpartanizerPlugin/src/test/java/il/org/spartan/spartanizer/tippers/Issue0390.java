@@ -13,6 +13,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @SuppressWarnings("static-method")
 public class Issue0390 {
   @Test public void demoOfAzzert() {
-    azzert.that(NameGuess.of("__"), is(NameGuess.ANONYMOUS));
+    azzert.that(guessName.of("__"), is(guessName.ANONYMOUS));
   }
 }

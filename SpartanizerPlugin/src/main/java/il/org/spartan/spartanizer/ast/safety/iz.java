@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
-
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -9,6 +9,7 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -18,6 +19,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -28,40 +30,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
-  interface literal {
-    /** @param ¢ JD
-     * @return */
-    static boolean classInstanceCreation(final ASTNode ¢) {
-      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return */
-    static boolean fieldAccess(final Expression ¢) {
-      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
-    }
-
-    /** @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
-     *         true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return literal(az.stringLiteral(¢), s);
-    }
-  }
-
-  int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
   List<String> defaultValues = Arrays.asList("null", "0", "false", "0.", "0L");
+  int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
@@ -90,42 +60,6 @@ public interface iz {
   static boolean anyOperator(final ASTNode ¢) {
     return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
-  }
-
-  static boolean definiteLoop(final ASTNode n) {
-    if (!iz.loop(n))
-      return false;
-    final Bool $ = new Bool(true);
-    n.accept(new ASTVisitor() {
-      @Override public boolean visit(final ContinueStatement ¢) {
-        mark(¢);
-        return false;
-      }
-
-      @Override public boolean visit(final BreakStatement ¢) {
-        mark(¢);
-        return false;
-      }
-
-      @Override public boolean visit(final ReturnStatement ¢) {
-        mark(¢);
-        return false;
-      }
-
-      void mark(@SuppressWarnings("unused") final ASTNode __) {
-        $.inner = false;
-      }
-    });
-    return $.inner;
-  }
-
-  static boolean simpleLoop(final ASTNode ¢) {
-    return loop(¢) && !iz.block(//
-        nodeType(¢) == ASTNode.ENHANCED_FOR_STATEMENT ? body(az.enhancedFor(¢)) //
-            : nodeType(¢) == FOR_STATEMENT ? body(az.forStatement(¢))//
-                : nodeType(¢) == ASTNode.WHILE_STATEMENT ? body(az.whileStatement(¢))//
-                    : nodeType(¢) == ASTNode.DO_STATEMENT ? body(az.doStatement(¢))//
-                        : null);
   }
 
   /** Ceck if an ASTNode is an Array Acess
@@ -233,10 +167,6 @@ public interface iz {
    * @return */
   static boolean booleanType(final Type ¢) {
     return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
-  }
-
-  static boolean intType(final Type ¢) {
-    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
   }
 
   static boolean breakStatement(final Statement ¢) {
@@ -363,6 +293,33 @@ public interface iz {
     return defaultValues.contains(¢ + "");
   }
 
+  static boolean definiteLoop(final ASTNode n) {
+    if (!iz.loop(n))
+      return false;
+    final Bool $ = new Bool(true);
+    n.accept(new ASTVisitor() {
+      void mark(@SuppressWarnings("unused") final ASTNode __) {
+        $.inner = false;
+      }
+
+      @Override public boolean visit(final BreakStatement ¢) {
+        mark(¢);
+        return false;
+      }
+
+      @Override public boolean visit(final ContinueStatement ¢) {
+        mark(¢);
+        return false;
+      }
+
+      @Override public boolean visit(final ReturnStatement ¢) {
+        mark(¢);
+        return false;
+      }
+    });
+    return $.inner;
+  }
+
   /** Check whether the operator of an expression is susceptible for applying
    * one of the two de Morgan laws.
    * @param x InfixExpression
@@ -379,6 +336,80 @@ public interface iz {
    *         which the de Morgan laws apply. */
   static boolean deMorgan(final Operator ¢) {
     return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
+  }
+
+  static boolean deterministic(MethodInvocation ¢) {
+    return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
+        iz.deterministic(step.arguments(¢));
+  }
+
+  static boolean deterministic(final ArrayAccess $) {
+    return iz.deterministic($.getArray(), $.getIndex());
+  }
+
+  static boolean deterministic(final Assignment $) {
+    return iz.deterministic(to($), from($));
+  }
+
+  static boolean deterministic(final Collection<Expression> ¢) {
+    return deterministic(¢.stream());
+  }
+
+  static boolean deterministic(final ConditionalExpression $) {
+    return iz.deterministic(step.expression($), then($), elze($));
+  }
+
+  static boolean deterministic(final Expression... ¢) {
+    return deterministic(Stream.of(¢));
+  }
+
+  static boolean deterministic(final Expression ¢) {
+      if (haz.sideEffects(¢))
+        return false;
+      switch (¢.getNodeType()) {
+        case PREFIX_EXPRESSION:
+          return deterministic(az.prefixExpression(¢));
+        case INFIX_EXPRESSION:
+          return deterministic(extract.allOperands(az.infixExpression(¢)));
+        case CONDITIONAL_EXPRESSION: 
+          return deterministic(az.conditionalExpression(¢));
+        case INSTANCEOF_EXPRESSION:
+          return deterministic(step.expression(az.instanceofExpression(¢)));
+        case ARRAY_ACCESS:
+          return deterministic(az.arrayAccess(¢));
+        case PARENTHESIZED_EXPRESSION:
+          return deterministic(extract.core(¢));
+        case ASSIGNMENT:
+          return deterministic(az.assignment(¢));
+        case ARRAY_INITIALIZER:
+          return deterministic(az.arrayAccess(¢).getArray()) && iz.deterministic(step.expressions(az.arrayInitializer(¢)));
+        case ARRAY_CREATION:
+        case CLASS_INSTANCE_CREATION:
+        case POSTFIX_EXPRESSION:
+          return false;
+        case METHOD_INVOCATION: 
+          return deterministic(az.methodInvocation(¢));  
+        case SUPER_METHOD_INVOCATION: 
+          return deterministic(az.superMethodInvocation(¢));  
+           default:
+            return true;
+    }
+  }
+
+  static boolean deterministic(PrefixExpression ¢) {
+    return !in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE) && deterministic(¢.getOperand());
+  }
+
+  static boolean deterministic(SuperMethodInvocation ¢) {
+    return deterministic(arguments(¢));
+  }
+
+  static boolean deterministic(List<Expression> ¢) {
+    return deterministic(¢.stream());
+  }
+
+  static boolean deterministic(Stream<Expression> xs) {
+    return xs.allMatch(λ -> iz.deterministic(λ));
   }
 
   static boolean doStatement(final ASTNode ¢) {
@@ -490,6 +521,13 @@ public interface iz {
    *         statement */
   static boolean forStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, FOR_STATEMENT);
+  }
+
+  static boolean fragile(final Expression with) {
+    // TODO Yossi Gil Auto-generated method stub for fragile
+    if (new Object().hashCode() != 0)
+      throw new AssertionError("Method 'iz::fragile' not implemented yet by yossi");
+    return false;
   }
 
   static boolean identifier(final String identifier, final Name typeName) {
@@ -604,15 +642,15 @@ public interface iz {
     return ¢ != null && type.of(¢) == INT;
   }
 
+  static boolean intType(final Type ¢) {
+    return ¢ != null && ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
+  }
+
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is a method
    *         decleration or false otherwise */
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
-  }
-
-  static boolean lambdaExpression(final ASTNode ¢) {
-    return iz.nodeTypeEquals(¢, LAMBDA_EXPRESSION);
   }
 
   /** @param ¢ node to check
@@ -677,6 +715,10 @@ public interface iz {
    * @return */
   static boolean labeledStatement(final ASTNode ¢) {
     return ¢ instanceof LabeledStatement;
+  }
+
+  static boolean lambdaExpression(final ASTNode ¢) {
+    return iz.nodeTypeEquals(¢, LAMBDA_EXPRESSION);
   }
 
   /** Determine whether an item is the last one in a list
@@ -1032,6 +1074,15 @@ public interface iz {
         THIS_EXPRESSION, TYPE_LITERAL);
   }
 
+  static boolean simpleLoop(final ASTNode ¢) {
+    return loop(¢) && !iz.block(//
+        nodeType(¢) == ASTNode.ENHANCED_FOR_STATEMENT ? body(az.enhancedFor(¢)) //
+            : nodeType(¢) == FOR_STATEMENT ? body(az.forStatement(¢))//
+                : nodeType(¢) == ASTNode.WHILE_STATEMENT ? body(az.whileStatement(¢))//
+                    : nodeType(¢) == ASTNode.DO_STATEMENT ? body(az.doStatement(¢))//
+                        : null);
+  }
+
   /** Determine whether a node is a simple name
    * @param pattern JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a simple
@@ -1257,6 +1308,38 @@ public interface iz {
     } catch (final IllegalArgumentException ¢) {
       monitor.logEvaluationError(box(l), ¢);
       return false;
+    }
+  }
+
+  interface literal {
+    /** @param ¢ JD
+     * @return */
+    static boolean classInstanceCreation(final ASTNode ¢) {
+      return ¢ != null && nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return */
+    static boolean fieldAccess(final Expression ¢) {
+      return ¢ != null && nodeTypeEquals(¢, FIELD_ACCESS);
+    }
+
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a literal
+     *         true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return literal(az.stringLiteral(¢), s);
     }
   }
 }

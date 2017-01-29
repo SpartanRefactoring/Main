@@ -55,7 +55,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
     final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {
       final SimpleName use = onlyOne(uses);
-      if (use == null || haz.unknownNumberOfEvaluations(use, nextStatement))
+      if (use == null || Coupling.unknownNumberOfEvaluations(use, nextStatement))
         return null;
     }
     for (final SimpleName use : uses)
