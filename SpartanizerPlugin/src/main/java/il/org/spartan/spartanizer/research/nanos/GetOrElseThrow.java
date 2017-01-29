@@ -8,32 +8,33 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** @nano if(X = null) return; <br>
- *       if(X = null) return null;
+/** <pre>
+ *  if(X) <br>
+ *    throw Y
+ *  return Z;
+ * </pre>
+ * 
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-08 */
-public class AssertNotNull extends NanoPatternTipper<IfStatement> {
+ * @since 2017-01-29 */
+public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
   private static final String description = "replace with azzert.notNull(X)";
-  private static final PreconditionNotNull rival = new PreconditionNotNull();
+  private static final AssertNotNull assertNotNull = new AssertNotNull();
 
   @Override public boolean canTip(final IfStatement ¢) {
-    return nullCheck(expression(¢))//
-        && returnsDefault(then(¢)) //
-        && rival.cantTip(¢)//
+    return assertNotNull.canTip(¢)//
+        && returns(extract.nextStatement(¢))//
     ;
   }
 
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
+        r.replace(¢, extract.singleStatement(ast("get().notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }
