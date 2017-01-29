@@ -13,11 +13,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/**
- * 
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2017-01-28
- */
+/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-01-28 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings({ "javadoc" })

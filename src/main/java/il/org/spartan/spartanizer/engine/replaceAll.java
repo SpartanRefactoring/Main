@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.engine;
+
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -108,7 +109,6 @@ public interface replaceAll {
       occurrences = collect.usesOf(name).in(range = ¢);
       return null;
     }
-
 
     public Inner of(final SimpleName ¢) {
       occurrences = collect.usesOf(name = ¢).in(range);

@@ -50,8 +50,7 @@ public enum normalize {
         : "START".equals(old) ? "A"
             : "z".equals(old) ? "x1"
                 : "Z".equals(old) ? "X1"
-                    : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1))
-                        : String.valueOf(old.charAt(0)) + (old.charAt(1) + 1);
+                    : old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1)) : String.valueOf(old.charAt(0)) + (old.charAt(1) + 1);
   }
 
   /** Separate the string to lines
