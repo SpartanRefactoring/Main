@@ -5,6 +5,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -26,7 +27,7 @@ public class CommandLineApplicator extends Applicator {
    * @return <code><b>this</b></code> applicator */
   @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
-      Arrays.asList(os).forEach(λ -> System.out.print(λ + " "));
+      as.list(os).forEach(λ -> System.out.print(λ + " "));
       System.out.println();
     });
     return this;

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+
 import org.junit.*;
 
 /** Test case for {@link RemoveRedundantSwitchReturn} and
