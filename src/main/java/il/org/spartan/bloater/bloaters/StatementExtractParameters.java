@@ -1,5 +1,6 @@
 package il.org.spartan.bloater.bloaters;
-
+import static il.org.spartan.lisp.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 import java.util.function.*;
 
@@ -8,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,17 +32,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
     implements TipperCategory.Bloater {
-  protected static final List<Integer> COMPLEX_TYPES = Arrays.asList(Integer.valueOf(ASTNode.CLASS_INSTANCE_CREATION),
-      Integer.valueOf(ASTNode.METHOD_INVOCATION), Integer.valueOf(ASTNode.INFIX_EXPRESSION), Integer.valueOf(ASTNode.ASSIGNMENT),
-      Integer.valueOf(ASTNode.CONDITIONAL_EXPRESSION), Integer.valueOf(ASTNode.LAMBDA_EXPRESSION));
-
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
   }
 
   @Override public Tip tip(final Statement s) {
-    if (!s.getAST().hasResolvedBindings() || !(s.getRoot() instanceof CompilationUnit)
-        || !(((CompilationUnit) s.getRoot()).getTypeRoot() instanceof ICompilationUnit))
+    final ASTNode root = s.getRoot();
+    if (!s.getAST().hasResolvedBindings() || !(root instanceof CompilationUnit)
+        || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
       return null;
     final Expression $ = choose(candidates(s));
     if ($ == null)
@@ -48,7 +47,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final ITypeBinding b = $.resolveTypeBinding();
     if (b == null)
       return null;
-    final CompilationUnit u = az.compilationUnit(s.getRoot());
+    final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
       return null;
     // TODO Ori Roth: use library code
@@ -159,9 +158,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
     final List<String> idns = new LinkedList<>();
     if (r.getAddedImports() != null)
-      idns.addAll(Arrays.asList(r.getAddedImports()));
+      idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)
-      idns.addAll(Arrays.asList(r.getAddedStaticImports()));
+      idns.addAll(as.list(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
       // TODO Ori Roth: do it better
       for (final ImportDeclaration oid : step.imports(u)) // Tough
@@ -232,13 +231,12 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return $;
   }
 
-  // TODO Ori Roth: extend (?)
   static boolean isComplicated(final Expression ¢) {
-    return COMPLEX_TYPES.contains(Integer.valueOf(¢.getNodeType()));
+    return iz.nodeTypeIn(¢, CLASS_INSTANCE_CREATION, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT, CONDITIONAL_EXPRESSION, LAMBDA_EXPRESSION);
   }
 
   private static Expression choose(final List<Expression> ¢) {
-    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+    return onlyOne(¢);
   }
 
   // TODO Ori Roth: move class to utility file

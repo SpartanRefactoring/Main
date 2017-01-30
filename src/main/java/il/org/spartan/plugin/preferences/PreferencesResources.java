@@ -1,7 +1,6 @@
 package il.org.spartan.plugin.preferences;
-
-import java.util.*;
 import java.util.concurrent.atomic.*;
+import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
 
@@ -70,7 +69,7 @@ public enum PreferencesResources {
     }
 
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
-      return Arrays.asList(TipperGroup.values()).stream().filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
+      return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
     private final Class<? extends TipperCategory> clazz;

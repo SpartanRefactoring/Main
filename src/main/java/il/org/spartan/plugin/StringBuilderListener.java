@@ -2,8 +2,8 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.Listener.*;
 
-import java.util.*;
-
+import il.org.spartan.*;
+import il.org.spartan.Separator;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
@@ -30,7 +30,7 @@ public class StringBuilderListener implements Listener {
 
   @Override public void tick(final Object... os) {
     $.append(newId()).append(": ");
-    Arrays.asList(os).forEach(λ -> $.append(new Separator(", ")).append(trivia.gist(λ)));
+    as.list(os).forEach(λ -> $.append(new Separator(", ")).append(trivia.gist(λ)));
     $.append('\n');
   }
 }

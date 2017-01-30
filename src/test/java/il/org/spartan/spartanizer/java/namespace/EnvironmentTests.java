@@ -25,7 +25,7 @@ public final class EnvironmentTests {
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
         final List<String> tmp = new ArrayList<>();
         tmp.add("a");
-        tmp.stream().forEach(λ -> y = λ);
+        tmp.forEach(λ -> y = λ);
       }
     }
   }

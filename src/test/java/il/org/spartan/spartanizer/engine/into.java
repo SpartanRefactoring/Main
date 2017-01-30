@@ -76,7 +76,7 @@ public enum into {
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
   public static List<Expression> es(final String... expressions) {
-    return Arrays.asList(expressions).stream().map(into::e).collect(Collectors.toList());
+    return Stream.of(expressions).map(into::e).collect(Collectors.toList());
   }
 
   /** Convert a given {@link String} into an {@link InfixExpression}, or fail
