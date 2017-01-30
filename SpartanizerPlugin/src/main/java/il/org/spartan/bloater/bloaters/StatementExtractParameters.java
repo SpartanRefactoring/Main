@@ -1,4 +1,5 @@
 package il.org.spartan.bloater.bloaters;
+
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
@@ -77,7 +78,6 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          /** [[SuppressWarningsSpartan]] */
           @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement v, final Statement ns,
               final ASTRewrite r, final TextEditGroup g) {
             final Block nb = p.getAST().newBlock();
@@ -86,10 +86,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             r.replace(s, nb, g);
           }
 
-          /** [[SuppressWarningsSpartan]] */
-          void goBlockParent(final Block p, final VariableDeclarationStatement v, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
-            final ListRewrite lr = r.getListRewrite(p, Block.STATEMENTS_PROPERTY);
-            lr.insertBefore(v, s, g);
+          void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+            final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+            lr.insertBefore(s, s, g);
             lr.insertBefore(ns, s, g);
             lr.remove(s, g);
           }

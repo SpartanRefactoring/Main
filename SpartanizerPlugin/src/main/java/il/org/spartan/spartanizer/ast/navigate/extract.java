@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -535,5 +536,13 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
+  }
+
+  public static SimpleName simpleName(final PrefixExpression $) {
+    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
+  }
+
+  public static SimpleName simpleName(final PostfixExpression $) {
+    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }
 }

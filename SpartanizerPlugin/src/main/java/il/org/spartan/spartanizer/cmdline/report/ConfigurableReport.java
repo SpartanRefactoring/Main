@@ -168,8 +168,7 @@ public interface ConfigurableReport {
         }
         assert bf != null;
         assert id != null;
-        as.list(ReportGenerator.Util.functions(""))
-            .forEach(λ -> report().put(id + λ.name(), bf.apply(λ.function().run(i), λ.function().run(n))));
+        as.list(ReportGenerator.Util.functions("")).forEach(λ -> report().put(id + λ.name(), bf.apply(λ.function().run(i), λ.function().run(n))));
       }
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
