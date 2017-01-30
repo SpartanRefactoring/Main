@@ -19,13 +19,13 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** convert</br>
- * <code>polite?"Eat your meal.":"Eat your meal, please"</code>,
- * <code>polite?"thanks for the meal":"I hated the meal"</code> </br>
+ * {@code polite?"Eat your meal.":"Eat your meal, please"},
+ * {@code polite?"thanks for the meal":"I hated the meal"} </br>
  * into </br>
- * <code>"Eat your meal"+(polite?".":", please")</code>,
- * <code>(polite?"thanks for":"I hated")+"the meal"</code></br>
- * Will not separate words, for example <code> f() ? "True" : "False" </code>
- * will not be changed
+ * {@code "Eat your meal"+(polite?".":", please")},
+ * {@code (polite?"thanks for":"I hated")+"the meal"}</br>
+ * Will not separate words, for example {@code f() ? "True" : "False" } will not
+ * be changed
  * @author Dor Ma'ayan
  * @author Niv Shalmon
  * @since 2016-09-1 */

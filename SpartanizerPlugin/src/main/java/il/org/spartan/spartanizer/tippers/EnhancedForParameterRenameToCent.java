@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert <code>for(int i:as)sum+=i;</code> to <code>f(int ¢:as)sum+=¢;</code>
+/** Convert {@code for(int i:as)sum+=i;} to <code>f(int ¢:as)sum+=¢;</code>
  * @author Yossi Gil
  * @author Doron Meshulam
  * @since 2016-09 */

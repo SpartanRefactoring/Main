@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes the "value" member from annotations that only have a single member,
- * converting <code>@SuppressWarnings(value = "unchecked")</code> to
- * <code>@SuppressWarnings("unchecked")</code>
+ * converting {@code @SuppressWarnings(value = "unchecked")} to
+ * {@code @SuppressWarnings("unchecked")}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationDiscardValueName //

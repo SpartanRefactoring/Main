@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 
-/** convert <code>int a = 3;return a;</code> into <code>return a;</code>
+/** convert {@code int a = 3;return a;} into <code>return a;</code>
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnExpression extends $FragementAndStatement//

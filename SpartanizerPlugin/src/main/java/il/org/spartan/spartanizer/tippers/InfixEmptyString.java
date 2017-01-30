@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to remove the empty String "" in String conversion
- * expression like <code> "" + X </code> but ONLY if X is a String.
+ * expression like {@code "" + X } but ONLY if X is a String.
  * @author Matteo Orru' <code><matt.orru [at] gmail.com></code>
  * @since 2016-08-14 */
 public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression>//

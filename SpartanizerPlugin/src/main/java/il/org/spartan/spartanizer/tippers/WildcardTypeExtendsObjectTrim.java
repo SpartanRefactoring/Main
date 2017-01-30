@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert <code>? extends Object</code> to <code>?</code>
+/** Convert {@code ? extends Object} to <code>?</code>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
 public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType>//

@@ -18,8 +18,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert <code>int a=3;for(;p;){++i}</code> to
- * <code>for(int a=3;p;) {++i;}</code>
+/** convert {@code int a=3;for(;p;){++i}} to {@code for(int a=3;p;) {++i;}}
  * @author Alex Kopzon
  * @since 2016 */
 public final class FragmentToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//

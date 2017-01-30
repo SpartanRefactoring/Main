@@ -51,7 +51,7 @@ public enum haz {
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
-   * @return <code> true </code> iff ¢ contains any continue statement
+   * @return {@code true } iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
     return ¢ != null

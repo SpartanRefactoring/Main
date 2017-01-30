@@ -14,29 +14,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Expand cases in a {@link SwitchStatement}: <code>
- * switch (x) {
- *   case 1:
- *     f(1);
- *   case 2:
- *     f(2);
- *     throw new Exception();
- *   default:
- *     f(3);
- * }
- * </code> turns into <code>
- * switch (x) {
- *   case 1:
- *     f(1);
- *     f(2);
- *     throw new Exception();
- *   case 2:
- *     f(2);
- *     throw new Exception();
- *   default:
- *     f(3);
- * }
- * </code> Test file: {@link Issue0977}
+/** Expand cases in a {@link SwitchStatement}: {@code switch (x) { case 1: f(1);
+ * case 2: f(2); throw new Exception(); default: f(3); } } turns into
+ * {@code switch (x) { case 1: f(1); f(2); throw new Exception(); case 2: f(2);
+ * throw new Exception(); default: f(3); } } Test file: {@link Issue0977}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement>//

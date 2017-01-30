@@ -16,10 +16,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Converts <code>x.size()==0</code> to <code>x.isEmpty()</code>,
- * <code>x.size()!=0 </code> and <code>x.size()>=1</code>
- * <code>!x.isEmpty()</code>, <code>x.size()<0</code> to <code><b>false</b>,and
- * <code>x.size()>=0</code> to <code><b>true</b>.
+/** Converts {@code x.size()==0} to <code>x.isEmpty()</code>,
+ * {@code x.size()!=0 } and <code>x.size()>=1</code> {@code !x.isEmpty()},
+ * <code>x.size()<0</code> to <code><b>false</b>,and
+ * {@code x.size()>=0} to <code><b>true</b>.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @author Yossi Gil
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>

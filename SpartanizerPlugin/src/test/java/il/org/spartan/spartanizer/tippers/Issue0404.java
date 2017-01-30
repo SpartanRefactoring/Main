@@ -32,11 +32,11 @@ public class Issue0404 {
    * methods as follows (variations are possible):
    * <ul>
    * <li><code>a()<code>, <code>b<()code>, <code>c()<code>, ...
-   * <li>and then, when you need to study a failure of <code>w()</code> better,
-   * <code>wa()</code>, <code>wb()</code> <code>wc()</code>, etc.
-   * <li>and then, when you fixed the fault at <code>w()</code>, proceed with
-   * series, <code>x()</code>, <code>y()</code>, etc.
-   * <li>and then, when you reached <code>z()</code>, and more names are needed,
+   * <li>and then, when you need to study a failure of {@code w()} better,
+   * {@code wa()}, <code>wb()</code> <code>wc()</code>, etc.
+   * <li>and then, when you fixed the fault at {@code w()}, proceed with series,
+   * {@code x()}, <code>y()</code>, etc.
+   * <li>and then, when you reached {@code z()}, and more names are needed,
    * rename the sequence of methods generated so far:
    *
    * <pre>
@@ -69,7 +69,7 @@ public class Issue0404 {
     dig.class.hashCode();
   }
 
-  /** Make sure that {@link dig} is an <code>interface</code> */
+  /** Make sure that {@link dig} is an {@code interface} */
   @Test public void b() {
     assert dig.class.isInterface();
   }
