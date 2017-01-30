@@ -31,13 +31,13 @@ import il.org.spartan.utils.*;
  * <br>
  * The currently available pattern variables ('i' denotes a sequence of digits):
  * <ul>
- * <li><code>$Xi, $Mi, $Ni, $Li</code>: Should be of type {@link Name} within
+ * <li>{@code $Xi, $Mi, $Ni, $Li}: Should be of type {@link Name} within
  * the pattern. Corresponds<br>
  * to: {@link Expression}, {@link MethodInvokation}, {@link Name},
  * {@link Literal}.</li>
- * <li><code>$Bi();</code> : Corresponds to {@link Block} and {@link Statement}
+ * <li>{@code $Bi();} : Corresponds to {@link Block} and {@link Statement}
  * </li>
- * <li><code>$Ai();</code> : Should be an argument within
+ * <li>{@code $Ai();} : Should be an argument within
  * {@link MethodInvocation}. <br>
  * Corresponds to arguments of {@link MethodInvocation}</li>
  * </ul>

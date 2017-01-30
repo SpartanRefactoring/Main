@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace {@code x = x # a } by <code> x #= a </code> where # can be any
+/** Replace {@code x = x # a } by {@code x #= a } where # can be any
  * operator. Tested in {@link Issue103}
  * @author Alex Kopzon
  * @since 2016 */

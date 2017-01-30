@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert {@code int a=E;for(e: C(a)) S;} to <code>for(e: C(E)) S;</code> to
+/** convert {@code int a=E;for(e: C(a)) S;} to {@code for(e: C(E)) S;} to
  * {@code for(int a=3;p;) {++i;}}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-27 */

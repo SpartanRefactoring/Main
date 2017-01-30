@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace {@code 1*X} by <code>X</code>
+/** Replace {@code 1*X} by {@code X}
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression>//

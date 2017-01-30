@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert {@code throw X;statement;} to <code>throw X;</code>.
+/** Convert {@code throw X;statement;} to {@code throw X;}.
  * @author Yossi Gil
  * @since 2016 */
 public final class SequencerNotLastInBlock<S extends Statement> extends ReplaceToNextStatement<S>//

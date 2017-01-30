@@ -12,6 +12,8 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -113,7 +115,26 @@ public class Toolbox {
             new LambdaRemoveParenthesis(), //
             new LambdaRenameSingleParameterToLambda(), //
             null) //
-        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
+        .add(EnhancedForStatement.class, //
+            new Aggregate(), //
+            new Collect(), //
+            new CountIf(), //
+            new FindFirst(), //
+            new ForEach(), //
+            new ForEachSuchThat(), //
+            new HoldsForAll(), //
+            new HoldsForAny(), //
+            null) //
+        .add(ForStatement.class, //
+            new ForLoop.FindFirst(), //
+            new ForEachInRange(), //
+            null) //
+        .add(WhileStatement.class, //
+            new While.CountIf(), //
+            // new Exhaust(), // R.I.P
+            null)//
+        .add(ExpressionStatement.class, //
+            new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
             new ModifierRedundant(), //
             new ModifierFinalAbstractMethodRedundant(), //
@@ -203,7 +224,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-             new InfixIndexOfToStringContains(), // v 2.7
+            new InfixIndexOfToStringContains(), // v 2.7
             new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
@@ -397,15 +418,13 @@ public class Toolbox {
 
   @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, final Tipper<N>... ts) {
     final Integer nodeType = wizard.classToNodeType.get(c);
-    for (final Tipper<N> ¢ : ts)
-      get(nodeType.intValue()).remove(¢);
+    Stream.of(ts).forEach(λ -> get(nodeType.intValue()).remove(λ));
     return this;
   }
 
-  public List<Tipper<? extends ASTNode>> getAllTippers() {
+  @SuppressWarnings("boxing") public List<Tipper<? extends ASTNode>> getAllTippers() {
     final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
-    for (int ¢ = 0; ¢ < implementation.length; ++¢)
-      $.addAll(get(¢));
+    range.from(0).to(implementation.length).forEach(λ -> $.addAll(get(λ)));
     return $;
   }
 
@@ -429,20 +448,12 @@ public class Toolbox {
     return Stream.of(implementation).map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
   }
 
-  public int tippersCount() {
-    int $ = 0;
-    for (final List<?> ¢ : implementation)
-      if (¢ != null)
-        $ += ¢.size();
-    return $;
+  @SuppressWarnings("boxing") public int tippersCount() {
+    return Stream.of(implementation).filter(Objects::nonNull).map(List::size).reduce((x, y) -> x + y).get();
   }
 
-  public int nodesTypeCount() {
-    int $ = 0;
-    for (final List<?> ¢ : implementation)
-      if (¢ != null)
-        $ += 1;
-    return $;
+  @SuppressWarnings("boxing") public int nodesTypeCount() {
+    return Stream.of(implementation).filter(Objects::nonNull).map(λ -> 1).reduce((x, y) -> x + y).get();
   }
 
   <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
