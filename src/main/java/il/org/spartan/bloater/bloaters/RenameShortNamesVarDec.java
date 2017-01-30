@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
@@ -44,11 +45,11 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
       final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
       for (final Object v : az.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclarationFragment) v).getName();
-        if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
+        if (!in($.getIdentifier(), namer.specials) && $.getIdentifier().length() > 1)
           return null;
         if (in($.getIdentifier(), "$")) {
           prev.add($);
-          after.add(s.getAST().newSimpleName("ret"));
+          after.add(s.getAST().newSimpleName("result"));
           continue;
         }
         if (s.getParent() == null)

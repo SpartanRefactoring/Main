@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public enum Coupling {
   IFF, IMPLIED, INDEPENDENT,;
   @SuppressWarnings("unused") public static Inner of(final ASTNode next) {
-    return to -> null;
+    return λ -> null;
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {

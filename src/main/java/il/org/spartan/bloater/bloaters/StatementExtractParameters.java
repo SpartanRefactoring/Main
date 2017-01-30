@@ -78,10 +78,10 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement v, final Statement ns,
+          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns,
               final ASTRewrite r, final TextEditGroup g) {
             final Block nb = p.getAST().newBlock();
-            nb.statements().add(v);
+            nb.statements().add(s);
             nb.statements().add(ns);
             r.replace(s, nb, g);
           }
