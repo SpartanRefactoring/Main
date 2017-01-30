@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** pushes down "<code>!</code>", the negation operator as much as possible,
- * using the de-Morgan and other simplification rules.
+/** pushes down "{@code !}", the negation operator as much as possible, using
+ * the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//

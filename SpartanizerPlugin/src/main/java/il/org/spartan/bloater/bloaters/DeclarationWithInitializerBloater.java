@@ -12,13 +12,13 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Test case is {@link Issue0996} Issue #996 convert <code>
+/** Test case is {@link Issue0996} Issue #996 convert {@code
  * int a = 3;
- * </code> to <code>
+ * } to {@code
  * int a;
  * a = 3;
- * </code> For now the expander do not expand if the declaration has some
- * annotation (so that no warnings would be created)
+ * } For now the expander do not expand if the declaration has some annotation
+ * (so that no warnings would be created)
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDeclarationStatement>//

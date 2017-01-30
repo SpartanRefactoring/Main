@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts <code>x==y?y:x</code> into <code>x</code>
+/** converts {@code x==y?y:x} into <code>x</code>
  * @author Dan Abramovich
  * @since 27-11-2016 */
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression>//

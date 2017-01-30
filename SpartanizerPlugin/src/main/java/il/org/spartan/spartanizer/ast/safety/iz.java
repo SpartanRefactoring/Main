@@ -262,7 +262,7 @@ public interface iz {
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
-   * @return <code> true </code> iff ¢ contains any continue statement
+   * @return {@code true } iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
     return ¢ != null
@@ -1016,13 +1016,13 @@ public interface iz {
 
   /** As {@link iz#sequencer}, but also accepts complex sequencers, i.e. a
    * statement that makes the following statements unreachable. Example:
-   * <code>if (b)
+   * {@code if (b)
    *   return 1;
    * else
    *   return 2;
    * assert false: "Unreachable";
-   * </code> snippet as this usually do not compile: nevertheless, complex
-   * sequencers are relevant in switch statements.
+   * } snippet as this usually do not compile: nevertheless, complex sequencers
+   * are relevant in switch statements.
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer
    *         (may be complex) */

@@ -8,8 +8,8 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert <code>if (true) x; else {y;} </code> into <code>x;</code> and
- * <code>if (false) x; else {y;}  </code> into <code>y;</code> .
+/** convert {@code if (true) x; else {y;} } into {@code x;} and {@code if
+ * (false) x; else {y;} } into {@code y;} .
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */

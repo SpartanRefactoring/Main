@@ -27,14 +27,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * ret = a;
  * return ret;
  * }
- * </code> ==> <code>
- * int f(int ret) {
- * int i1 = 5;
- * x(i1);
- * ret = i1;
- * return ret;
- * }
- * </code>
+ * </code> ==> {@code int f(int ret) { int i1 = 5; x(i1); ret = i1; return ret;
+ * } }
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: Raviv Rachmiel take care of single var decleration, tests

@@ -12,9 +12,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert <code>if(a){f();return;}g();</code> into
- * <code>if(a){f();return;}g();</code> f(); } </code> provided that this
- * <code><b>if</b></code> statement is the last statement in a method.
+/** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
+ * f(); } </code> provided that this <code><b>if</b></code> statement is the
+ * last statement in a method.
  * @author Yossi Gil
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//

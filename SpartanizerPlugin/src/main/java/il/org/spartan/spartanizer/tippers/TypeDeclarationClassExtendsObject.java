@@ -7,8 +7,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Converts <code>class C extends Object {...}</code> to
- * <code>class C {...}</code> to
+/** Converts {@code class C extends Object {...}} to {@code class C {...}} to
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-15 */
 public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration>//

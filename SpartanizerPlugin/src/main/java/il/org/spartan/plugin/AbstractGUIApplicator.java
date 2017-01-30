@@ -264,7 +264,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u the compilation to Spartanize
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
-   * @throws CoreException exception from the <code>pm</code> */
+   * @throws CoreException exception from the {@code pm} */
   private int performRule(final ICompilationUnit u) throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());

@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public enum flatten {
   ;
   /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
-   * an expression such as <code>(a + b) + c</code> whose inner form is roughly
-   * "+(+(a,b),c)", into <code>a + b + c</code>, whose inner form is (roughly)
+   * an expression such as {@code (a + b) + c} whose inner form is roughly
+   * "+(+(a,b),c)", into {@code a + b + c}, whose inner form is (roughly)
    * "+(a,b,c)".
    * @param $ JD
    * @return a duplicate of the argument, with the a flattened list of
