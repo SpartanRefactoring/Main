@@ -51,7 +51,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     };
   }
 
-  public SimpleName newCurrent(final EnhancedForStatement s) {
-    return s.getAST().newSimpleName(namer.current);
+  public static SimpleName newCurrent(final EnhancedForStatement ¢) {
+    return ¢.getAST().newSimpleName(namer.current);
   }
 }
