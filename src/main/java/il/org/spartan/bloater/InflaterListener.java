@@ -7,7 +7,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 import java.util.List;
-import java.util.Map.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
