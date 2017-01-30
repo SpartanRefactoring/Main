@@ -13,9 +13,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert {@code
- * int a = 3; while(Panic) { ++OS.is.in.danger; } } to {@code for(int a = 3;
- * Panic;) { ++OS.is.in.danger; } }
+/** convert {@code int a = 3; while(Panic) { ++OS.is.in.danger; } } to
+ * {@code for(int a = 3; Panic;) { ++OS.is.in.danger; } }
  * @author Alex Kopzon
  * @since 2016 */
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//

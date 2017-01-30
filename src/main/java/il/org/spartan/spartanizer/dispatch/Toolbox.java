@@ -203,7 +203,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            // new InfixIndexOfToStringContains(), // v 2.7
+             new InfixIndexOfToStringContains(), // v 2.7
             new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
@@ -219,9 +219,6 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            // new LispFirstElement(), //
-            // new LispLastElement(), //
-            // new StatementsThroughStep(), //
             null)//
         .add(ParenthesizedExpression.class, //
             new ParenthesizedRemoveExtraParenthesis(), //

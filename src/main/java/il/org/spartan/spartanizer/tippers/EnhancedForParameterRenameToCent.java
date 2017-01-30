@@ -32,16 +32,16 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));
-    if (sn == null || in(sn.getIdentifier(), "¢"))
+    if (sn == null || in(sn.getIdentifier(), namer.current))
       return null;
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName $ = d.getName();
-    if (in(identifier($), "$", "¢", "__", "_") || !JohnDoe.property(d))
+    if (namer.isSpecial($) || !JohnDoe.property(d))
       return null;
     final Statement body = body(s);
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
-    final SimpleName ¢ = s.getAST().newSimpleName("¢");
+    final SimpleName ¢ = newCurrent(s);
     if (m != null)
       m.exclude(s);
     return new Tip(description(s), s, getClass(), body) {
@@ -49,5 +49,9 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
         Tippers.rename($, ¢, s, r, g);
       }
     };
+  }
+
+  public SimpleName newCurrent(final EnhancedForStatement s) {
+    return s.getAST().newSimpleName(namer.current);
   }
 }

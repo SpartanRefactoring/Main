@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -23,7 +24,7 @@ public interface namer {
       return¢ = "$", //
       current = "¢", //
       lambda = "λ", //
-      standardNames[] = { forbidden, return¢, anonymous, current, lambda };
+      specials[] = { forbidden, return¢, anonymous, current, lambda };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
@@ -130,6 +131,10 @@ public interface namer {
     for (final String ¢ : lisp.rest(ss))
       $ += ¢;
     return $;
+  }
+
+  static boolean isSpecial(final SimpleName $) {
+    return in($.getIdentifier(), specials);
   }
 
   class GenericsCategory {

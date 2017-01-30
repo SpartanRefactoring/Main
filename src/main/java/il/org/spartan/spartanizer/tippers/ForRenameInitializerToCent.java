@@ -40,7 +40,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);
-    if (n == null || in(n.getIdentifier(), "$", "¢", "__", "_") || !JohnDoe.property(x.getType(), n))
+    if (n == null || in(n.getIdentifier(), namer.specials) || !JohnDoe.property(x.getType(), n))
       return null;
     final Statement body = $.getBody();
     if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
@@ -49,7 +49,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
       m.exclude(body);
       m.exclude($);
     }
-    final SimpleName ¢ = x.getAST().newSimpleName("¢");
+    final SimpleName ¢ = x.getAST().newSimpleName(namer.current);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, $, r, g);

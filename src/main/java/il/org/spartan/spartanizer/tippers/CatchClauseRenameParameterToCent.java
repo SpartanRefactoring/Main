@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
     implements TipperCategory.Centification {
-  @Override public String description(@SuppressWarnings("unused") final CatchClause ¢) {
-    return "Rename the parameter of the catch clause";
+  @Override public String description(final CatchClause ¢) {
+    return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
   }
 
   @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
@@ -30,15 +30,15 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;
-    if (in($.getIdentifier(), "$", "¢", "__", "_"))
+    if (namer.isSpecial($))
       return null;
     final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(c);
-    final SimpleName ¢ = c.getAST().newSimpleName("¢");
-    return new Tip("Rename paraemter " + $ + " to ¢ ", c, getClass()) {
+    final SimpleName ¢ = c.getAST().newSimpleName(namer.current);
+    return new Tip(description(c), c.getException(), getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, c, r, g);
       }
