@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -51,7 +52,7 @@ public enum AnalyzerOptions {
   public static void parseArguments(final String[] args) {
     if (args.length < 2)
       assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
-    Arrays.asList(args).forEach(AnalyzerOptions::parseArgument);
+    as.list(args).forEach(AnalyzerOptions::parseArgument);
     System.out.println(AnalyzerOptions.options);
   }
 

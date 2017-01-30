@@ -168,7 +168,7 @@ public interface ConfigurableReport {
         }
         assert bf != null;
         assert id != null;
-        Arrays.asList(ReportGenerator.Util.functions(""))
+        as.list(ReportGenerator.Util.functions(""))
             .forEach(λ -> report().put(id + λ.name(), bf.apply(λ.function().run(i), λ.function().run(n))));
       }
 
