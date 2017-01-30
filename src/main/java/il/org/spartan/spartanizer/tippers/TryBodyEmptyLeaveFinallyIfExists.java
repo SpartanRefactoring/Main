@@ -8,8 +8,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace this pattern <code>try {} catch(..) {a;} ... finally {x;}</code>
- * with <code>{x;}</code>, or nothing, if there is nothing in <code>x;</code>
+/** Replace this pattern {@code try {} catch(..) {a;} ... finally {x;}} with
+ * {@code {x;}}, or nothing, if there is nothing in {@code x;}
  * @author Sapir Bismot
  * @since 2016-11-21 */
 public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TryStatement>//

@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.dom.*;
  * <p>
  * A variable's short name is a single-character name, determined by the first
  * character in the last word of the type's name.<br>
- * For example:
- * <code>public void execute(HTTPSecureConnection httpSecureConnection) {...}</code>
- * would become <code>public void execute(HTTPSecureConnection c) {...} </code>
+ * For example: {@code public void execute(HTTPSecureConnection
+ * httpSecureConnection) {...}} would become {@code public void
+ * execute(HTTPSecureConnection c) {...} }
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-08-25 */
 @SuppressWarnings("static-method")
@@ -55,7 +55,7 @@ public final class JavaTypeNameParser {
    * variable name is considered to be a generic variation of its type name if
    * the variable name is equal to the type name, either one of them is
    * contained within the other, or it is an abbreviation of the type name (For
-   * example: <code>sb</code> is a generic variation of {@link StringBuilder})
+   * example: {@code sb} is a generic variation of {@link StringBuilder})
    * @param variableName the name of the variable
    * @return <code><b>true</b></code> <em>iff</em>the variable name is a generic
    *         variation of the type name, false otherwise */

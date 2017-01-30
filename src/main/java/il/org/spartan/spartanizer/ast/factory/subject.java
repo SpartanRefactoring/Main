@@ -338,7 +338,7 @@ public enum subject {
     }
 
     /** Transform the inner into a block if it's possible
-     * @return a Block statement <code>or</code> a <code>null</code> */
+     * @return a Block statement {@code or} a <code>null</code> */
     public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }

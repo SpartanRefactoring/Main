@@ -73,8 +73,8 @@ public interface type {
   /** @param x JD
    * @return <code><b>true</b></code> <i>if</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
-   *         used in applying the <code>+</code> operator to concatenate
-   *         strings. concatenation. */
+   *         used in applying the {@code +} operator to concatenate strings.
+   *         concatenation. */
   static boolean isNotString(final Expression ¢) {
     return !in(of(¢), STRING, ALPHANUMERIC);
   }

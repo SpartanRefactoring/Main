@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** expand additive terms, e.g., convert <code>a-(b+c)</code> to /**
+/** expand additive terms, e.g., convert {@code a-(b+c)} to /**
  * code>a-b-c</code>
  * @author Yossi Gil
  * @since 2016 */

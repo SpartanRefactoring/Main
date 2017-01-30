@@ -11,15 +11,15 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert <code>
+/** convert {@code
  * for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()))
  *  ;
  * return $ + ""
- * </code> to <code>
+ * } to {@code
  * for (String line = r.readLine();; line = r.readLine(), $.append(line).append(System.lineSeparator()))
  *  if ( line == null)
  *    return $ + "";
- * </code>
+ * }
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-/** Replace <code>0+X</code>, <code>X+0</code>
+/** Replace {@code 0+X}, <code>X+0</code>
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
