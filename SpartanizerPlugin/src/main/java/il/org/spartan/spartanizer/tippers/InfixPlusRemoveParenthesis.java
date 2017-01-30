@@ -19,7 +19,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating <br/>
- * {@code x+\"\"+(4) } goes to <code> x+\"\"+4 </code>
+ * {@code x+\"\"+(4) } goes to {@code x+\"\"+4 }
  * @author Niv Shalmon
  * @since 2016-09-11 */
 public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression>//

@@ -142,8 +142,8 @@ public enum az {
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is one of the six comparison operators: {@code <}, <code><=</code>,
-   * {@code >}, <code>>=</code>, <code>!=</code>, or <code>==</code>.
+   * is one of the six comparison operators: {@code <}, {@code <=},
+   * {@code >}, {@code >=}, <code>!=</code>, or <code>==</code>.
    * @param $ result
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */

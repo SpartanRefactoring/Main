@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert {@code T extends Object} to <code>T</code>
+/** Convert {@code T extends Object} to {@code T}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//

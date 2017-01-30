@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Converts {@code int a=3;return a;} into <code>return 3;</code>
+/** Converts {@code int a=3;return a;} into {@code return 3;}
  * @author Yossi Gil
  * @since 2015-08-07
  * @DisableSpartan */

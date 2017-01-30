@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert {@code ""+x} to <code>x+""</code>
+/** Convert {@code ""+x} to {@code x+""}
  * @author Dan Greenstein
  * @author Niv Shalmon
  * @since 2016 */

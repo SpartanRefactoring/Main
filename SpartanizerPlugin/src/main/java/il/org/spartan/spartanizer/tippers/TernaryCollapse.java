@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Converts {@code a?b?x:z:z}into <code>a&&b?x:z</code>
+/** Converts {@code a?b?x:z:z}into {@code a&&b?x:z}
  * @author Yossi Gil
  * @since 2015-9-19 */
 public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression>//

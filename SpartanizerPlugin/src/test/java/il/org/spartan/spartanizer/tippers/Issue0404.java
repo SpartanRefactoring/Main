@@ -33,9 +33,9 @@ public class Issue0404 {
    * <ul>
    * <li><code>a()<code>, <code>b<()code>, <code>c()<code>, ...
    * <li>and then, when you need to study a failure of {@code w()} better,
-   * {@code wa()}, <code>wb()</code> <code>wc()</code>, etc.
+   * {@code wa()}, {@code wb()} <code>wc()</code>, etc.
    * <li>and then, when you fixed the fault at {@code w()}, proceed with series,
-   * {@code x()}, <code>y()</code>, etc.
+   * {@code x()}, {@code y()}, etc.
    * <li>and then, when you reached {@code z()}, and more names are needed,
    * rename the sequence of methods generated so far:
    *
