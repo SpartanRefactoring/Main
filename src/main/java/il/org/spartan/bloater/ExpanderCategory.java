@@ -1,4 +1,5 @@
 package il.org.spartan.bloater;
+
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
