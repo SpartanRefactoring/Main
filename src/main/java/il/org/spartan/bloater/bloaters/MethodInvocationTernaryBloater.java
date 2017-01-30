@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Test case is {@link Issue0984} Issue #984 convert {@code o.f(x ? a : b); }
- * to <code> if (x) o.f(a); else o.f(b); </code>
+ * to {@code if (x) o.f(a); else o.f(b); }
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//

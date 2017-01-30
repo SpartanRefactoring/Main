@@ -14,9 +14,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Expands {@code a += 3} to <code>a = a + 3</code>. Capable of dealing with
+/** Expands {@code a += 3} to {@code a = a + 3}. Capable of dealing with
  * inclusion and all operator types: {@code a |= b &= c} ->
- * {@code a = a | (b &= c)} -> <code>a = a | (b = b & c)</code> Test file:
+ * {@code a = a | (b &= c)} -> {@code a = a | (b = b & c)} Test file:
  * {@link Issue1001}
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-28 */

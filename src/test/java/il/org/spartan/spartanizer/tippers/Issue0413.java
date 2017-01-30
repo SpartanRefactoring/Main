@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.cmdline.*;
  * Note that:
  * <ol>
  * <li>Fluent API class {@link azzert} is used for testing.
- * <li><code>static</code> members of fluent API class {@link azzert} are used
+ * <li>{@code static} members of fluent API class {@link azzert} are used
  * for fluent coding
  * <ul>
  * <li>azzert.that(Essence.stringRemove("abc"), iz("abc"));
@@ -63,11 +63,11 @@ public class Issue0413 {
    * recommendations:
    * <ul>
    * <li><b>DRY</b>: Don't Repeat Yourself; if a method is annotated with a
-   * <code>@Test</code>, it is a matter of DRY to include the word `test` in the
+   * {@code @Test}, it is a matter of DRY to include the word `test` in the
    * method's name
    * <li><b>Flavors</b>: name a test that prove that something is not done,
-   * <code>chocolate()</code>. If there are several, by names
-   * <code>chocolate01</code>, code>chocolate02</code>, etc
+   * {@code chocolate()}. If there are several, by names
+   * {@code chocolate01}, code>chocolate02</code>, etc
    * </ul>
   */
   @Test public void chocolate0() {

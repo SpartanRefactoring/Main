@@ -132,12 +132,10 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   }
 
   private void removeListeners() {
-    for (final Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
-      InflateHandler.removeListeners(text, ¢.getValue(), ¢.getKey());
+    externalListeners.entrySet().forEach(λ -> InflateHandler.removeListeners(text, λ.getValue(), λ.getKey()));
   }
 
   private void restoreListeners() {
-    for (final Entry<Integer, List<Listener>> ¢ : externalListeners.entrySet())
-      InflateHandler.addListeners(text, ¢.getValue(), ¢.getKey());
+    externalListeners.entrySet().forEach(λ -> InflateHandler.addListeners(text, λ.getValue(), λ.getKey()));
   }
 }

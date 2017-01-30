@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace {@code (long)X} by <code>1L*X</code>
+/** Replace {@code (long)X} by {@code 1L*X}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
