@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace {@code X-0} by <code>X</code> and <code>0-X</code> by <code>-X<code>
+/** Replace {@code X-0} by {@code X} and <code>0-X</code> by <code>-X<code>
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @author Dor Ma'ayan

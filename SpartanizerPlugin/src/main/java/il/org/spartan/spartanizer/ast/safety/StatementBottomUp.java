@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.ast.safety;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -152,29 +153,20 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     );
   }
 
-  protected R reduceResources(final TryStatement s) {
-    R $ = reduce();
-    for (final VariableDeclarationExpression ¢ : resources(s))
-      $ = reduce($, map(¢));
-    return $;
+  protected R reduceResources(final TryStatement ¢) {
+    return resources(¢).stream().map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
   protected R map(final VariableDeclarationExpression ¢) {
     return reduce(fragments(¢));
   }
 
-  protected R reduce(final List<VariableDeclarationFragment> fs) {
-    R $ = reduce();
-    for (final VariableDeclarationFragment ¢ : fs)
-      $ = reduce($, map(¢.getInitializer()));
-    return $;
+  protected R reduce(final List<VariableDeclarationFragment> ¢) {
+    return ¢.stream().map(VariableDeclarationFragment::getInitializer).map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
-  protected R reduceCatches(final TryStatement s) {
-    R $ = reduce();
-    for (final CatchClause ¢ : catchClauses(s))
-      $ = reduce($, map(¢.getBody()));
-    return $;
+  protected R reduceCatches(final TryStatement ¢) {
+    return catchClauses(¢).stream().map(CatchClause::getBody).map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
   protected R atomic(@SuppressWarnings("unused") final TypeDeclarationStatement __) {

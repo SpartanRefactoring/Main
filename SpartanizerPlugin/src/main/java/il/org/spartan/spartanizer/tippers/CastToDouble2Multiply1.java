@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace {@code (double)X} by <code>1.*X</code>
+/** Replace {@code (double)X} by {@code 1.*X}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */

@@ -19,16 +19,16 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** An expander to extract complex parameters from {@link Statement}: <code>
+/** An expander to extract complex parameters from {@link Statement}: {@code
  * f(1 + a[b ? 1 : 2]);
- * </code> ==> <code>
+ * } ==> {@code
  * int i = 1 + a[b ? 1 : 2];
  * f(i);
- * </code> ==> <code>
+ * } ==> {@code
  * int j = b ? 1 : 2;
  * int i = 1 + a[j];
  * f(i);
- * </code>
+ * }
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
@@ -172,8 +172,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   /** Required due to bug in eclipse (seams so). Given
-   * <code>T extends MyObject</code>, <code>T[]</code> turns with binding into
-   * <code>? extends E[]</code>. The problem is this type is considered as
+   * {@code T extends MyObject}, <code>T[]</code> turns with binding into
+   * {@code ? extends E[]}. The problem is this type is considered as
    * {@link ArrayType} rather than {@link WildcardType}! Thus the manual fix.
    * Real world example: <code>
    * class C<E extends Enum<?>> {
@@ -192,7 +192,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    *   }
    *   ...
    * }
-   * </code> and the {@link Type} <code>? extends E[]</code> is considered as
+   * </code> and the {@link Type} {@code ? extends E[]} is considered as
    * {@link ArrayType} rather than {@link WildcardType}!
    * @param t
    * @return */

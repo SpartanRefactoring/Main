@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes unnecessary uses of Boolean.valueOf, e.g.,
- * {@code Boolean.valueOf(true) } into <code>Boolean.TRUE</code>
+ * {@code Boolean.valueOf(true) } into {@code Boolean.TRUE}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-04 */
 public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation>//

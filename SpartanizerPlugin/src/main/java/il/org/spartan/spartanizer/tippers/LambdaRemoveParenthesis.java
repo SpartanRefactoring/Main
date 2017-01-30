@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert {@code (x)->x} to <code>x->x</code>
+/** convert {@code (x)->x} to {@code x->x}
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.Inlining {
