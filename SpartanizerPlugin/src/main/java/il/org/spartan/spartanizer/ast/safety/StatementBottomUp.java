@@ -119,6 +119,10 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     }
   }
 
+  protected R map(final VariableDeclarationStatement ¢) {
+    return reduce(fragments(¢));
+  }
+
   protected R map(final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
@@ -155,9 +159,13 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return $;
   }
 
-  public R map(final VariableDeclarationExpression x) {
+  protected R map(final VariableDeclarationExpression ¢) {
+    return reduce(fragments(¢));
+  }
+
+  protected R reduce(final List<VariableDeclarationFragment> fs) {
     R $ = reduce();
-    for (final VariableDeclarationFragment ¢ : fragments(x))
+    for (final VariableDeclarationFragment ¢ : fs)
       $ = reduce($, map(¢.getInitializer()));
     return $;
   }
@@ -169,15 +177,8 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return $;
   }
 
-  protected R atomic(final TypeDeclarationStatement ¢) {
+  protected R atomic(@SuppressWarnings("unused") final TypeDeclarationStatement __) {
     return reduce();
-  }
-
-  protected R map(final VariableDeclarationStatement ¢) {
-    // TODO Yossi Gil Auto-generated method stub for map
-    if (new Object().hashCode() != 0)
-      throw new AssertionError("Method 'StatementBottomUp::map' not implemented yet by yossi");
-    return null;
   }
 
   protected R map(final WhileStatement ¢) {

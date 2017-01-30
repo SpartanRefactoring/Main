@@ -29,7 +29,7 @@ public enum Wrap {
   ), //
   //
   ;
-  public static final Wrap[] WRAPS = new Wrap[] { Statement, Expression, Method, OUTER };
+  public static final Wrap[] WRAPS = { Statement, Expression, Method, OUTER };
 
   public static String essence(final String codeFragment) {
     return tide.clean(trivia.removeComments(codeFragment));

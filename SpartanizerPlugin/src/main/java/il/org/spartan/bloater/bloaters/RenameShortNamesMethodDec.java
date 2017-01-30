@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
@@ -46,11 +47,9 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     for (final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
-      if (!in($.getIdentifier(), "$", "¢", "__", "_") && $.getIdentifier().length() > 1)
-        continue;
       if (in($.getIdentifier(), "$")) {
         prev.add($);
-        after.add(d.getAST().newSimpleName("ret"));
+        after.add(d.getAST().newSimpleName("result"));
         continue;
       }
       final SimpleName ¢ = d.getAST().newSimpleName(scope.newName(body(d), step.type(parameter)));

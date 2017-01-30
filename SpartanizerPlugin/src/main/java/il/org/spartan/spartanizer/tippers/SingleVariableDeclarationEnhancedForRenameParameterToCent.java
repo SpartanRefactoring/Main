@@ -41,7 +41,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
-        if (in(sn.getIdentifier(), "¢"))
+        if (in(sn.getIdentifier(), namer.current))
           return null;
       }
     final Statement body = $.getBody();
@@ -49,7 +49,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       return null;
     final SimpleName n = d.getName();
     assert n != null;
-    if (in(n.getIdentifier(), "$", "¢", "__", "_") || haz.variableDefinition(body) || haz.cent(body))
+    if (in(n.getIdentifier(), namer.specials) || haz.variableDefinition(body) || haz.cent(body))
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(body);
     assert uses != null;
@@ -57,7 +57,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       return null;
     if (m != null)
       m.exclude(body);
-    final SimpleName ¢ = d.getAST().newSimpleName("¢");
+    final SimpleName ¢ = d.getAST().newSimpleName(namer.current);
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, $, r, g);

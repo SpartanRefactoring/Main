@@ -32,7 +32,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 public interface iz {
   List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
-  int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
+  int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
@@ -522,13 +522,6 @@ public interface iz {
    *         statement */
   static boolean forStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, FOR_STATEMENT);
-  }
-
-  static boolean fragile(final Expression with) {
-    // TODO Yossi Gil Auto-generated method stub for fragile
-    if (new Object().hashCode() != 0)
-      throw new AssertionError("Method 'iz::fragile' not implemented yet by yossi");
-    return false;
   }
 
   static boolean identifier(final String identifier, final Name typeName) {
@@ -1342,5 +1335,15 @@ public interface iz {
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
     }
+  }
+
+  /** @param with
+  /** @return [[SuppressWarningsSpartan]]*/
+  @SuppressWarnings("all")
+  static boolean fragile(Expression with) {
+    // TODO Yossi Gil Auto-generated method stub for fragile
+    if (new Object().hashCode() != 0)
+     throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30)." );
+    return false;
   }
 }

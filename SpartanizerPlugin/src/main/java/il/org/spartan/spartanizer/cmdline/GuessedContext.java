@@ -60,7 +60,7 @@ public enum GuessedContext {
   ), //
   //
   ;
-  public static final GuessedContext[] alternativeContextsToConsiderInThisOrder = new GuessedContext[] { //
+  public static final GuessedContext[] alternativeContextsToConsiderInThisOrder = { //
       COMPILATION_UNIT_LOOK_ALIKE, //
       OUTER_TYPE_LOOKALIKE, //
       STATEMENTS_LOOK_ALIKE, //

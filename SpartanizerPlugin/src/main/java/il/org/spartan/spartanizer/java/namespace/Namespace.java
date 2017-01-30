@@ -396,7 +396,7 @@ public final class Namespace implements Environment {
 
   public boolean allowsCurrentRecursive() {
     for (final String key : flat.keySet())
-      if (isVariable(key) && !in(key, namer.standardNames))
+      if (isVariable(key) && !in(key, namer.specials))
         return false;
     return children.stream().allMatch(Namespace::allowsCurrentRecursive);
   }
