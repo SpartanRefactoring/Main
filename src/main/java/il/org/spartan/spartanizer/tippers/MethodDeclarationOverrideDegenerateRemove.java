@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
- * class, e.g., <code>@Override void foo(){super.foo();}</code>
+ * class, e.g., {@code @Override void foo(){super.foo();}}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTipper<MethodDeclaration>//

@@ -14,8 +14,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert <code>catch(Exceprion e){}</code> to
- * <code>catch(Exceprion ¢){}</code>
+/** Convert {@code catch(Exceprion e){}} to {@code catch(Exceprion ¢){}}
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//

@@ -31,7 +31,7 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      yieldDescendants.untilClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(λ -> iz.simpleLoop(λ))
+      yieldDescendants.untilClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
           .forEach(λ -> appendFile(out, λ + ""));
     } catch (@SuppressWarnings("unused") final AssertionError __) {
       System.err.print("X");

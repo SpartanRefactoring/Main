@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert <code>int a=E;for(e: C(a)) S;</code> to <code>for(e: C(E)) S;</code>
- * to <code>for(int a=3;p;) {++i;}</code>
+/** convert {@code int a=E;for(e: C(a)) S;} to <code>for(e: C(E)) S;</code> to
+ * {@code for(int a=3;p;) {++i;}}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-27 */
 public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStatement<VariableDeclarationFragment> //

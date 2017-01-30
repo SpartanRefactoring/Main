@@ -97,9 +97,8 @@ public enum make {
   /** A fluent API method that wraps an {@link Expression} with parenthesis, if
    * the location in which this expression occurs requires such wrapping.
    * <p>
-   * Typical usage is in the form <code>new Plan(expression).in(host)</code>
-   * where <code>location</code> is the parent under which the expression is to
-   * be placed.
+   * Typical usage is in the form {@code new Plan(expression).in(host)} where
+   * {@code location} is the parent under which the expression is to be placed.
    * <p>
    * This function is a factory method recording the expression that might be
    * wrapped.

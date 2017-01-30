@@ -12,8 +12,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** An empty <code><b>enum</b></code> with a variety of <code>public
- * static</code> functions for restructuring expressions.
+/** An empty <code><b>enum</b></code> with a variety of {@code public
+ * static} functions for restructuring expressions.
  * @author Yossi Gil
  * @since 2015-07-21 */
 public enum copy {

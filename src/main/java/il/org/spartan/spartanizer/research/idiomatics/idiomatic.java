@@ -14,8 +14,8 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** An empty <code><b>enum</b></code> with a variety of <code>public
- * static</code> utility functions of reasonably wide use.
+/** An empty <code><b>enum</b></code> with a variety of {@code public
+ * static} utility functions of reasonably wide use.
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01
  * @author Ori Marcovitch
@@ -53,7 +53,7 @@ public interface idiomatic {
 
   /** @param condition JD
    * @return */
-  /** <code>incase</code>
+  /** {@code incase}
    * @param <T> JD
    * @param condition
    * @param t JD
@@ -243,7 +243,7 @@ public interface idiomatic {
       run.run();
     }
 
-    /** <code>unless</code>
+    /** {@code unless}
      * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);

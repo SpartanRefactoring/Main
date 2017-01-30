@@ -29,8 +29,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public interface trim {
   /** Starting point of fluent API for @Testing:
-   * <code>trimming.repeatedly.of("a+(b-c)")//
-  .gives("a+b-c")</code>, or <br/>
+   * {@code trimming.repeatedly.of("a+(b-c)")//
+  .gives("a+b-c")}, or <br/>
    * <code>trimming // See {@link trim} <br/>
    * .repeatedly //  See {@link trim.repeatedely} <br/>
    * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} <br/>

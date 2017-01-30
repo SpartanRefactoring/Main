@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Remove blocks that include only variable declarations: For example, remove
- * the block: <code> {int a=0;} </code>
+ * the block: {@code {int a=0;} }
  * @author Dor Ma'ayan
  * @since 2016-09-11 */
 public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends CarefulTipper<Block>//

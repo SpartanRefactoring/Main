@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replaces, e.g., <code>Integer x=new Integer(2);</code> with
- * <code>Integer x=Integer.valueOf(2);</code>, more generally new of of any
- * boxed primitive types/{@link String} with recommended factory method
- * <code>valueOf()</code>
+/** Replaces, e.g., {@code Integer x=new Integer(2);} with
+ * {@code Integer x=Integer.valueOf(2);}, more generally new of of any boxed
+ * primitive types/{@link String} with recommended factory method
+ * {@code valueOf()}
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation>//

@@ -19,8 +19,7 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Converts <code>""+"foo"</code> to <code>"foo"</code> when x is of type
- * String
+/** Converts {@code ""+"foo"} to <code>"foo"</code> when x is of type String
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */
