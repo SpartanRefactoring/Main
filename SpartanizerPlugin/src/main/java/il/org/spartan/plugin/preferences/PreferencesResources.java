@@ -1,4 +1,5 @@
 package il.org.spartan.plugin.preferences;
+
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 

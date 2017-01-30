@@ -6,7 +6,6 @@ package il.org.spartan.spartanizer.cmdline;
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 
-
 abstract class AbstractCommandLineProcessor {
   @External(alias = "i", value = "input folder") String inputFolder = ".";
   @External(alias = "o", value = "output folder") final String outputFolder = "/tmp";

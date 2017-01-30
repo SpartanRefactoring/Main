@@ -397,14 +397,6 @@ public enum az {
     return eval(() -> (SimpleName) $).when($ instanceof SimpleName);
   }
 
-  public static SimpleName simpleName(final PostfixExpression $) {
-    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
-  }
-
-  public static SimpleName simpleName(final PrefixExpression $) {
-    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
-  }
-
   /** Down-cast, if possible, to {@link SingleMemberAnnotation}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -414,7 +406,7 @@ public enum az {
   }
 
   public static SingleVariableDeclaration singleVariableDeclaration(final ASTNode $) {
-    return !iz.singleVariableDeclaration($) ? null : (SingleVariableDeclaration) $;
+    return !($ instanceof SingleVariableDeclaration) ? null : (SingleVariableDeclaration) $;
   }
 
   /** Down-cast, if possible, to {@link Statement}

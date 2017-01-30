@@ -1,9 +1,7 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import java.util.*;
 import java.util.stream.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Example for testing with binding

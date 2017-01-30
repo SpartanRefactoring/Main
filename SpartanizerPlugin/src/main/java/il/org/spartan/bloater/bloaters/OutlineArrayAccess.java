@@ -31,7 +31,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * assignment will be treated after outlining by other expanders . Test case is
  * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
- * @since 2016-12-25 [[SuppressWarningsSpartan]] */
+ * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
@@ -58,16 +58,16 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     };
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
     final Statement b = extract.containingStatement(a);
     if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.incrementOrDecrement(e) || iz.assignment(e))
       return false;
-    final SimpleName $ = iz.prefixExpression(e) ? az.simpleName(az.prefixExpression(e)) : az.simpleName(az.postfixExpression(e));
-    if ($ == null)
+    final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
+    if (n == null)
       return false;
-    final Expression s = expression(az.expressionStatement(b));
-    return iz.assignment(s) && left(az.assignment(s)).equals(a) && iz.plainAssignment(az.assignment(s))
-        && !iz.containsName($, right(az.assignment(s)));
+    final Assignment $ = az.assignment(expression(az.expressionStatement(b)));
+    return $ != null && left($).equals(a) && iz.plainAssignment($) && !iz.containsName(n, right($));
   }
 }
