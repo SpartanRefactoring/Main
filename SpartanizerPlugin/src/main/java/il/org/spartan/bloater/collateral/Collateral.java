@@ -1,6 +1,6 @@
 package il.org.spartan.bloater.collateral;
 
-import java.util.*;
+import java.util.stream.*;
 
 /** Implementation of the collateral function: ₡. An identical copy of this
  * class should be present in the SpartanFeature project.
@@ -11,6 +11,6 @@ enum Collateral {
   public static void ₡(final Runnable... collateralStatements) {
     if (collateralStatements == null)
       throw new IllegalArgumentException();
-    Arrays.asList(collateralStatements).forEach(Runnable::run);
+    Stream.of(collateralStatements).forEach(Runnable::run);
   }
 }

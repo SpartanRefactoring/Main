@@ -3,6 +3,7 @@ package il.org.spartan.plugin.old;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -164,7 +165,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
-    Arrays.asList(attribute.values()).forEach(λ -> $.put(λ, unknown));
+    Stream.of(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
   }
 
@@ -246,7 +247,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private static boolean valid(final Object... ¢) {
-    return Arrays.asList(¢).stream().allMatch(Objects::nonNull);
+    return Stream.of(¢).allMatch(Objects::nonNull);
   }
 
   private static void initializeProgressDialog(final ProgressMonitorDialog d) {

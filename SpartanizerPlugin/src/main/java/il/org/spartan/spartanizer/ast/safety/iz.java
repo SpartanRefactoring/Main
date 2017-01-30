@@ -31,7 +31,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-07-16 */
 public interface iz {
-  List<String> defaultValues = Arrays.asList("null", "0", "false", "0.", "0L");
+  List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
   int[] sequencerTypes = new int[] { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   static boolean abstract¢(final BodyDeclaration ¢) {
@@ -59,7 +59,7 @@ public interface iz {
   }
 
   static boolean anyOperator(final ASTNode ¢) {
-    return Arrays.asList(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
+    return as.list(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
   }
 
@@ -224,7 +224,7 @@ public interface iz {
    * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
    *         conditional or parenthesized conditional expression */
   static boolean conditionalExpression(final Expression... xs) {
-    return Arrays.asList(xs).stream().anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
+    return Stream.of(xs).anyMatch(λ -> nodeTypeEquals(extract.core(λ), CONDITIONAL_EXPRESSION));
   }
 
   /** Check whether an expression is a "conditional or" (||)

@@ -53,7 +53,7 @@ public interface replaceAll {
     private List<SimpleName> occurrences;
 
     ASTRewrite go(final TextEditGroup g, final ASTRewrite $) {
-      occurrences.stream().forEach(λ -> $.replace(λ, !iz.expression(λ) ? copy.of(with) : make.plant(with).into(λ.getParent()), g));
+      occurrences.forEach(λ -> $.replace(λ, !iz.expression(λ) ? copy.of(with) : make.plant(with).into(λ.getParent()), g));
       return $;
     }
 

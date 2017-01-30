@@ -3,9 +3,9 @@
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.cmdline;
 
-import java.util.*;
-
+import il.org.spartan.*;
 import il.org.spartan.external.*;
+
 
 abstract class AbstractCommandLineProcessor {
   @External(alias = "i", value = "input folder") String inputFolder = ".";
@@ -19,9 +19,9 @@ abstract class AbstractCommandLineProcessor {
   }
 
   public static void main(final String[] args) {
-    if (args.length == 0)
-      new BatchSpartanizer(".", "current-working-directory").fire();
+    if (args.length != 0)
+      as.list(args).forEach(λ -> new BatchSpartanizer(λ).fire());
     else
-      Arrays.asList(args).forEach(λ -> new BatchSpartanizer(λ).fire());
+      new BatchSpartanizer(".", "current-working-directory").fire();
   }
 }

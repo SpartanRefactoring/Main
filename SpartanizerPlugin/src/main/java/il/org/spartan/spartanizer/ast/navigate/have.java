@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -18,7 +19,7 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Expression... ¢) {
-    return Arrays.asList(¢).stream().anyMatch(iz::booleanLiteral);
+    return Stream.of(¢).anyMatch(iz::booleanLiteral);
   }
 
   /** Determine whether a boolean literal is present
@@ -42,7 +43,7 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
   public static boolean literal(final Expression... ¢) {
-    return Arrays.asList(¢).stream().anyMatch(iz::literal);
+    return Stream.of(¢).anyMatch(iz::literal);
   }
 
   /** Determine whether a literal is present
@@ -58,7 +59,7 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal. */
   public static boolean numericLiteral(final Expression... ¢) {
-    return Arrays.asList(¢).stream().anyMatch(iz::numericLiteral);
+    return Stream.of(¢).anyMatch(iz::numericLiteral);
   }
 
   /** Determine whether a numerical literal is present

@@ -99,7 +99,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   static Set<String> getKeywords(final String c, final String[] kws) {
-    return Arrays.asList(kws).stream().filter(c::contains).collect(Collectors.toSet());
+    return Stream.of(kws).filter(c::contains).collect(Collectors.toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
