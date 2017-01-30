@@ -10,9 +10,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 public enum Coupling {
-  DETERMININSTIC, ONEORMORE, UNKNOWN,;
-  public static Inner of(final ASTNode ¢) {
-    return new Inner(¢);
+  IFF, IMPLIED, INDEPENDENT,;
+  @SuppressWarnings("unused") public static Inner of(final ASTNode next) {
+    return to -> null;
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
@@ -32,11 +32,7 @@ public enum Coupling {
     return false;
   }
 
-  static class Inner {
-    public Inner(final ASTNode n) {}
-
-    public Coupling withRespectTo(final ASTNode to) {
-      return null;
-    }
+  interface Inner {
+    Coupling withRespectTo(ASTNode to);
   }
 }

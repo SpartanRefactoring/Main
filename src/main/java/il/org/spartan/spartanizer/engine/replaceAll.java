@@ -89,11 +89,11 @@ public interface replaceAll {
       if (occurrence == null)
         return false;
       switch (Coupling.of(occurrence).withRespectTo(commonAncestor(occurrence, with))) {
-        case DETERMININSTIC:
+        case IFF:
           return !iz.fragile(with);
-        case ONEORMORE:
+        case IMPLIED:
           return !haz.sideEffects(with);
-        case UNKNOWN:
+        case INDEPENDENT:
           return !iz.deterministic(with);
         default:
           return true;
