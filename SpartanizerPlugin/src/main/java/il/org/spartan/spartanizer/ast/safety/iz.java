@@ -700,7 +700,7 @@ public interface iz {
   static iz izParser(final Throwable ¢) {
     return new iz() {
       @Override public String toString() {
-        return ¢.getStackTrace() + "";
+        return Arrays.toString(¢.getStackTrace());
       }
     };
   }
@@ -1340,7 +1340,7 @@ public interface iz {
   /** @param with
   /** @return [[SuppressWarningsSpartan]]*/
   @SuppressWarnings("all")
-  static boolean fragile(Expression with) {
+  static boolean fragile(final Expression with) {
     // TODO Yossi Gil Auto-generated method stub for fragile
     if (new Object().hashCode() != 0)
      throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30)." );

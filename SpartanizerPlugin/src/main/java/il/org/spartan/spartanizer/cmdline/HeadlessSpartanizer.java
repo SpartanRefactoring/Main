@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
+import java.util.Arrays;
 
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
@@ -38,7 +39,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
 
   @Override public void apply() {
     try {
-      System.out.println(ReportGenerator.metricsMap().get("methods"));
+      System.out.println(Arrays.toString(ReportGenerator.metricsMap().get("methods")));
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".before.java", "before");
       ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".after.java", "after");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".CSV", "metrics");
@@ -48,7 +49,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
           defaultSelection = defaultApplicator2.defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {
-        commandLineApplicator.listener(λ -> System.out.println("Running DefaultApplicator: " + λ));
+        commandLineApplicator.listener(λ -> System.out.println("Running DefaultApplicator: " + Arrays.toString(λ)));
         defaultSelection.defaultListenerNoisy().go();
       }
       if (Spartanizer$Applicator)
