@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link ReturnIfException}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
 @SuppressWarnings("static-method")
-public class IfThrowsReturnTest {
+public class ReturnIfExceptionTest {
   @Test public void a() {
     trimmingOf(//
         "try {" + //
@@ -18,7 +18,7 @@ public class IfThrowsReturnTest {
             " catch (  B i) {" + //
             "    return null;}"//
     ) //
-        .using(CatchClause.class, new IfThrowsReturn())//
+        .using(CatchClause.class, new ReturnIfException())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnNull();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnNull();")//
         .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returnNull();")//
@@ -28,7 +28,7 @@ public class IfThrowsReturnTest {
 
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
-        .using(CatchClause.class, new IfThrowsReturn())//
+        .using(CatchClause.class, new ReturnIfException())//
         .stays();
   }
 
@@ -40,7 +40,7 @@ public class IfThrowsReturnTest {
             " catch (  B i) {" + //
             "    return;}"//
     ) //
-        .using(CatchClause.class, new IfThrowsReturn())//
+        .using(CatchClause.class, new ReturnIfException())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
         .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returns();")//
@@ -51,7 +51,7 @@ public class IfThrowsReturnTest {
   @Test public void d() {
     trimmingOf("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
         .gives("try{thing();}catch(B|A a){return;}")//
-        .using(CatchClause.class, new IfThrowsReturn())//
+        .using(CatchClause.class, new ReturnIfException())//
         .gives("If.throwz(()->{{thing();}}).returns();")//
         .gives("If.throwz(()->{thing();}).returns();")//
         .gives("If.throwz(()->thing()).returns();")//

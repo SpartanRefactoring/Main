@@ -4,7 +4,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link Adjuster}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-22 */
 @SuppressWarnings("static-method")

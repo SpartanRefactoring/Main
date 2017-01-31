@@ -24,9 +24,9 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Old class for some anlyzes, sort of deprecated since we use
+ * {@link FolderASTVisitor}
+ * @author Ori Marcovitch */
 public enum Analyze {
   ;
   static {

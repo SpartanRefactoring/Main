@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Generates files after nano spartanization+replacing
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class AfterFiles extends FolderASTVisitor {
