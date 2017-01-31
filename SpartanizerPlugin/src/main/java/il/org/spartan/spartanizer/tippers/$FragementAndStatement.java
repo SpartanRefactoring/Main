@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
@@ -16,6 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+
 /** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 25, 2016 */

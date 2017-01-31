@@ -16,9 +16,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Converts {@code x.size()==0} to {@code x.isEmpty()},
- * {@code x.size()!=0 } and {@code x.size()>=1} {@code !x.isEmpty()},
- * {@code x.size()<0} to <code><b>false</b>,and
+/** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
+ * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to
+ * <code><b>false</b>,and
  * {@code x.size()>=0} to <code><b>true</b>.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @author Yossi Gil

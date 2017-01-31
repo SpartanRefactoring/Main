@@ -9,15 +9,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** A {@link Tipper} to eliminate degenerate if sideEffects such as
- *
- * <code>
+/** A {@link Tipper} to eliminate degenerate if sideEffects such as {@code
  * if (x)
  *   ;
  * else
  *   ;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//

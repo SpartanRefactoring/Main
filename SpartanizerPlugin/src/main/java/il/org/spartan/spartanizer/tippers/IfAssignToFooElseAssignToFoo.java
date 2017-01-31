@@ -9,21 +9,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * if (x)
  *   a += 3;
  * else
  *   a += 9;
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * a += x ? 3 : 9;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement>//

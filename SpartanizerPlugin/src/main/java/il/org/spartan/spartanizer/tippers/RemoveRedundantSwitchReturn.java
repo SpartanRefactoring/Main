@@ -10,9 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** remove redundant return from switch in void method. convert
- *
- * <code>
+/** remove redundant return from switch in void method. convert <code>
  * void a() { switch(x) { case 1: y=2; break; default: return; } }
  *
  * <code>

@@ -18,28 +18,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
- * if (X) {
- *   bar();
- *   foo();
- * } else {
- *   baz();
- *   foo();
- * }
- * </code>
- *
- * into
- *
- * <code>
+/** convert {@code if (X) { bar(); foo(); } else { baz(); foo(); } } into {@code
  * if (X)
  *   bar();
  * else
  *   baz();
  * foo();
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//

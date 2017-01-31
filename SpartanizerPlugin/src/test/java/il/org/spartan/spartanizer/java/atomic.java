@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java;
 /** Use overloading to determine the type of an expression statically.
  * @author Yossi Gil
  * @since 2016 */
-@SuppressWarnings({"unused", "BooleanParameter"}) //
+@SuppressWarnings({ "unused", "BooleanParameter" }) //
 public interface atomic {
   static boolean isBoolean(final boolean __) {
     return true;

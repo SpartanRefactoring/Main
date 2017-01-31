@@ -17,22 +17,15 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * if (X)
  *   return A;
  * if (Y)
  *   return A;
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * if (X || Y)
  *   return A;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends ReplaceToNextStatement<IfStatement>//

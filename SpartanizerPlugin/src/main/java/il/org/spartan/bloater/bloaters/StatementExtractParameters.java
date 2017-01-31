@@ -1,4 +1,5 @@
 package il.org.spartan.bloater.bloaters;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -78,21 +79,24 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns,
-              final ASTRewrite r, final TextEditGroup g) {
+          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
+              final TextEditGroup g) {
             final Block b = p.getAST().newBlock();
             statements(b).add(s);
             statements(b).add(ns);
             r.replace(s, b, g);
             r.replace(s, b, g);
-        }};
+          }
+        };
   }
+
   static void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
     lr.insertBefore(s, s, g);
     lr.insertBefore(ns, s, g);
     lr.remove(s, g);
   }
+
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
     final List<Expression> $ = new LinkedList<>();
@@ -170,7 +174,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   /** Required due to bug in eclipse (seams so). Given
-   * {@code T extends MyObject}, <code>T[]</code> turns with binding into
+   * {@code T extends MyObject}, {@code T[]} turns with binding into
    * {@code ? extends E[]}. The problem is this type is considered as
    * {@link ArrayType} rather than {@link WildcardType}! Thus the manual fix.
    * Real world example: <code>

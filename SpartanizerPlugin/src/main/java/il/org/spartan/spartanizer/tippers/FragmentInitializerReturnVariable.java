@@ -12,20 +12,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * int a = 3;
  * return a;
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * return a;
- * </code>
- *
- * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
+ * } https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnVariable extends $FragementAndStatement//

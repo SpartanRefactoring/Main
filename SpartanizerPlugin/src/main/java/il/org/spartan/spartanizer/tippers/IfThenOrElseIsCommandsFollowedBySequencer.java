@@ -17,30 +17,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
- * f() {
- *   x++;
- *   y++;
- *   if (a) {
- *     i++;
- *     j++;
- *     k++;
- *   }
- * }
- * </code>
- *
- * into
- *
- * <code>
- * if (x) {
- *   f();
- *   return a;
- * }
- * g();
- * </code>
- *
+/** convert {@code f() { x++; y++; if (a) { i++; j++; k++; } } } into {@code if
+ * (x) { f(); return a; } g(); }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement>//

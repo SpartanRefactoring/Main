@@ -12,22 +12,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * if (x)
  *   return foo();
  * return bar();
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * return a ? foo() : bar();
- * </code>
- *
- * return a; } g();
- * </code>
+ * } return a; } g(); </code>
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement>//

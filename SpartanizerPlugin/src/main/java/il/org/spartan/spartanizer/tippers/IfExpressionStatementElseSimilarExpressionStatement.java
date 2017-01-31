@@ -11,21 +11,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * if (x)
  *   f(a);
  * else
  *   f(b);
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * f(x ? a : b);
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends ReplaceCurrentNode<IfStatement> //

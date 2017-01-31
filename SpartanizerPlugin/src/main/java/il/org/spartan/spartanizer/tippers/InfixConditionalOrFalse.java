@@ -7,18 +7,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * b || false
- * </code>
- *
- * to
- *
- * <code>
+ * } to {@code
  * b
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpression>//

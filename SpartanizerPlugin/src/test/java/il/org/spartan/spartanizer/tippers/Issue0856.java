@@ -34,21 +34,21 @@ public class Issue0856 {
         .stays();
   }
 
-  @Ignore // TODO Yossi Gil
   @Test public void d() {
     trimmingOf("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+        .gives("L<O> t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .stays();
   }
 
-  @Ignore // TODO Yossi Gil
   @Test public void d1() {
     trimmingOf("t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+        .gives("t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .stays();
   }
 
-  @Ignore // TODO Yossi Gil
   @Test public void d2() {
     trimmingOf("int len=t();for(int ¢=0; ¢ <len; ++¢)t.add(x);")//
+        .gives("for(int len=t(), ¢=0; ¢ <len; ++¢)t.add(x);")//
         .stays();
   }
 

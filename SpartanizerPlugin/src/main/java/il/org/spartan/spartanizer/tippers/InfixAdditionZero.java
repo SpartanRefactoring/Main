@@ -24,34 +24,15 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** A {@link Tipper} to convert an expression such as
- *
- * <code>
+/** A {@link Tipper} to convert an expression such as {@code
  * 0 + X = X
- * </code>
- *
- * or
- *
- * <code>
+ * } or {@code
  * X + 0 = X
- * </code>
- *
- * to
- *
- * <code>
- * X
- * </i>
- * or
- * <code>
+ * } to <code> X </i> or {@code
  * X + 0 + Y
- * </code>
- *
- * to
- *
- * <code>
+ * } to {@code
  * X + Y
- * </code>
- *
+ * }
  * @author Matteo Orrù
  * @since 2016 */
 public final class InfixAdditionZero extends EagerTipper<InfixExpression>//

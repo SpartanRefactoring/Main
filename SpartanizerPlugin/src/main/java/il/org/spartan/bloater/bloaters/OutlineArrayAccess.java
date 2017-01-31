@@ -14,9 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** converts
- *
- * <code>
+/** converts <code>
  * arr[i++] = y; arr[++i] = z;
  *
  * <code>
