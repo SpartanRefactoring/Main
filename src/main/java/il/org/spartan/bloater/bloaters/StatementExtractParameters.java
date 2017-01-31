@@ -84,7 +84,10 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             statements(b).add(s);
             statements(b).add(ns);
             r.replace(s, b, g);
-          }
+            int y = 1, x = 3;
+            r.replace(s, b, g);
+            switch(x) { case 1: y = 2; }
+switch(x) { case 1: { y=2; } } }
 
 
         };

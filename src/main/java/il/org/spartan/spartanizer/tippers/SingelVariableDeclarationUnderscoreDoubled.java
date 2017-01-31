@@ -41,7 +41,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
 
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
     final ASTNode $ = ¢.getParent();
-    return $ == null || !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
+    return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
 
   private static boolean isUnused(final Expression ¢) {

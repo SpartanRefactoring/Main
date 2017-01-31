@@ -109,7 +109,7 @@ public enum extract {
       case FIELD_DECLARATION:
         return "field";
       case INITIALIZER:
-        if (Modifier.isStatic(((Initializer) $).getModifiers()))
+        if (Modifier.isStatic(((BodyDeclaration) $).getModifiers()))
           return "static type initializer";
         return "type initializer";
       case METHOD_DECLARATION:
