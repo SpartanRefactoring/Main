@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace {@code int i = +0} with {@code int i = 0}, {@code int i = +1}
- * with {@code int i = 1} <code>int i = +a</code> with {@code int i = a},
+ * with {@code int i = 1} {@code int i = +a} with {@code int i = a},
  * etc.
  * @author Matteo Orru'
  * @since 2016 */

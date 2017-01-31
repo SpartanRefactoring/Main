@@ -39,6 +39,11 @@ public class Issue0052 {
     ;
   }
 
+  void m() {
+    if (new Object().hashCode() == 0)
+      m();
+  }
+
   @Test public void A$B1() {
     trimmingOf("void m(){if (a){f(); return;}}")//
         .gives("void m(){if (a){f();;}}")//
@@ -46,6 +51,13 @@ public class Issue0052 {
         .stays() //
     ;
   }
+  
+  @Test public void A$B1a() {
+    trimmingOf("void m(){if (a){f(); return;}}")//
+        .gives("void m(){if (a){f();;}}")//
+    ;
+  }
+  
 
   @Test public void A$B2() {
     trimmingOf("void m(){if (a) ++i; else{f(); return;}}")//

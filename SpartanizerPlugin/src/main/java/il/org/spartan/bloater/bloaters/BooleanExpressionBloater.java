@@ -53,7 +53,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     $.setInitializer(copy.of(x));
     final PrimitiveType t = x.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);
     $.setType(t);
-    $.setName(x.getAST().newSimpleName(scope.newName(x, t)));
+    $.setName(make.from(x).identifier(scope.newName(x, t)));
     return $;
   }
 

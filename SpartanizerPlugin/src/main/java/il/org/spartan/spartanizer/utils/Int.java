@@ -31,7 +31,7 @@ public final class Int {
     return $;
   }
 
-  public void getAndIncrement() {
+  public void step() {
     ++inner;
   }
 
@@ -39,16 +39,12 @@ public final class Int {
     return inner;
   }
 
-  public void addAndGet(final int value) {
+  public void add(final int value) {
     inner += value;
   }
 
   public void set(final int inner) {
     this.inner = inner;
-  }
-
-  public void incrementAndGet() {
-    getAndIncrement();
   }
 
   @Override public String toString() {

@@ -58,8 +58,8 @@ public class GUIBatchLaconizer extends Applicator {
           if (tipsInvoked <= 0)
             done.add(¢);
           ¢.dispose();
-          thisPassTipsInvoked.addAndGet(tipsInvoked);
-          totalTipsInvoked.addAndGet(tipsInvoked);
+          thisPassTipsInvoked.add(tipsInvoked);
+          totalTipsInvoked.add(tipsInvoked);
           listener().tick(message.visit_cu.get(operationName(), Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()),
               ¢.descriptor.getElementName(), totalTipsInvoked.get(), thisPassTipsInvoked.get()));
           if (!shouldRun())

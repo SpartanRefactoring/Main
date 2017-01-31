@@ -47,10 +47,10 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = copy.of(a);
         if (iz.postfixExpression($)) {
-          newa.setIndex(a.getAST().newSimpleName(identifier(az.simpleName(operand(az.postfixExpression($))))));
+          newa.setIndex(make.from(a).identifier(az.simpleName(operand(az.postfixExpression($)))));
           l.insertAfter(t.newExpressionStatement($), b, g);
         } else {
-          newa.setIndex(a.getAST().newSimpleName(identifier(az.simpleName(operand(az.prefixExpression($))))));
+          newa.setIndex(make.from(a).identifier(az.simpleName(operand(az.prefixExpression($)))));
           l.insertBefore(t.newExpressionStatement($), b, g);
         }
         r.replace(a, newa, g);

@@ -51,7 +51,7 @@ public enum determineIf {
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.statement(¢))
-          ++$.inner;
+          $.step();
       }
     });
     return $.inner >= 11;
@@ -80,10 +80,9 @@ public enum determineIf {
     if (d == null)
       return false;
     final Int $ = new Int();
-    $.inner = 0;
     d.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
-        ++$.inner;
+        $.step();
         return true;
       }
     });
@@ -100,7 +99,7 @@ public enum determineIf {
    * @return true iff the method has an inner block containing at least 5
    *         statements. */
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
-    return ¢ != null && ¢.getBody() != null && ¢.getBody().statements().size() >= 5;
+    return ¢ != null && ¢.getBody() != null && statements(body(¢)).size() >= 5;
   }
 
   /** see issue #710 for more details

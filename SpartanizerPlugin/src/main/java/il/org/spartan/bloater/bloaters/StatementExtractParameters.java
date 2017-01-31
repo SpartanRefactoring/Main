@@ -1,5 +1,5 @@
 package il.org.spartan.bloater.bloaters;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
@@ -66,35 +66,35 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             final Type tt = fixWildCardType(t);
             final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             final String nn = scope.newName(s, tt);
-            f.setName(s.getAST().newSimpleName(nn));
+            f.setName(make.from(s).identifier(nn));
             f.setInitializer(copy.of($));
             final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
             v.setType(tt);
             final Statement ns = copy.of(s);
-            s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, s.getAST().newSimpleName(nn), g)), ns);
+            s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
             if (!(s.getParent() instanceof Block))
               goNonBlockParent(s.getParent(), v, ns, r, g);
             else
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          @SuppressWarnings("unchecked") void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns,
+          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns,
               final ASTRewrite r, final TextEditGroup g) {
-            final Block nb = p.getAST().newBlock();
-            nb.statements().add(s);
-            nb.statements().add(ns);
-            r.replace(s, nb, g);
+            final Block b = p.getAST().newBlock();
+            statements(b).add(s);
+            statements(b).add(ns);
+            r.replace(s, b, g);
           }
 
-          void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
-            final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
-            lr.insertBefore(s, s, g);
-            lr.insertBefore(ns, s, g);
-            lr.remove(s, g);
-          }
+
         };
   }
-
+  static void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+    final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+    lr.insertBefore(s, s, g);
+    lr.insertBefore(ns, s, g);
+    lr.remove(s, g);
+  }
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
     final List<Expression> $ = new LinkedList<>();
