@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** For each element in range (a,b) apply some method
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-12 */
 public class ForEachInRange extends NanoPatternTipper<ForStatement> {
