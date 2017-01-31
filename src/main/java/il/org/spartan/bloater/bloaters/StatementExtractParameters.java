@@ -66,12 +66,12 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             final Type tt = fixWildCardType(t);
             final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
             final String nn = scope.newName(s, tt);
-            f.setName(s.getAST().newSimpleName(nn));
+            f.setName(make.from(s).identifier(nn));
             f.setInitializer(copy.of($));
             final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
             v.setType(tt);
             final Statement ns = copy.of(s);
-            s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, s.getAST().newSimpleName(nn), g)), ns);
+            s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
             if (!(s.getParent() instanceof Block))
               goNonBlockParent(s.getParent(), v, ns, r, g);
             else
@@ -86,15 +86,15 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             r.replace(s, nb, g);
           }
 
-          void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
-            final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
-            lr.insertBefore(s, s, g);
-            lr.insertBefore(ns, s, g);
-            lr.remove(s, g);
-          }
+
         };
   }
-
+  static void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+    final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+    lr.insertBefore(s, s, g);
+    lr.insertBefore(ns, s, g);
+    lr.remove(s, g);
+  }
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
     final List<Expression> $ = new LinkedList<>();

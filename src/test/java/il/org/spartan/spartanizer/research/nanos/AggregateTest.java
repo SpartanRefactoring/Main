@@ -8,10 +8,11 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 /** Tests {@link Aggregate}
  * @author Ori Marcovitch
  * @since Jan 18, 2017 */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore // TODO: Ori Marcovitch

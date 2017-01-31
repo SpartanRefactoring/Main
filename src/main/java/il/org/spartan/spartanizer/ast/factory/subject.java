@@ -186,7 +186,7 @@ public enum subject {
       assert ast != null : "Cannot find ast for method: " + methodName + ". RangeIterator = " + inner;
       final MethodInvocation $ = ast.newMethodInvocation();
       $.setExpression(inner);
-      $.setName(ast.newSimpleName(methodName));
+      $.setName(make.from(ast).identifier(methodName));
       return $;
     }
 

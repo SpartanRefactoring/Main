@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -49,12 +50,12 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
           return null;
         if (in($.getIdentifier(), "$")) {
           prev.add($);
-          after.add(s.getAST().newSimpleName("result"));
+          after.add(make.from(s).identifier("result"));
           continue;
         }
         if (s.getParent() == null)
           return null;
-        final SimpleName ¢ = s.getAST().newSimpleName(scope.newName(s.getParent(), step.type(s)));
+        final SimpleName ¢ = make.from(s).identifier(scope.newName(s.getParent(), step.type(s)));
         prev.add($);
         after.add(¢);
       }

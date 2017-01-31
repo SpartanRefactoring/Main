@@ -27,6 +27,11 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2016 */
 public enum make {
   ;
+  public static Expression assignmentAsExpression(final Assignment ¢) {
+    final Operator $ = ¢.getOperator();
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
+  }
+
   /** Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
    * @param ¢ JD
@@ -43,9 +48,26 @@ public enum make {
     return ¢.getAST().newEmptyStatement();
   }
 
-  public static ASTHolder from(final ASTNode ¢) {
-    assert ¢ != null;
-    return new make.ASTHolder(¢.getAST());
+  public static FromAST from(final AST t) {
+    return new make.FromAST() {
+      @Override public SimpleName identifier(final String identifier) {
+        return t.newSimpleName(identifier);
+      }
+
+      @Override public NumberLiteral literal(final int ¢) {
+        return t.newNumberLiteral(¢ + "");
+      }
+
+      @Override public StringLiteral literal(final String ¢) {
+        final StringLiteral $ = t.newStringLiteral();
+        $.setLiteralValue(¢);
+        return $;
+      }
+    };
+  }
+
+  public static make.FromAST from(final ASTNode ¢) {
+    return from(¢.getAST());
   }
 
   public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
@@ -60,6 +82,18 @@ public enum make {
     return make.from(¢).literal("");
   }
 
+  static Expression makeInfix(final List<Expression> xs, final AST t) {
+    if (xs.size() == 1)
+      return first(xs);
+    final InfixExpression $ = t.newInfixExpression();
+    $.setOperator(wizard.PLUS2);
+    $.setLeftOperand(copy.of(first(xs)));
+    $.setRightOperand(copy.of(second(xs)));
+    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
+      if (¢ >= xs.size())
+        return $;
+  }
+
   public static NullLiteral makeNullLiteral(final ASTNode ¢) {
     return ¢.getAST().newNullLiteral();
   }
@@ -72,12 +106,27 @@ public enum make {
                 : ¢;
   }
 
-  /** Create a new {@link SimpleName} instance at the AST of the parameter
-   * @param n JD
-   * @param newName the name that the returned value shall bear
-   * @return a new {@link SimpleName} instance at the AST of the parameter */
-  public static SimpleName newSimpleName(final ASTNode n, final String newName) {
-    return n.getAST().newSimpleName(newName);
+  static Expression minus(final Expression x, final NumberLiteral l) {
+    return l == null ? minusOf(x) //
+        : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
+    ;
+  }
+
+  static List<Expression> minus(final List<Expression> xs) {
+    final List<Expression> $ = new ArrayList<>();
+    $.add(first(xs));
+    $.addAll(az.stream(rest(xs)).map(λ -> minusOf(λ)).collect(Collectors.toList()));
+    return $;
+  }
+
+  static Expression minusOf(final Expression ¢) {
+    return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
+  }
+
+  static NumberLiteral newLiteral(final ASTNode n, final String token) {
+    final NumberLiteral $ = n.getAST().newNumberLiteral();
+    $.setToken(token);
+    return $;
   }
 
   /** @param ¢ JD
@@ -113,68 +162,37 @@ public enum make {
     return new make.PlantingStatement(inner);
   }
 
+  private static String signAdjust(final String token) {
+    return token.startsWith("-") ? token.substring(1) //
+        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
+  }
+
   /** @param ¢ the expression to return in the return statement
    * @return new return statement */
   public static ThrowStatement throwOf(final Expression ¢) {
     return subject.operand(¢).toThrow();
   }
 
-  static Expression makeInfix(final List<Expression> xs, final AST t) {
-    if (xs.size() == 1)
-      return first(xs);
-    final InfixExpression $ = t.newInfixExpression();
-    $.setOperator(wizard.PLUS2);
-    $.setLeftOperand(copy.of(first(xs)));
-    $.setRightOperand(copy.of(second(xs)));
-    for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
-      if (¢ >= xs.size())
-        return $;
-  }
-
-  static Expression minus(final Expression x, final NumberLiteral l) {
-    return l == null ? minusOf(x) //
-        : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
-    ;
-  }
-
-  static List<Expression> minus(final List<Expression> xs) {
-    final List<Expression> $ = new ArrayList<>();
-    $.add(first(xs));
-    $.addAll(az.stream(rest(xs)).map(λ -> minusOf(λ)).collect(Collectors.toList()));
+  public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression x) {
+    final AST create = x.getAST();
+    final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
+    fragment.setName(create.newSimpleName(name));
+    fragment.setInitializer(x);
+    final VariableDeclarationStatement $ = create.newVariableDeclarationStatement(fragment);
+    $.setType(t);
     return $;
   }
 
-  static Expression minusOf(final Expression ¢) {
-    return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
-  }
-
-  static NumberLiteral newLiteral(final ASTNode n, final String token) {
-    final NumberLiteral $ = n.getAST().newNumberLiteral();
-    $.setToken(token);
-    return $;
-  }
-
-  private static String signAdjust(final String token) {
-    return token.startsWith("-") ? token.substring(1) //
-        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
-  }
-
-  public static class ASTHolder {
-    private final AST ast;
-
-    public ASTHolder(final AST ast) {
-      this.ast = ast;
+  public interface FromAST {
+    default SimpleName identifier(final SimpleName ¢) {
+      return identifier(¢.getIdentifier());
     }
 
-    public NumberLiteral literal(final int ¢) {
-      return ast.newNumberLiteral(¢ + "");
-    }
+    SimpleName identifier(String identifier);
 
-    public StringLiteral literal(final String ¢) {
-      final StringLiteral $ = ast.newStringLiteral();
-      $.setLiteralValue(¢);
-      return $;
-    }
+    NumberLiteral literal(int i);
+
+    StringLiteral literal(String literal);
   }
 
   public static class PlantingExpression {
@@ -246,20 +264,5 @@ public enum make {
       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
-  }
-
-  public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression x) {
-    final AST create = x.getAST();
-    final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
-    fragment.setName(create.newSimpleName(name));
-    fragment.setInitializer(x);
-    final VariableDeclarationStatement $ = create.newVariableDeclarationStatement(fragment);
-    $.setType(t);
-    return $;
-  }
-
-  public static Expression assignmentAsExpression(final Assignment ¢) {
-    final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
 }
