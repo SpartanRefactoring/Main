@@ -17,7 +17,11 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Generates a table representing effectiveness of nanos. <br>
+ * For each nano, the level of reusability is measured: <br>
+ * 'M' - more occurrences than Method r-index.<br>
+ * 'X' - more than External.<br>
+ * 'I' - more than Internal. <br>
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
