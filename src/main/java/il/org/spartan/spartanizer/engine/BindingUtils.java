@@ -15,7 +15,7 @@ public enum BindingUtils {
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
     final ASTNode $ = il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(¢);
-    return eval(() -> ((TypeDeclaration) $).resolveBinding()).when($ != null && $ instanceof TypeDeclaration);
+    return eval(() -> ((AbstractTypeDeclaration) $).resolveBinding()).when($ instanceof TypeDeclaration);
   }
 
   /** @param compilationUnit current compilation unit

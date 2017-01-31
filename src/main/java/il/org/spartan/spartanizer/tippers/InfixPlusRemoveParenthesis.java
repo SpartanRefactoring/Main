@@ -54,7 +54,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
       // TODO: Dor Ma'ayan: use extract.core --yg
       if (iz.parenthesizedExpression(es.get(ii))) {
         Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
-        for (; iz.parenthesizedExpression(¢);) {
+        while (iz.parenthesizedExpression(¢)) {
           ¢ = expression(az.parenthesizedExpression(¢));
           replace(es, ¢, ii);
         }
