@@ -10,7 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** x true ? 1 : 0 <br>
+ * This is actually a casting from boolean to int
  * @author Ori Marcovitch
  * @since Dec 7, 2016 */
 public class AsBit extends NanoPatternTipper<ConditionalExpression> {

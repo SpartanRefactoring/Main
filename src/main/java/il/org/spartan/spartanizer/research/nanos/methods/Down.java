@@ -7,7 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TDown Caster
  * @author Ori Marcovitch
  * @since 2016 */
 public class Down {

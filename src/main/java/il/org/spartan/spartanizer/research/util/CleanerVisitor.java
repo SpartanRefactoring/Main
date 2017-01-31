@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.util;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** A visitor to clean a tree of all comments and imports
  * @author Ori Marcovitch
  * @since 2016 */
 public class CleanerVisitor extends ASTVisitor {

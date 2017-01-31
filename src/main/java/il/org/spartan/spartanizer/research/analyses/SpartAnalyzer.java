@@ -24,7 +24,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new IfThrowsReturn(), //
+        new ReturnIfException(), //
         new SuppressException(), //
         // new PercolateException(), // R.I.P
         null)//
@@ -52,9 +52,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 null) //
             .add(IfStatement.class, //
                 new NotNullOrThrow(), //
-                new AssertNotNull(), //
+                new NotNullOrReturn(), //
                 new CachingPattern(), //
-                new ExecuteWhen(), //
+                new ExecuteUnless(), //
                 new GeneralizedSwitch<>(), //
                 new GetOrElseThrow(),
                 // new PutIfAbsent(), // R.I.P

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  *       if(X = null) return null;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
-public class AssertNotNull extends NanoPatternTipper<IfStatement> {
+public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final String description = "replace with azzert.notNull(X)";
   private static final PreconditionNotNull rival = new PreconditionNotNull();
 
