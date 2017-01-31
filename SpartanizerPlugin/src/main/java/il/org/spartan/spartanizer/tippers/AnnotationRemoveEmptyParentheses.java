@@ -9,8 +9,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes the parentheses from annotations that do not take arguments,
- * converting <code><pre>@Override()</pre></code> to
- * <code><pre>@Override</pre></code>
+ * converting <code><code>@Override()</code></code> to
+ * <code><code>@Override</code></code>
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-02 */
 public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<NormalAnnotation>//

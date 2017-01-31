@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Converts
  *
- * <pre>
+ * <code>
  * if (X) {
  *   foo();
  *   bar();
@@ -29,17 +29,17 @@ import il.org.spartan.spartanizer.tipping.*;
  *   foo();
  *   baz();
  * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * foo();
  * if (X)
  *   bar();
  * else
  *   baz();
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-07-29 */

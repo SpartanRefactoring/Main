@@ -126,7 +126,7 @@ public enum getAll {
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
-          $.add((SingleVariableDeclaration) ¢);
+          $.add((VariableDeclaration) ¢);
         super.preVisit(¢);
       }
     });

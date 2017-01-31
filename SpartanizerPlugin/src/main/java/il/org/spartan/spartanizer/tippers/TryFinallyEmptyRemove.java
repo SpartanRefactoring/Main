@@ -9,15 +9,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** converts
  *
- * <pre>
+ * <code>
  * try { a;} catch(Exception e) { b;} finally {}
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * try { a;} catch(Exception e) { b;}
- * </pre>
+ * </code>
  *
  * @author kobybs
  * @author Dor Ma'ayan

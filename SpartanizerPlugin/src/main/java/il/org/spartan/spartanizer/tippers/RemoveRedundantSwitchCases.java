@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * switch (x) {
  *   case a:
  *   case b:
@@ -30,13 +30,13 @@ import il.org.spartan.spartanizer.tipping.*;
  *     break;
  *   default:
  * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
 * (some commands)
- * </pre>
+ * </code>
  *
  * . Tested in {@link Issue0880}
  * @author Yuval Simon

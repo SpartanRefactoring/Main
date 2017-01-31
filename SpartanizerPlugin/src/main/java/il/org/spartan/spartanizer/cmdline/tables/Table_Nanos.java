@@ -28,7 +28,7 @@ public class Table_Nanos {
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])
-            if (¢ != null && ¢ instanceof NanoPatternTipper)
+            if (¢ instanceof NanoPatternTipper)
               r//
                   .col("Name", name(¢.getClass()))//
                   .col("Node Class", Toolbox.intToClassName(i))//

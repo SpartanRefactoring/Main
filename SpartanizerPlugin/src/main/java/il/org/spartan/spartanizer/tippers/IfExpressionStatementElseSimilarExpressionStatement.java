@@ -13,18 +13,18 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (x)
  *   f(a);
  * else
  *   f(b);
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * f(x ? a : b);
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-07-29 */

@@ -17,21 +17,21 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * <b>if</b> (a) { f(); g(); }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * <b>if</b> (!a) return f(); g();
- * </pre>
+ * </code>
  *
  * provided that this
  *
- * <pre>
+ * <code>
  * <b>if</b>
- * </pre>
+ * </code>
  *
  * statement is the last statement in a method.
  * @author Yossi Gil

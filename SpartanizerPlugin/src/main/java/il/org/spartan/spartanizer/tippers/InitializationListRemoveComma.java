@@ -12,9 +12,9 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Remove unnecessary ',' from array initialization list {@code "int[] a = new
  * int[] {..,..,..,};"} to :
  *
- * <pre>
+ * <code>
  * {@code "int[] a = new int[] {..,..,..};"}
- * </pre>
+ * </code>
  *
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon<code><shalmon.niv [at] gmail.com></code>

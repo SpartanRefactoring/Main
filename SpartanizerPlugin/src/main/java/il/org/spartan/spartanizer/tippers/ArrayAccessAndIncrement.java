@@ -19,16 +19,16 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** convert :
  *
- * <pre>
+ * <code>
  * array[i];
  * ++i;
- * </pre>
+ * </code>
  *
  * to :
  *
- * <pre>
+ * <code>
  * array[i++];
- * </pre>
+ * </code>
  *
  * @author Dor Ma'ayan
  * @since 25-11-2016 */

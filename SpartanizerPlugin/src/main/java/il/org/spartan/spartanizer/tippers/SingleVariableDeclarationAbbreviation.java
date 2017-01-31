@@ -37,8 +37,8 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       for (final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final Object ¢ : step.fragments(t))
-            if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-              r.replace((SimpleName) ¢, make.from(d).identifier(newName), g);
+            if (¢ instanceof SimpleName && wizard.same((ASTNode) ¢, oldName)) {
+              r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
               return;
             }
   }

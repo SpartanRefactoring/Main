@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (x) {
  *   f();
  *   return a;
@@ -26,17 +26,17 @@ import il.org.spartan.spartanizer.tipping.*;
  *   g();
  *   {}
  * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * if (x) {
  *   f();
  *   return a;
  * }
  * g();
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-07-29 */

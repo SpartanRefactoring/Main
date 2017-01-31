@@ -19,19 +19,19 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (X)
  *   return A;
  * if (Y)
  *   return A;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * if (X || Y)
  *   return A;
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-07-29 */

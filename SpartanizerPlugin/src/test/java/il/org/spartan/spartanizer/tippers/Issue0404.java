@@ -39,30 +39,30 @@ public class Issue0404 {
    * <li>and then, when you reached {@code z()}, and more names are needed,
    * rename the sequence of methods generated so far:
    *
-   * <pre>
+   * <code>
    a(), b(), c(), ..., w(),  wa(), wb(), wc(), ..., x(), y(), z()
-   * </pre>
+   * </code>
    *
    * to (say)
    *
-   * <pre>
+   * <code>
    Aa(), Ab(), Ac(), ..., Aw(),  Awa(), Awb(), Awc(), ..., Ax(), Ay(), Az()
-   * </pre>
+   * </code>
    *
    * and proceed to generating tests named
    *
-   * <pre>
+   * <code>
    a(), b(), c(), ..., w(),  wa(), wb(), wc(), ..., x(), y(), z()
-   * </pre>
+   * </code>
    **
    * <li>and then, when you finish the entire
    * </ul>
    * <p>
    * <b>be sure to use</b>
    *
-   * <pre>
+   * <code>
   &#64;FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-   * </pre>
+   * </code>
    *
    * annotation on your test class */
   @Test public void a() {

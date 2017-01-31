@@ -45,7 +45,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
     try {
       final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
       for (final Object v : az.variableDeclarationExpression(s).fragments()) {
-        final SimpleName $ = ((VariableDeclarationFragment) v).getName();
+        final SimpleName $ = ((VariableDeclaration) v).getName();
         if (!in($.getIdentifier(), namer.specials) && $.getIdentifier().length() > 1)
           return null;
         if (in($.getIdentifier(), "$")) {

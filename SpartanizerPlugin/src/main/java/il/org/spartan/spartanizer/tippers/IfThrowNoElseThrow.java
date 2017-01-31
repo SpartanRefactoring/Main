@@ -14,17 +14,17 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (x)
  *   throw foo();
  * throw bar();
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * throw a ? foo() : bar();
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-09-09 */

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
 * switch (x) {
 *   case a:
 *      (commands)
@@ -25,17 +25,17 @@ import il.org.spartan.spartanizer.tipping.*;
 *   default:
 *      (other commands)
 * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
 * if(x == a) {
 *   (commands)
 * } else {
 *   (other commands)
 * }
- * </pre>
+ * </code>
  *
  * . Tested in {@link Issue0916}
  * @author Yuval Simon

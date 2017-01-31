@@ -11,12 +11,12 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to eliminate degenerate if sideEffects such as
  *
- * <pre>
+ * <code>
  * if (x)
  *   ;
  * else
  *   ;
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-08-26 */

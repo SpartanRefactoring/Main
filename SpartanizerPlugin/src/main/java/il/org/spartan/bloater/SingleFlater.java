@@ -201,7 +201,7 @@ public final class SingleFlater {
         invalidate();
         return;
       }
-      final ISourceViewer v = ((CompilationUnitEditor) e).getViewer();
+      final ISourceViewer v = ((JavaEditor) e).getViewer();
       if (v == null) {
         invalidate();
         return;

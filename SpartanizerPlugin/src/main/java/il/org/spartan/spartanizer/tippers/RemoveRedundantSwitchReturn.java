@@ -12,16 +12,16 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** remove redundant return from switch in void method. convert
  *
- * <pre>
+ * <code>
  * void a() { switch(x) { case 1: y=2; break; default: return; } }
  *
- * <pre>
+ * <code>
  * to
  *
- * <pre>
+ * <code>
  * void a() { switch(x) { case 1: y=2; break; } }
  *
- * <pre>
+ * <code>
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */

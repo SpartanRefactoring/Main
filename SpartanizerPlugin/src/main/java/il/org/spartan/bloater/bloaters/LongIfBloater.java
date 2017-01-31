@@ -11,21 +11,21 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Test case is {@link Issue0976} Issue #976 Convert:
  *
- * <pre>
+ * <code>
  * if (a == b && c == d) {
  *   a = 5;
  * }
- * </pre>
+ * </code>
  *
  * to:
  *
- * <pre>
+ * <code>
  * if (a == b) {
  *   if (c == d) {
  *     a = 5;
  *   }
  * }
- * </pre>
+ * </code>
  *
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */

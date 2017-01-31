@@ -194,7 +194,7 @@ public enum subject {
      * @param name a string of the name to be qualified
      * @return a qualified name node with name */
     public Expression toQualifier(final String name) {
-      return ast.newQualifiedName((SimpleName) inner, ast.newSimpleName(name));
+      return ast.newQualifiedName((Name) inner, ast.newSimpleName(name));
     }
 
     /** Create a new {@link ReturnStatement} which returns our operand
