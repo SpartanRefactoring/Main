@@ -2337,7 +2337,8 @@ public final class Version230 {
         .stays();
   }
 
-  @Ignore @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
+   @Ignore // TODO Ori Roth
+  @Test public void postfixToPrefixAvoidChangeOnVariableDeclaration() {
     trimmingOf("int s=2;int n=s++;S.out.print(n);")//
         .gives("int s=2;S.out.print(s++);");
   }

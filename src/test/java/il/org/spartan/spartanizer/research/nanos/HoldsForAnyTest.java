@@ -88,10 +88,12 @@ public class HoldsForAnyTest {
         .stays();
   }
 
-  @Ignore @Test public void j() {
+  @Test public void j() {
     trimmingOf(" for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
         .using(EnhancedForStatement.class, new HoldsForAny())//
-        .gives("return os.stream().anyMatch(¢->¢==(omg?yes:no));")//
-        .stays();
+        .gives("$=f.modifiers().stream().anyMatch(¢->((Modifier)¢).isFinal());")//
+        ;
   }
 }
+
+
