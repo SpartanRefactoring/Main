@@ -20,18 +20,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
- * b &amp;&amp; true
- * </code>
- *
- * to
- *
- * <code>
+/** convert {@code
+ * b && true
+ * } to {@code
  * b
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
@@ -44,8 +37,8 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
 
   private static Operator conjugate(final Operator ¢) {
     return ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
-            : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
-                : null;
+        : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
+            : null;
   }
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {

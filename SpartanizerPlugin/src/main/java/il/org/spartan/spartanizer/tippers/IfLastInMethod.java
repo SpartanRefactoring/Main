@@ -15,25 +15,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert <code>
  * <b>if</b> (a) { f(); g(); }
- * </code>
- *
- * into
- *
- * <code>
+ * </code> into <code>
  * <b>if</b> (!a) return f(); g();
- * </code>
- *
- * provided that this
- *
- * <code>
+ * </code> provided that this <code>
  * <b>if</b>
- * </code>
- *
- * statement is the last statement in a method.
+ * </code> statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfLastInMethod extends EagerTipper<IfStatement>//

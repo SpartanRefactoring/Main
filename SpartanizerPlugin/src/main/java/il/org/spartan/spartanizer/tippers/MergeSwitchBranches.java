@@ -9,23 +9,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removing redundant case branches in switch statement such as
- *
- * <code>
-* switch(x) {
-* case a: x=1; break;
-* case b: x=2; break;
-* default: x=1; break;
- * </code>
- *
- * into
- *
- * <code>
-* switch(x) {
-* case a: default: x=1; break;
-* case b: x=2; break;
- * </code>
- *
- * Tested in {@link Issue0858}
+ * {@code switch(x) { case a: x=1; break; case b: x=2; break; default: x=1;
+ * break; } into {@code switch(x) { case a: default: x=1; break; case b: x=2;
+ * break; } Tested in {@link Issue0858}
  * @author Yuval Simon
  * @since 2016-11-26 */
 public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//

@@ -17,19 +17,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert :
- *
- * <code>
+/** convert : {@code
  * array[i];
  * ++i;
- * </code>
- *
- * to :
- *
- * <code>
+ * } to : {@code
  * array[i++];
- * </code>
- *
+ * }
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
 public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//

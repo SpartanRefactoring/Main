@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -15,7 +16,7 @@ public final class TryBodyNotEmptyNoCatchesNoFinallyRemove extends ReplaceCurren
     implements TipperCategory.SyntacticBaggage {
   @Override public boolean prerequisite(final TryStatement ¢) {
     return !statements(body(¢)).isEmpty() && ¢.resources().isEmpty() && ¢.catchClauses().isEmpty()
-        && (¢.getFinally() == null ||statements(¢.getFinally()).isEmpty());
+        && (¢.getFinally() == null || statements(¢.getFinally()).isEmpty());
   }
 
   @Override public ASTNode replacement(final TryStatement ¢) {

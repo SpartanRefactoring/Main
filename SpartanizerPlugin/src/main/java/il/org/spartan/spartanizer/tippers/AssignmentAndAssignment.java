@@ -16,19 +16,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * a = 3;
  * b = 3;
- * </code>
- *
- * to
- *
- * <code>
+ * } to {@code
  * a = b = 3
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//

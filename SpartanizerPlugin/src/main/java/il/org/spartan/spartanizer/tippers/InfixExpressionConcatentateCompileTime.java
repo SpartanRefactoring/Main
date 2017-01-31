@@ -11,18 +11,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Concat some strings to one string
- *
- * <code>
+/** Concat some strings to one string {@code
  * "ab" + "c" + "de"
- * </code>
- *
- * to
- *
- * <code>
+ * } to {@code
  * "abcde"
- * </code>
- *
+ * }
  * @author Dor Ma'ayan
  * @author Nov Shalmon
  * @since 2016-09-04 */

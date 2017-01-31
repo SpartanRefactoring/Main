@@ -10,21 +10,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
+ * if (x)
+ *   return b; else {} } into {@code
  * if (x)
  *   return b;
- * else {}
- * </code>
- *
- * into
- *
- * <code>
- * if (x)
- *   return b;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//

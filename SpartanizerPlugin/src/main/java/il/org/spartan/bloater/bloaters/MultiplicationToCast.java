@@ -13,21 +13,13 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Covers Issues #1006 & #1007 </br>
- * Convert :
- *
- * <code>
+ * Convert : {@code
  * x * 1. / x * 1.0
  * x * 1L
- * </code>
- *
- * To:
- *
- * <code>
+ * } To: {@code
  * (double) x
  * (long) x
- * </code>
- *
- * Tested in {@link Issue1007}
+ * } Tested in {@link Issue1007}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-11 */
 public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//

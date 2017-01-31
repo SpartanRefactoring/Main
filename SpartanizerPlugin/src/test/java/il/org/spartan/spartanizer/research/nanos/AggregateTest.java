@@ -8,7 +8,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-
 /** Tests {@link Aggregate}
  * @author Ori Marcovitch
  * @since Jan 18, 2017 */

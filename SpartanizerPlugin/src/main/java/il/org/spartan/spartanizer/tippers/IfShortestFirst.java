@@ -7,18 +7,11 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * a ? (f,g,h) : c(d,e)
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * a ? c(d, e) : f(g, h)
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-15 */
 public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//

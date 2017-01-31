@@ -12,53 +12,23 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** <code>
+/** {@code
  * a ? b : c
- * </code>
- *
- * is the same as
- *
- * <code>
- * (a &amp;&amp; b) || (!a &amp;&amp; c)
- * </code>
- *
- * if b is false than:
- *
- * <code>
- * (a &amp;&amp; false) || (!a &amp;&amp; c) == (!a &amp;&amp; c)
- * </code>
- *
- * if b is true than:
- *
- * <code>
- * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
- * </code>
- *
- * if c is false than:
- *
- * <code>
- * (a &amp;&amp; b) || (!a &amp;&amp; false) == (!a &amp;&amp; c)
- * </code>
- *
- * if c is true than
- *
- * <code>
- * (a &amp;&amp; b) || (!a &amp;&amp; true) == (a &amp;&amp; b) || (!a) == !a || b
- * </code>
- *
- * keywords
- *
- * <code>
+ * } is the same as {@code
+ * (a && b) || (!a && c)
+ * } if b is false than: {@code
+ * (a && false) || (!a && c) == (!a && c)
+ * } if b is true than: {@code
+ * (a && true) || (!a && c) == a || (!a && c) == a || c
+ * } if c is false than: {@code
+ * (a && b) || (!a && false) == (!a && c)
+ * } if c is true than {@code
+ * (a && b) || (!a && true) == (a && b) || (!a) == !a || b
+ * } keywords <code>
  * <b>this</b>
- * </code>
- *
- * or
- *
- * <code>
+ * </code> or <code>
  * <b>null</b>
- * </code>
- *
- * .
+ * </code> .
  * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
@@ -67,41 +37,24 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
 
-  /** Consider an expression
-   *
-   * <code>
+  /** Consider an expression {@code
    * a ? b : c
-   * </code>
-   *
-   * in a sense it is the same as
-   *
-   * <code>
-   * (a &amp;&amp; b) || (!a &amp;&amp; c)
-   * </code>
+   * } in a sense it is the same as {@code
+   * (a && b) || (!a && c)
+   * }
    * <ol>
-   * <li>if b is false then:
-   *
-   * <code>
-   * (a &amp;&amp; false) || (!a &amp;&amp; c) == !a &amp;&amp; c
-   * </code>
-   *
-   * <li>if b is true then:
-   *
-   * <code>
-   * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
-   * </code>
-   *
-   * <li>if c is false then:
-   *
-   * <code>
-   * (a &amp;&amp; b) || (!a &amp;&amp; false) == a &amp;&amp; b
-   * </code>
-   *
-   * <li>if c is true then
-   *
-   * <code>
-   * (a &amp;&amp; b) || (!a &amp;&amp; true) == !a || b
-   * </code>
+   * <li>if b is false then: {@code
+   * (a && false) || (!a && c) == !a && c
+   * }
+   * <li>if b is true then: {@code
+   * (a && true) || (!a && c) == a || (!a && c) == a || c
+   * }
+   * <li>if c is false then: {@code
+   * (a && b) || (!a && false) == a && b
+   * }
+   * <li>if c is true then {@code
+   * (a && b) || (!a && true) == !a || b
+   * }
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression ¢) {

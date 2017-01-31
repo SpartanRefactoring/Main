@@ -11,19 +11,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** reorder comparisons so that the specific value is placed on the right.
- * Specific value means a literal, or any of the two keywords
- *
- * <code>
+ * Specific value means a literal, or any of the two keywords <code>
  * <b>this</b>
- * </code>
- *
- * or
- *
- * <code>
+ * </code> or <code>
  * <b>null</b>
- * </code>
- *
- * .
+ * </code> .
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression>//
