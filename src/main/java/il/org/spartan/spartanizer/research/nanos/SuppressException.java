@@ -12,10 +12,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Catch without body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
-public final class SupressException extends NanoPatternTipper<CatchClause> {
+public final class SuppressException extends NanoPatternTipper<CatchClause> {
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
