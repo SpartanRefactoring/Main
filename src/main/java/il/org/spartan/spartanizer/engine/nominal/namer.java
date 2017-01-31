@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -135,6 +136,14 @@ public interface namer {
 
   static boolean isSpecial(final SimpleName $) {
     return in($.getIdentifier(), specials);
+  }
+
+  static SimpleName newReturn(final ASTNode ¢) {
+    return make.from(¢).identifier(current);
+  }
+
+  static SimpleName newCurrent(final ASTNode ¢) {
+    return make.from(¢).identifier(current);
   }
 
   class GenericsCategory {

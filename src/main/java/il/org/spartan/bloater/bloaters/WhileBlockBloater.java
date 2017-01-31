@@ -16,12 +16,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 26-12-16 */
 public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Bloater {
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final WhileStatement s) {
+  @Override public ASTNode replacement(final WhileStatement s) {
     if (s == null)
       return null;
     final WhileStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
-    b.statements().add(copy.of(body(s)));
+    statements(b).add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
     body(s).accept(new ASTVisitor() {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {

@@ -18,12 +18,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 22-12-16 */
 public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Bloater {
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final ForStatement s) {
+  @Override public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;
     final ForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
-    b.statements().add(copy.of(body(s)));
+statements(b).add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
     body(s).accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final Block node) {

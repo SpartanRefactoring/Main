@@ -55,7 +55,7 @@ public final class TippersTest {
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
     azzert.that(block, iz("{int a = f(); return a += 2*a;}"));
-    final ReturnStatement returnStatement = (ReturnStatement) ((Block) block).statements().get(1);
+    final ReturnStatement returnStatement = (ReturnStatement) statements((Block) block).get(1);
     azzert.that(returnStatement, iz("return a += 2 *a;"));
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
