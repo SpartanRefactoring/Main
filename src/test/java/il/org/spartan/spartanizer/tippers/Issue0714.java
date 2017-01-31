@@ -47,7 +47,7 @@ public class Issue0714 {
   }
 
   @Test public void testNull() {
-    auxBool(determineIf.isImmutable((TypeDeclaration) null));
+    auxBool(determineIf.isImmutable(null));
   }
 
   @Test public void testONeWithFinalAndOneWithout() {

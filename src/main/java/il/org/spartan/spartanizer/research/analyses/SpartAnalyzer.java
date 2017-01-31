@@ -20,9 +20,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
-   * the gUIBatchLaconizer.
-   * @param ¢ our gUIBatchLaconizer
-   * @return */
+   * the gUIBatchLaconizer. */
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //

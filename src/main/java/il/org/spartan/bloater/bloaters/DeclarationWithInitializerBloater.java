@@ -1,5 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -28,15 +30,15 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) ¢.fragments().get(0)).getInitializer() != null
-        && ((VariableDeclaration) ¢.fragments().get(0)).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
+    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) first(fragments(¢))).getInitializer() != null
+        && ((VariableDeclaration) first(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
-    ((VariableDeclaration) $.fragments().get(0)).setInitializer(null);
+    ((VariableDeclaration) first(fragments($))).setInitializer(null);
     final Assignment a = ¢.getAST().newAssignment();
-    final VariableDeclarationFragment f2 = (VariableDeclarationFragment) ¢.fragments().get(0);
+    final VariableDeclarationFragment f2 = first(fragments(¢));
     a.setLeftHandSide(copy.of(az.expression(f2.getName())));
     a.setRightHandSide(copy.of(az.expression(f2.getInitializer())));
     return new Tip(description(¢), ¢, getClass()) {

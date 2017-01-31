@@ -19,7 +19,7 @@ public class CleanerVisitorTest {
   private class ASTNodeWrapper {
     public final ArrayList<ASTNode> inner;
 
-    public ASTNodeWrapper() {
+    ASTNodeWrapper() {
       inner = new ArrayList<>();
     }
   }

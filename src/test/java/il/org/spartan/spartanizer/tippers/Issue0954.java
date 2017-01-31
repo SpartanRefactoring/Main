@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2017-01-20 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public class Issue0954 {
-  @Ignore // TODO Yossi Gil
+  // @Ignore // TODO Yossi Gil
   @Test public void a() {
     trimmingOf("" //
         + "void f() {\n" //
@@ -19,7 +19,7 @@ public class Issue0954 {
         + "}")
             .gives("" //
                 + "void f() {\n" //
-                + "Arrays.deepToString(new Object[] {value});\n" //
+                + "String arrayString = Arrays.deepToString(new Object[] {value});\n" //
                 + "anotherStatement();\n" //
                 + "}");
   }

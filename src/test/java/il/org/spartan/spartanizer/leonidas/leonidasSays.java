@@ -71,7 +71,7 @@ public enum leonidasSays {
 
     final String s;
 
-    public expression(final String s) {
+    expression(final String s) {
       this.s = s;
     }
 

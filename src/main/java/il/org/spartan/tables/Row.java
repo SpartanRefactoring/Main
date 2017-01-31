@@ -49,7 +49,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Adds a key and a <code><b>double</b><code> value to this instance <br/>
-      * @param key The key to be added; must not be <code><b>null</b></code>
+       * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
   public Self col(final String key, final double value) {

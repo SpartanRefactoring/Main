@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 public class FixtureTryResources extends MetaFixture {
-  @knows("f/0") int f() throws FileNotFoundException, IOException {
+  @knows("f/0") int f() throws IOException {
     try (@knows("$") FileReader $ = new FileReader(toString())) {
       try (@knows({ "b", "$" }) FileReader b = new FileReader(toString())) {
         if (f() == 3)

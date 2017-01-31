@@ -1,5 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -28,12 +29,12 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
 
   @Override public Tip tip(final SwitchStatement s) {
     final List<Statement> $ = getAdditionalStatements(step.statements(s), caseWithNoSequencer(s));
-    final Statement n = (Statement) s.statements().get(s.statements().indexOf($.get(0)) - 1);
+    final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
         $.forEach(λ -> l.insertBefore(copy.of(λ), n, g));
-        if (!iz.sequencerComplex($.get($.size() - 1)))
+        if (!iz.sequencerComplex(last($)))
           l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }
     };

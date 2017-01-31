@@ -109,7 +109,7 @@ class Aggressive extends AbstractRenamePolicy {
     return ss.stream().map(λ -> collect.BOTH_LEXICAL.of(n).in(λ).size()).reduce((x, y) -> x + y).get();
   }
 
-  public Aggressive(final MethodDeclaration inner) {
+  Aggressive(final MethodDeclaration inner) {
     super(inner);
   }
 
@@ -119,7 +119,7 @@ class Aggressive extends AbstractRenamePolicy {
 }
 
 class Conservative extends AbstractRenamePolicy {
-  public Conservative(final MethodDeclaration inner) {
+  Conservative(final MethodDeclaration inner) {
     super(inner);
   }
 

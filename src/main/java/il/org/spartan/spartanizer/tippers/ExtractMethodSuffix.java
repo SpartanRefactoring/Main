@@ -243,7 +243,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final List<SingleVariableDeclaration> ps;
     final List<Statement> ss;
 
-    public NaturalVariablesOrder(final MethodDeclaration method) {
+    NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = parameters(method);
       ss = body(method) != null ? statements(method) : new LinkedList<>();
