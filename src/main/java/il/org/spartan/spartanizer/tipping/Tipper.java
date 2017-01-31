@@ -54,7 +54,7 @@ public abstract class Tipper<N extends ASTNode> //
 
   protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    fs.stream().filter(λ -> λ != null && λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
+    fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }
 

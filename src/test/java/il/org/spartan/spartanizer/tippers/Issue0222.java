@@ -27,8 +27,7 @@ public class Issue0222 {
         .stays();
   }
 
-  @Ignore
-  // TODO: Yossi Gil, I guess #1115 breaks this some how
+  @Ignore // TODO: Yossi Gil, I guess #1115 breaks this some how
   @Test public void vanilla() {
     trimmingOf("L<E> os(I x){if(x==null)return null;L<E> $=new A<>();$.a(l(x));$.a(r(x));if(x.h())$.d(s.es(x));return $;}")
         .gives("L<E> os(I ¢){if(¢==null)return null;L<E> $=new A<>();$.a(l(¢));$.a(r(¢));if(¢.h())$.d(s.es(¢));return $;}").stays();

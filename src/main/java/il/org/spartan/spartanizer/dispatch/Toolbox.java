@@ -31,7 +31,6 @@ public class Toolbox {
     static final long serialVersionUID = 1L;
     {
       final Toolbox t = freshCopyOfAllTippers();
-      assert t.implementation != null;
       Stream.of(t.implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
@@ -113,24 +112,6 @@ public class Toolbox {
             new LambdaRemoveParenthesis(), //
             new LambdaRenameSingleParameterToLambda(), //
             null) //
-        // .add(EnhancedForStatement.class, //
-        // new Aggregate(), //
-        // new Collect(), //
-        // new CountIf(), //
-        // new FindFirst(), //
-        // new ForEach(), //
-        // new ForEachSuchThat(), //
-        // new HoldsForAll(), //
-        // new HoldsForAny(), //
-        // null) //
-        // .add(ForStatement.class, //
-        // new ForLoop.FindFirst(), //
-        // new ForEachInRange(), //
-        // null) //
-        // .add(WhileStatement.class, //
-        // new While.CountIf(), //
-        // // new Exhaust(), // R.I.P
-        // null)//
         .add(ExpressionStatement.class, //
             new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //

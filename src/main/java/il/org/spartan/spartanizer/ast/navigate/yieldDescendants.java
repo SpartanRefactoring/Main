@@ -33,7 +33,7 @@ public abstract class yieldDescendants<N extends ASTNode> {
     final Class<N> clazz;
     Predicate<N> p = λ -> true;
 
-    public untilClass(final Class<N> clazz) {
+    untilClass(final Class<N> clazz) {
       this.clazz = clazz;
     }
 

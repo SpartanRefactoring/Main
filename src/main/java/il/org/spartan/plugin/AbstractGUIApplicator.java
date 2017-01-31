@@ -125,11 +125,11 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    *        displayed
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
-    return rewriterOf(¢, (IMarker) null, counter);
+    return rewriterOf(¢, null, counter);
   }
 
   public final ASTRewrite createRewrite(final CompilationUnit ¢) {
-    return rewriterOf(¢, (IMarker) null, new Int());
+    return rewriterOf(¢, null, new Int());
   }
 
   public boolean follow() throws CoreException {

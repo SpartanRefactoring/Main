@@ -87,7 +87,7 @@ public enum step {
   }
 
   public static Block body(final TryStatement ¢) {
-    return ¢ == null ? (Block) null : ¢.getBody();
+    return ¢ == null ? null : ¢.getBody();
   }
 
   public static Statement body(final WhileStatement ¢) {

@@ -121,6 +121,7 @@ public interface findFirst {
     return $.get();
   }
 
+  @FunctionalInterface
   interface In<N extends ASTNode> {
     N in(ASTNode n);
   }

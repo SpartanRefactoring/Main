@@ -88,7 +88,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
    *        displayed
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final IProgressMonitor ¢) {
-    return createRewrite(¢, (IMarker) null);
+    return createRewrite(¢, null);
   }
 
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {

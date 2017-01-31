@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.idiomatic.*;
 
+import il.org.spartan.spartanizer.ast.navigate.containing;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
 
@@ -14,7 +15,7 @@ public enum BindingUtils {
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
-    final ASTNode $ = il.org.spartan.spartanizer.ast.navigate.containing.typeDeclaration(¢);
+    final ASTNode $ = containing.typeDeclaration(¢);
     return eval(() -> ((AbstractTypeDeclaration) $).resolveBinding()).when($ instanceof TypeDeclaration);
   }
 

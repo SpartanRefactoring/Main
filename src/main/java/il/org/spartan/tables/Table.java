@@ -138,7 +138,7 @@ public class Table extends Row<Table> implements Closeable {
 
   @Override protected Table reset() {
     keySet().forEach(λ -> put(λ, ""));
-    put((String) null, ++length + "");
+    put(null, ++length + "");
     return this;
   }
 

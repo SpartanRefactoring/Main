@@ -18,7 +18,9 @@ public class Issue1089 {
         .stays();
   }
 
-  @Ignore @Test public void b() {
-    trimmingOf("Object o=new Object();l.forEach(c->a(o));").stays();
+  @Test public void b() {
+    trimmingOf("Object o=new Object();l.forEach(c->a(o));")//
+        .gives("Object o=new Object();l.forEach(λ->a(o));")//
+        .stays();
   }
 }
