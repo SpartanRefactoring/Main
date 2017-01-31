@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -42,7 +43,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       }
 
       SimpleName $() {
-        return d.getAST().newSimpleName("$");
+        return make.from(d).identifier("$");
       }
     };
   }

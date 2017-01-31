@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -37,7 +38,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final Object ¢ : step.fragments(t))
             if (¢ instanceof SimpleName && wizard.same((SimpleName) ¢, oldName)) {
-              r.replace((SimpleName) ¢, d.getAST().newSimpleName(newName), g);
+              r.replace((SimpleName) ¢, make.from(d).identifier(newName), g);
               return;
             }
   }
@@ -90,7 +91,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(oldName, d.getAST().newSimpleName(newName), $, r, g);
+        rename(oldName, make.from(d).identifier(newName), $, r, g);
         fixJavadoc($, oldName, newName, r, g);
       }
     };

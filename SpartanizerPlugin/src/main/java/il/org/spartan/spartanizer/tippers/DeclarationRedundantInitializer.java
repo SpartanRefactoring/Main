@@ -1,6 +1,4 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Sep 25, 2016 */
+
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
@@ -15,6 +13,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 25, 2016 */
 public final class DeclarationRedundantInitializer extends ReplaceCurrentNode<VariableDeclarationFragment>
     //
     implements TipperCategory.SyntacticBaggage {
