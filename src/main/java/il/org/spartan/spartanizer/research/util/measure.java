@@ -15,11 +15,10 @@ public enum measure {
     if (n == null)
       return 0;
     final Int $ = new Int();
-    $.inner = 0;
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
-          ++$.inner;
+          $.step();
       }
     });
     return $.inner;
@@ -32,7 +31,7 @@ public enum measure {
     n.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
-          ++$.inner;
+          $.step();
         return !iz.classInstanceCreation(¢);
       }
     });

@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.engine;
-
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -7,6 +6,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** A utility class used to scan statements of a {@link MethodDeclaration}.
  * @author Ori Roth
@@ -17,14 +18,14 @@ public abstract class MethodScanner {
   protected Statement currentStatement;
   protected int currentIndex;
 
-  @SuppressWarnings("unchecked") public MethodScanner(final MethodDeclaration method) {
+  public MethodScanner(final MethodDeclaration method) {
     assert method != null;
     this.method = method;
     if (body(method) == null) {
       statements = null;
       currentStatement = null;
     } else {
-      statements = body(method).statements();
+      statements = step.statements(body(method));
       currentStatement = first(statements);
     }
     currentIndex = -1;

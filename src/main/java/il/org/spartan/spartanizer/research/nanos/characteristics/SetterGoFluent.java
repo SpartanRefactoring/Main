@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   @Override public boolean canTip(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
-    @SuppressWarnings("unchecked") final List<Statement> ss = ¢.getBody().statements();
+final List<Statement> ss = statements(¢.getBody());
     if (ss.size() != 1 || !iz.expressionStatement(first(ss)))
       return false;
     final Expression e = az.expressionStatement(first(ss)).getExpression();

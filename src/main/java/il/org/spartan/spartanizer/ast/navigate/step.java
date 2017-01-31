@@ -86,8 +86,8 @@ public enum step {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static ASTNode body(final TryStatement ¢) {
-    return ¢ == null ? null : ¢.getBody();
+  public static Block body(final TryStatement ¢) {
+    return ¢ == null ? (Block) null : ¢.getBody();
   }
 
   public static Statement body(final WhileStatement ¢) {

@@ -21,7 +21,7 @@ public interface count {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(ImportDeclaration.class))
-          $.getAndIncrement();
+          $.step();
       }
     });
     return $.get();
@@ -63,7 +63,7 @@ public interface count {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
-        $.getAndIncrement();
+        $.step();
       }
     });
     return $.get();
@@ -74,7 +74,7 @@ public interface count {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(c))
-          $.getAndIncrement();
+          $.step();
       }
     });
     return $.get();
@@ -85,7 +85,7 @@ public interface count {
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class))
-          $.getAndIncrement();
+          $.step();
       }
     });
     return $.get();
@@ -99,7 +99,7 @@ public interface count {
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
-          $.getAndIncrement();
+          $.step();
       }
     });
     return $.get();
@@ -119,7 +119,7 @@ public interface count {
     final Int $ = new Int();
     root.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
-        $.addAndGet(as.bit(iz.statement(¢)));
+        $.add(as.bit(iz.statement(¢)));
       }
     });
     return $.get();
