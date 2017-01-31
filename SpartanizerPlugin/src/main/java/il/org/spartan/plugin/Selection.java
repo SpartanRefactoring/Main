@@ -104,7 +104,7 @@ public class Selection extends AbstractSelection<Selection> {
     final int o = textSelection.getOffset(), l = o + textSelection.getLength();
     int no = o, nl = l;
     try {
-      final IMarker[] ms = ((IFile) r).findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
+      final IMarker[] ms = r.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
       boolean changed = false;
       int i = 0;
       for (; i < ms.length; ++i) {
@@ -326,7 +326,7 @@ public class Selection extends AbstractSelection<Selection> {
      * @param ¢ JD
      * @return selection by file */
     private static Selection by(final IResource ¢) {
-      return !(¢ instanceof IFile) || !((IStorage) ¢).getName().endsWith(".java") ? empty() : by((IFile) ¢);
+      return !(¢ instanceof IFile) || !¢.getName().endsWith(".java") ? empty() : by((IFile) ¢);
     }
 
     /** @param ¢ JD

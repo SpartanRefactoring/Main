@@ -290,7 +290,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * @author Ori Roth
    * @since 2.6 */
   static class SimpleMapper extends EventMapper<none> {
-    public SimpleMapper(final Class<none> enumClass) {
+    SimpleMapper(final Class<none> enumClass) {
       super(enumClass);
     }
 

@@ -16,7 +16,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
   static class ByNodeClass<N extends ASTNode> extends yieldAncestors<N> {
     private final Class<N> clazz;
 
-    public ByNodeClass(final Class<N> clazz) {
+    ByNodeClass(final Class<N> clazz) {
       this.clazz = clazz;
     }
 
@@ -36,7 +36,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
   static class ByNodeInstances<N extends ASTNode> extends yieldAncestors<N> {
     private final List<N> instances;
 
-    public ByNodeInstances(final List<N> instances) {
+    ByNodeInstances(final List<N> instances) {
       this.instances = instances;
     }
 
@@ -56,7 +56,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
   static class ByNodeType extends yieldAncestors<ASTNode> {
     final int type;
 
-    public ByNodeType(final int type) {
+    ByNodeType(final int type) {
       this.type = type;
     }
 

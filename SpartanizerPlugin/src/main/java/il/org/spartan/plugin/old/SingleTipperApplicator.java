@@ -161,7 +161,7 @@ public final class SingleTipperApplicator {
      * operation has been made. */
     boolean doneTraversing;
 
-    public TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
+    TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit) {
       this.rewrite = rewrite;
       this.marker = marker;
       this.type = type;
@@ -170,7 +170,7 @@ public final class SingleTipperApplicator {
       doneTraversing = false;
     }
 
-    public TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
+    TipperApplyVisitor(final ASTRewrite rewrite, final IMarker marker, final Type type, final CompilationUnit compilationUnit,
         final Tipper<?> tipper) {
       this.rewrite = rewrite;
       this.marker = marker;
