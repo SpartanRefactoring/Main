@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * {
  *   ;
  *   ;
@@ -34,13 +34,13 @@ import il.org.spartan.spartanizer.tipping.*;
  *     ;
  *   }
  * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * g();
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-07-29 */

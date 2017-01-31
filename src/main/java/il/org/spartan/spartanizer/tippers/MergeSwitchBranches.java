@@ -10,20 +10,20 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Removing redundant case branches in switch statement such as
  *
- * <pre>
+ * <code>
 * switch(x) {
 * case a: x=1; break;
 * case b: x=2; break;
 * default: x=1; break;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
 * switch(x) {
 * case a: default: x=1; break;
 * case b: x=2; break;
- * </pre>
+ * </code>
  *
  * Tested in {@link Issue0858}
  * @author Yuval Simon

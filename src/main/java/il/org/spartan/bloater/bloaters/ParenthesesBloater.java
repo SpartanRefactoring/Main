@@ -10,19 +10,19 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Test case is {@link Issue1045} Issue #1045 Convert:
  *
- * <pre>
+ * <code>
  * if (a > 1 || b > 2 || c + e > 3) {
  *   return 1;
  * }
- * </pre>
+ * </code>
  *
  * to:
  *
- * <pre>
+ * <code>
  * if (((a > 1) || (b > 2)) || ((c + e) > 3)) {
  *   return 1;
  * }
- * </pre>
+ * </code>
  *
  * Currently the expander goes over expressions and for each InfixExpression
  * who's parent is also an InfixExpression, It will make it parenthesized.

@@ -10,15 +10,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace
  *
- * <pre>
+ * <code>
  * b + -3
- * </pre>
+ * </code>
  *
  * To
  *
- * <pre>
+ * <code>
  * b - 3
- * </pre>
+ * </code>
  *
  * @author Dor Ma'ayan
  * @since 05-12-2016 */

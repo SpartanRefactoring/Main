@@ -14,16 +14,16 @@ import il.org.spartan.spartanizer.java.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * int a = 3;
  * return a;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * return a;
- * </pre>
+ * </code>
  *
  * https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil

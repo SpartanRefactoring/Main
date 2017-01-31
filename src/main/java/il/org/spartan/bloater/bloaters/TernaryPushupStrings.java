@@ -13,16 +13,16 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Converts addition of string literal and ternary string literal to ternary
  * string literal of the concatenation. for example
  *
- * <pre>
+ * <code>
  * "abc" + (condition ? "123" : "456") (condition ? "abc" : "def") + 123"
  *
- * <pre>
+ * <code>
  * to
  *
- * <pre>
+ * <code>
  * condition ? "abc123" : "abc456" condition ? "abc123" : "def123"
  *
- * <pre>
+ * <code>
  * Test case is {@link Issue1003}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-08 */

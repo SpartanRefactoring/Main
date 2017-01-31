@@ -15,15 +15,15 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * <br/>
  * Expand :
  *
- * <pre>
+ * <code>
  * catch(Type1 | Type2 e){block}
- * </pre>
+ * </code>
  *
  * To:
  *
- * <pre>
+ * <code>
  * catch(Type1 e){block}catch(Type2 e){block}
- * </pre>
+ * </code>
  *
  * Tested in {@link Issue0970}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

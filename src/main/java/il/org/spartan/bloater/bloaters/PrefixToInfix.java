@@ -13,16 +13,16 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * ++i; --i;
  *
- * <pre>
+ * <code>
  * to
  *
- * <pre>
+ * <code>
  * i+=1; i-=1;
  *
- * <pre>
+ * <code>
  * Test case is {@link Issue1005}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */

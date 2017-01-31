@@ -346,18 +346,16 @@ public enum extract {
         return "initializer";
       case FIELD_DECLARATION:
         return separate.these(step.fragments((FieldDeclaration) ¢)).by("/");
-      case ANNOTATION_TYPE_DECLARATION:
-        return ((AnnotationTypeDeclaration) ¢).getName() + "";
       case ANNOTATION_TYPE_MEMBER_DECLARATION:
         return ((AnnotationTypeMemberDeclaration) ¢).getName() + "";
       case ENUM_CONSTANT_DECLARATION:
         return ((EnumConstantDeclaration) ¢).getName() + "";
-      case ENUM_DECLARATION:
-        return ((EnumDeclaration) ¢).getName() + "";
       case METHOD_DECLARATION:
         return ((MethodDeclaration) ¢).getName() + "";
+      case ANNOTATION_TYPE_DECLARATION:
+      case ENUM_DECLARATION:
       case TYPE_DECLARATION:
-        return ((TypeDeclaration) ¢).getName() + "";
+        return ((AbstractTypeDeclaration) ¢).getName() + "";
       default:
         assert fault.unreachable() : fault.dump() + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() + "\n d.getNodeType() = " + ¢.getNodeType()
             + fault.done();

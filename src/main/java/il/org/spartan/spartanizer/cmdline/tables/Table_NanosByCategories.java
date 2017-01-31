@@ -26,7 +26,7 @@ public class Table_NanosByCategories {
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)
         for (final Tipper<?> ¢ : implementation[i])
-          if (¢ != null && ¢ instanceof NanoPatternTipper) {
+          if (¢ instanceof NanoPatternTipper) {
             final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
             final String category = Category.pretty(np.category() != null ? np.category() + "" : Toolbox.intToClassName(i));
             categories.putIfAbsent(category, new TreeSet<>());

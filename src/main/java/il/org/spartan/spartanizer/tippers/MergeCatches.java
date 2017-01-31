@@ -13,15 +13,15 @@ import il.org.spartan.spartanizer.tipping.*;
  * <br>
  * convert
  *
- * <pre>
+ * <code>
  * try{}catch(Exception1 e){Block}catch(Exception2 e){SameBlock}
- * </pre>
+ * </code>
  *
  * to :
  *
- * <pre>
+ * <code>
  * try{}catch(Exception1 | Exception2 e){Block}
- * </pre>
+ * </code>
  *
  * @author Dor Ma'ayan
  * @since 20-11-2016 */

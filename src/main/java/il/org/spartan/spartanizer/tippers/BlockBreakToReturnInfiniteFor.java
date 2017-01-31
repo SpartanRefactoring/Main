@@ -36,8 +36,6 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
-    if (then == null)
-      return null;
     if (iz.breakStatement(then))
       return then;
     if (iz.block(then)) {

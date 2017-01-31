@@ -156,8 +156,8 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n that'" + codeFragment + "' is spartanized" //
               + "\n   to '" + expected + "', but, both look" //
               + "\n pretty much the same to me. You may want"//
-              + "\n change your @Test to <pre>" + //
-              "\n\tipper\tipper spartiziation.of(" + codeFragment + ").stays()" + "\n </pre>." //
+              + "\n change your @Test to <code>" + //
+              "\n\tipper\tipper spartiziation.of(" + codeFragment + ").stays()" + "\n </code>." //
       );
     }
     if (common(codeFragment) != null) {

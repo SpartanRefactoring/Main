@@ -10,6 +10,7 @@ public final class Bool {
 
   public Bool() {}
 
+  @SuppressWarnings("BooleanParameter")
   public Bool(final boolean b) {
     inner = b;
   }
