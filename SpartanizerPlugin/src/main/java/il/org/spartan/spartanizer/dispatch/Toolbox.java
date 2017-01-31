@@ -113,7 +113,26 @@ public class Toolbox {
             new LambdaRemoveParenthesis(), //
             new LambdaRenameSingleParameterToLambda(), //
             null) //
-        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
+        // .add(EnhancedForStatement.class, //
+        // new Aggregate(), //
+        // new Collect(), //
+        // new CountIf(), //
+        // new FindFirst(), //
+        // new ForEach(), //
+        // new ForEachSuchThat(), //
+        // new HoldsForAll(), //
+        // new HoldsForAny(), //
+        // null) //
+        // .add(ForStatement.class, //
+        // new ForLoop.FindFirst(), //
+        // new ForEachInRange(), //
+        // null) //
+        // .add(WhileStatement.class, //
+        // new While.CountIf(), //
+        // // new Exhaust(), // R.I.P
+        // null)//
+        .add(ExpressionStatement.class, //
+            new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
             new ModifierRedundant(), //
             new ModifierFinalAbstractMethodRedundant(), //
@@ -203,7 +222,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-             new InfixIndexOfToStringContains(), // v 2.7
+            new InfixIndexOfToStringContains(), // v 2.7
             new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
