@@ -1,5 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -24,7 +25,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       return null;
     final AST create = ¢.getAST();
     final SwitchStatement $ = create.newSwitchStatement();
-    $.setExpression(copy.of(az.simpleName(step.left(az.comparison(xs.get(0))))));
+    $.setExpression(copy.of(az.simpleName(step.left(az.comparison(first(xs))))));
     final List<Statement> ss = step.statements($);
     final List<Block> bs = getAllBlocks(¢);
     int i = 0;
@@ -48,9 +49,9 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static boolean isMyCase(final List<Expression> xs) {
-    if (xs == null || xs.isEmpty() || !iz.infixEquals(xs.get(0)))
+    if (xs == null || xs.isEmpty() || !iz.infixEquals(first(xs)))
       return false;
-    InfixExpression px = az.comparison(xs.get(0));
+    InfixExpression px = az.comparison(first(xs));
     if (!iz.infixEquals(px))
       return false;
     final SimpleName switchVariable = !iz.simpleName(step.left(px)) ? null : az.simpleName(step.left(px));

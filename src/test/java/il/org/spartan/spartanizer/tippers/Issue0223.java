@@ -126,7 +126,7 @@ public final class Issue0223 {
 
   @Test public void B$140findTipperDemands() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
+    assert Toolbox.defaultInstance().firstTipper(focus).canTip(focus);
   }
 
   @Test public void B$150findTipperCanSuggest() {

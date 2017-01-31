@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -66,7 +67,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       final List<SimpleName> nn = new ArrayList<>(newNames);
 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(on.get(0), nn.get(0), d, r, g);
+        Tippers.rename(first(on), first(nn), d, r, g);
       }
     };
   }

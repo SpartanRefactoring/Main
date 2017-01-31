@@ -53,7 +53,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
 
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     final List<SwitchCase> $ = extract.switchCases(¢);
-    return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && $.get(0).isDefault();
+    return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && first($).isDefault();
   }
 
   static boolean noSideEffectCommands(final SwitchStatement s) {

@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code
- * if (x)
- *   return b; else {} } into {@code
+ * if (x) return b; else {} } into {@code
  * if (x)
  *   return b;
  * }
