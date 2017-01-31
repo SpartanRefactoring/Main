@@ -49,7 +49,7 @@ public enum getAll {
     if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-    if (¢.getBody().statements().isEmpty())
+    if (statements(body(¢)).isEmpty())
       return $;
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢¢) {
