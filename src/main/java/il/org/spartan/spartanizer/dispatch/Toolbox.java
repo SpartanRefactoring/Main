@@ -12,7 +12,6 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -113,24 +112,6 @@ public class Toolbox {
             new LambdaRemoveParenthesis(), //
             new LambdaRenameSingleParameterToLambda(), //
             null) //
-        // .add(EnhancedForStatement.class, //
-        // new Aggregate(), //
-        // new Collect(), //
-        // new CountIf(), //
-        // new FindFirst(), //
-        // new ForEach(), //
-        // new ForEachSuchThat(), //
-        // new HoldsForAll(), //
-        // new HoldsForAny(), //
-        // null) //
-        // .add(ForStatement.class, //
-        // new ForLoop.FindFirst(), //
-        // new ForEachInRange(), //
-        // null) //
-        // .add(WhileStatement.class, //
-        // new While.CountIf(), //
-        // // new Exhaust(), // R.I.P
-        // null)//
         .add(ExpressionStatement.class, //
             new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
@@ -238,8 +219,7 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            new First(), //
-            new Last(), null)//
+            null)//
         .add(ParenthesizedExpression.class, //
             new ParenthesizedRemoveExtraParenthesis(), //
             null) //
