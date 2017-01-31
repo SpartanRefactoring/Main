@@ -19,19 +19,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Apply the distributive rule to multiplication:
- *
- * <code>
+/** Apply the distributive rule to multiplication: <code>
 * <b>a*b + a*c</b>
- * </code>
- *
- * to
- *
- * <code>
+ * </code> to <code>
 * <b>a * (b + c)</b>
- * </code>
- *
- * .
+ * </code> .
  * @author Matteo Orru'
  * @since 2016 */
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>

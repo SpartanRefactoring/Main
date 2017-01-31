@@ -8,20 +8,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Expend :
- *
- * <code>
+/** Expend : {@code
  *  a+ "";
- * </code>
- *
- * To:
- *
- * <code>
+ * } To: {@code
  * a.toString();
- * </code>
- *
- * Important : Works only in cases where binding exists, otherwise does nothing
- * Tested in {@link Issue096}
+ * } Important : Works only in cases where binding exists, otherwise does
+ * nothing Tested in {@link Issue096}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-20 */
 public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//

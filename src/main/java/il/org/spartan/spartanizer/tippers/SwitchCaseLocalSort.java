@@ -15,9 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** sorts cases of a local branch
- *
- * <code>
+/** sorts cases of a local branch <code>
  * switch(x) { case 2: case 1: break; }
  *
  * <code>

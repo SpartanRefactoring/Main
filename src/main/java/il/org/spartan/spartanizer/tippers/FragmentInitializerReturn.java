@@ -16,19 +16,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * int a = 3;
  * return a;
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * return 3;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class FragmentInitializerReturn extends $FragementAndStatement//

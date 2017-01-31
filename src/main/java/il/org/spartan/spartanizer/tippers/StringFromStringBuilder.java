@@ -84,7 +84,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     for (boolean hs = false;;) {
       final Expression e = r.getExpression();
       final ClassInstanceCreation c = az.classInstanceCreation(e);
-      if ( c != null){
+      if (c != null) {
         final String t = c.getType() + "";
         if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
           return null;
@@ -103,9 +103,9 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       if (mi == null || !"append".equals(mi.getName() + "") || mi.arguments().isEmpty())
         return null;
       final Expression a = onlyOne(arguments(mi));
-          if (a == null)
-            return null;
-          $.add(0, addParenthesisIfNeeded(a));
+      if (a == null)
+        return null;
+      $.add(0, addParenthesisIfNeeded(a));
       hs |= iz.stringLiteral(a);
       r = mi;
     }

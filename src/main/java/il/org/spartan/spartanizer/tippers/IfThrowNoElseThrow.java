@@ -12,20 +12,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * if (x)
  *   throw foo();
  * throw bar();
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * throw a ? foo() : bar();
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement>//

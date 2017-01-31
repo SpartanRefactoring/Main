@@ -10,19 +10,12 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * int a;
  * a = 3;
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * int a = 3;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class FragmentNoInitializerAssignment extends $FragementAndStatement//

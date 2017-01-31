@@ -15,19 +15,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * int a;
  * a = 3;
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * int a = 3;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//

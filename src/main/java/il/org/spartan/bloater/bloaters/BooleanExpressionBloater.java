@@ -12,20 +12,13 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Expand Boolean Expressions : </br>
- * Expand :
- *
- * <code>
+ * Expand : {@code
  * x && y()
- * </code>
- *
- * To :
- *
- * <code>
+ * } To : {@code
  *  boolean a = x;
  *  boolean b = y();
  *  a && b
- * </code>
- *
+ * }
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-13 */
 public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//

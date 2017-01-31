@@ -99,8 +99,7 @@ public enum az {
    * @param $ result
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
    *         <code><b>false</b></code> */
-  @SuppressWarnings("BooleanParameter")
-  public static int bit(final boolean $) {
+  @SuppressWarnings("BooleanParameter") public static int bit(final boolean $) {
     return $ ? 1 : 0;
   }
 
@@ -143,8 +142,8 @@ public enum az {
   }
 
   /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is one of the six comparison operators: {@code <}, {@code <=},
-   * {@code >}, {@code >=}, {@code !=}, or {@code ==}.
+   * is one of the six comparison operators: {@code <}, {@code <=}, {@code >},
+   * {@code >=}, {@code !=}, or {@code ==}.
    * @param $ result
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */

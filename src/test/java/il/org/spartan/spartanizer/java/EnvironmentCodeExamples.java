@@ -1,7 +1,7 @@
-
 package il.org.spartan.spartanizer.java;
 
 import il.org.spartan.spartanizer.annotations.*;
+
 /** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 7, 2016 */

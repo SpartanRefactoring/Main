@@ -10,20 +10,13 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Fluent API for testing:
- *
- * <code>
+/** Fluent API for testing: {@code
  * trimming.of("a+(b-c)")//
  *     .gives("a+b-c")
- * </code>
- *
- * or
- *
- * <code>
+ * } or {@code
  * trimming.with(InfixExpression.class, new InfixTermsExpand()).of("a+(b-c)")//
  *     .gives("a+b+c")
- * </code>
-*/
+ * } */
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2016 */

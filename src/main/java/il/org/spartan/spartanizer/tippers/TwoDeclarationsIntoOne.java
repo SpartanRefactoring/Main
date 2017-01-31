@@ -16,20 +16,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Test case is {@link Issue1012} Issue #1012 Convert:
- *
- * <code>
+/** Test case is {@link Issue1012} Issue #1012 Convert: {@code
  * int a = 0;
  * int b = 1;
  * int c = 2;
- * </code>
- *
- * to:
- *
- * <code>
+ * } to: {@code
  * int a = 0, b = 1, c = 2;
- * </code>
- *
+ * }
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDeclarationStatement>//

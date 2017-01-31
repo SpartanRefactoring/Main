@@ -11,19 +11,11 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Chage prfix expression to infix expression when possible </br>
- * Expand :
- *
- * <code>
+ * Expand : {@code
  * i++ / i-- ;
- * </code>
- *
- * To :
- *
- * <code>
+ * } To : {@code
  * i=i+1 / i=i-1 ;
- * </code>
- *
- * Test class is {@link Issue0974}
+ * } Test class is {@link Issue0974}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-09 */
 public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression>//

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -7,18 +8,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts
- *
- * <code>
- * try { a;} catch(Exception e) { b;} finally {}
- * </code>
- *
- * into
- *
- * <code>
- * try { a;} catch(Exception e) { b;}
- * </code>
- *
+/** converts {@code try { a;} catch(Exception e) { b;} finally {} } into
+ * {@code try { a;} catch(Exception e) { b;} }
  * @author kobybs
  * @author Dor Ma'ayan
  * @since 16-11-2016 */

@@ -13,19 +13,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Issue #970 <br/>
  * <br/>
- * Expand :
- *
- * <code>
- * catch(Type1 | Type2 e){block}
- * </code>
- *
- * To:
- *
- * <code>
- * catch(Type1 e){block}catch(Type2 e){block}
- * </code>
- *
- * Tested in {@link Issue0970}
+ * Expand : {@code catch(Type1 | Type2 e){block} } To: {@code catch(Type1
+ * e){block}catch(Type2 e){block} } Tested in {@link Issue0970}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
 public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//

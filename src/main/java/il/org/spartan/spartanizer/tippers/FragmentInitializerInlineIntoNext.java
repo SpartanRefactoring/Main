@@ -18,19 +18,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * a = 3;
  * whatever(a);
- * </code>
- *
- * to
- *
- * <code>
+ * } to {@code
  * whatever(3);
- * </code>
- *
+ * }
  * @author Ori Marcovitch
  * @since 2016-11-27 */
 public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//

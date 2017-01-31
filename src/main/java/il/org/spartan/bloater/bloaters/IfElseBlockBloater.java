@@ -9,19 +9,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Convert :
- *
- * <code>
+/** Convert : {@code
  * if(condition) block1 else block2
- * </code>
- *
- * to :
- *
- * <code>
- * if(condition){block1}else{block2}
- * </code>
- *
- * Tested in {@link Issue0971}
+ * } to : {@code if(condition){block1}else{block2} } Tested in {@link Issue0971}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-27 */
 public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
