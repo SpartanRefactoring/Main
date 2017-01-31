@@ -25,7 +25,7 @@ public enum enumerate {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢))
-          ++$.inner;
+          $.step();
       }
     });
     return $.inner;
@@ -42,7 +42,7 @@ public enum enumerate {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
-          ++$.inner;
+          $.step();
       }
     });
     return $.inner;
@@ -57,10 +57,9 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    $.inner = 0;
     ¢.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
-        ++$.inner;
+        $.step();
         return true;
       }
     });
@@ -74,11 +73,10 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    $.inner = 0;
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
         if (step.statements(step.body(node)) != null && !step.statements(step.body(node)).isEmpty())
-          ++$.inner;
+          $.step();
         return true;
       }
     });
@@ -132,39 +130,38 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    $.inner = 0;
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
-        ++$.inner;
+        $.step();
         return true;
       }
     });
     return $.inner;
   }
 
-  public static int loops(final ASTNode ¢) {
-    if (¢ == null)
+  public static int loops(final ASTNode n) {
+    if (n == null)
       return 0;
     final Int $ = new Int();
-    $.inner = 0;
-    ¢.accept(new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
-        ++$.inner;
-        return true;
+    n.accept(new ASTVisitor() {
+      @Override public boolean visit(final WhileStatement ¢) {
+        return push(¢);
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
-        ++$.inner;
-        return true;
+      @Override public boolean visit(final ForStatement ¢) {
+        return push(¢);
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
-        ++$.inner;
-        return true;
+      @Override public boolean visit(final EnhancedForStatement ¢) {
+        return push(¢);
       }
 
-      @Override public boolean visit(@SuppressWarnings("unused") final DoStatement __) {
-        ++$.inner;
+      @Override public boolean visit(final DoStatement ¢) {
+        return push(¢);
+      }
+
+      boolean push(@SuppressWarnings("unused") final ASTNode __) {
+        $.step();
         return true;
       }
     });
@@ -175,10 +172,9 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    $.inner = 0;
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {
-        ++$.inner;
+        $.step();
         return true;
       }
     });
