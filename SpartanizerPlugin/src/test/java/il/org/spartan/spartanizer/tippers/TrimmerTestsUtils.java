@@ -107,7 +107,7 @@ public enum TrimmerTestsUtils {
   static class OperandToTipper<N extends ASTNode> extends TrimmerTestsUtils.Operand {
     final Class<N> clazz;
 
-    public OperandToTipper(final String from, final Class<N> clazz) {
+    OperandToTipper(final String from, final Class<N> clazz) {
       super(from);
       this.clazz = clazz;
     }
