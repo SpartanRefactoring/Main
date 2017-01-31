@@ -46,7 +46,7 @@ public final class SpartanizeProject extends BaseHandler {
         λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
         a.setMarker(null);
         a.setICompilationUnit(first(todo));
-        $.addAndGet(a.countTips());
+        $.add(a.countTips());
         if (λ.isCanceled())
           $.set(0);
         λ.done();

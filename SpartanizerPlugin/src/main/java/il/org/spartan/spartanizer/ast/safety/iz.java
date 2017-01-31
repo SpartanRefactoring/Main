@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -14,6 +13,8 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -1019,7 +1020,7 @@ public interface iz {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> the parameter is a sequencer
    *         (may be complex) */
-  @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢) {
+  static boolean sequencerComplex(final ASTNode ¢) {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
@@ -1028,7 +1029,7 @@ public interface iz {
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
       case ASTNode.BLOCK: // Not the final implementation: should be changed
                           // when adding support for loops, switches etc.
-        for (final Statement s : (List<Statement>) ((Block) ¢).statements())
+        for (final Statement s : (statements((Block) ¢)))
           if (sequencerComplex(s))
             return true;
         return false;
@@ -1043,7 +1044,7 @@ public interface iz {
    *         contrast to sequencerComplex(ASTNode) above, this method not
    *         necessarily checks the following statements are not reachable.
    *         [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unchecked") static boolean sequencerComplex(final ASTNode ¢, final int type) {
+  static boolean sequencerComplex(final ASTNode ¢, final int type) {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
@@ -1051,7 +1052,7 @@ public interface iz {
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
       case ASTNode.BLOCK:
-        for (final Statement s : (List<Statement>) ((Block) ¢).statements())
+        for (final Statement s : statements(az.block(¢)))
           if (sequencerComplex(s, type))
             return true;
         return false;

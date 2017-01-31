@@ -168,7 +168,7 @@ public interface metrics {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement && !(¢ instanceof Block))
-          ++$.inner;
+          $.step();
       }
     });
     return $.inner;
@@ -183,10 +183,10 @@ public interface metrics {
     s.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getNodeType() == type)
-          ++$.inner;
+          $.step();
       }
     });
-    return $.inner;
+    return $.get();
   }
 
   @SuppressWarnings("boxing") static int countStatementsOfType(final List<Statement> ss, final int type) {
@@ -198,7 +198,7 @@ public interface metrics {
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Expression)
-          ++$.inner;
+          $.step();
       }
     });
     return $.inner;
@@ -208,7 +208,7 @@ public interface metrics {
     final Int $ = new Int();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final MethodDeclaration __) {
-        ++$.inner;
+        $.step();
         return true;
       }
     });
