@@ -168,11 +168,11 @@ public class ReportGenerator implements ConfigurableReport {
     }
 
     public String name() {
-      return this.name;
+      return name;
     }
 
     public ToInt<R> function() {
-      return this.f;
+      return f;
     }
   }
 

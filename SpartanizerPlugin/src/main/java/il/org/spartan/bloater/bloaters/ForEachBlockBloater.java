@@ -17,12 +17,12 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 10-01-17 */
 public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement>//
     implements TipperCategory.Bloater {
-  @Override @SuppressWarnings("unchecked") public ASTNode replacement(final EnhancedForStatement s) {
+  @Override public ASTNode replacement(final EnhancedForStatement s) {
     if (s == null)
       return null;
     final EnhancedForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
-    b.statements().add(copy.of(body(s)));
+    statements(b).add(copy.of(body(s)));
     final List<Boolean> cc = new ArrayList<>();
     body(s).accept(new ASTVisitor() {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {

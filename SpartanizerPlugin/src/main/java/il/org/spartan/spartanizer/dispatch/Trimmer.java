@@ -73,7 +73,7 @@ public class Trimmer extends AbstractGUIApplicator {
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }
         if (s != null) {
-          i.incrementAndGet();
+          i.step();
           TrimmerLog.application(r, s);
         }
         return true;
