@@ -33,7 +33,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
 
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager m) {
     final ASTNode p = d.getParent();
-    if (p == null || !(p instanceof EnhancedForStatement))
+    if (!(p instanceof EnhancedForStatement))
       return null;
     final EnhancedForStatement $ = (EnhancedForStatement) p;
     final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
