@@ -66,8 +66,6 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
   }
 
   @Override public Tip tip(final N n) {
-    if (n == null || az.bodyDeclaration(n) == null)
-      return null;
     final List<Annotation> $ = extract.annotations(n);
     if ($ == null || $.isEmpty())
       return null;
