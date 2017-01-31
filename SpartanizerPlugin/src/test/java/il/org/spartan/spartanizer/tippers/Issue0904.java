@@ -16,7 +16,7 @@ public class Issue0904 {
         .stays();
   }
 
-@Ignore // TODO: Raviv Rachmiel
+  @Ignore // TODO: Raviv Rachmiel
   @Test public void c() {
     trimmingOf("int i,j;j++;")//
         .gives("int j;j++;")//
@@ -45,7 +45,7 @@ public class Issue0904 {
     ;
   }
 
-@Ignore // TODO: Raviv Rachmiel
+  @Ignore // TODO: Raviv Rachmiel
   @Test public void issue075h() {
     trimmingOf("int i = +0;")//
         .gives("");

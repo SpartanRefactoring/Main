@@ -12,6 +12,7 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -31,7 +32,6 @@ public class Toolbox {
     static final long serialVersionUID = 1L;
     {
       final Toolbox t = freshCopyOfAllTippers();
-      assert t.implementation != null;
       Stream.of(t.implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
@@ -238,7 +238,8 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            null)//
+            new First(), //
+            new Last(), null)//
         .add(ParenthesizedExpression.class, //
             new ParenthesizedRemoveExtraParenthesis(), //
             null) //

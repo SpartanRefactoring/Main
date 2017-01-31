@@ -14,7 +14,7 @@ public class Issue0905 {
   @Test public void t06() {
     trimmingOf("if(b()){int i;}")//
         .gives("if(b()){}")//
-        ;
+    ;
   }
 
   @Test public void t12() {

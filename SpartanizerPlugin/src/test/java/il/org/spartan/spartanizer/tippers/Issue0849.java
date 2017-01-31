@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;

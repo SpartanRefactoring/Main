@@ -1,5 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -36,7 +38,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static InfixExpression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
-    final InfixExpression $ = subject.pair(copy.of(¢.getRightOperand()), copy.of((Expression) ¢.extendedOperands().get(0))).to(¢.getOperator());
+    final InfixExpression $ = subject.pair(¢.getRightOperand(), first(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, copy.of(step.extendedOperands(¢))).extendedOperands().remove(0);
     return $;
   }

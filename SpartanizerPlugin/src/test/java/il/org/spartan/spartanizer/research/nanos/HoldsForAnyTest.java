@@ -92,8 +92,6 @@ public class HoldsForAnyTest {
     trimmingOf(" for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
         .using(EnhancedForStatement.class, new HoldsForAny())//
         .gives("$=f.modifiers().stream().anyMatch(¢->((Modifier)¢).isFinal());")//
-        ;
+    ;
   }
 }
-
-

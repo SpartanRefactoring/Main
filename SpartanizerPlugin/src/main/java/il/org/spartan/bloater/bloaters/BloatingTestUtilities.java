@@ -1,5 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
 
@@ -147,7 +148,7 @@ public enum BloatingTestUtilities {
           .from(u);
       if ($.isEmpty())
         azzert.fail("No such method Exists");
-      return $.get(0);
+      return first($);
     }
 
     private static CompilationUnit createCUWithBinding(final String text) {
