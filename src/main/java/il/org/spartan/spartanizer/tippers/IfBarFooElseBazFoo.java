@@ -92,7 +92,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     private boolean notAllDefined;
     private final Statement[] l;
 
-    public DefinitionsCollector(final List<Statement> l) {
+    DefinitionsCollector(final List<Statement> l) {
       notAllDefined = false;
       this.l = l.toArray(new Statement[l.size()]);
     }

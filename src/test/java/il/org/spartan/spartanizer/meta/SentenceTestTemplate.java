@@ -3,8 +3,7 @@ package il.org.spartan.spartanizer.meta;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -62,7 +61,7 @@ public enum SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled)
-          .map((Function<MethodDeclaration, Object[]>) Changes::____).collect(Collectors.toList())));
+          .map(Changes::____).collect(Collectors.toList())));
       return $;
     }
 

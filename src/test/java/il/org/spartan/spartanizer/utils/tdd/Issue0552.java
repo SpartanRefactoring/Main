@@ -25,7 +25,7 @@ public class Issue0552 {
   }
 
   @Test public void a() {
-    auxInt(enumerate.expressions((ASTNode) null));
+    auxInt(enumerate.expressions(null));
   }
 
   @Test public void a0() {

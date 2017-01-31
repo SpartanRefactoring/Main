@@ -22,15 +22,15 @@ public class Issue0679 {
   }
 
   @Test public void checkExistence() {
-    enumerate.methods((CompilationUnit) null);
+    enumerate.methods(null);
   }
 
   @Test public void checkParameterType() {
-    enumerate.methods((CompilationUnit) null);
+    enumerate.methods(null);
   }
 
   @Test public void checkReturnType() {
-    enumerate.methods((CompilationUnit) null);
+    enumerate.methods(null);
   }
 
   @Test public void methodInOutterClassAndMethodInInnerClass() {

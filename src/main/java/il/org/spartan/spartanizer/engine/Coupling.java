@@ -32,6 +32,7 @@ public enum Coupling {
     return false;
   }
 
+  @FunctionalInterface
   interface Inner {
     Coupling withRespectTo(ASTNode to);
   }

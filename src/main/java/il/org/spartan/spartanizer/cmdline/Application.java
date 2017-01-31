@@ -276,7 +276,7 @@ final class Application implements IApplication {
     int linesAfter;
     final List<Integer> roundStats = new ArrayList<>();
 
-    public FileStats(final File file) throws IOException {
+    FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
 
