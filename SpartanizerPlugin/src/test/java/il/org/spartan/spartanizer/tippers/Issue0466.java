@@ -12,12 +12,12 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0466 {
   @Test public void TestDoesUseShouldntChange() {
-    trimmingOf("@SuppressWarnings(\"unused\") public void check__(Object... ¢) { ¢.get(0);  }")//
+    trimmingOf("@SuppressWarnings(\"unused\") public void check__(Object... ¢) { ¢.get2(0);  }")//
         .stays();
   }
 
   @Test public void TestDoesUseShouldntChange2() {
-    trimmingOf("public void check__(@SuppressWarnings(\"unused\") Object... ¢) { ¢.get(0);  }")//
+    trimmingOf("public void check__(@SuppressWarnings(\"unused\") Object... ¢) { ¢.get2(0);  }")//
         .stays();
   }
 

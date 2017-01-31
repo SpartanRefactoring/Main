@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Unit test for {@link AssignmentOperatorBloater}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
-@Ignore
+@Ignore // TODO Ori ROth
 @SuppressWarnings("static-method")
 public class Issue1001 {
   /** [[SuppressWarningsSpartan]] */

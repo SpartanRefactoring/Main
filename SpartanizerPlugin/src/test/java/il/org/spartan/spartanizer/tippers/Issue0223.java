@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -126,12 +125,12 @@ public final class Issue0223 {
 
   @Test public void B$140findTipperDemands() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
+    assert Toolbox.defaultInstance().firstTipper(focus).canTip(focus);
   }
 
   @Test public void B$150findTipperCanSuggest() {
     A$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).canTip(focus);
+    assert Toolbox.defaultInstance().firstTipper(focus).canTip(focus);
   }
 
   @Test public void B$160findTipperReplacmenentNotNull() {
@@ -221,7 +220,7 @@ public final class Issue0223 {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateTips($, u, (IMarker) null);
+      a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
