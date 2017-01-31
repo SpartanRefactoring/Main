@@ -18,7 +18,7 @@ public enum If {
   class If0 {
     final boolean b;
 
-    public If0(final boolean b) {
+    If0(final boolean b) {
       this.b = b;
     }
 

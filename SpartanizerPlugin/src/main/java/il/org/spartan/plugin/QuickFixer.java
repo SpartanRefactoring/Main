@@ -115,7 +115,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   private static class SingleTipper<N extends ASTNode> extends Trimmer {
     final Tipper<N> tipper;
 
-    public SingleTipper(final Tipper<N> tipper) {
+    SingleTipper(final Tipper<N> tipper) {
       this.tipper = tipper;
       name = "Applying " + tipper.myName();
     }

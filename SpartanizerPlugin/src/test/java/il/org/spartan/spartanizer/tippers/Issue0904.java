@@ -8,8 +8,6 @@ import org.junit.*;
  * failed tests. Related to {@link Issue0359}.
  * @author Yuval Simon
  * @since 2016-12-08 */
-// TODO: Ravi Rachmiel
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0904 {
   @Test public void a() {
@@ -18,6 +16,7 @@ public class Issue0904 {
         .stays();
   }
 
+  @Ignore // TODO: Raviv Rachmiel
   @Test public void c() {
     trimmingOf("int i,j;j++;")//
         .gives("int j;j++;")//
@@ -46,8 +45,7 @@ public class Issue0904 {
     ;
   }
 
-  // TODO: check if this test should work according to the issue of dead
-  // variables
+  @Ignore // TODO: Raviv Rachmiel
   @Test public void issue075h() {
     trimmingOf("int i = +0;")//
         .gives("");

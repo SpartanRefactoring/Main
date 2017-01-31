@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -17,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0706 {
   @Test public void test00() {
-    getAll2.stringVariables((MethodDeclaration) null);
+    getAll2.stringVariables(null);
   }
 
   @Test public void test02() {

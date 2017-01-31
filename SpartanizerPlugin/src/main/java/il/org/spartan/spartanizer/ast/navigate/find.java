@@ -36,10 +36,10 @@ public enum find {
 
   public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> ns) {
     Expression $;
-    if (ns.size() < 2 || ($ = singleExpressionDifference(ns.get(0), ns.get(1))) == null)
+    if (ns.size() < 2 || ($ = singleExpressionDifference(lisp.first(ns), ns.get(1))) == null)
       return null;
     for (int ¢ = 2; ¢ < ns.size(); ++¢)
-      if (!$.equals(singleExpressionDifference(ns.get(0), ns.get(¢))))
+      if (!$.equals(singleExpressionDifference(lisp.first(ns), ns.get(¢))))
         return null;
     return $;
   }
@@ -54,7 +54,7 @@ public enum find {
       return az.expression(n1);
     if (children1.isEmpty())
       return same(n1, n2) ? null : az.expression(n1);
-    Expression $ = singleExpressionDifference(children1.get(0), children2.get(0));
+    Expression $ = singleExpressionDifference(lisp.first(children1), lisp.first(children2));
     for (int i = 1; i < children1.size(); ++i) {
       final Expression diff = singleExpressionDifference(children1.get(i), children2.get(i));
       // If two children aren't the same and not with same expression, the whole
@@ -118,7 +118,7 @@ public enum find {
     if ($ == null)
       return null;
     for (int i = 2; i < ns.size(); ++i) {
-      final String diff = singleAtomicDifference(ns.get(0), ns.get(i));
+      final String diff = singleAtomicDifference(lisp.first(ns), ns.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && !"".equals(diff))
         return null;
