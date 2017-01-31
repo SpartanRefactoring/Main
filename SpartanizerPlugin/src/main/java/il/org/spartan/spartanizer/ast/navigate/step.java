@@ -532,10 +532,10 @@ public enum step {
     return $;
   }
 
-  /** @param d JD
+  /** @param ¢ JD
    * @return */
-  private static List<String> methodNames(final AbstractTypeDeclaration d) {
-    return d == null ? null : methods(d).stream().map(step::name).map(λ -> identifier(λ)).collect(Collectors.toList());
+  private static List<String> methodNames(final AbstractTypeDeclaration ¢) {
+    return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(Collectors.toList());
   }
 
   public static List<String> methodNames(final CompilationUnit u) {

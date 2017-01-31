@@ -44,44 +44,9 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return $;
   }
 
-  // list of class extending Expression class, that need to be surrounded by
-  // parenthesis
-  // when put out of method arguments list
+  /** list of class extending Expression class, that need to be surrounded by
+   * parenthesis when put out of method arguments list */
   private final Class<?>[] np = { InfixExpression.class };
-
-  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
-    return "Use \"+\" operator to concatenate strings";
-  }
-
-  @Override public ASTNode replacement(final MethodInvocation i) {
-    if (!"toString".equals(i.getName() + ""))
-      return null;
-    final List<Expression> $ = new ArrayList<>();
-    MethodInvocation r = i;
-    for (boolean hs = false;;) {
-      final Expression e = r.getExpression();
-      if (e instanceof ClassInstanceCreation) {
-        final String t = ((ClassInstanceCreation) e).getType() + "";
-        if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
-          return null;
-        if (!((ClassInstanceCreation) e).arguments().isEmpty() && "StringBuilder".equals(t)) {
-          final Expression a = first(arguments((ClassInstanceCreation) e));
-          $.add(0, addParenthesisIfNeeded(a));
-          hs |= iz.stringLiteral(a);
-        }
-        if (!hs)
-          $.add(0, make.makeEmptyString(e));
-        break;
-      }
-      if (!(e instanceof MethodInvocation) || !"append".equals(((MethodInvocation) e).getName() + "") || ((MethodInvocation) e).arguments().isEmpty())
-        return null;
-      final Expression a = first(arguments((MethodInvocation) e));
-      $.add(0, addParenthesisIfNeeded(a));
-      hs |= iz.stringLiteral(a);
-      r = (MethodInvocation) e;
-    }
-    return replacement(i, $);
-  }
 
   /** Adds parenthesis to expression if needed.
    * @param x an Expression
@@ -96,6 +61,10 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return $;
   }
 
+  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
+    return "Use \"+\" operator to concatenate strings";
+  }
+
   /** Checks if an expression need parenthesis in order to interpreted correctly
    * @param x an Expression
    * @return whether or not this expression need parenthesis when put together
@@ -105,5 +74,41 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    *         parenthesis */
   private boolean isParethesisNeeded(final Expression x) {
     return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
+  }
+
+  @Override public ASTNode replacement(final MethodInvocation i) {
+    if (!"toString".equals(i.getName() + ""))
+      return null;
+    final List<Expression> $ = new ArrayList<>();
+    MethodInvocation r = i;
+    for (boolean hs = false;;) {
+      final Expression e = r.getExpression();
+      final ClassInstanceCreation c = az.classInstanceCreation(e);
+      if ( c != null){
+        final String t = c.getType() + "";
+        if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
+          return null;
+        if (!c.arguments().isEmpty() && "StringBuilder".equals(t)) {
+          final Expression a = onlyOne(arguments(c));
+          if (a == null)
+            return null;
+          $.add(0, addParenthesisIfNeeded(a));
+          hs |= iz.stringLiteral(a);
+        }
+        if (!hs)
+          $.add(0, make.makeEmptyString(e));
+        break;
+      }
+      final MethodInvocation mi = az.methodInvocation(e);
+      if (mi == null || !"append".equals(mi.getName() + "") || mi.arguments().isEmpty())
+        return null;
+      final Expression a = onlyOne(arguments(mi));
+          if (a == null)
+            return null;
+          $.add(0, addParenthesisIfNeeded(a));
+      hs |= iz.stringLiteral(a);
+      r = mi;
+    }
+    return replacement(i, $);
   }
 }

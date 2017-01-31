@@ -11,15 +11,15 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Convert :
  *
- * <pre>
+ * <code>
  * if(condition) block1 else block2
- * </pre>
+ * </code>
  *
  * to :
  *
- * <pre>
+ * <code>
  * if(condition){block1}else{block2}
- * </pre>
+ * </code>
  *
  * Tested in {@link Issue0971}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

@@ -16,16 +16,16 @@ import il.org.spartan.spartanizer.java.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * f(cond ? a : b)
  *
- * <pre>
+ * <code>
  * to
  *
- * <pre>
+ * <code>
  * cond ? f(a) : f(b)
  *
- * <pre>
+ * <code>
  * Test case is {@link Issue1091}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */

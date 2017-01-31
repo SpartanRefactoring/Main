@@ -14,15 +14,15 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert
  *
- * <pre>
+ * <code>
  * a + 2 // ==//<//> 3
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * a // ==//<//> 1
- * </pre>
+ * </code>
  *
  * @author Dor Ma'ayan
  * @since 18-11-2016 */

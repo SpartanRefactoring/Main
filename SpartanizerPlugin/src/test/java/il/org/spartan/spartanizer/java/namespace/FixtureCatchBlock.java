@@ -23,13 +23,11 @@ public class FixtureCatchBlock extends MetaFixture {
     } catch (final FileNotFoundException x) {
       @foreign("r") final int a1 = hashCode() * hashCode() * x.hashCode();
       f(a1 * a1 * a1);
-      return;
     } catch (final IOException x) {
       @knows({ "a2", "x" }) @foreign("r") final int a2 = hashCode() * hashCode();
       f(a2 * x.hashCode());
       @knows({ "a2", "x" }) final int r = hashCode();
       f(r * a2 * a2 + r);
-      return;
     } finally {
       @foreign("r") final int a = hashCode() * hashCode();
       @knows("a") final int r = hashCode();

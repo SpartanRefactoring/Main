@@ -16,7 +16,7 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
     implements TipperCategory.SyntacticBaggage {
   private static boolean shouldRemove(final MethodDeclaration $, final SuperMethodInvocation i) {
     for (final Object m : $.modifiers())
-      if (m instanceof MarkerAnnotation && (((MarkerAnnotation) m).getTypeName() + "").contains("Deprecated"))
+      if (m instanceof MarkerAnnotation && (((Annotation) m).getTypeName() + "").contains("Deprecated"))
         return false;
     return (i.getName() + "").equals($.getName() + "") && arguments(i).size() == parameters($).size();
   }

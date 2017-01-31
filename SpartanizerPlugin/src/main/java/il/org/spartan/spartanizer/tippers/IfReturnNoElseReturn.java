@@ -14,20 +14,20 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (x)
  *   return foo();
  * return bar();
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * return a ? foo() : bar();
- * </pre>
+ * </code>
  *
  * return a; } g();
- * </pre>
+ * </code>
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement>//

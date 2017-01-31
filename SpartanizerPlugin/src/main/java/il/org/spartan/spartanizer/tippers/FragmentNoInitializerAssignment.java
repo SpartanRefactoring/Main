@@ -12,16 +12,16 @@ import il.org.spartan.spartanizer.dispatch.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * int a;
  * a = 3;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * int a = 3;
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-08-07 */

@@ -9,27 +9,27 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** converts
  *
- * <pre>
+ * <code>
  * ¢ ? Boolean.TRUE : Boolean.FALSE;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * ¢
- * </pre>
+ * </code>
  *
  * or
  *
- * <pre>
+ * <code>
  * ¢ ? Boolean.FALSE : Boolean.TRUE;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * !¢
- * </pre>
+ * </code>
  *
  * @author Dan Abramovich
  * @since 27-11-2016 */

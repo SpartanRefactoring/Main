@@ -9,15 +9,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * a ? (f,g,h) : c(d,e)
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * a ? c(d, e) : f(g, h)
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-08-15 */

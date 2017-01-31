@@ -24,31 +24,31 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to convert an expression such as
  *
- * <pre>
+ * <code>
  * 0 + X = X
- * </pre>
+ * </code>
  *
  * or
  *
- * <pre>
+ * <code>
  * X + 0 = X
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
  * X
  * </i>
  * or
- * <pre>
+ * <code>
  * X + 0 + Y
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
  * X + Y
- * </pre>
+ * </code>
  *
  * @author Matteo Orrù
  * @since 2016 */

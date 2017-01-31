@@ -16,16 +16,16 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * a = 3;
  * return a;
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
  * return a = 3;
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-08-28 */
