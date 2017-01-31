@@ -12,10 +12,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Catch(...) { return;}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
-public final class IfThrowsReturn extends NanoPatternTipper<CatchClause> {
+public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {

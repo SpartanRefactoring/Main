@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Tests {@link Unless}
  * @author Ori Marcovitch
  * @since Dec 13, 2016 */
 @SuppressWarnings("static-method")
