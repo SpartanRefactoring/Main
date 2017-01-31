@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
+import static il.org.spartan.lisp.*;
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
@@ -47,7 +48,7 @@ public interface Linguistic {
    * @return a linguistic list of the items */
   static String list(final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
-        : ¢.size() == 1 ? ¢.get(0) : separate.these(¢.subList(0, ¢.size() - 1)).by(Linguistic.SEPARATOR) + " and " + ¢.get(¢.size() - 1);
+        : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(Linguistic.SEPARATOR) + " and " + last(¢);
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.

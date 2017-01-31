@@ -58,10 +58,10 @@ public class Issue0310 {
   }
 
   @Test public void updaters_ordering_check_2_right() {
-    trimmingOf("List<M> ms=new U<>();M m=ms.get(0);for(int i=0;;){m=ms.get(i);++i;}")
-        .gives("List<M> ms=new U<>();M m=ms.get(0);for(int ¢=0;;){m=ms.get(¢);++¢;}")
-        .gives("List<M> ms=new U<>();M m=ms.get(0);for(int ¢=0;;++¢){m=ms.get(¢);}")
-        .gives("List<M> ms=new U<>();M m=ms.get(0);for(int ¢=0;;++¢) m=ms.get(¢);")//
+    trimmingOf("List<M> ms=new U<>();M m=ms.gt(0);for(int i=0;;){m=ms.gt(i);++i;}")
+        .gives("List<M> ms=new U<>();M m=ms.gt(0);for(int ¢=0;;){m=ms.gt(¢);++¢;}")
+        .gives("List<M> ms=new U<>();M m=ms.gt(0);for(int ¢=0;;++¢){m=ms.gt(¢);}")
+        .gives("List<M> ms=new U<>();M m=ms.gt(0);for(int ¢=0;;++¢) m=ms.gt(¢);")//
         .stays();
   }
 
