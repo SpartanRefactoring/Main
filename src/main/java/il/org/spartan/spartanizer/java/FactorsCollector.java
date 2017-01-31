@@ -25,7 +25,7 @@ final class FactorsCollector {
   private final List<Expression> dividers = new ArrayList<>();
   private final List<Factor> all = new ArrayList<>();
 
-  public FactorsCollector(final InfixExpression e) {
+  FactorsCollector(final InfixExpression e) {
     collect(e);
   }
 

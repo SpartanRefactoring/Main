@@ -89,7 +89,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
   static class SpartanPropertyListener implements IPropertyChangeListener {
     private final AtomicBoolean refreshNeeded;
 
-    public SpartanPropertyListener(final AtomicBoolean refreshNeeded) {
+    SpartanPropertyListener(final AtomicBoolean refreshNeeded) {
       this.refreshNeeded = refreshNeeded;
     }
 
@@ -109,7 +109,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     final List<String> dead;
     final Selection selection;
 
-    public TipsListEditor(final String name, final String labelText, final TipperGroup g, final GroupFieldEditor e) {
+    TipsListEditor(final String name, final String labelText, final TipperGroup g, final GroupFieldEditor e) {
       super(name, labelText, e.getFieldEditor());
       composite = e.getFieldEditor();
       alive = Toolbox.get(g);

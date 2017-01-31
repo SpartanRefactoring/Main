@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @since 2014/05/24
  * @author Yossi GIl */
 @SuppressWarnings({ "unused" })
-public abstract class FileTestUtils {
-  /** An abstract class to be extended and implemented by client, while
+public class FileTestUtils {
+    /** An abstract class to be extended and implemented by client, while
    * overriding {@link #go(List,File)} as per customer's need.
    * @seTestUtils.SATestSuite.Files
    * @see FileTestUtils.Traverse
@@ -87,7 +87,7 @@ public abstract class FileTestUtils {
    * TestCases test files for reference. */
   static final String testKeyword = "<Test Result>";
   /** Suffix for test files. */
-  protected static final String testSuffix = ".test";
+  static final String testSuffix = ".test";
   /** Folder in which all test cases are found */
   public static final File location = new File("src/test/resources");
 

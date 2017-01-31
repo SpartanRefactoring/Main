@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.util.*;
 @SuppressWarnings("static-method")
 public class Issue0705 {
   @Test public void a() {
-    auxList(getAll.instanceofs((MethodDeclaration) null));
+    auxList(getAll.instanceofs(null));
   }
 
   void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
