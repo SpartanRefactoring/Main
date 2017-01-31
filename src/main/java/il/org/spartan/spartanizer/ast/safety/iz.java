@@ -1029,7 +1029,7 @@ public interface iz {
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
       case ASTNode.BLOCK: // Not the final implementation: should be changed
                           // when adding support for loops, switches etc.
-        for (final Statement s : (statements((Block) ¢)))
+        for (final Statement s : statements((Block) ¢))
           if (sequencerComplex(s))
             return true;
         return false;
@@ -1338,13 +1338,11 @@ public interface iz {
     }
   }
 
-  /** @param with
-  /** @return [[SuppressWarningsSpartan]]*/
-  @SuppressWarnings("all")
-  static boolean fragile(final Expression with) {
+  /** @param with /** @return [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("all") static boolean fragile(final Expression with) {
     // TODO Yossi Gil Auto-generated method stub for fragile
     if (new Object().hashCode() != 0)
-     throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30)." );
+      throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30).");
     return false;
   }
 }

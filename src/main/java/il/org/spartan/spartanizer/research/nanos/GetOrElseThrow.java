@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  *    throw Y
  *  return Z;
  * </code>
- *
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-29 */
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {

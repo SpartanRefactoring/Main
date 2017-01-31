@@ -9,24 +9,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Test case is {@link Issue0976} Issue #976 Convert:
- *
- * <code>
- * if (a == b && c == d) {
- *   a = 5;
- * }
- * </code>
- *
- * to:
- *
- * <code>
- * if (a == b) {
- *   if (c == d) {
- *     a = 5;
- *   }
- * }
- * </code>
- *
+/** Test case is {@link Issue0976} Issue #976 Convert: {@code if (a == b && c ==
+ * d) { a = 5; } } to: {@code if (a == b) { if (c == d) { a = 5; } } }
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-09 */
 public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//

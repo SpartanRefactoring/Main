@@ -18,25 +18,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
- * switch (x) {
- * case a:
- * }
- *
- * switch(x) {
- * default: (some commands)
- * }
- * </code>
- *
- * into
- *
- * <code>
+/** convert {@code switch (x) { case a: } switch(x) { default: (some commands) }
+ * } into {@code
  * (some commands)
- * </code>
- *
- * . Tested in {@link Issue233}
+ * } . Tested in {@link Issue233}
  * @author Yuval Simon
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//

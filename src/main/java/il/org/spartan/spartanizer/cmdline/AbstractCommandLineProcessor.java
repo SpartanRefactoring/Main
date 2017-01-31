@@ -1,8 +1,8 @@
-
 package il.org.spartan.spartanizer.cmdline;
 
 import il.org.spartan.*;
 import il.org.spartan.external.*;
+
 /** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
  * @since Jan 15, 2017 */

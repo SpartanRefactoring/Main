@@ -12,18 +12,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Simplify comparison of additions by moving negative elements sides and by
- * moving integers convert
- *
- * <code>
+ * moving integers convert {@code
  * a - b // ==//<//> c - d
- * </code>
- *
- * into
- *
- * <code>
+ * } into {@code
  * a + d// ==//<//> c + b
- * </code>
- *
+ * }
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
 public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression>//

@@ -16,28 +16,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
- * if (x) {
- *   f();
- *   return a;
- * } else {
- *   g();
- *   {}
- * }
- * </code>
- *
- * into
- *
- * <code>
- * if (x) {
- *   f();
- *   return a;
- * }
- * g();
- * </code>
- *
+/** convert {@code if (x) { f(); return a; } else { g(); {} } } into {@code if
+ * (x) { f(); return a; } g(); }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceToNextStatement<IfStatement>//

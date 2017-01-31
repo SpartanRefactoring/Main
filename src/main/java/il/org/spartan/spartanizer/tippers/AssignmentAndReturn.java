@@ -14,19 +14,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * a = 3;
  * return a;
- * </code>
- *
- * to
- *
- * <code>
+ * } to {@code
  * return a = 3;
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment>//

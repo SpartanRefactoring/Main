@@ -11,9 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Converts addition of string literal and ternary string literal to ternary
- * string literal of the concatenation. for example
- *
- * <code>
+ * string literal of the concatenation. for example <code>
  * "abc" + (condition ? "123" : "456") (condition ? "abc" : "def") + 123"
  *
  * <code>

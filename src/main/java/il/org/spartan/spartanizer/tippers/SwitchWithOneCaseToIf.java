@@ -15,29 +15,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
-* switch (x) {
-*   case a:
-*      (commands)
-*      break;
-*   default:
-*      (other commands)
-* }
- * </code>
- *
- * into
- *
- * <code>
-* if(x == a) {
-*   (commands)
-* } else {
-*   (other commands)
-* }
- * </code>
- *
- * . Tested in {@link Issue0916}
+/** convert {@code switch (x) { case a: (commands) break; default: (other
+ * commands) } } into {@code if(x == a) { (commands) } else { (other commands) }
+ * } . Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//

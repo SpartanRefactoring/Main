@@ -8,18 +8,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace
- *
- * <code>
+/** Replace {@code
  * b + -3
- * </code>
- *
- * To
- *
- * <code>
+ * } To {@code
  * b - 3
- * </code>
- *
+ * }
  * @author Dor Ma'ayan
  * @since 05-12-2016 */
 public class InfixPlusToMinus extends ReplaceCurrentNode<InfixExpression>//

@@ -14,9 +14,7 @@ import java.util.*;
 
 import il.org.spartan.spartanizer.java.*;
 
-/** convert
- *
- * <code>
+/** convert <code>
  * f(cond ? a : b)
  *
  * <code>

@@ -7,7 +7,6 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
-@Ignore // TODO: Ori Marco
 @SuppressWarnings("static-method")
 public class CascadingSetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

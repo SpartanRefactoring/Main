@@ -10,35 +10,11 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
- * switch (x) {
- *   case a:
- *   case b:
- *     x = 5;
- *     break;
- *   case c:
- *   default:
- *   case d:
- *     break;
- * }
- * switch (x) {
- *   case a:
- *   case b:
- *     x = 5;
- *     break;
- *   default:
- * }
- * </code>
- *
- * into
- *
- * <code>
+/** convert {@code switch (x) { case a: case b: x = 5; break; case c: default:
+ * case d: break; } switch (x) { case a: case b: x = 5; break; default: } } into
+ * {@code
 * (some commands)
- * </code>
- *
- * . Tested in {@link Issue0880}
+ * } . Tested in {@link Issue0880}
  * @author Yuval Simon
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//

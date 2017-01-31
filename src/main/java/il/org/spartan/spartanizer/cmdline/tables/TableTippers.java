@@ -20,7 +20,6 @@ public class TableTippers {
       for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
         if (Toolbox.defaultInstance().implementation[i] != null)
           for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
-            
             if (¢ != null)
               r//
                   .col("Category", ¢.tipperGroup())//

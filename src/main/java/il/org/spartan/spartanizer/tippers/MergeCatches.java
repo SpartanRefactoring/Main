@@ -11,18 +11,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Consolidate identical catch blocks : <br>
  * <br>
- * convert
- *
- * <code>
- * try{}catch(Exception1 e){Block}catch(Exception2 e){SameBlock}
- * </code>
- *
- * to :
- *
- * <code>
- * try{}catch(Exception1 | Exception2 e){Block}
- * </code>
- *
+ * convert {@code try{}catch(Exception1 e){Block}catch(Exception2 e){SameBlock}
+ * } to : {@code try{}catch(Exception1 | Exception2 e){Block} }
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
 public class MergeCatches extends ReplaceCurrentNode<TryStatement>//

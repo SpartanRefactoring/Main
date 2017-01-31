@@ -37,34 +37,19 @@ public class Issue0404 {
    * <li>and then, when you fixed the fault at {@code w()}, proceed with series,
    * {@code x()}, {@code y()}, etc.
    * <li>and then, when you reached {@code z()}, and more names are needed,
-   * rename the sequence of methods generated so far:
-   *
-   * <code>
+   * rename the sequence of methods generated so far: {@code
    a(), b(), c(), ..., w(),  wa(), wb(), wc(), ..., x(), y(), z()
-   * </code>
-   *
-   * to (say)
-   *
-   * <code>
+   * } to (say) {@code
    Aa(), Ab(), Ac(), ..., Aw(),  Awa(), Awb(), Awc(), ..., Ax(), Ay(), Az()
-   * </code>
-   *
-   * and proceed to generating tests named
-   *
-   * <code>
+   * } and proceed to generating tests named {@code
    a(), b(), c(), ..., w(),  wa(), wb(), wc(), ..., x(), y(), z()
-   * </code>
-   **
-   * <li>and then, when you finish the entire
+   * }
+   ** <li>and then, when you finish the entire
    * </ul>
    * <p>
-   * <b>be sure to use</b>
-   *
-   * <code>
+   * <b>be sure to use</b> {@code
   &#64;FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-   * </code>
-   *
-   * annotation on your test class */
+   * } annotation on your test class */
   @Test public void a() {
     dig.class.hashCode();
   }

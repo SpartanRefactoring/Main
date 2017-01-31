@@ -15,21 +15,14 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert
- *
- * <code>
+/** convert {@code
  * if (x)
  *   if (a)
  *     f();
- * </code>
- *
- * into
- *
- * <code>
- * if (x &amp;&amp; a)
+ * } into {@code
+ * if (x && a)
  *   f();
- * </code>
- *
+ * }
  * @author Yossi Gil
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//

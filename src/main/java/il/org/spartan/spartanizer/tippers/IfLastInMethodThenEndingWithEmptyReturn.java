@@ -18,13 +18,9 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert {@code if (a) { f(); return; } } into {@code
  * if (a)
  *   f();
- * } provided that this
- *
- * <code>
+ * } provided that this <code>
  * <b>if</b>
- * </code>
- *
- * statement is the last statement in a method.
+ * </code> statement is the last statement in a method.
  * @author Yossi Gil
  * @since 2016 */
 public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<IfStatement>//
