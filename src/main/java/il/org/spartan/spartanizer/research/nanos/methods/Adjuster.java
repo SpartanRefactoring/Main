@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Delegate to another method but apply some method on a parameter
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-22 */
 public class Adjuster extends JavadocMarkerNanoPattern {

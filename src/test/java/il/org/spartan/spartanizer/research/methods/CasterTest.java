@@ -3,10 +3,10 @@ package il.org.spartan.spartanizer.research.methods;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.spartanizer.research.nanos.methods.Down.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Tests {@link Caster}
+ * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
 public class CasterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

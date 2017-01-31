@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
  * @since Nov 7, 2016 */
-public final class ExecuteWhen extends NanoPatternTipper<IfStatement> {
+public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
     static final long serialVersionUID = 1L;
     {
