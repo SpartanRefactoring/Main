@@ -1,11 +1,11 @@
-/** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
- * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
- * @since Jan 15, 2017 */
+
 package il.org.spartan.spartanizer.cmdline;
 
 import il.org.spartan.*;
 import il.org.spartan.external.*;
-
+/** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
+ * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
+ * @since Jan 15, 2017 */
 abstract class AbstractCommandLineProcessor {
   @External(alias = "i", value = "input folder") String inputFolder = ".";
   @External(alias = "o", value = "output folder") final String outputFolder = "/tmp";

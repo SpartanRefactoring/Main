@@ -148,7 +148,7 @@ public class CommandLineApplicator extends Applicator {
           ¢.dispose(); // nullify the CompilationUnit associated to an
                        // ICompilationUnit
           listener().tick(message.visit_cu.get(Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()), "unknown"));
-          totalTipsInvoked.addAndGet(tipsInvoked);
+          totalTipsInvoked.add(tipsInvoked);
           if (!shouldRun())
             break;
         }

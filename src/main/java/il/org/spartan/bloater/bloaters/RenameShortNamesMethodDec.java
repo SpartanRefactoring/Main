@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -48,10 +49,10 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
       assert $ != null;
       if (in($.getIdentifier(), "$")) {
         prev.add($);
-        after.add(d.getAST().newSimpleName("result"));
+        after.add(make.from(d).identifier("result"));
         continue;
       }
-      final SimpleName ¢ = d.getAST().newSimpleName(scope.newName(body(d), step.type(parameter)));
+      final SimpleName ¢ = make.from(d).identifier(scope.newName(body(d), step.type(parameter)));
       prev.add($);
       after.add(¢);
     }
