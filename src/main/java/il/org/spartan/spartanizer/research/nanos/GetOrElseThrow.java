@@ -14,11 +14,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** <pre>
+/** <code>
  *  if(X) <br>
  *    throw Y
  *  return Z;
- * </pre>
+ * </code>
  *
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-29 */

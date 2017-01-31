@@ -51,7 +51,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
 
 abstract class AbstractRenamePolicy {
   private static List<ReturnStatement> prune(final List<ReturnStatement> $) {
-    if ($ == null || $.isEmpty())
+    if ($.isEmpty())
       return null;
     for (final Iterator<ReturnStatement> i = $.iterator(); i.hasNext();) {
       final ReturnStatement r = i.next();

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * switch (x) {
  * case a:
  * }
@@ -28,13 +28,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * switch(x) {
  * default: (some commands)
  * }
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * (some commands)
- * </pre>
+ * </code>
  *
  * . Tested in {@link Issue233}
  * @author Yuval Simon

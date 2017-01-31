@@ -13,15 +13,15 @@ import il.org.spartan.spartanizer.tipping.*;
 /** reorder comparisons so that the specific value is placed on the right.
  * Specific value means a literal, or any of the two keywords
  *
- * <pre>
+ * <code>
  * <b>this</b>
- * </pre>
+ * </code>
  *
  * or
  *
- * <pre>
+ * <code>
  * <b>null</b>
- * </pre>
+ * </code>
  *
  * .
  * @author Yossi Gil

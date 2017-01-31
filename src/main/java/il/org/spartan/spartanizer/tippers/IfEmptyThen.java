@@ -11,16 +11,16 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (x) ; else {a;}
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * if (!x)
  * a;
- * </pre>
+ * </code>
  *
  * .
  * @author Yossi Gil

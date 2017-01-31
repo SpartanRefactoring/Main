@@ -10,15 +10,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Expend :
  *
- * <pre>
+ * <code>
  *  a+ "";
- * </pre>
+ * </code>
  *
  * To:
  *
- * <pre>
+ * <code>
  * a.toString();
- * </pre>
+ * </code>
  *
  * Important : Works only in cases where binding exists, otherwise does nothing
  * Tested in {@link Issue096}

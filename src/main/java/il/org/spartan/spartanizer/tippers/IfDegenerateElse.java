@@ -12,18 +12,18 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * if (x)
  *   return b;
  * else {}
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * if (x)
  *   return b;
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-08-01 */

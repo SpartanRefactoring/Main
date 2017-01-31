@@ -15,17 +15,17 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Covers Issues #1006 & #1007 </br>
  * Convert :
  *
- * <pre>
+ * <code>
  * x * 1. / x * 1.0
  * x * 1L
- * </pre>
+ * </code>
  *
  * To:
  *
- * <pre>
+ * <code>
  * (double) x
  * (long) x
- * </pre>
+ * </code>
  *
  * Tested in {@link Issue1007}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

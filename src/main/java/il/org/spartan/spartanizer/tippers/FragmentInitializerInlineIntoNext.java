@@ -20,16 +20,16 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * a = 3;
  * whatever(a);
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
  * whatever(3);
- * </pre>
+ * </code>
  *
  * @author Ori Marcovitch
  * @since 2016-11-27 */

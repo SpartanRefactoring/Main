@@ -17,13 +17,13 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** sorts cases of a local branch
  *
- * <pre>
+ * <code>
  * switch(x) { case 2: case 1: break; }
  *
- * <pre>
+ * <code>
  * to switch(x) { case 1: case 2: break; }
  *
- * <pre>
+ * <code>
  * Tests are in {@link Issue0860}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-09 */

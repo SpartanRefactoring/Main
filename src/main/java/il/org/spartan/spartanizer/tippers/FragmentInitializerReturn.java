@@ -18,16 +18,16 @@ import il.org.spartan.spartanizer.java.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * int a = 3;
  * return a;
- * </pre>
+ * </code>
  *
  * into
  *
- * <pre>
+ * <code>
  * return 3;
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-08-07 */

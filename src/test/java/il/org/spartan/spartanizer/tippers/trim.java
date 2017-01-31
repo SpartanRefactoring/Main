@@ -12,17 +12,17 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Fluent API for testing:
  *
- * <pre>
+ * <code>
  * trimming.of("a+(b-c)")//
  *     .gives("a+b-c")
- * </pre>
+ * </code>
  *
  * or
  *
- * <pre>
+ * <code>
  * trimming.with(InfixExpression.class, new InfixTermsExpand()).of("a+(b-c)")//
  *     .gives("a+b+c")
- * </pre>
+ * </code>
 */
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil

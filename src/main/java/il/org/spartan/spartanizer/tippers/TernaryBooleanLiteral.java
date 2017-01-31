@@ -12,51 +12,51 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** <pre>
+/** <code>
  * a ? b : c
- * </pre>
+ * </code>
  *
  * is the same as
  *
- * <pre>
+ * <code>
  * (a &amp;&amp; b) || (!a &amp;&amp; c)
- * </pre>
+ * </code>
  *
  * if b is false than:
  *
- * <pre>
+ * <code>
  * (a &amp;&amp; false) || (!a &amp;&amp; c) == (!a &amp;&amp; c)
- * </pre>
+ * </code>
  *
  * if b is true than:
  *
- * <pre>
+ * <code>
  * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
- * </pre>
+ * </code>
  *
  * if c is false than:
  *
- * <pre>
+ * <code>
  * (a &amp;&amp; b) || (!a &amp;&amp; false) == (!a &amp;&amp; c)
- * </pre>
+ * </code>
  *
  * if c is true than
  *
- * <pre>
+ * <code>
  * (a &amp;&amp; b) || (!a &amp;&amp; true) == (a &amp;&amp; b) || (!a) == !a || b
- * </pre>
+ * </code>
  *
  * keywords
  *
- * <pre>
+ * <code>
  * <b>this</b>
- * </pre>
+ * </code>
  *
  * or
  *
- * <pre>
+ * <code>
  * <b>null</b>
- * </pre>
+ * </code>
  *
  * .
  * @author Yossi Gil
@@ -69,39 +69,39 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
 
   /** Consider an expression
    *
-   * <pre>
+   * <code>
    * a ? b : c
-   * </pre>
+   * </code>
    *
    * in a sense it is the same as
    *
-   * <pre>
+   * <code>
    * (a &amp;&amp; b) || (!a &amp;&amp; c)
-   * </pre>
+   * </code>
    * <ol>
    * <li>if b is false then:
    *
-   * <pre>
+   * <code>
    * (a &amp;&amp; false) || (!a &amp;&amp; c) == !a &amp;&amp; c
-   * </pre>
+   * </code>
    *
    * <li>if b is true then:
    *
-   * <pre>
+   * <code>
    * (a &amp;&amp; true) || (!a &amp;&amp; c) == a || (!a &amp;&amp; c) == a || c
-   * </pre>
+   * </code>
    *
    * <li>if c is false then:
    *
-   * <pre>
+   * <code>
    * (a &amp;&amp; b) || (!a &amp;&amp; false) == a &amp;&amp; b
-   * </pre>
+   * </code>
    *
    * <li>if c is true then
    *
-   * <pre>
+   * <code>
    * (a &amp;&amp; b) || (!a &amp;&amp; true) == !a || b
-   * </pre>
+   * </code>
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression ¢) {

@@ -165,7 +165,7 @@ public class InflateHandler extends AbstractHandler {
     final IEditorInput i = ¢.getEditorInput();
     if (!(i instanceof FileEditorInput))
       return;
-    final IFile f = ((FileEditorInput) i).getFile();
+    final IFile f = ((IFileEditorInput) i).getFile();
     if (f == null)
       return;
     final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());

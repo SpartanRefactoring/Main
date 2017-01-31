@@ -20,9 +20,9 @@ import il.org.spartan.spartanizer.tipping.*;
  *   f();
  * } provided that this
  *
- * <pre>
+ * <code>
  * <b>if</b>
- * </pre>
+ * </code>
  *
  * statement is the last statement in a method.
  * @author Yossi Gil

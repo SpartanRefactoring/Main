@@ -22,15 +22,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert
  *
- * <pre>
+ * <code>
  * b &amp;&amp; true
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
  * b
- * </pre>
+ * </code>
  *
  * @author Yossi Gil
  * @since 2015-07-20 */
@@ -43,8 +43,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
   }
 
   private static Operator conjugate(final Operator ¢) {
-    return ¢ == null ? null
-        : ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
+    return ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
             : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
                 : null;
   }

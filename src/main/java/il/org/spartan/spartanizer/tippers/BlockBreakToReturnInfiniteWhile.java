@@ -34,8 +34,8 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : step.statements(body)) {
-      if (az.ifStatement(¢) != null)
-        $ = handleIf(¢, nextReturn);
+      if (iz.ifStatement(¢))
+        $ = handleIf(az.ifStatement(¢), nextReturn);
       if (iz.breakStatement(¢)) {
         $ = ¢;
         break;
@@ -44,7 +44,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return $;
   }
 
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+  private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     final IfStatement ifStatement = az.ifStatement(s);
     if (ifStatement == null)
       return null;
@@ -57,8 +57,8 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
         if ($ != null)
           return $;
       }
-      if (az.ifStatement(then) != null)
-        return handleIf(then, nextReturn);
+      if (iz.ifStatement(then))
+        return handleIf(az.ifStatement(then), nextReturn);
       if (elze != null) {
         if (iz.breakStatement(elze))
           return elze;
@@ -67,8 +67,8 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
           if ($ != null)
             return $;
         }
-        if (az.ifStatement(elze) != null)
-          return handleIf(elze, nextReturn);
+        if (iz.ifStatement(elze))
+          return handleIf(az.ifStatement(elze), nextReturn);
       }
     }
     return null;
@@ -90,15 +90,17 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final WhileStatement b, final ExclusionManager exclude) {
-    final ReturnStatement nextReturn = extract.nextReturn(b);
-    if (b == null || !isInfiniteLoop(b) || nextReturn == null)
+  @Override public Tip tip(final WhileStatement s, final ExclusionManager exclude) {
+    final ReturnStatement nextReturn = extract.nextReturn(s);
+    if (s == null || !isInfiniteLoop(s) || nextReturn == null)
       return null;
-    final Statement body = body(b), $ = iz.ifStatement(body) ? handleIf(body, nextReturn)
-        : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.breakStatement(body) ? body : null;
+    final Statement body = body(s), //
+        $ = iz.ifStatement(body) ? handleIf(az.ifStatement(body), nextReturn) //
+            : iz.block(body) ? handleBlock(az.block(body), nextReturn) //
+                : iz.breakStatement(body) ? body : null;
     if (exclude != null)
-      exclude.exclude(b);
-    return $ == null ? null : new Tip(description(b), b, getClass()) {
+      exclude.exclude(s);
+    return $ == null ? null : new Tip(description(s), s.getExpression(), getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);

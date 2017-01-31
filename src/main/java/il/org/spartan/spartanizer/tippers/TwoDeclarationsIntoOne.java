@@ -18,17 +18,17 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Test case is {@link Issue1012} Issue #1012 Convert:
  *
- * <pre>
+ * <code>
  * int a = 0;
  * int b = 1;
  * int c = 2;
- * </pre>
+ * </code>
  *
  * to:
  *
- * <pre>
+ * <code>
  * int a = 0, b = 1, c = 2;
- * </pre>
+ * </code>
  *
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-13 */

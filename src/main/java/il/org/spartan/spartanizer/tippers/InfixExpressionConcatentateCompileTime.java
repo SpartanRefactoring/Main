@@ -13,15 +13,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Concat some strings to one string
  *
- * <pre>
+ * <code>
  * "ab" + "c" + "de"
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
  * "abcde"
- * </pre>
+ * </code>
  *
  * @author Dor Ma'ayan
  * @author Nov Shalmon

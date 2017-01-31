@@ -21,15 +21,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Apply the distributive rule to multiplication:
  *
- * <pre>
+ * <code>
 * <b>a*b + a*c</b>
- * </pre>
+ * </code>
  *
  * to
  *
- * <pre>
+ * <code>
 * <b>a * (b + c)</b>
- * </pre>
+ * </code>
  *
  * .
  * @author Matteo Orru'

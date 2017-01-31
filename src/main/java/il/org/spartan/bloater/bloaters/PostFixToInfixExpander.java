@@ -13,15 +13,15 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Chage prfix expression to infix expression when possible </br>
  * Expand :
  *
- * <pre>
+ * <code>
  * i++ / i-- ;
- * </pre>
+ * </code>
  *
  * To :
  *
- * <pre>
+ * <code>
  * i=i+1 / i=i-1 ;
- * </pre>
+ * </code>
  *
  * Test class is {@link Issue0974}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

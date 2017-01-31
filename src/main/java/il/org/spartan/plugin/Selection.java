@@ -210,7 +210,7 @@ public class Selection extends AbstractSelection<Selection> {
       if (s == null || s instanceof ITextSelection || !(s instanceof ITreeSelection))
         return getProject();
       // TODO Ori Roth is there a better way of dealing with these many types
-      final Object o = ((ITreeSelection) s).getFirstElement();
+      final Object o = ((IStructuredSelection) s).getFirstElement();
       if (o == null)
         return getProject();
       if (o instanceof MarkerItem) {
@@ -326,7 +326,7 @@ public class Selection extends AbstractSelection<Selection> {
      * @param ¢ JD
      * @return selection by file */
     private static Selection by(final IResource ¢) {
-      return !(¢ instanceof IFile) || !((IFile) ¢).getName().endsWith(".java") ? empty() : by((IFile) ¢);
+      return !(¢ instanceof IFile) || !((IStorage) ¢).getName().endsWith(".java") ? empty() : by((IFile) ¢);
     }
 
     /** @param ¢ JD
