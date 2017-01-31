@@ -38,7 +38,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     if (!mns.contains($ + ""))
       return null;
     final Expression ¢ = onlyOne(arguments(i));
-    if (¢ == null || !(¢ instanceof StringLiteral))
+    if (!(¢ instanceof StringLiteral))
       return null;
     final Expression e = receiver(i);
     return e == null || e instanceof StringLiteral ? null : replacement($, ¢, e);
