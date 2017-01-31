@@ -84,13 +84,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             statements(b).add(s);
             statements(b).add(ns);
             r.replace(s, b, g);
-            int y = 1, x = 3;
             r.replace(s, b, g);
-            switch(x) { case 1: y = 2; }
-switch(x) { case 1: { y=2; } } }
-
-
-        };
+        }};
   }
   static void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
