@@ -14,8 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class AggregateTest {
-  @Ignore
-  @Test public void a() {
+  @Ignore @Test public void a() {
     trimmingOf("for (int ¢ = 1; ¢ < arr.length; ++¢)  if (arr[¢] < min)   min = arr[¢];") //
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("StatsAccumulator $=Create.a(StatsAccumulator.class).from(values);");

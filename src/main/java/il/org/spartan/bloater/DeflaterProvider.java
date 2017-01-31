@@ -1,5 +1,6 @@
 package il.org.spartan.bloater;
 
+import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.function.*;
 
@@ -30,6 +31,6 @@ public class DeflaterProvider extends OperationsProvider {
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return λ -> Collections.singletonList(λ.get(λ.size() - 1));
+    return λ -> Collections.singletonList(last(λ));
   }
 }
