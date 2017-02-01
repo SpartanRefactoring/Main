@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-/** Collects statistics for a method in which a nanopattern was found.
+/** Collects statistics for a method in which a nano was found.
  * @author Ori Marcovitch
  * @since 2016 */
 public class MethodRecord {
@@ -38,7 +38,7 @@ public class MethodRecord {
   }
 
   /** @param n matched node
-   * @param np matching nanopattern */
+   * @param np matching nano */
   public void markNP(final ASTNode n, final String np) {
     if (excluded(np))
       return;
