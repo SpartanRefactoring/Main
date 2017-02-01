@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code
  * a = 3;
@@ -24,11 +25,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-28 */
 public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {
+  @NotNull
   @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(a.getParent());
     if (parent == null || iz.forStatement(parent))
       return null;

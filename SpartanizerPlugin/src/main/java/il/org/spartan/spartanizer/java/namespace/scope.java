@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
@@ -48,12 +49,14 @@ public interface scope {
     return $;
   }
 
+  @Nullable
   static Block getBlock(final ASTNode ¢) {
     return az.block(delimiter(¢));
   }
 
   /** Bug in ternary spartanizing, do not remove the suppress
    * [[SuppressWarningsSpartan]] */
+  @Nullable
   static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode $ = delimiter(¢);
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));

@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 // This code is not working: we never managed to get this to work. Stav was the
 // last one working on it
@@ -26,7 +27,8 @@ public final class InitializationListRemoveComma extends ReplaceCurrentNode<Arra
     return "Remove Unecessary ','";
   }
 
-  @Override public ASTNode replacement(final ArrayInitializer $) {
+  @NotNull
+  @Override public ASTNode replacement(@NotNull final ArrayInitializer $) {
     final List<?> expressions = $.expressions();
     if (!expressions.isEmpty())
       expressions.remove(expressions.size() - 1);

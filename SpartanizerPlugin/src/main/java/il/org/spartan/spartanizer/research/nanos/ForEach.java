@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
+import org.jetbrains.annotations.Nullable;
 
 /** @nano Appply statement for each element in collection
  * @author Ori Marcovitch
@@ -45,6 +46,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
         && nonTips(rivals, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }

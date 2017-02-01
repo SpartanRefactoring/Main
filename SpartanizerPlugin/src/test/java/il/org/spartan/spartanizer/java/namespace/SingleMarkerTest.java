@@ -8,6 +8,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -19,12 +20,13 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class SingleMarkerTest extends MetaFixture {
-  public SingleMarkerTest(final definition.Kind kind, final SimpleName name) {
+  public SingleMarkerTest(final definition.Kind kind, @NotNull final SimpleName name) {
     assert name != null;
     this.name = name;
     this.kind = kind;
   }
 
+  @NotNull
   private final SimpleName name;
   private final definition.Kind kind;
 
@@ -37,6 +39,7 @@ public class SingleMarkerTest extends MetaFixture {
         , definition.kind(name), is(kind));
   }
 
+  @NotNull
   @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
     final List<Object[]> $ = new ArrayList<>();
     for (final MarkerAnnotation a : new definitionTest().markers()) {

@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -14,6 +16,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @author Amir Sagiv
  * @since 16-11-11 */
 public class Issue0815 {
+  @Nullable
   private static ASTNode ASTNodeFromString(final String ¢) {
     return wizard.ast(¢);
   }
@@ -22,7 +25,7 @@ public class Issue0815 {
     try {
       assertNotEquals(guessName.of("A_abc_CLASS_1"), guessName.CLASS_CONSTANT);
       fail();
-    } catch (final Error ¢) {
+    } catch (@NotNull final Error ¢) {
       azzert.that(AssertionError.class, is(¢.getClass()));
     }
   }

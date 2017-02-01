@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 /** A poor man's approximation of a mutable boolean, which is so much more
  * convenient than {@link Boolean}
  * @year 2016
@@ -18,10 +20,11 @@ public final class Bool {
     return inner;
   }
 
-  Bool set() {
+  @NotNull Bool set() {
     return set(true);
   }
 
+  @NotNull
   private Bool set(final boolean ¢) {
     inner = ¢;
     return this;
@@ -32,10 +35,12 @@ public final class Bool {
     return Boolean.valueOf(inner);
   }
 
+  @NotNull
   public static Bool valueOf(final boolean ¢) {
     return new Bool(¢);
   }
 
+  @NotNull
   public Bool clear() {
     return set(false);
   }

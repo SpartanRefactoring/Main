@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -18,33 +20,37 @@ public enum step {
   /** Expose the list of arguments in a {@link ClassInstanceCreation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final ClassInstanceCreation ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(@Nullable final ClassInstanceCreation ¢) {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final ConstructorInvocation ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(@Nullable final ConstructorInvocation ¢) {
     return ¢ == null ? null : ¢.arguments();
   }
 
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final MethodInvocation ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(@Nullable final MethodInvocation ¢) {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperConstructorInvocation ¢) {
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(@NotNull final SuperConstructorInvocation ¢) {
     return ¢.arguments();
   }
 
   /** Expose the list of arguments in a {@link SuperMethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperMethodInvocation ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> arguments(@Nullable final SuperMethodInvocation ¢) {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  private static boolean balanced(final String s) {
+  private static boolean balanced(@NotNull final String s) {
     int $ = 0;
     for (final Integer ¢ : range.from(0).to(s.length()))
       if (s.charAt(¢.intValue()) == '<')
@@ -54,57 +60,68 @@ public enum step {
     return $ == 0;
   }
 
-  public static Block body(final CatchClause ¢) {
+  @Nullable
+  public static Block body(@Nullable final CatchClause ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final DoStatement ¢) {
+  @Nullable
+  public static Statement body(@Nullable final DoStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final EnhancedForStatement ¢) {
+  @Nullable
+  public static Statement body(@Nullable final EnhancedForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final ForStatement ¢) {
+  @Nullable
+  public static Statement body(@Nullable final ForStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
   /** @param ¢ JD
    * @return */
-  public static Block body(final LambdaExpression ¢) {
+  @Nullable
+  public static Block body(@Nullable final LambdaExpression ¢) {
     return ¢ == null ? null : az.block(¢.getBody());
   }
 
-  public static Block body(final MethodDeclaration ¢) {
+  @Nullable
+  public static Block body(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
   /** @param ¢ JD
    * @return */
-  private static Block body(final SynchronizedStatement ¢) {
+  @Nullable
+  private static Block body(@Nullable final SynchronizedStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Block body(final TryStatement ¢) {
+  @Nullable
+  public static Block body(@Nullable final TryStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
-  public static Statement body(final WhileStatement ¢) {
+  @Nullable
+  public static Statement body(@Nullable final WhileStatement ¢) {
     return ¢ == null ? null : ¢.getBody();
   }
 
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AbstractTypeDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(@Nullable final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
   /** Expose the list of bodyDeclarations in an {@link AbstractTypeDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnnotationTypeDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(@Nullable final AnnotationTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
@@ -112,11 +129,13 @@ public enum step {
    * {@link AnonymousClassDeclaration}
    * @param ¢ JD
    * @return reference to the list of bodyDeclarations in the argument */
-  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(final AnonymousClassDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<BodyDeclaration> bodyDeclarations(@Nullable final AnonymousClassDeclaration ¢) {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
-  public static List<ConditionalExpression> branches(final ConditionalExpression ¢) {
+  @Nullable
+  public static List<ConditionalExpression> branches(@Nullable final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
@@ -140,7 +159,8 @@ public enum step {
    * Retreives all If branches
    * @param ¢ JD
    * @return */
-  public static List<IfStatement> branches(final IfStatement ¢) {
+  @Nullable
+  public static List<IfStatement> branches(@Nullable final IfStatement ¢) {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
@@ -154,23 +174,27 @@ public enum step {
   /** Expose the list of catchClauses in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of catchClauses in the argument */
-  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(final TryStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<CatchClause> catchClauses(@Nullable final TryStatement ¢) {
     return ¢ == null ? null : ¢.catchClauses();
   }
 
   /** Expose the loop condition contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
-  public static Expression condition(final ForStatement ¢) {
+  @Nullable
+  public static Expression condition(@Nullable final ForStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression condition(final WhileStatement ¢) {
+  @Nullable
+  public static Expression condition(@Nullable final WhileStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
   /** @param ¢ JD
    * @return */
+  @NotNull
   public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration d) {
     final List<MethodDeclaration> $ = new ArrayList<>();
     for (final BodyDeclaration bd : step.bodyDeclarations(d)) {
@@ -185,36 +209,42 @@ public enum step {
     return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> dimensions(@Nullable final ArrayCreation ¢) {
     return ¢ == null ? null : ¢.dimensions();
   }
 
   /** Shorthand for {@link ConditionalExpression#getElseExpression()}
    * @param ¢ JD
    * @return else part of the parameter */
-  public static Expression elze(final ConditionalExpression ¢) {
+  @Nullable
+  public static Expression elze(@Nullable final ConditionalExpression ¢) {
     return ¢ == null ? null : ¢.getElseExpression();
   }
 
   /** Shorthand for {@link IfStatement#getElseStatement}
    * @param ¢ JD
    * @return else statement of the parameter */
-  public static Statement elze(final IfStatement ¢) {
+  @Nullable
+  public static Statement elze(@Nullable final IfStatement ¢) {
     return ¢ == null ? null : ¢.getElseStatement();
   }
 
-  @SuppressWarnings("unchecked") public static List<EnumConstantDeclaration> enumConstants(final EnumDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<EnumConstantDeclaration> enumConstants(@Nullable final EnumDeclaration ¢) {
     return ¢ == null ? null : ¢.enumConstants();
   }
 
-  public static SingleVariableDeclaration exception(final CatchClause ¢) {
+  @Nullable
+  public static SingleVariableDeclaration exception(@Nullable final CatchClause ¢) {
     return ¢ == null ? null : ¢.getException();
   }
 
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
-  public static Expression expression(final ASTNode ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return null;
     switch (¢.getNodeType()) {
@@ -253,84 +283,103 @@ public enum step {
     }
   }
 
-  public static Expression expression(final CastExpression $) {
+  @Nullable
+  public static Expression expression(@Nullable final CastExpression $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final ClassInstanceCreation $) {
+  @Nullable
+  public static Expression expression(@Nullable final ClassInstanceCreation $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final ConditionalExpression ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final ConditionalExpression ¢) {
     return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
-  public static Expression expression(final DoStatement $) {
+  @Nullable
+  public static Expression expression(@Nullable final DoStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final ExpressionStatement $) {
+  @Nullable
+  public static Expression expression(@Nullable final ExpressionStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final FieldAccess ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final FieldAccess ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression expression(final ForStatement ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final ForStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression expression(final IfStatement $) {
+  @Nullable
+  public static Expression expression(@Nullable final IfStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final MethodInvocation ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final MethodInvocation ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression expression(final ParenthesizedExpression $) {
+  @Nullable
+  public static Expression expression(@Nullable final ParenthesizedExpression $) {
     return $ == null ? null : $.getExpression();
   }
 
-  public static Expression expression(final ReturnStatement $) {
+  @Nullable
+  public static Expression expression(@Nullable final ReturnStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final SwitchCase ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final SwitchCase ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression expression(final SwitchStatement ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  public static Expression expression(final ThrowStatement $) {
+  @Nullable
+  public static Expression expression(@Nullable final ThrowStatement $) {
     return $ == null ? null : extract.core($.getExpression());
   }
 
-  public static Expression expression(final WhileStatement ¢) {
+  @Nullable
+  public static Expression expression(@Nullable final WhileStatement ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> expressions(final ArrayInitializer ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> expressions(@Nullable final ArrayInitializer ¢) {
     return ¢ == null ? null : ¢.expressions();
   }
 
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final BodyDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(@Nullable final BodyDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final SingleVariableDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(@Nullable final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationExpression ¢) {
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(@NotNull final VariableDeclarationExpression ¢) {
     assert ¢ != null;
     return ¢.modifiers();
   }
 
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(final VariableDeclarationStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(@Nullable final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
@@ -338,113 +387,134 @@ public enum step {
    * @param ¢ JD
    * @return reference to the list of extended operands contained in the
    *         parameter */
-  @SuppressWarnings("unchecked") public static List<Expression> extendedOperands(final InfixExpression ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> extendedOperands(@Nullable final InfixExpression ¢) {
     return ¢ == null ? null : ¢.extendedOperands();
   }
 
   /** FieldDeclarations of type
    * @param ¢ JD
    * @return */
-  public static FieldDeclaration[] fieldDeclarations(final TypeDeclaration ¢) {
+  @Nullable
+  public static FieldDeclaration[] fieldDeclarations(@Nullable final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getFields();
   }
 
   /** FieldDeclarations names of type
    * @param ¢ JD
    * @return */
-  public static List<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
+  @Nullable
+  public static List<String> fieldDeclarationsNames(@Nullable final TypeDeclaration ¢) {
     return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(new ArrayList<>(), (x, y) -> {
       x.addAll(y);
       return x;
     });
   }
 
-  public static FieldDeclaration[] fields(final TypeDeclaration ¢) {
+  @Nullable
+  public static FieldDeclaration[] fields(@Nullable final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getFields();
   }
 
   /** Expose the list of fragments in a {@link FieldDeclaration}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final FieldDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final FieldDeclaration ¢) {
     return ¢ == null ? null : ¢.fragments();
   }
 
-  @SuppressWarnings("unchecked") public static List<IDocElement> fragments(final TagElement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<IDocElement> fragments(@Nullable final TagElement ¢) {
     return ¢ == null ? null : ¢.fragments();
   }
 
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationExpression ¢) {
+  @NotNull
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final VariableDeclarationExpression ¢) {
     return ¢ != null ? ¢.fragments() : new ArrayList<>();
   }
 
   /** Expose the list of fragments in a {@link VariableDeclarationStatement}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(final VariableDeclarationStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.fragments();
   }
 
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return right operand of the parameter */
-  public static Expression from(final Assignment ¢) {
+  @Nullable
+  public static Expression from(@Nullable final Assignment ¢) {
     return ¢ == null ? null : right(¢);
   }
 
-  public static String identifier(final AnnotationTypeDeclaration ¢) {
+  @NotNull
+  public static String identifier(@NotNull final AnnotationTypeDeclaration ¢) {
     return ¢.getName() + "";
   }
 
+  @Nullable
   public static String identifier(final MethodDeclaration ¢) {
     return identifier(name(¢));
   }
 
+  @Nullable
   public static String identifier(final MethodInvocation ¢) {
     return identifier(name(¢));
   }
 
-  public static String identifier(final Name ¢) {
+  @Nullable
+  public static String identifier(@Nullable final Name ¢) {
     return ¢ == null ? null : iz.simpleName(¢) ? az.simpleName(¢).getIdentifier() : az.qualifiedName(¢).getFullyQualifiedName();
   }
 
-  public static String identifier(final QualifiedName ¢) {
+  @Nullable
+  public static String identifier(@Nullable final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getFullyQualifiedName();
   }
 
-  public static String identifier(final SimpleName ¢) {
+  @Nullable
+  public static String identifier(@Nullable final SimpleName ¢) {
     return ¢ == null ? null : ¢.getIdentifier();
   }
 
+  @Nullable
   public static String identifier(final SingleVariableDeclaration ¢) {
     return identifier(name(¢));
   }
 
-  public static String identifier(final VariableDeclarationFragment ¢) {
+  @Nullable
+  public static String identifier(@Nullable final VariableDeclarationFragment ¢) {
     return ¢ == null ? null : identifier(¢.getName());
   }
 
-  @SuppressWarnings("unchecked") public static List<ImportDeclaration> importDeclarations(final CompilationUnit ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<ImportDeclaration> importDeclarations(@Nullable final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.imports();
   }
 
-  @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(final CompilationUnit ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(@Nullable final CompilationUnit ¢) {
     return ¢ == null ? null
         : ((List<ImportDeclaration>) ¢.imports()).stream().map(λ -> (!λ.isStatic() ? "" : "static ") + λ.getName() + (!λ.isOnDemand() ? "" : ".*"))
             .collect(Collectors.toList());
   }
 
-  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(final CompilationUnit ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(@Nullable final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.imports();
   }
 
   /** Expose initializer contained in a {@link VariableDeclaration}
    * @param ¢ JD
    * @return initializer */
-  public static Expression initializer(final VariableDeclaration ¢) {
+  @Nullable
+  public static Expression initializer(@Nullable final VariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getInitializer();
   }
 
@@ -455,7 +525,8 @@ public enum step {
   /** Expose the list of initializers contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
-  @SuppressWarnings("unchecked") public static List<Expression> initializers(final ForStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> initializers(@Nullable final ForStatement ¢) {
     return ¢ == null ? null : ¢.initializers();
   }
 
@@ -469,17 +540,20 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static Javadoc javadoc(final MethodDeclaration ¢) {
+  @Nullable
+  public static Javadoc javadoc(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getJavadoc();
   }
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName label(final ContinueStatement ¢) {
+  @Nullable
+  public static SimpleName label(@Nullable final ContinueStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
   }
 
-  public static Expression lastElse(final ConditionalExpression ¢) {
+  @Nullable
+  public static Expression lastElse(@Nullable final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     ConditionalExpression $ = ¢;
@@ -492,7 +566,8 @@ public enum step {
    * sequence
    * @param ¢
    * @return */
-  public static Statement lastElse(final IfStatement ¢) {
+  @Nullable
+  public static Statement lastElse(@Nullable final IfStatement ¢) {
     if (¢ == null)
       return null;
     IfStatement $ = ¢;
@@ -504,25 +579,29 @@ public enum step {
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param ¢ JD
    * @return left side of the assignment */
-  public static Expression left(final Assignment ¢) {
+  @Nullable
+  public static Expression left(@Nullable final Assignment ¢) {
     return ¢ == null ? null : ¢.getLeftHandSide();
   }
 
   /** Shorthand for {@link InfixExpression#getLeftOperand()}
    * @param ¢ JD
    * @return left operand of the parameter */
-  public static Expression left(final InfixExpression ¢) {
+  @Nullable
+  public static Expression left(@Nullable final InfixExpression ¢) {
     return ¢ == null ? null : ¢.getLeftOperand();
   }
 
   /** Shorthand for {@link InstanceofExpression#getLeftOperand()}
    * @param ¢ JD
    * @return left operand of the parameter */
-  public static Expression left(final InstanceofExpression ¢) {
+  @Nullable
+  public static Expression left(@Nullable final InstanceofExpression ¢) {
     return ¢ == null ? null : ¢.getLeftOperand();
   }
 
-  public static List<ASTNode> marchingList(final ASTNode ¢) {
+  @NotNull
+  public static List<ASTNode> marchingList(@NotNull final ASTNode ¢) {
     final List<ASTNode> $ = new ArrayList<>();
     for (final Object s : ¢.structuralPropertiesForType()) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
@@ -534,11 +613,13 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  private static List<String> methodNames(final AbstractTypeDeclaration ¢) {
+  @Nullable
+  private static List<String> methodNames(@Nullable final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(Collectors.toList());
   }
 
-  public static List<String> methodNames(final CompilationUnit u) {
+  @Nullable
+  public static List<String> methodNames(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     final List<String> $ = new ArrayList<>();
@@ -548,7 +629,8 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(@Nullable final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
@@ -557,6 +639,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
+  @NotNull
   public static List<MethodDeclaration> methods(final AnonymousClassDeclaration d) {
     final List<MethodDeclaration> $ = new ArrayList<>();
     for (final BodyDeclaration x : step.bodyDeclarations(d)) {
@@ -570,7 +653,8 @@ public enum step {
   /** get all methods
    * @param u JD
    * @return */
-  public static List<MethodDeclaration> methods(final CompilationUnit u) {
+  @Nullable
+  public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
@@ -578,103 +662,126 @@ public enum step {
     return $;
   }
 
-  public static List<?> modifiers(final FieldDeclaration ¢) {
+  @Nullable
+  public static List<?> modifiers(@Nullable final FieldDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
-  public static List<?> modifiers(final MethodDeclaration ¢) {
+  @Nullable
+  public static List<?> modifiers(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
-  public static List<?> modifiers(final VariableDeclarationStatement ¢) {
+  @Nullable
+  public static List<?> modifiers(@Nullable final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
-  public static SimpleName name(final AbstractTypeDeclaration ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final AnnotationTypeMemberDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final EnumConstantDeclaration ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final EnumConstantDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName name(final FieldAccess ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final FieldAccess ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static Name name(final ImportDeclaration ¢) {
+  @Nullable
+  public static Name name(@Nullable final ImportDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final MethodDeclaration ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final MethodInvocation ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final MethodInvocation ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final QualifiedName ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final QualifiedName ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final SingleVariableDeclaration ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static SimpleName name(final SuperMethodInvocation ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final SuperMethodInvocation ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
   /** @param ¢ JD
    * @return */
-  public static SimpleName name(final VariableDeclaration ¢) {
+  @Nullable
+  public static SimpleName name(@Nullable final VariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
-  private static List<String> names(final FieldDeclaration d) {
+  @Nullable
+  private static List<String> names(@Nullable final FieldDeclaration d) {
     return d == null ? null : fragments(d).stream().map(λ -> identifier(name(λ))).collect(Collectors.toList());
   }
 
-  public static int nodeType(final ASTNode ¢) {
+  public static int nodeType(@Nullable final ASTNode ¢) {
     return ¢ == null ? 0 : ¢.getNodeType();
   }
 
-  public static Expression operand(final PostfixExpression ¢) {
+  @Nullable
+  public static Expression operand(@Nullable final PostfixExpression ¢) {
     return ¢ == null ? null : extract.core(¢.getOperand());
   }
 
-  public static Expression operand(final PrefixExpression ¢) {
+  @Nullable
+  public static Expression operand(@Nullable final PrefixExpression ¢) {
     return ¢ == null ? null : extract.core(¢.getOperand());
   }
 
-  public static Assignment.Operator operator(final Assignment ¢) {
+  @Nullable
+  public static Assignment.Operator operator(@Nullable final Assignment ¢) {
     return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static InfixExpression.Operator operator(final InfixExpression ¢) {
+  @Nullable
+  public static InfixExpression.Operator operator(@Nullable final InfixExpression ¢) {
     return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static PostfixExpression.Operator operator(final PostfixExpression ¢) {
+  @Nullable
+  public static PostfixExpression.Operator operator(@Nullable final PostfixExpression ¢) {
     return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static PrefixExpression.Operator operator(final PrefixExpression ¢) {
+  @Nullable
+  public static PrefixExpression.Operator operator(@Nullable final PrefixExpression ¢) {
     return ¢ == null ? null : ¢.getOperator();
   }
 
-  public static PackageDeclaration packageDeclaration(final CompilationUnit ¢) {
+  @Nullable
+  public static PackageDeclaration packageDeclaration(@Nullable final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.getPackage();
   }
 
-  @SuppressWarnings("unchecked") public static List<? extends VariableDeclaration> parameters(final LambdaExpression ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<? extends VariableDeclaration> parameters(@Nullable final LambdaExpression ¢) {
     return ¢ == null ? null : ¢.parameters();
   }
 
@@ -682,20 +789,23 @@ public enum step {
    * @param ¢ JD
    * @return result of method {@link MethodDeclaration#parameters} downcasted to
    *         its correct type */
-  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.parameters();
   }
 
   /** Expose the list of parameters names in a {@link MethodDeclaration}
    * @param d JD
    * @return */
-  public static List<String> parametersNames(final MethodDeclaration d) {
+  @Nullable
+  public static List<String> parametersNames(@Nullable final MethodDeclaration d) {
     return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(λ -> λ.getName() + "").collect(Collectors.toList()));
   }
 
   /** Expose the list of parameters types in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return */
+  @NotNull
   public static List<Type> parametersTypes(final MethodDeclaration ¢) {
     return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(Collectors.toList()));
   }
@@ -703,113 +813,131 @@ public enum step {
   /** Shorthand for {@link ASTNode#getParent()}
    * @param ¢ JD
    * @return parent of the parameter */
-  public static ASTNode parent(final ASTNode ¢) {
+  @Nullable
+  public static ASTNode parent(@Nullable final ASTNode ¢) {
     return ¢ == null ? null : ¢.getParent();
   }
 
-  public static Expression receiver(final MethodInvocation ¢) {
+  @Nullable
+  public static Expression receiver(@Nullable final MethodInvocation ¢) {
     return ¢ == null ? null : extract.core(¢.getExpression());
   }
 
   /** Expose the list of resources contained in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of resources contained in the argument */
-  @SuppressWarnings("unchecked") public static List<VariableDeclarationExpression> resources(final TryStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<VariableDeclarationExpression> resources(@Nullable final TryStatement ¢) {
     return ¢ == null ? null : ¢.resources();
   }
 
   /** Returns the return type of the function
    * @param ¢ JD
    * @return */
-  public static Type returnType(final MethodDeclaration ¢) {
+  @Nullable
+  public static Type returnType(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.getReturnType2();
   }
 
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return right side of the assignment */
-  public static Expression right(final Assignment ¢) {
+  @Nullable
+  public static Expression right(@Nullable final Assignment ¢) {
     return ¢ == null ? null : ¢.getRightHandSide();
   }
 
   /** Shorthand for {@link CastExpression#getExpression()}
    * @param ¢ JD
    * @return right operand of the parameter */
-  public static Expression right(final CastExpression ¢) {
+  @Nullable
+  public static Expression right(@Nullable final CastExpression ¢) {
     return ¢ == null ? null : ¢.getExpression();
   }
 
   /** Shorthand for {@link InfixExpression#getRightOperand()}
    * @param ¢ JD
    * @return right operand of the parameter */
-  public static Expression right(final InfixExpression ¢) {
+  @Nullable
+  public static Expression right(@Nullable final InfixExpression ¢) {
     return ¢ == null ? null : ¢.getRightOperand();
   }
 
   /** Expose the list of sideEffects contained in a {@link Block}
    * @param ¢ JD
    * @return reference to the list of sideEffects contained in the argument */
-  @SuppressWarnings("unchecked") public static List<Statement> statements(final Block ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Statement> statements(@Nullable final Block ¢) {
     return ¢ == null ? null : ¢.statements();
   }
 
+  @Nullable
   public static List<Statement> statements(final LambdaExpression ¢) {
     return statements(body(¢));
   }
 
-  public static List<Statement> statements(final MethodDeclaration ¢) {
+  @Nullable
+  public static List<Statement> statements(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
 
   /** Expose the list of sideEffects contained in a {@link SwitchStatement}
    * @param ¢ JD
    * @return reference to the list of sideEffects contained in the argument */
-  @SuppressWarnings("unchecked") public static List<Statement> statements(final SwitchStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Statement> statements(@Nullable final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.statements();
   }
 
   /** @param ¢ JD
    * @return */
-  public static List<Statement> statements(final SynchronizedStatement ¢) {
+  @Nullable
+  public static List<Statement> statements(@Nullable final SynchronizedStatement ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
 
-  @SuppressWarnings("unchecked") public static List<TagElement> tags(final Javadoc ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<TagElement> tags(@Nullable final Javadoc ¢) {
     return ¢ == null ? null : ¢.tags();
   }
 
   /** Shorthand for {@link ConditionalExpression#getThenExpression()}
    * @param ¢ JD
    * @return then part of the parameter */
-  public static Expression then(final ConditionalExpression ¢) {
+  @Nullable
+  public static Expression then(@Nullable final ConditionalExpression ¢) {
     return ¢ == null ? null : ¢.getThenExpression();
   }
 
   /** Shorthand for {@link IfStatement#getThenStatement}
    * @param ¢ JD
    * @return then statement of the parameter */
-  public static Statement then(final IfStatement ¢) {
+  @Nullable
+  public static Statement then(@Nullable final IfStatement ¢) {
     return ¢ == null ? null : ¢.getThenStatement();
   }
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param ¢ JD
    * @return left operand of the parameter */
-  public static Expression to(final Assignment ¢) {
+  @Nullable
+  public static Expression to(@Nullable final Assignment ¢) {
     return ¢ == null ? null : left(¢);
   }
 
   /** Shorthand for {@link NumberLiteral#getToken()}
    * @param ¢ JD
    * @return the token representing the number */
-  public static String token(final NumberLiteral ¢) {
+  @Nullable
+  public static String token(@Nullable final NumberLiteral ¢) {
     return ¢ == null ? null : ¢.getToken();
   }
 
   /** A little hack to get Type out of TypeDeclaration.
    * @param d JD
    * @return */
-  public static Type type(final AbstractTypeDeclaration d) {
+  @Nullable
+  public static Type type(@Nullable final AbstractTypeDeclaration d) {
     if (d == null)
       return null;
     String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
@@ -844,50 +972,58 @@ public enum step {
   /** Shorthand for {@link CastExpression#getType()}
    * @param ¢ JD
    * @return the Type of the {@link castExpression} */
-  public static Type type(final CastExpression ¢) {
+  @Nullable
+  public static Type type(@Nullable final CastExpression ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** Shorthand for {@link ClassInstanceCreation#getType()}
    * @param ¢ JD
    * @return the Type of the {@link ClassInstanceCreation} */
-  public static Type type(final ClassInstanceCreation ¢) {
+  @Nullable
+  public static Type type(@Nullable final ClassInstanceCreation ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** @param ¢ JD
    * @return */
-  public static Type type(final FieldDeclaration ¢) {
+  @Nullable
+  public static Type type(@Nullable final FieldDeclaration ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** Shorthand for {@link InstanceofExpression#getRightOperand()}
    * @param ¢ JD
    * @return the Type of the right operand */
-  public static Type type(final InstanceofExpression ¢) {
+  @Nullable
+  public static Type type(@Nullable final InstanceofExpression ¢) {
     return ¢ == null ? null : ¢.getRightOperand();
   }
 
   /** @param p JD
    * @return */
-  public static Type type(final SingleVariableDeclaration ¢) {
+  @Nullable
+  public static Type type(@Nullable final SingleVariableDeclaration ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** Shorthand for {@link VariableDeclarationExpression#getType()}
    * @param ¢ JD
    * @return the Type of the {@link VariableDeclarationExpression} */
-  public static Type type(final VariableDeclarationExpression ¢) {
+  @Nullable
+  public static Type type(@Nullable final VariableDeclarationExpression ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
   /** @param ¢ JD
    * @return */
-  public static Type type(final VariableDeclarationFragment ¢) {
+  @Nullable
+  public static Type type(@Nullable final VariableDeclarationFragment ¢) {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
 
-  public static Type type(final VariableDeclarationStatement ¢) {
+  @Nullable
+  public static Type type(@Nullable final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();
   }
 
@@ -896,40 +1032,48 @@ public enum step {
   // public static Type type(final VariableDeclarationStatement ¢) {
   // return ¢ == null ? null : ¢.getType();
   // }
-  @SuppressWarnings("unchecked") public static List<Type> typeArguments(final ParameterizedType ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Type> typeArguments(@Nullable final ParameterizedType ¢) {
     return ¢ == null ? null : ¢.typeArguments();
   }
 
-  @SuppressWarnings("unchecked") public static List<Type> typeBounds(final TypeParameter ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Type> typeBounds(@Nullable final TypeParameter ¢) {
     return ¢ == null ? null : ¢.typeBounds();
   }
 
-  public static Name typeName(final Annotation ¢) {
+  @Nullable
+  public static Name typeName(@Nullable final Annotation ¢) {
     return ¢ == null ? null : ¢.getTypeName();
   }
 
   /** @param ¢ JD
    * @return types in ¢ */
-  @SuppressWarnings("unchecked") public static List<AbstractTypeDeclaration> types(final CompilationUnit ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<AbstractTypeDeclaration> types(@Nullable final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.types();
   }
 
-  @SuppressWarnings("unchecked") public static List<Type> types(final UnionType ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Type> types(@Nullable final UnionType ¢) {
     return ¢ == null ? null : ¢.types();
   }
 
-  public static String typeString(final ASTNode ¢) {
+  @NotNull
+  public static String typeString(@Nullable final ASTNode ¢) {
     return ¢ == null ? "" : ¢.getClass().getSimpleName();
   }
 
   /** Expose the list of updaters contained in a {@link ForStatement}
    * @param ¢ JD
    * @return reference to the list of initializers contained in the argument */
-  @SuppressWarnings("unchecked") public static List<Expression> updaters(final ForStatement ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<Expression> updaters(@Nullable final ForStatement ¢) {
     return ¢ == null ? null : ¢.updaters();
   }
 
-  @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
+  @Nullable
+  @SuppressWarnings("unchecked") public static List<MemberValuePair> values(@Nullable final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
   }
 }

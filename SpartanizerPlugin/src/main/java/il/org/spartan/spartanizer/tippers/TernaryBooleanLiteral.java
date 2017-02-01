@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** {@code
  * a ? b : c
@@ -33,7 +35,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
-  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
+  private static boolean isTernaryOfBooleanLitreral(@Nullable final ConditionalExpression ¢) {
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
 
@@ -57,10 +59,12 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * }
    * </ol>
   */
-  private static Expression simplifyTernary(final ConditionalExpression ¢) {
+  @NotNull
+  private static Expression simplifyTernary(@NotNull final ConditionalExpression ¢) {
     return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), copy.of(¢.getExpression()));
   }
 
+  @NotNull
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
@@ -76,7 +80,8 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return isTernaryOfBooleanLitreral(¢);
   }
 
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @NotNull
+  @Override public Expression replacement(@NotNull final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }
 }

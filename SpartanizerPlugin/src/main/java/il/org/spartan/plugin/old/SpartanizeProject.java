@@ -16,6 +16,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
@@ -26,6 +28,7 @@ import il.org.spartan.spartanizer.utils.*;
 public final class SpartanizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
   private final StringBuilder status = new StringBuilder();
+  @Nullable
   private ICompilationUnit currentCompilationUnit;
   IJavaProject javaProject;
   final List<ICompilationUnit> todo = new ArrayList<>();
@@ -51,12 +54,13 @@ public final class SpartanizeProject extends BaseHandler {
           $.set(0);
         λ.done();
       });
-    } catch (InvocationTargetException | InterruptedException ¢) {
+    } catch (@NotNull InvocationTargetException | InterruptedException ¢) {
       ¢.printStackTrace();
     }
     return $.get();
   }
 
+  @Nullable
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
@@ -65,6 +69,7 @@ public final class SpartanizeProject extends BaseHandler {
     return go();
   }
 
+  @Nullable
   public Void go() {
     start();
     if (initialCount == 0)
@@ -113,7 +118,7 @@ public final class SpartanizeProject extends BaseHandler {
         done.clear();
         pm.done();
       });
-    } catch (final InterruptedException | InvocationTargetException ¢) {
+    } catch (@NotNull final InterruptedException | InvocationTargetException ¢) {
       monitor.logEvaluationError(this, ¢);
       return true;
     }

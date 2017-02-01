@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import org.jetbrains.annotations.Nullable;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>
@@ -22,10 +23,12 @@ enum FactorsExpander {
     return base(new FactorsCollector(¢));
   }
 
+  @Nullable
   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
 
+  @Nullable
   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
     final Expression ¢ = copy.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);

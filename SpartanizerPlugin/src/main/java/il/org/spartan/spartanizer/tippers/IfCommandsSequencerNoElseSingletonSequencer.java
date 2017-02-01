@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code if (x) { f(); return a; } else { g(); {} } } into {@code if
  * (x) { f(); return a; } g(); }
@@ -26,7 +27,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
     return "Invert conditional and use next statement)";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, @NotNull final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());

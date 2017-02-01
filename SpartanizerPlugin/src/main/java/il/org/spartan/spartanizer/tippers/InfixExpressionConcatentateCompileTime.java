@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Concat some strings to one string {@code
  * "ab" + "c" + "de"
@@ -29,7 +30,7 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     return "Concat the string literals to a single string";
   }
 
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     final List<Expression> $ = extract.allOperands(x);

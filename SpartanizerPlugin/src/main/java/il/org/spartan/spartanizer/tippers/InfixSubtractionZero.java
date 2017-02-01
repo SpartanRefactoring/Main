@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by <code>-X<code>
  * @author Alex Kopzon
@@ -29,12 +30,12 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return cons(minus(first(prune)), chop(prune));
   }
 
-  private static List<Expression> prune(final List<Expression> ¢) {
+  private static List<Expression> prune(@NotNull final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
     return $.size() != ¢.size() ? $ : null;
   }
 
-  private static ASTNode replacement(final List<Expression> xs) {
+  private static ASTNode replacement(@NotNull final List<Expression> xs) {
     final List<Expression> $ = prune(xs);
     if ($ == null)
       return null;
@@ -48,11 +49,12 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(MINUS2);
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;
   }
 
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     return ¢.getOperator() != MINUS ? null : replacement(operands(¢));
   }
 }

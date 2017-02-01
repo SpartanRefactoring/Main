@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link GUIBatchLaconizer} as its applicator.
@@ -29,6 +31,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   public static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
+  @Nullable
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
@@ -36,6 +39,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     return null;
   }
 
+  @NotNull
   @Override public String getLabel() {
     return "Apply";
   }
@@ -44,20 +48,22 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
 
+  @NotNull
   public static GUIBatchLaconizer applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static GUIBatchLaconizer applicator(final Linguistic.Activity activityNamer) {
+  @NotNull
+  public static GUIBatchLaconizer applicator(@NotNull final Linguistic.Activity activityNamer) {
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (InvocationTargetException | InterruptedException ¢) {
+      } catch (@NotNull InvocationTargetException | InterruptedException ¢) {
         monitor.log(¢);
         ¢.printStackTrace();
       }
@@ -134,6 +140,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
+  @NotNull
   @Deprecated @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
@@ -177,7 +184,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (InvocationTargetException | InterruptedException ¢) {
+      } catch (@NotNull InvocationTargetException | InterruptedException ¢) {
         monitor.log(¢);
         ¢.printStackTrace();
       }
@@ -201,7 +208,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       this.printing = printing;
     }
 
-    public String get(final Object... ¢) {
+    public String get(@NotNull final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }

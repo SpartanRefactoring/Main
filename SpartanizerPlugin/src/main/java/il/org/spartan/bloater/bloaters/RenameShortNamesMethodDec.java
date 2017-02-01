@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a method dec to more common or intuitive names (s.e i for an integer
@@ -35,11 +37,13 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 // TODO: take care of single var declaration, tests
 public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
-  @Override public String description(final MethodDeclaration ¢) {
+  @NotNull
+  @Override public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override @SuppressWarnings("unused") public Tip tip(final MethodDeclaration d, final ExclusionManager __) {
+  @Nullable
+  @Override @SuppressWarnings("unused") public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;

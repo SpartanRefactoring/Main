@@ -10,23 +10,27 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
-  private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
+  @NotNull
+  private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
     return $;
   }
 
+  @Nullable
   private static Statement dupForBody(final ForStatement ¢) {
     return copy.of(step.body(¢));
   }
 
-  private static boolean fitting(final ForStatement ¢) {
+  private static boolean fitting(@Nullable final ForStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢)
         && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢)
         && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
@@ -47,7 +51,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         $ != null ? az.simpleName($.getOperand()) : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
   }
 
-  public static boolean bodyDeclaresElementsOf(final ASTNode n) {
+  public static boolean bodyDeclaresElementsOf(@NotNull final ASTNode n) {
     final Block $ = az.block(n.getParent());
     return $ != null && extract.fragments($).stream().anyMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
   }
@@ -68,18 +72,21 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         .anyMatch(λ -> (λ.getName() + "").equals(n + ""));
   }
 
+  @Nullable
   private static Expression updaterFromBody(final ForStatement ¢) {
     return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  @Override public String description(final ForStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final ForStatement ¢) {
     return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final ForStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
+  @Nullable
   @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
   }

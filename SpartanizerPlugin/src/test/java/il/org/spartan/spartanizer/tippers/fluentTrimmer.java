@@ -7,9 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 public class fluentTrimmer extends Trimmer {
-  @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ws) {
+  @SafeVarargs public <N extends ASTNode> fluentTrimmer(@NotNull final Class<N> clazz, final Tipper<N>... ws) {
     super(Toolbox.make(clazz, ws));
   }
 

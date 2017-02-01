@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Evaluate the addition of numbers according to the following rules <br/>
  * <br/>
@@ -25,17 +26,17 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
-  @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> xs) {
+  @Override @SuppressWarnings("boxing") double evaluateDouble(@NotNull final List<Expression> xs) {
     double $ = 0;
     try {
       $ = xs.stream().map(az.throwing::double¢).reduce((x, y) -> x + y).get();
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
 
-  @Override int evaluateInt(final List<Expression> xs) {
+  @Override int evaluateInt(@NotNull final List<Expression> xs) {
     int $ = 0;
     try {
       for (final Expression ¢ : xs) {
@@ -43,13 +44,13 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ += az.throwing.int¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs) {
+  @Override long evaluateLong(@NotNull final List<Expression> xs) {
     long $ = 0;
     try {
       for (final Expression ¢ : xs) {
@@ -57,7 +58,7 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ += az.throwing.long¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

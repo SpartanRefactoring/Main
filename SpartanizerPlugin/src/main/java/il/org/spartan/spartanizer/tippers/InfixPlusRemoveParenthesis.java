@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
@@ -29,7 +31,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return <code><b>true</b></code> <em>iff</em>the parenthesis can be removed
    *         and false otherwise */
-  private static boolean canRemove(final InfixExpression x) {
+  private static boolean canRemove(@NotNull final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
         || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
@@ -38,7 +40,8 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return "Remove redundant parenthesis";
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull
+  @Override public String description(@NotNull final InfixExpression ¢) {
     return description() + " in: " + trivia.gist(¢);
   }
 

@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of type String
  * @author Stav Namir
@@ -29,11 +31,12 @@ public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<I
     return "[\"\"+foo]->foo";
   }
 
+  @Nullable
   @Override public String description(final InfixExpression ¢) {
     return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
-  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement(@NotNull final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);

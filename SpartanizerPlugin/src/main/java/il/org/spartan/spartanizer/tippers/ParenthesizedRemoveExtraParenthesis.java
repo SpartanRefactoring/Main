@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** ((x)) to (x) <br>
  * (x); to x; <br>
@@ -20,15 +21,17 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
-  @Override public Tip tip(final ParenthesizedExpression x) {
+  @NotNull
+  @Override public Tip tip(@NotNull final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, copy.of(expression(x)), g);
       }
     };
   }
 
-  @Override public String description(final ParenthesizedExpression ¢) {
+  @NotNull
+  @Override public String description(@NotNull final ParenthesizedExpression ¢) {
     return "remove extra parenthesis " + trivia.gist(¢);
   }
 

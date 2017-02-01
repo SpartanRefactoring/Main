@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Class for averaging whatever about methods before and after refactoring +
  * patterning
@@ -20,7 +21,7 @@ public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
     getSafe(histogram, measure.statements(before)).add(Int.valueOf(metric(before) < metric(after) ? 0 : 1));
   }
 
-  private static List<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
+  private static List<Int> getSafe(@NotNull final Map<Integer, List<Int>> m, final Integer i) {
     m.putIfAbsent(i, new ArrayList<>());
     return m.get(i);
   }

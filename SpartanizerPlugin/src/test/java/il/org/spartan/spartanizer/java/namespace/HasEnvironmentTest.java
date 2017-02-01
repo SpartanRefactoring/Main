@@ -6,6 +6,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -35,6 +36,7 @@ public class HasEnvironmentTest extends MetaFixture {
 
   private static final Set<String> signature = new HashSet<>();
 
+  @NotNull
   private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
@@ -46,6 +48,7 @@ public class HasEnvironmentTest extends MetaFixture {
     return $;
   }
 
+  @NotNull
   @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
     return collect(new NamespaceTest(), new definitionTest());
   }

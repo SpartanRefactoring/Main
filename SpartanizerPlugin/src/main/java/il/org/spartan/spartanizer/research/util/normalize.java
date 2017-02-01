@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -20,6 +21,7 @@ public enum normalize {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
+  @NotNull
   public static String unwarpedTestcase(final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
@@ -31,7 +33,7 @@ public enum normalize {
   /** escapes all "s
    * @param ¢
    * @return */
-  private static String escapeQuotes(final String ¢) {
+  private static String escapeQuotes(@NotNull final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
 
@@ -45,7 +47,8 @@ public enum normalize {
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
-  static String renderIdentifier(final String old) {
+  @NotNull
+  static String renderIdentifier(@NotNull final String old) {
     return "start".equals(old) ? "a"
         : "START".equals(old) ? "A"
             : "z".equals(old) ? "x1"
@@ -56,7 +59,8 @@ public enum normalize {
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
-  private static String linify(final String ¢) {
+  @NotNull
+  private static String linify(@NotNull final String ¢) {
     String $ = "";
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
@@ -76,7 +80,7 @@ public enum normalize {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
-      @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(@NotNull final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;
         final String name = ((Name) ¢).getFullyQualifiedName();
@@ -95,10 +99,10 @@ public enum normalize {
     return ASTutils.extractCode(s, $);
   }
 
-  private static void applyChanges(final Document d, final ASTRewrite r) {
+  private static void applyChanges(@NotNull final Document d, @NotNull final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       ¢.printStackTrace();
     }
   }
