@@ -4,18 +4,12 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry exported="true" kind="lib" path="lib/hamcrest-all-1.3.jar" sourcepath="lib/hamcrest-all-1.3.jar">
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="java/src/*"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/junit-4.12.jar">
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="*/src/*"/>
-		</accessrules>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/mockito-all-2.0.2-beta.jar"/>
 	<classpathentry kind="lib" path="lib/spartan-1.2.jar" sourcepath="lib/spartan-1.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/cli-1.02.jar" sourcepath="lib/cli-1.02-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
+		<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 </classpath>
