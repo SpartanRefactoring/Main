@@ -15,27 +15,27 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** A DefaultParametersAdder method is such one that calls another method
  * (usually with same name) and just adds parameters to the method.
- * @author Ori Marcovitch
- * @since 2016 */
+ * @author Ori Marcovitch */
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$N($A)", "", ""));
-      add(patternTipper("$N.$N2($A)", "", ""));
+      add(patternTipper("$N1.$N2($A)", "", ""));
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
-        && (defaulter(¢, onlyStatement(¢)) || defaulter(¢, onlySynchronizedStatementStatement(¢)));
+        && (parametersAdder(¢, onlyStatement(¢))//
+            || parametersAdder(¢, onlySynchronizedStatementStatement(¢)));
   }
 
-  private static boolean defaulter(final MethodDeclaration d, final Statement s) {
-    return defaulter(d, expression(s));
+  private static boolean parametersAdder(final MethodDeclaration d, final Statement s) {
+    return parametersAdder(d, expression(s));
   }
 
-  private static boolean defaulter(final MethodDeclaration d, final Expression $) {
+  private static boolean parametersAdder(final MethodDeclaration d, final Expression $) {
     return anyTips(tippers, $)//
         && iz.methodInvocation($)//
         && containsParameters(d, $)//
@@ -45,7 +45,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
-    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> az.name(λ) + "").collect(Collectors.toList())
+    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> identifier(az.name(λ))).collect(Collectors.toList())
         .containsAll(parametersNames(¢));
   }
 
