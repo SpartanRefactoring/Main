@@ -9,9 +9,10 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Base class for all nanos which match a full method, those patterns add a
+ * Javadoc marker to the method rather than replacing it with some other syntax.
+ * Once a method is marked by a nano, it won't be marked again by the same nano.
+ * @author Ori Marcovitch */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodDeclaration> implements MethodPatternUtilitiesTrait {
   @Override public final boolean canTip(final MethodDeclaration ¢) {
     final Javadoc $ = javadoc(¢);
