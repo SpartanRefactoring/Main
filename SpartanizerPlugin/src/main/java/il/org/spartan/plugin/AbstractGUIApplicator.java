@@ -261,7 +261,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** .
-   * @return <code><b>true</b></code> <em>iff</em>there are tipss which can be
+   * @return <code><b>true</b></code> <em>iff</em> there are tips which can be
    *         performed on the compilation unit. */
   public final boolean haveTips() {
     return countTips() > 0;
