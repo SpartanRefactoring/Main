@@ -124,11 +124,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   protected SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
-        new HashCodeMethod(), // Not Counted
+        new HashCodeMethod(), // Not Counted, actually skipped
         new Independent(), // Uberlola
         new JDPattern(), // Uberlola
         new UseParameterAndReturnIt(), //
-        new ToStringMethod(), // Not Counted
+        new ToStringMethod(), // Not Counted, actually skipped
         null);
     return this;
   }
