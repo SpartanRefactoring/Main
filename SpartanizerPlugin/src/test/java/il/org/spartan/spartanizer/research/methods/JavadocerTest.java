@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -14,11 +15,11 @@ public abstract class JavadocerTest {
                                                        // initialize
   static final SpartAnalyzer spartanizer = new SpartAnalyzer();
 
-  private static boolean javadoced(final String ¢) {
+  private static boolean javadoced(@NotNull final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
   }
 
-  private static String spartanized(final String ¢) {
+  private static String spartanized(@NotNull final String ¢) {
     return spartanizer.fixedPoint(makeAST1.COMPILATION_UNIT.from(¢) + "");
   }
 

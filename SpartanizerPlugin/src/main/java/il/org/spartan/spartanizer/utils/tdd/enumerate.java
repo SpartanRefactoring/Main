@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -35,7 +36,7 @@ public enum enumerate {
    * @author Noam Yefet
    * @param ¢
    * @since Nov 1, 2016 */
-  public static int statements(final ASTNode n) {
+  public static int statements(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
     final Int $ = new Int();
@@ -126,7 +127,7 @@ public enum enumerate {
   }
   // For you to implement! Let's TDD and get it on!
 
-  public static int ifStatements(final ASTNode ¢) {
+  public static int ifStatements(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
@@ -139,7 +140,7 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int loops(final ASTNode n) {
+  public static int loops(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
     final Int $ = new Int();
@@ -168,7 +169,7 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int ternaries(final ASTNode ¢) {
+  public static int ternaries(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int $ = new Int();

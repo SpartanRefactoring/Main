@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code
  * a ? (f,g,h) : c(d,e)
@@ -24,12 +25,12 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
     return new LongestCommonSubsequence(e1 + "", e2 + "").similarity();
   }
 
-  private static boolean compatible(final Expression e1, final Expression e2) {
+  private static boolean compatible(@NotNull final Expression e1, @NotNull final Expression e2) {
     return e1.getNodeType() == e2.getNodeType()
         && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
 
-  private static boolean compatibleCondition(final Expression e1, final Expression e2) {
+  private static boolean compatibleCondition(@NotNull final Expression e1, @NotNull final Expression e2) {
     return compatible(e1, e2) || compatible(e1, make.notOf(e2));
   }
 
@@ -37,7 +38,7 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
 
-  @Override public ConditionalExpression replacement(final ConditionalExpression x) {
+  @Override public ConditionalExpression replacement(@NotNull final ConditionalExpression x) {
     final ConditionalExpression $ = subject.pair(core(x.getElseExpression()), core(x.getThenExpression())).toCondition(make.notOf(x.getExpression()));
     final Expression then = $.getElseExpression(), elze = $.getThenExpression();
     if (!iz.conditionalExpression(then) && iz.conditionalExpression(elze))

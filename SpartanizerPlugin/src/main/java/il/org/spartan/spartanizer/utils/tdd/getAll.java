@@ -9,6 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -26,7 +28,8 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  public static Set<String> invocations(final MethodInvocation ¢) {
+  @Nullable
+  public static Set<String> invocations(@Nullable final MethodInvocation ¢) {
     if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
@@ -45,14 +48,15 @@ public enum getAll {
    * @author Dor Ma'ayan
    * @param d JD
    * @return List of the names of the methods */
-  public static Set<String> invocations(final MethodDeclaration ¢) {
+  @Nullable
+  public static Set<String> invocations(@Nullable final MethodDeclaration ¢) {
     if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
     if (statements(body(¢)).isEmpty())
       return $;
     ¢.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodInvocation ¢¢) {
+      @Override public boolean visit(@NotNull final MethodInvocation ¢¢) {
         $.add(¢¢.getName() + "");
         return true;
       }
@@ -65,7 +69,8 @@ public enum getAll {
    * @author Kfir Marx
    * @param ¢ Block
    * @return List of the names in the block */
-  public static List<Name> names(final Block b) {
+  @Nullable
+  public static List<Name> names(@Nullable final Block b) {
     if (b == null)
       return null;
     final List<Name> $ = new ArrayList<>();
@@ -82,7 +87,8 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  public static List<InstanceofExpression> instanceofs(final MethodDeclaration d) {
+  @Nullable
+  public static List<InstanceofExpression> instanceofs(@Nullable final MethodDeclaration d) {
     if (d == null)
       return null;
     final List<InstanceofExpression> $ = new ArrayList<>();
@@ -101,7 +107,8 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  public static List<CastExpression> casts(final MethodDeclaration d) {
+  @Nullable
+  public static List<CastExpression> casts(@Nullable final MethodDeclaration d) {
     if (d == null)
       return null;
     final List<CastExpression> $ = new ArrayList<>();
@@ -119,7 +126,8 @@ public enum getAll {
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
-  public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
+  @Nullable
+  public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration d) {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (d == null)
       return null;
@@ -138,7 +146,8 @@ public enum getAll {
    * @param ¢ TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  public static List<String> publicFields(final TypeDeclaration ¢) {
+  @Nullable
+  public static List<String> publicFields(@Nullable final TypeDeclaration ¢) {
     if (¢ == null)
       return null;
     final List<String> $ = new ArrayList<>();
@@ -146,9 +155,10 @@ public enum getAll {
     return $;
   }
 
-  private static ASTVisitor publicFieldsCollector(final List<String> $) {
+  @NotNull
+  private static ASTVisitor publicFieldsCollector(@NotNull final List<String> $) {
     return new ASTVisitor() {
-      @Override public boolean visit(final FieldDeclaration d) {
+      @Override public boolean visit(@NotNull final FieldDeclaration d) {
         if (iz.public¢(d))
           $.addAll(fragments(d).stream().map(λ -> step.name(λ) + "").collect(Collectors.toList()));
         return true;
@@ -161,7 +171,8 @@ public enum getAll {
    * @param CompilationUnit
    * @author RoeiRaz
    * @author RoeyMaor */
-  public static List<MethodDeclaration> methods(final CompilationUnit u) {
+  @Nullable
+  public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
@@ -180,12 +191,13 @@ public enum getAll {
    * @author yonzarecki
    * @author rodedzats
    * @author zivizhar */
-  public static List<String> privateFields(final TypeDeclaration d) {
+  @NotNull
+  public static List<String> privateFields(@Nullable final TypeDeclaration d) {
     final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;
     d.accept(new ASTVisitor() { // traverse all FieldDeclaration
-      @Override public boolean visit(final FieldDeclaration current) {
+      @Override public boolean visit(@NotNull final FieldDeclaration current) {
         if (current.getModifiers() == Modifier.PRIVATE)
           $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList()));
         return true;

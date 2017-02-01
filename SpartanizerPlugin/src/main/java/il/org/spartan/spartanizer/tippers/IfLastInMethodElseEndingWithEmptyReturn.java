@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code if(a)f();else{g();return;} } into
  * {@code if(a)f();else{g();;}} provided that this <code><b>if</b></code>
@@ -27,13 +28,13 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 
-  @Override public Tip tip(final IfStatement s) {
+  @Override public Tip tip(@NotNull final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
     return $ == null || $.getExpression() != null ? null : new Tip(description(s), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace($, make.emptyStatement(s), g);
       }
     };

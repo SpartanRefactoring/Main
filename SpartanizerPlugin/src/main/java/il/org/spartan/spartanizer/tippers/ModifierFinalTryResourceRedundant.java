@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
  * <code><b>interface</b> a{}</code>, etc.
@@ -18,11 +19,12 @@ public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modi
     return "Remove redundant final modifier of try resource";
   }
 
+  @NotNull
   @Override public String description(final Modifier ¢) {
     return description() + ": '" + az.variableDeclarationExpression(parent(¢)) + "'";
   }
 
-  @Override public boolean prerequisite(final Modifier $) {
+  @Override public boolean prerequisite(@NotNull final Modifier $) {
     if (!$.isFinal())
       return false;
     final VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));

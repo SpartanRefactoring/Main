@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -27,6 +29,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
     return false;
   }
 
+  @Nullable
   @Override public Tip pattern(@SuppressWarnings("unused") final Block __) {
     return null;
     // return new Tip("", x, getClass()) {
@@ -48,11 +51,13 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
   }
 
   static final class Matcher {
+    @Nullable
     private final List<Statement> ss;
     public String name;
     static final UserDefinedTipper<Expression> creation = patternTipper("$T1 $N = new $T2()", "$T $N = with(new $T2())", "");
     public int creationIdx;
 
+    @NotNull
     public static Matcher matcher(final Block ¢) {
       return new Matcher(¢);
     }
@@ -74,6 +79,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
       return creates(idx) && new Matcher(ss).creation(idx).usage(idx + 1);
     }
 
+    @NotNull
     public Matcher creation(final int idx) {
       name = creation.getMatching(ss.get(idx), "$N") + "";
       creationIdx = idx;
@@ -87,6 +93,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
       return null;
     }
 
+    @Nullable
     public static Matcher creation(final Block ¢) {
       return new Matcher(¢).findCreation();
     }

@@ -13,7 +13,7 @@ import il.org.spartan.*;
  * @author Dan
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({"static-method", "javadoc", "PointlessBooleanExpression"})
 public class Issue0177 {
   @Test @SuppressWarnings("unused") public void BitWiseAnd_withSideEffectsEXT() {
     class Class {
@@ -167,6 +167,7 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffects() {
+    @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       int a;
 
@@ -188,6 +189,7 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
+    @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       class Inner {
         int a;
@@ -216,6 +218,7 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEXT() {
+    @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       class Inner {
         int a;
@@ -263,6 +266,7 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffects() {
+    @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       int a;
 
@@ -284,6 +288,7 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
+    @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       class Inner {
         int a;

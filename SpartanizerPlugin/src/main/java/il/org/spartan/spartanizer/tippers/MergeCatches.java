@@ -8,6 +8,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Consolidate identical catch blocks : <br>
  * <br>
@@ -17,7 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 20-11-2016 */
 public class MergeCatches extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Unite {
-  @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(final TryStatement s) {
+  @Nullable
+  @Override @SuppressWarnings({ "unchecked" }) public ASTNode replacement(@NotNull final TryStatement s) {
     final List<CatchClause> cs = step.catchClauses(s);
     for (int i = 0; i < cs.size(); ++i)
       for (int j = i + 1; j < cs.size(); ++j)
@@ -36,6 +39,7 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement>//
     return null;
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final TryStatement ¢) {
     return "Consolidate identical catch blocks";
   }

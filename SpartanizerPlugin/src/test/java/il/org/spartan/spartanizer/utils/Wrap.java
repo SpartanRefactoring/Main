@@ -8,6 +8,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import org.jetbrains.annotations.NotNull;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -31,7 +32,7 @@ public enum Wrap {
   ;
   public static final Wrap[] WRAPS = { Statement, Expression, Method, OUTER };
 
-  public static String essence(final String codeFragment) {
+  public static String essence(@NotNull final String codeFragment) {
     return tide.clean(trivia.removeComments(codeFragment));
   }
 
@@ -39,7 +40,8 @@ public enum Wrap {
    * @param codeFragment JD
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
-  public static Wrap find(final String codeFragment) {
+  @NotNull
+  public static Wrap find(@NotNull final String codeFragment) {
     for (final Wrap $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
@@ -47,6 +49,7 @@ public enum Wrap {
     throw new RuntimeException();
   }
 
+  @NotNull
   private static String options(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
@@ -72,7 +75,7 @@ public enum Wrap {
     this.after = after;
   }
 
-  private boolean contains(final String wrap, final String inner) {
+  private boolean contains(final String wrap, @NotNull final String inner) {
     final String off = off(wrap), $ = essence(inner), essence2 = essence(off);
     assert essence2 != null;
     return essence2.contains($);
@@ -83,6 +86,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
+  @NotNull
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(on(codeFragment));
   }
@@ -91,6 +95,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
+  @NotNull
   public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
@@ -105,6 +110,7 @@ public enum Wrap {
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
+  @NotNull
   public String on(final String codeFragment) {
     return before + codeFragment + after;
   }

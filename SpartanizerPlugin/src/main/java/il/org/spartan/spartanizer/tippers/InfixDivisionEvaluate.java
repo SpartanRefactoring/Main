@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Evaluate the subtraction of numbers according to the following rules <br/>
  * <br/>
@@ -35,7 +36,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.double¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -54,7 +55,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.int¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -73,7 +74,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.long¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

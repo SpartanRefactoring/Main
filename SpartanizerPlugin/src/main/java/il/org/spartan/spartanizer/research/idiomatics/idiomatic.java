@@ -9,6 +9,8 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -25,18 +27,19 @@ public interface idiomatic {
   String QUOTE = "'";
   /** an evaluating trigger */
   Trigger eval = new Trigger() {
-    @Override public <T> T eval(final Supplier<T> ¢) {
+    @Override public <T> T eval(@NotNull final Supplier<T> ¢) {
       return ¢.get();
     }
   };
   /** an ignoring trigger */
-  Trigger tIgnore = new Trigger() {
+  @Nullable Trigger tIgnore = new Trigger() {
+    @Nullable
     @Override public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
       return null;
     }
   };
 
-  static void addImport(final CompilationUnit u, final ASTRewrite r) {
+  static void addImport(@NotNull final CompilationUnit u, @NotNull final ASTRewrite r) {
     final ImportDeclaration d = u.getAST().newImportDeclaration();
     d.setStatic(true);
     d.setOnDemand(true);
@@ -47,7 +50,7 @@ public interface idiomatic {
   /** @param <T> JD
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
-  static <T> Holder<T> eval(final Supplier<T> $) {
+  static <T> Holder<T> eval(@NotNull final Supplier<T> $) {
     return $::get;
   }
 
@@ -58,6 +61,7 @@ public interface idiomatic {
    * @param condition
    * @param t JD
    * @return T */
+  @Nullable
   static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
@@ -68,10 +72,10 @@ public interface idiomatic {
    * @param $ JD
    * @return result of invoking the parameter, or <code><b>null</b></code> if an
    *         exception occurred. */
-  static <T> T katching(final Producer<T> $) {
+  static <T> T katching(@NotNull final Producer<T> $) {
     try {
       return $.λ();
-    } catch (final Exception ¢) {
+    } catch (@NotNull final Exception ¢) {
       ¢.printStackTrace();
       return null;
     }
@@ -80,12 +84,14 @@ public interface idiomatic {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  static String quote(final String $) {
+  @NotNull
+  static String quote(@Nullable final String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
+  @NotNull
   static Runner run(final Runnable ¢) {
     return new Runner(¢);
   }
@@ -93,12 +99,14 @@ public interface idiomatic {
   /** @param <T> JD
    * @param ¢ JD
    * @return Yielder<T> */
+  @NotNull
   static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
 
   /** @param condition JD
    * @return */
+  @Nullable
   static Trigger unless(final boolean condition) {
     return vhen(!condition);
   }
@@ -108,6 +116,7 @@ public interface idiomatic {
    * @param t JD
    * @return non-boolean parameter, in case the boolean parameter is true, or
    *         null, otherwise */
+  @Nullable
   static <T> T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
@@ -119,6 +128,7 @@ public interface idiomatic {
       this.t = t;
     }
 
+    @Nullable
     public ConditionHolder nulls() {
       return new ConditionHolder(t == null);
     }
@@ -131,6 +141,7 @@ public interface idiomatic {
       this.b = b;
     }
 
+    @NotNull
     public <T> SupplierHolder<T> eval(final Supplier<T> ¢) {
       return new SupplierHolder<>(¢, b);
     }
@@ -150,16 +161,19 @@ public interface idiomatic {
     }
   }
 
+  @NotNull
   static <T> ObjectHolder<T> when(final T ¢) {
     return new ObjectHolder<>(¢);
   }
 
+  @NotNull
   static ConditionHolder when(final boolean ¢) {
     return new ConditionHolder(¢);
   }
 
   /** @param condition JD
    * @return */
+  @Nullable
   static Trigger vhen(final boolean condition) {
     return condition ? eval : tIgnore;
   }
@@ -171,6 +185,7 @@ public interface idiomatic {
     public abstract <T> void when(boolean c);
   }
 
+  @NotNull
   static Executor execute(final Runnable r) {
     return new Executor() {
       final Runnable runnable = r;
@@ -182,6 +197,7 @@ public interface idiomatic {
     };
   }
 
+  @NotNull
   static <T> Storer<T> default¢(final T ¢) {
     return new Storer<>(¢);
   }
@@ -196,6 +212,7 @@ public interface idiomatic {
      * @param unless condition on which value is returned
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>. */
+    @Nullable
     default T unless(final boolean unless) {
       return when(!unless);
     }
@@ -204,6 +221,7 @@ public interface idiomatic {
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>.
      * @param when condition on which value is returned */
+    @Nullable
     default T when(final boolean when) {
       return when ? get() : null;
     }
@@ -223,7 +241,7 @@ public interface idiomatic {
   interface Producer<T> {
     /** @return next value provided by this instance
      * @throws Exception JD */
-    T λ() throws Exception;
+    @NotNull T λ() throws Exception;
   }
 
   /** Evaluate a {@link Runnable} when a condition applies or unless a condition
@@ -328,11 +346,11 @@ public interface idiomatic {
       azzert.isNull(take(null).unless(false));
     }
 
-    String mapper(final String ¢) {
+    @NotNull String mapper(final String ¢) {
       return ¢ + ¢;
     }
 
-    String mapper(final Integer ¢) {
+    @NotNull String mapper(final Integer ¢) {
       return ¢ + "";
     }
 
@@ -404,11 +422,12 @@ public interface idiomatic {
     /** @param <T> JD
      * @param t JD
      * @return */
-    <T> T eval(Supplier<T> t);
+    @Nullable <T> T eval(Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD
      * @return */
+    @Nullable
     default <T> T eval(final T $) {
       return eval(() -> $);
     }
@@ -421,6 +440,7 @@ public interface idiomatic {
    * apply, reduce, ...
    * @param ¢
    * @return */
+  @NotNull
   static <T, CT extends Collection<T>> CollectionHolder<T, CT> on(final CT ¢) {
     return new CollectionHolder<>(¢);
   }
@@ -432,26 +452,31 @@ public interface idiomatic {
       this.collection = collection;
     }
 
-    public void apply(final Consumer<? super T> mapper) {
+    public void apply(@NotNull final Consumer<? super T> mapper) {
       collection.forEach(mapper);
     }
 
+    @NotNull
     @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
       return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
     }
 
+    @NotNull
     @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
       return (CT) collection.stream().filter(mapper).collect(new GenericCollector<>(collection.getClass()));
     }
 
+    @NotNull
     public T reduce(final BinaryOperator<T> reducer) {
       return collection.stream().reduce(reducer).get();
     }
 
+    @NotNull
     public T max(final Comparator<? super T> comperator) {
       return collection.stream().max(comperator).get();
     }
 
+    @NotNull
     public T min(final Comparator<? super T> comperator) {
       return collection.stream().min(comperator).get();
     }
@@ -460,6 +485,7 @@ public interface idiomatic {
   /** This is not good. java cannot infer types.
    * @param mapper
    * @return */
+  @NotNull
   static <T, R> MapperLambdaHolder<T, R> mapp(final Function<T, R> mapper) {
     return new MapperLambdaHolder<>(mapper);
   }
@@ -471,7 +497,8 @@ public interface idiomatic {
       this.mapper = mapper;
     }
 
-    @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(final CT ¢) {
+    @NotNull
+    @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(@NotNull final CT ¢) {
       return (CR) ¢.stream().map(mapper).collect(new GenericCollector<>(¢.getClass()));
     }
     // @SuppressWarnings("boxing") @Test public void useNewMapper() {
@@ -502,11 +529,12 @@ public interface idiomatic {
       return λ -> (Collection<R>) λ;
     }
 
+    @Nullable
     @Override @SuppressWarnings("unchecked") public Supplier<Collection<R>> supplier() {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception $) {
+        } catch (@NotNull final Exception $) {
           $.printStackTrace();
         }
         return null;
@@ -517,6 +545,7 @@ public interface idiomatic {
       return Collection::add;
     }
 
+    @NotNull
     @Override public BinaryOperator<Collection<R>> combiner() {
       return (left, right) -> {
         left.addAll(right);
@@ -524,10 +553,12 @@ public interface idiomatic {
       };
     }
 
+    @NotNull
     @Override public Function<Collection<R>, Collection<R>> finisher() {
       return castingIdentity();
     }
 
+    @NotNull
     @Override public Set<Characteristics> characteristics() {
       return new HashSet<>();
     }
