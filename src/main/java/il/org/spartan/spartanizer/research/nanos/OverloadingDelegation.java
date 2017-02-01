@@ -24,7 +24,7 @@ public final class OverloadingDelegation extends NanoPatternTipper<MethodInvocat
         && sameSize(parameters($), arguments(¢));
   }
 
-  private static boolean sameSize(List<SingleVariableDeclaration> parameters, List<Expression> arguments) {
+  private static boolean sameSize(final List<SingleVariableDeclaration> parameters, final List<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();
@@ -33,7 +33,7 @@ public final class OverloadingDelegation extends NanoPatternTipper<MethodInvocat
   @Override public Tip pattern(final MethodInvocation ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        MethodInvocation $ = copy.of(¢);
+        final MethodInvocation $ = copy.of(¢);
         $.setName($.getAST().newSimpleName("self"));
         r.replace(¢, $, g);
       }
