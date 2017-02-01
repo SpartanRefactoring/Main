@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -27,6 +28,7 @@ public final class OccurrencesTest {
   private final SimpleName a = findFirst.variableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclaration) ab.fragments().get(1)).getName();
+  @Nullable
   private final IfStatement s = extract.nextIfStatement(a);
   private final InfixExpression e = (InfixExpression) s.getExpression();
 

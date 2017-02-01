@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** if(X == null) throw Exception;
  * @author Ori Marcovitch
@@ -25,10 +27,12 @@ public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Exception;
   }

@@ -7,13 +7,17 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
+import org.jetbrains.annotations.NotNull;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Collects statistics for a method in which a nano was found.
  * @author Ori Marcovitch
  * @since 2016 */
 public class MethodRecord {
+  @NotNull
   public final String methodName;
+  @NotNull
   public final String methodClassName;
   public int numNPStatements;
   public int numNPExpressions;
@@ -21,10 +25,11 @@ public class MethodRecord {
   public final int numParameters;
   public final int numStatements;
   public final int numExpressions;
+  @NotNull
   public final MethodDeclaration before;
   public MethodDeclaration after;
 
-  public MethodRecord(final MethodDeclaration d) {
+  public MethodRecord(@NotNull final MethodDeclaration d) {
     before = d;
     methodName = d.getName() + "";
     methodClassName = findTypeAncestor(d);

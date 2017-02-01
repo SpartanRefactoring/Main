@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.annotation.*;
 
 /** To say that a certain name is recognized in a certain definition.
@@ -14,5 +16,5 @@ import java.lang.annotation.*;
     ElementType.CONSTRUCTOR, //
     ElementType.TYPE, })
 public @interface knows {
-  String[] value();
+  @NotNull String[] value();
 }

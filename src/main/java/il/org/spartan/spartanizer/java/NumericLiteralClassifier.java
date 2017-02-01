@@ -1,13 +1,16 @@
 package il.org.spartan.spartanizer.java;
 
 import il.org.spartan.spartanizer.engine.type.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility to determine the exact type of a Java character or numerical
  * literal.
  * @author Yossi Gil
  * @since 2015-08-30 */
 public final class NumericLiteralClassifier {
-  public static Primitive.Certain of(final String literal) {
+  @Nullable
+  public static Primitive.Certain of(@Nullable final String literal) {
     return literal == null ? null : new NumericLiteralClassifier(literal).type();
   }
 
@@ -21,6 +24,7 @@ public final class NumericLiteralClassifier {
 
   /** @return the type of this literal.
    * @see PrudentType */
+  @NotNull
   public Primitive.Certain type() {
     if (inner.charAt(0) == '\'')
       return Primitive.Certain.CHAR;

@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -25,14 +27,17 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final WhileStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }
 
+  @NotNull
   @Override public String description() {
     return "Move an Iterable to its end using getNext() != null";
   }

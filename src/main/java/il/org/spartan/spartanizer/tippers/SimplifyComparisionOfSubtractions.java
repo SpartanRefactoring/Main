@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
@@ -21,7 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 18-11-2016 */
 public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     if (!isLiegal(x) || !az.infixExpression(x.getLeftOperand()).extendedOperands().isEmpty()
         || !az.infixExpression(x.getRightOperand()).extendedOperands().isEmpty())
       return null;
@@ -33,7 +36,7 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
     return prerequisite(res) ? res : null;
   }
 
-  private static boolean isLiegal(final InfixExpression ¢) {
+  private static boolean isLiegal(@NotNull final InfixExpression ¢) {
     return isLegalOperation(¢) && iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
   }
 
@@ -41,11 +44,12 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
-  @Override public boolean prerequisite(final InfixExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }

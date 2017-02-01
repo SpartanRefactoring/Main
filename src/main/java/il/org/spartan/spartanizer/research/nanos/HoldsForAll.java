@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** {@link HoldsForAll} Nano Pattern - holds P(c) for all c in C
  * @author Ori Marcovitch
@@ -29,10 +31,12 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, az.block(parent(x)));
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }

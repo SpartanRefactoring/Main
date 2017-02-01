@@ -7,6 +7,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** converts {@code try { a;} catch(Exception e) { b;} finally {} } into
  * {@code try { a;} catch(Exception e) { b;} }
@@ -15,10 +17,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 16-11-2016 */
 public final class TryFinallyEmptyRemove extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.SyntacticBaggage {
-  @Override public boolean prerequisite(final TryStatement ¢) {
+  @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
     return !statements(body(¢)).isEmpty() && ¢.getFinally() != null && statements(¢.getFinally()).isEmpty() && !¢.catchClauses().isEmpty();
   }
 
+  @Nullable
   @Override public ASTNode replacement(final TryStatement ¢) {
     final TryStatement $ = copy.of(¢);
     $.setFinally(null);

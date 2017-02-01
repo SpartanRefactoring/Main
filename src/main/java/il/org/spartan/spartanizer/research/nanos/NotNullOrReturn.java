@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @nano if(X = null) return; <br>
  *       if(X = null) return null;
@@ -30,30 +31,36 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
     ;
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @NotNull
+  @Override public Tip pattern(@NotNull final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Safety;
   }
 
+  @NotNull
   @Override public String description() {
     return description;
   }
 
+  @NotNull
   @Override public String technicalName() {
     return "IfXIsNullReturn";
   }
 
+  @NotNull
   @Override public String example() {
     return "if(X == null) return;";
   }
 
+  @NotNull
   @Override public String symbolycReplacement() {
     return "azzert.notNull(X);";
   }

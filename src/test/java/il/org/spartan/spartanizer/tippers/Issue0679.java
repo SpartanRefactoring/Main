@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -15,7 +16,8 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @since Nov 2, 2016 */
 @SuppressWarnings("static-method")
 public class Issue0679 {
-  public static CompilationUnit cu(final String program) {
+  @NotNull
+  public static CompilationUnit cu(@NotNull final String program) {
     final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(program.toCharArray());
     return (CompilationUnit) $.createAST(null);

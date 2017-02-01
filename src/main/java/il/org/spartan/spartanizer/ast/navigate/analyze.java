@@ -9,6 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A class to find all sort all things about a node, generally some small
  * analyses.
@@ -18,7 +20,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum analyze {
   ;
-  public static Set<String> dependencies(final ASTNode n) {
+  @NotNull
+  public static Set<String> dependencies(@NotNull final ASTNode n) {
     final Set<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
@@ -41,7 +44,7 @@ public enum analyze {
     return $;
   }
 
-  public static List<String> dependencies(final List<Expression> arguments) {
+  public static List<String> dependencies(@Nullable final List<Expression> arguments) {
     if (arguments == null)
       return new ArrayList<>();
     final Set<String> $ = new HashSet<>();
@@ -53,6 +56,7 @@ public enum analyze {
     return new ArrayList<>($).stream().collect(Collectors.toList());
   }
 
+  @Nullable
   public static String type(final Name n) {
     final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
     final String $ = m == null ? null : findDeclarationInMethod(n, m);
@@ -69,7 +73,7 @@ public enum analyze {
     return null;
   }
 
-  private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
+  private static String findDeclarationInMethod(final Name n, @NotNull final MethodDeclaration d) {
     final Str $ = new Str();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {

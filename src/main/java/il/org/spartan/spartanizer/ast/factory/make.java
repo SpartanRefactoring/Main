@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -27,7 +29,8 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2016 */
 public enum make {
   ;
-  public static Expression assignmentAsExpression(final Assignment ¢) {
+  @Nullable
+  public static Expression assignmentAsExpression(@NotNull final Assignment ¢) {
     final Operator $ = ¢.getOperator();
     return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
@@ -38,27 +41,31 @@ public enum make {
    * @return a newly created expression with its operands thus swapped.
    * @throws IllegalArgumentException when the parameter has extra operands.
    * @see InfixExpression#hasExtendedOperands */
-  public static InfixExpression conjugate(final InfixExpression ¢) {
+  public static InfixExpression conjugate(@NotNull final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
-  public static EmptyStatement emptyStatement(final ASTNode ¢) {
+  public static EmptyStatement emptyStatement(@NotNull final ASTNode ¢) {
     return ¢.getAST().newEmptyStatement();
   }
 
-  public static FromAST from(final AST t) {
+  @NotNull
+  public static FromAST from(@NotNull final AST t) {
     return new make.FromAST() {
-      @Override public SimpleName identifier(final String identifier) {
+      @NotNull
+      @Override public SimpleName identifier(@NotNull final String identifier) {
         return t.newSimpleName(identifier);
       }
 
+      @NotNull
       @Override public NumberLiteral literal(final int ¢) {
         return t.newNumberLiteral(¢ + "");
       }
 
-      @Override public StringLiteral literal(final String ¢) {
+      @NotNull
+      @Override public StringLiteral literal(@NotNull final String ¢) {
         final StringLiteral $ = t.newStringLiteral();
         $.setLiteralValue(¢);
         return $;
@@ -66,11 +73,13 @@ public enum make {
     };
   }
 
-  public static make.FromAST from(final ASTNode ¢) {
+  @NotNull
+  public static make.FromAST from(@NotNull final ASTNode ¢) {
     return from(¢.getAST());
   }
 
-  public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
+  @NotNull
+  public static IfStatement ifWithoutElse(@NotNull final Statement s, @NotNull final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);
     $.setThenStatement(s);
@@ -78,11 +87,12 @@ public enum make {
     return $;
   }
 
-  public static StringLiteral makeEmptyString(final ASTNode ¢) {
+  @NotNull
+  public static StringLiteral makeEmptyString(@NotNull final ASTNode ¢) {
     return make.from(¢).literal("");
   }
 
-  static Expression makeInfix(final List<Expression> xs, final AST t) {
+  static Expression makeInfix(@NotNull final List<Expression> xs, @NotNull final AST t) {
     if (xs.size() == 1)
       return first(xs);
     final InfixExpression $ = t.newInfixExpression();
@@ -94,10 +104,11 @@ public enum make {
         return $;
   }
 
-  public static NullLiteral makeNullLiteral(final ASTNode ¢) {
+  public static NullLiteral makeNullLiteral(@NotNull final ASTNode ¢) {
     return ¢.getAST().newNullLiteral();
   }
 
+  @NotNull
   public static Expression minus(final Expression ¢) {
     final PrefixExpression $ = az.prefixExpression(¢);
     return $ == null ? minus(¢, az.numberLiteral(¢))
@@ -106,12 +117,14 @@ public enum make {
                 : ¢;
   }
 
-  static Expression minus(final Expression x, final NumberLiteral l) {
+  @NotNull
+  static Expression minus(final Expression x, @Nullable final NumberLiteral l) {
     return l == null ? minusOf(x) //
         : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
 
+  @NotNull
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
@@ -123,7 +136,8 @@ public enum make {
     return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
   }
 
-  static NumberLiteral newLiteral(final ASTNode n, final String token) {
+  @NotNull
+  static NumberLiteral newLiteral(@NotNull final ASTNode n, @NotNull final String token) {
     final NumberLiteral $ = n.getAST().newNumberLiteral();
     $.setToken(token);
     return $;
@@ -137,7 +151,8 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-  public static ParenthesizedExpression parethesized(final Expression ¢) {
+  @NotNull
+  public static ParenthesizedExpression parethesized(@NotNull final Expression ¢) {
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
     $.setExpression(step.parent(¢) == null ? ¢ : copy.of(¢));
     return $;
@@ -152,17 +167,20 @@ public enum make {
    * This function is a factory method recording the expression that might be
    * wrapped.
    * @param inner JD */
+  @NotNull
   public static make.PlantingExpression plant(final Expression ¢) {
     return new make.PlantingExpression(¢);
   }
 
   /** Factory method recording the statement might be wrapped.
    * @param inner JD */
+  @NotNull
   public static make.PlantingStatement plant(final Statement inner) {
     return new make.PlantingStatement(inner);
   }
 
-  private static String signAdjust(final String token) {
+  @NotNull
+  private static String signAdjust(@NotNull final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
@@ -173,7 +191,8 @@ public enum make {
     return subject.operand(¢).toThrow();
   }
 
-  public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression x) {
+  @NotNull
+  public static VariableDeclarationStatement variableDeclarationStatement(@NotNull final Type t, @NotNull final String name, @NotNull final Expression x) {
     final AST create = x.getAST();
     final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
     fragment.setName(create.newSimpleName(name));
@@ -184,15 +203,16 @@ public enum make {
   }
 
   public interface FromAST {
-    default SimpleName identifier(final SimpleName ¢) {
+    @NotNull
+    default SimpleName identifier(@NotNull final SimpleName ¢) {
       return identifier(¢.getIdentifier());
     }
 
-    SimpleName identifier(String identifier);
+    @NotNull SimpleName identifier(String identifier);
 
-    NumberLiteral literal(int i);
+    @NotNull NumberLiteral literal(int i);
 
-    StringLiteral literal(String literal);
+    @NotNull StringLiteral literal(String literal);
   }
 
   public static class PlantingExpression {
@@ -205,7 +225,7 @@ public enum make {
       return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }
 
-    private static boolean isStringConcatingSafe(final InfixExpression ¢) {
+    private static boolean isStringConcatingSafe(@NotNull final InfixExpression ¢) {
       return type.of(¢.getLeftOperand()) == Certain.STRING;
     }
 
@@ -222,10 +242,12 @@ public enum make {
      * @return either the expression itself, or the expression wrapped in
      *         parenthesis, depending on the relative precedences of the
      *         expression and its host. */
+    @NotNull
     public Expression into(final ASTNode host) {
       return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
     }
 
+    @NotNull
     public Expression intoLeft(final InfixExpression host) {
       return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
     }
@@ -234,6 +256,7 @@ public enum make {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 
+    @NotNull
     private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
       $.setExpression(copy.of(¢));
@@ -260,7 +283,7 @@ public enum make {
       this.inner = inner;
     }
 
-    public void intoThen(final IfStatement s) {
+    public void intoThen(@NotNull final IfStatement s) {
       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }

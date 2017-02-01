@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -21,7 +23,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
-  @Override public boolean canTip(final MethodDeclaration ¢) {
+  @Override public boolean canTip(@NotNull final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     final List<Statement> ss = statements(¢.getBody());
@@ -35,9 +37,10 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
         && wizard.same($.getRightHandSide(), first(step.parameters(¢)).getName());
   }
 
-  @Override public Tip pattern(final MethodDeclaration d) {
+  @NotNull
+  @Override public Tip pattern(@NotNull final MethodDeclaration d) {
     return new Tip(description(d), d, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(step.returnType(d)))
           return;
         final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
@@ -50,10 +53,12 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     };
   }
 
+  @Nullable
   protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Make setter fluent";
   }
