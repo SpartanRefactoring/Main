@@ -9,6 +9,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Annotation;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -470,6 +471,7 @@ class ZZZ___Fixture_ModelClass {
       abra, @ScopeSize(3)
       @enumConstant
       cadabra;
+      
       @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
         return vaz();
       }

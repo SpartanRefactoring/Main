@@ -9,12 +9,15 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Couples together {@link CompilationUnit} and its {@link ICompilationUnit}.
  * @author Ori Roth
  * @since 2016 */
 public class WrappedCompilationUnit {
   public ICompilationUnit descriptor;
+  @Nullable
   public CompilationUnit compilationUnit;
   public String fileName;
   public String filePath;
@@ -40,6 +43,7 @@ public class WrappedCompilationUnit {
     compilationUnit = cu;
   }
 
+  @NotNull
   public WrappedCompilationUnit build() {
     if (compilationUnit == null)
       compilationUnit = (CompilationUnit) (!useBinding ? make1.COMPILATION_UNIT.parser(descriptor)
@@ -47,17 +51,20 @@ public class WrappedCompilationUnit {
     return this;
   }
 
+  @NotNull
   public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
       compilationUnit = (CompilationUnit) make1.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
 
+  @NotNull
   public WrappedCompilationUnit dispose() {
     compilationUnit = null;
     return this;
   }
 
+  @Nullable
   public String name() {
     return descriptor == null ? null : descriptor.getElementName();
   }
@@ -65,6 +72,7 @@ public class WrappedCompilationUnit {
   /** Factory method
    * @param ¢ JD
    * @return an instance created by the parameter */
+  @NotNull
   public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }
@@ -73,18 +81,20 @@ public class WrappedCompilationUnit {
    * @author matteo
    * @param ¢ JD
    * @return an instance created by the parameter */
-  public static List<WrappedCompilationUnit> ov(final List<CompilationUnit> ¢) {
+  public static List<WrappedCompilationUnit> ov(@NotNull final List<CompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
-  public static List<WrappedCompilationUnit> of(final List<ICompilationUnit> ¢) {
+  public static List<WrappedCompilationUnit> of(@NotNull final List<ICompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
+  @NotNull
   public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
   }
 
+  @NotNull
   public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
     return new WrappedCompilationUnit(from, name, absolutePath);
   }

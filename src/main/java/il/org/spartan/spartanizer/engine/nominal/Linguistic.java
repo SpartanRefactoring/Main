@@ -7,33 +7,39 @@ import java.util.function.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
  * @since 2.6 */
 public interface Linguistic {
   interface Activity {
-    static Activity simple(final String base) {
+    @NotNull
+    static Activity simple(@NotNull final String base) {
       return new Activity() {
+        @NotNull
         @Override public String get() {
           return base;
         }
 
+        @NotNull
         @Override public String getEd() {
           return base + "ed";
         }
 
+        @NotNull
         @Override public String getIng() {
           return base + "ing";
         }
       };
     }
 
-    String get();
+    @NotNull String get();
 
-    String getEd();
+    @NotNull String getEd();
 
-    String getIng();
+    @NotNull String getIng();
   }
 
   /** Error string, replacing null/error value. */
@@ -46,7 +52,8 @@ public interface Linguistic {
   /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
    * @param ¢ list of items
    * @return a linguistic list of the items */
-  static String list(final List<String> ¢) {
+  @NotNull
+  static String list(@Nullable final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(Linguistic.SEPARATOR) + " and " + last(¢);
   }
@@ -55,6 +62,7 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
+  @NotNull
   static String plurales(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "es";
   }
@@ -63,7 +71,8 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  static String plurales(final String s, final Int i) {
+  @NotNull
+  static String plurales(final String s, @Nullable final Int i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.get() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
@@ -71,7 +80,8 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  static String plurales(final String s, final Integer i) {
+  @NotNull
+  static String plurales(final String s, @Nullable final Integer i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
@@ -79,6 +89,7 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
+  @NotNull
   static String plurals(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "s";
   }
@@ -87,7 +98,8 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  static String plurals(final String s, final Int i) {
+  @NotNull
+  static String plurals(final String s, @Nullable final Int i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.get() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
@@ -95,14 +107,15 @@ public interface Linguistic {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  static String plurals(final String s, final Integer i) {
+  @NotNull
+  static String plurals(final String s, @Nullable final Integer i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
   static String time(final long $) {
     try {
       return new DecimalFormat(DOUBLE_FORMAT).format($ / 1000000000.0);
-    } catch (final ArithmeticException ¢) {
+    } catch (@NotNull final ArithmeticException ¢) {
       monitor.log(¢);
       return UNKNOWN;
     }
@@ -111,7 +124,7 @@ public interface Linguistic {
   /** Cut string's suffix to maximal length for every row.
    * @param s JD
    * @return cut string */
-  static String trim(final String s) {
+  static String trim(@NotNull final String s) {
     final String[] $ = s.split("\n");
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = trimAbsolute($[¢], TRIM_THRESHOLD, TRIM_SUFFIX);
@@ -123,21 +136,24 @@ public interface Linguistic {
    * @param l JD
    * @param x replacement suffix string
    * @return cut string */
-  static String trimAbsolute(final String s, final int l, final String x) {
+  @NotNull
+  static String trimAbsolute(@Nullable final String s, final int l, @NotNull final String x) {
     assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
 
   /** @param ¢ something
    * @return printable {@link String} for it */
-  static <X> String unknownIfNull(final X ¢) {
+  @NotNull
+  static <X> String unknownIfNull(@Nullable final X ¢) {
     return ¢ != null ? ¢ + "" : UNKNOWN;
   }
 
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
-  static <X> String unknownIfNull(final X x, final Function<X, ?> f) {
+  @NotNull
+  static <X> String unknownIfNull(@Nullable final X x, @NotNull final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
 }

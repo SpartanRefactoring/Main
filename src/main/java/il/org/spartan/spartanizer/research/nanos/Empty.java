@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** collection.size() == 0
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -26,6 +28,7 @@ public final class Empty extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
@@ -46,6 +49,7 @@ public final class Empty extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
+  @NotNull
   @Override public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }

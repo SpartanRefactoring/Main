@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Remove curly braces from a lambda expression if and only if </br>
  * its body has only one statement.
@@ -21,16 +22,17 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-11-17 */
 public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
     implements TipperCategory.SyntacticBaggage {
-  @Override public Tip tip(final LambdaExpression x) {
+  @NotNull
+  @Override public Tip tip(@NotNull final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, replacement(x, r, g), g);
       }
     };
   }
 
-  public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
+  public static ASTNode replacement(@NotNull final LambdaExpression x, @NotNull final ASTRewrite r, final TextEditGroup g) {
     if (onlyOne(statements(body(x))) == null)
       return null;
     final Statement s = first(statements(x));
@@ -42,7 +44,8 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     return $;
   }
 
-  @Override public String description(final LambdaExpression ¢) {
+  @NotNull
+  @Override public String description(@NotNull final LambdaExpression ¢) {
     return "remove curly braces from " + trivia.gist(¢);
   }
 

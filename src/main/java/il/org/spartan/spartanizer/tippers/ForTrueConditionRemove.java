@@ -7,29 +7,34 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static ForStatement buildForWhithoutCondition(final ForStatement $) {
+  @NotNull
+  private static ForStatement buildForWhithoutCondition(@NotNull final ForStatement $) {
     $.setExpression(null);
     return $;
   }
 
-  private static boolean fitting(final ForStatement ¢) {
+  private static boolean fitting(@Nullable final ForStatement ¢) {
     return ¢ != null && iz.literal.true¢(step.expression(¢));
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Convert loop: 'for(?;" + "true" + ";?)' to 'for(?;;?)'";
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final ForStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
+  @Nullable
   @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutCondition(copy.of(¢));
   }

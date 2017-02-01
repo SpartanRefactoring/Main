@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert {@code ""+x} to {@code x+""}
  * @author Dan Greenstein
@@ -19,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  private static InfixExpression replace(final InfixExpression ¢) {
+  private static InfixExpression replace(@NotNull final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
@@ -32,7 +34,8 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
    * @param i1 the index of the first element
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
-  private static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+  @NotNull
+  private static <T> List<T> swap(@NotNull final List<T> $, final int i1, final int i2) {
     if (i1 < $.size() && i2 < $.size()) {
       final T t = $.get(i1);
       lisp.replace($, $.get(i2), i1);
@@ -41,11 +44,12 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     return $;
   }
 
+  @Nullable
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }
 
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) ? null : replace(¢);
   }
 }

@@ -13,13 +13,16 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Parse and visit all Java files under a given path.
  * @year 2016
  * @author Yossi Gil
  * @since Dec 14, 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
+  @NotNull
   @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @NotNull
   @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array(".");
   protected static Class<? extends FolderASTVisitor> clazz;
@@ -40,14 +43,14 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     }
     try {
       return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
-    } catch (NoSuchMethodException | SecurityException ¢) {
+    } catch (@NotNull NoSuchMethodException | SecurityException ¢) {
       monitor.logProbableBug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
       throw new RuntimeException();
     }
   }
 
-  public static void main(final String[] args)
+  public static void main(@NotNull final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);
   }
@@ -65,6 +68,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
+  @NotNull
   protected static String makeFile(final String fileName) {
     return outputFolder + system.fileSeparator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
@@ -78,25 +82,25 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     done(path);
   }
 
-  void collect(final CompilationUnit u) {
+  void collect(@NotNull final CompilationUnit u) {
     try {
       u.accept(this);
-    } catch (final NullPointerException ¢) {
+    } catch (@NotNull final NullPointerException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  void collect(final String javaCode) {
+  void collect(@NotNull final String javaCode) {
     collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
   }
 
-  void visit(final File f) {
+  void visit(@NotNull final File f) {
     dotter.click();
     if (!system.isTestFile(f))
       try {
         collect(FileUtils.read(f));
         dotter.click();
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
   }

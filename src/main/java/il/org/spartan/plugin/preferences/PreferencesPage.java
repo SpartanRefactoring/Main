@@ -21,6 +21,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** ??
  * @author Daniel Mittelman
@@ -147,10 +149,12 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       });
     }
 
+    @NotNull
     @Override protected String[] parseString(final String stringList) {
       return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
+    @Nullable
     @Override @SuppressWarnings("unused") protected String getNewInputObject() {
       if (dead.isEmpty() || composite == null)
         return null;
