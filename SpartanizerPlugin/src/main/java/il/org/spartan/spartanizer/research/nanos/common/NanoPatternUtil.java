@@ -16,7 +16,7 @@ public interface NanoPatternUtil {
   static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
         || body(¢) == null//
-        || anyTips(NanoPatternsConfiguration.excluded, ¢);
+        || anyTips(NanoPatternsConfiguration.skipped, ¢);
   }
 
   static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
