@@ -35,11 +35,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
-<<<<<<< HEAD
-  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
-=======
   @Nullable @Override public Tip pattern(final ConditionalExpression ¢) {
->>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
     return firstTip(tippers, ¢);
   }
 
@@ -55,11 +51,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-<<<<<<< HEAD
-  @Override @NotNull public Category category() {
-=======
   @NotNull @Override public Category category() {
->>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
     return Category.Safety;
   }
 }
