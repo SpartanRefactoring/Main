@@ -23,6 +23,8 @@ import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
@@ -30,20 +32,25 @@ import il.org.spartan.spartanizer.java.*;
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
-  static inner.implementation baptize(final String name) {
+  @NotNull
+  static inner.implementation baptize(@NotNull final String name) {
     return baptize(name, "anonymously born");
   }
 
-  static inner.implementation baptize(final String name, final String description) {
+  @NotNull
+  static inner.implementation baptize(@NotNull final String name, @NotNull final String description) {
     return have(name) ? bring(name) : new inner.implementation() {
+      @NotNull
       @Override public String description() {
         return description;
       }
 
+      @NotNull
       @Override public String toString() {
         return name + "";
       }
 
+      @NotNull
       @Override public String key() {
         return name;
       }
@@ -58,15 +65,15 @@ public interface type {
     return inner.types.containsKey(name);
   }
 
-  static boolean isDouble(final Expression ¢) {
+  static boolean isDouble(@NotNull final Expression ¢) {
     return type.of(¢) == Certain.DOUBLE;
   }
 
-  static boolean isInt(final Expression ¢) {
+  static boolean isInt(@NotNull final Expression ¢) {
     return type.of(¢) == Certain.INT;
   }
 
-  static boolean isLong(final Expression ¢) {
+  static boolean isLong(@NotNull final Expression ¢) {
     return type.of(¢) == Certain.LONG;
   }
 
@@ -75,23 +82,26 @@ public interface type {
    *         whose type is provably not of type {@link String}, in the sense
    *         used in applying the {@code +} operator to concatenate strings.
    *         concatenation. */
-  static boolean isNotString(final Expression ¢) {
+  static boolean isNotString(@NotNull final Expression ¢) {
     return !in(of(¢), STRING, ALPHANUMERIC);
   }
 
-  static boolean isString(final Expression ¢) {
+  static boolean isString(@NotNull final Expression ¢) {
     return of(¢) == Certain.STRING;
   }
 
   // TODO: Matteo: Nano-pattern of values: not implemented
-  @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
+  @Nullable
+  @SuppressWarnings("synthetic-access") static type of(@NotNull final Expression ¢) {
     return inner.get(¢);
   }
 
+  @Nullable
   default Certain asPrimitiveCertain() {
     return null;
   }
 
+  @Nullable
   default Uncertain asPrimitiveUncertain() {
     return null;
   }
@@ -102,6 +112,7 @@ public interface type {
 
   String description();
 
+  @NotNull
   default String fullName() {
     return this + "=" + key() + " (" + description() + ")";
   }
@@ -148,42 +159,52 @@ public interface type {
    * @since 2016 */
   @SuppressWarnings("unused")
   interface Axiom {
+    @NotNull
     static Certain type(final boolean __) {
       return BOOLEAN;
     }
 
+    @NotNull
     static Certain type(final byte __) {
       return BYTE;
     }
 
+    @NotNull
     static Certain type(final char __) {
       return CHAR;
     }
 
+    @NotNull
     static Certain type(final double __) {
       return DOUBLE;
     }
 
+    @NotNull
     static Certain type(final float __) {
       return FLOAT;
     }
 
+    @NotNull
     static Certain type(final int __) {
       return INT;
     }
 
+    @NotNull
     static Certain type(final long __) {
       return LONG;
     }
 
+    @NotNull
     static type type(final Object __) {
       return NOTHING;
     }
 
+    @NotNull
     static Certain type(final short __) {
       return SHORT;
     }
 
+    @NotNull
     static Certain type(final String __) {
       return STRING;
     }
@@ -195,7 +216,8 @@ public interface type {
     /** All type that were ever born , as well as all primitive types */
     static final Map<String, implementation> types = new LinkedHashMap<>();
 
-    private static implementation get(final Expression ¢) {
+    @Nullable
+    private static implementation get(@NotNull final Expression ¢) {
       return (implementation) (property.has(¢, propertyName) ? property.get(¢, propertyName) : property.set(¢, propertyName, lookUp(¢, lookDown(¢))));
     }
 
@@ -206,19 +228,23 @@ public interface type {
       return $ < Short.MAX_VALUE && $ > Short.MIN_VALUE;
     }
 
+    @Nullable
     private static implementation lookDown(final Assignment x) {
       final implementation $ = get(step.to(x));
       return !$.isNoInfo() ? $ : get(step.from(x)).isNumeric() ? NUMERIC : get(step.from(x));
     }
 
+    @NotNull
     private static implementation lookDown(final CastExpression ¢) {
       return get(step.expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
     }
 
+    @NotNull
     private static implementation lookDown(final ClassInstanceCreation ¢) {
       return baptize(step.type(¢) + "");
     }
 
+    @NotNull
     private static implementation lookDown(final ConditionalExpression x) {
       final implementation $ = get(step.then(x)), ¢ = get(step.elze(x));
       return $ == ¢ ? $
@@ -230,7 +256,8 @@ public interface type {
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    private static implementation lookDown(final Expression ¢) {
+    @Nullable
+    private static implementation lookDown(@NotNull final Expression ¢) {
       switch (¢.getNodeType()) {
         case BOOLEAN_LITERAL:
           return BOOLEAN;
@@ -267,6 +294,7 @@ public interface type {
       }
     }
 
+    @Nullable
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
@@ -276,32 +304,39 @@ public interface type {
       return $;
     }
 
+    @NotNull
     private static implementation lookDown(final MethodInvocation ¢) {
       return "toString".equals(step.name(¢) + "") && arguments(¢).isEmpty() ? STRING : NOTHING;
     }
 
+    @NotNull
     private static implementation lookDown(final NumberLiteral ¢) {
       return new NumericLiteralClassifier(step.token(¢)).type();
     }
 
+    @Nullable
     private static implementation lookDown(final ParenthesizedExpression ¢) {
       return get(core(¢));
     }
 
+    @NotNull
     private static implementation lookDown(final PostfixExpression ¢) {
       return get(step.operand(¢)).asNumeric(); // see
                                                // testInDecreamentSemantics
     }
 
+    @NotNull
     private static implementation lookDown(final PrefixExpression ¢) {
       return get(step.operand(¢)).under(step.operator(¢));
     }
 
+    @NotNull
     private static implementation lookDown(final VariableDeclarationExpression ¢) {
       return baptize(step.type(¢) + "");
     }
 
-    private static implementation lookUp(final Expression x, final implementation i) {
+    @NotNull
+    private static implementation lookUp(final Expression x, @NotNull final implementation i) {
       if (i.isCertain())
         return i;
       for (final ASTNode $ : hop.ancestors(x)) {
@@ -337,20 +372,24 @@ public interface type {
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
+      @NotNull
       default implementation above(final PrefixExpression.Operator ¢) {
         return ¢ == NOT ? BOOLEAN : ¢ != COMPLEMENT ? asNumeric() : asIntegral();
       }
 
+      @NotNull
       default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
         return in(¢, EQUALS, NOT_EQUALS) ? this
             : ¢ == wizard.PLUS2 ? asAlphaNumeric()
                 : wizard.isBitwiseOperator(¢) ? asBooleanIntegral() : wizard.isShift(¢) ? asIntegral() : asNumeric();
       }
 
+      @NotNull
       default implementation asAlphaNumeric() {
         return isAlphaNumeric() ? this : ALPHANUMERIC;
       }
 
+      @NotNull
       default implementation asBooleanIntegral() {
         return isIntegral() || this == BOOLEAN ? this : BOOLEANINTEGRAL;
       }
@@ -358,12 +397,14 @@ public interface type {
       /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
        *         {@link BYTE}, {@link SHORT} or {@link #INTEGRAL}, in case it
        *         cannot decide */
+      @NotNull
       default implementation asIntegral() {
         return isIntegral() ? this : INTEGRAL;
       }
 
       /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in
        *         case it cannot decide */
+      @NotNull
       default implementation asIntegralUnderOperation() {
         return isIntUnderOperation() ? INT : asIntegral();
       }
@@ -372,6 +413,7 @@ public interface type {
        *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
        *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
        *         information is available */
+      @NotNull
       default implementation asNumeric() {
         return isNumeric() ? this : NUMERIC;
       }
@@ -379,6 +421,7 @@ public interface type {
       /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
        *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case
        *         no further information is available */
+      @NotNull
       default implementation asNumericUnderOperation() {
         return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
       }
@@ -397,6 +440,7 @@ public interface type {
         return in(this, NOTHING, NULL);
       }
 
+      @NotNull
       default implementation join() {
         assert !have(key()) : "fault: the dictionary should not have type " + key() + "\n receiver is " + this + "\n This is all I know";
         inner.types.put(key(), this);
@@ -408,7 +452,8 @@ public interface type {
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
-      default implementation under(final PrefixExpression.Operator ¢) {
+      @NotNull
+      default implementation under(@NotNull final PrefixExpression.Operator ¢) {
         assert ¢ != null;
         return ¢ == NOT ? BOOLEAN
             : in(¢, DECREMENT, INCREMENT) ? asNumeric() : ¢ != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
@@ -418,7 +463,8 @@ public interface type {
        *         {@link #DOUBLE} , {@link #STRING} , {@link #INTEGRAL} ,
        *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or
        *         {@link #ALPHANUMERIC} , in case it cannot decide */
-      default implementation underBinaryOperator(final InfixExpression.Operator o, final implementation k) {
+      @NotNull
+      default implementation underBinaryOperator(final InfixExpression.Operator o, @NotNull final implementation k) {
         if (o == wizard.PLUS2)
           return underPlus(k);
         if (wizard.isComparison(o))
@@ -437,7 +483,8 @@ public interface type {
       /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
        *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
        *         decide */
-      default implementation underBitwiseOperation(final implementation k) {
+      @NotNull
+      default implementation underBitwiseOperation(@NotNull final implementation k) {
         return k == this ? k
             : isIntegral() && k.isIntegral() ? underIntegersOnlyOperator(k)
                 : isNoInfo() ? k.underBitwiseOperationNoInfo() //
@@ -448,11 +495,13 @@ public interface type {
       /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
        *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
        *         decide */
+      @NotNull
       default implementation underBitwiseOperationNoInfo() {
         return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
       }
 
-      default implementation underIntegersOnlyOperator(final implementation k) {
+      @NotNull
+      default implementation underIntegersOnlyOperator(@NotNull final implementation k) {
         final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
         return in(LONG, $, ¢2) ? LONG : !in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
@@ -460,7 +509,8 @@ public interface type {
       /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
        *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot
        *         decide */
-      default implementation underNumericOnlyOperator(final implementation k) {
+      @NotNull
+      default implementation underNumericOnlyOperator(@NotNull final implementation k) {
         if (!isNumeric())
           return asNumericUnderOperation().underNumericOnlyOperator(k);
         assert k != null;
@@ -481,7 +531,8 @@ public interface type {
       /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
        *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
        *         {@link #ALPHANUMERIC}, in case it cannot decide */
-      default implementation underPlus(final implementation k) {
+      @NotNull
+      default implementation underPlus(@NotNull final implementation k) {
         // addition with NULL or String must be a String
         // unless both operands are numeric, the result is alphanumeric
         return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
@@ -546,7 +597,7 @@ public interface type {
       final String description;
       final String key;
 
-      Certain(final String key, final String description, final String s) {
+      Certain(final String key, final String description, @Nullable final String s) {
         this.key = key;
         this.description = description;
         inner.types.put(key, this);
@@ -554,6 +605,7 @@ public interface type {
           inner.types.put(s, this);
       }
 
+      @NotNull
       @Override public Certain asPrimitiveCertain() {
         return this;
       }
@@ -611,6 +663,7 @@ public interface type {
         return separate.these(options).by('|');
       }
 
+      @NotNull
       @Override public Iterable<Certain> options() {
         return options;
       }

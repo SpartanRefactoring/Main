@@ -13,21 +13,26 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Replace {@code assertTrue(X)} by {@code assert X;}
  * @author Yossi Gil
  * @since 2016/12/11 */
 public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Idiomatic {
+  @NotNull
   @Override public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
 
+  @Nullable
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replacement(az.methodInvocation(expression(¢)));
   }
 
-  private static ASTNode replacement(final MethodInvocation ¢) {
+  @Nullable
+  private static ASTNode replacement(@Nullable final MethodInvocation ¢) {
     if (¢ == null)
       return null;
     final List<Expression> $ = arguments(¢);
@@ -35,7 +40,8 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     return replacement(¢, first($), second($));
   }
 
-  public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {
+  @Nullable
+  public static ASTNode replacement(@NotNull final MethodInvocation i, final Expression first, @Nullable final Expression second) {
     final Expression message = second == null ? null : first, condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
     if (message != null)
@@ -43,7 +49,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     return replacement(i, condition, $);
   }
 
-  private static ASTNode replacement(final MethodInvocation i, final Expression condition, final AssertStatement $) {
+  private static ASTNode replacement(@NotNull final MethodInvocation i, final Expression condition, @NotNull final AssertStatement $) {
     switch (name(i) + "") {
       case "assertFalse":
         return setAssert($, make.notOf(condition));
@@ -56,7 +62,8 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     }
   }
 
-  private static AssertStatement setAssert(final AssertStatement $, final Expression x) {
+  @NotNull
+  private static AssertStatement setAssert(@NotNull final AssertStatement $, @NotNull final Expression x) {
     $.setExpression(x);
     return $;
   }

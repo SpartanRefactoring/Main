@@ -7,6 +7,7 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import org.jetbrains.annotations.NotNull;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -26,7 +27,7 @@ public enum make1 {
    * enum value
    * @param tipper The {@link makeAST1} type
    * @return corresponding {@link make1} value to the argument */
-  public static make1 from(final makeAST1 ¢) {
+  public static make1 from(@NotNull final makeAST1 ¢) {
     switch (¢) {
       case CLASS_BODY_DECLARATIONS:
         return make1.CLASS_BODY_DECLARATIONS;
@@ -50,6 +51,7 @@ public enum make1 {
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
+  @NotNull
   public ASTParser parser(final char[] text) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(text);
@@ -59,7 +61,8 @@ public enum make1 {
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
-  public ASTParser parser(final Document ¢) {
+  @NotNull
+  public ASTParser parser(@NotNull final Document ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢.get().toCharArray());
     return $;
@@ -68,6 +71,7 @@ public enum make1 {
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
+  @NotNull
   public ASTParser parser(final ICompilationUnit ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢);
@@ -77,6 +81,7 @@ public enum make1 {
   /** Creates a binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
+  @NotNull
   public ASTParser parserWithBinding(final ICompilationUnit ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢);
@@ -87,6 +92,7 @@ public enum make1 {
   /** Creates a parser for a given {@link IFile}
    * @param f JD
    * @return created parser */
+  @NotNull
   public ASTParser parser(final IFile ¢) {
     return parser(JavaCore.createCompilationUnitFrom(¢));
   }
@@ -94,14 +100,16 @@ public enum make1 {
   /** Creates a parser for a given marked text.
    * @param m JD
    * @return created parser */
-  public ASTParser parser(final IMarker ¢) {
+  @NotNull
+  public ASTParser parser(@NotNull final IMarker ¢) {
     return parser(makeAST1.iCompilationUnit(¢));
   }
 
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-  public ASTParser parser(final String text) {
+  @NotNull
+  public ASTParser parser(@NotNull final String text) {
     return parser(text.toCharArray());
   }
 }

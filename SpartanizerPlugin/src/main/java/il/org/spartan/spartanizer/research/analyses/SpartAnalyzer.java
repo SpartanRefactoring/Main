@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.tippers.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
@@ -21,6 +22,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
+  @NotNull
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
@@ -96,6 +98,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
+  @NotNull
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
@@ -122,6 +125,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
+  @NotNull
   protected SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
@@ -134,6 +138,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
+  @NotNull
   public List<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(λ -> λ instanceof NanoPatternTipper).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));

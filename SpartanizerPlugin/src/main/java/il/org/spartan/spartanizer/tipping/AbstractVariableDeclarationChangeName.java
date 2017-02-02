@@ -8,14 +8,17 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A parent tipper for changing variables names
  * @author Ori Roth
  * @since 2016/05/08
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment */
 public abstract class AbstractVariableDeclarationChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
-  @Override public ASTRewrite go(final ASTRewrite r, final N n, @SuppressWarnings("unused") final TextEditGroup __, final List<ASTNode> uses,
-      final List<ASTNode> replacement) {
+  @Nullable
+  @Override public ASTRewrite go(final ASTRewrite r, @NotNull final N n, @SuppressWarnings("unused") final TextEditGroup __, @NotNull final List<ASTNode> uses,
+                                 @NotNull final List<ASTNode> replacement) {
     if (!change(n))
       return null;
     uses.addAll(collect.usesOf(n.getName()).in(containing.typeDeclaration(n)));
@@ -25,5 +28,6 @@ public abstract class AbstractVariableDeclarationChangeName<N extends VariableDe
 
   protected abstract boolean change(N n);
 
+  @NotNull
   protected abstract SimpleName replacement(N n);
 }

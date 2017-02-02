@@ -17,6 +17,8 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.
@@ -25,6 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2013/07/01 */
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
+  @NotNull
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     return new IMarkerResolution[] { //
         apply, //
@@ -51,7 +54,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     a.setRunAction(u -> {
       try {
         new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);
-      } catch (final InterruptedException ¢¢) {
+      } catch (@NotNull final InterruptedException ¢¢) {
         monitor.logCancellationRequest(this, ¢¢);
       }
       return Integer.valueOf(0);
@@ -88,22 +91,24 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @param name resolution's name
    * @param solution resolution's solution
    * @return marker resolution */
-  private static IMarkerResolution quickFix(final String name, final Consumer<IMarker> solution) {
+  @NotNull
+  private static IMarkerResolution quickFix(@NotNull final String name, @NotNull final Consumer<IMarker> solution) {
     return new IMarkerResolution() {
       @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
 
+      @NotNull
       @Override public String getLabel() {
         return name;
       }
     };
   }
 
-  static AbstractGUIApplicator getSpartanizer(final IMarker $) {
+  static AbstractGUIApplicator getSpartanizer(@NotNull final IMarker $) {
     try {
       return Tips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-    } catch (final CoreException ¢) {
+    } catch (@NotNull final CoreException ¢) {
       monitor.log(¢);
     }
     return null;
@@ -113,36 +118,38 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @author Ori Roth
    * @since 2016 */
   private static class SingleTipper<N extends ASTNode> extends Trimmer {
+    @NotNull
     final Tipper<N> tipper;
 
-    SingleTipper(final Tipper<N> tipper) {
+    SingleTipper(@NotNull final Tipper<N> tipper) {
       this.tipper = tipper;
       name = "Applying " + tipper.myName();
     }
 
-    @Override protected boolean check(final ASTNode ¢) {
+    @Override protected boolean check(@NotNull final ASTNode ¢) {
       return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
     }
 
-    @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(final ASTNode ¢) {
+    @Nullable
+    @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(@NotNull final ASTNode ¢) {
       assert check(¢);
       return !tipper.canTip((N) ¢) ? null : tipper;
     }
 
-    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker $) {
+    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(@NotNull final IMarker $) {
       try {
         assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
-      } catch (final CoreException ¢) {
+      } catch (@NotNull final CoreException ¢) {
         monitor.log(¢);
       }
       return null;
     }
 
-    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(final Class<T> $) {
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(@NotNull final Class<T> $) {
       try {
         return new SingleTipper<>($.newInstance());
-      } catch (InstantiationException | IllegalAccessException ¢) {
+      } catch (@NotNull InstantiationException | IllegalAccessException ¢) {
         monitor.log(¢);
       }
       return null;
@@ -154,8 +161,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";
 
-    static IMarkerResolution apply(final SingleTipperApplicator.Type t, final String label) {
+    @NotNull
+    static IMarkerResolution apply(final SingleTipperApplicator.Type t, @NotNull final String label) {
       return new IMarkerResolution() {
+        @NotNull
         @Override public String getLabel() {
           return label;
         }
@@ -163,39 +172,47 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         @Override public void run(final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
-          } catch (IllegalArgumentException | CoreException ¢) {
+          } catch (@NotNull IllegalArgumentException | CoreException ¢) {
             monitor.logEvaluationError(this, ¢);
           }
         }
       };
     }
 
+    @NotNull
     static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
 
+    @NotNull
     static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
 
+    @NotNull
     static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
 
+    @NotNull
     static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress spartanization tips on class");
     }
 
+    @NotNull
     static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Suppress spartanization tips on out most class");
     }
 
+    @NotNull
     static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
     }
 
-    static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, final String label) {
+    @NotNull
+    static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, @NotNull final String label) {
       return new IMarkerResolution() {
+        @NotNull
         @Override public String getLabel() {
           return label;
         }
@@ -203,7 +220,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         @Override public void run(final IMarker m) {
           try {
             SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);
-          } catch (IllegalArgumentException | CoreException ¢) {
+          } catch (@NotNull IllegalArgumentException | CoreException ¢) {
             monitor.logEvaluationError(this, ¢);
           }
         }

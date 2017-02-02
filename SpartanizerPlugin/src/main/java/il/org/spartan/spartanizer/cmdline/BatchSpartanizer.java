@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
@@ -29,16 +30,19 @@ final class BatchSpartanizer extends FolderASTVisitor {
   private static String inputDir;
   private static boolean defaultDir;
   private int classesDone;
+  @NotNull
   private final String beforeFileName;
+  @NotNull
   private final String afterFileName;
   private PrintWriter befores;
   private PrintWriter afters;
   private CSVStatistics report;
+  @NotNull
   private final String reportFileName;
 
   /** Main method used to run BatchSpartanizer as a stand alone application
    * @param args */
-  public static void main(final String[] args) {
+  public static void main(@NotNull final String[] args) {
     if (args.length == 0)
       printHelpPrompt();
     else {
@@ -64,11 +68,11 @@ final class BatchSpartanizer extends FolderASTVisitor {
     }
   }
 
-  private static void spartanizeFile(final File input) {
+  private static void spartanizeFile(@NotNull final File input) {
     new BatchSpartanizer(input.getAbsolutePath()).fire();
   }
 
-  private static void spartanizeDir(final File input) {
+  private static void spartanizeDir(@NotNull final File input) {
     for (final File ¢ : input.listFiles())
       if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
         System.out.println(¢.getAbsolutePath());
@@ -76,6 +80,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       }
   }
 
+  @NotNull
   public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
@@ -93,7 +98,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     System.out.println("");
   }
 
-  private static void parseCommandLineArgs(final String[] args) {
+  private static void parseCommandLineArgs(@NotNull final String[] args) {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
@@ -114,7 +119,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       }
   }
 
-  BatchSpartanizer(final String path) {
+  BatchSpartanizer(@NotNull final String path) {
     this(path, system.folder2File(path));
   }
 
@@ -128,7 +133,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       System.out.println(dir.mkdir());
   }
 
-  boolean collect(final AbstractTypeDeclaration in) {
+  boolean collect(@NotNull final AbstractTypeDeclaration in) {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
@@ -184,32 +189,32 @@ final class BatchSpartanizer extends FolderASTVisitor {
     return false;
   }
 
-  @Override void collect(final CompilationUnit u) {
+  @Override void collect(@NotNull final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+      @Override public boolean visit(@NotNull final AnnotationTypeDeclaration ¢) {
         return collect(¢);
       }
 
-      @Override public boolean visit(final EnumDeclaration ¢) {
+      @Override public boolean visit(@NotNull final EnumDeclaration ¢) {
         return collect(¢);
       }
 
-      @Override public boolean visit(final TypeDeclaration ¢) {
+      @Override public boolean visit(@NotNull final TypeDeclaration ¢) {
         return collect(¢);
       }
     });
   }
 
-  private void collect(final File f) {
+  private void collect(@NotNull final File f) {
     if (!system.isTestFile(f))
       try {
         collect(FileUtils.read(f));
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
   }
 
-  @Override void collect(final String javaCode) {
+  @Override void collect(@NotNull final String javaCode) {
     collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
   }
 
@@ -235,7 +240,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
@@ -255,7 +260,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
       new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> collect(λ));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       ¢.printStackTrace();
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
@@ -268,7 +273,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     system.bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 
-  private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
+  private static boolean containsJavaFileOrJavaFileItSelf(@NotNull final File f) {
     if (f.getName().endsWith(".java"))
       return true;
     if (f.isDirectory())

@@ -13,6 +13,7 @@ import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import java.util.*;
 
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.Nullable;
 
 /** convert <code>
  * f(cond ? a : b)
@@ -29,6 +30,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Bloater {
+  @Nullable
   @Override public ASTNode replacement(final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;

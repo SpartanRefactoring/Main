@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.annotation;
 
+import org.jetbrains.annotations.NotNull;
+
 public @interface OutOfOrderFlatENV {
-  String[] value();
+  @NotNull String[] value();
 }

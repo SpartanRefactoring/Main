@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Catch(...) { return;}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -28,10 +30,12 @@ public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
+  @Nullable
   @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Exception;
   }
