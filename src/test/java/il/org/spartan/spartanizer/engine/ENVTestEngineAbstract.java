@@ -104,7 +104,7 @@ public abstract class ENVTestEngineAbstract {
     final File f = new File(rOOT + from);
     assert f != null;
     assert f.exists() : f;
-    final ASTNode $ = makeAST1.COMPILATION_UNIT.from(f);
+    final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
     assert $ != null;
     return $;
   }

@@ -21,8 +21,6 @@ import org.jetbrains.annotations.Nullable;
 public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {
   @Nullable private static Expression collapse(@Nullable final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
     Expression $;
     return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
   }

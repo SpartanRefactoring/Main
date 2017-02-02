@@ -161,13 +161,13 @@ public enum TrimmerTestsUtils {
   }
 
   static String apply(@NotNull final Tipper<? extends ASTNode> t, @NotNull final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
     return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   public static String applyTrimmer(@NotNull final Trimmer t, @NotNull final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = TESTUtils.rewrite(t, u, new Document(from));
     assert $ != null;

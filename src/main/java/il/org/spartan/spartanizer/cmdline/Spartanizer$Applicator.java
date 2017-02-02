@@ -80,7 +80,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   boolean go(@NotNull final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input + "");
-    final ASTNode outputASTNode = makeAST1.COMPILATION_UNIT.from(output); // makeAST.CLASS_BODY_DECLARATIONS.from(output);
+    final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // makeAST.CLASS_BODY_DECLARATIONS.from(output);
     ReportGenerator.printFile(input + "", "before");
     ReportGenerator.printFile(output, "after");
     computeMetrics(input, outputASTNode);
@@ -101,7 +101,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
 
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST1.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (@NotNull final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-public enum makeAST1 {
+public enum makeAST {
   /** Converts file, string or marker to compilation unit. */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
     @Override @NotNull public CompilationUnit from(@NotNull final File ¢) {
@@ -27,11 +26,11 @@ public enum makeAST1 {
     }
 
     @Override @NotNull public CompilationUnit from(final IFile ¢) {
-      return (CompilationUnit) make1.COMPILATION_UNIT.parser(¢).createAST(null);
+      return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(null);
     }
 
     @Override @NotNull public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
-      return (CompilationUnit) make1.COMPILATION_UNIT.parser(m).createAST(pm);
+      return (CompilationUnit) make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
     @Override @NotNull public CompilationUnit from(@NotNull final String ¢) {
@@ -45,11 +44,11 @@ public enum makeAST1 {
     }
 
     @Override @NotNull public Expression from(final IFile ¢) {
-      return (Expression) make1.EXPRESSION.parser(¢).createAST(null);
+      return (Expression) make.EXPRESSION.parser(¢).createAST(null);
     }
 
     @Override @NotNull public Expression from(final IMarker m, final IProgressMonitor pm) {
-      return (Expression) make1.EXPRESSION.parser(m).createAST(pm);
+      return (Expression) make.EXPRESSION.parser(m).createAST(pm);
     }
 
     @Override @NotNull public Expression from(@NotNull final String ¢) {
@@ -92,7 +91,7 @@ public enum makeAST1 {
 
   final int kind;
 
-  makeAST1(final int kind) {
+  makeAST(final int kind) {
     this.kind = kind;
   }
 
@@ -126,7 +125,7 @@ public enum makeAST1 {
   /** @param function IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
-    return make1.from(this).parser(¢).createAST(null);
+    return make.from(this).parser(¢).createAST(null);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -134,7 +133,7 @@ public enum makeAST1 {
    * @param pm ProgressMonitor
    * @return ASTNode */
   public ASTNode from(final IMarker m, final IProgressMonitor pm) {
-    return make1.from(this).parser(m).createAST(pm);
+    return make.from(this).parser(m).createAST(pm);
   }
 
   /** String -> ASTNode converter

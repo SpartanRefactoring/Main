@@ -23,7 +23,7 @@ public enum TESTUtils {
   static final String WHITES = "(?m)\\s+";
 
   static String apply(@NotNull final Trimmer t, @NotNull final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
     final Document d = new Document(from);
     assert d != null;
@@ -35,7 +35,7 @@ public enum TESTUtils {
   }
 
   static void assertNoOpportunity(final AbstractGUIApplicator a, @NotNull final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
 
@@ -44,7 +44,7 @@ public enum TESTUtils {
   }
 
   static void assertOneOpportunity(final AbstractGUIApplicator a, @NotNull final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
   }
@@ -70,7 +70,7 @@ public enum TESTUtils {
    * @return an {@link Statement} data structure representing the parameter. */
   public static Statement asSingle(@NotNull final String statement) {
     assert statement != null;
-    final ASTNode $ = makeAST1.STATEMENTS.from(statement);
+    final ASTNode $ = makeAST.STATEMENTS.from(statement);
     assert $ != null;
     return extract.singleStatement($);
   }
