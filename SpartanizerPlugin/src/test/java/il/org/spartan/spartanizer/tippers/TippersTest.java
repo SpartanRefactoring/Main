@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.utils.*;
 public final class TippersTest {
   @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
     final String input = "int f() { for (int a: as) return a; }";
-    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
+    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
     azzert.that(m, iz(input));
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(body(m)))).getParameter();
     assert p != null;
@@ -86,7 +86,7 @@ public final class TippersTest {
   @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
-    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.COMPILATION_UNIT.from(d));
+    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final Block b = body(m);
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(b))).getParameter();
@@ -103,7 +103,7 @@ public final class TippersTest {
   @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
-    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.COMPILATION_UNIT.from(d));
+    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;

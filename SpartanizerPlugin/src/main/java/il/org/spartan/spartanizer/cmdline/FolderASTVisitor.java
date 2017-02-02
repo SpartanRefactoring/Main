@@ -88,7 +88,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   void collect(@NotNull final String javaCode) {
-    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   void visit(@NotNull final File f) {

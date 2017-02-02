@@ -25,8 +25,8 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -163,7 +163,7 @@ public enum eclipse {
   }
 
   private static ASTNode createAST(final ICompilationUnit ¢) {
-    return make1.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
+    return make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
 
   private static int int¢(@NotNull final IMarker m, final String name) throws CoreException {

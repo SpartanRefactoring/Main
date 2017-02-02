@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -17,7 +17,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by <code>-X<code>
  * @author Alex Kopzon
@@ -27,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
   private static List<Expression> minusFirst(final List<Expression> prune) {
-    return cons(minus(first(prune)), chop(prune));
+    return cons(make.minus(first(prune)), chop(prune));
   }
 
   private static List<Expression> prune(@NotNull final List<Expression> ¢) {
@@ -44,7 +43,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
       return make.from(first).literal(0);
     assert !$.isEmpty();
     if ($.size() == 1)
-      return !iz.literal0(first) ? first : minus(first($));
+      return !iz.literal0(first) ? first : make.minus(first($));
     assert $.size() >= 2;
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(MINUS2);
   }

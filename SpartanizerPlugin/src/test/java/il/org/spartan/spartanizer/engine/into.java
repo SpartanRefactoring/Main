@@ -45,7 +45,7 @@ public enum into {
    * @return {@link CompilationUnit} data structure representing the
    *         parameter. */
   @NotNull public static CompilationUnit cu(@NotNull final String cu) {
-    return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(cu);
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(cu);
   }
 
   /** Convert a given {@link String} into an {@link MethodDeclaration} by
@@ -66,7 +66,7 @@ public enum into {
    * @param expression a {@link String} that represents a Java expression
    * @return an {@link Expression} data structure representing the parameter. */
   @NotNull public static Expression e(@NotNull final String expression) {
-    return (Expression) makeAST1.EXPRESSION.from(expression);
+    return (Expression) makeAST.EXPRESSION.from(expression);
   }
 
   /** Convert an array of {@link String} into a {@link List} of
@@ -90,7 +90,7 @@ public enum into {
   }
 
   @NotNull public static MethodDeclaration m(@NotNull final String p) {
-    return findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.CLASS_BODY_DECLARATIONS.from(p));
+    return findFirst.instanceOf(MethodDeclaration.class).in(makeAST.CLASS_BODY_DECLARATIONS.from(p));
   }
 
   /** Convert a given {@link String} into an {@link PrefixExpression}, or fail
@@ -108,7 +108,7 @@ public enum into {
    * @return an {@link Statement} data structure representing the parameter. */
   @NotNull public static Statement s(@NotNull final String statement) {
     assert statement != null;
-    final ASTNode $ = makeAST1.STATEMENTS.from(statement);
+    final ASTNode $ = makeAST.STATEMENTS.from(statement);
     assert statement != null;
     assert $ != null;
     azzert.that(statement, $, instanceOf(Statement.class));
@@ -123,6 +123,6 @@ public enum into {
    * @return {@link CompilationUnit} data structure representing the
    *         parameter. */
   @NotNull public static CompilationUnit cuWithBinding(@NotNull final String cu) {
-    return (CompilationUnit) makeAST1.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
   }
 }

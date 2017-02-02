@@ -140,7 +140,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   private static AbstractTypeDeclaration getType(@NotNull final File x) {
     return az.abstractTypeDeclaration(
-        step.types(az.compilationUnit(makeAST1.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
+        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
 
   @Nullable private static String getProperty(final String property) {

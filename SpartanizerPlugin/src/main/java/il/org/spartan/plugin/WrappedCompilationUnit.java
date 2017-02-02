@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,14 +44,14 @@ public class WrappedCompilationUnit {
 
   @NotNull public WrappedCompilationUnit build() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) (!useBinding ? make1.COMPILATION_UNIT.parser(descriptor)
-          : make1.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
+      compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
+          : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
     return this;
   }
 
   @NotNull public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) make1.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
+      compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
 
