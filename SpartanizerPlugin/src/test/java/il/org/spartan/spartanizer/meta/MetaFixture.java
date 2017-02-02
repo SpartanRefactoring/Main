@@ -16,7 +16,6 @@ import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
 import org.jetbrains.annotations.NotNull;
@@ -91,7 +90,7 @@ public abstract class MetaFixture {
   private static CompilationUnit loadAST(@NotNull final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
-        final ASTParser p = make1.COMPILATION_UNIT.parser(makeAST1.string($));
+        final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);
         p.setUnitName(fileName);
         p.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
@@ -103,7 +102,7 @@ public abstract class MetaFixture {
   private static String loadText(@NotNull final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
-        return makeAST1.string($);
+        return makeAST.string($);
     return null;
   }
 

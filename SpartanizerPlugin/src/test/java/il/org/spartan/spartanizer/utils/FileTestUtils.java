@@ -166,7 +166,7 @@ public class FileTestUtils {
 
   /** Makes an Input file out of a Test file */
   @NotNull protected static File makeInFile(@NotNull final File ¢) {
-    return createTempFile(deleteTestKeyword(makeAST1.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
+    return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
   @NotNull static AbstractGUIApplicator makeLaconizationObject(@NotNull final File ¢) {
@@ -183,7 +183,7 @@ public class FileTestUtils {
 
   /** Makes an Output file out of a Test file */
   @NotNull protected static File makeOutFile(@NotNull final File ¢) {
-    final StringBuilder $ = makeAST1.COMPILATION_UNIT.builder(¢);
+    final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);

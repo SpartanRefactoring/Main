@@ -135,7 +135,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length(), tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
         wordCount = system.wc(Essence.of(out + ""));
-    final ASTNode from = makeAST1.COMPILATION_UNIT.from(out);
+    final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = count.nodes(from), body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);
@@ -211,7 +211,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
   }
 
   @Override void collect(@NotNull final String javaCode) {
-    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   void fire() {

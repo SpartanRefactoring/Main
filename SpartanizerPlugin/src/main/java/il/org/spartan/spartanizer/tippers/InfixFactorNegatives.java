@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -74,9 +73,9 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     return new Tip(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first($);
-        $.stream().filter(λ -> λ != first && minus.level(λ) > 0).forEach(λ -> r.replace(λ, plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
+        $.stream().filter(λ -> λ != first && minus.level(λ) > 0).forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)
-          r.replace(first, plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

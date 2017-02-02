@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
 
 public class ParseASTTest {
   public static void main(final String[] args) {
-    final ASTNode u = makeAST1.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
+    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n"
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
         + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}");
     assert u != null;
@@ -118,7 +118,7 @@ public class ParseASTTest {
   }
 
   @Test @SuppressWarnings("static-method") public void testStepMethod_01() {
-    makeAST1.COMPILATION_UNIT.from(
+    makeAST.COMPILATION_UNIT.from(
         "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
             + "public class Test {\n" + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n"
             + " }\n" + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}")
