@@ -33,6 +33,6 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
   /** * [[SuppressWarningsSpartan]] */
   @Override public Statement replacement(@NotNull final IfStatement s) {
     final Expression then = extract.throwExpression(then(s)), elze = extract.throwExpression(elze(s));
-    return then == null || elze == null ? null : make.throwOf(subject.pair(then, elze).toCondition(s.getExpression()));
+    return make.throwOf(subject.pair(then, elze).toCondition(s.getExpression()));
   }
 }

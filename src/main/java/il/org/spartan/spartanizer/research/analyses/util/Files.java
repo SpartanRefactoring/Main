@@ -94,13 +94,13 @@ public enum Files {
   /** @param ¢ file
    * @return compilation unit out of file */
   private static ASTNode getCompilationUnit(@NotNull final File ¢) {
-    return makeAST1.COMPILATION_UNIT.from(¢);
+    return makeAST.COMPILATION_UNIT.from(¢);
   }
 
   /** @param ¢ string
    * @return compilation unit out of string */
   public static ASTNode getCompilationUnit(@NotNull final String ¢) {
-    return makeAST1.COMPILATION_UNIT.from(¢);
+    return makeAST.COMPILATION_UNIT.from(¢);
   }
 
   /** Get all java files contained in outputFolder recursively. <br>

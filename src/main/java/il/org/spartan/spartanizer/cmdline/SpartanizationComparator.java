@@ -61,7 +61,7 @@ public enum SpartanizationComparator {
   }
 
   private static void collect(@NotNull final String javaCode, final String id) {
-    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode), id);
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
   }
 
   private static void collect(@NotNull final CompilationUnit u, final String id) {

@@ -36,7 +36,7 @@ public enum SuppressWarningsLaconicOnOff {
   public static void deactivate(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t)
       throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
-    final ICompilationUnit u = makeAST1.iCompilationUnit(m);
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
@@ -129,7 +129,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   @NotNull private static ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t) {
-    return createRewrite(pm, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, t);
+    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
   }
 
   private static void fillRewrite(@NotNull final ASTRewrite $, @NotNull final CompilationUnit u, @NotNull final IMarker m, @NotNull final Type t) {

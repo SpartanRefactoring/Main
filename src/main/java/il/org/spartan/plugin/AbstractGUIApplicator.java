@@ -241,7 +241,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make1.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
@@ -274,7 +274,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make1.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
@@ -342,7 +342,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
 
   public void parse() {
-    compilationUnit = (CompilationUnit) make1.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
+    compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   private void scan() {
@@ -356,7 +356,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final CompilationUnit cu = (CompilationUnit) make1.COMPILATION_UNIT.parser(u).createAST(m);
+    final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
     final Int $ = new Int();
     textChange.setEdit(createRewrite(cu, $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
@@ -368,7 +368,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
-    final ICompilationUnit u = makeAST1.iCompilationUnit(m);
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -419,7 +419,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   @NotNull private ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST1.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
   private List<ICompilationUnit> getUnits() throws JavaModelException {

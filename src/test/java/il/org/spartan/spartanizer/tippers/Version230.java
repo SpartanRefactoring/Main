@@ -3634,9 +3634,9 @@ public final class Version230 {
 
   @Test public void twoOpportunityExample() {
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST1.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
     azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST1.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
   }
 
   @Test public void unsafeBlockSimlify() {

@@ -146,7 +146,7 @@ public enum GuessedContext {
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
   @NotNull public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(on(codeFragment));
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
 
   /** Guess a given code fragment, and converts it into a {@link Document}

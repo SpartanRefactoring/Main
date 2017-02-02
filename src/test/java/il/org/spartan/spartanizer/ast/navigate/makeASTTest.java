@@ -23,7 +23,7 @@ public final class makeASTTest {
     assert f != null;
     assert f.exists();
     assert f.exists();
-    final ASTNode ast = makeAST1.COMPILATION_UNIT.from(f);
+    final ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
     assert ast != null;
     azzert.that(ast, instanceOf(CompilationUnit.class));
   }

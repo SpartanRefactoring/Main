@@ -54,7 +54,7 @@ enum CollectClassMetrics {
 
   private static void go(@NotNull final String javaCode) {
     output.put("Characters", javaCode.length());
-    report("Before-", (CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
+    report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   private static void go(final String[] where) {

@@ -16,7 +16,6 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 import org.jetbrains.annotations.Nullable;
@@ -46,15 +45,15 @@ public enum BloatingTestUtilities {
       assert $ != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap);
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST1.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
-            unpeeled1 = rename((CompilationUnit) makeAST1.COMPILATION_UNIT.from(unpeeled)) + "";
-        if ((rename((CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap)) + "").equals(unpeeled1))
+        final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
+            unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
+        if ((rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "").equals(unpeeled1))
           azzert.fail("Nothing done on " + get());
         final String peeled1 = w.off(unpeeled1);
         if (peeled1.equals(get()))
@@ -76,10 +75,10 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final String $1 = rename((CompilationUnit) makeAST1.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+        final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
         final Document doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
-        final String unpeeled = rename((CompilationUnit) makeAST1.COMPILATION_UNIT.from(doc)) + "";
+        final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
         if (wrap.equals(unpeeled))
           azzert.fail("Nothing done on " + get());
         if (unpeeled.equals(get()))
@@ -111,9 +110,9 @@ public enum BloatingTestUtilities {
           azzert.fail("Nothing done on " + get());
         if (unpeeled.equals(get()))
           azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
-        m = getMethod(az.compilationUnit(makeAST1.COMPILATION_UNIT.from(unpeeled)), f);
+        m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
         assertSimilar($, m + "");
-        final ASTParser p = make1.COMPILATION_UNIT.parser(unpeeled);
+        final ASTParser p = make.COMPILATION_UNIT.parser(unpeeled);
         p.setResolveBindings(true);
         return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
@@ -153,7 +152,7 @@ public enum BloatingTestUtilities {
     }
 
     private static CompilationUnit createCUWithBinding(final String text) {
-      final ASTParser $ = make1.COMPILATION_UNIT.parser(text);
+      final ASTParser $ = make.COMPILATION_UNIT.parser(text);
       $.setResolveBindings(true);
       return az.compilationUnit($.createAST(null));
     }
@@ -163,7 +162,7 @@ public enum BloatingTestUtilities {
         return;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
-      final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(wrap);
+      final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
