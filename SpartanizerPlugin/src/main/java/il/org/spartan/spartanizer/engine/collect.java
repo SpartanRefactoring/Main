@@ -13,6 +13,8 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
@@ -28,21 +30,21 @@ public enum collect {
   },
   /** collects assignments of an variable */
   DEFINITIONS {
-    @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
+    @Override ASTVisitor[] collectors(final SimpleName n, @NotNull final List<SimpleName> into) {
       return as.array(definitionsCollector(into, n));
     }
   },
   /** collects assignments AND semantic (multiple uses for loops) uses of a
    * variable */
   BOTH_SEMANTIC {
-    @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
+    @Override ASTVisitor[] collectors(final SimpleName n, @NotNull final List<SimpleName> into) {
       return as.array(new UsesCollector(into, n), lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   },
   /** collects assignments AND lexical (single use for loops) uses of an
    * expression */
   BOTH_LEXICAL {
-    @Override ASTVisitor[] collectors(final SimpleName n, final List<SimpleName> into) {
+    @Override ASTVisitor[] collectors(final SimpleName n, @NotNull final List<SimpleName> into) {
       return as.array(lexicalUsesCollector(into, n), definitionsCollector(into, n));
     }
   };
@@ -53,8 +55,10 @@ public enum collect {
    * @param n JD
    * @return A {@link GUIBatchLaconizer}, with the uses of the provided
    *         identifier within declarations. */
+  @NotNull
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
+      @NotNull
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
@@ -63,8 +67,10 @@ public enum collect {
     };
   }
 
+  @NotNull
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
+      @NotNull
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
@@ -77,8 +83,10 @@ public enum collect {
    * @param n same as "name"
    * @return {@link GUIBatchLaconizer} of all occurrences which are not
    *         definitions. */
+  @NotNull
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
+      @NotNull
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
@@ -91,8 +99,10 @@ public enum collect {
    * {@link ClassInstanceCreation}
    * @param n JD
    * @return a gUIBatchLaconizer with all unsafe uses of the identifier (n) */
+  @NotNull
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
+      @NotNull
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
@@ -107,8 +117,10 @@ public enum collect {
    * @return A {@link GUIBatchLaconizer}, with the uses of the provided
    *         identifier within the provided {@link ASTNode}s array to the in
    *         function.. */
+  @NotNull
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
+      @NotNull
       @Override public List<SimpleName> in(final ASTNode... ns) {
         final List<SimpleName> $ = new ArrayList<>();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
@@ -117,12 +129,15 @@ public enum collect {
     };
   }
 
+  @Nullable
   public static Collector usesOf(final String s) {
     return new Collector(s) {
+      @Nullable
       @Override public List<SimpleName> in(@SuppressWarnings("unused") final ASTNode... __) {
         return null;
       }
 
+      @NotNull
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = new ArrayList<>();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
@@ -137,7 +152,8 @@ public enum collect {
    * @param into - The ASTVisitor's output parameter
    * @param n JD
    * @return <b>ASTVisitor</b> as described above. */
-  static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
+  @NotNull
+  static ASTVisitor declarationsCollector(@NotNull final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final ForStatement ¢) {
         return consider(initializers(¢));
@@ -172,7 +188,7 @@ public enum collect {
       /** Tries to add to the list provided by the closure (into) the names of
        * the {@VariableDeclarationFragment}s given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
-      void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(@NotNull final List<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> add(step.name(λ)));
       }
 
@@ -184,7 +200,7 @@ public enum collect {
        * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
-      boolean consider(final List<? extends Expression> xs) {
+      boolean consider(@NotNull final List<? extends Expression> xs) {
         xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
@@ -194,7 +210,8 @@ public enum collect {
   /** @see {@link declarationsCollector} specific comments are provided to
    *      methods which are not taking place in the
    *      {@link declarationsCollector}. */
-  static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
+  @NotNull
+  static ASTVisitor definitionsCollector(@NotNull final List<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment ¢) {
         return consider(to(¢));
@@ -207,7 +224,7 @@ public enum collect {
       /** {@link PostfixExpression} can be only INCREMENT OR DECREMENT.
        * @param it JD
        * @return identifier of the operand. */
-      @Override public boolean visit(final PostfixExpression it) {
+      @Override public boolean visit(@NotNull final PostfixExpression it) {
         return consider(it.getOperand());
       }
 
@@ -215,7 +232,7 @@ public enum collect {
        * but only on that cases it is a definition.
        * @param it JD
        * @return identifier of the operand. */
-      @Override public boolean visit(final PrefixExpression it) {
+      @Override public boolean visit(@NotNull final PrefixExpression it) {
         return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
 
@@ -238,7 +255,7 @@ public enum collect {
         return true;
       }
 
-      void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(@NotNull final List<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> add(step.name(λ)));
       }
 
@@ -252,7 +269,7 @@ public enum collect {
         return add(az.simpleName(¢));
       }
 
-      boolean consider(final List<? extends Expression> initializers) {
+      boolean consider(@NotNull final List<? extends Expression> initializers) {
         initializers.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
@@ -267,7 +284,8 @@ public enum collect {
    * @param what JD
    * @return ASTVisitor that adds uses by name of the SimpleName 'what' to the
    *         list 'into' */
-  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
+  @NotNull
+  static ASTVisitor lexicalUsesCollector(@NotNull final List<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
 
@@ -278,7 +296,8 @@ public enum collect {
    * @param lexicalOnly - True if only explicit matches (by name) are required.
    * @return ASTVisitor that adds all the uses of the SimpleName to the provided
    *         list. */
-  private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
+  @NotNull
+  private static ASTVisitor usesCollector(final SimpleName what, @NotNull final List<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       int loopDepth;
 
@@ -298,7 +317,7 @@ public enum collect {
         --loopDepth;
       }
 
-      @Override public boolean visit(final AnonymousClassDeclaration d) {
+      @Override public boolean visit(@NotNull final AnonymousClassDeclaration d) {
         return getFieldsOfClass(d).stream().allMatch(λ -> !step.name(λ).subtreeMatch(matcher, what));
       }
 
@@ -372,7 +391,7 @@ public enum collect {
         return true;
       }
 
-      boolean collect(final List<?> os) {
+      boolean collect(@NotNull final List<?> os) {
         os.forEach(this::add);
         return true;
       }
@@ -390,7 +409,7 @@ public enum collect {
           into.add(¢);
       }
 
-      List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
+      @NotNull List<VariableDeclarationFragment> getFieldsOfClass(@NotNull final ASTNode classNode) {
         final List<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration ¢) {
@@ -411,8 +430,10 @@ public enum collect {
    * @param n what to search for
    * @return a function object to be used for searching for the parameter in a
    *         given location */
+  @NotNull
   public Of of(final SimpleName n) {
     return new Of() {
+      @NotNull
       @Override public List<SimpleName> in(final ASTNode... ¢) {
         return uses(n, ¢);
       }
@@ -424,6 +445,7 @@ public enum collect {
    * @param f JD
    * @return a function object to be used for searching for the
    *         {@link SimpleName} embedded in the parameter. */
+  @NotNull
   public Of of(final VariableDeclarationFragment ¢) {
     return of(step.name(¢));
   }
@@ -432,7 +454,7 @@ public enum collect {
    * @param what the expression to search for
    * @param ns the n in which to counted
    * @return list of uses */
-  List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
+  @NotNull List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
     final List<SimpleName> $ = new ArrayList<>();
     as.list(ns).forEach(λ -> as.list(collectors(what, $)).forEach(λ::accept));
     removeDuplicates($);
@@ -448,6 +470,7 @@ public enum collect {
    * @author Yossi Gil
    * @since 2015-09-06 */
   public abstract static class Collector {
+    @Nullable
     final SimpleName name;
     final String stringName;
 
@@ -456,11 +479,13 @@ public enum collect {
       stringName = name + "";
     }
 
+    @NotNull
     @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
       return new ArrayList<>();
     }
 
-    public final List<SimpleName> in(final List<? extends ASTNode> ¢) {
+    @Nullable
+    public final List<SimpleName> in(@NotNull final List<? extends ASTNode> ¢) {
       return in(¢.toArray(new ASTNode[¢.size()]));
     }
 
@@ -469,6 +494,7 @@ public enum collect {
       stringName = name;
     }
 
+    @Nullable
     public abstract List<SimpleName> in(ASTNode... ns);
   }
 
@@ -495,6 +521,7 @@ public enum collect {
     /** the method that will carry out the search
      * @param ns where to search
      * @return a list of occurrences of the captured value in the parameter. */
+    @NotNull
     public abstract List<SimpleName> in(ASTNode... ns);
   }
 }

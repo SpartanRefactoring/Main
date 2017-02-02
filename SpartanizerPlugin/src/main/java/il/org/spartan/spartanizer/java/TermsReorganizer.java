@@ -8,24 +8,29 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import org.jetbrains.annotations.Nullable;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
  * @since 2016 */
 public enum TermsReorganizer {
   ;
+  @Nullable
   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
 
+  @Nullable
   private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
+  @Nullable
   private static Expression build(final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
+  @Nullable
   private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);

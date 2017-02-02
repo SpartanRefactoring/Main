@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ltk.core.refactoring.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.plugin.*;
@@ -30,6 +31,7 @@ public interface trim {
    * .of("a+(b-c)") //  See {@link #of(String)} <br/>
    * .gives("a+b-c")</code> */
   interface repeatedly {
+    @NotNull
     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
@@ -42,6 +44,7 @@ public interface trim {
       };
     }
 
+    @NotNull
     @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
       return new fluentTrimmer(clazz, ts) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
@@ -95,14 +98,16 @@ public interface trim {
     }
   }
 
-  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+  static int countOpportunities(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u) {
     return a.collectSuggestions(u).size();
   }
 
+  @NotNull
   static fluentTrimmerApplication of(final String codeFragment) {
     return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
 
+  @NotNull
   @SafeVarargs //
   static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
     return new fluentTrimmer(clazz, ts);

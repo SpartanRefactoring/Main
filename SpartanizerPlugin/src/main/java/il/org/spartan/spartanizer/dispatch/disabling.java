@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
@@ -32,7 +34,7 @@ public interface disabling {
    * @param n an {@link ASTNode}
    * @author Ori Roth
    * @since 2016/05/13 */
-  static void scan(final ASTNode n) {
+  static void scan(@NotNull final ASTNode n) {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
@@ -57,7 +59,7 @@ public interface disabling {
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
    * @param d disabled {@link BodyDeclaration} */
-  static void disable(final BodyDeclaration d) {
+  static void disable(@NotNull final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (¢ instanceof BodyDeclaration && disabling.isEnabledByIdentifier((BodyDeclaration) ¢)) {
@@ -84,11 +86,11 @@ public interface disabling {
     return !disabling.hasJavaDocIdentifier(¢, disablers) && disabling.hasJavaDocIdentifier(¢, enablers);
   }
 
-  static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String[] ids) {
+  static boolean hasJavaDocIdentifier(@Nullable final BodyDeclaration d, final String[] ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 
-  static boolean contains(final String s, final String[] ids) {
+  static boolean contains(@NotNull final String s, final String[] ids) {
     return Stream.of(ids).anyMatch(s::contains);
   }
 }

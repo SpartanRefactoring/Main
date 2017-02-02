@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert Finite loops with return sideEffects to shorter ones : </br>
  * Convert <br/>
@@ -34,10 +36,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-07 */
 public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement>//
     implements TipperCategory.CommnonFactoring {
-  private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
+  private static boolean compareReturnStatements(@Nullable final ReturnStatement r1, @Nullable final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
+  @Nullable
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
@@ -49,15 +52,18 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return $;
   }
 
-  private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
+  @Nullable
+  private static Statement handleIf(@Nullable final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
 
+  @Nullable
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
-  private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
+  @Nullable
+  private static Statement handleIf(@Nullable final Statement then, @Nullable final Statement elze, final ReturnStatement nextReturn) {
     if (then == null)
       return null;
     if (compareReturnStatements(az.returnStatement(then), nextReturn))
@@ -83,7 +89,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return null;
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement ¢) {
+  private static boolean isInfiniteLoop(@NotNull final WhileStatement ¢) {
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -91,15 +97,16 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return "Convert the return inside the loop to break";
   }
 
+  @NotNull
   @Override public String description(final WhileStatement b) {
     return "Convert the return inside " + b + " to break";
   }
 
-  @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final WhileStatement b, final ExclusionManager exclude) {
+  @Override public Tip tip(@Nullable final WhileStatement b, @Nullable final ExclusionManager exclude) {
     final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
@@ -108,7 +115,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     if (exclude != null)
       exclude.exclude(b);
     return $ == null ? null : new Tip(description(), b, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace($, az.astNode(first(statements(az.block(into.s("break;"))))), g);
       }
     };

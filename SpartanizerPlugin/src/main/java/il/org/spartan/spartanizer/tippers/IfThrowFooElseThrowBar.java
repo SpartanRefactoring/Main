@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code
  * if (x)
@@ -30,7 +31,7 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
   }
 
   /** * [[SuppressWarningsSpartan]] */
-  @Override public Statement replacement(final IfStatement s) {
+  @Override public Statement replacement(@NotNull final IfStatement s) {
     final Expression then = extract.throwExpression(then(s)), elze = extract.throwExpression(elze(s));
     return then == null || elze == null ? null : make.throwOf(subject.pair(then, elze).toCondition(s.getExpression()));
   }

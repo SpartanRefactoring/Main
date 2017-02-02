@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** @nano last index in collection, lisp style
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -29,10 +31,12 @@ public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 
+  @Nullable
   @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Functional;
   }

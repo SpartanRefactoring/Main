@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -29,6 +30,7 @@ public enum generalize {
 
   /** @param type of placeHolder, can be X,N,M,B,A,L
    * @return */
+  @NotNull
   static String renderIdentifier(final String type) {
     return "$" + type + serial.inner++;
   }
@@ -43,7 +45,7 @@ public enum generalize {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(final StringLiteral $) {
+      @Override public boolean visit(@NotNull final StringLiteral $) {
         final StringLiteral ¢ = ast.newStringLiteral();
         ¢.setLiteralValue(renderIdentifier("L"));
         r.replace($, ¢, null);
@@ -60,7 +62,7 @@ public enum generalize {
         return false;
       }
 
-      @Override public boolean visit(final SimpleName $) {
+      @Override public boolean visit(@NotNull final SimpleName $) {
         final String name = $.getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
@@ -70,7 +72,7 @@ public enum generalize {
     });
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logEvaluationError(¢);
     }
     return ASTutils.extractCode(s, d);
@@ -81,6 +83,7 @@ public enum generalize {
     System.out.println(generalize.code(m()));
   }
 
+  @NotNull
   private static String m() {
     try (Scanner reader = new Scanner(System.in)) {
       String $ = "";

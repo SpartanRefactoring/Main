@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TrackerSelection extends Selection {
   ASTNode track;
@@ -20,11 +22,13 @@ public class TrackerSelection extends Selection {
     super(asList(compilationUnit), textSelection, name);
   }
 
+  @Nullable
   public static TrackerSelection empty() {
     return new TrackerSelection(null, null, null);
   }
 
-  public TrackerSelection track(final ASTNode ¢) {
+  @NotNull
+  public TrackerSelection track(@NotNull final ASTNode ¢) {
     assert ¢ != null;
     assert ¢ instanceof MethodDeclaration || ¢ instanceof AbstractTypeDeclaration;
     track = ¢;
@@ -47,7 +51,8 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
-  private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
+  @NotNull
+  private static List<WrappedCompilationUnit> asList(@Nullable final WrappedCompilationUnit ¢) {
     final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
@@ -58,18 +63,18 @@ public class TrackerSelection extends Selection {
     return yieldAncestors.untilNodeType(nodeType).from(coveredNode);
   }
 
-  private static boolean match(final ASTNode track, final ASTNode newTrack) {
+  private static boolean match(@NotNull final ASTNode track, @Nullable final ASTNode newTrack) {
     return newTrack != null && (track.getClass().isInstance(newTrack) || newTrack.getClass().isInstance(track))
         && (track instanceof MethodDeclaration ? match((MethodDeclaration) track, (MethodDeclaration) newTrack)
             : track instanceof AbstractTypeDeclaration && match((AbstractTypeDeclaration) track, (AbstractTypeDeclaration) newTrack));
   }
 
-  private static boolean match(final MethodDeclaration track, final MethodDeclaration newTrack) {
+  private static boolean match(@NotNull final MethodDeclaration track, @NotNull final MethodDeclaration newTrack) {
     return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
         : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
   }
 
-  private static boolean match(final AbstractTypeDeclaration track, final AbstractTypeDeclaration newTrack) {
+  private static boolean match(@NotNull final AbstractTypeDeclaration track, @NotNull final AbstractTypeDeclaration newTrack) {
     return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
         : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
   }
