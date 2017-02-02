@@ -21,8 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
-  @NotNull
-  @Override public String description(final MethodInvocation ¢) {
+  @Override @NotNull public String description(final MethodInvocation ¢) {
     final Expression $ = receiver(¢);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }

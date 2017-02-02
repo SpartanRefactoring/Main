@@ -40,10 +40,10 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   }
 
   /** Consider an expression {@code
-    * a ? b : c
-    * } in a sense it is the same as {@code
-   * (a && b) || (!a && c)
-   * }
+     * a ? b : c
+     * } in a sense it is the same as {@code
+  * (a && b) || (!a && c)
+  * }
    * <ol>
    * <li>if b is false then: {@code
    * (a && false) || (!a && c) == !a && c
@@ -59,13 +59,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * }
    * </ol>
   */
-  @NotNull
-  private static Expression simplifyTernary(@NotNull final ConditionalExpression ¢) {
+  @NotNull private static Expression simplifyTernary(@NotNull final ConditionalExpression ¢) {
     return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), copy.of(¢.getExpression()));
   }
 
-  @NotNull
-  private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
+  @NotNull private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
@@ -80,8 +78,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return isTernaryOfBooleanLitreral(¢);
   }
 
-  @NotNull
-  @Override public Expression replacement(@NotNull final ConditionalExpression ¢) {
+  @Override @NotNull public Expression replacement(@NotNull final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }
 }

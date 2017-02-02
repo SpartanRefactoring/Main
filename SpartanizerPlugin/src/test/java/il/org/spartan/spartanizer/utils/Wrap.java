@@ -40,8 +40,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
-  @NotNull
-  public static Wrap find(@NotNull final String codeFragment) {
+  @NotNull public static Wrap find(@NotNull final String codeFragment) {
     for (final Wrap $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
@@ -49,8 +48,7 @@ public enum Wrap {
     throw new RuntimeException();
   }
 
-  @NotNull
-  private static String options(final String codeFragment) {
+  @NotNull private static String options(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
@@ -86,8 +84,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull
-  public CompilationUnit intoCompilationUnit(final String codeFragment) {
+  @NotNull public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(on(codeFragment));
   }
 
@@ -95,8 +92,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull
-  public Document intoDocument(final String codeFragment) {
+  @NotNull public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
 
@@ -110,8 +106,7 @@ public enum Wrap {
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
-  @NotNull
-  public String on(final String codeFragment) {
+  @NotNull public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
 }

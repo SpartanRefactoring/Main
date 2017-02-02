@@ -15,8 +15,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
-  @NotNull
-  private static ForStatement buildForWhithoutLastStatement(@NotNull final WhileStatement ¢) {
+  @NotNull private static ForStatement buildForWhithoutLastStatement(@NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(dupWhileExpression(¢));
     step.updaters($).add(dupUpdaterFromBody(¢));
@@ -24,18 +23,15 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return $;
   }
 
-  @Nullable
-  private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
+  @Nullable private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
     return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  @Nullable
-  private static Statement dupWhileBody(final WhileStatement ¢) {
+  @Nullable private static Statement dupWhileBody(final WhileStatement ¢) {
     return copy.of(step.body(¢));
   }
 
-  @Nullable
-  private static Expression dupWhileExpression(@NotNull final WhileStatement ¢) {
+  @Nullable private static Expression dupWhileExpression(@NotNull final WhileStatement ¢) {
     return copy.of(¢.getExpression());
   }
 
@@ -53,8 +49,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return hop.lastStatement(step.body(¢));
   }
 
-  @NotNull
-  @Override public String description(@NotNull final WhileStatement ¢) {
+  @Override @NotNull public String description(@NotNull final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
@@ -62,8 +57,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return ¢ != null && fitting(¢);
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final WhileStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

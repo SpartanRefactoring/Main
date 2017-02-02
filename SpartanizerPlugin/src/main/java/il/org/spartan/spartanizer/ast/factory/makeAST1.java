@@ -22,45 +22,37 @@ import org.jetbrains.annotations.NotNull;
 public enum makeAST1 {
   /** Converts file, string or marker to compilation unit. */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
-    @NotNull
-    @Override public CompilationUnit from(@NotNull final File ¢) {
+    @Override @NotNull public CompilationUnit from(@NotNull final File ¢) {
       return from(string(¢));
     }
 
-    @NotNull
-    @Override public CompilationUnit from(final IFile ¢) {
+    @Override @NotNull public CompilationUnit from(final IFile ¢) {
       return (CompilationUnit) make1.COMPILATION_UNIT.parser(¢).createAST(null);
     }
 
-    @NotNull
-    @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
+    @Override @NotNull public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
       return (CompilationUnit) make1.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
-    @NotNull
-    @Override public CompilationUnit from(@NotNull final String ¢) {
+    @Override @NotNull public CompilationUnit from(@NotNull final String ¢) {
       return (CompilationUnit) makeParser(¢).createAST(null);
     }
   },
   /** Converts file, string or marker to expression. */
   EXPRESSION(ASTParser.K_EXPRESSION) {
-    @NotNull
-    @Override public Expression from(@NotNull final File ¢) {
+    @Override @NotNull public Expression from(@NotNull final File ¢) {
       return from(string(¢));
     }
 
-    @NotNull
-    @Override public Expression from(final IFile ¢) {
+    @Override @NotNull public Expression from(final IFile ¢) {
       return (Expression) make1.EXPRESSION.parser(¢).createAST(null);
     }
 
-    @NotNull
-    @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
+    @Override @NotNull public Expression from(final IMarker m, final IProgressMonitor pm) {
       return (Expression) make1.EXPRESSION.parser(m).createAST(pm);
     }
 
-    @NotNull
-    @Override public Expression from(@NotNull final String ¢) {
+    @Override @NotNull public Expression from(@NotNull final String ¢) {
       return (Expression) makeParser(¢).createAST(null);
     }
   },
@@ -108,8 +100,7 @@ public enum makeAST1 {
    * @param f JD
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter. */
-  @NotNull
-  public StringBuilder builder(@NotNull final File f) {
+  @NotNull public StringBuilder builder(@NotNull final File f) {
     try (Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (@NotNull final Exception ¢) {

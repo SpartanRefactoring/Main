@@ -51,8 +51,7 @@ public interface ConfigurableReport {
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
-    @NotNull
-    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+    @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
@@ -164,7 +163,7 @@ public interface ConfigurableReport {
       }
 
       @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, @Nullable final String id,
-                                                                      @Nullable final BiFunction<Integer, Integer> bf) {
+          @Nullable final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;
@@ -191,8 +190,7 @@ public interface ConfigurableReport {
       }
     }
 
-    @NotNull
-    public Action getAction() {
+    @NotNull public Action getAction() {
       return new Action();
     }
 

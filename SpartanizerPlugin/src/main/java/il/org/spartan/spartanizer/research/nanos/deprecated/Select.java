@@ -32,13 +32,11 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Override @Nullable public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Iterative;
   }
 

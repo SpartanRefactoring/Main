@@ -24,13 +24,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final SwitchStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
     final List<switchBranch> l = switchBranch.intoBranches(s);
@@ -54,8 +52,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return $;
   }
 
-  @Nullable
-  private static InfixExpression makeFrom(final SwitchStatement s, @NotNull final List<SwitchCase> cs) {
+  @Nullable private static InfixExpression makeFrom(final SwitchStatement s, @NotNull final List<SwitchCase> cs) {
     InfixExpression $ = null;
     for (final SwitchCase c : cs) {
       if (c.isDefault())

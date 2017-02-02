@@ -24,14 +24,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnVariable extends $FragementAndStatement//
     implements TipperCategory.Inlining {
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n, @Nullable final Expression initializer,
-                                    final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n,
+      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);

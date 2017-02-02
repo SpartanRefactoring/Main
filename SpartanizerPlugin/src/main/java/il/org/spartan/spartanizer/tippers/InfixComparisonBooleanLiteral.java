@@ -23,8 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onBooleans {
-  @Nullable
-  private static BooleanLiteral literal(final InfixExpression ¢) {
+  @Nullable private static BooleanLiteral literal(final InfixExpression ¢) {
     return az.booleanLiteral(core(literalOnLeft(¢) ? left(¢) : right(¢)));
   }
 
@@ -40,13 +39,11 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return l.booleanValue() != (x.getOperator() == EQUALS);
   }
 
-  @Nullable
-  private static Expression nonLiteral(final InfixExpression ¢) {
+  @Nullable private static Expression nonLiteral(final InfixExpression ¢) {
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Omit redundant comparison with '" + literal(¢) + "'";
   }
 
@@ -54,8 +51,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 
-  @NotNull
-  @Override public Expression replacement(@NotNull final InfixExpression x) {
+  @Override @NotNull public Expression replacement(@NotNull final InfixExpression x) {
     final BooleanLiteral $ = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
     return plant(!negating(x, $) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());

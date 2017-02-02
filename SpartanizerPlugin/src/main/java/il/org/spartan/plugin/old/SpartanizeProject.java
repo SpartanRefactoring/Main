@@ -28,8 +28,7 @@ import org.jetbrains.annotations.Nullable;
 public final class SpartanizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
   private final StringBuilder status = new StringBuilder();
-  @Nullable
-  private ICompilationUnit currentCompilationUnit;
+  @Nullable private ICompilationUnit currentCompilationUnit;
   IJavaProject javaProject;
   final List<ICompilationUnit> todo = new ArrayList<>();
   private int initialCount;
@@ -60,8 +59,7 @@ public final class SpartanizeProject extends BaseHandler {
     return $.get();
   }
 
-  @Nullable
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override @Nullable public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
     done.clear();
@@ -69,8 +67,7 @@ public final class SpartanizeProject extends BaseHandler {
     return go();
   }
 
-  @Nullable
-  public Void go() {
+  @Nullable public Void go() {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");

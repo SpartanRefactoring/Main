@@ -25,8 +25,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     implements TipperCategory.Idiomatic {
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
-  @Nullable
-  public static Operator conjugate(@Nullable final Operator ¢) {
+  @Nullable public static Operator conjugate(@Nullable final Operator ¢) {
     return ¢ == null ? null
         : ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
             : ¢.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
@@ -42,13 +41,11 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
    * top most parameter is logical negation.
    * @param x JD
    * @return simplified parameter */
-  @Nullable
-  public static Expression simplifyNot(@NotNull final PrefixExpression ¢) {
+  @Nullable public static Expression simplifyNot(@NotNull final PrefixExpression ¢) {
     return pushdownNot(az.not(extract.core(¢)));
   }
 
-  @Nullable
-  static Expression notOfLiteral(@NotNull final BooleanLiteral ¢) {
+  @Nullable static Expression notOfLiteral(@NotNull final BooleanLiteral ¢) {
     final BooleanLiteral $ = copy.of(¢);
     $.setBooleanValue(!¢.booleanValue());
     return $;
@@ -67,8 +64,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
             ? $ : null;
   }
 
-  @NotNull
-  private static Expression comparison(@NotNull final InfixExpression ¢) {
+  @NotNull private static Expression comparison(@NotNull final InfixExpression ¢) {
     return subject.pair(left(¢), right(¢)).to(conjugate(¢.getOperator()));
   }
 
@@ -80,43 +76,35 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return ¢ != null && hasOpportunity(core(step.operand(¢)));
   }
 
-  @Nullable
-  private static Expression perhapsComparison(final Expression inner) {
+  @Nullable private static Expression perhapsComparison(final Expression inner) {
     return perhapsComparison(az.comparison(inner));
   }
 
-  @Nullable
-  private static Expression perhapsComparison(@Nullable final InfixExpression inner) {
+  @Nullable private static Expression perhapsComparison(@Nullable final InfixExpression inner) {
     return inner == null ? null : comparison(inner);
   }
 
-  @Nullable
-  private static Expression perhapsDeMorgan(final Expression ¢) {
+  @Nullable private static Expression perhapsDeMorgan(final Expression ¢) {
     return perhapsDeMorgan(az.andOrOr(¢));
   }
 
-  @Nullable
-  private static Expression perhapsDeMorgan(@Nullable final InfixExpression ¢) {
+  @Nullable private static Expression perhapsDeMorgan(@Nullable final InfixExpression ¢) {
     return ¢ == null ? null : wizard.applyDeMorgan(¢);
   }
 
-  @Nullable
-  private static Expression perhapsDoubleNegation(final Expression ¢) {
+  @Nullable private static Expression perhapsDoubleNegation(final Expression ¢) {
     return perhapsDoubleNegation(az.not(¢));
   }
 
-  @Nullable
-  private static Expression perhapsDoubleNegation(@Nullable final PrefixExpression ¢) {
+  @Nullable private static Expression perhapsDoubleNegation(@Nullable final PrefixExpression ¢) {
     return ¢ == null ? null : tryToSimplify(step.operand(¢));
   }
 
-  @Nullable
-  private static Expression pushdownNot(@Nullable final PrefixExpression ¢) {
+  @Nullable private static Expression pushdownNot(@Nullable final PrefixExpression ¢) {
     return ¢ == null ? null : pushdownNot(step.operand(¢));
   }
 
-  @Nullable
-  private static Expression tryToSimplify(final Expression ¢) {
+  @Nullable private static Expression tryToSimplify(final Expression ¢) {
     final Expression $ = pushdownNot(az.not(¢));
     return $ != null ? $ : ¢;
   }
@@ -129,8 +117,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
   }
 
-  @Nullable
-  @Override public Expression replacement(@NotNull final PrefixExpression ¢) {
+  @Override @Nullable public Expression replacement(@NotNull final PrefixExpression ¢) {
     return simplifyNot(¢);
   }
 }

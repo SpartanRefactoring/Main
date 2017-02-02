@@ -17,13 +17,11 @@ import org.jetbrains.annotations.NotNull;
 public enum monitor {
   /** Not clear why we need this */
   LOG_TO_STDOUT {
-    @NotNull
-    @Override public monitor debugMessage(final String message) {
+    @Override @NotNull public monitor debugMessage(final String message) {
       return info(message);
     }
 
-    @NotNull
-    @Override public monitor error(final String message) {
+    @Override @NotNull public monitor error(final String message) {
       System.out.println(message);
       return this;
     }
@@ -33,13 +31,11 @@ public enum monitor {
     final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
     final boolean FILE_EXISTING = new File("logs").exists();
 
-    @NotNull
-    @Override public monitor debugMessage(final String message) {
+    @Override @NotNull public monitor debugMessage(final String message) {
       return logToFile(message);
     }
 
-    @NotNull
-    @Override public monitor error(final String message) {
+    @Override @NotNull public monitor error(final String message) {
       return logToFile(message);
     }
 
@@ -56,16 +52,14 @@ public enum monitor {
   },
   /** Used for real headless system; logs are simply ignore */
   OBLIVIOUS {
-    @NotNull
-    @Override public monitor error(@SuppressWarnings("unused") final String __) {
+    @Override @NotNull public monitor error(@SuppressWarnings("unused") final String __) {
       return this;
     }
   },
   /** For release versions, we keep a log of errors in stderr, but try to
    * proceed */
   PRODUCTION {
-    @NotNull
-    @Override public monitor error(final String message) {
+    @Override @NotNull public monitor error(final String message) {
       System.err.println(message);
       return this;
     }
@@ -73,13 +67,11 @@ public enum monitor {
   /** Used for debugging; program exits immediately with the first logged
    * message */
   SUPER_TOUCHY {
-    @NotNull
-    @Override public monitor debugMessage(final String message) {
+    @Override @NotNull public monitor debugMessage(final String message) {
       return info(message);
     }
 
-    @NotNull
-    @Override public monitor error(final String message) {
+    @Override @NotNull public monitor error(final String message) {
       System.err.println(message);
       System.exit(1);
       throw new RuntimeException(message);
@@ -88,13 +80,11 @@ public enum monitor {
   /** Used for debugging; program throws a {@link RuntimeException} with the
    * first logged message */
   TOUCHY {
-    @NotNull
-    @Override public monitor debugMessage(final String message) {
+    @Override @NotNull public monitor debugMessage(final String message) {
       return info(message);
     }
 
-    @NotNull
-    @Override public monitor error(final String message) {
+    @Override @NotNull public monitor error(final String message) {
       throw new RuntimeException(message);
     }
   };
@@ -102,14 +92,12 @@ public enum monitor {
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final monitor now = monitor.PRODUCTION;
 
-  @NotNull
-  public static String className(@NotNull final Class<?> ¢) {
+  @NotNull public static String className(@NotNull final Class<?> ¢) {
     final String $ = ¢.getCanonicalName();
     return ¢.getSimpleName() + "[" + ($ == null ? ¢ : $) + "]";
   }
 
-  @NotNull
-  public static String className(@NotNull final Object ¢) {
+  @NotNull public static String className(@NotNull final Object ¢) {
     return className(¢.getClass());
   }
 
@@ -122,13 +110,11 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  @NotNull
-  public static monitor debug(final String message) {
+  @NotNull public static monitor debug(final String message) {
     return now.debugMessage(message);
   }
 
-  @NotNull
-  public static monitor infoIOException(@NotNull final Exception x, final String message) {
+  @NotNull public static monitor infoIOException(@NotNull final Exception x, final String message) {
     return now.info(//
         "   Got an exception of type : " + x.getClass().getSimpleName() + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + x + "'" + //
@@ -168,8 +154,7 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  @NotNull
-  public static monitor logEvaluationError(@NotNull final Object o, @NotNull final Throwable t) {
+  @NotNull public static monitor logEvaluationError(@NotNull final Object o, @NotNull final Throwable t) {
     System.err.println(//
         dump() + //
             "\n An instance of " + className(o) + //
@@ -182,8 +167,7 @@ public enum monitor {
     return now;
   }
 
-  @NotNull
-  public static monitor logEvaluationError(@NotNull final Throwable ¢) {
+  @NotNull public static monitor logEvaluationError(@NotNull final Throwable ¢) {
     return logEvaluationError(now, ¢);
   }
 
@@ -196,11 +180,9 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  @NotNull
-  public abstract monitor error(String message);
+  @NotNull public abstract monitor error(String message);
 
-  @NotNull
-  public monitor info(final String message) {
+  @NotNull public monitor info(final String message) {
     System.out.println(message);
     return this;
   }

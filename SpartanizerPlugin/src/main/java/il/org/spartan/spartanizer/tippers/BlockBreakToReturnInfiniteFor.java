@@ -33,8 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
-  @Nullable
-  private static Statement handleIf(@Nullable final IfStatement s, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleIf(@Nullable final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
 
@@ -67,8 +66,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
                 : null;
   }
 
-  @Nullable
-  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
       if (iz.ifStatement(¢))
@@ -79,8 +77,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return $;
   }
 
-  @Nullable
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
@@ -92,8 +89,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside 'for(;;)' to 'return'";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final ForStatement ¢) {
+  @Override @NotNull public String description(@NotNull final ForStatement ¢) {
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
@@ -113,8 +109,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Nullable
-  @Override public Tip tip(@Nullable final ForStatement vor, final ExclusionManager exclude) {
+  @Override @Nullable public Tip tip(@Nullable final ForStatement vor, final ExclusionManager exclude) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     final ReturnStatement $ = extract.nextReturn(vor);

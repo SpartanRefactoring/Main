@@ -53,8 +53,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    * @param x an Expression
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e */
-  @NotNull
-  private Expression addParenthesisIfNeeded(@NotNull final Expression x) {
+  @NotNull private Expression addParenthesisIfNeeded(@NotNull final Expression x) {
     final AST a = x.getAST();
     if (!isParethesisNeeded(x))
       return x;

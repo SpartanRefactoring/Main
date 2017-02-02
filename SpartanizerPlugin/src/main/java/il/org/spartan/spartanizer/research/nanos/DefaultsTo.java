@@ -30,8 +30,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -51,8 +50,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @NotNull
-  @Override public NanoPatternTipper.Category category() {
+  @Override @NotNull public NanoPatternTipper.Category category() {
     return Category.Default;
   }
 }

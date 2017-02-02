@@ -18,10 +18,8 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil
  * @since 2015/07/25 */
 public final class TipperApplicator extends AbstractGUIApplicator {
-  @NotNull
-  final Tipper<ASTNode> tipper;
-  @Nullable
-  final Class<? extends ASTNode> clazz;
+  @NotNull final Tipper<ASTNode> tipper;
+  @Nullable final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
@@ -34,7 +32,8 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     // w.myName();
   }
 
-  @Override protected void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
+  @Override protected void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m,
+      @SuppressWarnings("unused") final Int __) {
     u.accept(new ASTVisitor() {
       @Override public void preVisit(@NotNull final ASTNode ¢) {
         super.preVisit(¢);
@@ -44,8 +43,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     });
   }
 
-  @Nullable
-  @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
+  @Override @Nullable protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
     return new ASTVisitor() {
       @Override public void preVisit(@NotNull final ASTNode ¢) {
         super.preVisit(¢);

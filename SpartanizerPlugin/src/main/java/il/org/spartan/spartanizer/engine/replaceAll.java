@@ -25,28 +25,23 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil
  * @since Sep 13, 2016 */
 public interface replaceAll {
-  @NotNull
-  static ASTRewrite go(final TextEditGroup g, @NotNull final ASTRewrite r) {
+  @NotNull static ASTRewrite go(final TextEditGroup g, @NotNull final ASTRewrite r) {
     return new Inner().go(g, r);
   }
 
-  @Nullable
-  static Inner in(final ASTNode... ¢) {
+  @Nullable static Inner in(final ASTNode... ¢) {
     return new Inner().in(¢);
   }
 
-  @Nullable
-  static Inner of(final SimpleName ¢) {
+  @Nullable static Inner of(final SimpleName ¢) {
     return new Inner().of(¢);
   }
 
-  @NotNull
-  static Inner with(final Expression ¢) {
+  @NotNull static Inner with(final Expression ¢) {
     return new Inner().with(¢);
   }
 
-  @NotNull
-  static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode[] ns) {
+  @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
     as.list(ns).forEach(λ -> $[i.next()] = new Wrapper<>(λ));
@@ -57,8 +52,7 @@ public interface replaceAll {
     private SimpleName name;
     private ASTNode[] range;
     private Expression with;
-    @Nullable
-    private List<SimpleName> occurrences;
+    @Nullable private List<SimpleName> occurrences;
 
     @NotNull ASTRewrite go(final TextEditGroup g, @NotNull final ASTRewrite $) {
       occurrences.forEach(λ -> $.replace(λ, !iz.expression(λ) ? copy.of(with) : make.plant(with).into(λ.getParent()), g));
@@ -113,14 +107,12 @@ public interface replaceAll {
       return collect.definitionsOf(name).in().isEmpty();
     }
 
-    @Nullable
-    public Inner in(final ASTNode[] ¢) {
+    @Nullable public Inner in(final ASTNode[] ¢) {
       occurrences = collect.usesOf(name).in(range = ¢);
       return null;
     }
 
-    @Nullable
-    public Inner of(final SimpleName ¢) {
+    @Nullable public Inner of(final SimpleName ¢) {
       occurrences = collect.usesOf(name = ¢).in(range);
       return null;
     }
@@ -133,8 +125,7 @@ public interface replaceAll {
       return metrics.size(range) + occurrences.size() * (metrics.size(get()) - 1);
     }
 
-    @NotNull
-    public Inner with(final Expression ¢) {
+    @NotNull public Inner with(final Expression ¢) {
       with = ¢;
       return this;
     }

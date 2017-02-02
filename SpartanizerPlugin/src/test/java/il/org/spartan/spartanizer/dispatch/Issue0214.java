@@ -22,14 +22,12 @@ public final class Issue0214 {
   }
 
   private final Tipper<?> blockSimplify = new BlockSimplify();
-  @Nullable
-  private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
+  @Nullable private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
     @Override public String description() {
       return null;
     }
 
-    @Nullable
-    @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
+    @Override @Nullable public String description(@SuppressWarnings("unused") final ASTNode __) {
       return null;
     }
   };

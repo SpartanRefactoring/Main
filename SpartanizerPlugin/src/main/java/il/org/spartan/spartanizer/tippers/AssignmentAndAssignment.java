@@ -28,8 +28,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
-  @Nullable
-  private static Expression extractRight(final Assignment ¢) {
+  @Nullable private static Expression extractRight(final Assignment ¢) {
     final Expression $ = extract.core(from(¢));
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
@@ -38,8 +37,7 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
     return operator(¢) != ASSIGN ? null : extractRight(¢);
   }
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @Override @NotNull public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 

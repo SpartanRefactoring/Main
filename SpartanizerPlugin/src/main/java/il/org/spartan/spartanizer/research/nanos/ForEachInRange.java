@@ -27,23 +27,19 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final ForStatement ¢) {
+  @Override @Nullable public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @NotNull
-  @Override public String technicalName() {
+  @Override @NotNull public String technicalName() {
     return "ForEachFromL₁ToL₂ApplyS";
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Iterative;
   }
 

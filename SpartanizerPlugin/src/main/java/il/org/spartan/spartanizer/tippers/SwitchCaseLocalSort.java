@@ -29,8 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {
-  @NotNull
-  @Override public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
+  @Override @NotNull public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
@@ -59,8 +58,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
             || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
   }
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @Override @NotNull @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "sort cases with same flow control";
   }
 }

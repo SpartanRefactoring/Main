@@ -14,8 +14,7 @@ abstract class AbstractCommandLineProcessor {
 
   public abstract void apply();
 
-  @NotNull
-  protected String makeFile(final String fileName) {
+  @NotNull protected String makeFile(final String fileName) {
     return outputFolder + system.fileSeparator + presentSourceName + "." + fileName;
   }
 

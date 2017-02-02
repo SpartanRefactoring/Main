@@ -40,8 +40,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  @Nullable
-  private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
       if (az.ifStatement(¢) != null)
@@ -52,18 +51,15 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return $;
   }
 
-  @Nullable
-  private static Statement handleIf(@Nullable final IfStatement s, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleIf(@Nullable final IfStatement s, final ReturnStatement nextReturn) {
     return s == null ? null : handleIf(then(s), elze(s), nextReturn);
   }
 
-  @Nullable
-  private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
-  @Nullable
-  private static Statement handleIf(@Nullable final Statement then, @Nullable final Statement elze, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleIf(@Nullable final Statement then, @Nullable final Statement elze, final ReturnStatement nextReturn) {
     if (then == null)
       return null;
     if (compareReturnStatements(az.returnStatement(then), nextReturn))
@@ -97,8 +93,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return "Convert the return inside the loop to break";
   }
 
-  @NotNull
-  @Override public String description(final WhileStatement b) {
+  @Override @NotNull public String description(final WhileStatement b) {
     return "Convert the return inside " + b + " to break";
   }
 

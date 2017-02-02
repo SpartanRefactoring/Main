@@ -15,13 +15,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2017-01-04 */
 public class EliminateConditionalContinueInFor extends EagerTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final ForStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final ForStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

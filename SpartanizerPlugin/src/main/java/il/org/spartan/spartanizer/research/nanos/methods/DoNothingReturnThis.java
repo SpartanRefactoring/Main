@@ -13,8 +13,7 @@ public class DoNothingReturnThis extends JavadocMarkerNanoPattern {
     return hazOneStatement(¢) && returnsThis(¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Default;
   }
 }

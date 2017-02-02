@@ -28,8 +28,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
-  @Nullable
-  @Override public Tip tip(@NotNull final SwitchStatement s) {
+  @Override @Nullable public Tip tip(@NotNull final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = statements(s);
@@ -48,8 +47,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     };
   }
 
-  @NotNull
-  static String statementsToString(@NotNull final List<Statement> ¢) {
+  @NotNull static String statementsToString(@NotNull final List<Statement> ¢) {
     final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";

@@ -27,8 +27,7 @@ enum Dialogs {
   /** Whether or not the {@link Dialogs#icon} has been initialized. */
   private static boolean iconInitialized;
   /** Icon used for button/dialogs. May not appear on some OSs. */
-  @Nullable
-  private static Image icon;
+  @Nullable private static Image icon;
   /** Path of the {@link Dialogs#logo} used for dialogs. */
   private static final String LOGO_PATH = "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
   // private static final String LOGO_PATH =
@@ -36,15 +35,13 @@ enum Dialogs {
   /** Whether or not the {@link Dialogs#logo} has been initialized. */
   private static boolean logoInitialized;
   /** Logo used for dialogs. */
-  @Nullable
-  private static Image logo;
+  @Nullable private static Image logo;
   /** Id for run in background button. */
   private static final int RIB_ID = 2;
 
   /** Lazy, dynamic loading of the dialogs' icon.
    * @return icon used by dialogs */
-  @Nullable
-  private static Image icon() {
+  @Nullable private static Image icon() {
     if (!iconInitialized) {
       iconInitialized = true;
       try {
@@ -60,8 +57,7 @@ enum Dialogs {
 
   /** Lazy, dynamic loading of the dialogs' logo.
    * @return icon used by dialogs */
-  @Nullable
-  static Image logo() {
+  @Nullable static Image logo() {
     if (!logoInitialized) {
       logoInitialized = true;
       try {
@@ -81,8 +77,7 @@ enum Dialogs {
    * message.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-  @Nullable
-  public static MessageDialog messageUnsafe(final String message) {
+  @Nullable public static MessageDialog messageUnsafe(final String message) {
     return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
@@ -93,8 +88,7 @@ enum Dialogs {
         super.createButtonsForButtonBar(¢);
       }
 
-      @Nullable
-      @Override public Image getInfoImage() {
+      @Override @Nullable public Image getInfoImage() {
         return logo();
       }
     };
@@ -103,8 +97,7 @@ enum Dialogs {
   /** Simple dialog, waits for user operation.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-  @Nullable
-  public static MessageDialog message(final String message) {
+  @Nullable public static MessageDialog message(final String message) {
     return messageUnsafe(Linguistic.trim(message));
   }
 
@@ -112,8 +105,7 @@ enum Dialogs {
    * blocking).
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-  @Nullable
-  public static MessageDialog messageOnTheRun(final String message) {
+  @Nullable public static MessageDialog messageOnTheRun(final String message) {
     final MessageDialog $ = message(message);
     $.setBlockOnOpen(false);
     return $;
@@ -122,8 +114,7 @@ enum Dialogs {
   /** @param openOnRun whether this dialog should be open on run
    * @return dialog with progress bar, connected to a
    *         {@link IProgressMonitor} */
-  @Nullable
-  public static ProgressMonitorDialog progress(final boolean openOnRun) {
+  @Nullable public static ProgressMonitorDialog progress(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
@@ -145,8 +136,7 @@ enum Dialogs {
         }
       }
 
-      @Nullable
-      @Override public Image getInfoImage() {
+      @Override @Nullable public Image getInfoImage() {
         return logo();
       }
     };

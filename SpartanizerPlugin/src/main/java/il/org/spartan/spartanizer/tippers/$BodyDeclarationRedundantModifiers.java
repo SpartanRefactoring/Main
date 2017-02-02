@@ -19,8 +19,7 @@ import org.jetbrains.annotations.Nullable;
 abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
     //
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public String description(@NotNull final BodyDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final BodyDeclaration ¢) {
     return "Remove redundant " + wizard.redundants(¢) + " modifier(s) from declaration";
   }
 
@@ -29,8 +28,7 @@ abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> ext
     return !$.isEmpty() && !wizard.matchess(¢, $).isEmpty();
   }
 
-  @Nullable
-  @Override public BodyDeclaration replacement(@NotNull final BodyDeclaration $) {
+  @Override @Nullable public BodyDeclaration replacement(@NotNull final BodyDeclaration $) {
     final Set<Predicate<Modifier>> predicates = wizard.redundancies($);
     return predicates.isEmpty() ? null : wizard.prune(copy.of($), predicates);
   }
