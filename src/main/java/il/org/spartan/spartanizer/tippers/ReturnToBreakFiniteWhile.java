@@ -17,20 +17,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /** Convert Finite loops with return sideEffects to shorter ones : </br>
- * Convert <br/>
+ * Convert 
  * <code>
- * for (..) { <br/>
- *  does(something); <br/>
- *   return XX; <br/>
- * } <br/>
- *return XX; <br/>
- * </code> to : <br/>
+ * for (..) { 
+ *  does(something); 
+ *   return XX; 
+ * } 
+ *return XX; 
+ * </code> to : 
  * <code>
- * for (..) { <br/>
- *  does(something); <br/>
- *   break; <br/>
- * } <br/>
- *return XX; <br/>
+ * for (..) { 
+ *  does(something); 
+ *   break; 
+ * } 
+ *return XX; 
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */

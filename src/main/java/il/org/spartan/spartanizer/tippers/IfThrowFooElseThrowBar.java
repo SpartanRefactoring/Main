@@ -22,17 +22,15 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Ternarization {
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Consolidate 'if' into a 'throw' statement of a conditional expression";
+  @Override public String description(final IfStatement ¢) {
+    return "Consolidate 'if' " + trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {
     return extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
 
-  /** * [[SuppressWarningsSpartan]] */
-  @Override public Statement replacement(@NotNull final IfStatement s) {
-    final Expression then = extract.throwExpression(then(s)), elze = extract.throwExpression(elze(s));
-    return make.throwOf(subject.pair(then, elze).toCondition(s.getExpression()));
+  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+    return make.throwOf(subject.pair(extract.throwExpression(then(¢)), extract.throwExpression(elze(¢))).toCondition(¢.getExpression()));
   }
 }

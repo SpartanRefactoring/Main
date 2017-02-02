@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -17,36 +17,24 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
   @NotNull private static ForStatement buildForWhithoutLastStatement(@NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
-    $.setExpression(dupWhileExpression(¢));
-    step.updaters($).add(dupUpdaterFromBody(¢));
-    $.setBody(minus.lastStatement(dupWhileBody(¢)));
+    $.setExpression(copy.of(¢.getExpression()));
+    updaters($).add(copy.of(az.expressionStatement(lastStatement(¢)).getExpression()));
+    $.setBody(minus.lastStatement(copy.of(body(¢))));
     return $;
   }
 
-  @Nullable private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
-    return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
-  }
-
-  @Nullable private static Statement dupWhileBody(final WhileStatement ¢) {
-    return copy.of(step.body(¢));
-  }
-
-  @Nullable private static Expression dupWhileExpression(@NotNull final WhileStatement ¢) {
-    return copy.of(¢.getExpression());
-  }
-
   private static boolean fitting(@Nullable final WhileStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢)
+    return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢)
         && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    return az.block(step.body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && step.statements(az.block(step.body(¢))).size() >= 2
+    return az.block(body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && statements(az.block(body(¢))).size() >= 2
         && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatement(step.body(¢));
+    return hop.lastStatement(body(¢));
   }
 
   @Override @NotNull public String description(@NotNull final WhileStatement ¢) {

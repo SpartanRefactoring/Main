@@ -33,7 +33,6 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     if (¢ == null)
       return null;
     final List<Expression> $ = arguments(¢);
-    // return onlyOne($) == null ? null : replacement(¢, first($), second($));
     return replacement(¢, first($), second($));
   }
 

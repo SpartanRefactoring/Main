@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
   @Nullable private static Expression extractRight(final Assignment ¢) {
-    final Expression $ = extract.core(from(¢));
+    final Expression $ = (from(¢));
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 

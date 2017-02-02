@@ -15,20 +15,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /** Convert Infinite loops with return sideEffects to shorter ones : </br>
- * Convert <br/>
+ * Convert 
  * <code>
- * while (true) { <br/>
- * doSomething(); <br/>
- * if(done()) <br/>
- * break; <br/>
- * } <br/>
- *return XX; <br/>
- * </code> to : <br/>
- * <code> while (true) { <br/>
- * doSomething(); <br/>
- * if(done()) <br/>
- * return XX; <br/>
- * } <br/>
+ * while (true) { 
+ * doSomething(); 
+ *    if(done()) 
+ *    break; 
+ * } 
+ *return XX; 
+ * </code> to : 
+ * <code> while (true) { 
+ * doSomething(); 
+ * if(done()) 
+ * return XX; 
+ * } 
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement>//
