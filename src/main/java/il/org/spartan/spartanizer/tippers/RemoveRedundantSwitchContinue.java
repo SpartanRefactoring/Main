@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** remove redundant continue in switch in loops. for example converts <code>
  * while(b) { switch(x) { case 1: x=2; break; default: continue; } }
@@ -25,7 +27,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {
-  @Override public ASTNode replacement(final SwitchStatement s) {
+  @Nullable
+  @Override public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
     final Block b = az.block(s.getParent());
@@ -43,6 +46,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     return null;
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }

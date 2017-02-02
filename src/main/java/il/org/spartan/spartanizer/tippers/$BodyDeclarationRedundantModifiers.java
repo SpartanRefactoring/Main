@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
  * <code><b>interface</b> a{}</code>, etc.
@@ -17,16 +19,18 @@ import il.org.spartan.spartanizer.tipping.*;
 abstract class $BodyDeclarationRedundantModifiers<N extends BodyDeclaration> extends ReplaceCurrentNode<N>
     //
     implements TipperCategory.SyntacticBaggage {
-  @Override public String description(final BodyDeclaration ¢) {
+  @NotNull
+  @Override public String description(@NotNull final BodyDeclaration ¢) {
     return "Remove redundant " + wizard.redundants(¢) + " modifier(s) from declaration";
   }
 
-  @Override public boolean prerequisite(final BodyDeclaration ¢) {
+  @Override public boolean prerequisite(@NotNull final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = wizard.redundancies(¢);
     return !$.isEmpty() && !wizard.matchess(¢, $).isEmpty();
   }
 
-  @Override public BodyDeclaration replacement(final BodyDeclaration $) {
+  @Nullable
+  @Override public BodyDeclaration replacement(@NotNull final BodyDeclaration $) {
     final Set<Predicate<Modifier>> predicates = wizard.redundancies($);
     return predicates.isEmpty() ? null : wizard.prune(copy.of($), predicates);
   }

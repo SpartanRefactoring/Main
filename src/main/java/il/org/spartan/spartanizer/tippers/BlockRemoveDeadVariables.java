@@ -13,12 +13,15 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** removes unused variable declarations example: "int i,j; j++" to "int j; j++"
  * @author kobybs
  * @since 4-12-2016 */
 public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block>//
     implements TipperCategory.Unite {
+  @Nullable
   @Override public ASTNode replacement(final Block n) {
     final Block $ = copy.of(n);
     final List<Statement> removalList = new ArrayList<>();
@@ -37,6 +40,7 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block>//
     return !wizard.same($, n) ? $ : null;
   }
 
+  @NotNull
   @Override @SuppressWarnings("unused") public String description(final Block n) {
     return "Eliminate dead variables";
   }

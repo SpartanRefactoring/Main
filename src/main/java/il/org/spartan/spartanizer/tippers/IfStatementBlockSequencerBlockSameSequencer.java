@@ -12,14 +12,17 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Tested by {@link Issue1105}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-22 */
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
-  @Override public Tip tip(final IfStatement s) {
+  @Nullable
+  @Override public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement $ = copy.of(s);
         r.getListRewrite(then($), Block.STATEMENTS_PROPERTY).remove(extract.lastStatement(then($)), g);
         final Block b = az.block(parent(s));
@@ -43,6 +46,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<I
     return super.description();
   }
 
+  @NotNull
   @Override public String description(final IfStatement ¢) {
     return "Consolidate " + ¢ + " with next statements";
   }

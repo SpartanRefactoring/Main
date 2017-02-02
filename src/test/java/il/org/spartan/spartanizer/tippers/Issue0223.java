@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -138,10 +139,12 @@ public final class Issue0223 {
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
+  @NotNull
   private ClassInstanceCreation findMe(final Statement c) {
     return findFirst.instanceOf(SUBJECT_CLASS).in(c);
   }
 
+  @NotNull
   private ClassInstanceCreationValueTypes makeTipper() {
     return new ClassInstanceCreationValueTypes();
   }
@@ -200,7 +203,7 @@ public final class Issue0223 {
     final Trimmer a = new Trimmer();
     try {
       a.createRewrite(u).rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
@@ -223,7 +226,7 @@ public final class Issue0223 {
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;

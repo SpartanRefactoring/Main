@@ -18,6 +18,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add
@@ -90,6 +92,7 @@ public class Augmenter implements Application {
    * as list of lists of statements.
    * @param ss statements to be collateralized
    * @return collateralization output as list of lists of statements */
+  @Nullable
   public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
@@ -168,6 +171,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
+  @NotNull
   private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }

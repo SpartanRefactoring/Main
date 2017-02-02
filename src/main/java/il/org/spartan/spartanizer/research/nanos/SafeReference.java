@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** There's also {@link Infix.SafeReference} which catches the same
  * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -38,6 +40,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
@@ -54,6 +57,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return firstReplacement(tippers);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Safety;
   }

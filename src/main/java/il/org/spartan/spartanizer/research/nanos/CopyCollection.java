@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -27,10 +29,12 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
     return anyTips(tippers, x);
   }
 
+  @Nullable
   @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }
