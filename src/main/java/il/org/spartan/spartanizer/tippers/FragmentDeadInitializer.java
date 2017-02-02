@@ -23,8 +23,7 @@ public final class FragmentDeadInitializer extends ReplaceCurrentNode<VariableDe
     return "Remove default values initiliazing field";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 

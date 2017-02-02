@@ -29,8 +29,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
     return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Remove all additions and substructions of 0 to and from " + ¢;
   }
 

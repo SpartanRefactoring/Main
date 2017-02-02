@@ -24,8 +24,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil
  * @since Sep 13, 2016 */
 public final class Inliner {
-  @NotNull
-  static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode[] ns) {
+  @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
     Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
@@ -46,8 +45,7 @@ public final class Inliner {
     this.editGroup = editGroup;
   }
 
-  @NotNull
-  public InlinerWithValue byValue(final Expression replacement) {
+  @NotNull public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
   }
 
@@ -69,8 +67,7 @@ public final class Inliner {
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  @Nullable
-  public static String getElTypeNameFromArrayType(final Type t) {
+  @Nullable public static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
     final Type et = ((ArrayType) t).getElementType();
@@ -80,8 +77,7 @@ public final class Inliner {
     return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
-  @NotNull
-  public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  @NotNull public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
@@ -97,13 +93,13 @@ public final class Inliner {
    * @return <code><b>true</b></code> <em>iff</em> the SimpleName is used in a
    *         ForStatement's condition, updaters, or body. */
   public static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
-    return !collect.usesOf(n).in(step.condition(s), step.body(s)).isEmpty() || !collect.usesOf(n).in(step.updaters(s)).isEmpty();
+    return !collect.usesOf(n).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }
 
   public static boolean variableNotUsedAfterStatement(@NotNull final Statement s, final SimpleName n) {
     final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is not a block";
-    final List<Statement> statements = step.statements(b);
+    final List<Statement> statements = statements(b);
     boolean passedFor = false;
     for (final Statement ¢ : statements) {
       if (passedFor && !collect.usesOf(n).in(¢).isEmpty())
@@ -162,13 +158,11 @@ public final class Inliner {
           .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
-    @Nullable
-    private List<SimpleName> unsafeUses(final ASTNode... ¢) {
+    @Nullable private List<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    @Nullable
-    private List<SimpleName> uses(final ASTNode... ¢) {
+    @Nullable private List<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

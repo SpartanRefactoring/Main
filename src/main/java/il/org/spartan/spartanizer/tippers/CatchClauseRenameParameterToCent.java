@@ -19,8 +19,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
     implements TipperCategory.Centification {
-  @NotNull
-  @Override public String description(@NotNull final CatchClause ¢) {
+  @Override @NotNull public String description(@NotNull final CatchClause ¢) {
     return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
   }
 

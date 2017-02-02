@@ -29,13 +29,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class SingleTipperApplicator {
-  @NotNull
-  private static ASTRewrite createRewrite(//
-                                          @NotNull final IProgressMonitor pm, //
-                                          @NotNull final CompilationUnit u, //
-                                          final IMarker m, //
-                                          final Type t, //
-                                          final Tipper<?> w) {
+  @NotNull private static ASTRewrite createRewrite(//
+      @NotNull final IProgressMonitor pm, //
+      @NotNull final CompilationUnit u, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -44,22 +43,20 @@ public final class SingleTipperApplicator {
     return $;
   }
 
-  @NotNull
-  private static ASTRewrite createRewrite(//
-                                          @NotNull final IProgressMonitor pm, //
-                                          final IMarker m, //
-                                          final Type t, //
-                                          final Tipper<?> w, //
-                                          @Nullable final IFile f) {
+  @NotNull private static ASTRewrite createRewrite(//
+      @NotNull final IProgressMonitor pm, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w, //
+      @Nullable final IFile f) {
     return createRewrite(pm, (CompilationUnit) (f != null ? makeAST1.COMPILATION_UNIT.from(f) : makeAST1.COMPILATION_UNIT.from(m, pm)), m, t, w);
   }
 
-  @Nullable
-  private static Tipper<?> fillRewrite(final ASTRewrite $, //
-                                       @NotNull final CompilationUnit u, //
-                                       final IMarker m, //
-                                       final Type t, //
-                                       @Nullable final Tipper<?> w) {
+  @Nullable private static Tipper<?> fillRewrite(final ASTRewrite $, //
+      @NotNull final CompilationUnit u, //
+      final IMarker m, //
+      final Type t, //
+      @Nullable final Tipper<?> w) {
     Toolbox.refresh();
     final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)

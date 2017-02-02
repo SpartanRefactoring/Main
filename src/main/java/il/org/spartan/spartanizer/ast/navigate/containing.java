@@ -14,13 +14,11 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil
  * @since 2016 */
 public interface containing {
-  @Nullable
-  static CompilationUnit compilationUnit(final ASTNode ¢) {
+  @Nullable static CompilationUnit compilationUnit(final ASTNode ¢) {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
 
-  @NotNull
-  static String package¢(final CastExpression ¢) {
+  @NotNull static String package¢(final CastExpression ¢) {
     return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 

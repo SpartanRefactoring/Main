@@ -17,8 +17,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Deadcode {
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }
 
@@ -26,8 +25,7 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement>//
     return ¢ != null && (literal.true¢(expression(¢)) || literal.false¢(expression(¢)));
   }
 
-  @Nullable
-  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+  @Override @Nullable public Statement replacement(@NotNull final IfStatement ¢) {
     return literal.true¢(expression(¢)) ? then(¢) //
         : elze(¢) != null ? elze(¢) //
             : ¢.getAST().newBlock();

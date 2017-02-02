@@ -31,13 +31,11 @@ public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 
-  @Nullable
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Override @Nullable public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Functional;
   }
 

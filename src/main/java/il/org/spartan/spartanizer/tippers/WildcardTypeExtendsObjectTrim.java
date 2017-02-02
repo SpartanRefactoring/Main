@@ -13,8 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2017-01-16 */
 public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public String description(@NotNull final WildcardType ¢) {
+  @Override @NotNull public String description(@NotNull final WildcardType ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 

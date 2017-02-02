@@ -20,8 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
-  @NotNull
-  @Override public String description(@NotNull final IfStatement ¢) {
+  @Override @NotNull public String description(@NotNull final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 

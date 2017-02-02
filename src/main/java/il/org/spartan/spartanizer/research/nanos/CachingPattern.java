@@ -26,13 +26,11 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
     return tipper.canTip(az.block(parent(x)));
   }
 
-  @Nullable
-  @Override public Tip pattern(final IfStatement $) {
+  @Override @Nullable public Tip pattern(final IfStatement $) {
     return tipper.tip(az.block(parent($)));
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Field;
   }
 

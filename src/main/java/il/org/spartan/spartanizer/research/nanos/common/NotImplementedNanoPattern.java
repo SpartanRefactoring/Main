@@ -9,13 +9,11 @@ import il.org.spartan.spartanizer.engine.*;
 import org.jetbrains.annotations.Nullable;
 
 public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTipper<N> {
-  @Nullable
-  @Override public String technicalName() {
+  @Override @Nullable public String technicalName() {
     return null;
   }
 
-  @Nullable
-  @Override protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
+  @Override @Nullable protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
     return null;
   }
 

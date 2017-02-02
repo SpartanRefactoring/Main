@@ -40,8 +40,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return "Remove redundant parenthesis";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final InfixExpression ¢) {
+  @Override @NotNull public String description(@NotNull final InfixExpression ¢) {
     return description() + " in: " + trivia.gist(¢);
   }
 

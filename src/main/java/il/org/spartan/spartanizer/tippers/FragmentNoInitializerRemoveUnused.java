@@ -22,8 +22,7 @@ public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<Varia
     return "Remove unused, uninitialized variable";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Remove unused variable: " + trivia.gist(¢);
   }
 

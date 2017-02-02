@@ -33,8 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement>//
     implements TipperCategory.Shortcircuit {
-  @Nullable
-  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : step.statements(body)) {
       if (iz.ifStatement(¢))
@@ -85,8 +84,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return "Convert the break inside 'while()' loop to 'return'";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final WhileStatement ¢) {
+  @Override @NotNull public String description(@NotNull final WhileStatement ¢) {
     return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
 

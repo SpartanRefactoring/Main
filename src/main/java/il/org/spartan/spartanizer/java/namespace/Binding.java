@@ -23,14 +23,11 @@ public class Binding {
   }
 
   /** What do we know about an entry hidden by this one */
-  @Nullable
-  final Binding hiding;
+  @Nullable final Binding hiding;
   /** The node at which this entry was created */
-  @Nullable
-  private final ASTNode self;
+  @Nullable private final ASTNode self;
   /** What do we know about the type of this definition */
-  @Nullable
-  private final type type;
+  @Nullable private final type type;
 
   public Binding() {
     hiding = null;
@@ -38,8 +35,7 @@ public class Binding {
     self = null;
   }
 
-  @NotNull
-  @Override public String toString() {
+  @Override @NotNull public String toString() {
     return type + "";
   }
 

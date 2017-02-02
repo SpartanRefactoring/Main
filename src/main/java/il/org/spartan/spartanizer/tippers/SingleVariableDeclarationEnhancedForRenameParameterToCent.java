@@ -29,8 +29,7 @@ import org.jetbrains.annotations.Nullable;
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
     //
     implements TipperCategory.Centification {
-  @NotNull
-  @Override public String description(final SingleVariableDeclaration ¢) {
+  @Override @NotNull public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 

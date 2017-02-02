@@ -25,8 +25,7 @@ public enum getAll2 {
    * @param u CompilationUnit
    * @author Moshe Eliasof
    * @author Netanel Felcher */
-  @Nullable
-  public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
+  @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
@@ -44,8 +43,7 @@ public enum getAll2 {
    * @return List<Name> which is all names in b
    * @author Doron Meshulam
    * @author Tomer Dragucki */
-  @Nullable
-  public static List<Name> names(@Nullable final Block b) {
+  @Nullable public static List<Name> names(@Nullable final Block b) {
     if (b == null)
       return null;
     final List<Name> $ = new ArrayList<>();
@@ -63,8 +61,7 @@ public enum getAll2 {
    * @since 16-11-3 Given a TypeDeclaration argument, this function returns a
    *        list of it's public fields names.
    * @param d - the TypeDeclaration argument */
-  @NotNull
-  public static List<String> publicFields(@Nullable final TypeDeclaration d) {
+  @NotNull public static List<String> publicFields(@Nullable final TypeDeclaration d) {
     final ArrayList<String> $ = new ArrayList<>();
     if (d == null)
       return $;
@@ -82,8 +79,7 @@ public enum getAll2 {
    * @since 16-11-8 Given a MethodDeclaration argument, this function returns a
    *        list of it's all String variable declarations.
    * @param ¢ - the MethodDeclaration argument */
-  @NotNull
-  public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration ¢) {
+  @NotNull public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration ¢) {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return $;

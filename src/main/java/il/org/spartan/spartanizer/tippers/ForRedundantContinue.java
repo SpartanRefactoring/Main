@@ -20,18 +20,15 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
-  @NotNull
-  @Override public String description(final ForStatement ¢) {
+  @Override @NotNull public String description(final ForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Prune redundant continue";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final ForStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final Block b = az.block(step.body(¢));

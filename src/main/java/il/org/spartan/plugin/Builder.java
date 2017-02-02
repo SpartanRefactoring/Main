@@ -90,8 +90,7 @@ public final class Builder extends IncrementalProjectBuilder {
         }
   }
 
-  @NotNull
-  private static String prefix() {
+  @NotNull private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
 

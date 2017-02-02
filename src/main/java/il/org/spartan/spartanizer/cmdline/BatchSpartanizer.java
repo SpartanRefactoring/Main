@@ -30,15 +30,12 @@ final class BatchSpartanizer extends FolderASTVisitor {
   private static String inputDir;
   private static boolean defaultDir;
   private int classesDone;
-  @NotNull
-  private final String beforeFileName;
-  @NotNull
-  private final String afterFileName;
+  @NotNull private final String beforeFileName;
+  @NotNull private final String afterFileName;
   private PrintWriter befores;
   private PrintWriter afters;
   private CSVStatistics report;
-  @NotNull
-  private final String reportFileName;
+  @NotNull private final String reportFileName;
 
   /** Main method used to run BatchSpartanizer as a stand alone application
    * @param args */
@@ -80,8 +77,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
       }
   }
 
-  @NotNull
-  public static ProcessBuilder runScript¢(final String pathname) {
+  @NotNull public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);

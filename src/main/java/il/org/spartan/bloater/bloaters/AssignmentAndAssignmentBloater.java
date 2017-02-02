@@ -20,14 +20,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-12-24 */
 public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement>//
     implements TipperCategory.Bloater {
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
   // TODO: Doron - I spartanized your code. --yg
-  @Nullable
-  @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final ExpressionStatement ¢) {
     final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {

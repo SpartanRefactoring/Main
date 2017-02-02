@@ -18,13 +18,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-26 */
 public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.EmptyCycles {
-  @NotNull
-  @Override public String description(final IfStatement ¢) {
+  @Override @NotNull public String description(final IfStatement ¢) {
     return "Remove :" + ¢;
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final IfStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final IfStatement s) {
     if (s == null)
       return null;
     final boolean $ = sideEffects.free(s.getExpression()), then = sideEffects.free(then(s)), elze = sideEffects.free(elze(s));

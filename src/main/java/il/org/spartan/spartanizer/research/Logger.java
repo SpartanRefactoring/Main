@@ -22,8 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class Logger {
   public static int numMethods;
   private static String currentFile;
-  @NotNull
-  private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
+  @NotNull private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
   private static final List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
@@ -52,8 +51,7 @@ public class Logger {
     return Integer.valueOf((currentFile + "." + getType() + name(¢) + parametersTypes(¢)).hashCode());
   }
 
-  @NotNull
-  private static String getType() {
+  @NotNull private static String getType() {
     return currentType == null || currentType.isEmpty() ? "" : currentType.peek() + "";
   }
 

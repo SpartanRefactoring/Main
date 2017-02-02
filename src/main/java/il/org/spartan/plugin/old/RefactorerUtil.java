@@ -25,8 +25,7 @@ public enum RefactorerUtil {
   ;
   public static final int MANY_PASSES = 20;
 
-  @NotNull
-  @SuppressWarnings("unchecked") public static String getTipperName(@NotNull final Map<attribute, Object> $) {
+  @NotNull @SuppressWarnings("unchecked") public static String getTipperName(@NotNull final Map<attribute, Object> $) {
     if (Refactorer.unknown.equals($.get(attribute.TIPPER)))
       try {
         $.put(attribute.TIPPER,
@@ -51,8 +50,8 @@ public enum RefactorerUtil {
     return ((Collection<ICompilationUnit>) ¢.get(attribute.CHANGES)).size();
   }
 
-  public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __, @NotNull final List<ICompilationUnit> us,
-                                                         @NotNull final Map<attribute, Object> m, final attribute a) {
+  public static IRunnableWithProgress countTipsInProject(@SuppressWarnings("unused") final AbstractGUIApplicator __,
+      @NotNull final List<ICompilationUnit> us, @NotNull final Map<attribute, Object> m, final attribute a) {
     if (us.isEmpty())
       return null;
     final Trimmer $ = new Trimmer();

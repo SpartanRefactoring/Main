@@ -28,8 +28,7 @@ public final class MethodExplorer {
    * also correctly adds variables declared within plain and extended for loops,
    * just as local variables defined within a try and catch clauses.
    * @return a list of {@link SimpleName} from the given method. */
-  @NotNull
-  public List<SimpleName> localVariables() {
+  @NotNull public List<SimpleName> localVariables() {
     final List<SimpleName> $ = new ArrayList<>();
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(@NotNull final CatchClause ¢) {
@@ -75,8 +74,7 @@ public final class MethodExplorer {
    * <p>
    * This method correctly ignores return sideEffects found within nested types.
    * @return a list of {@link ReturnStatement} from the given method. */
-  @NotNull
-  public List<ReturnStatement> returnStatements() {
+  @NotNull public List<ReturnStatement> returnStatements() {
     final List<ReturnStatement> $ = new ArrayList<>();
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final ReturnStatement ¢) {

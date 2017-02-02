@@ -178,8 +178,7 @@ class UsesCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(¢.getInitializer());
   }
 
-  @NotNull
-  @Override protected UsesCollector clone() {
+  @Override @NotNull protected UsesCollector clone() {
     return new UsesCollector(result, focus);
   }
 
@@ -343,8 +342,7 @@ class StringCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(¢.getInitializer());
   }
 
-  @NotNull
-  @Override protected StringCollector clone() {
+  @Override @NotNull protected StringCollector clone() {
     return new StringCollector(result, focus);
   }
 
@@ -476,8 +474,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
     return false;
   }
 
-  @NotNull
-  @Override protected UsesCollectorIgnoreDefinitions clone() {
+  @Override @NotNull protected UsesCollectorIgnoreDefinitions clone() {
     return new UsesCollectorIgnoreDefinitions(this);
   }
 }

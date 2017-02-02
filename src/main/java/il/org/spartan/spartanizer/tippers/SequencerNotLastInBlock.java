@@ -16,13 +16,11 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016 */
 public final class SequencerNotLastInBlock<S extends Statement> extends ReplaceToNextStatement<S>//
     implements TipperCategory.Deadcode {
-  @NotNull
-  @Override public String description(final S ¢) {
+  @Override @NotNull public String description(final S ¢) {
     return "Remove dead statement after " + ¢;
   }
 
-  @NotNull
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final S s, @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override @NotNull protected ASTRewrite go(@NotNull final ASTRewrite $, final S s, @NotNull final Statement nextStatement, final TextEditGroup g) {
     final Block b = az.block(parent(s));
     if (b == null) {
       $.remove(nextStatement, g);

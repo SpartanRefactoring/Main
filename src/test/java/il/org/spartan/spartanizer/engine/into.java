@@ -24,8 +24,7 @@ public enum into {
    * current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter. */
-  @NotNull
-  public static Assignment a(@NotNull final String expression) {
+  @NotNull public static Assignment a(@NotNull final String expression) {
     return (Assignment) e(expression);
   }
 
@@ -34,8 +33,7 @@ public enum into {
    * @param conditionalExpression a {@link String} that represents a
    *        "conditional" (also known as "ternary") expression.
    * @return an {@link Statement} data structure representing the parameter. */
-  @NotNull
-  public static ConditionalExpression c(@NotNull final String conditionalExpression) {
+  @NotNull public static ConditionalExpression c(@NotNull final String conditionalExpression) {
     final Expression $ = e(conditionalExpression);
     assert conditionalExpression != null;
     assert $ != null;
@@ -46,8 +44,7 @@ public enum into {
   /** @param p a {@link String} that represents a Java Compilation unit
    * @return {@link CompilationUnit} data structure representing the
    *         parameter. */
-  @NotNull
-  public static CompilationUnit cu(@NotNull final String cu) {
+  @NotNull public static CompilationUnit cu(@NotNull final String cu) {
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(cu);
   }
 
@@ -59,8 +56,7 @@ public enum into {
    *        declaration
    * @return an {@link MethodDeclaration} data structure representing the
    *         parameter. */
-  @NotNull
-  public static MethodDeclaration d(@NotNull final String methodDelclaration) {
+  @NotNull public static MethodDeclaration d(@NotNull final String methodDelclaration) {
     assert methodDelclaration != null;
     return findFirst.instanceOf(MethodDeclaration.class).in(Wrap.Method.intoCompilationUnit(methodDelclaration));
   }
@@ -69,8 +65,7 @@ public enum into {
    * current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
    * @return an {@link Expression} data structure representing the parameter. */
-  @NotNull
-  public static Expression e(@NotNull final String expression) {
+  @NotNull public static Expression e(@NotNull final String expression) {
     return (Expression) makeAST1.EXPRESSION.from(expression);
   }
 
@@ -90,13 +85,11 @@ public enum into {
    * @param expression a {@link String} that represents a Java expression
    * @return an {@link InfixExpression} data structure representing the
    *         parameter. */
-  @NotNull
-  public static InfixExpression i(@NotNull final String expression) {
+  @NotNull public static InfixExpression i(@NotNull final String expression) {
     return (InfixExpression) e(expression);
   }
 
-  @NotNull
-  public static MethodDeclaration m(@NotNull final String p) {
+  @NotNull public static MethodDeclaration m(@NotNull final String p) {
     return findFirst.instanceOf(MethodDeclaration.class).in(makeAST1.CLASS_BODY_DECLARATIONS.from(p));
   }
 
@@ -105,8 +98,7 @@ public enum into {
    * @param expression a {@link String} that represents a Java expression
    * @return a {@link PrefixExpression} data structure representing the
    *         parameter. */
-  @NotNull
-  public static PrefixExpression p(@NotNull final String expression) {
+  @NotNull public static PrefixExpression p(@NotNull final String expression) {
     return (PrefixExpression) e(expression);
   }
 
@@ -114,8 +106,7 @@ public enum into {
    * current test, if such a conversion is not possible
    * @param statement a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter. */
-  @NotNull
-  public static Statement s(@NotNull final String statement) {
+  @NotNull public static Statement s(@NotNull final String statement) {
     assert statement != null;
     final ASTNode $ = makeAST1.STATEMENTS.from(statement);
     assert statement != null;
@@ -124,16 +115,14 @@ public enum into {
     return (Statement) $;
   }
 
-  @NotNull
-  public static Type t(@NotNull final String codeFragment) {
+  @NotNull public static Type t(@NotNull final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 
   /** @param p a {@link String} that represents a Java Compilation unit
    * @return {@link CompilationUnit} data structure representing the
    *         parameter. */
-  @NotNull
-  public static CompilationUnit cuWithBinding(@NotNull final String cu) {
+  @NotNull public static CompilationUnit cuWithBinding(@NotNull final String cu) {
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
   }
 }

@@ -29,13 +29,11 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
     return anyTips(tippers, x);
   }
 
-  @Nullable
-  @Override public Tip pattern(final Block x) {
+  @Override @Nullable public Tip pattern(final Block x) {
     return firstTip(tippers, x);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Iterative;
   }
 

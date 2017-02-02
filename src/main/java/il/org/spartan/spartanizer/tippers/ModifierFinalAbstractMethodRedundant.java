@@ -18,8 +18,7 @@ public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<M
     return "Remove redundant final modifier of paramaeter to abstract method";
   }
 
-  @NotNull
-  @Override public String description(final Modifier ¢) {
+  @Override @NotNull public String description(final Modifier ¢) {
     return "Remove redundant final '" + az.singleVariableDeclaration(parent(¢)) + "' (parameter to abstract method)";
   }
 

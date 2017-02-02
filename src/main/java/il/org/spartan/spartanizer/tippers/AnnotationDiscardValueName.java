@@ -18,8 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public final class AnnotationDiscardValueName //
     extends ReplaceCurrentNode<NormalAnnotation>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public String description(@NotNull final NormalAnnotation ¢) {
+  @Override @NotNull public String description(@NotNull final NormalAnnotation ¢) {
     return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 

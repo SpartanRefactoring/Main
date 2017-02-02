@@ -17,8 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>//
     implements TipperCategory.Idiomatic {
-  @NotNull
-  private static String description(final Operator ¢) {
+  @NotNull private static String description(final Operator ¢) {
     return (¢ == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }
 
@@ -26,8 +25,7 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
     return ¢ == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final PostfixExpression ¢) {
+  @Override @NotNull public String description(@NotNull final PostfixExpression ¢) {
     return "Convert post-" + description(¢.getOperator()) + " of " + operand(¢) + " to pre-" + description(¢.getOperator());
   }
 
@@ -38,8 +36,7 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
         && yieldAncestors.untilNodeType(ASTNode.VARIABLE_DECLARATION_EXPRESSION).from(¢) == null;
   }
 
-  @NotNull
-  @Override public PrefixExpression replacement(@NotNull final PostfixExpression ¢) {
+  @Override @NotNull public PrefixExpression replacement(@NotNull final PostfixExpression ¢) {
     return subject.operand(step.operand(¢)).to(pre2post(¢.getOperator()));
   }
 }

@@ -116,8 +116,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   /** This method
    * @param u
    * @return */
-  @NotNull
-  public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
+  @NotNull public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
@@ -126,8 +125,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   /** Rewrite CompilationUnit
    * @param ¢
    * @return */
-  @NotNull
-  public ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
+  @NotNull public ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     consolidateTips($, ¢);
     return $;

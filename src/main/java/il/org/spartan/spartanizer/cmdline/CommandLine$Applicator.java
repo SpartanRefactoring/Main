@@ -158,8 +158,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
-  @NotNull
-  private ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
+  @NotNull private ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     lastTime = new Date().getTime();
     consolidateTips($, ¢);
@@ -171,8 +170,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * matteo
    * @param u
    * @return */
-  @NotNull
-  public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
+  @NotNull public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
