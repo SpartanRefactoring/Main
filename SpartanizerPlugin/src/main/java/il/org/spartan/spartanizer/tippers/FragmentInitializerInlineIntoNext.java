@@ -36,7 +36,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
 
   @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f,
       @Nullable final Statement nextStatement, final TextEditGroup g) {
-    if (nextStatement == null || containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+    if (containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
     final Expression initializer = f.getInitializer();
     if (initializer == null)
