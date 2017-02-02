@@ -23,20 +23,6 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Idiomatic {
-  /** @param o JD
-   * @return operator that produces the logical negation of the parameter */
-  @Nullable public static Operator conjugate(@Nullable final Operator ¢) {
-    return ¢ == null ? null
-        : ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
-            : ¢.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
-                : ¢.equals(EQUALS) ? NOT_EQUALS
-                    : ¢.equals(NOT_EQUALS) ? EQUALS
-                        : ¢.equals(LESS_EQUALS) ? GREATER
-                            : ¢.equals(GREATER) ? LESS_EQUALS //
-                                : ¢.equals(GREATER_EQUALS) ? LESS //
-                                    : ¢.equals(LESS) ? GREATER_EQUALS : null;
-  }
-
   /** A utility function, which tries to simplify a boolean expression, whose
    * top most parameter is logical negation.
    * @param x JD
@@ -65,7 +51,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   @NotNull private static Expression comparison(@NotNull final InfixExpression ¢) {
-    return subject.pair(left(¢), right(¢)).to(conjugate(¢.getOperator()));
+    return subject.pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {

@@ -28,9 +28,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return "Convert switch statement to if-else statement";
   }
 
-  @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
-    if (s == null)
-      return null;
+  @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
     final List<switchBranch> l = switchBranch.intoBranches(s);
     if (l.size() != 2)
       return null;

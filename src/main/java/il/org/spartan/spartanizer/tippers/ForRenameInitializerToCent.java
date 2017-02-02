@@ -36,8 +36,6 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
   }
 
   @Override @Nullable public Tip tip(@Nullable final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
-    if (x == null)
-      return null;
     final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;

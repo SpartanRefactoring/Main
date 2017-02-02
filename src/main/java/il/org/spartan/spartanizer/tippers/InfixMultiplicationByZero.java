@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/** Convert a multiplication of expression\statement by zero to zero <br/>
+/** Convert a multiplication of expression\statement by zero to zero 
  * where there is no any side effect
  * @author Dor Ma'ayan
  * @since 2016-09-25

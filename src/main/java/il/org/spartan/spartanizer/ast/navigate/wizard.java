@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -30,10 +31,7 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
@@ -214,7 +212,7 @@ public interface wizard {
 
   static Expression applyDeMorgan(@NotNull final InfixExpression $) {
     return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(Collectors.toList()))
-        .to(PrefixNotPushdown.conjugate(operator($)));
+        .to(wizard.negate(operator($)));
   }
 
   static int arity(final InfixExpression ¢) {
@@ -247,6 +245,16 @@ public interface wizard {
       default:
         return null;
     }
+  }
+
+  @Nullable static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
+    final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
+    final int last = Math.min(ns1.size(), ns2.size()) - 1;
+    final ASTNode $ = null;
+    for (int ¢ = 0; ¢ <= last; ++¢)
+      if (ns1.get(¢) != ns2.get(¢))
+        break;
+    return $;
   }
 
   /** the function checks if all the given assignments have the same left hand
@@ -295,6 +303,19 @@ public interface wizard {
    *         "+". */
   static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
     return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
+  }
+
+  /** @param o JD
+   * @return operator that produces the logical negation of the parameter */
+  @Nullable static InfixExpression.Operator negate(@Nullable final InfixExpression.Operator ¢) {
+    return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
+            : ¢.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
+                : ¢.equals(EQUALS) ? NOT_EQUALS
+                    : ¢.equals(NOT_EQUALS) ? EQUALS
+                        : ¢.equals(LESS_EQUALS) ? GREATER
+                            : ¢.equals(GREATER) ? LESS_EQUALS //
+                                : ¢.equals(GREATER_EQUALS) ? LESS //
+                                    : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
   /** @param ns unknown number of nodes to check
@@ -691,14 +712,4 @@ public interface wizard {
   // return !iz.block(body(¢)) ? body(¢) :
   // last(statements(az.block(body(¢))));
   // }
-
-  @Nullable static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
-    final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
-    final int last = Math.min(ns1.size(), ns2.size()) - 1;
-    final ASTNode $ = null;
-    for (int ¢ = 0; ¢ <= last; ++¢)
-      if (ns1.get(¢) != ns2.get(¢))
-        break;
-    return $;
-  }
 }

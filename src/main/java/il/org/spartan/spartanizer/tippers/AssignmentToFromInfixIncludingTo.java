@@ -57,9 +57,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   @Override public ASTNode replacement(@NotNull final Assignment ¢) {
-    assert ¢ != null;
     final Operator $ = ¢.getOperator();
-    assert $ != null;
     return $ != ASSIGN || az.infixExpression(from(¢)) == null ? null : replacement(to(¢), az.infixExpression(from(¢)));
   }
 }
