@@ -29,8 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public enum make {
   ;
-  @Nullable
-  public static Expression assignmentAsExpression(@NotNull final Assignment ¢) {
+  @Nullable public static Expression assignmentAsExpression(@NotNull final Assignment ¢) {
     final Operator $ = ¢.getOperator();
     return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
@@ -51,21 +50,17 @@ public enum make {
     return ¢.getAST().newEmptyStatement();
   }
 
-  @NotNull
-  public static FromAST from(@NotNull final AST t) {
+  @NotNull public static FromAST from(@NotNull final AST t) {
     return new make.FromAST() {
-      @NotNull
-      @Override public SimpleName identifier(@NotNull final String identifier) {
+      @Override @NotNull public SimpleName identifier(@NotNull final String identifier) {
         return t.newSimpleName(identifier);
       }
 
-      @NotNull
-      @Override public NumberLiteral literal(final int ¢) {
+      @Override @NotNull public NumberLiteral literal(final int ¢) {
         return t.newNumberLiteral(¢ + "");
       }
 
-      @NotNull
-      @Override public StringLiteral literal(@NotNull final String ¢) {
+      @Override @NotNull public StringLiteral literal(@NotNull final String ¢) {
         final StringLiteral $ = t.newStringLiteral();
         $.setLiteralValue(¢);
         return $;
@@ -73,13 +68,11 @@ public enum make {
     };
   }
 
-  @NotNull
-  public static make.FromAST from(@NotNull final ASTNode ¢) {
+  @NotNull public static make.FromAST from(@NotNull final ASTNode ¢) {
     return from(¢.getAST());
   }
 
-  @NotNull
-  public static IfStatement ifWithoutElse(@NotNull final Statement s, @NotNull final InfixExpression condition) {
+  @NotNull public static IfStatement ifWithoutElse(@NotNull final Statement s, @NotNull final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);
     $.setThenStatement(s);
@@ -87,8 +80,7 @@ public enum make {
     return $;
   }
 
-  @NotNull
-  public static StringLiteral makeEmptyString(@NotNull final ASTNode ¢) {
+  @NotNull public static StringLiteral makeEmptyString(@NotNull final ASTNode ¢) {
     return make.from(¢).literal("");
   }
 
@@ -108,8 +100,7 @@ public enum make {
     return ¢.getAST().newNullLiteral();
   }
 
-  @NotNull
-  public static Expression minus(final Expression ¢) {
+  @NotNull public static Expression minus(final Expression ¢) {
     final PrefixExpression $ = az.prefixExpression(¢);
     return $ == null ? minus(¢, az.numberLiteral(¢))
         : $.getOperator() == wizard.MINUS1 ? $.getOperand() //
@@ -117,15 +108,13 @@ public enum make {
                 : ¢;
   }
 
-  @NotNull
-  static Expression minus(final Expression x, @Nullable final NumberLiteral l) {
+  @NotNull static Expression minus(final Expression x, @Nullable final NumberLiteral l) {
     return l == null ? minusOf(x) //
         : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
 
-  @NotNull
-  static List<Expression> minus(final List<Expression> xs) {
+  @NotNull static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
     $.addAll(az.stream(rest(xs)).map(λ -> minusOf(λ)).collect(Collectors.toList()));
@@ -136,8 +125,7 @@ public enum make {
     return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
   }
 
-  @NotNull
-  static NumberLiteral newLiteral(@NotNull final ASTNode n, @NotNull final String token) {
+  @NotNull static NumberLiteral newLiteral(@NotNull final ASTNode n, @NotNull final String token) {
     final NumberLiteral $ = n.getAST().newNumberLiteral();
     $.setToken(token);
     return $;
@@ -151,8 +139,7 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-  @NotNull
-  public static ParenthesizedExpression parethesized(@NotNull final Expression ¢) {
+  @NotNull public static ParenthesizedExpression parethesized(@NotNull final Expression ¢) {
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
     $.setExpression(step.parent(¢) == null ? ¢ : copy.of(¢));
     return $;
@@ -167,20 +154,17 @@ public enum make {
    * This function is a factory method recording the expression that might be
    * wrapped.
    * @param inner JD */
-  @NotNull
-  public static make.PlantingExpression plant(final Expression ¢) {
+  @NotNull public static make.PlantingExpression plant(final Expression ¢) {
     return new make.PlantingExpression(¢);
   }
 
   /** Factory method recording the statement might be wrapped.
    * @param inner JD */
-  @NotNull
-  public static make.PlantingStatement plant(final Statement inner) {
+  @NotNull public static make.PlantingStatement plant(final Statement inner) {
     return new make.PlantingStatement(inner);
   }
 
-  @NotNull
-  private static String signAdjust(@NotNull final String token) {
+  @NotNull private static String signAdjust(@NotNull final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
@@ -191,8 +175,8 @@ public enum make {
     return subject.operand(¢).toThrow();
   }
 
-  @NotNull
-  public static VariableDeclarationStatement variableDeclarationStatement(@NotNull final Type t, @NotNull final String name, @NotNull final Expression x) {
+  @NotNull public static VariableDeclarationStatement variableDeclarationStatement(@NotNull final Type t, @NotNull final String name,
+      @NotNull final Expression x) {
     final AST create = x.getAST();
     final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
     fragment.setName(create.newSimpleName(name));
@@ -203,8 +187,7 @@ public enum make {
   }
 
   public interface FromAST {
-    @NotNull
-    default SimpleName identifier(@NotNull final SimpleName ¢) {
+    @NotNull default SimpleName identifier(@NotNull final SimpleName ¢) {
       return identifier(¢.getIdentifier());
     }
 
@@ -242,13 +225,11 @@ public enum make {
      * @return either the expression itself, or the expression wrapped in
      *         parenthesis, depending on the relative precedences of the
      *         expression and its host. */
-    @NotNull
-    public Expression into(final ASTNode host) {
+    @NotNull public Expression into(final ASTNode host) {
       return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
     }
 
-    @NotNull
-    public Expression intoLeft(final InfixExpression host) {
+    @NotNull public Expression intoLeft(final InfixExpression host) {
       return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
     }
 
@@ -256,8 +237,7 @@ public enum make {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
 
-    @NotNull
-    private ParenthesizedExpression parenthesize(final Expression ¢) {
+    @NotNull private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
       $.setExpression(copy.of(¢));
       return $;

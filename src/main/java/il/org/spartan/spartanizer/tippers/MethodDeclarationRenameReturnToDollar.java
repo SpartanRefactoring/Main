@@ -26,8 +26,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Dollarization {
-  @NotNull
-  @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
@@ -68,12 +67,9 @@ abstract class AbstractRenamePolicy {
   }
 
   private final MethodDeclaration inner;
-  @NotNull
-  final List<SimpleName> localVariables;
-  @Nullable
-  final List<SingleVariableDeclaration> parameters;
-  @Nullable
-  final List<ReturnStatement> returnStatements;
+  @NotNull final List<SimpleName> localVariables;
+  @Nullable final List<SingleVariableDeclaration> parameters;
+  @Nullable final List<ReturnStatement> returnStatements;
 
   AbstractRenamePolicy(final MethodDeclaration inner) {
     final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
@@ -82,8 +78,7 @@ abstract class AbstractRenamePolicy {
     returnStatements = prune(explorer.returnStatements());
   }
 
-  @Nullable
-  abstract SimpleName innerSelectReturnVariable();
+  @Nullable abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
@@ -120,8 +115,7 @@ class Aggressive extends AbstractRenamePolicy {
     super(inner);
   }
 
-  @Nullable
-  @Override SimpleName innerSelectReturnVariable() {
+  @Override @Nullable SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
 }

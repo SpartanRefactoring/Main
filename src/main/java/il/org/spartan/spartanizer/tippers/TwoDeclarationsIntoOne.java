@@ -29,8 +29,8 @@ import org.jetbrains.annotations.Nullable;
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDeclarationStatement>//
     implements TipperCategory.Unite {
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationStatement s, @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationStatement s,
+      @NotNull final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))
       return null;
     final VariableDeclarationStatement sc = copy.of(s);
@@ -40,8 +40,7 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Unify two variable declarations of the same type into one";
   }
 

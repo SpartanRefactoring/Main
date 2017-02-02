@@ -28,8 +28,7 @@ enum CollectClassMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  @NotNull
-  static CompilationUnit spartanize(@NotNull final CompilationUnit before) {
+  @NotNull static CompilationUnit spartanize(@NotNull final CompilationUnit before) {
     final Trimmer tr = new Trimmer();
     assert tr != null;
     final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
@@ -62,8 +61,7 @@ enum CollectClassMetrics {
     new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
   }
 
-  @NotNull
-  private static CSVStatistics init() {
+  @NotNull private static CSVStatistics init() {
     try {
       return new CSVStatistics(OUTPUT, "property");
     } catch (@NotNull final IOException ¢) {

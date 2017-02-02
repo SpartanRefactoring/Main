@@ -40,8 +40,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -57,8 +56,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return firstReplacement(tippers);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Safety;
   }
 }

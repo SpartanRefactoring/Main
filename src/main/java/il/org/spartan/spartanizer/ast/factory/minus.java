@@ -29,8 +29,7 @@ public enum minus {
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  @NotNull
-  public static Statement lastStatement(@NotNull final Statement $) {
+  @NotNull public static Statement lastStatement(@NotNull final Statement $) {
     if (!iz.block($))
       return make.emptyStatement($);
     final List<Statement> ss = step.statements(az.block($));
@@ -59,8 +58,7 @@ public enum minus {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
-  @NotNull
-  public static Expression peel(final Expression $) {
+  @NotNull public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
             : iz.nodeTypeEquals($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
@@ -68,8 +66,7 @@ public enum minus {
                     : $;
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final InfixExpression ¢) {
+  @NotNull public static Expression peel(@NotNull final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
@@ -77,13 +74,11 @@ public enum minus {
     return ¢.stream().map(minus::peel).collect(Collectors.toList());
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final NumberLiteral $) {
+  @NotNull public static Expression peel(@NotNull final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final PrefixExpression $) {
+  @NotNull public static Expression peel(@NotNull final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 }

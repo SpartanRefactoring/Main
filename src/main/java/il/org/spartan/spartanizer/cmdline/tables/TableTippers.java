@@ -35,8 +35,7 @@ public class TableTippers {
     }
   }
 
-  @NotNull
-  protected static String intToClassName(final int $) {
+  @NotNull protected static String intToClassName(final int $) {
     try {
       return name(ASTNode.nodeClassForType($));
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
@@ -44,8 +43,7 @@ public class TableTippers {
     }
   }
 
-  @NotNull
-  protected static String name(@Nullable final Class<?> ¢) {
+  @NotNull protected static String name(@Nullable final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }

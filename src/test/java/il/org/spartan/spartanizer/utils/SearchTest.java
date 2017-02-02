@@ -414,8 +414,7 @@ public final class SearchTest {
     azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
   }
 
-  @NotNull
-  private Collector searcher() {
+  @NotNull private Collector searcher() {
     return collect.usesOf(n);
   }
 

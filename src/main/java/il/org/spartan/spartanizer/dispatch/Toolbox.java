@@ -43,8 +43,7 @@ public class Toolbox {
    * first tipper that applies to a node in the usual scan.
    * @param root JD
    * @return */
-  @NotNull
-  public ASTRewrite pickFirstTip(@NotNull final ASTNode root) {
+  @NotNull public ASTRewrite pickFirstTip(@NotNull final ASTNode root) {
     disabling.scan(root);
     final AtomicBoolean done = new AtomicBoolean(false);
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
@@ -65,29 +64,24 @@ public class Toolbox {
     return $;
   }
 
-  @Nullable
-  public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+  @Nullable public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
-  @Nullable
-  public static Tip extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
+  @Nullable public static Tip extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
     return t.tip(n);
   }
 
-  @NotNull
-  public static Toolbox defaultInstance() {
+  @NotNull public static Toolbox defaultInstance() {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-  @NotNull
-  public static Toolbox mutableDefaultInstance() {
+  @NotNull public static Toolbox mutableDefaultInstance() {
     return freshCopyOfAllTippers();
   }
 
-  @NotNull
-  private static Toolbox emptyToolboox() {
+  @NotNull private static Toolbox emptyToolboox() {
     return new Toolbox();
   }
 
@@ -95,8 +89,7 @@ public class Toolbox {
     return Stream.of(ts).filter(λ -> λ.canTip(n)).findFirst().orElse(null);
   }
 
-  @NotNull
-  public static Toolbox freshCopyOfAllTippers() {
+  @NotNull public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
@@ -341,8 +334,7 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @NotNull
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(@NotNull final Class<N> clazz, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public static <N extends ASTNode> Toolbox make(@NotNull final Class<N> clazz, final Tipper<N>... ts) {
     return emptyToolboox().add(clazz, ts);
   }
 
@@ -378,8 +370,7 @@ public class Toolbox {
    * @param c JD
    * @param ts JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(@NotNull final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> Toolbox add(@NotNull final Class<N> c, final Tipper<N>... ts) {
     final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //
         "\n c = " + c + //
@@ -390,8 +381,7 @@ public class Toolbox {
     return add($, ts);
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(@NotNull final Integer nodeType, @NotNull final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> Toolbox add(@NotNull final Integer nodeType, @NotNull final Tipper<N>... ts) {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
@@ -407,16 +397,14 @@ public class Toolbox {
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, @NotNull final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> Toolbox remove(final Class<N> c, @NotNull final Tipper<N>... ts) {
     final Integer nodeType = wizard.classToNodeType.get(c);
     for (final Tipper<N> ¢ : ts)
       get(nodeType.intValue()).remove(¢);
     return this;
   }
 
-  @NotNull
-  public List<Tipper<? extends ASTNode>> getAllTippers() {
+  @NotNull public List<Tipper<? extends ASTNode>> getAllTippers() {
     final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
@@ -435,8 +423,7 @@ public class Toolbox {
     return firstTipper(¢, get(¢));
   }
 
-  @NotNull
-  public List<Tipper<? extends ASTNode>> get(final int ¢) {
+  @NotNull public List<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
@@ -464,8 +451,7 @@ public class Toolbox {
     return get(¢.getNodeType());
   }
 
-  @NotNull
-  public static String intToClassName(final int $) {
+  @NotNull public static String intToClassName(final int $) {
     try {
       return Table_Tippers.name(ASTNode.nodeClassForType($));
     } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException __) {
@@ -473,8 +459,7 @@ public class Toolbox {
     }
   }
 
-  @NotNull
-  public static List<String> get(@Nullable final TipperGroup ¢) {
+  @NotNull public static List<String> get(@Nullable final TipperGroup ¢) {
     final List<String> $ = new LinkedList<>();
     if (¢ == null)
       return $;

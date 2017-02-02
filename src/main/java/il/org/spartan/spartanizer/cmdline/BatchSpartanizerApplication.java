@@ -186,8 +186,7 @@ final class BatchSpartanizerApplication implements IApplication {
   // }
   // }
   // }
-  @NotNull
-  public static ProcessBuilder runScript¢(final String pathname) {
+  @NotNull public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);

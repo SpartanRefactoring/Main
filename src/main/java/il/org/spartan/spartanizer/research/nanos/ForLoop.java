@@ -50,23 +50,19 @@ public final class ForLoop {
       ;
     }
 
-    @Nullable
-    @Override public Tip pattern(final ForStatement $) {
+    @Override @Nullable public Tip pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @NotNull
-    @Override public Category category() {
+    @Override @NotNull public Category category() {
       return Category.Iterative;
     }
 
-    @NotNull
-    @Override public String description() {
+    @Override @NotNull public String description() {
       return "Iterate a collection for the first element matching some predicate";
     }
 
-    @NotNull
-    @Override public String technicalName() {
+    @Override @NotNull public String technicalName() {
       return "ReturnFirstInCSatisfyingXIfNoneY";
     }
 

@@ -18,8 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-11-26 */
 public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
+  @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
@@ -33,8 +32,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merge branches with same code";
   }
 }

@@ -39,21 +39,18 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  @NotNull
-  private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
     if (iz.infixExpression(x))
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
 
-  @NotNull
-  private static List<Expression> gather(final InfixExpression ¢) {
+  @NotNull private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, new ArrayList<>());
   }
 
-  @NotNull
-  private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(operator(x), PLUS, MINUS)) {
@@ -67,8 +64,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return $;
   }
 
-  @NotNull
-  private static List<Expression> gather(@NotNull final List<Expression> xs, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(@NotNull final List<Expression> xs, @NotNull final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
@@ -77,8 +73,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return null;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final InfixExpression ¢) {
+  @Override @NotNull public String description(@NotNull final InfixExpression ¢) {
     return "Remove noop of adding 0 in " + trivia.gist(¢);
   }
 
@@ -101,8 +96,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     };
   }
 
-  @NotNull
-  @Override public TipperGroup tipperGroup() {
+  @Override @NotNull public TipperGroup tipperGroup() {
     return TipperGroup.Abbreviation;
   }
 }

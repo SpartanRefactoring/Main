@@ -22,8 +22,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     implements TipperCategory.Idiomatic {
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
-  @NotNull
-  private static ASTNode replacement(@NotNull final SimpleName n, final Expression ¢, final Expression x) {
+  @NotNull private static ASTNode replacement(@NotNull final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(copy.of(¢));
     $.setName(copy.of(n));
@@ -31,8 +30,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     return $;
   }
 
-  @NotNull
-  @Override public String description(final MethodInvocation ¢) {
+  @Override @NotNull public String description(final MethodInvocation ¢) {
     return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 

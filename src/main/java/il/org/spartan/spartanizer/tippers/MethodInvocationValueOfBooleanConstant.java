@@ -18,23 +18,19 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-04-04 */
 public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
-  @NotNull
-  private static String asString(@NotNull final BooleanLiteral ¢) {
+  @NotNull private static String asString(@NotNull final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
 
-  @Nullable
-  private static Expression replacement(final Expression x, @Nullable final BooleanLiteral l) {
+  @Nullable private static Expression replacement(final Expression x, @Nullable final BooleanLiteral l) {
     return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
 
-  @Nullable
-  private static Expression replacement(@Nullable final Expression x, final Expression $) {
+  @Nullable private static Expression replacement(@Nullable final Expression x, final Expression $) {
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 
-  @NotNull
-  @Override public String description(final MethodInvocation ¢) {
+  @Override @NotNull public String description(final MethodInvocation ¢) {
     return "Replace valueOf (" + onlyArgument(¢) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(¢)));
   }
 

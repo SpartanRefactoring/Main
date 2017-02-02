@@ -9,8 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.NotNull;
 
 abstract class InfixExpressionSorting extends ReplaceCurrentNode<InfixExpression> {
-  @NotNull
-  @Override public final String description(@NotNull final InfixExpression ¢) {
+  @Override @NotNull public final String description(@NotNull final InfixExpression ¢) {
     return "Reorder operands of " + ¢.getOperator();
   }
 

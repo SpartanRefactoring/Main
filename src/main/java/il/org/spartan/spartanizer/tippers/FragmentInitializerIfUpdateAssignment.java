@@ -26,14 +26,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-07 */
 public final class FragmentInitializerIfUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n, @Nullable final Expression initializer,
-                                    @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n,
+      @Nullable final Expression initializer, @NotNull final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = az.ifStatement(nextStatement);

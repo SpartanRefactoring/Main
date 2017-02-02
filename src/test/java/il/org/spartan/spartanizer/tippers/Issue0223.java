@@ -139,13 +139,11 @@ public final class Issue0223 {
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
-  @NotNull
-  private ClassInstanceCreation findMe(final Statement c) {
+  @NotNull private ClassInstanceCreation findMe(final Statement c) {
     return findFirst.instanceOf(SUBJECT_CLASS).in(c);
   }
 
-  @NotNull
-  private ClassInstanceCreationValueTypes makeTipper() {
+  @NotNull private ClassInstanceCreationValueTypes makeTipper() {
     return new ClassInstanceCreationValueTypes();
   }
 

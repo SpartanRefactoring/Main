@@ -35,9 +35,8 @@ public enum BindingUtils {
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
    * @return method's binding if it is visible from context, else null */
-  @Nullable
-  public static IMethodBinding getVisibleMethod(@Nullable final ITypeBinding b, final String methodName, final ITypeBinding[] bs, final ASTNode n,
-                                                @NotNull final CompilationUnit u) {
+  @Nullable public static IMethodBinding getVisibleMethod(@Nullable final ITypeBinding b, final String methodName, final ITypeBinding[] bs,
+      final ASTNode n, @NotNull final CompilationUnit u) {
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);

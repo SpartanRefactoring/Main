@@ -39,8 +39,7 @@ public enum eclipse {
   static ImageIcon icon;
   static org.eclipse.swt.graphics.Image iconNonBusy;
   static final String NAME = "Laconic";
-  @Nullable
-  static final Shell parent = null;
+  @Nullable static final Shell parent = null;
   static final boolean persistLocation = false;
   static final boolean persistSize = false;
   static final int shellStyle = SWT.TOOL;
@@ -67,7 +66,8 @@ public enum eclipse {
    *        operation times use {@link wizard@nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits(@Nullable final ICompilationUnit u, @NotNull final IProgressMonitor m) throws JavaModelException {
+  public static List<ICompilationUnit> compilationUnits(@Nullable final ICompilationUnit u, @NotNull final IProgressMonitor m)
+      throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
@@ -86,8 +86,8 @@ public enum eclipse {
     return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
   }
 
-  private static int compilationUnits(@NotNull final IProgressMonitor m, @NotNull final List<ICompilationUnit> us, @NotNull final IPackageFragmentRoot r)
-      throws JavaModelException {
+  private static int compilationUnits(@NotNull final IProgressMonitor m, @NotNull final List<ICompilationUnit> us,
+      @NotNull final IPackageFragmentRoot r) throws JavaModelException {
     int $ = 0;
     m.worked(1);
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
@@ -104,8 +104,7 @@ public enum eclipse {
 
   /** Retrieves the current {@link ICompilationUnit}
    * @return current {@link ICompilationUnit} */
-  @Nullable
-  public static ICompilationUnit currentCompilationUnit() {
+  @Nullable public static ICompilationUnit currentCompilationUnit() {
     return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
   }
 
@@ -115,8 +114,7 @@ public enum eclipse {
     return $;
   }
 
-  @NotNull
-  @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(@NotNull final IProgressMonitor ¢) {
+  @NotNull @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(@NotNull final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
@@ -125,8 +123,7 @@ public enum eclipse {
     return null;
   }
 
-  @NotNull
-  static MessageDialog announceNonBusy(final String message) {
+  @NotNull static MessageDialog announceNonBusy(final String message) {
     return new MessageDialog(null, NAME, iconNonBusy(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
@@ -134,13 +131,11 @@ public enum eclipse {
     };
   }
 
-  @Nullable
-  static ICompilationUnit compilationUnit(@Nullable final IEditorPart ep) {
+  @Nullable static ICompilationUnit compilationUnit(@Nullable final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
 
-  @Nullable
-  static ICompilationUnit compilationUnit(@Nullable final IResource ¢) {
+  @Nullable static ICompilationUnit compilationUnit(@Nullable final IResource ¢) {
     return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
   }
 
@@ -205,8 +200,7 @@ public enum eclipse {
     return iconNonBusy;
   }
 
-  @NotNull
-  static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
+  @NotNull static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);

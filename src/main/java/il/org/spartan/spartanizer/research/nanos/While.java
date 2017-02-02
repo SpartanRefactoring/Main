@@ -30,18 +30,15 @@ public class While {
       return anyTips(tippers, ¢);
     }
 
-    @Nullable
-    @Override public Tip pattern(final WhileStatement ¢) {
+    @Override @Nullable public Tip pattern(final WhileStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
-    @NotNull
-    @Override public String description() {
+    @Override @NotNull public String description() {
       return "Count elements in collection that satisfy some predicate";
     }
 
-    @NotNull
-    @Override public String technicalName() {
+    @Override @NotNull public String technicalName() {
       return "CountEInCSatisfyingX";
     }
 

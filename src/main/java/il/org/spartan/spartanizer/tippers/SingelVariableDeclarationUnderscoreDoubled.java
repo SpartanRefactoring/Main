@@ -50,8 +50,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢);
   }
 
-  @NotNull
-  private static ASTNode replace(@NotNull final SingleVariableDeclaration ¢) {
+  @NotNull private static ASTNode replace(@NotNull final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
@@ -82,13 +81,11 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "__";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final SingleVariableDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final SingleVariableDeclaration ¢) {
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final SingleVariableDeclaration ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final SingleVariableDeclaration ¢) {
     return replacement(¢, null);
   }
 

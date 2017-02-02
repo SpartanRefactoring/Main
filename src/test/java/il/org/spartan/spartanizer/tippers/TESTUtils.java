@@ -75,8 +75,7 @@ public enum TESTUtils {
     return extract.singleStatement($);
   }
 
-  @NotNull
-  public static Document rewrite(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u, @NotNull final Document $) {
+  @NotNull public static Document rewrite(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u, @NotNull final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;

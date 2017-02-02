@@ -29,13 +29,11 @@ public final class SuppressException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  @Nullable
-  @Override public Tip pattern(final CatchClause ¢) {
+  @Override @Nullable public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Exception;
   }
 

@@ -27,8 +27,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-09-09 */
 public final class IfLastInMethod extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {
-  @NotNull
-  @Override public String description(final IfStatement ¢) {
+  @Override @NotNull public String description(final IfStatement ¢) {
     return "Invert conditional " + expression(¢) + " for early return";
   }
 

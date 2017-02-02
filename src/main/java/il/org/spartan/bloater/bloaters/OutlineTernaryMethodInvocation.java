@@ -30,8 +30,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Bloater {
-  @Nullable
-  @Override public ASTNode replacement(final MethodInvocation n) {
+  @Override @Nullable public ASTNode replacement(final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;
     final List<Expression> l = arguments(n);

@@ -33,8 +33,7 @@ enum CollectMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  @NotNull
-  public static Document rewrite(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u, @NotNull final Document $) {
+  @NotNull public static Document rewrite(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u, @NotNull final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
@@ -74,8 +73,7 @@ enum CollectMetrics {
     new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
   }
 
-  @NotNull
-  private static CSVStatistics init(final String $, final String property) {
+  @NotNull private static CSVStatistics init(final String $, final String property) {
     try {
       return new CSVStatistics($, property);
     } catch (@NotNull final IOException ¢) {
@@ -119,8 +117,7 @@ enum CollectMetrics {
     }
   }
 
-  @NotNull
-  private static CompilationUnit spartanize(final String javaCode) {
+  @NotNull private static CompilationUnit spartanize(final String javaCode) {
     final String $ = new Trimmer().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.from($);

@@ -109,16 +109,14 @@ public class switchBranch {
     bs.forEach(λ -> λ.addAll(ss));
   }
 
-  @NotNull
-  public static SwitchStatement makeSwitchStatement(@NotNull final List<switchBranch> bs, final Expression x, @NotNull final AST t) {
+  @NotNull public static SwitchStatement makeSwitchStatement(@NotNull final List<switchBranch> bs, final Expression x, @NotNull final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
     return $;
   }
 
-  @NotNull
-  @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
+  @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
     List<SwitchCase> c = null;
     List<Statement> s = null;
     final List<switchBranch> $ = new ArrayList<>();
@@ -160,8 +158,7 @@ public class switchBranch {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 
-  @NotNull
-  private List<Statement> functionalCommands() {
+  @NotNull private List<Statement> functionalCommands() {
     final List<Statement> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < statements.size() - 1; ++¢)
       $.add(statements.get(¢));
@@ -174,8 +171,7 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
 
-  @Nullable
-  public static Statement removeBreakSequencer(@NotNull final Statement s) {
+  @Nullable public static Statement removeBreakSequencer(@NotNull final Statement s) {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST a = s.getAST();
@@ -197,8 +193,7 @@ public class switchBranch {
     return $;
   }
 
-  @NotNull
-  public static List<Statement> removeBreakSequencer(@NotNull final List<Statement> ss) {
+  @NotNull public static List<Statement> removeBreakSequencer(@NotNull final List<Statement> ss) {
     final List<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);

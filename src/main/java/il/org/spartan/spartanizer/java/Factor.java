@@ -7,7 +7,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-// TOOD Niv: Who wrote this class?
+/** See class {@link Term}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-02-02 */
 class Factor {
   static Factor divide(final Expression ¢) {
     return new Factor(true, ¢);

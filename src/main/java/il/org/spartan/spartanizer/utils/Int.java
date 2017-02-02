@@ -26,8 +26,7 @@ public final class Int {
 
   /** @param ¢ JD
    * @return */
-  @NotNull
-  public static Int valueOf(final int ¢) {
+  @NotNull public static Int valueOf(final int ¢) {
     final Int $ = new Int();
     $.inner = ¢;
     return $;
@@ -49,8 +48,7 @@ public final class Int {
     this.inner = inner;
   }
 
-  @NotNull
-  @Override public String toString() {
+  @Override @NotNull public String toString() {
     return inner + "";
   }
 

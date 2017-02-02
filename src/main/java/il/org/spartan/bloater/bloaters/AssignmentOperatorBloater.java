@@ -34,6 +34,7 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
   @Override public Tip tip(final Assignment ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        // TODO Ori Roth: use class subject
         final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(copy.of(left(¢)));
         e.setRightOperand(make.plant(copy.of(right(¢))).into(e));

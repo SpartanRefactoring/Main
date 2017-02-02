@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
  * @since Jan 8, 2017 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
-  @Nullable
-  public final N nodeTypeHolder = null;
+  @Nullable public final N nodeTypeHolder = null;
 
   protected static <N extends ASTNode> boolean anyTips(@NotNull final Collection<UserDefinedTipper<N>> ts, @Nullable final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.canTip(n));
@@ -36,8 +35,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return ts.stream().filter(λ -> λ.canTip(n)).findFirst().get();
   }
 
-  @Nullable
-  public static <N extends ASTNode> Tip firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+  @Nullable public static <N extends ASTNode> Tip firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
     return firstTipper(ts, n).tip(n);
   }
 
@@ -53,8 +51,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return first(¢);
   }
 
-  @NotNull
-  @Override public final Tip tip(@NotNull final N ¢) {
+  @Override @NotNull public final Tip tip(@NotNull final N ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Logger.logNP(¢, className());
@@ -71,8 +68,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return className();
   }
 
-  @Nullable
-  @SuppressWarnings("static-method") public String example() {
+  @SuppressWarnings("static-method") @Nullable public String example() {
     return null;
   }
 
@@ -80,8 +76,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return "";
   }
 
-  @NotNull
-  public String[] akas() {
+  @NotNull public String[] akas() {
     return new String[] { className() };
   }
 
@@ -91,15 +86,13 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
 
   protected abstract Tip pattern(N ¢);
 
-  @Nullable
-  @SuppressWarnings("static-method") public Category category() {
+  @SuppressWarnings("static-method") @Nullable public Category category() {
     return null;
   }
 
   public enum Category {
     Iterative, Field, Conditional, Exception, Safety, MethodBody {
-      @NotNull
-      @Override public String toString() {
+      @Override @NotNull public String toString() {
         return "Method Body";
       }
     },

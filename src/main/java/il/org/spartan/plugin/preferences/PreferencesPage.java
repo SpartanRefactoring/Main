@@ -149,13 +149,11 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       });
     }
 
-    @NotNull
-    @Override protected String[] parseString(final String stringList) {
+    @Override @NotNull protected String[] parseString(final String stringList) {
       return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
-    @Nullable
-    @Override @SuppressWarnings("unused") protected String getNewInputObject() {
+    @Override @SuppressWarnings("unused") @Nullable protected String getNewInputObject() {
       if (dead.isEmpty() || composite == null)
         return null;
       final ListDialog d = new ListDialog(composite.getShell());

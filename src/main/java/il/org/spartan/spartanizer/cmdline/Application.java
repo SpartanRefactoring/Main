@@ -290,8 +290,7 @@ final class Application implements IApplication {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
 
-    @NotNull
-    public String fileName() {
+    @NotNull public String fileName() {
       return file.getName();
     }
 

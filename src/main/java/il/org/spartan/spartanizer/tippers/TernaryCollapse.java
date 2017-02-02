@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -19,8 +20,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-9-19 */
 public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {
-  @Nullable
-  private static Expression collapse(@Nullable final ConditionalExpression ¢) {
+  @Nullable private static Expression collapse(@Nullable final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     Expression $;
@@ -31,7 +31,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
     if ($ == null)
       return null;
-    final Expression then = core(x.getThenExpression()), elseThen = core($.getThenExpression()), elseElse = core($.getElseExpression());
+    final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
     return !wizard.same(then, elseElse) && !wizard.same(then, elseThen) ? null
         : wizard.same(then, elseElse)
             ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), $.getExpression()).to(CONDITIONAL_AND))
@@ -43,7 +43,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
     if ($ == null)
       return null;
-    final Expression elze = core(x.getElseExpression()), thenThen = core($.getThenExpression()), thenElse = core($.getElseExpression());
+    final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
     return wizard.same(thenElse, elze)
         ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), $.getExpression()).to(CONDITIONAL_AND))
         : wizard.same(thenThen, elze)
@@ -54,8 +54,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     return "Eliminate nested conditional expression";
   }
 
-  @Nullable
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @Override @Nullable public Expression replacement(final ConditionalExpression ¢) {
     return collapse(¢);
   }
 }

@@ -21,8 +21,7 @@ public enum normalize {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
-  @NotNull
-  public static String unwarpedTestcase(final String raw) {
+  @NotNull public static String unwarpedTestcase(final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
@@ -47,8 +46,7 @@ public enum normalize {
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
-  @NotNull
-  static String renderIdentifier(@NotNull final String old) {
+  @NotNull static String renderIdentifier(@NotNull final String old) {
     return "start".equals(old) ? "a"
         : "START".equals(old) ? "A"
             : "z".equals(old) ? "x1"
@@ -59,8 +57,7 @@ public enum normalize {
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
-  @NotNull
-  private static String linify(@NotNull final String ¢) {
+  @NotNull private static String linify(@NotNull final String ¢) {
     String $ = "";
     try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
