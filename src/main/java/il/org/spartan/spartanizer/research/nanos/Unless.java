@@ -19,8 +19,8 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$X1 ? null : $X2", "unless($X1).eval(() -> $X2)", "Go fluent: Unless pattern"));
-      add(patternTipper("$X1  ? $X2 : null", "unless(!$X1).eval(() -> $X2)", "Go fluent: Unless pattern"));
+      add(patternTipper("$X1 ? $D : $X2", "unless($X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"));
+      add(patternTipper("$X1  ? $X2 : $D", "unless(!$X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"));
     }
   };
   private static final List<NanoPatternTipper<ConditionalExpression>> rivals = new ArrayList<NanoPatternTipper<ConditionalExpression>>() {
@@ -35,7 +35,11 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
+<<<<<<< HEAD
   @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
+=======
+  @Nullable @Override public Tip pattern(final ConditionalExpression ¢) {
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
     return firstTip(tippers, ¢);
   }
 
@@ -51,7 +55,11 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
+<<<<<<< HEAD
   @Override @NotNull public Category category() {
+=======
+  @NotNull @Override public Category category() {
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
     return Category.Safety;
   }
 }
