@@ -7,6 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Factory to create tippers out of user strings! Much easier to implement
  * tippers with. <br>
@@ -20,18 +21,21 @@ import il.org.spartan.spartanizer.research.Matcher.*;
  * @since 2016 */
 public enum TipperFactory {
   ;
-  public static UserDefinedTipper<Block> statementsPattern(final String _pattern, final String _replacement, final String description,
-      final Option... os) {
+  @NotNull
+  public static UserDefinedTipper<Block> statementsPattern(@NotNull final String _pattern, @NotNull final String _replacement, @NotNull final String description,
+                                                           final Option... os) {
     return newSubBlockTipper(_pattern, _replacement, description, os);
   }
 
-  private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
-      final Option[] os) {
+  @NotNull
+  private static UserDefinedTipper<Block> newSubBlockTipper(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description,
+                                                            final Option[] os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
-      @Override public Tip tip(final Block n) {
+      @NotNull
+      @Override public Tip tip(@NotNull final Block n) {
         return new Tip(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.blockReplacement(n), g);
           }
         };
@@ -41,6 +45,7 @@ public enum TipperFactory {
         return $.blockMatches(¢);
       }
 
+      @NotNull
       @Override public String description(@SuppressWarnings("unused") final Block __) {
         return description;
       }
@@ -53,17 +58,20 @@ public enum TipperFactory {
         return $.replacement(¢);
       }
 
+      @NotNull
       @Override public String pattern() {
         return pattern;
       }
 
+      @NotNull
       @Override public String replacement() {
         return replacement;
       }
     };
   }
 
-  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement) {
+  @NotNull
+  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(@NotNull final String pattern, @NotNull final String replacement) {
     return patternTipper(pattern, replacement, String.format("[%s] => [%s]", pattern, replacement));
   }
 
@@ -76,16 +84,19 @@ public enum TipperFactory {
    * @param replacement Replacement pattern
    * @param description Description of the tipper
    * @return {@link UserDefinedTipper} */
-  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement, final String description) {
+  @NotNull
+  public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
     final Matcher $ = Matcher.patternMatcher(pattern, replacement);
     return new UserDefinedTipper<N>() {
+      @NotNull
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }
 
-      @Override public Tip tip(final N n) {
+      @NotNull
+      @Override public Tip tip(@NotNull final N n) {
         return new Tip(description(n), n, getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.replacement(n), g);
           }
         };
@@ -103,10 +114,12 @@ public enum TipperFactory {
         return $.replacement(¢);
       }
 
+      @NotNull
       @Override public String pattern() {
         return pattern;
       }
 
+      @NotNull
       @Override public String replacement() {
         return replacement;
       }

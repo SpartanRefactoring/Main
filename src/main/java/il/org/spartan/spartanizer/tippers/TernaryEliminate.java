@@ -8,6 +8,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil
@@ -18,11 +20,12 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
     return "Eliminate conditional exprssion with identical branches";
   }
 
-  @Override public boolean prerequisite(final ConditionalExpression ¢) {
+  @Override public boolean prerequisite(@Nullable final ConditionalExpression ¢) {
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢.getExpression());
   }
 
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @NotNull
+  @Override public Expression replacement(@NotNull final ConditionalExpression ¢) {
     return plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }
 }

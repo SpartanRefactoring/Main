@@ -22,6 +22,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A tipper is so small that it is
@@ -39,7 +41,7 @@ public abstract class Tipper<N extends ASTNode> //
    * @param f
    * @param r
    * @param g */
-  public static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+  public static void eliminate(@NotNull final VariableDeclarationFragment f, @NotNull final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     if (live.isEmpty()) {
@@ -52,7 +54,8 @@ public abstract class Tipper<N extends ASTNode> //
     r.replace(parent, newParent, g);
   }
 
-  protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final List<VariableDeclarationFragment> fs) {
+  @NotNull
+  protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, @NotNull final List<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
@@ -77,18 +80,22 @@ public abstract class Tipper<N extends ASTNode> //
     return !canTip(¢);
   }
 
+  @Nullable
   @Override public String description() {
     return getClass().getSimpleName();
   }
 
+  @Nullable
   public abstract String description(N n);
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
+  @NotNull
   public final Class<N> myAbstractOperandsClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
+  @Nullable
   public Class<N> myActualOperandsClass() {
     final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
@@ -96,6 +103,7 @@ public abstract class Tipper<N extends ASTNode> //
 
   /** @return a string representing a class name. The class must inherit from
    *         Tipper. */
+  @NotNull
   public String myName() {
     return getClass().getSimpleName();
   }
@@ -103,6 +111,7 @@ public abstract class Tipper<N extends ASTNode> //
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
+  @Nullable
   public Tip tip(final N ¢) {
     return tip(¢, null);
   }
@@ -110,14 +119,17 @@ public abstract class Tipper<N extends ASTNode> //
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
-  public Tip tip(final N n, final ExclusionManager m) {
+  @Nullable
+  public Tip tip(final N n, @Nullable final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
+  @NotNull
+  @SuppressWarnings("unchecked") private Class<N> castClass(@NotNull final Class<?> c2) {
     return (Class<N>) c2;
   }
 
+  @NotNull
   private Class<N> initializeMyOperandsClass() {
     Class<N> $ = null;
     for (final Method ¢ : getClass().getMethods())
@@ -126,15 +138,16 @@ public abstract class Tipper<N extends ASTNode> //
     return $ != null ? $ : castClass(ASTNode.class);
   }
 
-  private boolean isDefinedHere(final Method ¢) {
+  private boolean isDefinedHere(@NotNull final Method ¢) {
     return ¢.getDeclaringClass() == getClass();
   }
 
-  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
+  @NotNull
+  private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
-  @Override public boolean equals(final Object ¢) {
+  @Override public boolean equals(@Nullable final Object ¢) {
     return ¢ != null && getClass().equals(¢.getClass());
   }
 
@@ -142,7 +155,7 @@ public abstract class Tipper<N extends ASTNode> //
     return super.hashCode();
   }
 
-  public static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+  public static boolean frobiddenOpOnPrimitive(@NotNull final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
     final ExpressionStatement x = (ExpressionStatement) nextStatement;
@@ -156,7 +169,7 @@ public abstract class Tipper<N extends ASTNode> //
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  public static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
+  public static Expression goInfix(@NotNull final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
     // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {

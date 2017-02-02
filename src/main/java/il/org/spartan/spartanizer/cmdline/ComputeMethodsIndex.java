@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
  * tokens for methods...
@@ -19,7 +20,7 @@ public class ComputeMethodsIndex extends FolderASTVisitor {
     clazz = ComputeMethodsIndex.class;
   }
 
-  public static void main(final String[] args)
+  public static void main(@NotNull final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
   }

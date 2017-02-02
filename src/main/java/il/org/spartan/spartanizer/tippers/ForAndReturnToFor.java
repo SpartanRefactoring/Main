@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * for (String line = r.readLine(); line != null; line = r.readLine(), $.append(line).append(System.lineSeparator()))
@@ -24,7 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
-  @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Nullable
+  @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final ForStatement s, @Nullable final Statement nextStatement, final TextEditGroup g) {
     if (s == null || $ == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
@@ -35,6 +38,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     return $;
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "combine the for and return statements to a single statement";
   }

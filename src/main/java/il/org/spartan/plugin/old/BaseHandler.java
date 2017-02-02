@@ -8,6 +8,8 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.handlers.*;
 
 import il.org.spartan.plugin.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
@@ -28,10 +30,11 @@ abstract class BaseHandler extends AbstractHandler {
     this.inner = inner;
   }
 
-  @Override public Void execute(final ExecutionEvent $) throws ExecutionException {
+  @Nullable
+  @Override public Void execute(@NotNull final ExecutionEvent $) throws ExecutionException {
     try {
       return execute(HandlerUtil.getCurrentSelection($));
-    } catch (final InterruptedException ¢) {
+    } catch (@NotNull final InterruptedException ¢) {
       throw new ExecutionException(¢.getMessage());
     }
   }
@@ -44,19 +47,22 @@ abstract class BaseHandler extends AbstractHandler {
     return inner;
   }
 
+  @Nullable
   private Void execute(final ISelection ¢) throws InterruptedException {
     return !(¢ instanceof ITextSelection) ? null : execute((ITextSelection) ¢);
   }
 
+  @Nullable
   private Void execute(final ITextSelection ¢) throws InterruptedException {
     return execute(new RefactoringWizardOpenOperation(getWizard(¢, eclipse.currentCompilationUnit())));
   }
 
-  private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
+  private Void execute(@NotNull final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(eclipse.currentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
 
+  @NotNull
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
     final AbstractGUIApplicator $ = getRefactoring();
     $.setSelection(s);

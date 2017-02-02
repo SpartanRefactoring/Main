@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
+import org.jetbrains.annotations.Nullable;
 
 /** @nano all patterns of reducing a collection into one element
  * @author Ori Marcovitch
@@ -43,6 +44,7 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
         && rival.cantTip(x);
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement x) {
     return firstTip(tippers, x);
   }

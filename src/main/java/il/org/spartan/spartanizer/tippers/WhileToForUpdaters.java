@@ -7,13 +7,16 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
-  private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
+  @NotNull
+  private static ForStatement buildForWhithoutLastStatement(@NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(dupWhileExpression(¢));
     step.updaters($).add(dupUpdaterFromBody(¢));
@@ -21,19 +24,22 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return $;
   }
 
+  @Nullable
   private static Expression dupUpdaterFromBody(final WhileStatement ¢) {
     return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
+  @Nullable
   private static Statement dupWhileBody(final WhileStatement ¢) {
     return copy.of(step.body(¢));
   }
 
-  private static Expression dupWhileExpression(final WhileStatement ¢) {
+  @Nullable
+  private static Expression dupWhileExpression(@NotNull final WhileStatement ¢) {
     return copy.of(¢.getExpression());
   }
 
-  private static boolean fitting(final WhileStatement ¢) {
+  private static boolean fitting(@Nullable final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢)
         && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
@@ -47,15 +53,17 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return hop.lastStatement(step.body(¢));
   }
 
-  @Override public String description(final WhileStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
-  @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final WhileStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
-  @Override public ASTNode replacement(final WhileStatement ¢) {
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

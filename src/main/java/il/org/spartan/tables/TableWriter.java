@@ -3,6 +3,7 @@ package il.org.spartan.tables;
 import java.io.*;
 
 import il.org.spartan.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -11,7 +12,7 @@ public class TableWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
    * @throws IOException */
-  public TableWriter(final TableRenderer renderer, final String basePath) throws IOException {
+  public TableWriter(@NotNull final TableRenderer renderer, @NotNull final String basePath) throws IOException {
     this.renderer = renderer;
     fileName = basePath.replaceAll("\\.[a-z0-9]*$", "") + "." + renderer.extension();
     file = new File(fileName);
@@ -19,7 +20,7 @@ public class TableWriter implements Closeable {
     write(renderer.beforeTable());
   }
 
-  public void write(final String s) {
+  public void write(@NotNull final String s) {
     try {
       writer.write(s);
       writer.flush();
@@ -28,10 +29,14 @@ public class TableWriter implements Closeable {
     }
   }
 
+  @NotNull
   public final File file;
   /** The name of the file into which records are written. */
+  @NotNull
   public final String fileName;
+  @NotNull
   public final OutputStreamWriter writer;
+  @NotNull
   public final TableRenderer renderer;
   private boolean headerPrinted;
   private boolean footerPrinted;
@@ -47,7 +52,7 @@ public class TableWriter implements Closeable {
     }
   }
 
-  public void write(final Row<?> ¢) {
+  public void write(@NotNull final Row<?> ¢) {
     if (!headerPrinted) {
       headerPrinted = true;
       writeHeader(¢);
@@ -55,7 +60,7 @@ public class TableWriter implements Closeable {
     writeData(¢);
   }
 
-  public void writeFooter(final Row<?> ¢) {
+  public void writeFooter(@NotNull final Row<?> ¢) {
     if (!footerPrinted) {
       write(renderer.beforeFooter());
       footerPrinted = true;
@@ -63,18 +68,19 @@ public class TableWriter implements Closeable {
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
 
-  private void writeData(final Row<?> ¢) {
+  private void writeData(@NotNull final Row<?> ¢) {
     write(renderer.recordBegin() + separate.these(¢.values()).by(renderer.recordSeparator()) + renderer.recordEnd());
   }
 
-  private void writeHeader(final Row<?> ¢) {
+  private void writeHeader(@NotNull final Row<?> ¢) {
     renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
   }
 
-  private String writeHeaderInner(final Row<?> r) {
+  @NotNull
+  private String writeHeaderInner(@NotNull final Row<?> r) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();
     r.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));

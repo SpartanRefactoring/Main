@@ -5,13 +5,15 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Oct 28, 2016 */
 public enum measure {
   ;
-  public static int expressions(final ASTNode n) {
+  public static int expressions(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
     final Int $ = new Int();
@@ -24,7 +26,7 @@ public enum measure {
     return $.inner;
   }
 
-  public static int statements(final ASTNode n) {
+  public static int statements(@Nullable final ASTNode n) {
     final Int $ = new Int();
     if (n == null)
       return 0;
@@ -38,7 +40,7 @@ public enum measure {
     return $.inner;
   }
 
-  static boolean excluded(final Statement ¢) {
+  static boolean excluded(@NotNull final Statement ¢) {
     return as.list(//
         Block.class, //
         // BreakStatement.class, //
@@ -52,7 +54,7 @@ public enum measure {
         .contains(¢.getClass());
   }
 
-  static boolean excluded(final Expression ¢) {
+  static boolean excluded(@NotNull final Expression ¢) {
     return as.list(//
         Annotation.class, //
         ArrayAccess.class, //

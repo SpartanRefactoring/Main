@@ -8,6 +8,8 @@ import org.eclipse.jdt.internal.core.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility class to manage libraries at the users side, in front of the
  * ecilpse machine and specific code. Current implementation makes use of the
@@ -19,6 +21,7 @@ public enum LibrariesManagement {
   /** Absolute path of the spartan feature. */
   public static final IPath FEATURE_PATH;
   /** Eclipse's installation outputFolder absolute path. */
+  @NotNull
   public static final IPath INSTALLATION_FOLDER;
   /** Library name, as seen by the user. */
   public static final String LIBRARY_NAME = "Spartan Library";
@@ -26,6 +29,7 @@ public enum LibrariesManagement {
    * SpartanFeature project. */
   public static final String LIBRARY_QULIFIED_NAME = "spartan.libraries";
   /** The class path container for our library. */
+  @NotNull
   public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
   static {
     INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
@@ -41,10 +45,12 @@ public enum LibrariesManagement {
         return K_APPLICATION;
       }
 
+      @NotNull
       @Override public String getDescription() {
         return LIBRARY_NAME;
       }
 
+      @NotNull
       @Override public IClasspathEntry[] getClasspathEntries() {
         return new IClasspathEntry[] { JavaCore.newLibraryEntry(FEATURE_PATH, null, null) };
       }
@@ -59,14 +65,14 @@ public enum LibrariesManagement {
 
   /** @param p JD
    * @return true iff the project uses the spartan library. */
-  public static boolean hasLibrary(final IJavaProject p) {
+  public static boolean hasLibrary(@Nullable final IJavaProject p) {
     if (p == null)
       return false;
     try {
       for (final IClasspathEntry ¢ : p.getRawClasspath()) // NANO?
         if (LIBRARY_PATH_CONTAINER.getPath().equals(¢.getPath()))
           return true;
-    } catch (final JavaModelException ¢) {
+    } catch (@NotNull final JavaModelException ¢) {
       monitor.log(¢);
     }
     return false;
@@ -75,14 +81,14 @@ public enum LibrariesManagement {
   /** Adding the spartan library to a project.
    * @param p JD
    * @return true upon success */
-  public static boolean addLibrary(final IJavaProject p) {
+  public static boolean addLibrary(@Nullable final IJavaProject p) {
     if (p == null)
       return false;
     final List<IClasspathEntry> nes = new ArrayList<>();
     final IClasspathEntry[] es;
     try {
       es = p.getRawClasspath();
-    } catch (final JavaModelException ¢) {
+    } catch (@NotNull final JavaModelException ¢) {
       monitor.log(¢);
       return false;
     }
@@ -91,7 +97,7 @@ public enum LibrariesManagement {
     nes.add(JavaCore.newContainerEntry(LIBRARY_PATH_CONTAINER.getPath(), null, null, false));
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
-    } catch (final JavaModelException ¢) {
+    } catch (@NotNull final JavaModelException ¢) {
       monitor.log(¢);
       return false;
     }
@@ -101,7 +107,7 @@ public enum LibrariesManagement {
   /** If the project does not make use of the spartan library, we try to add it.
    * @param ¢ JD
    * @return true iff the project uses the spartan library */
-  public static boolean checkLibrary(final IJavaProject ¢) {
+  public static boolean checkLibrary(@Nullable final IJavaProject ¢) {
     return ¢ != null && (hasLibrary(¢) || addLibrary(¢));
   }
 
