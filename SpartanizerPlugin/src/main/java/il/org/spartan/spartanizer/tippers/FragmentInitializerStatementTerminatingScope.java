@@ -40,8 +40,6 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
         || Tipper.frobiddenOpOnPrimitive(f, nextStatement) || Inliner.isArrayInitWithUnmatchingTypes(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
-    if (currentStatement == null)
-      return null;
     boolean found = false;
     for (final VariableDeclarationFragment ff : fragments(currentStatement))
       if (!found)

@@ -28,7 +28,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
   @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final ForStatement s, @Nullable final Statement nextStatement,
       final TextEditGroup g) {
-    if (s == null || $ == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
+    if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
     f.setBody(copy.of(subject.pair(copy.of(nextStatement), null).toIf(make.notOf(copy.of(expression(f))))));

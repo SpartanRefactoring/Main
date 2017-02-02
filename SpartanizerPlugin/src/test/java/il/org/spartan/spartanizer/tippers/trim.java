@@ -24,11 +24,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
-  .gives("a+b-c")}, or <br/>
-   * <code>trimming // See {@link trim} <br/>
-   * .repeatedly //  See {@link trim.repeatedely} <br/>
-   * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} <br/>
-   * .of("a+(b-c)") //  See {@link #of(String)} <br/>
+  .gives("a+b-c")}, or 
+   * <code>trimming // See {@link trim} 
+   * .repeatedly //  See {@link trim.repeatedely} 
+   * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+   * .of("a+(b-c)") //  See {@link #of(String)} 
    * .gives("a+b-c")</code> */
   interface repeatedly {
     @NotNull static fluentTrimmerApplication of(final String codeFragment) {
