@@ -81,8 +81,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
    * printing to console.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  @Override public GUIBatchLaconizer defaultListenerNoisy() {
+  @Override @NotNull public GUIBatchLaconizer defaultListenerNoisy() {
     listener(λ -> {
       as.list(λ).forEach(System.out::print);
       System.out.println();
@@ -93,8 +92,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default listener configuration of {@link GUIBatchLaconizer}. Silent
    * listener.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultListenerSilent() {
+  @NotNull public GUIBatchLaconizer defaultListenerSilent() {
     listener((@NotNull final Object... __) -> {/**/});
     return this;
   }
@@ -102,8 +100,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default selection configuration of {@link GUIBatchLaconizer}. Normal
    * eclipse user selection.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultSelection() {
+  @NotNull public GUIBatchLaconizer defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
@@ -111,8 +108,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default passes configuration of {@link GUIBatchLaconizer}, with few
    * passes.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultPassesFew() {
+  @NotNull public GUIBatchLaconizer defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
@@ -120,8 +116,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default passes configuration of {@link GUIBatchLaconizer}, with many
    * passes.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultPassesMany() {
+  @NotNull public GUIBatchLaconizer defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
@@ -129,8 +124,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default run context configuration of {@link GUIBatchLaconizer}. Simply
    * runs the {@link Runnable} in the current thread.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultRunContext() {
+  @NotNull public GUIBatchLaconizer defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
@@ -140,8 +134,7 @@ public class GUIBatchLaconizer extends Applicator {
    * the {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultRunAction(@NotNull final AbstractGUIApplicator a) {
+  @NotNull public GUIBatchLaconizer defaultRunAction(@NotNull final AbstractGUIApplicator a) {
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection())));
     name(a.getName());
     return this;
@@ -149,23 +142,20 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default operation name.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultOperationName() {
+  @NotNull public GUIBatchLaconizer defaultOperationName() {
     operationName(Linguistic.Activity.simple(DEFAULT_OPERATION_NAME));
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return <code><b>this</b></code> applicator */
-  @NotNull
-  public GUIBatchLaconizer defaultSettings() {
+  @NotNull public GUIBatchLaconizer defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer()).defaultOperationName();
   }
 
   /** Factory method.
    * @return default event applicator */
-  @NotNull
-  public static GUIBatchLaconizer defaultApplicator() {
+  @NotNull public static GUIBatchLaconizer defaultApplicator() {
     return new GUIBatchLaconizer().defaultSettings();
   }
 

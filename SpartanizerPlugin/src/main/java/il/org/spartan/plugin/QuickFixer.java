@@ -27,8 +27,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2013/07/01 */
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
-  @NotNull
-  @Override public IMarkerResolution[] getResolutions(final IMarker __) {
+  @Override @NotNull public IMarkerResolution[] getResolutions(final IMarker __) {
     return new IMarkerResolution[] { //
         apply, //
         // applyPreview, //
@@ -91,15 +90,13 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @param name resolution's name
    * @param solution resolution's solution
    * @return marker resolution */
-  @NotNull
-  private static IMarkerResolution quickFix(@NotNull final String name, @NotNull final Consumer<IMarker> solution) {
+  @NotNull private static IMarkerResolution quickFix(@NotNull final String name, @NotNull final Consumer<IMarker> solution) {
     return new IMarkerResolution() {
       @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
 
-      @NotNull
-      @Override public String getLabel() {
+      @Override @NotNull public String getLabel() {
         return name;
       }
     };
@@ -118,8 +115,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @author Ori Roth
    * @since 2016 */
   private static class SingleTipper<N extends ASTNode> extends Trimmer {
-    @NotNull
-    final Tipper<N> tipper;
+    @NotNull final Tipper<N> tipper;
 
     SingleTipper(@NotNull final Tipper<N> tipper) {
       this.tipper = tipper;
@@ -130,8 +126,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
     }
 
-    @Nullable
-    @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(@NotNull final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") @Nullable protected Tipper<N> getTipper(@NotNull final ASTNode ¢) {
       assert check(¢);
       return !tipper.canTip((N) ¢) ? null : tipper;
     }
@@ -161,11 +156,9 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";
 
-    @NotNull
-    static IMarkerResolution apply(final SingleTipperApplicator.Type t, @NotNull final String label) {
+    @NotNull static IMarkerResolution apply(final SingleTipperApplicator.Type t, @NotNull final String label) {
       return new IMarkerResolution() {
-        @NotNull
-        @Override public String getLabel() {
+        @Override @NotNull public String getLabel() {
           return label;
         }
 
@@ -179,41 +172,33 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       };
     }
 
-    @NotNull
-    static IMarkerResolution applyFile() {
+    @NotNull static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
 
-    @NotNull
-    static IMarkerResolution applyFunction() {
+    @NotNull static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
 
-    @NotNull
-    static IMarkerResolution applyProject() {
+    @NotNull static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
 
-    @NotNull
-    static IMarkerResolution disableClassFix() {
+    @NotNull static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress spartanization tips on class");
     }
 
-    @NotNull
-    static IMarkerResolution disableFileFix() {
+    @NotNull static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Suppress spartanization tips on out most class");
     }
 
-    @NotNull
-    static IMarkerResolution disableFunctionFix() {
+    @NotNull static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
     }
 
-    @NotNull
-    static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, @NotNull final String label) {
+    @NotNull static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, @NotNull final String label) {
       return new IMarkerResolution() {
-        @NotNull
-        @Override public String getLabel() {
+        @Override @NotNull public String getLabel() {
           return label;
         }
 

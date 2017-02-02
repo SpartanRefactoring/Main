@@ -35,8 +35,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.close();
   }
 
-  @NotNull
-  static int[] ranks(@NotNull final Map<?, Integer> m) {
+  @NotNull static int[] ranks(@NotNull final Map<?, Integer> m) {
     final Int n = new Int();
     final int $[] = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
@@ -114,13 +113,11 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return increment(addIfNecessary(category, key), key);
   }
 
-  @NotNull
-  private String key(@NotNull final InfixExpression ¢) {
+  @NotNull private String key(@NotNull final InfixExpression ¢) {
     return key(¢, wizard.arity(¢));
   }
 
-  @NotNull
-  private String key(@NotNull final InfixExpression ¢, final int arity) {
+  @NotNull private String key(@NotNull final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return Vocabulary.mangle(¢.getOperator(), arity);
   }

@@ -23,8 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2-12-2016 */
 public class LessEqualsToLess extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixMinus(right(¢))//
         || !"1".equals(token(az.numberLiteral(right(az.infixExpression(right(¢)))))) || type.isDouble(¢.getLeftOperand()) ? null
@@ -35,8 +34,7 @@ public class LessEqualsToLess extends ReplaceCurrentNode<InfixExpression>//
     return iz.infixLessEquals(¢);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }
 }

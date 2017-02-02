@@ -19,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016 */
 public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  @NotNull
-  @Override public String description(final PrefixExpression ¢) {
+  @Override @NotNull public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }
 

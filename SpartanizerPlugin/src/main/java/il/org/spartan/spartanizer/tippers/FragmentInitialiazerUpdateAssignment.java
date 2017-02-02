@@ -27,14 +27,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-07 */
 public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n, @Nullable final Expression initializer,
-                                    @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n,
+      @Nullable final Expression initializer, @NotNull final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);

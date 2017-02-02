@@ -23,8 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Ternarization {
-  @Nullable
-  @Override public String description(final IfStatement ¢) {
+  @Override @Nullable public String description(final IfStatement ¢) {
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
 

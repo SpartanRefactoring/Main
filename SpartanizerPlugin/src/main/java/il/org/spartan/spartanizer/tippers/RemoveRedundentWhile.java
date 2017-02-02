@@ -14,13 +14,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-26 */
 public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.EmptyCycles {
-  @NotNull
-  @Override public String description(final WhileStatement ¢) {
+  @Override @NotNull public String description(final WhileStatement ¢) {
     return "Remove :" + ¢;
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final WhileStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@Nullable final WhileStatement ¢) {
     return ¢ == null || !sideEffects.free(¢.getExpression()) || haz.sideEffects(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 }

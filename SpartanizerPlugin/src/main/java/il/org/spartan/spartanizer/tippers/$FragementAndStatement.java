@@ -48,8 +48,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
     return initializer == null || haz.annotation(f);
   }
 
-  @NotNull
-  private static List<VariableDeclarationFragment> forbiddenSiblings(@NotNull final VariableDeclarationFragment f) {
+  @NotNull private static List<VariableDeclarationFragment> forbiddenSiblings(@NotNull final VariableDeclarationFragment f) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
@@ -94,12 +93,11 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
     return false;
   }
 
-  @Nullable
-  protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer, Statement nextStatement,
-                                   TextEditGroup g);
+  @Nullable protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
+      Statement nextStatement, TextEditGroup g);
 
   @Override protected final ASTRewrite go(final ASTRewrite r, @NotNull final VariableDeclarationFragment f, final Statement nextStatement,
-                                          final TextEditGroup g) {
+      final TextEditGroup g) {
     if (!iz.variableDeclarationStatement(f.getParent()))
       return null;
     final SimpleName $ = f.getName();

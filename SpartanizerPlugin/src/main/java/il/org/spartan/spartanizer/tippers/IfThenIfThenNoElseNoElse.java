@@ -39,8 +39,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     return "Merge conditionals of nested if staement";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final IfStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final IfStatement ¢) {
     return tip(¢, null);
   }
 

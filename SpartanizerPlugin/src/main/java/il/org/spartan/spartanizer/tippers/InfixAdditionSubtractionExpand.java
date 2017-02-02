@@ -14,8 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016 */
 public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;
   }
 

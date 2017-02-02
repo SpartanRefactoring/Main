@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -10,7 +11,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** convert {@code
  * a ? (f,g,h) : c(d,e)
@@ -39,8 +39,8 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
   }
 
   @Override public ConditionalExpression replacement(@NotNull final ConditionalExpression x) {
-    final ConditionalExpression $ = subject.pair(core(x.getElseExpression()), core(x.getThenExpression())).toCondition(make.notOf(x.getExpression()));
-    final Expression then = $.getElseExpression(), elze = $.getThenExpression();
+    final ConditionalExpression $ = subject.pair(elze(x), then(x)).toCondition(make.notOf(x.getExpression()));
+    final Expression then = elze($), elze = then($);
     if (!iz.conditionalExpression(then) && iz.conditionalExpression(elze))
       return null;
     if (iz.conditionalExpression(then) && !iz.conditionalExpression(elze))

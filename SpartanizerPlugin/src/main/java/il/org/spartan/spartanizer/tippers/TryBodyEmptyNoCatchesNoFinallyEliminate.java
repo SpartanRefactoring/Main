@@ -17,8 +17,7 @@ public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTippe
     return statements(body(¢)).isEmpty() && ¢.catchClauses().isEmpty() && (¢.getFinally() == null || statements(¢.getFinally()).isEmpty());
   }
 
-  @NotNull
-  @Override public String description(@NotNull final TryStatement ¢) {
+  @Override @NotNull public String description(@NotNull final TryStatement ¢) {
     return "Eliminate this no-op try block " + trivia.gist(¢.getBody());
   }
 }

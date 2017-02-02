@@ -24,8 +24,7 @@ public final class Bool {
     return set(true);
   }
 
-  @NotNull
-  private Bool set(final boolean ¢) {
+  @NotNull private Bool set(final boolean ¢) {
     inner = ¢;
     return this;
   }
@@ -35,13 +34,11 @@ public final class Bool {
     return Boolean.valueOf(inner);
   }
 
-  @NotNull
-  public static Bool valueOf(final boolean ¢) {
+  @NotNull public static Bool valueOf(final boolean ¢) {
     return new Bool(¢);
   }
 
-  @NotNull
-  public Bool clear() {
+  @NotNull public Bool clear() {
     return set(false);
   }
 }

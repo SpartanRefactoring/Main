@@ -68,8 +68,7 @@ public interface Environment {
 
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
-  @Nullable
-  default Binding hiding(final String name) {
+  @Nullable default Binding hiding(final String name) {
     return nest() == null ? null : nest().get(name);
   }
 
@@ -162,8 +161,7 @@ public interface Environment {
   }
 
   /** @return set of entries declared in the node, including all hiding. */
-  @NotNull
-  static LinkedHashSet<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
+  @NotNull static LinkedHashSet<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
     // Holds the declarations in the subtree and relevant siblings.
     final LinkedHashSet<Entry<String, Binding>> $ = new LinkedHashSet<>();
     ¢.accept(new EnvironmentVisitor($));
@@ -177,15 +175,13 @@ public interface Environment {
     return upEnv;
   }
 
-  @NotNull
-  static String fullName(final ASTNode ¢) {
+  @NotNull static String fullName(final ASTNode ¢) {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
-  @NotNull
-  static Namespace genesis() {
+  @NotNull static Namespace genesis() {
     return NULL.spawn();
   }
 
@@ -203,13 +199,11 @@ public interface Environment {
     return null;
   }
 
-  @Nullable
-  static Block getParentBlock(final ASTNode ¢) {
+  @Nullable static Block getParentBlock(final ASTNode ¢) {
     return az.block(¢.getParent());
   }
 
-  @Nullable
-  static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
+  @Nullable static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
 
@@ -243,8 +237,7 @@ public interface Environment {
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  @NotNull
-  static LinkedHashSet<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
+  @NotNull static LinkedHashSet<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
     return new LinkedHashSet<>();
   }
 }

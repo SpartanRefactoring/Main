@@ -21,8 +21,7 @@ public final class TryFinallyEmptyRemove extends ReplaceCurrentNode<TryStatement
     return !statements(body(¢)).isEmpty() && ¢.getFinally() != null && statements(¢.getFinally()).isEmpty() && !¢.catchClauses().isEmpty();
   }
 
-  @Nullable
-  @Override public ASTNode replacement(final TryStatement ¢) {
+  @Override @Nullable public ASTNode replacement(final TryStatement ¢) {
     final TryStatement $ = copy.of(¢);
     $.setFinally(null);
     return $;

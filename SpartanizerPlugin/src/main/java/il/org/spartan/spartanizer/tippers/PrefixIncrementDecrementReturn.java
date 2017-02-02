@@ -27,12 +27,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-28 */
 public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression>//
     implements TipperCategory.Unite {
-  @Nullable
-  @Override public String description(final PrefixExpression ¢) {
+  @Override @Nullable public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement,
+      final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
     final Statement parent = az.statement(x.getParent());

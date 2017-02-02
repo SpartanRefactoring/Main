@@ -9,8 +9,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil
  * @since 2015-08-30 */
 public final class NumericLiteralClassifier {
-  @Nullable
-  public static Primitive.Certain of(@Nullable final String literal) {
+  @Nullable public static Primitive.Certain of(@Nullable final String literal) {
     return literal == null ? null : new NumericLiteralClassifier(literal).type();
   }
 
@@ -24,8 +23,7 @@ public final class NumericLiteralClassifier {
 
   /** @return the type of this literal.
    * @see PrudentType */
-  @NotNull
-  public Primitive.Certain type() {
+  @NotNull public Primitive.Certain type() {
     if (inner.charAt(0) == '\'')
       return Primitive.Certain.CHAR;
     switch (inner.charAt(inner.length() - 1)) {

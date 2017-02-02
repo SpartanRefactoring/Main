@@ -14,8 +14,7 @@ public class NanoPatternRecord {
   public int occurences;
   public int numNPStatements;
   public int numNPExpressions;
-  @NotNull
-  public final String className;
+  @NotNull public final String className;
 
   public NanoPatternRecord(final String name, @NotNull final Class<? extends ASTNode> cl) {
     this.name = name;

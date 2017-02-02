@@ -10,8 +10,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil
  * @since 2016-10-07 */
 public interface dig {
-  @NotNull
-  static List<String> stringLiterals(@Nullable final ASTNode n) {
+  @NotNull static List<String> stringLiterals(@Nullable final ASTNode n) {
     final List<String> $ = new ArrayList<>();
     if (n == null)
       return $;

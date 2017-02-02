@@ -39,16 +39,14 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     return os1.size() == os2.size() && range.to(os1.size()).stream().allMatch(λ -> os1.get(λ) == os2.get(λ));
   }
 
-  @NotNull
-  private static Block reorganizeStatement(@NotNull final Statement s) {
+  @NotNull private static Block reorganizeStatement(@NotNull final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     copy.into(ss, statements($));
     return $;
   }
 
-  @NotNull
-  @Override public String description(final Block ¢) {
+  @Override @NotNull public String description(final Block ¢) {
     return "Simplify block with  " + extract.statements(¢).size() + " sideEffects";
   }
 

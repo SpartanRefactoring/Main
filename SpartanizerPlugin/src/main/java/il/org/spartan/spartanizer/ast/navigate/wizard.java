@@ -153,7 +153,8 @@ public interface wizard {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
 
-  static <N extends MethodDeclaration> void addJavaDoc(@NotNull final N n, @NotNull final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+  static <N extends MethodDeclaration> void addJavaDoc(@NotNull final N n, @NotNull final ASTRewrite r, final TextEditGroup g,
+      final String addedJavadoc) {
     final Javadoc j = n.getJavadoc();
     if (j == null)
       r.replace(n,
@@ -188,12 +189,12 @@ public interface wizard {
    * @param m JD
    * @param r rewriter
    * @param g edit group, usually null */
-  static void addMethodToType(@NotNull final AbstractTypeDeclaration d, final MethodDeclaration m, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  static void addMethodToType(@NotNull final AbstractTypeDeclaration d, final MethodDeclaration m, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
 
-  @NotNull
-  static <N extends ASTNode> List<? extends ASTNode> addRest(@NotNull final List<ASTNode> $, final N n, @NotNull final List<N> ns) {
+  @NotNull static <N extends ASTNode> List<? extends ASTNode> addRest(@NotNull final List<ASTNode> $, final N n, @NotNull final List<N> ns) {
     boolean add = false;
     for (final ASTNode x : ns)
       if (add)
@@ -270,18 +271,15 @@ public interface wizard {
     return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
   }
 
-  @NotNull
-  static CompilationUnit compilationUnitWithBinding(@NotNull final File ¢) {
+  @NotNull static CompilationUnit compilationUnitWithBinding(@NotNull final File ¢) {
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
-  @NotNull
-  static CompilationUnit compilationUnitWithBinding(@NotNull final String ¢) {
+  @NotNull static CompilationUnit compilationUnitWithBinding(@NotNull final String ¢) {
     return (CompilationUnit) makeAST1.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
-  @NotNull
-  static <T> String completionIndex(@NotNull final List<T> ts, final T t) {
+  @NotNull static <T> String completionIndex(@NotNull final List<T> ts, final T t) {
     final String $ = ts.size() + "";
     String i = ts.indexOf(t) + 1 + "";
     while (i.length() < $.length())
@@ -362,7 +360,8 @@ public interface wizard {
    * @param es1
    * @param es2
    * @return */
-  @SuppressWarnings("boxing") static int findSingleDifference(@NotNull final List<? extends ASTNode> es1, @NotNull final List<? extends ASTNode> es2) {
+  @SuppressWarnings("boxing") static int findSingleDifference(@NotNull final List<? extends ASTNode> es1,
+      @NotNull final List<? extends ASTNode> es2) {
     int $ = -1;
     for (final Integer ¢ : range.from(0).to(es1.size()))
       if (!wizard.same(es1.get(¢), es2.get(¢))) {
@@ -373,8 +372,7 @@ public interface wizard {
     return $;
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(@NotNull final ASTNode n) {
+  @NotNull @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(@NotNull final ASTNode n) {
     final List<MethodDeclaration> $ = new ArrayList<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
@@ -501,18 +499,15 @@ public interface wizard {
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
 
-  @NotNull
-  static String nth(final int i, @NotNull final Collection<?> os) {
+  @NotNull static String nth(final int i, @NotNull final Collection<?> os) {
     return nth(i, os.size());
   }
 
-  @NotNull
-  static String nth(final int i, final int n) {
+  @NotNull static String nth(final int i, final int n) {
     return nth(i + "", n + "");
   }
 
-  @NotNull
-  static String nth(final String s, final String n) {
+  @NotNull static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
   }
 
@@ -520,13 +515,11 @@ public interface wizard {
    * @param x JD
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
-  @Nullable
-  static Expression parenthesize(@NotNull final Expression ¢) {
+  @Nullable static Expression parenthesize(@NotNull final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
 
-  @NotNull
-  static ASTParser parser(final int kind) {
+  @NotNull static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     setBinding($);
     $.setKind(kind);
@@ -550,8 +543,7 @@ public interface wizard {
    * @return a duplicate of the parameter, downcasted to the returned type.
    * @see ASTNode#copySubtree
    * @see ASTRewrite */
-  @NotNull
-  @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
+  @NotNull @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
 
@@ -565,8 +557,7 @@ public interface wizard {
         return $;
   }
 
-  @NotNull
-  static Set<Predicate<Modifier>> redundancies(@NotNull final BodyDeclaration ¢) {
+  @NotNull static Set<Predicate<Modifier>> redundancies(@NotNull final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
       return $;
@@ -697,12 +688,11 @@ public interface wizard {
     return ms.stream().anyMatch(λ -> λ.test(m));
   }
   // static Statement lastStatement(final ForStatement ¢) {
-  // return !iz.block(step.body(¢)) ? step.body(¢) :
-  // last(step.statements(az.block(step.body(¢))));
+  // return !iz.block(body(¢)) ? body(¢) :
+  // last(statements(az.block(body(¢))));
   // }
 
-  @Nullable
-  static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
+  @Nullable static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
     final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
     final int last = Math.min(ns1.size(), ns2.size()) - 1;
     final ASTNode $ = null;

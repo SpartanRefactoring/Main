@@ -34,8 +34,7 @@ public abstract class MetaFixture {
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
 
-  @NotNull
-  public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
+  @NotNull public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
     final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
@@ -71,13 +70,11 @@ public abstract class MetaFixture {
     return first(yieldDescendants.untilClass(¢).from(reflectedCompilationUnit()));
   }
 
-  @NotNull
-  public List<SingleMemberAnnotation> singleMemberAnnotations() {
+  @NotNull public List<SingleMemberAnnotation> singleMemberAnnotations() {
     return yieldDescendants.untilClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 
-  @NotNull
-  public List<Annotation> annotations() {
+  @NotNull public List<Annotation> annotations() {
     return yieldDescendants.untilClass(Annotation.class).from(reflectedCompilationUnit());
   }
 
@@ -117,13 +114,11 @@ public abstract class MetaFixture {
     return $;
   }
 
-  @NotNull
-  protected static String[] values(@NotNull final SingleMemberAnnotation ¢) {
+  @NotNull protected static String[] values(@NotNull final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
 
-  @NotNull
-  private static String[] values(@Nullable final Expression $) {
+  @NotNull private static String[] values(@Nullable final Expression $) {
     return $ == null ? new String[] {} : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
   }
@@ -140,8 +135,7 @@ public abstract class MetaFixture {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
-  @Nullable
-  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  @Nullable protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -150,8 +144,7 @@ public abstract class MetaFixture {
       new KnowsTest(null, null, null), //
   };
 
-  @NotNull
-  protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
+  @NotNull protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)

@@ -20,8 +20,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public enum analyze {
   ;
-  @NotNull
-  public static Set<String> dependencies(@NotNull final ASTNode n) {
+  @NotNull public static Set<String> dependencies(@NotNull final ASTNode n) {
     final Set<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
@@ -56,8 +55,7 @@ public enum analyze {
     return new ArrayList<>($).stream().collect(Collectors.toList());
   }
 
-  @Nullable
-  public static String type(final Name n) {
+  @Nullable public static String type(final Name n) {
     final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
     final String $ = m == null ? null : findDeclarationInMethod(n, m);
     return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));

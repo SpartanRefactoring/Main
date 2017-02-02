@@ -74,11 +74,9 @@ public enum PreferencesResources {
       return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-    @NotNull
-    private final Class<? extends TipperCategory> clazz;
+    @NotNull private final Class<? extends TipperCategory> clazz;
     public final String id;
-    @NotNull
-    final String label;
+    @NotNull final String label;
 
     TipperGroup(@NotNull final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;

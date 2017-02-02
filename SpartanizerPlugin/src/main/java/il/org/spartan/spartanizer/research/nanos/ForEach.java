@@ -46,8 +46,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
         && nonTips(rivals, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Override @Nullable public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

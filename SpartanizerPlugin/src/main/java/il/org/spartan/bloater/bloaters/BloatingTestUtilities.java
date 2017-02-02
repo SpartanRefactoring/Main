@@ -42,8 +42,7 @@ public enum BloatingTestUtilities {
       this.classText = classText;
     }
 
-    @Nullable
-    public Operand gives(final String $) {
+    @Nullable public Operand gives(final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -70,8 +69,7 @@ public enum BloatingTestUtilities {
       return null;
     }
 
-    @Nullable
-    public Operand givesWithBinding(final String $) {
+    @Nullable public Operand givesWithBinding(final String $) {
       assert $ != null;
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
@@ -98,8 +96,7 @@ public enum BloatingTestUtilities {
      * @param f tested method name. expanders will be applied only for this
      *        method
      * @return */
-    @Nullable
-    public Operand givesWithBinding(final String $, final String f) {
+    @Nullable public Operand givesWithBinding(final String $, final String f) {
       assert $ != null;
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
@@ -131,8 +128,7 @@ public enum BloatingTestUtilities {
      * @since 19-01-2017
      * @param b
      * @return */
-    @Nullable
-    private static CompilationUnit rename(final CompilationUnit u) {
+    @Nullable private static CompilationUnit rename(final CompilationUnit u) {
       if (u == null)
         return null;
       counter = 0;

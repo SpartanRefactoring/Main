@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @author Amir Sagiv
  * @since 16-11-11 */
 public class Issue0815 {
-  @Nullable
-  private static ASTNode ASTNodeFromString(final String ¢) {
+  @Nullable private static ASTNode ASTNodeFromString(final String ¢) {
     return wizard.ast(¢);
   }
 
