@@ -25,7 +25,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   @NotNull private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new ReturnIfException(), //
+        new ReturnOnException(), //
         new SuppressException(), //
         // new PercolateException(), // R.I.P
         null)//

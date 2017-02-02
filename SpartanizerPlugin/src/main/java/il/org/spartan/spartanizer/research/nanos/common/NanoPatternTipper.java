@@ -51,11 +51,18 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return first(¢);
   }
 
+<<<<<<< HEAD
   @Override @NotNull public final Tip tip(@NotNull final N ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+=======
+  @Override public final Tip tip(final N ¢) {
+    final Tip $ = pattern(¢);
+    return new Tip($.description, ¢, getClass()) {
+      @NotNull @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
         Logger.logNP(¢, className());
-        pattern(¢).go(r, g);
+        $.go(r, g);
       }
     };
   }
@@ -68,7 +75,11 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return className();
   }
 
+<<<<<<< HEAD
   @SuppressWarnings("static-method") @Nullable public String example() {
+=======
+  @Nullable @SuppressWarnings("static-method") public String example() {
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
     return null;
   }
 
@@ -86,13 +97,21 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
 
   protected abstract Tip pattern(N ¢);
 
+<<<<<<< HEAD
   @SuppressWarnings("static-method") @Nullable public Category category() {
+=======
+  @Nullable @SuppressWarnings("static-method") public Category category() {
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
     return null;
   }
 
   public enum Category {
     Iterative, Field, Conditional, Exception, Safety, MethodBody {
+<<<<<<< HEAD
       @Override @NotNull public String toString() {
+=======
+      @NotNull @Override public String toString() {
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
         return "Method Body";
       }
     },

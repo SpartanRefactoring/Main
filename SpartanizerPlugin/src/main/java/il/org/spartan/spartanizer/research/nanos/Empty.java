@@ -21,6 +21,7 @@ public final class Empty extends NanoPatternTipper<InfixExpression> {
     {
       add(patternTipper("$X.size() == 0", "empty($X)", "is empty"));
       add(patternTipper("0 == $X.size()", "empty($X)", "is empty"));
+      add(patternTipper("$X.isEmpty()", "empty($X)", "is empty"));
     }
   };
 
