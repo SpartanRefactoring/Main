@@ -102,12 +102,7 @@ public interface Linguistic {
   }
 
   static String time(final long $) {
-    try {
-      return new DecimalFormat(DOUBLE_FORMAT).format($ / 1000000000.0);
-    } catch (@NotNull final ArithmeticException ¢) {
-      monitor.log(¢);
-      return UNKNOWN;
-    }
+    return new DecimalFormat(DOUBLE_FORMAT).format($ / 1000000000.0);
   }
 
   /** Cut string's suffix to maximal length for every row.
