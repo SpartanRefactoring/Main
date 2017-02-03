@@ -17,12 +17,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-11-13 */
 @SuppressWarnings("static-method") //
 public class LinguisticTest {
-  @Test public void testPluralInt() {
-    azzert.that(Linguistic.plurals("house", (Int) null), is(Linguistic.UNKNOWN + " houses"));
-    azzert.that(Linguistic.plurals("house", new Int(1)), is("one house"));
-    azzert.that(Linguistic.plurals("house", new Int(2)), is("2 houses"));
-  }
-
   @Test public void testPluralesInt() {
     azzert.that(Linguistic.plurales("church", (Int) null), is(Linguistic.UNKNOWN + " churches"));
     azzert.that(Linguistic.plurales("church", new Int(1)), is("one church"));
@@ -33,6 +27,12 @@ public class LinguisticTest {
     azzert.that(Linguistic.plurales("church", (Integer) null), is(Linguistic.UNKNOWN + " churches"));
     azzert.that(Linguistic.plurales("church", Integer.valueOf(1)), is("one church"));
     azzert.that(Linguistic.plurales("church", Integer.valueOf(2)), is("2 churches"));
+  }
+
+  @Test public void testPluralInt() {
+    azzert.that(Linguistic.plurals("house", (Int) null), is(Linguistic.UNKNOWN + " houses"));
+    azzert.that(Linguistic.plurals("house", new Int(1)), is("one house"));
+    azzert.that(Linguistic.plurals("house", new Int(2)), is("2 houses"));
   }
 
   @Test public void testPluralInteger() {
@@ -48,6 +48,15 @@ public class LinguisticTest {
 
   @Test public void testTimeCorrect() {
     azzert.that(Linguistic.time(0), is(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0)));
+  }
+
+
+  @Test public void testTimeMAX() {
+    azzert.that(Linguistic.time(Long.MAX_VALUE), is(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(9223372036.85)));
+  }
+
+  @Test public void testTimeMIN() {
+    azzert.that(Linguistic.time(Long.MIN_VALUE), is(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(-9223372036.85)));
   }
 
   @Test public void testTrimAbsoluteReturnsSameStringForShortString() {
