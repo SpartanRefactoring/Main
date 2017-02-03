@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
+import static il.org.spartan.lisp.last;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
@@ -211,8 +212,7 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(@NotNull final InfixExpression $) {
-    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(Collectors.toList()))
-        .to(wizard.negate(operator($)));
+    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(Collectors.toList())).to(wizard.negate(operator($)));
   }
 
   static int arity(final InfixExpression ¢) {
@@ -305,19 +305,6 @@ public interface wizard {
     return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
   }
 
-  /** @param o JD
-   * @return operator that produces the logical negation of the parameter */
-  @Nullable static InfixExpression.Operator negate(@Nullable final InfixExpression.Operator ¢) {
-    return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
-            : ¢.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
-                : ¢.equals(EQUALS) ? NOT_EQUALS
-                    : ¢.equals(NOT_EQUALS) ? EQUALS
-                        : ¢.equals(LESS_EQUALS) ? GREATER
-                            : ¢.equals(GREATER) ? LESS_EQUALS //
-                                : ¢.equals(GREATER_EQUALS) ? LESS //
-                                    : ¢.equals(LESS) ? GREATER_EQUALS : null;
-  }
-
   /** @param ns unknown number of nodes to check
    * @return <code><b>true</b></code> <em>iff</em>one of the nodes is an
    *         Expression Statement of type Post or Pre Expression with ++ or --
@@ -364,6 +351,37 @@ public interface wizard {
   static InfixExpression.Operator deMorgan(@NotNull final InfixExpression.Operator ¢) {
     assert iz.deMorgan(¢);
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
+  }
+
+  /** Determines if we can be certain that a {@link Statement} ends with a
+   * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
+   * {@link BreakStatement}, {@link ContinueStatement}).
+   * @param ¢ JD
+   * @return true <b>iff</b> the Statement can be verified to end with a
+   *         sequencer. */
+  static boolean endsWithSequencer(@Nullable final Statement ¢) {
+    if (¢ == null)
+      return false;
+    final Statement $ = (Statement) hop.lastStatement(¢);
+    if ($ == null)
+      return false;
+    switch ($.getNodeType()) {
+      case BLOCK:
+        return endsWithSequencer(last(statements((Block) $)));
+      case BREAK_STATEMENT:
+      case CONTINUE_STATEMENT:
+      case RETURN_STATEMENT:
+      case THROW_STATEMENT:
+        return true;
+      case DO_STATEMENT:
+        return endsWithSequencer(((DoStatement) $).getBody());
+      case LABELED_STATEMENT:
+        return endsWithSequencer(((LabeledStatement) $).getBody());
+      case IF_STATEMENT:
+        return endsWithSequencer(then((IfStatement) $)) && endsWithSequencer(elze((IfStatement) $));
+      default:
+        return false;
+    }
   }
 
   /** Find the first matching expression to the given boolean (b).
@@ -504,6 +522,19 @@ public interface wizard {
 
   static MethodDeclaration methodWithBinding(@NotNull final String m) {
     return findFirst.instanceOf(MethodDeclaration.class).in(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
+  }
+
+  /** @param o JD
+   * @return operator that produces the logical negation of the parameter */
+  @Nullable static InfixExpression.Operator negate(@Nullable final InfixExpression.Operator ¢) {
+    return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
+        : ¢.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
+            : ¢.equals(EQUALS) ? NOT_EQUALS
+                : ¢.equals(NOT_EQUALS) ? EQUALS
+                    : ¢.equals(LESS_EQUALS) ? GREATER
+                        : ¢.equals(GREATER) ? LESS_EQUALS //
+                            : ¢.equals(GREATER_EQUALS) ? LESS //
+                                : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
   /** Determine whether a node is an infix expression whose operator is

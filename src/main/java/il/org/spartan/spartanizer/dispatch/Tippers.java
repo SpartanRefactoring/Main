@@ -57,37 +57,6 @@ public enum Tippers {
     }
   }
 
-  /** Determines if we can be certain that a {@link Statement} ends with a
-   * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
-   * {@link BreakStatement}, {@link ContinueStatement}).
-   * @param ¢ JD
-   * @return true <b>iff</b> the Statement can be verified to end with a
-   *         sequencer. */
-  public static boolean endsWithSequencer(@Nullable final Statement ¢) {
-    if (¢ == null)
-      return false;
-    final Statement $ = (Statement) hop.lastStatement(¢);
-    if ($ == null)
-      return false;
-    switch ($.getNodeType()) {
-      case BLOCK:
-        return endsWithSequencer(last(statements((Block) $)));
-      case BREAK_STATEMENT:
-      case CONTINUE_STATEMENT:
-      case RETURN_STATEMENT:
-      case THROW_STATEMENT:
-        return true;
-      case DO_STATEMENT:
-        return endsWithSequencer(((DoStatement) $).getBody());
-      case LABELED_STATEMENT:
-        return endsWithSequencer(((LabeledStatement) $).getBody());
-      case IF_STATEMENT:
-        return endsWithSequencer(then((IfStatement) $)) && endsWithSequencer(elze((IfStatement) $));
-      default:
-        return false;
-    }
-  }
-
   @NotNull public static ListRewrite insertAfter(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r,
       final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
