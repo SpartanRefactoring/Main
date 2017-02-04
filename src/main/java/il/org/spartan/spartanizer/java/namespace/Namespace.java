@@ -112,14 +112,12 @@ public final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  @NotNull
-  static Namespace spawnFor(final Namespace $, final ForStatement s) {
+  @NotNull static Namespace spawnFor(final Namespace $, final ForStatement s) {
     final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
     return s == null || x == null ? $ : $.spawn(for¢).put(x);
   }
 
-  @NotNull
-  static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
+  @NotNull static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());
   }
 

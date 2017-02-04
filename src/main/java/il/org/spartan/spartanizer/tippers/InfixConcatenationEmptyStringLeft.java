@@ -34,8 +34,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
    * @param i1 the index of the first element
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
-  @NotNull
-  private static <T> List<T> swap(@NotNull final List<T> $, final int i1, final int i2) {
+  @NotNull private static <T> List<T> swap(@NotNull final List<T> $, final int i1, final int i2) {
     if (i1 < $.size() && i2 < $.size()) {
       final T t = $.get(i1);
       lisp.replace($, $.get(i2), i1);
@@ -44,8 +43,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     return $;
   }
 
-  @Nullable
-  @Override public String description(final InfixExpression ¢) {
+  @Override @Nullable public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }
 

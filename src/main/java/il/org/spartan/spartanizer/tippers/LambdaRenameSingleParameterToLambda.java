@@ -23,8 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09 */
 public final class LambdaRenameSingleParameterToLambda extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {
-  @NotNull
-  @Override public String description(final LambdaExpression ¢) {
+  @Override @NotNull public String description(final LambdaExpression ¢) {
     return "Rename parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 

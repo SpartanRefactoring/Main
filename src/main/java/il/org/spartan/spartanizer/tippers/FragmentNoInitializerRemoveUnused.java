@@ -22,14 +22,13 @@ public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<Varia
     return "Remove unused, uninitialized variable";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Remove unused variable: " + trivia.gist(¢);
   }
 
   @Override public Tip tip(@NotNull final VariableDeclarationFragment f) {
     return !iz.variableDeclarationStatement(parent(f)) || f.getInitializer() != null || haz.annotation(f)
-        || !collect.usesOf(f.getName()).in(scope.of(f)).isEmpty() ? null : new Tip(description(f), f, getClass()) {
+        || !collect.usesOf(f.getName()).in(scope.of(f)).isEmpty() ? null : new Tip(description(f), f.getName(), getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             eliminate(f, r, g);
           }

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/** Convert a multiplication of expression\statement by zero to zero <br/>
+/** Convert a multiplication of expression\statement by zero to zero 
  * where there is no any side effect
  * @author Dor Ma'ayan
  * @since 2016-09-25
@@ -27,13 +27,11 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     return extract.allOperands(x).stream().anyMatch(λ -> !sideEffects.free(λ));
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();

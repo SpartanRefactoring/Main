@@ -13,15 +13,15 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 import org.jetbrains.annotations.NotNull;
 
-/** Evaluate the addition of numbers according to the following rules <br/>
- * <br/>
+/** Evaluate the addition of numbers according to the following rules 
+ * 
  * <code>
- * int + int --> int <br/>
- * double + double --> double <br/>
- * long + long --> long <br/>
- * int + double --> double <br/>
- * int + long --> long <br/>
- * long + double --> double <br/>
+ * int + int --> int 
+ * double + double --> double 
+ * long + long --> long 
+ * int + double --> double 
+ * int + long --> long 
+ * long + double --> double 
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */

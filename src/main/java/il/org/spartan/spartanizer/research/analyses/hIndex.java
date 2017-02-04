@@ -47,8 +47,7 @@ public interface hIndex {
     System.out.println("h-index: " + hindex(rs));
   }
 
-  @NotNull
-  static String declarationFile(final CompilationUnit u, final String methodName, @NotNull final String fileName) {
+  @NotNull static String declarationFile(final CompilationUnit u, final String methodName, @NotNull final String fileName) {
     return !methodNames(u).contains(methodName) ? "" : fileName.replaceAll("\\.java", "") + ".";
   }
 }

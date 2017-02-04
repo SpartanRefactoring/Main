@@ -33,8 +33,7 @@ public class Table_Tippers {
     }
   }
 
-  @NotNull
-  public static String name(@Nullable final Class<?> ¢) {
+  @NotNull public static String name(@Nullable final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }

@@ -10,8 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Matteo Orru'
  * @since 2016 */
 public interface FeatureCollector<T> {
-  @NotNull
-  default NamedFunction<ASTNode, Object> m(final String name, final Function<ASTNode, Object> r) {
+  @NotNull default NamedFunction<ASTNode, Object> m(final String name, final Function<ASTNode, Object> r) {
     return new NamedFunction<>(name, r);
   }
 

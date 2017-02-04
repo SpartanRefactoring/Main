@@ -21,8 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public Tip tip(@NotNull final ParenthesizedExpression x) {
+  @Override @NotNull public Tip tip(@NotNull final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, copy.of(expression(x)), g);
@@ -30,8 +29,7 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
     };
   }
 
-  @NotNull
-  @Override public String description(@NotNull final ParenthesizedExpression ¢) {
+  @Override @NotNull public String description(@NotNull final ParenthesizedExpression ¢) {
     return "remove extra parenthesis " + trivia.gist(¢);
   }
 

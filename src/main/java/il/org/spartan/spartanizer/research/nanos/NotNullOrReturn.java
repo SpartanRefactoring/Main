@@ -31,8 +31,7 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
     ;
   }
 
-  @NotNull
-  @Override public Tip pattern(@NotNull final IfStatement ¢) {
+  @Override @NotNull public Tip pattern(@NotNull final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
@@ -40,28 +39,23 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
     };
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Safety;
   }
 
-  @NotNull
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return description;
   }
 
-  @NotNull
-  @Override public String technicalName() {
+  @Override @NotNull public String technicalName() {
     return "IfXIsNullReturn";
   }
 
-  @NotNull
-  @Override public String example() {
+  @Override @NotNull public String example() {
     return "if(X == null) return;";
   }
 
-  @NotNull
-  @Override public String symbolycReplacement() {
+  @Override @NotNull public String symbolycReplacement() {
     return "azzert.notNull(X);";
   }
 }

@@ -19,14 +19,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 05-12-2016 */
 public class InfixPlusToMinus extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.SyntacticBaggage {
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     return !iz.prefixMinus(¢.getRightOperand()) || !iz.infixPlus(¢) ? null
         : subject.pair(¢.getLeftOperand(), az.prefixExpression(¢.getRightOperand()).getOperand()).to(Operator.MINUS);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "replace the plus in: " + ¢ + " to minus";
   }
 }

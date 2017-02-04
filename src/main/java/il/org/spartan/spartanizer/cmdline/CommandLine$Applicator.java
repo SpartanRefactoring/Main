@@ -93,7 +93,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     ReportGenerator.report("metrics").put("File", presentFileName);
     ReportGenerator.report("methods").put("File", presentFileName);
     final String output = fixedPoint(input);
-    final ASTNode outputASTNode = makeAST1.COMPILATION_UNIT.from(output); // instead
+    final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // instead
                                                                           // of
                                                                           // CLASS_BODY_DECLARATIONS
     // ReportGenerator.report("tips").put("ClassLOCAfter",
@@ -143,7 +143,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   private String fixedPoint(final String from) {
     for (final Document $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST1.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (@NotNull final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
@@ -158,8 +158,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
-  @NotNull
-  private ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
+  @NotNull private ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     lastTime = new Date().getTime();
     consolidateTips($, ¢);
@@ -171,8 +170,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * matteo
    * @param u
    * @return */
-  @NotNull
-  public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
+  @NotNull public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;

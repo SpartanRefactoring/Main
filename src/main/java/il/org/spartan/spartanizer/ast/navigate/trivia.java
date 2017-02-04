@@ -58,8 +58,7 @@ public interface trivia {
     return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
-  @NotNull
-  static <N extends ASTNode> N removeComments(@NotNull final N n) {
+  @NotNull static <N extends ASTNode> N removeComments(@NotNull final N n) {
     n.accept(new ASTVisitor() {
       boolean delete(@NotNull final ASTNode ¢) {
         ¢.delete();

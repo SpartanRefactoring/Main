@@ -15,23 +15,19 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public enum TermsReorganizer {
   ;
-  @Nullable
-  public static Expression simplify(final InfixExpression ¢) {
+  @Nullable public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
 
-  @Nullable
-  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
+  @Nullable private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-  @Nullable
-  private static Expression build(final TermsCollector ¢) {
+  @Nullable private static Expression build(final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
-  @Nullable
-  private static Expression buildMinus(final Expression first, final List<Expression> rest) {
+  @Nullable private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     if (rest.isEmpty())

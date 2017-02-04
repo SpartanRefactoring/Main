@@ -12,8 +12,8 @@ import il.org.spartan.utils.*;
  * @since Jan 21, 2017 */
 public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   private static final long serialVersionUID = 1L;
-  @SuppressWarnings("boxing") private static final List<Integer> loopTypes = Arrays
-      .asList(ASTNode.WHILE_STATEMENT, ASTNode.FOR_STATEMENT, ASTNode.ENHANCED_FOR_STATEMENT, ASTNode.DO_STATEMENT);
+  @SuppressWarnings("boxing") private static final List<Integer> loopTypes = Arrays.asList(ASTNode.WHILE_STATEMENT, ASTNode.FOR_STATEMENT,
+      ASTNode.ENHANCED_FOR_STATEMENT, ASTNode.DO_STATEMENT);
 
   @Override public void clear() {
     super.clear();

@@ -25,8 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-08-28 */
 public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @Override @NotNull public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 

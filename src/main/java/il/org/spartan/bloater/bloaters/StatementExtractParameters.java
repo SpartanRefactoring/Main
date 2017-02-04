@@ -1,8 +1,8 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -11,9 +11,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -164,7 +165,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       idns.addAll(as.list(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
       // TODO Ori Roth: do it better
-      for (final ImportDeclaration oid : step.imports(u)) // Tough
+      for (final ImportDeclaration oid : imports(u)) // Tough
         if (idn.equals(oid.getName().getFullyQualifiedName()))
           continue outer;
       final ImportDeclaration id = s.getAST().newImportDeclaration();

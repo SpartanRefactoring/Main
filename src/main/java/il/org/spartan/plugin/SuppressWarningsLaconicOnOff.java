@@ -33,9 +33,10 @@ public enum SuppressWarningsLaconicOnOff {
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
    * @param tipper deactivation {@link Type} */
-  public static void deactivate(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t) throws IllegalArgumentException, CoreException {
+  public static void deactivate(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t)
+      throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
-    final ICompilationUnit u = makeAST1.iCompilationUnit(m);
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
@@ -59,8 +60,7 @@ public enum SuppressWarningsLaconicOnOff {
       $.replace(d, $.createGroupNode(new ASTNode[] { $.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), $.createCopyTarget(d) }), null);
   }
 
-  @NotNull
-  private static String fixNL(final BodyDeclaration ¢) {
+  @NotNull private static String fixNL(final BodyDeclaration ¢) {
     return ¢ instanceof EnumDeclaration || ¢ instanceof MethodDeclaration || ¢ instanceof EnumConstantDeclaration ? "\n" : "";
   }
 
@@ -118,8 +118,8 @@ public enum SuppressWarningsLaconicOnOff {
     unEnable($, d.getJavadoc());
   }
 
-  @NotNull
-  private static ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final CompilationUnit u, @NotNull final IMarker m, @NotNull final Type t) {
+  @NotNull private static ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final CompilationUnit u, @NotNull final IMarker m,
+      @NotNull final Type t) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -128,9 +128,8 @@ public enum SuppressWarningsLaconicOnOff {
     return $;
   }
 
-  @NotNull
-  private static ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t) {
-    return createRewrite(pm, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, t);
+  @NotNull private static ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t) {
+    return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
   }
 
   private static void fillRewrite(@NotNull final ASTRewrite $, @NotNull final CompilationUnit u, @NotNull final IMarker m, @NotNull final Type t) {

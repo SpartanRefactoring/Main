@@ -20,10 +20,8 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil
  * @since Dec 14, 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
-  @NotNull
-  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @NotNull
-  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") @NotNull protected static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @NotNull protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array(".");
   protected static Class<? extends FolderASTVisitor> clazz;
   private static Constructor<? extends FolderASTVisitor> declaredConstructor;
@@ -68,8 +66,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
-  @NotNull
-  protected static String makeFile(final String fileName) {
+  @NotNull protected static String makeFile(final String fileName) {
     return outputFolder + system.fileSeparator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
@@ -91,7 +88,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   void collect(@NotNull final String javaCode) {
-    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   void visit(@NotNull final File f) {

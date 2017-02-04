@@ -20,7 +20,7 @@ public abstract class JavadocerTest {
   }
 
   private static String spartanized(@NotNull final String ¢) {
-    return spartanizer.fixedPoint(makeAST1.COMPILATION_UNIT.from(¢) + "");
+    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 
   protected static void setNano(final JavadocMarkerNanoPattern ¢) {

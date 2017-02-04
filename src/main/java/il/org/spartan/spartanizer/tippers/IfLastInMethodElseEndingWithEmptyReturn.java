@@ -5,6 +5,7 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -14,7 +15,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** convert {@code if(a)f();else{g();return;} } into
  * {@code if(a)f();else{g();;}} provided that this <code><b>if</b></code>

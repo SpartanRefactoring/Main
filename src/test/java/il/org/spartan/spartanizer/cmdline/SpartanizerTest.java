@@ -19,7 +19,7 @@ public class SpartanizerTest {
   private static int nMethods;
 
   public static void main(final String[] args) {
-    final ASTNode u = makeAST1.COMPILATION_UNIT.from("package test;import static il.org.spartan.plugin.demos.Inline.*;"
+    final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;import static il.org.spartan.plugin.demos.Inline.*;"
         + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
         + " @Ignore(\"comment\") @Test public void testMethod(){int i = 1;assert (i>0);} }");
     assert u != null;
@@ -149,7 +149,7 @@ public class SpartanizerTest {
   }
 
   @Test public void testMethodWithAnnotation_01() {
-    final ASTNode u1 = makeAST1.COMPILATION_UNIT.from(test1), u2 = makeAST1.COMPILATION_UNIT.from(test2);
+    final ASTNode u1 = makeAST.COMPILATION_UNIT.from(test1), u2 = makeAST.COMPILATION_UNIT.from(test2);
     assert u1 != null;
     assert u2 != null;
     visitASTNode(u1);
@@ -160,14 +160,14 @@ public class SpartanizerTest {
 
   @Test public void testSpartanizerCheckMethod_01() {
     print(test1);
-    final ASTNode u = makeAST1.COMPILATION_UNIT.from(test2);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
     print(u.getClass());
     assert u != null;
   }
 
   @Test public void testSpartanizerCheckMethod_02() {
     print(test1);
-    final ASTNode u = makeAST1.COMPILATION_UNIT.from(test2);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test2);
     assert u != null;
     u.accept(new ASTVisitor() {
       /* (non-Javadoc)
@@ -206,7 +206,7 @@ public class SpartanizerTest {
     final String test4 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
         + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{public void method1(){int i = 1;" + " assert (i>0);} }";
     print(test4);
-    final ASTNode u = makeAST1.COMPILATION_UNIT.from(test4);
+    final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean storeMethodName(final SimpleName ¢) {

@@ -60,8 +60,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
     runTest();
   }
 
-  @Nullable
-  @Override protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
+  @Override @Nullable protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
 

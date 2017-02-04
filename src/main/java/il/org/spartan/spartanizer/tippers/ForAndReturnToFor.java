@@ -26,9 +26,9 @@ import org.jetbrains.annotations.Nullable;
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
-  @Nullable
-  @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final ForStatement s, @Nullable final Statement nextStatement, final TextEditGroup g) {
-    if (s == null || $ == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
+  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final ForStatement s, @Nullable final Statement nextStatement,
+      final TextEditGroup g) {
+    if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
     f.setBody(copy.of(subject.pair(copy.of(nextStatement), null).toIf(make.notOf(copy.of(expression(f))))));
@@ -38,8 +38,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "combine the for and return statements to a single statement";
   }
 }

@@ -35,18 +35,15 @@ public final class Infix {
       return anyTips(tippers, ¢);
     }
 
-    @Nullable
-    @Override public Tip pattern(final InfixExpression ¢) {
+    @Override @Nullable public Tip pattern(final InfixExpression ¢) {
       return firstTip(tippers, ¢);
     }
 
-    @NotNull
-    @Override public Category category() {
+    @Override @NotNull public Category category() {
       return Category.Safety;
     }
 
-    @NotNull
-    @Override public String description() {
+    @Override @NotNull public String description() {
       return "A field access or an invocation where the callee is checked to be non-null and if is, evaluates to a default value";
     }
 

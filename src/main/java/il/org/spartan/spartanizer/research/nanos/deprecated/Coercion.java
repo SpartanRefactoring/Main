@@ -40,8 +40,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
 
-  @NotNull
-  @Override public Tip pattern(@NotNull final CastExpression ¢) {
+  @Override @NotNull public Tip pattern(@NotNull final CastExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         if (!azMethodExist(¢))
@@ -71,13 +70,11 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
   }
 
-  @Nullable
-  private static String fileAzFilePath() {
+  @Nullable private static String fileAzFilePath() {
     return getProperty(API_FILE);
   }
 
-  @NotNull
-  private static File fileAzFile() {
+  @NotNull private static File fileAzFile() {
     return new File(fileAzFilePath());
   }
 
@@ -108,13 +105,11 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return "static ";
   }
 
-  @NotNull
-  private static String azMethodBody(final CastExpression ¢) {
+  @NotNull private static String azMethodBody(final CastExpression ¢) {
     return "(Object ¢){return (" + step.type(¢) + ")¢;}";
   }
 
-  @NotNull
-  static String azMethodName(final CastExpression ¢) {
+  @NotNull static String azMethodName(final CastExpression ¢) {
     return (getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : !API_LEVEL_TYPE.equals(getProperty(API_LEVEL)) ? "" : "az")
         + (step.type(¢) + "").replaceAll("//.", "•");
   }
@@ -134,24 +129,21 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
   }
 
-  @NotNull
-  private static File packageAzFile(final CastExpression ¢) {
+  @NotNull private static File packageAzFile(final CastExpression ¢) {
     return new File(packageAzFilePath(¢));
   }
 
-  @NotNull
-  private static String packageAzFilePath(final CastExpression ¢) {
+  @NotNull private static String packageAzFilePath(final CastExpression ¢) {
     return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + containing.package¢(¢).replaceAll("\\.", system.fileSeparator)
         + "/az.java";
   }
 
   private static AbstractTypeDeclaration getType(@NotNull final File x) {
     return az.abstractTypeDeclaration(
-        step.types(az.compilationUnit(makeAST1.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
+        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
 
-  @Nullable
-  private static String getProperty(final String property) {
+  @Nullable private static String getProperty(final String property) {
     return AnalyzerOptions.get(Coercion.class.getSimpleName(), property);
   }
 
@@ -163,8 +155,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return ¢;
   }
 
-  @NotNull
-  private static File createFileFromTemplate(@NotNull final File $) {
+  @NotNull private static File createFileFromTemplate(@NotNull final File $) {
     // TODO: Marco update package declaration to match actual package...
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
@@ -175,8 +166,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final CastExpression __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final CastExpression __) {
     return "replace coercion with az()";
   }
 }

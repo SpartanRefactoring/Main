@@ -18,79 +18,65 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
-  @NotNull
-  protected T map(@NotNull final ArrayAccess ¢) {
+  @NotNull protected T map(@NotNull final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  @NotNull
-  protected T map(@NotNull final ArrayCreation ¢) {
+  @NotNull protected T map(@NotNull final ArrayCreation ¢) {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  @Nullable
-  private T reduce(@NotNull final List<Expression> xs) {
+  @Nullable private T reduce(@NotNull final List<Expression> xs) {
     T $ = neutralElement();
     for (final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
 
-  @Nullable
-  protected T map(final AssertStatement ¢) {
+  @Nullable protected T map(final AssertStatement ¢) {
     return mapAtomic(¢);
   }
 
-  @NotNull
-  protected T map(final Assignment ¢) {
+  @NotNull protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
-  @Nullable
-  protected T map(final Block b) {
+  @Nullable protected T map(final Block b) {
     T $ = neutralElement();
     for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
 
-  @Nullable
-  protected T map(final BreakStatement ¢) {
+  @Nullable protected T map(final BreakStatement ¢) {
     return mapAtomic(¢);
   }
 
-  @NotNull
-  protected T map(@NotNull final ClassInstanceCreation ¢) {
+  @NotNull protected T map(@NotNull final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduce(arguments(¢)));
   }
 
-  @NotNull
-  protected T map(@NotNull final ConditionalExpression ¢) {
+  @NotNull protected T map(@NotNull final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  @Nullable
-  protected T map(final ConstructorInvocation ¢) {
+  @Nullable protected T map(final ConstructorInvocation ¢) {
     return mapAtomic(¢);
   }
 
-  @Nullable
-  protected T map(final ContinueStatement ¢) {
+  @Nullable protected T map(final ContinueStatement ¢) {
     return mapAtomic(¢);
   }
 
-  @Nullable
-  protected T map(@NotNull final DoStatement ¢) {
+  @Nullable protected T map(@NotNull final DoStatement ¢) {
     return map(¢.getBody());
   }
 
-  @Nullable
-  protected T map(final EmptyStatement ¢) {
+  @Nullable protected T map(final EmptyStatement ¢) {
     return mapAtomic(¢);
   }
 
-  @Nullable
-  protected T map(@NotNull final EnhancedForStatement ¢) {
+  @Nullable protected T map(@NotNull final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
 
@@ -127,43 +113,35 @@ public abstract class StatementReduce<T> {
     }
   }
 
-  @Nullable
-  protected T map(@NotNull final InstanceofExpression ¢) {
+  @Nullable protected T map(@NotNull final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 
-  @Nullable
-  protected T map(final ExpressionStatement ¢) {
+  @Nullable protected T map(final ExpressionStatement ¢) {
     return mapAtomic(¢);
   }
 
-  @NotNull
-  protected T map(final IfStatement ¢) {
+  @NotNull protected T map(final IfStatement ¢) {
     return reduceIfStatement(expression(¢), then(¢), elze(¢));
   }
 
-  @Nullable
-  protected T map(@NotNull final LabeledStatement ¢) {
+  @Nullable protected T map(@NotNull final LabeledStatement ¢) {
     return map(¢.getBody());
   }
 
-  @NotNull
-  protected T map(final MethodInvocation ¢) {
+  @NotNull protected T map(final MethodInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-  @Nullable
-  protected T map(final PostfixExpression ¢) {
+  @Nullable protected T map(final PostfixExpression ¢) {
     return map(step.expression(¢));
   }
 
-  @Nullable
-  protected T map(final PrefixExpression ¢) {
+  @Nullable protected T map(final PrefixExpression ¢) {
     return map(step.expression(¢));
   }
 
-  @Nullable
-  protected T map(final ReturnStatement ¢) {
+  @Nullable protected T map(final ReturnStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -201,40 +179,33 @@ public abstract class StatementReduce<T> {
     }
   }
 
-  @NotNull
-  protected T map(final SuperConstructorInvocation ¢) {
+  @NotNull protected T map(final SuperConstructorInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-  @NotNull
-  protected T map(final SuperMethodInvocation ¢) {
+  @NotNull protected T map(final SuperMethodInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-  @Nullable
-  protected T mapAtomic(final Statement i) {
+  @Nullable protected T mapAtomic(final Statement i) {
     ___.______unused(i);
     return neutralElement();
   }
 
-  @Nullable
-  protected T neutralElement() {
+  @Nullable protected T neutralElement() {
     return null;
   }
 
-  @NotNull
-  protected abstract T reduce(T t1, T t2);
+  @NotNull protected abstract T reduce(T t1, T t2);
 
-  @NotNull
-  @SafeVarargs protected final T reduce(final T t1, final T t2, @NotNull final T... ts) {
+  @SafeVarargs @NotNull protected final T reduce(final T t1, final T t2, @NotNull final T... ts) {
     T $ = reduce(t1, t2);
     for (final T ¢ : ts)
       $ = reduce($, ¢);
     return $;
   }
 
-  @NotNull
-  protected T reduceIfStatement(@NotNull final Expression x, @NotNull final Statement then, @NotNull final Statement elze) {
+  @NotNull protected T reduceIfStatement(@NotNull final Expression x, @NotNull final Statement then, @NotNull final Statement elze) {
     return reduce(map(x), reduce(map(then), map(elze)));
   }
 }

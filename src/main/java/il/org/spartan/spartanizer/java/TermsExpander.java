@@ -22,24 +22,19 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-08 */
 public enum TermsExpander {
   ;
-  @NotNull
-  public static Expression simplify(@NotNull final InfixExpression ¢) {
+  @NotNull public static Expression simplify(@NotNull final InfixExpression ¢) {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
-  @Nullable
-  private static InfixExpression appendMinus(@NotNull final Term ¢, final InfixExpression $) {
+  @Nullable private static InfixExpression appendMinus(@NotNull final Term ¢, final InfixExpression $) {
     return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
   }
 
-  @Nullable
-  private static InfixExpression appendPlus(@NotNull final Term t, final InfixExpression $) {
-    final Expression ¢ = copy.of(t.expression);
-    return t.positive() ? subject.append($, ¢) : subject.pair($, ¢).to(MINUS2);
+  @Nullable private static InfixExpression appendPlus(@NotNull final Term t, final InfixExpression $) {
+    return t.positive() ? subject.append($, t.expression) : subject.pair($, t.expression).to(MINUS2);
   }
 
-  @NotNull
-  private static Expression base(@NotNull final List<Term> ts) {
+  @NotNull private static Expression base(@NotNull final List<Term> ts) {
     assert ts != null;
     assert !ts.isEmpty();
     final Term first = first(ts);
@@ -51,8 +46,7 @@ public enum TermsExpander {
     return step(chop(chop(ts)), $);
   }
 
-  @NotNull
-  private static InfixExpression base(@NotNull final Term t1, @NotNull final Term t2) {
+  @NotNull private static InfixExpression base(@NotNull final Term t1, @NotNull final Term t2) {
     if (t1.positive())
       return subject.pair(t1.expression, t2.expression).to(t2.positive() ? PLUS2 : MINUS2);
     assert t1.negative();
@@ -62,8 +56,7 @@ public enum TermsExpander {
     ).to(MINUS2);
   }
 
-  @NotNull
-  private static Expression base(@NotNull final TermsCollector ¢) {
+  @NotNull private static Expression base(@NotNull final TermsCollector ¢) {
     return base(¢.all());
   }
 
@@ -94,8 +87,7 @@ public enum TermsExpander {
     return recurse(chop(ts), o == PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }
 
-  @NotNull
-  private static Expression step(@NotNull final List<Term> ¢, @NotNull final Expression $) {
+  @NotNull private static Expression step(@NotNull final List<Term> ¢, @NotNull final Expression $) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse(¢, $);
   }

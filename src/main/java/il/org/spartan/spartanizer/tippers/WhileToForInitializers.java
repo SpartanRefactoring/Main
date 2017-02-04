@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
-  @NotNull
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
+  @NotNull private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
@@ -34,8 +33,7 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return fragmentsUseFitting(s, ¢);
   }
 
-  @Nullable
-  private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
+  @Nullable private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
 
@@ -46,13 +44,11 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  @Nullable
-  private static Expression Initializers(final VariableDeclarationFragment ¢) {
+  @Nullable private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return az.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  @Nullable
-  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  @Nullable private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
@@ -73,14 +69,12 @@ public final class WhileToForInitializers extends ReplaceToNextStatementExclude<
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f, @Nullable final Statement nextStatement, final TextEditGroup g,
-                                    @Nullable final ExclusionManager exclude) {
+  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
+      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement vds = parent(f);

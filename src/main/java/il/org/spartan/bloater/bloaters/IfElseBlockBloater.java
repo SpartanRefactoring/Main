@@ -2,8 +2,9 @@ package il.org.spartan.bloater.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -17,17 +18,17 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final IfStatement s) {
-    if (s == null || iz.block(step.then(s)) && step.elze(s) == null || iz.block(step.then(s)) && step.elze(s) != null && iz.block(step.elze(s)))
+    if (s == null || iz.block(then(s)) && elze(s) == null || iz.block(then(s)) && elze(s) != null && iz.block(elze(s)))
       return null;
     final IfStatement $ = copy.of(s);
-    if (!iz.block(step.then(s))) {
+    if (!iz.block(then(s))) {
       final Block b = s.getAST().newBlock();
-      step.statements(b).add(copy.of(step.then(s)));
+      statements(b).add(copy.of(then(s)));
       $.setThenStatement(b);
     }
-    if (step.elze(s) != null && !iz.block(step.elze(s))) {
+    if (elze(s) != null && !iz.block(elze(s))) {
       final Block b = s.getAST().newBlock();
-      step.statements(b).add(copy.of(step.elze(s)));
+      statements(b).add(copy.of(elze(s)));
       $.setElseStatement(b);
     }
     return $;

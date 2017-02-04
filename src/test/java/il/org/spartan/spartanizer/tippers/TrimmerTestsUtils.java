@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public enum TrimmerTestsUtils {
   ;
   public static class Operand extends Wrapper<String> {
-    @NotNull
-    private final Trimmer trimmer;
+    @NotNull private final Trimmer trimmer;
 
     public Operand(final String inner) {
       super(inner);
@@ -52,8 +51,7 @@ public enum TrimmerTestsUtils {
         assertSimilar(get(), peeled);
     }
 
-    @NotNull
-    public Operand gives(@NotNull final String $) {
+    @NotNull public Operand gives(@NotNull final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
@@ -73,8 +71,7 @@ public enum TrimmerTestsUtils {
      * @return Operand
      * @author Dor Ma'ayan
      * @since 09-12-2016 */
-    @Nullable
-    public Operand givesEither(@NotNull final String... options) {
+    @Nullable public Operand givesEither(@NotNull final String... options) {
       assert options != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
@@ -98,14 +95,12 @@ public enum TrimmerTestsUtils {
           Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
-    @NotNull
-    public <N extends ASTNode> Operand using(@NotNull final Class<N> c, final Tipper<N> ¢) {
+    @NotNull public <N extends ASTNode> Operand using(@NotNull final Class<N> c, final Tipper<N> ¢) {
       trimmer.fix(c, ¢);
       return this;
     }
 
-    @NotNull
-    @SafeVarargs public final <N extends ASTNode> Operand using(@NotNull final Class<N> c, final Tipper<N>... ts) {
+    @SafeVarargs @NotNull public final <N extends ASTNode> Operand using(@NotNull final Class<N> c, final Tipper<N>... ts) {
       as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
       return this;
     }
@@ -154,27 +149,25 @@ public enum TrimmerTestsUtils {
       return $.get();
     }
 
-    @NotNull
-    public OperandToTipper<N> in(@NotNull final Tipper<N> ¢) {
+    @NotNull public OperandToTipper<N> in(@NotNull final Tipper<N> ¢) {
       azzert.that(¢.canTip(findNode(¢)), is(true));
       return this;
     }
 
-    @NotNull
-    public OperandToTipper<N> notIn(@NotNull final Tipper<N> ¢) {
+    @NotNull public OperandToTipper<N> notIn(@NotNull final Tipper<N> ¢) {
       azzert.that(¢.canTip(findNode(¢)), is(false));
       return this;
     }
   }
 
   static String apply(@NotNull final Tipper<? extends ASTNode> t, @NotNull final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
     return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   public static String applyTrimmer(@NotNull final Trimmer t, @NotNull final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST1.COMPILATION_UNIT.from(from);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = TESTUtils.rewrite(t, u, new Document(from));
     assert $ != null;
@@ -182,7 +175,8 @@ public enum TrimmerTestsUtils {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  static void assertSimplifiesTo(final String from, @NotNull final String expected, @NotNull final Tipper<? extends ASTNode> n, @NotNull final Wrap w) {
+  static void assertSimplifiesTo(final String from, @NotNull final String expected, @NotNull final Tipper<? extends ASTNode> n,
+      @NotNull final Wrap w) {
     final String wrap = w.on(from), unpeeled = apply(n, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
@@ -198,13 +192,11 @@ public enum TrimmerTestsUtils {
     return a.collectSuggestions(u).size();
   }
 
-  @NotNull
-  static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
+  @NotNull static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
 
-  @NotNull
-  public static Operand trimmingOf(final String from) {
+  @NotNull public static Operand trimmingOf(final String from) {
     return new Operand(from);
   }
 }

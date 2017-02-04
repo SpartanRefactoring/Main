@@ -33,8 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
-  @NotNull
-  private static List<Statement> commonPrefix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
+  @NotNull private static List<Statement> commonPrefix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
       final Statement s1 = first(ss1);
@@ -79,7 +78,8 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
             return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
           }
 
-          @Nullable IfStatement replacement(final Expression condition, @Nullable final Statement trimmedThen, @Nullable final Statement trimmedElse) {
+          @Nullable IfStatement replacement(final Expression condition, @Nullable final Statement trimmedThen,
+              @Nullable final Statement trimmedElse) {
             return trimmedThen == null && trimmedElse == null ? null
                 : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
           }

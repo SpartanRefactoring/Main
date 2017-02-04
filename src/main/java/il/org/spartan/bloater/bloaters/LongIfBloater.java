@@ -21,14 +21,14 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     if (!shouldTip(¢))
       return null;
     final InfixExpression ie = az.infixExpression(¢.getExpression());
-    final IfStatement newThen = subject.pair(copy.of(¢.getThenStatement()), null)
-        .toIf(!ie.hasExtendedOperands() ? copy.of(ie.getRightOperand()) : az.expression(getReducedIEFromIEWithExtOp(ie))),
-        $ = subject.pair(newThen, null).toIf(copy.of(az.infixExpression(¢.getExpression()).getLeftOperand()));
+    final IfStatement newThen = subject.pair(then(¢), null)
+        .toIf(!ie.hasExtendedOperands() ? ie.getRightOperand() : az.expression(getReducedIEFromIEWithExtOp(ie))),
+        $ = subject.pair(newThen, null).toIf(az.infixExpression(¢.getExpression()).getLeftOperand());
     final Statement oldElse = ¢.getElseStatement();
     if (oldElse != null) {
-      newThen.setElseStatement(copy.of(oldElse));
+      newThen.setElseStatement(oldElse);
       $.setThenStatement(newThen);
-      $.setElseStatement(copy.of(oldElse));
+      $.setElseStatement(oldElse);
     }
     return $;
   }
@@ -39,7 +39,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
 
   private static InfixExpression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
     final InfixExpression $ = subject.pair(¢.getRightOperand(), first(extendedOperands(¢))).to(¢.getOperator());
-    subject.append($, copy.of(step.extendedOperands(¢))).extendedOperands().remove(0);
+    subject.append($, step.extendedOperands(¢)).extendedOperands().remove(0);
     return $;
   }
 

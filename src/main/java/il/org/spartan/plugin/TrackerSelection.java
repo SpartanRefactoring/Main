@@ -22,13 +22,11 @@ public class TrackerSelection extends Selection {
     super(asList(compilationUnit), textSelection, name);
   }
 
-  @Nullable
-  public static TrackerSelection empty() {
+  @Nullable public static TrackerSelection empty() {
     return new TrackerSelection(null, null, null);
   }
 
-  @NotNull
-  public TrackerSelection track(@NotNull final ASTNode ¢) {
+  @NotNull public TrackerSelection track(@NotNull final ASTNode ¢) {
     assert ¢ != null;
     assert ¢ instanceof MethodDeclaration || ¢ instanceof AbstractTypeDeclaration;
     track = ¢;
@@ -51,8 +49,7 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
-  @NotNull
-  private static List<WrappedCompilationUnit> asList(@Nullable final WrappedCompilationUnit ¢) {
+  @NotNull private static List<WrappedCompilationUnit> asList(@Nullable final WrappedCompilationUnit ¢) {
     final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);

@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
- * concating <br/>
+ * concating 
  * {@code x+\"\"+(4) } goes to {@code x+\"\"+4 }
  * @author Niv Shalmon
  * @since 2016-09-11 */
@@ -40,8 +40,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return "Remove redundant parenthesis";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final InfixExpression ¢) {
+  @Override @NotNull public String description(@NotNull final InfixExpression ¢) {
     return description() + " in: " + trivia.gist(¢);
   }
 

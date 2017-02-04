@@ -31,8 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-09-05 */
 public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
-  @NotNull
-  private static List<Statement> commmonSuffix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
+  @NotNull private static List<Statement> commmonSuffix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = last(ss1);
@@ -93,8 +92,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
 
   private class DefinitionsCollector extends ASTVisitor {
     private boolean notAllDefined;
-    @NotNull
-    private final Statement[] l;
+    @NotNull private final Statement[] l;
 
     DefinitionsCollector(@NotNull final List<Statement> l) {
       notAllDefined = false;

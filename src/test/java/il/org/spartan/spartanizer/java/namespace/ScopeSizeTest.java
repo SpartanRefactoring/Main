@@ -31,10 +31,8 @@ public class ScopeSizeTest extends MetaFixture {
     this.kind = kind;
   }
 
-  @NotNull
-  private final SimpleName name;
-  @NotNull
-  private final Integer scopeSize;
+  @NotNull private final SimpleName name;
+  @NotNull private final Integer scopeSize;
   private final definition.Kind kind;
 
   @Test public void test() {
@@ -48,8 +46,7 @@ public class ScopeSizeTest extends MetaFixture {
         , scope.of(name).size(), is(scopeSize.intValue()));
   }
 
-  @NotNull
-  @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
+  @NotNull @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
     final List<Object[]> $ = new ArrayList<>();
     for (final Annotation a : new definitionTest().annotations()) {
       final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);

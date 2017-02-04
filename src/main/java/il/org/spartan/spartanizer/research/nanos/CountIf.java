@@ -29,18 +29,15 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Override @Nullable public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Count elements in collection that satisfy some predicate";
   }
 
-  @NotNull
-  @Override public String technicalName() {
+  @Override @NotNull public String technicalName() {
     return "CountEInCSatisfyingX";
   }
 

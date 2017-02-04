@@ -40,8 +40,7 @@ public class TopMenuHandlers extends AbstractHandler {
     }
   };
 
-  @Nullable
-  @Override public Object execute(@NotNull final ExecutionEvent ¢) {
+  @Override @Nullable public Object execute(@NotNull final ExecutionEvent ¢) {
     final String id = ¢.getCommand().getId();
     if (!handlers.containsKey(id)) {
       monitor.LOG_TO_STDOUT.info("Handler " + id + " is not registered in " + getClass().getName());

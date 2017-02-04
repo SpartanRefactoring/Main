@@ -30,14 +30,13 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-11-27 */
 public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @Nullable final Statement nextStatement, final TextEditGroup g) {
-    if (nextStatement == null || containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f,
+      @Nullable final Statement nextStatement, final TextEditGroup g) {
+    if (containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
     final Expression initializer = f.getInitializer();
     if (initializer == null)
@@ -133,8 +132,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     return $.size() != 1 ? null : first($);
   }
 
-  @NotNull
-  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+  @NotNull static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

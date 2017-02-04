@@ -150,13 +150,11 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @Nullable
-  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 

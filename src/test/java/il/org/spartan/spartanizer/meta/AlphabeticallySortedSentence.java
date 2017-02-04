@@ -29,10 +29,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
-  @NotNull
-  public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
-  @NotNull
-  public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
+  @NotNull public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
+  @NotNull public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
@@ -117,8 +115,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     forbidden();
   }
 
-  @NotNull
-  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
+  @NotNull public static Vocabulary reify(final AnonymousClassDeclaration cd) {
     final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);

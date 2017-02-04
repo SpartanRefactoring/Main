@@ -15,27 +15,20 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  private static ForStatement buildForWhithoutCondition(@NotNull final ForStatement $) {
+  @NotNull private static ForStatement buildForWhithoutCondition(@NotNull final ForStatement $) {
     $.setExpression(null);
     return $;
   }
 
-  private static boolean fitting(@Nullable final ForStatement ¢) {
-    return ¢ != null && iz.literal.true¢(step.expression(¢));
-  }
-
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Convert loop: 'for(?;" + "true" + ";?)' to 'for(?;;?)'";
   }
 
   @Override public boolean prerequisite(@Nullable final ForStatement ¢) {
-    return ¢ != null && fitting(¢);
+    return iz.literal.true¢(step.expression(¢));
   }
 
-  @Nullable
-  @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutCondition(copy.of(¢));
+  @Override @Nullable public ASTNode replacement(final ForStatement ¢) {
+    return buildForWhithoutCondition(copy.of(¢));
   }
 }

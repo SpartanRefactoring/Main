@@ -29,13 +29,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class SingleTipperApplicator {
-  @NotNull
-  private static ASTRewrite createRewrite(//
-                                          @NotNull final IProgressMonitor pm, //
-                                          @NotNull final CompilationUnit u, //
-                                          final IMarker m, //
-                                          final Type t, //
-                                          final Tipper<?> w) {
+  @NotNull private static ASTRewrite createRewrite(//
+      @NotNull final IProgressMonitor pm, //
+      @NotNull final CompilationUnit u, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -44,22 +43,20 @@ public final class SingleTipperApplicator {
     return $;
   }
 
-  @NotNull
-  private static ASTRewrite createRewrite(//
-                                          @NotNull final IProgressMonitor pm, //
-                                          final IMarker m, //
-                                          final Type t, //
-                                          final Tipper<?> w, //
-                                          @Nullable final IFile f) {
-    return createRewrite(pm, (CompilationUnit) (f != null ? makeAST1.COMPILATION_UNIT.from(f) : makeAST1.COMPILATION_UNIT.from(m, pm)), m, t, w);
+  @NotNull private static ASTRewrite createRewrite(//
+      @NotNull final IProgressMonitor pm, //
+      final IMarker m, //
+      final Type t, //
+      final Tipper<?> w, //
+      @Nullable final IFile f) {
+    return createRewrite(pm, (CompilationUnit) (f != null ? makeAST.COMPILATION_UNIT.from(f) : makeAST.COMPILATION_UNIT.from(m, pm)), m, t, w);
   }
 
-  @Nullable
-  private static Tipper<?> fillRewrite(final ASTRewrite $, //
-                                       @NotNull final CompilationUnit u, //
-                                       final IMarker m, //
-                                       final Type t, //
-                                       @Nullable final Tipper<?> w) {
+  @Nullable private static Tipper<?> fillRewrite(final ASTRewrite $, //
+      @NotNull final CompilationUnit u, //
+      final IMarker m, //
+      final Type t, //
+      @Nullable final Tipper<?> w) {
     Toolbox.refresh();
     final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
@@ -74,9 +71,9 @@ public final class SingleTipperApplicator {
       goProject(pm, m);
       return;
     }
-    final ICompilationUnit u = makeAST1.iCompilationUnit(m);
+    final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
     if (w == null)
       return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
@@ -99,7 +96,7 @@ public final class SingleTipperApplicator {
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
     // XXX Roth: find a better way to get tipper from marker
-    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
       pm.done();
       return;
