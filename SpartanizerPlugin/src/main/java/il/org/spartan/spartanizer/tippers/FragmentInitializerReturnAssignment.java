@@ -24,14 +24,12 @@ import org.jetbrains.annotations.Nullable;
  * @DisableSpartan */
 public final class FragmentInitializerReturnAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n, @Nullable final Expression initializer,
-                                    final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n,
+      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
     final Assignment a = az.assignment(step.expression(az.returnStatement(nextStatement)));

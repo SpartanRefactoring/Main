@@ -36,18 +36,15 @@ public interface namer {
           "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //
           "TreeSet", "Vector");
 
-  @NotNull
-  static String[] components(final Name ¢) {
+  @NotNull static String[] components(final Name ¢) {
     return components(¢);
   }
 
-  @NotNull
-  static String[] components(@NotNull final QualifiedType ¢) {
+  @NotNull static String[] components(@NotNull final QualifiedType ¢) {
     return components(¢.getName());
   }
 
-  @NotNull
-  static String[] components(@NotNull final SimpleType ¢) {
+  @NotNull static String[] components(@NotNull final SimpleType ¢) {
     return components(¢.getName());
   }
 
@@ -59,13 +56,11 @@ public interface namer {
     return String.valueOf(new char[i]).replace('\0', c);
   }
 
-  @NotNull
-  static String shorten(@NotNull final ArrayType ¢) {
+  @NotNull static String shorten(@NotNull final ArrayType ¢) {
     return shorten(¢.getElementType()) + repeat(¢.getDimensions(), 's');
   }
 
-  @Nullable
-  static String shorten(@SuppressWarnings("unused") final IntersectionType __) {
+  @Nullable static String shorten(@SuppressWarnings("unused") final IntersectionType __) {
     return null;
   }
 
@@ -76,20 +71,17 @@ public interface namer {
         .map(namer::shorten).findFirst().orElse(null);
   }
 
-  @Nullable
-  static String shorten(final Name ¢) {
+  @Nullable static String shorten(final Name ¢) {
     return ¢ instanceof SimpleName ? shorten(¢ + "") //
         : ¢ instanceof QualifiedName ? shorten(((QualifiedName) ¢).getName()) //
             : null;
   }
 
-  @Nullable
-  static String shorten(@NotNull final NameQualifiedType ¢) {
+  @Nullable static String shorten(@NotNull final NameQualifiedType ¢) {
     return shorten(¢.getName());
   }
 
-  @Nullable
-  static String shorten(@NotNull final ParameterizedType ¢) {
+  @Nullable static String shorten(@NotNull final ParameterizedType ¢) {
     if (yielding.contains(¢))
       return shorten(first(typeArguments(¢)));
     if (plurals.contains(¢))
@@ -104,13 +96,11 @@ public interface namer {
     return (¢.getPrimitiveTypeCode() + "").substring(0, 1);
   }
 
-  @Nullable
-  static String shorten(@NotNull final QualifiedType ¢) {
+  @Nullable static String shorten(@NotNull final QualifiedType ¢) {
     return shorten(¢.getName());
   }
 
-  @Nullable
-  static String shorten(@NotNull final SimpleType ¢) {
+  @Nullable static String shorten(@NotNull final SimpleType ¢) {
     return shorten(¢.getName());
   }
 
@@ -118,8 +108,7 @@ public interface namer {
     return JavaTypeNameParser.make(¢).shortName();
   }
 
-  @Nullable
-  static String shorten(final Type ¢) {
+  @Nullable static String shorten(final Type ¢) {
     return ¢ instanceof NameQualifiedType ? shorten((NameQualifiedType) ¢)
         : ¢ instanceof PrimitiveType ? shorten((PrimitiveType) ¢)
             : ¢ instanceof QualifiedType ? shorten((QualifiedType) ¢)
@@ -131,13 +120,11 @@ public interface namer {
                                     : ¢ instanceof UnionType ? shortName((UnionType) ¢) : null;
   }
 
-  @Nullable
-  static String shortName(@SuppressWarnings("unused") final UnionType __) {
+  @Nullable static String shortName(@SuppressWarnings("unused") final UnionType __) {
     return null;
   }
 
-  @Nullable
-  static String shortName(@NotNull final WildcardType ¢) {
+  @Nullable static String shortName(@NotNull final WildcardType ¢) {
     return ¢.getBound() == null ? "o" : shorten(¢.getBound());
   }
 
@@ -153,19 +140,16 @@ public interface namer {
     return in($.getIdentifier(), specials);
   }
 
-  @NotNull
-  static SimpleName newReturn(@NotNull final ASTNode ¢) {
+  @NotNull static SimpleName newReturn(@NotNull final ASTNode ¢) {
     return make.from(¢).identifier(current);
   }
 
-  @NotNull
-  static SimpleName newCurrent(@NotNull final ASTNode ¢) {
+  @NotNull static SimpleName newCurrent(@NotNull final ASTNode ¢) {
     return make.from(¢).identifier(current);
   }
 
   class GenericsCategory {
-    @NotNull
-    public final Set<String> set;
+    @NotNull public final Set<String> set;
 
     public GenericsCategory(final String... names) {
       set = new LinkedHashSet<>(as.list(names));

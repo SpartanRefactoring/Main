@@ -26,8 +26,7 @@ public class SingleMarkerTest extends MetaFixture {
     this.kind = kind;
   }
 
-  @NotNull
-  private final SimpleName name;
+  @NotNull private final SimpleName name;
   private final definition.Kind kind;
 
   @Test public void test() {
@@ -39,8 +38,7 @@ public class SingleMarkerTest extends MetaFixture {
         , definition.kind(name), is(kind));
   }
 
-  @NotNull
-  @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
+  @NotNull @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
     final List<Object[]> $ = new ArrayList<>();
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       final String key = (a + "").substring(1);

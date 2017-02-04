@@ -21,8 +21,7 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
     return $;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final TypeDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final TypeDeclaration ¢) {
     return "Trim implicit extends " + ¢.getSuperclassType();
   }
 

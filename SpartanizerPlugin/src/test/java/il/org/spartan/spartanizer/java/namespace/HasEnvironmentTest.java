@@ -36,8 +36,7 @@ public class HasEnvironmentTest extends MetaFixture {
 
   private static final Set<String> signature = new HashSet<>();
 
-  @NotNull
-  private static Collection<Object[]> collect(final MetaFixture... fs) {
+  @NotNull private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
     final List<Object[]> $ = new ArrayList<>();
     Arrays.asList(fs).forEach(t -> yieldDescendants.untilClass(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
@@ -48,8 +47,7 @@ public class HasEnvironmentTest extends MetaFixture {
     return $;
   }
 
-  @NotNull
-  @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
+  @NotNull @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
     return collect(new NamespaceTest(), new definitionTest());
   }
 

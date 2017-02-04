@@ -15,8 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016-04-02 */
 public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<NormalAnnotation>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public String description(@NotNull final NormalAnnotation ¢) {
+  @Override @NotNull public String description(@NotNull final NormalAnnotation ¢) {
     return "Remove redundant parentheses from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 

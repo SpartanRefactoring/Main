@@ -470,7 +470,6 @@ class ZZZ___Fixture_ModelClass {
       abra, @ScopeSize(3)
       @enumConstant
       cadabra;
-      
       @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
         return vaz();
       }

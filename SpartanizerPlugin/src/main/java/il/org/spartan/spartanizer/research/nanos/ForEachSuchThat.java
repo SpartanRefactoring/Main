@@ -33,18 +33,15 @@ public class ForEachSuchThat extends ForEach {
         && nonTips(rivals, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Override @Nullable public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @NotNull
-  @Override public String technicalName() {
+  @Override @NotNull public String technicalName() {
     return "ForEachEInCSatisfyingXApplyS";
   }
 

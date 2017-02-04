@@ -26,8 +26,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
     return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Remove all multiplications by 1 from " + ¢;
   }
 

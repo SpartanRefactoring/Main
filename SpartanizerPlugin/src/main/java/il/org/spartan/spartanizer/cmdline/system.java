@@ -18,8 +18,7 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  @NotNull
-  static Process dumpOutput(@NotNull final Process $) {
+  @NotNull static Process dumpOutput(@NotNull final Process $) {
     if (windows())
       return $;
     try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
@@ -31,8 +30,7 @@ public interface system {
     return $;
   }
 
-  @NotNull
-  static String essenced(final String fileName) {
+  @NotNull static String essenced(final String fileName) {
     return fileName + ".essence";
   }
 
@@ -47,13 +45,11 @@ public interface system {
     ;
   }
 
-  @NotNull
-  static ProcessBuilder runScript() {
+  @NotNull static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
 
-  @NotNull
-  static String runScript(@NotNull final Process p) throws IOException {
+  @NotNull static String runScript(@NotNull final Process p) throws IOException {
     try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
       for (final StringBuilder $ = new StringBuilder();; $.append(¢))
@@ -62,8 +58,7 @@ public interface system {
     }
   }
 
-  @NotNull
-  static String runScript(final String pathname) throws IOException {
+  @NotNull static String runScript(final String pathname) throws IOException {
     return runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
 
@@ -117,8 +112,7 @@ public interface system {
     return formatRelative(d1 / d2);
   }
 
-  @NotNull
-  static String format2(final double ¢) {
+  @NotNull static String format2(final double ¢) {
     if (¢ < 0)
       return "-" + format2(-¢);
     final double $ = 100 * ¢;
@@ -166,8 +160,7 @@ public interface system {
     return n2 / n1;
   }
 
-  @Nullable
-  static Process shellEssenceMetrics(final String fileName) {
+  @Nullable static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 

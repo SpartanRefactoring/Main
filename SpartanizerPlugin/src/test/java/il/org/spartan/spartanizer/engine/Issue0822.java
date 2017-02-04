@@ -24,14 +24,14 @@ public class Issue0822 {
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
     f.setReadable(false);
-    if (makeAST1.string(f) != null)
-      azzert.that(makeAST1.string(f), equalTo(""));
+    if (makeAST.string(f) != null)
+      azzert.that(makeAST.string(f), equalTo(""));
   }
 
   @Test public void testBuilderException() {
     StringBuilder sb = null;
     try {
-      sb = makeAST1.STATEMENTS.builder(null);
+      sb = makeAST.STATEMENTS.builder(null);
     } catch (final Exception ¢) {
       fail(¢.getMessage());
     }
@@ -42,25 +42,25 @@ public class Issue0822 {
   @Test public void testBuilderFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a = a + b;"));
-    azzert.that(makeAST1.STATEMENTS.builder(p.toFile()) + "", is("a = a + b;"));
+    azzert.that(makeAST.STATEMENTS.builder(p.toFile()) + "", is("a = a + b;"));
   }
 
   @Test public void testExpressionFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a + b"));
-    final ASTNode ast = makeAST1.EXPRESSION.from(p.toFile());
+    final ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
     azzert.that(ast + "", is(wizard.ast("a+b") + ""));
     azzert.that(ast, instanceOf(Expression.class));
   }
 
   @Test public void testStatementsFromDocument() {
-    azzert.that(wizard.ast("a = b + c + d;") + "", is(makeAST1.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
+    azzert.that(wizard.ast("a = b + c + d;") + "", is(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
   }
 
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a = a + b;"));
-    final ASTNode ast = makeAST1.STATEMENTS.from(p.toFile());
+    final ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
     azzert.that(ast + "", is(wizard.ast("a = a + b;") + ""));
     azzert.that(ast, instanceOf(Statement.class));
   }

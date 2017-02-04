@@ -1,5 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -24,9 +25,9 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
       return null;
     final MethodInvocation mThen = copy.of(i);
     final int ci = mThen.arguments().indexOf(findFirst.conditionalArgument(mThen));
-    step.arguments(mThen).set(ci, copy.of($.getThenExpression()));
+    arguments(mThen).set(ci, copy.of(then($)));
     final MethodInvocation mElse = copy.of(i);
-    step.arguments(mElse).set(ci, copy.of($.getElseExpression()));
+    arguments(mElse).set(ci, copy.of(elze($)));
     return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of($.getExpression()));
   }
 

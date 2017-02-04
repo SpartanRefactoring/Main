@@ -28,9 +28,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
 
   public abstract ASTNode getMatching(ASTNode n);
 
-  @NotNull
-  public abstract String pattern();
+  @NotNull public abstract String pattern();
 
-  @NotNull
-  public abstract String replacement();
+  @NotNull public abstract String replacement();
 }

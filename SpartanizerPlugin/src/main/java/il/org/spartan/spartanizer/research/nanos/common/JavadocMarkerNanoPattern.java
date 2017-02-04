@@ -27,8 +27,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
 
   protected abstract boolean prerequisites(MethodDeclaration ¢);
 
-  @NotNull
-  @Override public final Tip pattern(@NotNull final MethodDeclaration d) {
+  @Override @NotNull public final Tip pattern(@NotNull final MethodDeclaration d) {
     return new Tip(description(d), d, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         wizard.addJavaDoc(d, r, g, tag());
@@ -36,13 +35,11 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
     };
   }
 
-  @NotNull
-  @Override public final String description(final MethodDeclaration ¢) {
+  @Override @NotNull public final String description(final MethodDeclaration ¢) {
     return name(¢) + " is a " + getClass().getSimpleName() + " method";
   }
 
-  @NotNull
-  public final String tag() {
+  @NotNull public final String tag() {
     return "[[" + getClass().getSimpleName() + "]]";
   }
 

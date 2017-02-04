@@ -38,13 +38,11 @@ public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
     return fragments(s).stream().allMatch(λ -> initializer(λ) == null || sideEffects.free(initializer(λ)));
   }
 
-  @NotNull
-  @Override public String description(final IfStatement ¢) {
+  @Override @NotNull public String description(final IfStatement ¢) {
     return "remove :" + ¢;
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final IfStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final IfStatement s) {
     if (s == null)
       return null;
     final boolean $ = sideEffects.free(expression(s)), then = checkBlock(s.getThenStatement()), elze = checkBlock(elze(s));

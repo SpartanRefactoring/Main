@@ -23,8 +23,7 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     return "Remove empty initializer";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final Initializer ¢) {
+  @Override @NotNull public String description(@NotNull final Initializer ¢) {
     return "Remove empty " + (iz.static¢(¢) ? "" : "non-") + "static initializer";
   }
 }

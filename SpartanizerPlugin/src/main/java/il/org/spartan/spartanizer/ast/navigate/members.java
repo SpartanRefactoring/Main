@@ -14,25 +14,21 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
 public interface members {
-  @Nullable
-  static List<? extends ASTNode> of(final EnumDeclaration ¢) {
+  @Nullable static List<? extends ASTNode> of(final EnumDeclaration ¢) {
     final ArrayList<ASTNode> $ = new ArrayList<>(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
   }
 
-  @Nullable
-  static List<? extends BodyDeclaration> of(final TypeDeclaration ¢) {
+  @Nullable static List<? extends BodyDeclaration> of(final TypeDeclaration ¢) {
     return step.bodyDeclarations(¢);
   }
 
-  @Nullable
-  static List<? extends BodyDeclaration> of(final AnnotationTypeDeclaration ¢) {
+  @Nullable static List<? extends BodyDeclaration> of(final AnnotationTypeDeclaration ¢) {
     return step.bodyDeclarations(¢);
   }
 
-  @Nullable
-  static List<? extends BodyDeclaration> of(@NotNull final AnonymousClassDeclaration ¢) {
+  @Nullable static List<? extends BodyDeclaration> of(@NotNull final AnonymousClassDeclaration ¢) {
     assert ¢ != null;
     final List<BodyDeclaration> $ = step.bodyDeclarations(¢);
     assert $ != null;

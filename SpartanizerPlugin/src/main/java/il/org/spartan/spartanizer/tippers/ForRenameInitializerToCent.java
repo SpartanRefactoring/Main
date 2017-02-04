@@ -31,15 +31,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09 */
 public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression>//
     implements TipperCategory.Centification {
-  @NotNull
-  @Override public String description(final VariableDeclarationExpression ¢) {
+  @Override @NotNull public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
-  @Nullable
-  @Override public Tip tip(@Nullable final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
-    if (x == null)
-      return null;
+  @Override @Nullable public Tip tip(@Nullable final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
     final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;

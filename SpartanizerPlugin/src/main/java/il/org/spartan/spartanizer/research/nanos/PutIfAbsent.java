@@ -31,8 +31,7 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override @Nullable public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

@@ -22,8 +22,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
-  @NotNull
-  private SpartAnalyzer addNanoPatterns() {
+  @NotNull private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
         new ReturnOnException(), //
@@ -98,8 +97,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  @NotNull
-  private SpartAnalyzer addMethodPatterns() {
+  @NotNull private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
         new ArgumentsTuple(), //
@@ -125,8 +123,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  @NotNull
-  protected SpartAnalyzer addCharacteristicMethodPatterns() {
+  @NotNull protected SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted, actually skipped
@@ -138,8 +135,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  @NotNull
-  public List<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
+  @NotNull public List<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(λ -> λ instanceof NanoPatternTipper).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;

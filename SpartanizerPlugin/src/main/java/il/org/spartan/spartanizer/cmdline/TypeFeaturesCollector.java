@@ -109,8 +109,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
         m("static", λ -> iz.static¢((BodyDeclaration) λ)));
   }
 
-  @Nullable
-  @Override public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
+  @Override @Nullable public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
     // TODO Auto-generated method stub
     return null;
   }

@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
+  @Override @NotNull public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
@@ -38,8 +37,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     return $ != null && ($.isDefault() || n.isDefault());
   }
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @Override @NotNull @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "remove redundant switch case";
   }
 }

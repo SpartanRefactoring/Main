@@ -57,8 +57,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   };
 
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
-    @Nullable
-    @Override protected Tip pattern(final EnhancedForStatement ¢) {
+    @Override @Nullable protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
@@ -72,8 +71,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
         || anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement $) {
+  @Override @Nullable public Tip pattern(final EnhancedForStatement $) {
     try {
       return firstTip(blockTippers, az.block(parent($)));
     } catch (@NotNull @SuppressWarnings("unused") final NoSuchElementException __) {
@@ -81,13 +79,11 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     }
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Iterative;
   }
 
-  @NotNull
-  @Override public String technicalName() {
+  @Override @NotNull public String technicalName() {
     return "collect C [s.t. P(·)]";
   }
 }

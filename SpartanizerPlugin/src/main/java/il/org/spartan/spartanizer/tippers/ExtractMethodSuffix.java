@@ -31,13 +31,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 
-  @NotNull
-  @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
     return "Split " + ¢.getName() + " into two logical parts";
   }
 
-  @Nullable
-  @Override public List<ASTNode> go(@NotNull final ASTRewrite r, @NotNull final MethodDeclaration d, @SuppressWarnings("unused") final TextEditGroup __) {
+  @Override @Nullable public List<ASTNode> go(@NotNull final ASTRewrite r, @NotNull final MethodDeclaration d,
+      @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
     final MethodVariablesScanner $ = new MethodVariablesScanner(d);
@@ -71,9 +70,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return true;
   }
 
-  @NotNull
-  private static List<ASTNode> splitMethod(@NotNull final ASTRewrite r, @NotNull final MethodDeclaration d, @NotNull final List<VariableDeclaration> ds,
-                                           final Statement forkPoint, final boolean equalParams) {
+  @NotNull private static List<ASTNode> splitMethod(@NotNull final ASTRewrite r, @NotNull final MethodDeclaration d,
+      @NotNull final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
     ds.sort(new NaturalVariablesOrder(d));
     final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = copy.of(d);
@@ -116,12 +114,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       i.setName(i.getAST().newSimpleName(fixName(i.getName() + "")));
   }
 
-  @NotNull
-  private static String fixName(@NotNull final String ¢) {
+  @NotNull private static String fixName(@NotNull final String ¢) {
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
 
-  private static void fixParameters(@NotNull final MethodDeclaration d, @NotNull final MethodDeclaration d2, @NotNull final List<VariableDeclaration> ds) {
+  private static void fixParameters(@NotNull final MethodDeclaration d, @NotNull final MethodDeclaration d2,
+      @NotNull final List<VariableDeclaration> ds) {
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
       if (v instanceof SingleVariableDeclaration)
@@ -174,12 +172,9 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     // TODO Ori Roth: get more suitable names for constants
     // 1.0 means all statements but the last.
     private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;// 2.0/3.0;
-    @NotNull
-    final Map<VariableDeclaration, List<Statement>> uses;
-    @NotNull
-    final List<VariableDeclaration> active;
-    @NotNull
-    final List<VariableDeclaration> inactive;
+    @NotNull final Map<VariableDeclaration, List<Statement>> uses;
+    @NotNull final List<VariableDeclaration> active;
+    @NotNull final List<VariableDeclaration> inactive;
     int variablesTerminated;
 
     public MethodVariablesScanner(@NotNull final MethodDeclaration method) {
@@ -197,8 +192,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       }
     }
 
-    @NotNull
-    @Override public List<Statement> availableStatements() {
+    @Override @NotNull public List<Statement> availableStatements() {
       return statements.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * statements.size()) + 1, statements.size() - 2));
     }
 
@@ -231,8 +225,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return variablesTerminated > 0;// && active.isEmpty();
     }
 
-    @NotNull
-    public List<VariableDeclaration> usedVariables() {
+    @NotNull public List<VariableDeclaration> usedVariables() {
       final List<VariableDeclaration> $ = new ArrayList<>();
       $.addAll(uses.keySet());
       return $;
@@ -251,10 +244,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   static class NaturalVariablesOrder implements Comparator<VariableDeclaration> {
-    @Nullable
-    final List<SingleVariableDeclaration> ps;
-    @Nullable
-    final List<Statement> ss;
+    @Nullable final List<SingleVariableDeclaration> ps;
+    @Nullable final List<Statement> ss;
 
     NaturalVariablesOrder(@NotNull final MethodDeclaration method) {
       assert method != null;

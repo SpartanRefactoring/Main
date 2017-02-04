@@ -64,7 +64,7 @@ public enum TypeNamesCollector {
   }
 
   private static void collect(@NotNull final String javaCode) {
-    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode));
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   private static void collect(final String[] where) {

@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-12-22 */
 public enum find {
   ;
-  @NotNull
-  public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
+  @NotNull public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
     return new Operand<N>() {
       @Override public N under(final ASTNode ¢) {
         return lisp.first(yieldDescendants.untilClass(c).from(¢));
@@ -47,8 +46,7 @@ public enum find {
     return $;
   }
 
-  @Nullable
-  private static Expression singleExpressionDifference(@Nullable final ASTNode n1, @Nullable final ASTNode n2) {
+  @Nullable private static Expression singleExpressionDifference(@Nullable final ASTNode n1, @Nullable final ASTNode n2) {
     if (n1 == null || n2 == null)
       return null;
     if (areSelfDifferent(n1, n2))
@@ -70,15 +68,13 @@ public enum find {
     return $;
   }
 
-  @NotNull
-  public static <N extends ASTNode> List<String> singleAtomicDifferences(@NotNull final List<N> ¢) {
+  @NotNull public static <N extends ASTNode> List<String> singleAtomicDifferences(@NotNull final List<N> ¢) {
     final List<String> $ = new ArrayList<>();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleAtomicDifference(λ, lisp.first(¢)) : singleAtomicDifference(lisp.first(¢), second(¢))));
     return $;
   }
 
-  @NotNull
-  public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(@NotNull final List<N> ¢) {
+  @NotNull public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(@NotNull final List<N> ¢) {
     final List<Expression> $ = new ArrayList<>();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleExpressionDifference(λ, lisp.first(¢)) : singleExpressionDifference(lisp.first(¢), second(¢))));
     return $;
@@ -87,8 +83,7 @@ public enum find {
   /** Gets two nodes and returns the identifier of the only name i n1 which is
    * different from n2. If the nodes subtrees differ with other then one name or
    * any node, -1 is returned. */
-  @Nullable
-  public static <N extends ASTNode> String singleAtomicDifference(@Nullable final N n1, @Nullable final N n2) {
+  @Nullable public static <N extends ASTNode> String singleAtomicDifference(@Nullable final N n1, @Nullable final N n2) {
     if (n1 == null || n2 == null)
       return null;
     if ((n1 + "").equals(n2 + ""))

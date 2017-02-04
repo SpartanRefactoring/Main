@@ -18,8 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Ori Roth
  * @since 2016 */
 public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
-  @Nullable
-  public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
+  @Nullable public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
 
   /** @return child list property descriptor of the parent of the node we are
    *         replacing */
@@ -29,8 +28,7 @@ public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulT
     return ¢.getParent() != null && go(ASTRewrite.create(¢.getAST()), ¢, null) != null;
   }
 
-  @NotNull
-  @Override public final Tip tip(@NotNull final N n) {
+  @Override @NotNull public final Tip tip(@NotNull final N n) {
     return new Tip(description(n), n, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n.getParent(), listDescriptor(n));

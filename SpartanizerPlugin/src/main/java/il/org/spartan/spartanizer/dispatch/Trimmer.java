@@ -89,7 +89,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   public String fixed(final String from) {
     for (final Document $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST1.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
       } catch (@NotNull final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
@@ -102,8 +102,7 @@ public class Trimmer extends AbstractGUIApplicator {
     }
   }
 
-  @Nullable
-  @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
+  @Override @Nullable protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
@@ -137,8 +136,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   public abstract class With {
-    @NotNull
-    public Trimmer trimmer() {
+    @NotNull public Trimmer trimmer() {
       return Trimmer.this;
     }
   }
@@ -147,15 +145,13 @@ public class Trimmer extends AbstractGUIApplicator {
     return true;
   }
 
-  @Nullable
-  protected <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
+  @Nullable protected <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
     return toolbox.firstTipper(¢);
   }
 
   boolean firstAddition = true;
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Trimmer fix(@NotNull final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> Trimmer fix(@NotNull final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       toolbox = new Toolbox();
@@ -164,8 +160,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Trimmer addSingleTipper(@NotNull final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> Trimmer addSingleTipper(@NotNull final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       toolbox = new Toolbox();

@@ -30,14 +30,12 @@ abstract class Analyzer<T> {
    * If parameter is double, leaves only 2 first digits.
    * @param ¢
    * @return */
-  @NotNull
-  static String tidy(final double ¢) {
+  @NotNull static String tidy(final double ¢) {
     final double $ = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     return $ != Math.floor($) ? $ + "" : asInt($);
   }
 
-  @NotNull
-  private static String asInt(final double $) {
+  @NotNull private static String asInt(final double $) {
     return (int) $ + "";
   }
 

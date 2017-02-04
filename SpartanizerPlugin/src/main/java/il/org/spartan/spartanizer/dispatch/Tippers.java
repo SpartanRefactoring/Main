@@ -25,8 +25,8 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-17 */
 public enum Tippers {
   ;
-  public static void addAllReplacing(@NotNull final List<Statement> to, @NotNull final List<Statement> from, final Statement substitute, final Statement by1,
-                                     @NotNull final List<Statement> by2) {
+  public static void addAllReplacing(@NotNull final List<Statement> to, @NotNull final List<Statement> from, final Statement substitute,
+      final Statement by1, @NotNull final List<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
         copy.into(¢, to);
@@ -36,8 +36,7 @@ public enum Tippers {
       }
   }
 
-  @NotNull
-  public static IfStatement blockIfNeeded(@NotNull final IfStatement s, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  @NotNull public static IfStatement blockIfNeeded(@NotNull final IfStatement s, @NotNull final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
     final Block $ = subject.statement(s).toBlock();
@@ -58,59 +57,26 @@ public enum Tippers {
     }
   }
 
-  /** Determines if we can be certain that a {@link Statement} ends with a
-   * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
-   * {@link BreakStatement}, {@link ContinueStatement}).
-   * @param ¢ JD
-   * @return true <b>iff</b> the Statement can be verified to end with a
-   *         sequencer. */
-  public static boolean endsWithSequencer(@Nullable final Statement ¢) {
-    if (¢ == null)
-      return false;
-    final Statement $ = (Statement) hop.lastStatement(¢);
-    if ($ == null)
-      return false;
-    switch ($.getNodeType()) {
-      case BLOCK:
-        return endsWithSequencer(last(step.statements((Block) $)));
-      case BREAK_STATEMENT:
-      case CONTINUE_STATEMENT:
-      case RETURN_STATEMENT:
-      case THROW_STATEMENT:
-        return true;
-      case DO_STATEMENT:
-        return endsWithSequencer(((DoStatement) $).getBody());
-      case LABELED_STATEMENT:
-        return endsWithSequencer(((LabeledStatement) $).getBody());
-      case IF_STATEMENT:
-        return endsWithSequencer(then((IfStatement) $)) && endsWithSequencer(elze((IfStatement) $));
-      default:
-        return false;
-    }
-  }
-
-  @NotNull
-  public static ListRewrite insertAfter(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  @NotNull public static ListRewrite insertAfter(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
       if (¢ < 0)
         return $;
   }
 
-  @NotNull
-  public static ListRewrite insertBefore(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  @NotNull public static ListRewrite insertBefore(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
   }
 
-  @NotNull
-  public static IfStatement invert(@NotNull final IfStatement ¢) {
+  @NotNull public static IfStatement invert(@NotNull final IfStatement ¢) {
     return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
   }
 
-  @Nullable
-  public static IfStatement makeShorterIf(@NotNull final IfStatement s) {
+  @Nullable public static IfStatement makeShorterIf(@NotNull final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
     final IfStatement $ = invert(s);
     if (then.isEmpty())
@@ -143,8 +109,8 @@ public enum Tippers {
         .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[] {}));
   }
 
-  @NotNull
-  public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by, final TextEditGroup g) {
+  @NotNull public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by,
+      final TextEditGroup g) {
     final Block parent = az.block(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);

@@ -9,13 +9,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil
  * @since 2016 */
 class Term {
-  @NotNull
-  static Term minus(final Expression ¢) {
+  @NotNull static Term minus(final Expression ¢) {
     return new Term(true, ¢);
   }
 
-  @NotNull
-  static Term plus(final Expression ¢) {
+  @NotNull static Term plus(final Expression ¢) {
     return new Term(false, ¢);
   }
 

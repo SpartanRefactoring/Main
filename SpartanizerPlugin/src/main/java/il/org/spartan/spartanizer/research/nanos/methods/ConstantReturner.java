@@ -28,8 +28,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
         && !rival.matches(¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Default;
   }
 }

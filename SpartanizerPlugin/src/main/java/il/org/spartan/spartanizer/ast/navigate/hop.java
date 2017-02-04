@@ -42,8 +42,7 @@ public interface hop {
 
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
-  @Nullable
-  static List<ASTNode> descendants(@Nullable final ASTNode root) {
+  @Nullable static List<ASTNode> descendants(@Nullable final ASTNode root) {
     if (root == null)
       return null;
     final List<ASTNode> $ = new ArrayList<>();
@@ -60,7 +59,8 @@ public interface hop {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs,
+      final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 
@@ -69,8 +69,7 @@ public interface hop {
     return $ == null ? null : $.getName() + "";
   }
 
-  @Nullable
-  static SimpleName lastComponent(@Nullable final Name ¢) {
+  @Nullable static SimpleName lastComponent(@Nullable final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 
@@ -91,8 +90,7 @@ public interface hop {
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
    * @return a list of all operands of an expression */
-  @Nullable
-  static List<Expression> operands(@Nullable final InfixExpression ¢) {
+  @Nullable static List<Expression> operands(@Nullable final InfixExpression ¢) {
     if (¢ == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
@@ -149,8 +147,7 @@ public interface hop {
     return $.indexOf(s) < 1 ? null : $.get($.indexOf(s) - 1);
   }
 
-  @Nullable
-  static SimpleName simpleName(@NotNull final Type ¢) {
+  @Nullable static SimpleName simpleName(@NotNull final Type ¢) {
     return lastComponent(hop.name(¢));
   }
 }

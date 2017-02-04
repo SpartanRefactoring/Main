@@ -11,8 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public interface Nominal extends TipperCategory {
   String ____ = "Spartanizing code by using more spartan names";
 
-  @Nullable
-  @Override default String description() {
+  @Override @Nullable default String description() {
     return ____;
   }
 }

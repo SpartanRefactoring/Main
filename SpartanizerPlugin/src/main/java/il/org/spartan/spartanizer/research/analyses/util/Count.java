@@ -46,8 +46,7 @@ public enum Count {
     return d == 0 ? 1 : sumSratio / d;
   }
 
-  @NotNull
-  private static Pair<Int, Int> newPair() {
+  @NotNull private static Pair<Int, Int> newPair() {
     return new Pair<>(new Int(), new Int());
   }
 }
