@@ -63,8 +63,7 @@ public class Issue0714 {
     assert determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class A {}")))));
   }
 
-  @NotNull
-  private TypeDeclaration typeConvert(final String $) {
+  @NotNull private TypeDeclaration typeConvert(final String $) {
     return (TypeDeclaration) first(types(az.compilationUnit(wizard.ast($))));
   }
 }

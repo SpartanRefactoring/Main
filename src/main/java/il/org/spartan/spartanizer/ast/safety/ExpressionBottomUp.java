@@ -33,8 +33,7 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  @Nullable
-  @Override public T map(final Expression ¢) {
+  @Override @Nullable public T map(final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
@@ -71,18 +70,15 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  @Nullable
-  protected T map(final PostfixExpression ¢) {
+  @Nullable protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable
-  protected T map(final PrefixExpression ¢) {
+  @Nullable protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable
-  protected T map(final InstanceofExpression ¢) {
+  @Nullable protected T map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 }

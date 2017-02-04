@@ -92,8 +92,7 @@ public class Augmenter implements Application {
    * as list of lists of statements.
    * @param ss statements to be collateralized
    * @return collateralization output as list of lists of statements */
-  @Nullable
-  public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
+  @Nullable public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
 
@@ -171,8 +170,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
-  @NotNull
-  private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
+  @NotNull private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }

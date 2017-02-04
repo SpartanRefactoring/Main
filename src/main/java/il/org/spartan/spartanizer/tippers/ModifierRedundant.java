@@ -20,8 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-07-29 */
 public final class ModifierRedundant extends CarefulTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public String description(final Modifier ¢) {
+  @Override @NotNull public String description(final Modifier ¢) {
     return "Remove redundant [" + ¢ + "] modifier";
   }
 
@@ -29,8 +28,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     return "Remove redundant modifier";
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final Modifier ¢) {
+  @Override @NotNull public Tip tip(@NotNull final Modifier ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);

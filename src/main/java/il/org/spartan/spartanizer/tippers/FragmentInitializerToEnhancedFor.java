@@ -25,12 +25,12 @@ import org.jetbrains.annotations.NotNull;
  * @since 2017-01-27 */
 public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStatement<VariableDeclarationFragment> //
     implements TipperCategory.Inlining {
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final Statement nextStatement,
+      final TextEditGroup g) {
     final Expression initializer = f.getInitializer();
     if (initializer == null)
       return null;
@@ -118,8 +118,7 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
     return $.size() != 1 ? null : first($);
   }
 
-  @NotNull
-  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+  @NotNull static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

@@ -15,20 +15,19 @@ import org.jetbrains.annotations.Nullable;
 /** remove redundant continue in switch in loops. for example converts <code>
  * while(b) { switch(x) { case 1: x=2; break; default: continue; } }
  *
- * <code>
+ * </code>
  * to
  *
  * <code>
  * while(b) { switch(x) { case 1: x=2; break; } }
  *
- * <code>
+ * </code>
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final SwitchStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
     final Block b = az.block(s.getParent());
@@ -46,8 +45,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

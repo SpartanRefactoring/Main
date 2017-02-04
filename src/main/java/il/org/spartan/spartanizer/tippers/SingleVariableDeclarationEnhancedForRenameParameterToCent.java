@@ -22,23 +22,21 @@ import il.org.spartan.spartanizer.tipping.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/** @mdoron this is a redundant tipper, see #750 Convert
- *         {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
+/** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
+ *         {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
  * @author Yossi Gil
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
     //
     implements TipperCategory.Centification {
-  @NotNull
-  @Override public String description(final SingleVariableDeclaration ¢) {
+  @Override @NotNull public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 
   @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
-    final ASTNode p = d.getParent();
-    if (!(p instanceof EnhancedForStatement))
+    final EnhancedForStatement $ = az.enhancedFor(parent(d));
+    if ($ == null)
       return null;
-    final EnhancedForStatement $ = (EnhancedForStatement) p;
     final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
     if (p1 instanceof MethodDeclaration)
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {

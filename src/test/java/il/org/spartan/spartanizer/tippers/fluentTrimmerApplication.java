@@ -21,18 +21,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class fluentTrimmerApplication extends Trimmer.With {
-  @NotNull
-  public final String codeFragment;
-  @NotNull
-  public final GuessedContext guessedContext;
-  @NotNull
-  public final String wrappedFragment;
-  @NotNull
-  public final CompilationUnit compilationUnit;
-  @NotNull
-  public final Document document;
-  @NotNull
-  public final ASTRewrite createRewrite;
+  @NotNull public final String codeFragment;
+  @NotNull public final GuessedContext guessedContext;
+  @NotNull public final String wrappedFragment;
+  @NotNull public final CompilationUnit compilationUnit;
+  @NotNull public final Document document;
+  @NotNull public final ASTRewrite createRewrite;
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
@@ -87,8 +81,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
 
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
-  @NotNull
-  public final ASTRewrite createRewrite() {
+  @NotNull public final ASTRewrite createRewrite() {
     return createRewrite(nullProgressMonitor);
   }
 
@@ -96,13 +89,11 @@ public class fluentTrimmerApplication extends Trimmer.With {
    * @param pm a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  @NotNull
-  public final ASTRewrite createRewrite(@NotNull final IProgressMonitor ¢) {
+  @NotNull public final ASTRewrite createRewrite(@NotNull final IProgressMonitor ¢) {
     return createRewrite(¢, null);
   }
 
-  @NotNull
-  private ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, final IMarker m) {
+  @NotNull private ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, final IMarker m) {
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());
     fillRewrite($, m);

@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 4-12-2016 */
 public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block>//
     implements TipperCategory.Unite {
-  @Nullable
-  @Override public ASTNode replacement(final Block n) {
+  @Override @Nullable public ASTNode replacement(final Block n) {
     final Block $ = copy.of(n);
     final List<Statement> removalList = new ArrayList<>();
     for (final Statement s : extract.statements($)) {
@@ -40,8 +39,7 @@ public class BlockRemoveDeadVariables extends ReplaceCurrentNode<Block>//
     return !wizard.same($, n) ? $ : null;
   }
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final Block n) {
+  @Override @NotNull @SuppressWarnings("unused") public String description(final Block n) {
     return "Eliminate dead variables";
   }
 }

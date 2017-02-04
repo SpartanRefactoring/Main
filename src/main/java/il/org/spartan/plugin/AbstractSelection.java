@@ -11,8 +11,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2.6 */
 public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Files in selection. */
-  @Nullable
-  public List<WrappedCompilationUnit> inner;
+  @Nullable public List<WrappedCompilationUnit> inner;
   /** Text selection in selection. Nullable. */
   public ITextSelection textSelection;
   /** Selection's name. */
@@ -33,8 +32,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Set compilation units for this selection.
    * @param ¢ JD
    * @return <code><b>this</b></code> selection */
-  @NotNull
-  public Self setCompilationUnits(@Nullable final List<WrappedCompilationUnit> ¢) {
+  @NotNull public Self setCompilationUnits(@Nullable final List<WrappedCompilationUnit> ¢) {
     inner = ¢ != null ? ¢ : new ArrayList<>();
     return self();
   }
@@ -42,14 +40,12 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Set text selection for this selection.
    * @param ¢ JD
    * @return <code><b>this</b></code> selection */
-  @NotNull
-  public Self setTextSelection(final ITextSelection ¢) {
+  @NotNull public Self setTextSelection(final ITextSelection ¢) {
     textSelection = ¢;
     return self();
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") private Self self() {
+  @NotNull @SuppressWarnings("unchecked") private Self self() {
     return (Self) this;
   }
 
@@ -73,8 +69,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return <code><b>this</b></code> selection */
-  @NotNull
-  public Self add(@Nullable final List<WrappedCompilationUnit> ¢) {
+  @NotNull public Self add(@Nullable final List<WrappedCompilationUnit> ¢) {
     if (¢ != null)
       inner.addAll(¢);
     return self();
@@ -83,8 +78,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return <code><b>this</b></code> selection */
-  @NotNull
-  public Self add(final WrappedCompilationUnit... ¢) {
+  @NotNull public Self add(final WrappedCompilationUnit... ¢) {
     Collections.addAll(inner, ¢);
     return self();
   }

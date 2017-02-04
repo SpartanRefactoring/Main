@@ -20,8 +20,7 @@ public final class Recurser<T> {
   /** Get a list of some of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  @Nullable
-  public static List<? extends ASTNode> children(@Nullable final ASTNode n) {
+  @Nullable public static List<? extends ASTNode> children(@Nullable final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
@@ -39,8 +38,7 @@ public final class Recurser<T> {
   /** Operators cannot be retrieved because they are not nodes...
    * @param ¢
    * @return */
-  @Nullable
-  @SuppressWarnings("unchecked") public static List<ASTNode> allChildren(final ASTNode ¢) {
+  @SuppressWarnings("unchecked") @Nullable public static List<ASTNode> allChildren(final ASTNode ¢) {
     final List<ASTNode> $ = (List<ASTNode>) children(¢);
     if (iz.methodInvocation(¢)) {
       $.addAll(arguments(az.methodInvocation(¢)));
@@ -81,8 +79,7 @@ public final class Recurser<T> {
     this.current = current;
   }
 
-  @NotNull
-  public Recurser<T> from(final T value) {
+  @NotNull public Recurser<T> from(final T value) {
     current = value;
     return this;
   }

@@ -23,20 +23,16 @@ import org.jetbrains.annotations.NotNull;
  * @since Jan 21, 2017 */
 public enum SpartanizationComparator {
   ;
-  @NotNull
-  @External(alias = "i", value = "input folder") static String inputFolder = system.windows() ? "" : ".";
-  @NotNull
-  @External(alias = "o", value = "output folder") static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") @NotNull static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @NotNull static String outputFolder = "/tmp";
   static String presentSourcePath;
   static String presentSourceName;
   static int methodNesting;
   static MethodDeclaration lastNode;
-  @NotNull
-  static Dotter dotter = new Dotter();
+  @NotNull static Dotter dotter = new Dotter();
   private static final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
-  @NotNull
-  static String makeFile(final String fileName) {
+  @NotNull static String makeFile(final String fileName) {
     return outputFolder + "/" + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
@@ -65,7 +61,7 @@ public enum SpartanizationComparator {
   }
 
   private static void collect(@NotNull final String javaCode, final String id) {
-    collect((CompilationUnit) makeAST1.COMPILATION_UNIT.from(javaCode), id);
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
   }
 
   private static void collect(@NotNull final CompilationUnit u, final String id) {
@@ -154,8 +150,7 @@ public enum SpartanizationComparator {
     writer.nl();
   }
 
-  @NotNull
-  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+  @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
 

@@ -19,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public String description(@NotNull final TypeParameter ¢) {
+  @Override @NotNull public String description(@NotNull final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 

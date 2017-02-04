@@ -13,8 +13,7 @@ public class DoNothingReturnParam extends JavadocMarkerNanoPattern {
     return hazOneParameter(¢) && hazOneStatement(¢) && returnsParam(¢) && returnTypeSameAsParameter(¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Default;
   }
 }

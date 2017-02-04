@@ -25,8 +25,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09 */
 public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
     implements TipperCategory.Centification {
-  @NotNull
-  @Override public String description(@NotNull final EnhancedForStatement ¢) {
+  @Override @NotNull public String description(@NotNull final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 

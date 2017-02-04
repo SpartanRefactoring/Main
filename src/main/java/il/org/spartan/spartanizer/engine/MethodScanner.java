@@ -16,12 +16,9 @@ import org.jetbrains.annotations.Nullable;
  * @author Ori Roth
  * @since 2016 */
 public abstract class MethodScanner {
-  @NotNull
-  protected final MethodDeclaration method;
-  @Nullable
-  protected final List<Statement> statements;
-  @Nullable
-  protected Statement currentStatement;
+  @NotNull protected final MethodDeclaration method;
+  @Nullable protected final List<Statement> statements;
+  @Nullable protected Statement currentStatement;
   protected int currentIndex;
 
   public MethodScanner(@NotNull final MethodDeclaration method) {
@@ -42,8 +39,7 @@ public abstract class MethodScanner {
 
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */
-  @NotNull
-  public Iterable<Statement> statements() {
+  @NotNull public Iterable<Statement> statements() {
     return () -> new Iterator<Statement>() {
       final Iterator<Statement> i = availableStatements().iterator();
 

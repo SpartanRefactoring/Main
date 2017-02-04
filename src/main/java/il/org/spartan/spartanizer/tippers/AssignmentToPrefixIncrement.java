@@ -29,13 +29,11 @@ public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assign
     return type.isNotString(subject.pair(left(¢), right(¢)).to(wizard.assign2infix(¢.getOperator())));
   }
 
-  @NotNull
-  private static ASTNode replace(@NotNull final Assignment ¢) {
+  @NotNull private static ASTNode replace(@NotNull final Assignment ¢) {
     return subject.operand(left(¢)).to(isIncrement(¢) ? INCREMENT : DECREMENT);
   }
 
-  @Nullable
-  @Override public String description(@NotNull final Assignment ¢) {
+  @Override @Nullable public String description(@NotNull final Assignment ¢) {
     return "Replace " + ¢ + " to " + right(¢) + (isIncrement(¢) ? "++" : "--");
   }
 

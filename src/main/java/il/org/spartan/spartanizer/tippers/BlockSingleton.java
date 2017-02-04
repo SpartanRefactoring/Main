@@ -17,8 +17,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
-  @Nullable
-  private static Statement replacement(@Nullable final Statement $) {
+  @Nullable private static Statement replacement(@Nullable final Statement $) {
     return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : copy.of($);
   }
 

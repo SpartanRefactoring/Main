@@ -30,13 +30,11 @@ public final class NotHoldsOrThrow extends NanoPatternTipper<IfStatement> {
         && rival.cantTip(¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override @Nullable public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Exception;
   }
 

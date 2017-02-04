@@ -56,8 +56,7 @@ public interface metrics {
 
   /** @param pattern JD
    * @return */
-  @NotNull
-  static Set<String> dictionary(@NotNull final ASTNode u) {
+  @NotNull static Set<String> dictionary(@NotNull final ASTNode u) {
     final Set<String> $ = new LinkedHashSet<>();
     u.accept(new ASTVisitor() {
       @Override public void endVisit(final SimpleName node) {
@@ -115,8 +114,7 @@ public interface metrics {
     return literals(¢).size();
   }
 
-  @NotNull
-  static Set<String> literals(@NotNull final ASTNode n) {
+  @NotNull static Set<String> literals(@NotNull final ASTNode n) {
     final Set<String> $ = new LinkedHashSet<>();
     n.accept(new ASTVisitor() {
       @Override public void endVisit(final BooleanLiteral node) {

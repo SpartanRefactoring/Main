@@ -13,7 +13,7 @@ import il.org.spartan.*;
  * @author Dan
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({"static-method", "javadoc", "PointlessBooleanExpression"})
+@SuppressWarnings({ "static-method", "javadoc", "PointlessBooleanExpression" })
 public class Issue0177 {
   @Test @SuppressWarnings("unused") public void BitWiseAnd_withSideEffectsEXT() {
     class Class {

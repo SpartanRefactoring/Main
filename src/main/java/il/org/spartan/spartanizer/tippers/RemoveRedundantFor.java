@@ -17,13 +17,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-26 */
 public class RemoveRedundantFor extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.EmptyCycles {
-  @NotNull
-  @Override public String description(final ForStatement ¢) {
+  @Override @NotNull public String description(final ForStatement ¢) {
     return "remove :" + ¢;
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final ForStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@Nullable final ForStatement ¢) {
     return ¢ == null || !sideEffects.free(¢.getExpression()) || !sideEffects.free(initializers(¢)) || !sideEffects.free(updaters(¢))
         || !sideEffects.free(¢.getBody()) ? null : ¢.getAST().newBlock();
   }

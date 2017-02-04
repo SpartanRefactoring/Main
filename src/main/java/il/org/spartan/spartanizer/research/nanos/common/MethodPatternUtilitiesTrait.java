@@ -41,8 +41,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
-  @NotNull
-  default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
+  @NotNull default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return yieldDescendants.untilClass(ReturnStatement.class).from(¢);
   }
 

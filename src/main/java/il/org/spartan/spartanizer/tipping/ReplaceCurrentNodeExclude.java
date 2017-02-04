@@ -28,6 +28,5 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
     return true;
   }
 
-  @Nullable
-  protected abstract ASTNode replacement(N n, ExclusionManager m);
+  @Nullable protected abstract ASTNode replacement(N n, ExclusionManager m);
 }

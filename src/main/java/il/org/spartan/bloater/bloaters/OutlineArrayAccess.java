@@ -33,8 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
-  @Nullable
-  @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
+  @Override @SuppressWarnings("unused") @Nullable public String description(final ArrayAccess n) {
     return null;
   }
 

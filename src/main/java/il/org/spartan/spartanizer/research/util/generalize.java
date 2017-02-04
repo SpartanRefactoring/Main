@@ -30,8 +30,7 @@ public enum generalize {
 
   /** @param type of placeHolder, can be X,N,M,B,A,L
    * @return */
-  @NotNull
-  static String renderIdentifier(final String type) {
+  @NotNull static String renderIdentifier(final String type) {
     return "$" + type + serial.inner++;
   }
 
@@ -83,8 +82,7 @@ public enum generalize {
     System.out.println(generalize.code(m()));
   }
 
-  @NotNull
-  private static String m() {
+  @NotNull private static String m() {
     try (Scanner reader = new Scanner(System.in)) {
       String $ = "";
       while (reader.hasNext())

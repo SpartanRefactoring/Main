@@ -29,15 +29,11 @@ public class RecordWriter implements Closeable {
     }
   }
 
-  @NotNull
-  public final File file;
+  @NotNull public final File file;
   /** The name of the file into which records are written. */
-  @NotNull
-  public final String fileName;
-  @NotNull
-  public final OutputStreamWriter writer;
-  @NotNull
-  public final TableRenderer renderer;
+  @NotNull public final String fileName;
+  @NotNull public final OutputStreamWriter writer;
+  @NotNull public final TableRenderer renderer;
   private boolean headerPrinted;
   private boolean footerPrinted;
 
@@ -79,8 +75,7 @@ public class RecordWriter implements Closeable {
         renderer.afterHeader());
   }
 
-  @NotNull
-  private String writeHeaderInner(@NotNull final Row<?> r) {
+  @NotNull private String writeHeaderInner(@NotNull final Row<?> r) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();
     r.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));

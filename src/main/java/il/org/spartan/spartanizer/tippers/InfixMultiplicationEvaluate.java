@@ -17,12 +17,12 @@ import org.jetbrains.annotations.NotNull;
  * </br>
  * </br>
  * <code>
- * int * int --> int <br/>
- * double * double --> double <br/>
- * long * long --> long <br/>
- * int * double --> double <br/>
- * int * long --> long <br/>
- * long * double --> double <br/>
+ * int * int --> int 
+ * double * double --> double 
+ * long * long --> long 
+ * int * double --> double 
+ * int * long --> long 
+ * long * double --> double 
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */

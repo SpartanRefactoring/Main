@@ -54,13 +54,11 @@ public enum Analyze {
     return a < d ? a : d;
   }
 
-  @Nullable
-  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 

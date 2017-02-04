@@ -20,8 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016-04-06 */
 public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation>//
     implements TipperCategory.Idiomatic {
-  @NotNull
-  @Override public String description(@NotNull final ClassInstanceCreation ¢) {
+  @Override @NotNull public String description(@NotNull final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
 
@@ -33,8 +32,6 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     if (!wizard.isValueType(t))
       return null;
     final SimpleName simpleName = hop.simpleName(t);
-    if (simpleName == null)
-      return null;
     final MethodInvocation $ = subject.operand(copy.of(simpleName)).toMethod("valueOf");
     arguments($).add(copy.of(e));
     return $;

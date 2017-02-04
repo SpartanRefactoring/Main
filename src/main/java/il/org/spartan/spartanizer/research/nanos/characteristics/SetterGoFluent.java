@@ -33,15 +33,13 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     if (!iz.assignment(e))
       return false;
     final Assignment $ = az.assignment(e);
-    return (iz.name($.getLeftHandSide()) || tipper.canTip($.getLeftHandSide()))
-        && wizard.same($.getRightHandSide(), first(step.parameters(¢)).getName());
+    return (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), first(parameters(¢)).getName());
   }
 
-  @NotNull
-  @Override public Tip pattern(@NotNull final MethodDeclaration d) {
+  @Override @NotNull public Tip pattern(@NotNull final MethodDeclaration d) {
     return new Tip(description(d), d, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        if (!iz.voidType(step.returnType(d)))
+        if (!iz.voidType(returnType(d)))
           return;
         final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
         n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(yieldAncestors.untilContainingType().from(d)))));
@@ -53,13 +51,11 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     };
   }
 
-  @Nullable
-  protected static Type getType(final AbstractTypeDeclaration ¢) {
+  @Nullable protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Make setter fluent";
   }
 }

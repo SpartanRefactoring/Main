@@ -29,8 +29,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
     return false;
   }
 
-  @Nullable
-  @Override public Tip pattern(@SuppressWarnings("unused") final Block __) {
+  @Override @Nullable public Tip pattern(@SuppressWarnings("unused") final Block __) {
     return null;
     // return new Tip("", x, getClass()) {
     // @Override public void go(ASTRewrite r, TextEditGroup g) {
@@ -51,14 +50,12 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
   }
 
   static final class Matcher {
-    @Nullable
-    private final List<Statement> ss;
+    @Nullable private final List<Statement> ss;
     public String name;
     static final UserDefinedTipper<Expression> creation = patternTipper("$T1 $N = new $T2()", "$T $N = with(new $T2())", "");
     public int creationIdx;
 
-    @NotNull
-    public static Matcher matcher(final Block ¢) {
+    @NotNull public static Matcher matcher(final Block ¢) {
       return new Matcher(¢);
     }
 
@@ -79,8 +76,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
       return creates(idx) && new Matcher(ss).creation(idx).usage(idx + 1);
     }
 
-    @NotNull
-    public Matcher creation(final int idx) {
+    @NotNull public Matcher creation(final int idx) {
       name = creation.getMatching(ss.get(idx), "$N") + "";
       creationIdx = idx;
       return this;
@@ -93,8 +89,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
       return null;
     }
 
-    @Nullable
-    public static Matcher creation(final Block ¢) {
+    @Nullable public static Matcher creation(final Block ¢) {
       return new Matcher(¢).findCreation();
     }
 
