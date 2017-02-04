@@ -40,13 +40,11 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement>//
     return true;
   }
 
-  @NotNull
-  @Override public String description(final WhileStatement ¢) {
+  @Override @NotNull public String description(final WhileStatement ¢) {
     return "remove :" + ¢;
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final WhileStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@Nullable final WhileStatement ¢) {
     return ¢ == null || !sideEffects.free(¢.getExpression()) || !checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 }

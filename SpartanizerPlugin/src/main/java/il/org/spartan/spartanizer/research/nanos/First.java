@@ -27,13 +27,11 @@ public final class First extends NanoPatternTipper<MethodInvocation> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final MethodInvocation ¢) {
+  @Override @Nullable public Tip pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Iterative;
   }
 

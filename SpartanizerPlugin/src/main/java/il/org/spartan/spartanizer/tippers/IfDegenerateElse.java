@@ -12,8 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/** convert {@code
- * if (x) return b; else {} } into {@code
+/** convert {@code if (x) return b; else {} } into {@code
  * if (x)
  *   return b;
  * }
@@ -25,8 +24,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @NotNull
-  @Override public String description(@NotNull final IfStatement ¢) {
+  @Override @NotNull public String description(@NotNull final IfStatement ¢) {
     return "Remove vacuous 'else' branch of 'if(" + trivia.gist(¢.getExpression() + "") + ")...'";
   }
 
@@ -34,8 +32,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
 
-  @NotNull
-  @Override public Statement replacement(final IfStatement ¢) {
+  @Override @NotNull public Statement replacement(final IfStatement ¢) {
     final IfStatement $ = copy.of(¢);
     $.setElseStatement(null);
     return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();

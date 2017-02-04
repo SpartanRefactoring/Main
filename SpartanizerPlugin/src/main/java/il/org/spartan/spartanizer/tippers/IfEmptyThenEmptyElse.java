@@ -28,8 +28,7 @@ public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
     return iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final IfStatement s) {
+  @Override @NotNull public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);

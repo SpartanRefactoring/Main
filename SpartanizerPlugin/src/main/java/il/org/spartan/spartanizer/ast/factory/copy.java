@@ -20,8 +20,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-21 */
 public enum copy {
   ;
-  @NotNull
-  static List<Expression> adjust(final Operator o, @NotNull final List<Expression> xs) {
+  @NotNull static List<Expression> adjust(final Operator o, @NotNull final List<Expression> xs) {
     return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(Collectors.toList());
   }
 
@@ -51,8 +50,7 @@ public enum copy {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @Nullable
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ of(@Nullable final ¢ ¢) {
+  @SuppressWarnings("unchecked") @Nullable public static <¢ extends ASTNode> ¢ of(@Nullable final ¢ ¢) {
     return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
   }
 
@@ -63,8 +61,7 @@ public enum copy {
     return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(Collectors.toList());
   }
 
-  @Nullable
-  public static Expression ofWhileExpression(final WhileStatement ¢) {
+  @Nullable public static Expression ofWhileExpression(final WhileStatement ¢) {
     return of(expression(¢));
   }
 }

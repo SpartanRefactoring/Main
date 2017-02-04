@@ -18,15 +18,13 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
-  @NotNull
-  private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
+  @NotNull private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
     return $;
   }
 
-  @Nullable
-  private static Statement dupForBody(final ForStatement ¢) {
+  @Nullable private static Statement dupForBody(final ForStatement ¢) {
     return copy.of(step.body(¢));
   }
 
@@ -72,13 +70,11 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         .anyMatch(λ -> (λ.getName() + "").equals(n + ""));
   }
 
-  @Nullable
-  private static Expression updaterFromBody(final ForStatement ¢) {
+  @Nullable private static Expression updaterFromBody(final ForStatement ¢) {
     return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
   }
 
-  @NotNull
-  @Override public String description(@NotNull final ForStatement ¢) {
+  @Override @NotNull public String description(@NotNull final ForStatement ¢) {
     return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 
@@ -86,8 +82,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return ¢ != null && fitting(¢);
   }
 
-  @Nullable
-  @Override public ASTNode replacement(final ForStatement ¢) {
+  @Override @Nullable public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
   }
 }

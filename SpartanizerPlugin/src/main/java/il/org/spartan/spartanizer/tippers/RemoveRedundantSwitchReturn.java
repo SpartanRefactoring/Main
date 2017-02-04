@@ -15,20 +15,19 @@ import org.jetbrains.annotations.Nullable;
 /** remove redundant return from switch in void method. convert <code>
  * void a() { switch(x) { case 1: y=2; break; default: return; } }
  *
- * <code>
+ * </code>
  * to
  *
  * <code>
  * void a() { switch(x) { case 1: y=2; break; } }
  *
- * <code>
+ * </code>
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final SwitchStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
     final Block b = az.block(s.getParent());
@@ -44,8 +43,7 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

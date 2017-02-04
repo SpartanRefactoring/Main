@@ -29,8 +29,7 @@ public final class Empty extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Override @Nullable public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -50,8 +49,7 @@ public final class Empty extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @NotNull
-  @Override public NanoPatternTipper.Category category() {
+  @Override @NotNull public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

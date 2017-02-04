@@ -78,7 +78,7 @@ public final class Builder extends IncrementalProjectBuilder {
   private static void addMarkers(@NotNull final IFile ¢) throws CoreException {
     Tips.reset();
     deleteMarkers(¢);
-    addMarkers(¢, (CompilationUnit) makeAST1.COMPILATION_UNIT.from(¢));
+    addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
   }
 
   private static void addMarkers(@NotNull final IFile f, final CompilationUnit u) throws CoreException {
@@ -90,8 +90,7 @@ public final class Builder extends IncrementalProjectBuilder {
         }
   }
 
-  @NotNull
-  private static String prefix() {
+  @NotNull private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
 

@@ -12,8 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-23 */
 public interface ancestors {
-  @NotNull
-  static List<ASTNode> path(@NotNull final ASTNode n) {
+  @NotNull static List<ASTNode> path(@NotNull final ASTNode n) {
     final List<ASTNode> $ = new ArrayList<>();
     for (ASTNode parent = n; parent != null; parent = n.getParent())
       $.add(parent);
@@ -29,8 +28,7 @@ public interface ancestors {
         return next != null;
       }
 
-      @Nullable
-      @Override public ASTNode next() {
+      @Override @Nullable public ASTNode next() {
         final ASTNode $ = next;
         next = parent($);
         return $;

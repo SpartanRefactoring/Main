@@ -27,8 +27,9 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
     return "Invert conditional and use next statement)";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, @NotNull final Statement nextStatement, final TextEditGroup g) {
-    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !endsWithSequencer(then(s)))
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, @NotNull final Statement nextStatement,
+      final TextEditGroup g) {
+    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !wizard.endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
     if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {

@@ -27,14 +27,12 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-07 */
 public final class FragmentInitializerStatementTerminatingScope extends $FragementAndStatement //
     implements TipperCategory.Inlining {
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @Nullable final VariableDeclarationFragment f, final SimpleName n, @Nullable final Expression initializer,
-                                    @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @Nullable final VariableDeclarationFragment f, final SimpleName n,
+      @Nullable final Expression initializer, @NotNull final Statement nextStatement, final TextEditGroup g) {
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
@@ -42,8 +40,6 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
         || Tipper.frobiddenOpOnPrimitive(f, nextStatement) || Inliner.isArrayInitWithUnmatchingTypes(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
-    if (currentStatement == null)
-      return null;
     boolean found = false;
     for (final VariableDeclarationFragment ff : fragments(currentStatement))
       if (!found)

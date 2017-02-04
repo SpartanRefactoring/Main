@@ -1,8 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.factory.make.*;
-
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -13,7 +12,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Transforms x.toString() to "" + x
  * @author Stav Namir
@@ -21,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
-  @NotNull
-  @Override public String description(final MethodInvocation ¢) {
+  @Override @NotNull public String description(final MethodInvocation ¢) {
     final Expression $ = receiver(¢);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
@@ -33,7 +30,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
-    final InfixExpression $ = subject.pair(makeEmptyString(i), receiver).to(PLUS2);
-    return !iz.methodInvocation(parent(i)) ? $ : parethesized($);
+    final InfixExpression $ = subject.pair(make.makeEmptyString(i), receiver).to(PLUS2);
+    return !iz.methodInvocation(parent(i)) ? $ : make.parethesized($);
   }
 }

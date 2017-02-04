@@ -26,8 +26,7 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement>//
     return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 
-  @NotNull
-  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+  @Override @NotNull public Statement replacement(@NotNull final IfStatement ¢) {
     final IfStatement $ = subject.pair(elze(¢), null).toNot(¢.getExpression());
     return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
   }

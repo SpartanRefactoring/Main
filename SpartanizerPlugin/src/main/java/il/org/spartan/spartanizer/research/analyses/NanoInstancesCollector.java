@@ -28,8 +28,7 @@ public class NanoInstancesCollector extends FolderASTVisitor {
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
-      @NotNull
-      @Override public Tip pattern(@NotNull final EnhancedForStatement ¢) {
+      @Override @NotNull public Tip pattern(@NotNull final EnhancedForStatement ¢) {
         return new Tip("", ¢, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");

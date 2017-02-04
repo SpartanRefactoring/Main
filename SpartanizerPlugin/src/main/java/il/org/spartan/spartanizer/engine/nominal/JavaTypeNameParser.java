@@ -17,8 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-08-25 */
 @SuppressWarnings("static-method")
 public final class JavaTypeNameParser {
-  @NotNull
-  public static JavaTypeNameParser make(final String ¢) {
+  @NotNull public static JavaTypeNameParser make(final String ¢) {
     return new JavaTypeNameParser(¢);
   }
 
@@ -76,8 +75,7 @@ public final class JavaTypeNameParser {
 
   /** Returns the calculated short name for the type
    * @return type's short name */
-  @NotNull
-  public String shortName() {
+  @NotNull public String shortName() {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
@@ -109,8 +107,7 @@ public final class JavaTypeNameParser {
     return Character.isUpperCase(typeName.charAt(¢));
   }
 
-  @NotNull
-  private String lastNameCharIndex(final int ¢) {
+  @NotNull private String lastNameCharIndex(final int ¢) {
     return lastName().length() <= ¢ ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
 

@@ -30,13 +30,11 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
     return anyTips(tippers, az.block(parent(x)));
   }
 
-  @Nullable
-  @Override public Tip pattern(final ReturnStatement $) {
+  @Override @Nullable public Tip pattern(final ReturnStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
-  @NotNull
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Field;
   }
 

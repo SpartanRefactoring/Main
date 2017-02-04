@@ -17,20 +17,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /** Convert Finite loops with return sideEffects to shorter ones : </br>
- * Convert <br/>
+ * Convert 
  * <code>
- * for (..) { <br/>
- *  does(something); <br/>
- *   return XX; <br/>
- * } <br/>
- *return XX; <br/>
- * </code> to : <br/>
+ * for (..) { 
+ *  does(something); 
+ *   return XX; 
+ * } 
+ *return XX; 
+ * </code> to : 
  * <code>
- * for (..) { <br/>
- *  does(something); <br/>
- *   break; <br/>
- * } <br/>
- *return XX; <br/>
+ * for (..) { 
+ *  does(something); 
+ *   break; 
+ * } 
+ *return XX; 
  * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
@@ -40,8 +40,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  @Nullable
-  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : step.statements(body)) {
       if (az.ifStatement(¢) != null)
@@ -92,8 +91,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return "Convert the return inside the loop to break";
   }
 
-  @NotNull
-  @Override public String description(final ForStatement ¢) {
+  @Override @NotNull public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
 

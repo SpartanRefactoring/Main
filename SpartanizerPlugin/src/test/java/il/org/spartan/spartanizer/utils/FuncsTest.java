@@ -94,8 +94,7 @@ public final class FuncsTest {
     assert iz.deMorgan(CONDITIONAL_OR);
   }
 
-  @NotNull
-  private Type t(final String codeFragment) {
+  @NotNull private Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 }

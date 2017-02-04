@@ -22,8 +22,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2016-11-17 */
 public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
     implements TipperCategory.SyntacticBaggage {
-  @NotNull
-  @Override public Tip tip(@NotNull final LambdaExpression x) {
+  @Override @NotNull public Tip tip(@NotNull final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
     return new Tip(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
@@ -44,8 +43,7 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     return $;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final LambdaExpression ¢) {
+  @Override @NotNull public String description(@NotNull final LambdaExpression ¢) {
     return "remove curly braces from " + trivia.gist(¢);
   }
 

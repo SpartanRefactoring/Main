@@ -32,22 +32,19 @@ public enum flatten {
     return subject.operands(flatten.into(o, hop.operands($), new ArrayList<>())).to(copy.of($).getOperator());
   }
 
-  @NotNull
-  private static List<Expression> add(final Expression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> add(final Expression x, @NotNull final List<Expression> $) {
     $.add(x);
     return $;
   }
 
-  @NotNull
-  private static List<Expression> into(final Operator o, final Expression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> into(final Operator o, final Expression x, @NotNull final List<Expression> $) {
     final Expression core = core(x);
     final InfixExpression inner = az.infixExpression(core);
     return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? x : core, $)
         : flatten.into(o, copy.adjust(o, hop.operands(inner)), $);
   }
 
-  @NotNull
-  private static List<Expression> into(final Operator o, @NotNull final List<Expression> xs, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> into(final Operator o, @NotNull final List<Expression> xs, @NotNull final List<Expression> $) {
     xs.forEach(λ -> into(o, λ, $));
     return $;
   }

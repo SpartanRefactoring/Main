@@ -16,8 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 27-11-2016 */
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.EmptyCycles {
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final ConditionalExpression ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final ConditionalExpression ¢) {
     return copy.of(¢.getElseExpression());
   }
 
@@ -38,8 +37,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     return wizard.same(elze, left) || wizard.same(elze, right);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate ternary expression that evaluates to the same value";
   }
 }

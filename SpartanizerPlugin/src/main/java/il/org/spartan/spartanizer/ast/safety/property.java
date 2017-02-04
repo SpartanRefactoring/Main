@@ -27,9 +27,8 @@ public enum property {
    * @param n JD
    * @param key property name
    * @return key property of node, null if it does not have this property. */
-  @Nullable
   @SuppressWarnings("unchecked") //
-  public static <T> T get(@Nullable final ASTNode n, @NotNull final String key) {
+  @Nullable public static <T> T get(@Nullable final ASTNode n, @NotNull final String key) {
     return n == null ? null : (T) n.getProperty(key);
   }
 
@@ -61,8 +60,7 @@ public enum property {
    * @param n JD
    * @param key property name
    * @param value property value */
-  @Nullable
-  public static <T> T set(@Nullable final ASTNode n, @NotNull final String key, final T value) {
+  @Nullable public static <T> T set(@Nullable final ASTNode n, @NotNull final String key, final T value) {
     if (n == null)
       return null;
     n.setProperty(key, value);

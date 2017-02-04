@@ -1,15 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.factory.make.*;
-
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil
@@ -24,8 +22,7 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢.getExpression());
   }
 
-  @NotNull
-  @Override public Expression replacement(@NotNull final ConditionalExpression ¢) {
-    return plant(extract.core(¢.getThenExpression())).into(¢.getParent());
+  @Override @NotNull public Expression replacement(@NotNull final ConditionalExpression ¢) {
+    return make.plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }
 }

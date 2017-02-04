@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 import org.jetbrains.annotations.NotNull;
 
-/** Evaluate the $ of numbers according to the following rules <br/>
- * <br/>
+/** Evaluate the $ of numbers according to the following rules 
+ * 
  * <code>
- * int % int --> int <br/>
- * long % long --> long <br/>
- * int % long --> long <br/>
- * long % int --> long <br/>
+ * int % int --> int 
+ * long % long --> long 
+ * int % long --> long 
+ * long % int --> long 
  * </code>
  * @author Dor Ma'ayan
  * @since 2016 */

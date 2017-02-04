@@ -14,14 +14,15 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/** Catch without body
+/** Catch(...) { return;}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-01-05 */
-public final class SuppressException extends NanoPatternTipper<CatchClause> {
+ * @since 2016-12-27 */
+public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("try $B1 catch($T $N){}", "try $B1 catch($T $N){ignore();};", ""));
+      add(patternTipper("try $B1 catch($T $N){ return null; }", "If.throwz(() -> $B1).returnNull();", "Go Fluent: IfThrowsReturnNull"));
+      add(patternTipper("try $B1 catch($T $N){ return; }", "If.throwz(() -> $B1).returns();", "Go Fluent: IfThrowsReturns"));
     }
   };
 
@@ -39,10 +40,6 @@ public final class SuppressException extends NanoPatternTipper<CatchClause> {
 
   private static TryStatement parent(final CatchClause ¢) {
     return az.tryStatement(step.parent(¢));
-  }
-
-  @Override public String technicalName() {
-    return "catchXIgnore";
   }
 
   @Override public String example() {

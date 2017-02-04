@@ -67,8 +67,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     return ¢.stream().sorted(comp).collect(Collectors.toList());
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final N n) {
+  @Override @Nullable public Tip tip(@NotNull final N n) {
     final List<Annotation> $ = extract.annotations(n);
     if ($ == null || $.isEmpty())
       return null;
@@ -87,8 +86,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     };
   }
 
-  @NotNull
-  @Override public String description(@NotNull final N ¢) {
+  @Override @NotNull public String description(@NotNull final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
   }

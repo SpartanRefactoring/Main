@@ -23,8 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 18-11-2016 */
 public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression x) {
     if (!isLiegal(x) || !az.infixExpression(x.getLeftOperand()).extendedOperands().isEmpty()
         || !az.infixExpression(x.getRightOperand()).extendedOperands().isEmpty())
       return null;
@@ -49,8 +48,7 @@ public class SimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixE
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }
 }

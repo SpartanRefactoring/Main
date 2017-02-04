@@ -75,8 +75,7 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return most appropriate Guess, or null, if the parameter could not be
    *         parsed appropriately. */
-  @NotNull
-  public static GuessedContext find(@NotNull final String codeFragment) {
+  @NotNull public static GuessedContext find(@NotNull final String codeFragment) {
     final String cleanFragment = codeFragment.replaceAll("\\s+", "").replaceAll(" ", "").replaceAll("\n", "");
     if (cleanFragment.startsWith("{") && cleanFragment.endsWith("}"))
       return BLOCK_LOOK_ALIKE;
@@ -88,8 +87,7 @@ public enum GuessedContext {
     return accuratelyCheckedContext(codeFragment);
   }
 
-  @NotNull
-  private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
+  @NotNull private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
@@ -108,8 +106,7 @@ public enum GuessedContext {
     return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
 
-  @NotNull
-  static String enumerateFailingAttempts(final String codeFragment) {
+  @NotNull static String enumerateFailingAttempts(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
     for (final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
@@ -148,17 +145,15 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull
-  public CompilationUnit intoCompilationUnit(final String codeFragment) {
-    return (CompilationUnit) makeAST1.COMPILATION_UNIT.from(on(codeFragment));
+  @NotNull public CompilationUnit intoCompilationUnit(final String codeFragment) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
 
   /** Guess a given code fragment, and converts it into a {@link Document}
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull
-  public Document intoDocument(final String codeFragment) {
+  @NotNull public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
 
@@ -172,8 +167,7 @@ public enum GuessedContext {
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
-  @NotNull
-  public String on(final String codeFragment) {
+  @NotNull public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
 

@@ -27,8 +27,7 @@ public interface Listener {
     return eventId.incrementAndGet();
   }
 
-  @NotNull
-  default Listener asListener() {
+  @NotNull default Listener asListener() {
     return this;
   }
 
@@ -57,20 +56,18 @@ public interface Listener {
     private static final long serialVersionUID = 1L;
 
     /** for fluent API use, i.e., <code>
-       *
-       * <code>
-               <b>public final</b> {@link Listener}  listeners = {@link Listener.S}.{@link #empty()}
-       * </code> <code>
+        *
+        * <code>
+                <b>public final</b> {@link Listener}  listeners = {@link Listener.S}.{@link #empty()}
+        * </code> <code>
      * @return an empty new instance */
-    @NotNull
-    public static Listener.S empty() {
+    @NotNull public static Listener.S empty() {
       return new Listener.S();
     }
 
     /** To be used in the nano found in {@link ConfigurableObjectTemplate}
      * @return <code><b>this</b></code> */
-    @NotNull
-    public Listener listeners() {
+    @NotNull public Listener listeners() {
       return this;
     }
 
