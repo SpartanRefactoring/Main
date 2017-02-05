@@ -39,7 +39,7 @@ public enum GuessedContext {
           OUTER_TYPE_LOOKALIKE.after //
   ), STATEMENTS_LOOK_ALIKE(//
       METHOD_LOOK_ALIKE.before //
-          + "\n\t\t\t public Object m() { /* BEGIN Public function m */\n" //
+          + "\n\t\t\t public Object masdf767() { /* BEGIN Public function m */\n" //
       , " }" + METHOD_LOOK_ALIKE.after), EXPRESSION_LOOK_ALIKE(//
           STATEMENTS_LOOK_ALIKE.before + //
               "\n\t\t\t\t if (foo("//
