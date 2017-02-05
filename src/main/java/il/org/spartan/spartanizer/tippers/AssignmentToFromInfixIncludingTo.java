@@ -6,10 +6,8 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -53,11 +51,10 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   @Override  public String description(final Assignment ¢) {
-    return "Replace x = x " + operator(¢) + "a; to x " + operator(¢) + "= a;";
+    return "Replace x = x " + operator(¢) + "a; with x " + operator(¢) + "= a;";
   }
 
   @Override public ASTNode replacement( final Assignment ¢) {
-    final Operator $ = ¢.getOperator();
-    return $ != ASSIGN || az.infixExpression(from(¢)) == null ? null : replacement(to(¢), az.infixExpression(from(¢)));
+    return ¢.getOperator() != ASSIGN || az.infixExpression(from(¢)) == null ? null : replacement(to(¢), az.infixExpression(from(¢)));
   }
 }

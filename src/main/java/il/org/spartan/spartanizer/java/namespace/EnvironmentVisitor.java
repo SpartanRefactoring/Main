@@ -181,9 +181,8 @@ final class EnvironmentVisitor extends ASTVisitor {
    *
    * If no match is found, return null. */
   Binding getHidden(final String ¢) {
-    final String shortName = ¢.substring(¢.lastIndexOf(".") + 1);
     for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
-      final Binding i = get($, s + "." + shortName);
+      final Binding i = get($, s + "." + ¢.substring(¢.lastIndexOf(".") + 1));
       if (i != null)
         return i;
     }

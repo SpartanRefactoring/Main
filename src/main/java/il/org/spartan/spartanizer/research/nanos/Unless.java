@@ -35,7 +35,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -51,7 +51,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @NotNull @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Safety;
   }
 }
