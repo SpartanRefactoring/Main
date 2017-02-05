@@ -92,6 +92,9 @@ public class Toolbox {
 
    public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(Initializer.class, new InitializerEmptyRemove()) //
+        .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis())
+        .add(Javadoc.class, new JavadocEmpty())
         .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
@@ -101,15 +104,12 @@ public class Toolbox {
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(EnhancedForStatement.class, //
-            // TODO: Doron Meshulam - why do we have two similar tippers?
-            // Perhaps the bug is here? --yg
             new EnhancedForRedundantContinue(), //
             new EnhancedForEliminateConditionalContinue(), //
             new EnhancedForParameterRenameToCent(), //
             null)//
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
             new SequencerNotLastInBlock<>()) //
-        .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(LambdaExpression.class, //
             new LambdaRemoveRedundantCurlyBraces(), //
             new LambdaRemoveParenthesis(), //
@@ -125,13 +125,13 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
+            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new RemoveRedundantFor(), //
+            new ForDeadRemove(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
@@ -176,7 +176,6 @@ public class Toolbox {
         .add(ArrayAccess.class, //
             new ArrayAccessAndIncrement(), //
             null) //
-        .add(Javadoc.class, new JavadocEmpty())
         .add(InfixExpression.class, //
             new InfixPlusToMinus(), //
             new LessEqualsToLess(), //
@@ -210,7 +209,8 @@ public class Toolbox {
             new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
-            new AnnotationSort<>(), new MethodDeclarationRenameReturnToDollar(), //
+            new AnnotationSort<>(), //
+            new MethodDeclarationRenameReturnToDollar(), //
             new BodyDeclarationModifiersSort<>(), //
             new MethodDeclarationRenameSingleParameterToCent(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
@@ -224,9 +224,6 @@ public class Toolbox {
             new StringFromStringBuilder(), //
             new OverloadingDelegation(), //
             null)//
-        .add(ParenthesizedExpression.class, //
-            new ParenthesizedRemoveExtraParenthesis(), //
-            null) //
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
             new TryBodyEmptyNoCatchesNoFinallyEliminate(), //
@@ -321,9 +318,9 @@ public class Toolbox {
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
             new FragmentInitializerInlineIntoNext(), //
-            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
+            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
-            new FragmentToForInitializers(), //
+            new FragmentInitializerToForInitializers(), //
             new WhileToForInitializers(), //
             null) //
     //
