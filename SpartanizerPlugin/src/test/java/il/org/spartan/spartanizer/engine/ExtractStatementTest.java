@@ -2,10 +2,12 @@
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.engine;
+import static il.org.spartan.Utils.*;
 
+import org.hamcrest.*;
+import org.hamcrest.core.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
-import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import org.junit.*;
 import org.junit.runners.*;
