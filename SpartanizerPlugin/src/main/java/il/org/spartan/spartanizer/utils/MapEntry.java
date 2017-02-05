@@ -3,7 +3,7 @@
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-import org.jetbrains.annotations.Nullable;
+
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     this.value = value;
   }
 
-  @Override public boolean equals(@Nullable final Object ¢) {
+  @Override public boolean equals( final Object ¢) {
     return ¢ != null && ¢.getClass() == getClass()
         && (((Map.Entry<?, ?>) ¢).getKey() == null && key == null || key.equals(((Map.Entry<?, ?>) ¢).getKey()))
         && (((Map.Entry<?, ?>) ¢).getValue() == null && value == null || value.equals(((Map.Entry<?, ?>) ¢).getValue()));

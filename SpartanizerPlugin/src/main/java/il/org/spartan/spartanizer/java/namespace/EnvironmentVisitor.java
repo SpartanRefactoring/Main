@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.Nullable;
+
 
 /** Three groups of visitors here: 1. Non-declarations with a name. 2.
  * Non-declarations without a name. 3. Actual Declarations. First two groups are
@@ -83,7 +83,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(trivia.condense(¢.getType())));
   }
 
-  @Nullable Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
+   Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
     // VariableDeclarationFragment, that comes from either FieldDeclaration,
     // VariableDeclarationStatement or VariableDeclarationExpression,
     // does not contain its type. Hence, the type is sent from the parent in

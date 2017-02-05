@@ -13,21 +13,21 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** As per {@link Issue1008}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-21 */
 public class MethodDeclarationConstructorMoveToInitializers extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
-  @Override protected boolean prerequisite(@NotNull final MethodDeclaration ¢) {
+  @Override protected boolean prerequisite( final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;
     final ASTNode $ = containing.typeDeclaration(¢);
     return step.constructors($).size() == 1 && step.initializersInstance($).isEmpty();
   }
 
-  @Override @NotNull public String description(final MethodDeclaration ¢) {
+  @Override  public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 

@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -19,7 +19,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Sorting {
-  @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
+  @Override  public ASTNode replacement( final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
@@ -33,7 +33,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Sort switch branches";
   }
 }

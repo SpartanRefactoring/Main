@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** if(X) throw Exception;
  * @year 2016
@@ -30,11 +30,11 @@ public final class NotHoldsOrThrow extends NanoPatternTipper<IfStatement> {
         && rival.cantTip(¢);
   }
 
-  @Override @Nullable public Tip pattern(final IfStatement ¢) {
+  @Override  public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Exception;
   }
 

@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** convert {@code
  * a = 3;
@@ -28,8 +28,8 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
-  @Nullable private static Expression extractRight(final Assignment ¢) {
-    final Expression $ = (from(¢));
+   private static Expression extractRight(final Assignment ¢) {
+    final Expression $ = from(¢);
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 
@@ -37,11 +37,11 @@ public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assign
     return operator(¢) != ASSIGN ? null : extractRight(¢);
   }
 
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override  public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final ASTNode parent = parent(a);
     if (!iz.statement(parent))
       return null;

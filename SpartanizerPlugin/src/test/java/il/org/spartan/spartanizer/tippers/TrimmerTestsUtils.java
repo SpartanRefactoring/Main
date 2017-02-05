@@ -15,20 +15,20 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 public enum TrimmerTestsUtils {
   ;
   public static class Operand extends Wrapper<String> {
-    @NotNull private final Trimmer trimmer;
+     private final Trimmer trimmer;
 
     public Operand(final String inner) {
       super(inner);
       trimmer = new Trimmer();
     }
 
-    void checkExpected(@NotNull final String expected) {
+    void checkExpected( final String expected) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap);
       if (wrap.equals(unpeeled))
@@ -51,7 +51,7 @@ public enum TrimmerTestsUtils {
         assertSimilar(get(), peeled);
     }
 
-    @NotNull public Operand gives(@NotNull final String $) {
+     public Operand gives( final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
@@ -71,7 +71,7 @@ public enum TrimmerTestsUtils {
      * @return Operand
      * @author Dor Ma'ayan
      * @since 09-12-2016 */
-    @Nullable public Operand givesEither(@NotNull final String... options) {
+     public Operand givesEither( final String... options) {
       assert options != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
@@ -95,12 +95,12 @@ public enum TrimmerTestsUtils {
           Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
-    @NotNull public <N extends ASTNode> Operand using(@NotNull final Class<N> c, final Tipper<N> ¢) {
+     public <N extends ASTNode> Operand using( final Class<N> c, final Tipper<N> ¢) {
       trimmer.fix(c, ¢);
       return this;
     }
 
-    @SafeVarargs @NotNull public final <N extends ASTNode> Operand using(@NotNull final Class<N> c, final Tipper<N>... ts) {
+    @SafeVarargs  public final <N extends ASTNode> Operand using( final Class<N> c, final Tipper<N>... ts) {
       as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
       return this;
     }
@@ -114,7 +114,7 @@ public enum TrimmerTestsUtils {
       this.clazz = clazz;
     }
 
-    private N findNode(@NotNull final Tipper<N> t) {
+    private N findNode( final Tipper<N> t) {
       assert t != null;
       final Wrap wrap = Wrap.find(get());
       assert wrap != null;
@@ -125,7 +125,7 @@ public enum TrimmerTestsUtils {
       return $;
     }
 
-    private N firstInstance(@NotNull final CompilationUnit u) {
+    private N firstInstance( final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor() {
         /** The implementation of the visitation procedure in the JDT seems to
@@ -137,7 +137,7 @@ public enum TrimmerTestsUtils {
          * @param pattern the node currently being visited.
          * @return <code><b>true</b></code> <i>iff</i> the sought node is
          *         found. */
-        @Override @SuppressWarnings("unchecked") public boolean preVisit2(@NotNull final ASTNode ¢) {
+        @Override @SuppressWarnings("unchecked") public boolean preVisit2( final ASTNode ¢) {
           if ($.get() != null)
             return false;
           if (!clazz.isAssignableFrom(¢.getClass()))
@@ -149,24 +149,24 @@ public enum TrimmerTestsUtils {
       return $.get();
     }
 
-    @NotNull public OperandToTipper<N> in(@NotNull final Tipper<N> ¢) {
+     public OperandToTipper<N> in( final Tipper<N> ¢) {
       azzert.that(¢.canTip(findNode(¢)), is(true));
       return this;
     }
 
-    @NotNull public OperandToTipper<N> notIn(@NotNull final Tipper<N> ¢) {
+     public OperandToTipper<N> notIn( final Tipper<N> ¢) {
       azzert.that(¢.canTip(findNode(¢)), is(false));
       return this;
     }
   }
 
-  static String apply(@NotNull final Tipper<? extends ASTNode> t, @NotNull final String from) {
+  static String apply( final Tipper<? extends ASTNode> t,  final String from) {
     final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
     return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
-  public static String applyTrimmer(@NotNull final Trimmer t, @NotNull final String from) {
+  public static String applyTrimmer( final Trimmer t,  final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = TESTUtils.rewrite(t, u, new Document(from));
@@ -175,8 +175,8 @@ public enum TrimmerTestsUtils {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  static void assertSimplifiesTo(final String from, @NotNull final String expected, @NotNull final Tipper<? extends ASTNode> n,
-      @NotNull final Wrap w) {
+  static void assertSimplifiesTo(final String from,  final String expected,  final Tipper<? extends ASTNode> n,
+       final Wrap w) {
     final String wrap = w.on(from), unpeeled = apply(n, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
@@ -188,15 +188,15 @@ public enum TrimmerTestsUtils {
     assertSimilar(expected, peeled);
   }
 
-  public static int countOpportunities(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u) {
+  public static int countOpportunities( final AbstractGUIApplicator a,  final CompilationUnit u) {
     return a.collectSuggestions(u).size();
   }
 
-  @NotNull static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
+   static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
 
-  @NotNull public static Operand trimmingOf(final String from) {
+   public static Operand trimmingOf(final String from) {
     return new Operand(from);
   }
 }

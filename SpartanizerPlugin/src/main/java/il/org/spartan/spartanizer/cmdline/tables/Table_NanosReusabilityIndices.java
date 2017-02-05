@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Generates a table representing effectiveness of nanos. <br>
  * For each nano, the level of reusability is measured: <br>
@@ -57,17 +57,17 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
     System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
   }
 
-  @Override public boolean visit(@NotNull final MethodDeclaration $) {
+  @Override public boolean visit( final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
+      } catch ( @SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit( final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -102,7 +102,7 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
         .forEach(λ -> pWriter.put(λ, "-"));
   }
 
-  private static boolean anyTips(@NotNull final Collection<JavadocMarkerNanoPattern> ps, @Nullable final MethodDeclaration d) {
+  private static boolean anyTips( final Collection<JavadocMarkerNanoPattern> ps,  final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
   }
 }

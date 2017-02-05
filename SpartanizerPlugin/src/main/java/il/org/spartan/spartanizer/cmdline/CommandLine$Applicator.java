@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Specific applicator
  * @author Matteo Orru'
@@ -60,17 +60,17 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
   }
 
-  private static String[] removeExcludedNanoPatterns(@Nullable final String[] tipperGroups, final String[] excludedNanoPatterns) {
+  private static String[] removeExcludedNanoPatterns( final String[] tipperGroups, final String[] excludedNanoPatterns) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
         .filter(λ -> !as.list(excludedNanoPatterns).contains(λ)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
-  private static String[] removeExcludedTippers(@Nullable final String[] tipperGroups, final String[] excludedTipperGroups) {
+  private static String[] removeExcludedTippers( final String[] tipperGroups, final String[] excludedTipperGroups) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
         .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
-  private void go(@NotNull final CompilationUnit u) {
+  private void go( final CompilationUnit u) {
     // extract.type(u);
     // ReportGenerator.report("tips").put("FileName", presentFileName);
     // ReportGenerator.report("tips").put("FilePath", presentFilePath);
@@ -79,7 +79,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // ""));
     ReportGenerator.Util.initialize();
     u.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
+      @Override public boolean preVisit2( final ASTNode ¢) {
         assert ¢ != null;
         System.out.println(¢.getClass() + ": " + selectedNodeTypes.contains(¢.getClass()));
         return !selectedNodeTypes.contains(¢.getClass()) || go(¢);
@@ -87,7 +87,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     });
   }
 
-  boolean go(@NotNull final ASTNode input) {
+  boolean go( final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     System.out.println(input.getClass());
     ReportGenerator.report("metrics").put("File", presentFileName);
@@ -115,7 +115,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return false;
   }
 
-  private void computeMethodMetrics(@NotNull final ASTNode input, final ASTNode output) {
+  private void computeMethodMetrics( final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("methods");
     ReportGenerator.name(input);
@@ -123,7 +123,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     ReportGenerator.nl("methods");
   }
 
-  @SuppressWarnings({ "boxing" }) private void computeMetrics(@NotNull final ASTNode input, final ASTNode output) {
+  @SuppressWarnings({ "boxing" }) private void computeMetrics( final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     // ReportGenerator.report("tips").put("Name", extract.name(input));
     // ReportGenerator.report("tips").put("Category", extract.category(input));
@@ -146,7 +146,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
-      } catch (@NotNull final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      } catch ( final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
         throw new AssertionError(¢);
       }
@@ -158,7 +158,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
-  @NotNull private ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
+   private ASTRewrite createRewrite( final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     lastTime = new Date().getTime();
     consolidateTips($, ¢);
@@ -170,7 +170,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * matteo
    * @param u
    * @return */
-  @NotNull public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
+   public ASTRewrite createRewrite( final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
@@ -179,17 +179,17 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** consolidate tips on CompilationUnit
    * @param r
    * @param u */
-  private void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u) {
+  private void consolidateTips(final ASTRewrite r,  final CompilationUnit u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(@NotNull final N n) {
+      @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go( final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (tipper == null)
@@ -197,7 +197,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (s != null) {
@@ -230,17 +230,17 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * -- matteo
    * @param r
    * @param u */
-  private void consolidateTips(final ASTRewrite r, @NotNull final BodyDeclaration u) {
+  private void consolidateTips(final ASTRewrite r,  final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
+      @Override protected <N extends ASTNode> boolean go( final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (tipper == null)
@@ -249,7 +249,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (s != null) {
@@ -260,19 +260,19 @@ public class CommandLine$Applicator extends Generic$Applicator {
         return true;
       }
 
-      @SuppressWarnings("unused") <N extends ASTNode> void tick(final N n, @NotNull final Tipper<N> w) throws TipperFailure {
+      @SuppressWarnings("unused") <N extends ASTNode> void tick(final N n,  final Tipper<N> w) throws TipperFailure {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      <N extends ASTNode> void tick(@NotNull final Tipper<N> w) {
+      <N extends ASTNode> void tick( final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
-      <N extends ASTNode> void tick2(@SuppressWarnings("unused") final N __, @NotNull final Tipper<N> w) {
+      <N extends ASTNode> void tick2(@SuppressWarnings("unused") final N __,  final Tipper<N> w) {
         @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
@@ -288,7 +288,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   // @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
   // return toolbox.firstTipper(¢);
   // }
-  public boolean apply(@NotNull final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
+  public boolean apply( final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
     apply(u);
     return false;
   }
@@ -296,7 +296,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   /** Apply to single compilation unit
    * @param ¢
    * @return */
-  private boolean apply(@NotNull final WrappedCompilationUnit ¢) {
+  private boolean apply( final WrappedCompilationUnit ¢) {
     // System.out.println("*********");
     presentFileName = ¢.getFileName();
     presentFilePath = ¢.getFilePath();
@@ -305,12 +305,12 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return false;
   }
 
-  public boolean apply(@NotNull final AbstractSelection<?> __) {
+  public boolean apply( final AbstractSelection<?> __) {
     for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
       System.out.println("presentFileName: " + presentFileName);
       System.out.println("presentFilePath: " + presentFilePath);
       w.compilationUnit.accept(new ASTVisitor() {
-        @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
+        @Override public boolean preVisit2( final ASTNode ¢) {
           return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // ||
                                                                      // !filter(¢)
         }

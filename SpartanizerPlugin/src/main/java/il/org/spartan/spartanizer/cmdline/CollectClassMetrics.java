@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @year 2016
@@ -23,12 +23,12 @@ enum CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static final CSVStatistics output = init();
 
-  public static void main(@NotNull final String[] where) {
+  public static void main( final String[] where) {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
 
-  @NotNull static CompilationUnit spartanize(@NotNull final CompilationUnit before) {
+   static CompilationUnit spartanize( final CompilationUnit before) {
     final Trimmer tr = new Trimmer();
     assert tr != null;
     final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
@@ -36,23 +36,23 @@ enum CollectClassMetrics {
     assert $ != null;
     try {
       tr.checkAllConditions(null);
-    } catch (@NotNull OperationCanceledException | CoreException ¢) {
+    } catch ( OperationCanceledException | CoreException ¢) {
       ¢.printStackTrace();
     }
     return before;
   }
 
-  private static void go(@NotNull final File f) {
+  private static void go( final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void go(@NotNull final String javaCode) {
+  private static void go( final String javaCode) {
     output.put("Characters", javaCode.length());
     report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
@@ -61,10 +61,10 @@ enum CollectClassMetrics {
     new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
   }
 
-  @NotNull private static CSVStatistics init() {
+   private static CSVStatistics init() {
     try {
       return new CSVStatistics(OUTPUT, "property");
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       throw new RuntimeException(OUTPUT, ¢);
     }
   }
@@ -76,7 +76,7 @@ enum CollectClassMetrics {
    * classes. Turn this if you like into a documentation
    * @param string */
   // TODO: Yossi Gil: make this even more clever, by using function interfaces..
-  private static void report(final String prefix, @NotNull final CompilationUnit ¢) {
+  private static void report(final String prefix,  final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
     // Do
     // this by adding stuff to the metrics suite.

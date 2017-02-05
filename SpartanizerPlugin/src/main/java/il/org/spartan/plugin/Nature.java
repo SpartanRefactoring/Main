@@ -6,7 +6,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
 import il.org.spartan.spartanizer.java.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** TODO: Artium Nihamkin please add a description
  * @author Artium Nihamkin
@@ -45,7 +45,7 @@ public final class Nature implements IProjectNature {
     project = ¢;
   }
 
-  private void set(@NotNull final IProjectDescription d, final ICommand[] cs) throws CoreException {
+  private void set( final IProjectDescription d, final ICommand[] cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(append(cs, c));

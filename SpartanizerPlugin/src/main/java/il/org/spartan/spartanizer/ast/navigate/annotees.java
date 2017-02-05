@@ -8,13 +8,13 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Extract items to which a given annotation applies
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
 public interface annotees {
-  static List<SimpleName> names(@NotNull final List<VariableDeclarationFragment> ¢) {
+  static List<SimpleName> names( final List<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclaration::getName).collect(Collectors.toList());
   }
 
@@ -47,19 +47,19 @@ public interface annotees {
     }
   }
 
-  static List<SimpleName> of(@NotNull final AnnotationTypeMemberDeclaration $) {
+  static List<SimpleName> of( final AnnotationTypeMemberDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of(@NotNull final AnnotationTypeDeclaration $) {
+  static List<SimpleName> of( final AnnotationTypeDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of(@NotNull final EnumConstantDeclaration $) {
+  static List<SimpleName> of( final EnumConstantDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of(@NotNull final EnumDeclaration $) {
+  static List<SimpleName> of( final EnumDeclaration $) {
     return as.list($.getName());
   }
 
@@ -67,15 +67,15 @@ public interface annotees {
     return names(fragments($));
   }
 
-  static List<SimpleName> of(@NotNull final MethodDeclaration $) {
+  static List<SimpleName> of( final MethodDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of(@NotNull final SingleVariableDeclaration ¢) {
+  static List<SimpleName> of( final SingleVariableDeclaration ¢) {
     return as.list(¢.getName());
   }
 
-  static List<SimpleName> of(@NotNull final TypeDeclaration $) {
+  static List<SimpleName> of( final TypeDeclaration $) {
     return as.list($.getName());
   }
 

@@ -7,8 +7,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.statistics.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,
@@ -16,24 +16,24 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
-  public Table(@NotNull final Object o) {
+  public Table( final Object o) {
     this(o.getClass());
   }
 
-  public Table(@NotNull final Class<?> c) {
+  public Table( final Class<?> c) {
     this(classToNormalizedFileName(c));
   }
 
-  public Table(@NotNull final String name) {
+  public Table( final String name) {
     this(name, TableRenderer.builtin.values());
   }
 
-  @SuppressWarnings("resource") public Table(@NotNull final String name, final TableRenderer... rs) {
+  @SuppressWarnings("resource") public Table( final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
     as.list(rs).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch (@NotNull final IOException ¢) {
+      } catch ( final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
@@ -41,12 +41,12 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private int length;
-  @NotNull public final String name;
+   public final String name;
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
 
-  @NotNull public String baseName() {
+   public String baseName() {
     return temporariesFolder + name + ".*";
   }
 
@@ -66,7 +66,7 @@ public class Table extends Row<Table> implements Closeable {
     writers.forEach(RecordWriter::close);
   }
 
-  @Nullable private String lastEmptyColumn() {
+   private String lastEmptyColumn() {
     String $ = null;
     for (final String key : keySet()) {
       final RealStatistics r = getRealStatistics(key);
@@ -87,13 +87,13 @@ public class Table extends Row<Table> implements Closeable {
     return super.col(key, value);
   }
 
-  @Override @NotNull public Table col(final String key, final long value) {
+  @Override  public Table col(final String key, final long value) {
     getRealStatistics(key).record(value);
     super.col(key, value);
     return this;
   }
 
-  @NotNull public String description() {
+   public String description() {
     String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
         "The table has " + length() + " data rows, each consisting of " + size() + " columns.\n" + //
         "Table header is  " + keySet() + "\n"; //
@@ -117,41 +117,41 @@ public class Table extends Row<Table> implements Closeable {
     reset();
   }
 
-  @NotNull private String path() {
+   private String path() {
     return temporariesFolder + name;
   }
 
-  @NotNull public Table noStatistics() {
+   public Table noStatistics() {
     statisics = new Statistic[0];
     return this;
   }
 
-  @NotNull public Table remove(final Statistic... ¢) {
+   public Table remove(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.removeAll(as.list(¢));
     return set($);
   }
 
-  @NotNull public Table add(final Statistic... ¢) {
+   public Table add(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.addAll(as.list(¢));
     return set($);
   }
 
-  @Override @NotNull protected Table reset() {
+  @Override  protected Table reset() {
     keySet().forEach(λ -> put(λ, ""));
     put(null, ++length + "");
     return this;
   }
 
   /* @formatter:off*/ @Override
-  @NotNull protected Table self() { return this; } /*@formatter:on*/
+   protected Table self() { return this; } /*@formatter:on*/
 
-  @NotNull private Table set(@NotNull final List<Statistic> ¢) {
+   private Table set( final List<Statistic> ¢) {
     return set(¢.toArray(new Statistic[¢.size()]));
   }
 
-  @NotNull Table set(final Statistic... ¢) {
+   Table set(final Statistic... ¢) {
     statisics = ¢;
     return this;
   }
@@ -159,7 +159,7 @@ public class Table extends Row<Table> implements Closeable {
   private static final long serialVersionUID = 1L;
   public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
-  public static String classToNormalizedFileName(@NotNull final Class<?> ¢) {
+  public static String classToNormalizedFileName( final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
   }
 

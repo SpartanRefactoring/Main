@@ -30,7 +30,7 @@ public class ExaminerTest extends JavadocerTest {
   }
 
   @Test public void e() {
-    assert is("@Override public boolean apply(@Nullable Object ¢){ return ¢ == null;}");
+    assert is("@Override public boolean apply( Object ¢){ return ¢ == null;}");
   }
 
   @Test public void f() {

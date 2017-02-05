@@ -11,7 +11,7 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -21,37 +21,37 @@ import org.jetbrains.annotations.NotNull;
 public enum makeAST {
   /** Converts file, string or marker to compilation unit. */
   COMPILATION_UNIT(ASTParser.K_COMPILATION_UNIT) {
-    @Override @NotNull public CompilationUnit from(@NotNull final File ¢) {
+    @Override  public CompilationUnit from( final File ¢) {
       return from(string(¢));
     }
 
-    @Override @NotNull public CompilationUnit from(final IFile ¢) {
+    @Override  public CompilationUnit from(final IFile ¢) {
       return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(null);
     }
 
-    @Override @NotNull public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
+    @Override  public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
       return (CompilationUnit) make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
-    @Override @NotNull public CompilationUnit from(@NotNull final String ¢) {
+    @Override  public CompilationUnit from( final String ¢) {
       return (CompilationUnit) makeParser(¢).createAST(null);
     }
   },
   /** Converts file, string or marker to expression. */
   EXPRESSION(ASTParser.K_EXPRESSION) {
-    @Override @NotNull public Expression from(@NotNull final File ¢) {
+    @Override  public Expression from( final File ¢) {
       return from(string(¢));
     }
 
-    @Override @NotNull public Expression from(final IFile ¢) {
+    @Override  public Expression from(final IFile ¢) {
       return (Expression) make.EXPRESSION.parser(¢).createAST(null);
     }
 
-    @Override @NotNull public Expression from(final IMarker m, final IProgressMonitor pm) {
+    @Override  public Expression from(final IMarker m, final IProgressMonitor pm) {
       return (Expression) make.EXPRESSION.parser(m).createAST(pm);
     }
 
-    @Override @NotNull public Expression from(@NotNull final String ¢) {
+    @Override  public Expression from( final String ¢) {
       return (Expression) makeParser(¢).createAST(null);
     }
   },
@@ -71,19 +71,19 @@ public enum makeAST {
   /** IMarker -> ICompilationUnit converter
    * @param marker IMarker
    * @return CompilationUnit */
-  public static ICompilationUnit iCompilationUnit(@NotNull final IMarker ¢) {
+  public static ICompilationUnit iCompilationUnit( final IMarker ¢) {
     return iCompilationUnit((IFile) ¢.getResource());
   }
 
   /** Convert file contents into a {@link String}
    * @param f JD
    * @return entire contents of this file, as one string */
-  public static String string(@NotNull final File f) {
+  public static String string( final File f) {
     try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
       for (String $ = "", ¢ = r.readLine();; $ += ¢ + System.lineSeparator(), ¢ = r.readLine())
         if (¢ == null)
           return $;
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       monitor.infoIOException(¢, f + "");
       return null;
     }
@@ -99,10 +99,10 @@ public enum makeAST {
    * @param f JD
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter. */
-  @NotNull public StringBuilder builder(@NotNull final File f) {
+   public StringBuilder builder( final File f) {
     try (Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
-    } catch (@NotNull final Exception ¢) {
+    } catch ( final Exception ¢) {
       monitor.logEvaluationError(this, ¢);
       return new StringBuilder();
     }
@@ -111,14 +111,14 @@ public enum makeAST {
   /** Parses a given {@link Document}.
    * @param d JD
    * @return {@link ASTNode} obtained by parsing */
-  public ASTNode from(@NotNull final Document ¢) {
+  public ASTNode from( final Document ¢) {
     return from(¢.get());
   }
 
   /** File -> ASTNode converter
    * @param function File
    * @return ASTNode */
-  public ASTNode from(@NotNull final File ¢) {
+  public ASTNode from( final File ¢) {
     return from(string(¢));
   }
 
@@ -139,7 +139,7 @@ public enum makeAST {
   /** String -> ASTNode converter
    * @param s String
    * @return ASTNode */
-  public ASTNode from(@NotNull final String ¢) {
+  public ASTNode from( final String ¢) {
     return makeParser(¢).createAST(null);
   }
 
@@ -164,20 +164,20 @@ public enum makeAST {
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-  public ASTParser makeParser(@NotNull final String text) {
+  public ASTParser makeParser( final String text) {
     return makeParser(text.toCharArray());
   }
 
   /** Creates a binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-  public ASTParser makeParserWithBinding(@NotNull final String text) {
+  public ASTParser makeParserWithBinding( final String text) {
     final ASTParser $ = makeParser(text.toCharArray());
     $.setResolveBindings(true);
     return $;
   }
 
-  public ASTParser makeParserWithBinding(@NotNull final File ¢) {
+  public ASTParser makeParserWithBinding( final File ¢) {
     return makeParserWithBinding(string(¢));
   }
 }

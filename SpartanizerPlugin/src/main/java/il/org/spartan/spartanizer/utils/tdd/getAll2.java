@@ -5,8 +5,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -25,7 +25,7 @@ public enum getAll2 {
    * @param u CompilationUnit
    * @author Moshe Eliasof
    * @author Netanel Felcher */
-  @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
+   public static List<MethodDeclaration> methods( final CompilationUnit u) {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
@@ -45,7 +45,7 @@ public enum getAll2 {
    * @author Tomer Dragucki */
   // TODO: Tomer Drgucki - this function has zero coverage in tests. Please add
   // tests.
-  @Nullable public static List<Name> names(@Nullable final Block b) {
+   public static List<Name> names( final Block b) {
     if (b == null)
       return null;
     final List<Name> $ = new ArrayList<>();
@@ -63,7 +63,7 @@ public enum getAll2 {
    * @since 16-11-3 Given a TypeDeclaration argument, this function returns a
    *        list of it's public fields names.
    * @param d - the TypeDeclaration argument */
-  @NotNull public static List<String> publicFields(@Nullable final TypeDeclaration d) {
+   public static List<String> publicFields( final TypeDeclaration d) {
     final ArrayList<String> $ = new ArrayList<>();
     if (d == null)
       return $;
@@ -81,12 +81,12 @@ public enum getAll2 {
    * @since 16-11-8 Given a MethodDeclaration argument, this function returns a
    *        list of it's all String variable declarations.
    * @param ¢ - the MethodDeclaration argument */
-  @NotNull public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration ¢) {
+   public static List<VariableDeclaration> stringVariables( final MethodDeclaration ¢) {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return $;
     ¢.accept(new ASTVisitor() {
-      @Override public boolean visit(@NotNull final SingleVariableDeclaration node) {
+      @Override public boolean visit( final SingleVariableDeclaration node) {
         if ("String".equals(node.getType() + ""))
           $.add(node);
         return true;

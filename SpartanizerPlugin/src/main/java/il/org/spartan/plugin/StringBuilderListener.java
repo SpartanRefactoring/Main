@@ -6,7 +6,7 @@ import il.org.spartan.*;
 import il.org.spartan.Separator;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** A kind of {@link Listener} that records a long string of the message it got.
  * @author Yossi Gil
@@ -15,7 +15,7 @@ public class StringBuilderListener implements Listener {
   private static final Tab tab = new Tab();
   private final StringBuilder $ = new StringBuilder();
 
-  @NotNull public String $() {
+   public String $() {
     return $ + "";
   }
 

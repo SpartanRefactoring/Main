@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -26,11 +26,11 @@ public enum SentenceTestTemplate {
   ;
   public static final Trimmer trimmer = new Trimmer();
 
-  @NotNull static List<List<MethodDeclaration>> allSentences() {
+   static List<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());
   }
 
-  @NotNull static List<List<MethodDeclaration>> collectSentences(@NotNull final MetaFixture... fs) {
+   static List<List<MethodDeclaration>> collectSentences( final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
       for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
@@ -59,13 +59,13 @@ public enum SentenceTestTemplate {
       azzert.that("Trimming of " + name + " is just reformatting", tide.clean(from), is(not(tide.clean(peeled))));
     }
 
-    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(Collectors.toList())));
       return $;
     }
 
-    @NotNull public static Object[] ____(@NotNull final MethodDeclaration changes) {
+     public static Object[] ____( final MethodDeclaration changes) {
       return new Object[] { changes.getName() + "", changes };
     }
   }
@@ -91,7 +91,7 @@ public enum SentenceTestTemplate {
       return (first + "").replace(disabling.disabler, "");
     }
 
-    @NotNull String firstName() {
+     String firstName() {
       return first.getName() + "";
     }
 
@@ -99,11 +99,11 @@ public enum SentenceTestTemplate {
       return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
     }
 
-    @NotNull String secondName() {
+     String secondName() {
       return second.getName() + "";
     }
 
-    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
         for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
@@ -112,7 +112,7 @@ public enum SentenceTestTemplate {
       return $;
     }
 
-    @NotNull public static Object[] ____(@NotNull final MethodDeclaration from, @NotNull final MethodDeclaration to) {
+     public static Object[] ____( final MethodDeclaration from,  final MethodDeclaration to) {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
   }
@@ -135,14 +135,14 @@ public enum SentenceTestTemplate {
         azzert.that(Wrap.essence(peeled), is(Wrap.essence(from)));
     }
 
-    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(
           sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(Collectors.toList())));
       return $;
     }
 
-    @NotNull public static Object[] ____(@NotNull final MethodDeclaration stays) {
+     public static Object[] ____( final MethodDeclaration stays) {
       return new Object[] { stays.getName() + "", stays, };
     }
   }

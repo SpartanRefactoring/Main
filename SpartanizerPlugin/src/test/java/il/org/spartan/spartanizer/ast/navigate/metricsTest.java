@@ -203,7 +203,7 @@ public final class metricsTest {
   @Test public void understandability8() {
     azzert.that(metrics.subtreeUnderstandability2(findFirst.instanceOf(MethodDeclaration.class)
         .in(wizard.ast(//
-            "@Override public boolean containsValue(@Nullable Object value){\n" + //
+            "@Override public boolean containsValue( Object value){\n" + //
                 "  for (  Collection<V> collection : asMap().values()) {\n" + //
                 "    if (collection.contains(value)) {\n" + //
                 "      return true;\n" + //

@@ -7,8 +7,8 @@ import org.eclipse.core.commands.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth
@@ -40,7 +40,7 @@ public class TopMenuHandlers extends AbstractHandler {
     }
   };
 
-  @Override @Nullable public Object execute(@NotNull final ExecutionEvent ¢) {
+  @Override  public Object execute( final ExecutionEvent ¢) {
     final String id = ¢.getCommand().getId();
     if (!handlers.containsKey(id)) {
       monitor.LOG_TO_STDOUT.info("Handler " + id + " is not registered in " + getClass().getName());

@@ -26,11 +26,11 @@ public class Issue1012 {
   }
 
   @Test public void d() {
-    trimmingOf("@Nullable final String[] parts = { null }; @NotNull final String[] t = CSV.split(CSV.combine(parts)); f(parts); g();").stays();
+    trimmingOf(" final String[] parts = { null };  final String[] t = CSV.split(CSV.combine(parts)); f(parts); g();").stays();
   }
 
   @Test public void e() {
-    trimmingOf("@NotNull final int a[] = Permutation.random(10000); int count = 0;").stays();
+    trimmingOf(" final int a[] = Permutation.random(10000); int count = 0;").stays();
   }
 
   @Test public void f() {
@@ -38,6 +38,6 @@ public class Issue1012 {
   }
 
   @Test public void g() {
-    trimmingOf("@NotNull final int a = 0; @NotNull final int b = 8; f(); g();").gives("@NotNull final int a = 0, b = 8; f(); g();");
+    trimmingOf(" final int a = 0;  final int b = 8; f(); g();").gives(" final int a = 0, b = 8; f(); g();");
   }
 }

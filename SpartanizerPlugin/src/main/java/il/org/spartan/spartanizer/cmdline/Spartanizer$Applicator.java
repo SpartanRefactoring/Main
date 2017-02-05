@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** TODO: Matteo Orru' please add a description
  * @author Matteo Orru'
@@ -39,14 +39,14 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @param u
    * @param s
    * @return */
-  public boolean apply(@NotNull final AbstractSelection<?> __) {
+  public boolean apply( final AbstractSelection<?> __) {
     final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
     for (final WrappedCompilationUnit w : list) {
       assert w != null;
       assert w.compilationUnit != null;
       System.out.println(w.compilationUnit);
       w.compilationUnit.accept(new ASTVisitor() {
-        @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
+        @Override public boolean preVisit2( final ASTNode ¢) {
           return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // ||
                                                                      // !filter(¢)
         }
@@ -60,14 +60,14 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @param s
    * @return
    * @author matteo */
-  @SuppressWarnings("unused") public boolean apply(@NotNull final WrappedCompilationUnit u, final AbstractSelection<?> __) {
+  @SuppressWarnings("unused") public boolean apply( final WrappedCompilationUnit u, final AbstractSelection<?> __) {
     go(u.compilationUnit);
     return false;
   }
 
-  void go(@NotNull final CompilationUnit u) {
+  void go( final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
+      @Override public boolean preVisit2( final ASTNode ¢) {
         System.out.println("!selectedNodeTypes.contains(¢.getClass()): " + !selectedNodeTypes.contains(¢.getClass()));
         // System.out.println("!filter(¢): " + !filter(¢));
         System.out.println("¢.getClass(): " + ¢.getClass());
@@ -77,7 +77,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     });
   }
 
-  boolean go(@NotNull final ASTNode input) {
+  boolean go( final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     final String output = fixedPoint(input + "");
     final ASTNode outputASTNode = makeAST.COMPILATION_UNIT.from(output); // makeAST.CLASS_BODY_DECLARATIONS.from(output);
@@ -87,7 +87,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     return false;
   }
 
-  @SuppressWarnings({ "boxing" }) protected void computeMetrics(@NotNull final ASTNode input, final ASTNode output) {
+  @SuppressWarnings({ "boxing" }) protected void computeMetrics( final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);
@@ -104,7 +104,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
-      } catch (@NotNull final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      } catch ( final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
         throw new AssertionError(¢);
       }
@@ -116,7 +116,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   /** This method
    * @param u
    * @return */
-  @NotNull public ASTRewrite createRewrite(@NotNull final BodyDeclaration u) {
+   public ASTRewrite createRewrite( final BodyDeclaration u) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u);
     return $;
@@ -125,7 +125,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   /** Rewrite CompilationUnit
    * @param ¢
    * @return */
-  @NotNull public ASTRewrite createRewrite(@NotNull final CompilationUnit ¢) {
+   public ASTRewrite createRewrite( final CompilationUnit ¢) {
     final ASTRewrite $ = ASTRewrite.create(¢.getAST());
     consolidateTips($, ¢);
     return $;
@@ -134,17 +134,17 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   /** ConsolidateTips on CompilationUnit
    * @param r
    * @param u */
-  public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u) {
+  public void consolidateTips(final ASTRewrite r,  final CompilationUnit u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
+      @Override protected <N extends ASTNode> boolean go( final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (tipper == null)
@@ -153,7 +153,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (s != null) {
@@ -168,12 +168,12 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         return toolbox.firstTipper(¢);
       }
 
-      <N extends ASTNode> void tick(final N n, @NotNull final Tipper<N> w) {
+      <N extends ASTNode> void tick(final N n,  final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      <N extends ASTNode> void tick(@NotNull final Tipper<N> w) {
+      <N extends ASTNode> void tick( final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
@@ -186,17 +186,17 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     });
   }
 
-  public void consolidateTips(final ASTRewrite r, @NotNull final BodyDeclaration u) {
+  public void consolidateTips(final ASTRewrite r,  final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
+      @Override protected <N extends ASTNode> boolean go( final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (tipper == null)
@@ -205,7 +205,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
-        } catch (@NotNull final Exception ¢) {
+        } catch ( final Exception ¢) {
           monitor.debug(this, ¢);
         }
         if (s != null) {
@@ -220,12 +220,12 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         return toolbox.firstTipper(¢);
       }
 
-      <N extends ASTNode> void tick(final N n, @NotNull final Tipper<N> w) {
+      <N extends ASTNode> void tick(final N n,  final Tipper<N> w) {
         tick(w);
         TrimmerLog.tip(w, n);
       }
 
-      <N extends ASTNode> void tick(@NotNull final Tipper<N> w) {
+      <N extends ASTNode> void tick( final Tipper<N> w) {
         final String key = monitor.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);

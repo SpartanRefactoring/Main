@@ -12,14 +12,14 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Convert {@code T extends Object} to {@code T}
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
     implements TipperCategory.SyntacticBaggage {
-  @Override @NotNull public String description(@NotNull final TypeParameter ¢) {
+  @Override  public String description( final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 

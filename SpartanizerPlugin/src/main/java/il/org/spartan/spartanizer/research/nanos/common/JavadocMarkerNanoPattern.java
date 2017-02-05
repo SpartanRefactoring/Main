@@ -8,7 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Base class for all nanos which match a full method, those patterns add a
  * Javadoc marker to the method rather than replacing it with some other syntax.
@@ -27,19 +27,19 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
 
   protected abstract boolean prerequisites(MethodDeclaration ¢);
 
-  @Override @NotNull public final Tip pattern(@NotNull final MethodDeclaration d) {
+  @Override  public final Tip pattern( final MethodDeclaration d) {
     return new Tip(description(d), d, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         wizard.addJavaDoc(d, r, g, tag());
       }
     };
   }
 
-  @Override @NotNull public final String description(final MethodDeclaration ¢) {
+  @Override  public final String description(final MethodDeclaration ¢) {
     return name(¢) + " is a " + getClass().getSimpleName() + " method";
   }
 
-  @NotNull public final String tag() {
+   public final String tag() {
     return "[[" + getClass().getSimpleName() + "]]";
   }
 

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** convert {@code
  * if (x)
@@ -33,7 +33,7 @@ public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement
     return "Consolidate into a single 'throw'";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     final Expression $ = getThrowExpression(then(s));
