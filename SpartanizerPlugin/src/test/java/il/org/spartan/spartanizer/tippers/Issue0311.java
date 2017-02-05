@@ -27,26 +27,26 @@ public class Issue0311 {
 
   @Test public void challenge_for_i_initialization_expression_3c() {
     trimmingOf("boolean b;for (;(b=true);)$.ap(line).ap(ls);")//
-        .gives("for(boolean b=true;b;)$.ap(line).ap(ls);")//
-        .gives("for(boolean ¢=true;¢;)$.ap(line).ap(ls);")//
+        .gives("for(boolean b;b;)$.ap(line).ap(ls);")//
+        .gives("for(boolean ¢;¢;)$.ap(line).ap(ls);")//
         .stays();
   }
 
   @Test public void a() {
     trimmingOf("while (start <il_string.l() && m.f(start)) { int x = m.start();" + //
-        " int eA = m.end(); int lE = eA - x; print(lE);  InstructionHandle[] ch = m(x, lE);" + //
+        " int eA = m.z(); int lE = eA - x; p(lE);  I[] ch = m(x, lE);" + //
         "if ((c == null) || c.k(ch)) st.$(ch); start = eA;}")//
             .gives("while (start <il_string.l() && m.f(start)) { int x = m.start()" + //
-                ",eA = m.end(); int lE = eA - x; print(lE);  InstructionHandle[] ch = m(x, lE);" + //
+                ",eA = m.z(); int lE = eA - x; p(lE);  I[] ch = m(x, lE);" + //
                 "if ((c == null) || c.k(ch)) st.$(ch); start = eA;}")//
             .gives("while (start <il_string.l() && m.f(start)) { int x = m.start()" + //
-                ", eA = m.end(), lE = eA - x; print(lE);  InstructionHandle[] ch = m(x, lE);" + //
+                ", eA = m.z(), lE = eA - x; p(lE);  I[] ch = m(x, lE);" + //
                 "if ((c == null) || c.k(ch)) st.$(ch); start = eA;}")
             .stays();
   }
 
   @Test public void b() {
-    trimmingOf("index = 1;while (sg.t(index) != ')') { int d = getTypeSize(sg.substring(index));$ += size(d);index += consumed(d);}").stays();
+    trimmingOf("y = 1;while (sg.t(y) != ')') { int d = gT(sg.ss(y));$ += size(d);y += consumed(d);}").stays();
   }
 
   @Test public void ca() {
