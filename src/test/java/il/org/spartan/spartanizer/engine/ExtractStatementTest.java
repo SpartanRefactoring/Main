@@ -1,13 +1,9 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.engine;
-import static il.org.spartan.Utils.*;
 
-import org.hamcrest.*;
-import org.hamcrest.core.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.azzert.is;
+import static il.org.spartan.azzert.not;
 import static il.org.spartan.spartanizer.engine.into.*;
+import static org.hamcrest.Matchers.*;
 
 import org.junit.*;
 import org.junit.runners.*;
@@ -15,6 +11,9 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExtractStatementTest {
