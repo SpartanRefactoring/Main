@@ -93,7 +93,9 @@ public class Toolbox {
    public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(Initializer.class, new InitializerEmptyRemove()) //
+        .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
         .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis())
+        .add(CatchClause.class, new CatchClauseRenameParameterToCent())
         .add(Javadoc.class, new JavadocEmpty())
         .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
@@ -103,20 +105,19 @@ public class Toolbox {
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
+        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
+        .add(ReturnStatement.class, new ReturnLastInMethod(), //
+            new SequencerNotLastInBlock<>()) //
         .add(EnhancedForStatement.class, //
             new EnhancedForRedundantContinue(), //
             new EnhancedForEliminateConditionalContinue(), //
             new EnhancedForParameterRenameToCent(), //
             null)//
-        .add(ReturnStatement.class, new ReturnLastInMethod(), //
-            new SequencerNotLastInBlock<>()) //
         .add(LambdaExpression.class, //
             new LambdaRemoveRedundantCurlyBraces(), //
             new LambdaRemoveParenthesis(), //
             new LambdaRenameSingleParameterToLambda(), //
             null) //
-        .add(ExpressionStatement.class, //
-            new ExpressionStatementAssertTrueFalse()) //
         .add(Modifier.class, //
             new ModifierRedundant(), //
             new ModifierFinalAbstractMethodRedundant(), //
@@ -170,16 +171,11 @@ public class Toolbox {
             // new BlockRemoveDeadVariables(), // v 2.7
             // new FindFirst(),
             null) //
-        .add(PostfixExpression.class, //
-            new PostfixToPrefix(), //
-            null) //
-        .add(ArrayAccess.class, //
-            new ArrayAccessAndIncrement(), //
-            null) //
+        .add(PostfixExpression.class, new PostfixToPrefix()) //
         .add(InfixExpression.class, //
             new InfixPlusToMinus(), //
-            new LessEqualsToLess(), //
-            new LessToLessEquals(), //
+            new InfixLessEqualsToLess(), //
+            new InfixLessToLessEquals(), //
             new InfixMultiplicationEvaluate(), //
             new InfixDivisionEvaluate(), //
             new InfixRemainderEvaluate(), //
@@ -206,7 +202,8 @@ public class Toolbox {
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
             new InfixIndexOfToStringContains(), // v 2.7
-            new SimplifyComparisionOfAdditions(), new SimplifyComparisionOfSubtractions(), //
+            new InfixSimplifyComparisionOfAdditions(), //
+            new InfixSimplifyComparisionOfSubtractions(), //
             null)
         .add(MethodDeclaration.class, //
             new AnnotationSort<>(), //
@@ -231,12 +228,9 @@ public class Toolbox {
             new TryFinallyEmptyRemove(), //
             new MergeCatches(), //
             null)//
-        .add(CatchClause.class, //
-            new CatchClauseRenameParameterToCent(), //
-            null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
-            new RemoveRedundantIf(), //
+            new IfDeadRemov(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
             new IfLastInMethodElseEndingWithEmptyReturn(), //
             new IfLastInMethod(), //
@@ -306,7 +300,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new FragmentDeadInitializer(), //
+            new FragmentInitializerDead(), //
             new FragmentNoInitializerAssignment(), //
             new FragmentInitialiazerUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
@@ -318,10 +312,10 @@ public class Toolbox {
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
             new FragmentInitializerInlineIntoNext(), //
+            new FragmentInitializerWhile(), //
+            new FragmentInitializerToForInitializers(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
-            new FragmentInitializerToForInitializers(), //
-            new WhileToForInitializers(), //
             null) //
     //
     //

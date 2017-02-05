@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** This is a unit test for {@link RemoveRedundantIf},
+/** This is a unit test for {@link IfDeadRemov},
  * {@link ForDeadRemove}, {@link RemoveRedundantWhile} of previously failed
  * tests. Related to {@link Issue0251}.
  * @author Yuval Simon
