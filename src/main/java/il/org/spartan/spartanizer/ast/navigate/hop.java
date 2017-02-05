@@ -9,8 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -42,7 +42,7 @@ public interface hop {
 
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
-  @Nullable static List<ASTNode> descendants(@Nullable final ASTNode root) {
+   static List<ASTNode> descendants( final ASTNode root) {
     if (root == null)
       return null;
     final List<ASTNode> $ = new ArrayList<>();
@@ -59,7 +59,7 @@ public interface hop {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs,
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment( final List<VariableDeclarationFragment> fs,
       final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
@@ -69,7 +69,7 @@ public interface hop {
     return $ == null ? null : $.getName() + "";
   }
 
-  @Nullable static SimpleName lastComponent(@Nullable final Name ¢) {
+   static SimpleName lastComponent( final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 
@@ -81,7 +81,7 @@ public interface hop {
     return last(extract.statements(¢));
   }
 
-  static Name name(@NotNull final Type ¢) {
+  static Name name( final Type ¢) {
     return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
@@ -90,7 +90,7 @@ public interface hop {
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
    * @return a list of all operands of an expression */
-  @Nullable static List<Expression> operands(@Nullable final InfixExpression ¢) {
+   static List<Expression> operands( final InfixExpression ¢) {
     if (¢ == null)
       return null;
     final List<Expression> $ = new ArrayList<>();
@@ -139,7 +139,7 @@ public interface hop {
    * @return the previous {@link Statement} in the parent {@link Block}. If
    *         parent is not {@link Block} return null, if n is first
    *         {@link Statement} also null. */
-  static Statement previousStatementInBody(@NotNull final Statement s) {
+  static Statement previousStatementInBody( final Statement s) {
     final Block b = az.block(s.getParent());
     if (b == null)
       return null;
@@ -147,7 +147,7 @@ public interface hop {
     return $.indexOf(s) < 1 ? null : $.get($.indexOf(s) - 1);
   }
 
-  @Nullable static SimpleName simpleName(@NotNull final Type ¢) {
+   static SimpleName simpleName( final Type ¢) {
     return lastComponent(hop.name(¢));
   }
 }

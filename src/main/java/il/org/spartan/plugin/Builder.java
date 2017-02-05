@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> @since
@@ -44,11 +44,11 @@ public final class Builder extends IncrementalProjectBuilder {
    *         Resource changes are disallowed during certain types of resource
    *         change event notification¢ See {@link IResourceChangeEvent}¢for
    *         more details. */
-  public static void deleteMarkers(@NotNull final IFile ¢) throws CoreException {
+  public static void deleteMarkers( final IFile ¢) throws CoreException {
     ¢.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
   }
 
-  private static void incrementalBuild(@NotNull final IResourceDelta d) throws CoreException {
+  private static void incrementalBuild( final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
       final int k = internalDelta.getKind();
       // return true to continue visiting children.
@@ -64,7 +64,7 @@ public final class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final AbstractGUIApplicator a, @NotNull final Tip r, @NotNull final IMarker m) throws CoreException {
+  private static void addMarker(final AbstractGUIApplicator a,  final Tip r,  final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(SPARTANIZATION_TIPPER_KEY, r.tipperClass);
@@ -75,13 +75,13 @@ public final class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
 
-  private static void addMarkers(@NotNull final IFile ¢) throws CoreException {
+  private static void addMarkers( final IFile ¢) throws CoreException {
     Tips.reset();
     deleteMarkers(¢);
     addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
   }
 
-  private static void addMarkers(@NotNull final IFile f, final CompilationUnit u) throws CoreException {
+  private static void addMarkers( final IFile f, final CompilationUnit u) throws CoreException {
     for (final AbstractGUIApplicator s : Tips.all())
       for (final Tip ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {
@@ -90,11 +90,11 @@ public final class Builder extends IncrementalProjectBuilder {
         }
   }
 
-  @NotNull private static String prefix() {
+   private static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
 
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, @Nullable final IProgressMonitor m)
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __,  final IProgressMonitor m)
       throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
@@ -111,7 +111,7 @@ public final class Builder extends IncrementalProjectBuilder {
         addMarkers(λ);
         return true; // to continue visiting children.
       });
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       monitor.logCancellationRequest(this, ¢);
     }
   }

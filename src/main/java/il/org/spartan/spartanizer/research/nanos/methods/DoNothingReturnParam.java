@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -13,7 +13,7 @@ public class DoNothingReturnParam extends JavadocMarkerNanoPattern {
     return hazOneParameter(¢) && hazOneStatement(¢) && returnsParam(¢) && returnTypeSameAsParameter(¢);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Default;
   }
 }

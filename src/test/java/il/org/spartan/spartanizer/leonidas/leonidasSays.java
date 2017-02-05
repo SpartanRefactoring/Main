@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>
@@ -38,7 +38,7 @@ public enum leonidasSays {
       string = _s;
     }
 
-    public void into(@NotNull final String rrr) {
+    public void into( final String rrr) {
       final Document document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
@@ -59,7 +59,7 @@ public enum leonidasSays {
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);
-      } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
+      } catch ( MalformedTreeException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
       }
       azzertEquals(rrr, document);
@@ -67,7 +67,7 @@ public enum leonidasSays {
   }
 
   static class expression {
-    @NotNull private static ASTNode ast(final String s2) {
+     private static ASTNode ast(final String s2) {
       return extractStatementIfOne(wizard.ast(s2));
     }
 
@@ -89,11 +89,11 @@ public enum leonidasSays {
   public static class statementsTipper {
     private final Tipper<Block> tipper;
 
-    public statementsTipper(@NotNull final String pattern, @NotNull final String replacement) {
+    public statementsTipper( final String pattern,  final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
 
-    public statementsTipper(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
+    public statementsTipper( final String pattern,  final String replacement,  final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
 
@@ -109,7 +109,7 @@ public enum leonidasSays {
       assert tipper.canTip(az.block(wizard.ast(¢)));
     }
 
-    @NotNull public blockTurns turns(final String ¢) {
+     public blockTurns turns(final String ¢) {
       return new blockTurns(tipper, ¢);
     }
   }
@@ -117,11 +117,11 @@ public enum leonidasSays {
   public static class tipper {
     private final UserDefinedTipper<ASTNode> tipper;
 
-    public tipper(@NotNull final String pattern, @NotNull final String replacement) {
+    public tipper( final String pattern,  final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
 
-    public tipper(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
+    public tipper( final String pattern,  final String replacement,  final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
 
@@ -137,7 +137,7 @@ public enum leonidasSays {
       assert tipper.canTip(extractStatementIfOne(wizard.ast(¢)));
     }
 
-    @NotNull public turns turns(final String ¢) {
+     public turns turns(final String ¢) {
       return new turns(tipper, ¢);
     }
   }
@@ -151,7 +151,7 @@ public enum leonidasSays {
       string = _s;
     }
 
-    public void into(@NotNull final String expected) {
+    public void into( final String expected) {
       final Document document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
@@ -171,14 +171,14 @@ public enum leonidasSays {
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);
-      } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
+      } catch ( MalformedTreeException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
       }
       azzertEquals(expected, document);
     }
   }
 
-  static void azzertEquals(@NotNull final String s, @NotNull final Document d) {
+  static void azzertEquals( final String s,  final Document d) {
     String actual = null;
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
@@ -199,7 +199,7 @@ public enum leonidasSays {
     }
   }
 
-  static ASTNode extractASTNode(@NotNull final String s, final CompilationUnit u) {
+  static ASTNode extractASTNode( final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -215,18 +215,18 @@ public enum leonidasSays {
     }
   }
 
-  @NotNull static ASTNode extractStatementIfOne(@NotNull final ASTNode ¢) {
+   static ASTNode extractStatementIfOne( final ASTNode ¢) {
     return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : (ASTNode) first(statements(az.block(¢)));
   }
 
-  @Nullable static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
+   static <N extends ASTNode> N findSecond( final Class<?> c,  final ASTNode n) {
     if (n == null)
       return null;
     final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
     final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
+      @Override public boolean preVisit2( final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
@@ -244,23 +244,23 @@ public enum leonidasSays {
     return $$;
   }
 
-  @NotNull public static statementsTipper statementsTipper(@NotNull final String p, @NotNull final String s, @NotNull final String d) {
+   public static statementsTipper statementsTipper( final String p,  final String s,  final String d) {
     return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
   }
 
-  @NotNull public static expression that(final String ¢) {
+   public static expression that(final String ¢) {
     return new expression(¢);
   }
 
-  @NotNull public static tipper tipper(@NotNull final String p, @NotNull final String s, @NotNull final String d) {
+   public static tipper tipper( final String p,  final String s,  final String d) {
     return new tipper(p, s, d);
   }
 
-  @NotNull public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
+   public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
     return new tipper(¢);
   }
 
-  static String wrapCode(@NotNull final String ¢) {
+  static String wrapCode( final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:

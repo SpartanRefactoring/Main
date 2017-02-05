@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Convert Infinite loops with return sideEffects to shorter ones : </br>
  * Convert 
@@ -33,11 +33,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
-  @Nullable private static Statement handleIf(@Nullable final IfStatement s, final ReturnStatement nextReturn) {
+   private static Statement handleIf( final IfStatement s, final ReturnStatement nextReturn) {
     return handleIf(then(s), elze(s), nextReturn);
   }
 
-  private static Statement handleIf(final Statement then, @Nullable final Statement elze, final ReturnStatement nextReturn) {
+  private static Statement handleIf(final Statement then,  final Statement elze, final ReturnStatement nextReturn) {
     if (iz.breakStatement(then))
       return then;
     if (iz.block(then)) {
@@ -66,7 +66,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
                 : null;
   }
 
-  @Nullable private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
+   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
       if (iz.ifStatement(¢))
@@ -77,11 +77,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return $;
   }
 
-  @Nullable private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
+   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
-  private static boolean isInfiniteLoop(@NotNull final ForStatement ¢) {
+  private static boolean isInfiniteLoop( final ForStatement ¢) {
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -89,27 +89,27 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside 'for(;;)' to 'return'";
   }
 
-  @Override @NotNull public String description(@NotNull final ForStatement ¢) {
+  @Override  public String description( final ForStatement ¢) {
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
-  private Tip make(@NotNull final ForStatement vor, @NotNull final ReturnStatement nextReturn, @Nullable final ExclusionManager exclude) {
+  private Tip make( final ForStatement vor,  final ReturnStatement nextReturn,  final ExclusionManager exclude) {
     final Statement $ = make(body(vor), nextReturn);
     if (exclude != null)
       exclude.exclude(vor);
     return $ == null ? null : new Tip(description(), vor, getClass(), nextReturn) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }
     };
   }
 
-  @Override public boolean prerequisite(@Nullable final ForStatement ¢) {
+  @Override public boolean prerequisite( final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override @Nullable public Tip tip(@Nullable final ForStatement vor, final ExclusionManager exclude) {
+  @Override  public Tip tip( final ForStatement vor, final ExclusionManager exclude) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     final ReturnStatement $ = extract.nextReturn(vor);

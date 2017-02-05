@@ -24,8 +24,8 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
@@ -37,7 +37,7 @@ public class InflateHandler extends AbstractHandler {
   public static final AtomicBoolean active = new AtomicBoolean(false);
   private static final IPartListener pageListener = pageListener();
 
-  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override  public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }
@@ -61,7 +61,7 @@ public class InflateHandler extends AbstractHandler {
     return null;
   }
 
-  @NotNull protected static List<Listener> getListeners(final StyledText t) {
+   protected static List<Listener> getListeners(final StyledText t) {
     final ArrayList<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
@@ -101,7 +101,7 @@ public class InflateHandler extends AbstractHandler {
     return !($ instanceof ITextEditor) ? null : (ITextEditor) $;
   }
 
-  @Nullable protected static StyledText getText(final ITextEditor ¢) {
+   protected static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
     final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);

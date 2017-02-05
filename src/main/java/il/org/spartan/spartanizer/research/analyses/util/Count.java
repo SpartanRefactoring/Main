@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -46,7 +46,7 @@ public enum Count {
     return d == 0 ? 1 : sumSratio / d;
   }
 
-  @NotNull private static Pair<Int, Int> newPair() {
+   private static Pair<Int, Int> newPair() {
     return new Pair<>(new Int(), new Int());
   }
 }

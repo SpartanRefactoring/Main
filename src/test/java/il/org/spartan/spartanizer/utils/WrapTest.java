@@ -8,7 +8,7 @@ import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -102,7 +102,7 @@ public final class WrapTest {
         "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar(@NotNull final String s1, @NotNull final String s2) {
+  private void similar( final String s1,  final String s2) {
     azzert.that(essence(s2), is(essence(s1)));
   }
 

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @year 2016
@@ -28,37 +28,37 @@ enum CollectMetrics {
   private static final CSVStatistics output = init(OUTPUT, "property");
   private static final CSVStatistics Tips = init(OUTPUT_Tips, "tips");
 
-  public static void main(@NotNull final String[] where) {
+  public static void main( final String[] where) {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
 
-  @NotNull public static Document rewrite(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u, @NotNull final Document $) {
+   public static Document rewrite( final AbstractGUIApplicator a,  final CompilationUnit u,  final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
-    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
+    } catch ( MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
   }
 
   // TODO Yossi Gil: eliminate warning
-  private static void collectTips(@SuppressWarnings("unused") final String __, @NotNull final CompilationUnit before) {
+  private static void collectTips(@SuppressWarnings("unused") final String __,  final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggestions(before));
   }
 
-  private static void go(@NotNull final File f) {
+  private static void go( final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
       Tips.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void go(@NotNull final String javaCode) {
+  private static void go( final String javaCode) {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
@@ -73,10 +73,10 @@ enum CollectMetrics {
     new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
   }
 
-  @NotNull private static CSVStatistics init(final String $, final String property) {
+   private static CSVStatistics init(final String $, final String property) {
     try {
       return new CSVStatistics($, property);
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       throw new RuntimeException(OUTPUT, ¢);
     }
   }
@@ -88,7 +88,7 @@ enum CollectMetrics {
    * classes. Turn this if you like into a documentation
    * @param string */
   // TODO: Yossi Gil: make this even more clever, by using function interfaces..
-  private static void report(final String prefix, @NotNull final CompilationUnit ¢) {
+  private static void report(final String prefix,  final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
     // Do
     // this by adding stuff to the metrics suite.
@@ -107,7 +107,7 @@ enum CollectMetrics {
     output.put(prefix + "No Imports", count.noimports(¢));
   }
 
-  private static void reportTips(@NotNull final List<Tip> ¢) {
+  private static void reportTips( final List<Tip> ¢) {
     for (final Tip $ : ¢) {
       Tips.put("description", $.description);
       Tips.put("from", $.from);
@@ -117,7 +117,7 @@ enum CollectMetrics {
     }
   }
 
-  @NotNull private static CompilationUnit spartanize(final String javaCode) {
+   private static CompilationUnit spartanize(final String javaCode) {
     final String $ = new Trimmer().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);

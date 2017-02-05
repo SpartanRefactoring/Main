@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -75,7 +75,7 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return most appropriate Guess, or null, if the parameter could not be
    *         parsed appropriately. */
-  @NotNull public static GuessedContext find(@NotNull final String codeFragment) {
+   public static GuessedContext find( final String codeFragment) {
     final String cleanFragment = codeFragment.replaceAll("\\s+", "").replaceAll(" ", "").replaceAll("\n", "");
     if (cleanFragment.startsWith("{") && cleanFragment.endsWith("}"))
       return BLOCK_LOOK_ALIKE;
@@ -87,7 +87,7 @@ public enum GuessedContext {
     return accuratelyCheckedContext(codeFragment);
   }
 
-  @NotNull private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
+   private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
@@ -98,15 +98,15 @@ public enum GuessedContext {
     throw new RuntimeException();
   }
 
-  private static boolean methodInvocationLookAlike(@NotNull final String codeFragment) {
+  private static boolean methodInvocationLookAlike( final String codeFragment) {
     return codeFragment.matches("[\\S]+\\(\\)");
   }
 
-  private static boolean wasActuallyInsertedToWrapper(@NotNull final GuessedContext $, final String codeFragment) {
+  private static boolean wasActuallyInsertedToWrapper( final GuessedContext $, final String codeFragment) {
     return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
 
-  @NotNull static String enumerateFailingAttempts(final String codeFragment) {
+   static String enumerateFailingAttempts(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
     for (final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
@@ -127,7 +127,7 @@ public enum GuessedContext {
     return $ + "";
   }
 
-  private static String problems(@NotNull final CompilationUnit u) {
+  private static String problems( final CompilationUnit u) {
     final Int $ = new Int();
     return Stream.of(u.getProblems()).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
@@ -145,7 +145,7 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull public CompilationUnit intoCompilationUnit(final String codeFragment) {
+   public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
 
@@ -153,7 +153,7 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull public Document intoDocument(final String codeFragment) {
+   public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
 
@@ -167,7 +167,7 @@ public enum GuessedContext {
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
-  @NotNull public String on(final String codeFragment) {
+   public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
 
@@ -177,7 +177,7 @@ public enum GuessedContext {
     return essence2.contains($);
   }
 
-  private boolean contains(final String wrap, @NotNull final String inner) {
+  private boolean contains(final String wrap,  final String inner) {
     final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
     assert essence2 != null;
     return essence2.contains($);

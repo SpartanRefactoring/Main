@@ -8,8 +8,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Simplify if statements as much as possible (or remove them or parts of them)
  * if and only if </br>
@@ -18,11 +18,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-26 */
 public class RemoveRedundentIf extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.EmptyCycles {
-  @Override @NotNull public String description(final IfStatement ¢) {
+  @Override  public String description(final IfStatement ¢) {
     return "Remove :" + ¢;
   }
 
-  @Override @Nullable public ASTNode replacement(@Nullable final IfStatement s) {
+  @Override  public ASTNode replacement( final IfStatement s) {
     if (s == null)
       return null;
     final boolean $ = sideEffects.free(s.getExpression()), then = sideEffects.free(then(s)), elze = sideEffects.free(elze(s));

@@ -4,7 +4,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -29,7 +29,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnnotationTypeDeclaration) */
-      @Override public boolean visit(@NotNull final AnnotationTypeDeclaration node) {
+      @Override public boolean visit( final AnnotationTypeDeclaration node) {
         print("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true; // super.visit(node);
       }
@@ -39,7 +39,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * AnonymousClassDeclaration) */
-      @Override public boolean visit(@NotNull final AnnotationTypeMemberDeclaration node) {
+      @Override public boolean visit( final AnnotationTypeMemberDeclaration node) {
         print("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
         return super.visit(node);
       }
@@ -49,7 +49,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * Assignment) */
-      @Override public boolean visit(@NotNull final Assignment node) {
+      @Override public boolean visit( final Assignment node) {
         print(node.getOperator());
         return super.visit(node);
       }
@@ -59,7 +59,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * ImportDeclaration) */
-      @Override public boolean visit(@NotNull final ImportDeclaration node) {
+      @Override public boolean visit( final ImportDeclaration node) {
         print(node.getName());
         return super.visit(node);
       }
@@ -69,7 +69,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MarkerAnnotation) */
-      @Override public boolean visit(@NotNull final MarkerAnnotation node) {
+      @Override public boolean visit( final MarkerAnnotation node) {
         print("MarkerAnnotation: " + node.getTypeName());
         print("parent: " + node.getParent().getNodeType());
         return super.visit(node);
@@ -80,7 +80,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodDeclaration) */
-      @Override public boolean visit(@NotNull final MethodDeclaration node) {
+      @Override public boolean visit( final MethodDeclaration node) {
         print("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node);
       }
@@ -90,7 +90,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * MethodInvocation) */
-      @Override public boolean visit(@NotNull final MethodInvocation node) {
+      @Override public boolean visit( final MethodInvocation node) {
         print(node.getName());
         return super.visit(node);
       }
@@ -100,7 +100,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * NormalAnnotation) */
-      @Override public boolean visit(@NotNull final NormalAnnotation node) {
+      @Override public boolean visit( final NormalAnnotation node) {
         print("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
@@ -110,7 +110,7 @@ public class ParseASTTest {
        * @see
        * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
        * PackageDeclaration) */
-      @Override public boolean visit(@NotNull final PackageDeclaration node) {
+      @Override public boolean visit( final PackageDeclaration node) {
         print(node.getName());
         return super.visit(node);
       }

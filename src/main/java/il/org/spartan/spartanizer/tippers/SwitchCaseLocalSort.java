@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** sorts cases of a local branch <code>switch(x) { case 2: case 1: break; }</code>
  * to <code>switch(x) { case 1: case 2: break; } </code>
@@ -24,19 +24,19 @@ import org.jetbrains.annotations.Nullable;
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {
-  @Override @NotNull public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
+  @Override  public Tip tip( final SwitchCase n,  final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
     return new Tip(description(n), n, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, copy.of($), g);
         r.replace($, copy.of(n), g);
       }
     };
   }
 
-  @Override protected boolean prerequisite(@NotNull final SwitchCase n) {
+  @Override protected boolean prerequisite( final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
     if (cases.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
@@ -53,7 +53,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
             || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
   }
 
-  @Override @NotNull @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @Override  @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "sort cases with same flow control";
   }
 }

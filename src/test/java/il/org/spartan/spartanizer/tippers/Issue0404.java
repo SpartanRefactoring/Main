@@ -7,7 +7,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0404 {
-  private static void forceStaticReturnType(@NotNull final List<String> ¢) {
+  private static void forceStaticReturnType( final List<String> ¢) {
     assert ¢ != null;
   }
 

@@ -6,7 +6,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -94,7 +94,7 @@ public final class FuncsTest {
     assert iz.deMorgan(CONDITIONAL_OR);
   }
 
-  @NotNull private Type t(final String codeFragment) {
+   private Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 }

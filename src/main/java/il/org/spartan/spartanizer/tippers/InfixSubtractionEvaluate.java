@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Evaluate the subtraction of numbers according to the following rules 
  * 
@@ -32,7 +32,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     double $ = 0;
     try {
       $ = az.throwing.double¢(first(xs)) - az.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -47,7 +47,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ -= az.throwing.int¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -62,7 +62,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ -= az.throwing.long¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

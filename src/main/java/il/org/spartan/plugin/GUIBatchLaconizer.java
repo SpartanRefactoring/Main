@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Possible events during spartanization process
  * <p>
@@ -81,7 +81,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
    * printing to console.
    * @return <code><b>this</b></code> applicator */
-  @Override @NotNull public GUIBatchLaconizer defaultListenerNoisy() {
+  @Override  public GUIBatchLaconizer defaultListenerNoisy() {
     listener(λ -> {
       as.list(λ).forEach(System.out::print);
       System.out.println();
@@ -92,15 +92,15 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default listener configuration of {@link GUIBatchLaconizer}. Silent
    * listener.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultListenerSilent() {
-    listener((@NotNull final Object... __) -> {/**/});
+   public GUIBatchLaconizer defaultListenerSilent() {
+    listener(( final Object... __) -> {/**/});
     return this;
   }
 
   /** Default selection configuration of {@link GUIBatchLaconizer}. Normal
    * eclipse user selection.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultSelection() {
+   public GUIBatchLaconizer defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
@@ -108,7 +108,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default passes configuration of {@link GUIBatchLaconizer}, with few
    * passes.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultPassesFew() {
+   public GUIBatchLaconizer defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
@@ -116,7 +116,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default passes configuration of {@link GUIBatchLaconizer}, with many
    * passes.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultPassesMany() {
+   public GUIBatchLaconizer defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
@@ -124,7 +124,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default run context configuration of {@link GUIBatchLaconizer}. Simply
    * runs the {@link Runnable} in the current thread.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultRunContext() {
+   public GUIBatchLaconizer defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
@@ -134,7 +134,7 @@ public class GUIBatchLaconizer extends Applicator {
    * the {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultRunAction(@NotNull final AbstractGUIApplicator a) {
+   public GUIBatchLaconizer defaultRunAction( final AbstractGUIApplicator a) {
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection())));
     name(a.getName());
     return this;
@@ -142,20 +142,20 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default operation name.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultOperationName() {
+   public GUIBatchLaconizer defaultOperationName() {
     operationName(Linguistic.Activity.simple(DEFAULT_OPERATION_NAME));
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public GUIBatchLaconizer defaultSettings() {
+   public GUIBatchLaconizer defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer()).defaultOperationName();
   }
 
   /** Factory method.
    * @return default event applicator */
-  @NotNull public static GUIBatchLaconizer defaultApplicator() {
+   public static GUIBatchLaconizer defaultApplicator() {
     return new GUIBatchLaconizer().defaultSettings();
   }
 
@@ -179,7 +179,7 @@ public class GUIBatchLaconizer extends Applicator {
       this.printing = printing;
     }
 
-    public String get(@NotNull final Object... ¢) {
+    public String get( final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
@@ -188,7 +188,7 @@ public class GUIBatchLaconizer extends Applicator {
       return Linguistic.unknownIfNull(os, λ -> λ[index]);
     }
 
-    private static String printableAt(final Object[] os, final int index, @NotNull final Function<Object, String> operation) {
+    private static String printableAt(final Object[] os, final int index,  final Function<Object, String> operation) {
       return Linguistic.unknownIfNull(os, λ -> operation.apply(λ[index]));
     }
   }
@@ -203,7 +203,7 @@ public class GUIBatchLaconizer extends Applicator {
     d.setAutoBuilding(false);
     try {
       w.setDescription(d);
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       monitor.log(¢);
       return false;
     }
@@ -220,7 +220,7 @@ public class GUIBatchLaconizer extends Applicator {
     d.setAutoBuilding(true);
     try {
       w.setDescription(d);
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       monitor.log(¢);
     }
   }

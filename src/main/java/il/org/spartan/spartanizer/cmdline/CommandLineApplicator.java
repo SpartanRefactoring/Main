@@ -10,7 +10,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'
@@ -19,14 +19,14 @@ public class CommandLineApplicator extends Applicator {
   private static final int PASSES_FEW = 1;
   private static final int PASSES_MANY = 20;
 
-  @NotNull public static CommandLineApplicator defaultApplicator() {
+   public static CommandLineApplicator defaultApplicator() {
     return new CommandLineApplicator().defaultSettings();
   }
 
   // private final CommandLine$Applicator a = new CommandLine$Applicator();
   /** Default listener configuration. Simple printing to console.
    * @return <code><b>this</b></code> applicator */
-  @Override @NotNull public CommandLineApplicator defaultListenerNoisy() {
+  @Override  public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       as.list(os).forEach(λ -> System.out.print(λ + " "));
       System.out.println();
@@ -35,20 +35,20 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** @return <code><b>this</b></code> */
-  @NotNull private CommandLineApplicator defaultListenerSilent() {
+   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
 
   /** @return <code><b>this</b></code> */
-  @NotNull private CommandLineApplicator defaultPassesFew() {
+   private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration, with many passes.
    * @return <code><b>this</b></code> applicator */
-  @NotNull public CommandLineApplicator defaultPassesMany() {
+   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
@@ -59,7 +59,7 @@ public class CommandLineApplicator extends Applicator {
   // - we will inspect it once we meet. --or
   /** Applies {@link Spartanizer$Applicator} by default.
    * @return <code><b>this</b></code> */
-  @NotNull private CommandLineApplicator defaultRunAction() {
+   private CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
     setRunAction(λ -> Integer.valueOf(new Spartanizer$Applicator().apply(λ, selection()) ? 1 : 0));
     return this;
@@ -82,7 +82,7 @@ public class CommandLineApplicator extends Applicator {
    * {@link Spartanizer$Applicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */
-  @NotNull public CommandLineApplicator defaultRunAction(@NotNull final Spartanizer$Applicator a) {
+   public CommandLineApplicator defaultRunAction( final Spartanizer$Applicator a) {
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
     return this;
@@ -93,7 +93,7 @@ public class CommandLineApplicator extends Applicator {
    * {@link CommandLine$Applicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */
-  @Override @NotNull public CommandLineApplicator defaultRunAction(@NotNull final CommandLine$Applicator a) {
+  @Override  public CommandLineApplicator defaultRunAction( final CommandLine$Applicator a) {
     CommandLine$Applicator.startingTime = new Date().getTime();
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
     name(a.getClass().getSimpleName());
@@ -101,26 +101,26 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** @return <code><b>this</b></code> */
-  @NotNull private CommandLineApplicator defaultRunContext() {
+   private CommandLineApplicator defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
 
   /** @return <code><b>this</b></code> */
-  @NotNull private CommandLineApplicator defaultSelection() {
+   private CommandLineApplicator defaultSelection() {
     // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
   }
 
   /** @param ¢ JD
    * @return */
-  @Override @NotNull public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
+  @Override  public CommandLineApplicator defaultSelection(@SuppressWarnings("rawtypes") final AbstractSelection ¢) {
     selection(¢);
     return this;
   }
 
   /** @return <code><b>this</b></code> */
-  @NotNull private CommandLineApplicator defaultSettings() {
+   private CommandLineApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
 
@@ -182,12 +182,12 @@ public class CommandLineApplicator extends Applicator {
       this.printing = printing;
     }
 
-    public String get(@NotNull final Object... ¢) {
+    public String get( final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
 
-    @NotNull private static String printableAt(final Object[] os, final int index) {
+     private static String printableAt(final Object[] os, final int index) {
       return Linguistic.unknownIfNull(os, λ -> λ[index]);
     }
   }

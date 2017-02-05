@@ -17,20 +17,20 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 public class fluentTrimmerApplication extends Trimmer.With {
-  @NotNull public final String codeFragment;
-  @NotNull public final GuessedContext guessedContext;
-  @NotNull public final String wrappedFragment;
-  @NotNull public final CompilationUnit compilationUnit;
-  @NotNull public final Document document;
-  @NotNull public final ASTRewrite createRewrite;
+   public final String codeFragment;
+   public final GuessedContext guessedContext;
+   public final String wrappedFragment;
+   public final CompilationUnit compilationUnit;
+   public final Document document;
+   public final ASTRewrite createRewrite;
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public fluentTrimmerApplication(@NotNull final Trimmer t, @NotNull final String codeFragment) {
+  public fluentTrimmerApplication( final Trimmer t,  final String codeFragment) {
     t.super();
     this.codeFragment = codeFragment;
     assert codeFragment != null;
@@ -55,13 +55,13 @@ public class fluentTrimmerApplication extends Trimmer.With {
       undoEdit = textEdit.apply(document);
       assert undoEdit != null;
       dump.go(document.get(), "DOC Content now");
-    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
+    } catch ( MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError("MISSING_CASE", ¢);
     }
     assert undoEdit != null;
   }
 
-  @Nullable String aboutTheSame(@NotNull final String s1, @NotNull final String s2) {
+   String aboutTheSame( final String s1,  final String s2) {
     assert s1 != null;
     assert s2 != null;
     if (s1.equals(s2)) // Highly unlikely, but what the hack
@@ -75,13 +75,13 @@ public class fluentTrimmerApplication extends Trimmer.With {
     return tide.eq($, g2b) || tide.eq(s1, g2b) || tide.eq($, g2a) ? g2b : null;
   }
 
-  @Nullable String common(@NotNull final String expected) {
+   String common( final String expected) {
     return aboutTheSame(expected, document.get());
   }
 
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
-  @NotNull public final ASTRewrite createRewrite() {
+   public final ASTRewrite createRewrite() {
     return createRewrite(nullProgressMonitor);
   }
 
@@ -89,11 +89,11 @@ public class fluentTrimmerApplication extends Trimmer.With {
    * @param pm a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  @NotNull public final ASTRewrite createRewrite(@NotNull final IProgressMonitor ¢) {
+   public final ASTRewrite createRewrite( final IProgressMonitor ¢) {
     return createRewrite(¢, null);
   }
 
-  @NotNull private ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, final IMarker m) {
+   private ASTRewrite createRewrite( final IProgressMonitor pm, final IMarker m) {
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());
     fillRewrite($, m);
@@ -103,7 +103,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
 
   protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
     compilationUnit.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
+      @Override protected <N extends ASTNode> boolean go( final N n) {
         if (!trimmer().inRange(m, n))
           return true;
         final Tipper<N> w = trimmer().toolbox.firstTipper(n);
@@ -117,14 +117,14 @@ public class fluentTrimmerApplication extends Trimmer.With {
     });
   }
 
-  <N extends ASTNode> N findNode(@NotNull final Class<N> clazz) {
+  <N extends ASTNode> N findNode( final Class<N> clazz) {
     assert GuessedContext.find(codeFragment) != null;
     final N $ = firstInstance(clazz);
     assert $ != null;
     return $;
   }
 
-  <N extends ASTNode> N firstInstance(@NotNull final Class<N> clazz) {
+  <N extends ASTNode> N firstInstance( final Class<N> clazz) {
     final Wrapper<N> $ = new Wrapper<>();
     compilationUnit.accept(new ASTVisitor() {
       /** The implementation of the visitation procedure in the JDT seems to be
@@ -136,7 +136,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
        * @param pattern the node currently being visited.
        * @return <code><b>true</b></code> <i>iff</i> the sought node is
        *         found. */
-      @Override @SuppressWarnings("unchecked") public boolean preVisit2(@NotNull final ASTNode ¢) {
+      @Override @SuppressWarnings("unchecked") public boolean preVisit2( final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (!clazz.isAssignableFrom(¢.getClass()))
@@ -148,7 +148,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     return $.get();
   }
 
-  public fluentTrimmerApplication gives(@NotNull final String expected) {
+  public fluentTrimmerApplication gives( final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
       dump.go(this);
       azzert.fail(//

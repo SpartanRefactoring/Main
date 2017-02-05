@@ -17,22 +17,22 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** convert {@code int a=3;for(;p;){++i}} to {@code for(int a=3;p;) {++i;}}
  * @author Alex Kopzon
  * @since 2016 */
 public final class FragmentToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
-  @Nullable private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
+   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
     setInitializers($, copy.of(s));
     return $;
   }
 
-  private static boolean fitting(@NotNull final VariableDeclarationStatement s, @NotNull final ForStatement ¢) {
+  private static boolean fitting( final VariableDeclarationStatement s,  final ForStatement ¢) {
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
@@ -43,28 +43,28 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
    * @param x
    * @return <code><b>true</b></code> <em>iff</em> initializer's and
    *         declaration's modifiers are mergable. */
-  private static boolean fittingModifiers(final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
+  private static boolean fittingModifiers(final VariableDeclarationStatement s,  final VariableDeclarationExpression x) {
     final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
 
-  private static boolean fittingType(@NotNull final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
+  private static boolean fittingType( final VariableDeclarationStatement s,  final VariableDeclarationExpression x) {
     return (x.getType() + "").equals(s.getType() + "");
   }
 
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
-  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, @NotNull final ForStatement s) {
+  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds,  final ForStatement s) {
     return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
 
-  @Nullable public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
+   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     fragments(s).stream().filter(λ -> (name(λ) + "").equals(az.simpleName(left(from)) + ""))
         .forEachOrdered(λ -> λ.setInitializer(copy.of(right(from))));
     return copy.of(left(from));
   }
 
-  @Nullable public static Expression handleParenthesizedCondition(@NotNull final ParenthesizedExpression from, final VariableDeclarationStatement s) {
+   public static Expression handleParenthesizedCondition( final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? goInfix(e, s) : from;
@@ -75,11 +75,11 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
-  @Nullable private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+   private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? goInfix(az.infixExpression(from), s) : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
-  private static boolean sameTypeAndModifiers(@NotNull final VariableDeclarationStatement s, final ForStatement ¢) {
+  private static boolean sameTypeAndModifiers( final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
@@ -97,12 +97,12 @@ public final class FragmentToForInitializers extends ReplaceToNextStatementExclu
     fragments(az.variableDeclarationExpression(findFirst.elementOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
-  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
+  @Override  public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
-  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
-      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,
+       final Statement nextStatement, final TextEditGroup g,  final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());

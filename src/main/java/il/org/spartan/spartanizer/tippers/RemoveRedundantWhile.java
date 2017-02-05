@@ -8,8 +8,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Simplify if statements as much as possible (or remove them or parts of them)
  * if and only if </br>
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-26 */
 public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.EmptyCycles {
-  private static boolean checkBlock(@Nullable final ASTNode n) {
+  private static boolean checkBlock( final ASTNode n) {
     if (n != null
         && (iz.expression(n) && !sideEffects.free(az.expression(n))
             || iz.expressionStatement(n) && !sideEffects.free(az.expressionStatement(n).getExpression())) //
@@ -40,11 +40,11 @@ public class RemoveRedundantWhile extends ReplaceCurrentNode<WhileStatement>//
     return true;
   }
 
-  @Override @NotNull public String description(final WhileStatement ¢) {
+  @Override  public String description(final WhileStatement ¢) {
     return "remove :" + ¢;
   }
 
-  @Override @Nullable public ASTNode replacement(@Nullable final WhileStatement ¢) {
+  @Override  public ASTNode replacement( final WhileStatement ¢) {
     return ¢ == null || !sideEffects.free(¢.getExpression()) || !checkBlock(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 }

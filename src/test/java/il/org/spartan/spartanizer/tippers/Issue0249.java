@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.Nullable;
+
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -65,7 +65,7 @@ public class Issue0249 {
     azzert.that(az.block(into.s("{}")), iz("{}"));
   }
 
-  public int metricUnderTest(@Nullable final String javaStatements) {
+  public int metricUnderTest( final String javaStatements) {
     return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }
 }

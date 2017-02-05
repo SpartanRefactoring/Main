@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** x true ? 1 : 0 <br>
  * This is actually a casting from boolean to int
@@ -29,15 +29,15 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
+  @Override  public Tip pattern(final ConditionalExpression ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Casting a boolean into an int";
   }
 
-  @Override @NotNull public String technicalName() {
+  @Override  public String technicalName() {
     return "CastXFromBooleanToInt";
   }
 
@@ -49,7 +49,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Functional;
   }
 }

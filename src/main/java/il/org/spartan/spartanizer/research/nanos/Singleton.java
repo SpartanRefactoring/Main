@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** collection.size() == 1
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -28,7 +28,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final InfixExpression ¢) {
+  @Override  public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -48,7 +48,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public NanoPatternTipper.Category category() {
+  @Override  public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

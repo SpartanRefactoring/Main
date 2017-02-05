@@ -10,16 +10,16 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
-  @Override public boolean prerequisite(@NotNull final N current) {
+  @Override public boolean prerequisite( final N current) {
     final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;
   }
 
-  @Override @Nullable public Tip tip(@NotNull final N n, @Nullable final ExclusionManager exclude) {
+  @Override  public Tip tip( final N n,  final ExclusionManager exclude) {
     final Statement $ = extract.nextStatement(n);
     assert $ != null;
     if (exclude != null && exclude.isExcluded($)) // see issue #1101
@@ -33,5 +33,5 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
     };
   }
 
-  @Nullable protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
+   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

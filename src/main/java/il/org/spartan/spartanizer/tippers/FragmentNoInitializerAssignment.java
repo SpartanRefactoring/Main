@@ -9,8 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** convert {@code
  * int a;
@@ -22,18 +22,18 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-08-07 */
 public final class FragmentNoInitializerAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {
-  @Nullable private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
+   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
     final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(copy.of(x));
     return $;
   }
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, final SimpleName n,
-      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f, final SimpleName n,
+       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
