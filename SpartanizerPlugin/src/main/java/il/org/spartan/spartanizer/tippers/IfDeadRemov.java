@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if and only if it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundantIf extends ReplaceCurrentNode<IfStatement>//
+public class IfDeadRemov extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.EmptyCycles {
   private static boolean checkBlock( final ASTNode n) {
     if (n != null

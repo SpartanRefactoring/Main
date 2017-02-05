@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code for(int a = 3; Panic;) { ++OS.is.in.danger; } }
  * @author Alex Kopzon
  * @since 2016 */
-public final class WhileToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
+public final class FragmentInitializerWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
    private static ForStatement buildForStatement(final VariableDeclarationFragment f,  final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
