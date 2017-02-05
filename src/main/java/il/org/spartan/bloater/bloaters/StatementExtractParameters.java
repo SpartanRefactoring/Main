@@ -47,8 +47,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final Expression $ = choose(candidates(s));
     if ($ == null)
       return null;
-    final ITypeBinding b = $.resolveTypeBinding();
-    if (b == null)
+    final ITypeBinding binding = $.resolveTypeBinding();
+    if (binding == null)
       return null;
     final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
@@ -59,7 +59,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       return null;
     ir.setUseContextToFilterImplicitImports(true); // solves many issues
     ir.setFilterImplicitImports(true); // along with this of course
-    final Type t = ir.addImport(b, s.getAST());
+    final Type t = ir.addImport(binding, s.getAST());
     return t == null || $ instanceof Assignment ? // TODO Ori Roth: enable
                                                   // assignments extraction
         null : new Tip(description(s), s, getClass()) {
