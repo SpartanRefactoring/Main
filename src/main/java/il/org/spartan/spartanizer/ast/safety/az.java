@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.utils.Unbox.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -306,7 +305,7 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
-   private static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+   public static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
     final List<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;
@@ -314,12 +313,6 @@ public enum az {
 
    public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;
-  }
-
-  private static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    copy.into(fragments(¢), $);
-    return chop($);
   }
 
   /** Down-cast, if possible, to {@link NormalAnnotation}
@@ -509,17 +502,7 @@ public enum az {
     return az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
   }
 
-   public static VariableDeclarationExpression variableDeclarationExpression( final VariableDeclarationStatement ¢) {
-    if (¢ == null)
-      return null;
-    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(findFirst.elementOf(fragments(copy.of(¢)))));
-    fragments($).addAll(nextFragmentsOf(¢));
-    $.setType(copy.of(type(¢)));
-    extendedModifiers($).addAll(modifiersOf(¢));
-    return $;
-  }
-
-  /** @param ¢ JD
+   /** @param ¢ JD
    * @return */
    public static VariableDeclarationStatement variableDeclarationStatement( final ASTNode ¢) {
     return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;

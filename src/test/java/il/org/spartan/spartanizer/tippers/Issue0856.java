@@ -52,6 +52,13 @@ public class Issue0856 {
         .stays();
   }
 
+  @Test public void d3() {
+    trimmingOf("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+        .using(VariableDeclarationFragment.class, new FragmentInitializerToForInitializers()) //
+        .gives("L<O> t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+        .stays();
+  }
+
   @Test public void e() {
     trimmingOf("I il=(I)((T)l).g();il.finalize(); return 0;")//
         .gives("((I)((T)l).g()).finalize();return 0;")//
