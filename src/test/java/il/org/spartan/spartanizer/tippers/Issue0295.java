@@ -4,7 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -30,7 +30,7 @@ public class Issue0295 {
   final Statement seriesA$step1 = into.s("A a = new A();for (A b: g.f(a,true))sum+=b;");
   final EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
   final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class).in(seriesA$step1);
-  @NotNull EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
+   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
   final FragmentInitializerStatementTerminatingScope tipper = new FragmentInitializerStatementTerminatingScope();
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
 

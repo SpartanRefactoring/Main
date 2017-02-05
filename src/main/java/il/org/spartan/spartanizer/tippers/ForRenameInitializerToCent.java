@@ -23,19 +23,19 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil
  * @since 2016-09 */
 public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression>//
     implements TipperCategory.Centification {
-  @Override @NotNull public String description(final VariableDeclarationExpression ¢) {
+  @Override  public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
-  @Override @Nullable public Tip tip(@Nullable final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
+  @Override  public Tip tip( final VariableDeclarationExpression x,  final ExclusionManager m) {
     final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
+
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -18,11 +18,11 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
     return "Eliminate conditional exprssion with identical branches";
   }
 
-  @Override public boolean prerequisite(@Nullable final ConditionalExpression ¢) {
+  @Override public boolean prerequisite( final ConditionalExpression ¢) {
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢.getExpression());
   }
 
-  @Override @NotNull public Expression replacement(@NotNull final ConditionalExpression ¢) {
+  @Override  public Expression replacement( final ConditionalExpression ¢) {
     return make.plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }
 }

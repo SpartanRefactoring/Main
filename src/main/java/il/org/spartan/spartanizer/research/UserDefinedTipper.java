@@ -7,12 +7,12 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
-  @Override public final boolean canTip(@Nullable final N ¢) {
+  @Override public final boolean canTip( final N ¢) {
     return ¢ != null && prerequisite(¢);
   }
 
@@ -28,7 +28,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
 
   public abstract ASTNode getMatching(ASTNode n);
 
-  @NotNull public abstract String pattern();
+   public abstract String pattern();
 
-  @NotNull public abstract String replacement();
+   public abstract String replacement();
 }

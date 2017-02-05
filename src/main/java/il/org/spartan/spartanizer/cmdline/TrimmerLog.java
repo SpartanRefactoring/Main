@@ -10,7 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Logging stuff
  * @year 2016
@@ -42,7 +42,7 @@ public enum TrimmerLog {
     logToScreen = true;
   }
 
-  public static void application(final ASTRewrite r, @NotNull final Tip t) {
+  public static void application(final ASTRewrite r,  final Tip t) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
         System.out.println("Stopped logging applications");
@@ -86,7 +86,7 @@ public enum TrimmerLog {
     TrimmerLog.outputDir = $;
   }
 
-  public static <N extends ASTNode> void tip(@NotNull final Tipper<N> w, final N n) {
+  public static <N extends ASTNode> void tip( final Tipper<N> w, final N n) {
     if (--maxTips <= 0) {
       if (maxTips == 0)
         System.out.println("Stopped logging tips");
@@ -114,14 +114,14 @@ public enum TrimmerLog {
     System.out.println("    Suggests: " + w.tip(n));
   }
 
-  public static void visitation(@NotNull final ASTNode ¢) {
+  public static void visitation( final ASTNode ¢) {
     if (--maxVisitations > 0)
       System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + clazz(¢) + ")" + " parent = " + clazz(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }
 
-  private static String clazz(@NotNull final Object n) {
+  private static String clazz( final Object n) {
     return n.getClass().getSimpleName();
   }
 

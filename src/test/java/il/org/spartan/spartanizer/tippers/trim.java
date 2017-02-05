@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ltk.core.refactoring.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 
 import il.org.spartan.plugin.*;
@@ -31,7 +31,7 @@ public interface trim {
    * .of("a+(b-c)") //  See {@link #of(String)} 
    * .gives("a+b-c")</code> */
   interface repeatedly {
-    @NotNull static fluentTrimmerApplication of(final String codeFragment) {
+     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
@@ -43,7 +43,7 @@ public interface trim {
       };
     }
 
-    @SafeVarargs @NotNull static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+    @SafeVarargs  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
       return new fluentTrimmer(clazz, ts) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           return super.checkAllConditions(pm);
@@ -96,16 +96,16 @@ public interface trim {
     }
   }
 
-  static int countOpportunities(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u) {
+  static int countOpportunities( final AbstractGUIApplicator a,  final CompilationUnit u) {
     return a.collectSuggestions(u).size();
   }
 
-  @NotNull static fluentTrimmerApplication of(final String codeFragment) {
+   static fluentTrimmerApplication of(final String codeFragment) {
     return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
 
   @SafeVarargs //
-  @NotNull static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+   static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
     return new fluentTrimmer(clazz, ts);
   }
 }

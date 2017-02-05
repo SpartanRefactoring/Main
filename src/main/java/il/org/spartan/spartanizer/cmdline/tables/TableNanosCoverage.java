@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -50,7 +50,7 @@ public class TableNanosCoverage extends FolderASTVisitor {
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
-    } catch (@NotNull final AssertionError __) {
+    } catch ( final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -61,7 +61,7 @@ public class TableNanosCoverage extends FolderASTVisitor {
       scope.pop();
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit( final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -108,11 +108,11 @@ public class TableNanosCoverage extends FolderASTVisitor {
     }
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(@NotNull final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage( final List<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(@NotNull final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered( final List<MethodRecord> rs) {
     return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
   }
 

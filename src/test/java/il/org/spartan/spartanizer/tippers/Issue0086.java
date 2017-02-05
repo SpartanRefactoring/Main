@@ -4,7 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -128,7 +128,7 @@ public final class Issue0086 extends Issue____ {
             .stays();
   }
 
-  @NotNull private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
+   private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
     return new SequencerNotLastInBlock<>();
   }
 

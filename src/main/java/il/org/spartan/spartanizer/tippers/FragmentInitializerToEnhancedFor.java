@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** convert {@code int a=E;for(e: C(a)) S;} to {@code for(e: C(E)) S;} to
  * {@code for(int a=3;p;) {++i;}}
@@ -25,11 +25,11 @@ import org.jetbrains.annotations.NotNull;
  * @since 2017-01-27 */
 public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStatement<VariableDeclarationFragment> //
     implements TipperCategory.Inlining {
-  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
+  @Override  public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final Statement nextStatement,
+  @Override protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final Statement nextStatement,
       final TextEditGroup g) {
     final Expression initializer = f.getInitializer();
     if (initializer == null)
@@ -90,7 +90,7 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
     final Bool $ = new Bool();
     final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
+      @Override public boolean preVisit2( final ASTNode ¢) {
         if (parent.equals(¢))
           return true;
         if (!¢.equals(nextStatement) && !¢.equals(originalStatement) && iz.statement(¢) && !occurencesOf(az.statement(¢), id).isEmpty())
@@ -101,7 +101,7 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
     return $.inner;
   }
 
-  private static boolean leftSide(@NotNull final Statement nextStatement, final String id) {
+  private static boolean leftSide( final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
     nextStatement.accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {
@@ -118,7 +118,7 @@ public final class FragmentInitializerToEnhancedFor extends ReplaceToNextStateme
     return $.size() != 1 ? null : first($);
   }
 
-  @NotNull static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

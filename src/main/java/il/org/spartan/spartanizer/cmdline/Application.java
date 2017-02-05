@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** An {@link IApplication} extension entry point, allowing execution of this
  * plug-in from the command line.
@@ -28,7 +28,7 @@ final class Application implements IApplication {
    * @param ¢ File
    * @return
    * @throws IOException */
-  static int countLines(@NotNull final File ¢) throws IOException {
+  static int countLines( final File ¢) throws IOException {
     try (LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
       $.skip(Long.MAX_VALUE);
       return $.getLineNumber();
@@ -39,14 +39,14 @@ final class Application implements IApplication {
    * @param fileName
    * @return
    * @throws IOException */
-  static int countLines(@NotNull final String fileName) throws IOException {
+  static int countLines( final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
 
-  static MethodInvocation getMethodInvocation(@NotNull final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
+  static MethodInvocation getMethodInvocation( final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit(@NotNull final MethodInvocation ¢) {
+      @Override public boolean visit( final MethodInvocation ¢) {
         if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
           $.set(¢);
         return super.visit(¢);
@@ -55,7 +55,7 @@ final class Application implements IApplication {
     return $.get() == null ? i : $.get();
   }
 
-  private static String getPackageNameFromSource(@NotNull final String source) {
+  private static String getPackageNameFromSource( final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
@@ -83,9 +83,9 @@ final class Application implements IApplication {
     System.out.println("");
   }
 
-  private static String getPackageNameFromSource(@NotNull final Wrapper<String> $, @NotNull final ASTNode n) {
+  private static String getPackageNameFromSource( final Wrapper<String> $,  final ASTNode n) {
     n.accept(new ASTVisitor() {
-      @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
+      @Override public boolean visit( final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -104,13 +104,13 @@ final class Application implements IApplication {
   private int optRounds = 20;
   private String optPath;
 
-  @Override public Object start(@NotNull final IApplicationContext arg0) {
+  @Override public Object start( final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     final List<FileStats> fileStats = new ArrayList<>();
     try {
       prepareTempIJavaProject();
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
@@ -133,10 +133,10 @@ final class Application implements IApplication {
         s.countLinesAfter();
         fileStats.add(s);
         ++done;
-      } catch (@NotNull final JavaModelException | IOException ¢) {
+      } catch ( final JavaModelException | IOException ¢) {
         System.err.println(f + ": " + ¢.getMessage());
         ++failed;
-      } catch (@NotNull final Exception ¢) {
+      } catch ( final Exception ¢) {
         System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
         ¢.printStackTrace();
         ++failed;
@@ -156,17 +156,17 @@ final class Application implements IApplication {
     ___.nothing();
   }
 
-  @NotNull String determineOutputFilename(@NotNull final String path) {
+   String determineOutputFilename( final String path) {
     return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   /** Discard compilation unit u
    * @param u */
-  private void discardCompilationUnit(@NotNull final ICompilationUnit u) {
+  private void discardCompilationUnit( final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
-    } catch (@NotNull final NullPointerException | JavaModelException ¢) {
+    } catch ( final NullPointerException | JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
   }
@@ -175,18 +175,18 @@ final class Application implements IApplication {
     try {
       javaProject.close();
       javaProject.getProject().delete(true, null);
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  private ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws IOException, JavaModelException {
+  private ICompilationUnit openCompilationUnit( final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private boolean parseArguments(@Nullable final List<String> args) {
+  private boolean parseArguments( final List<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
@@ -199,7 +199,7 @@ final class Application implements IApplication {
       try {
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
-      } catch (@NotNull @SuppressWarnings("unused") final NumberFormatException __) {
+      } catch ( @SuppressWarnings("unused") final NumberFormatException __) {
         // Ignore
       }
       if ("-V".equals(a))
@@ -234,7 +234,7 @@ final class Application implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  private void printLineStatistics(@NotNull final List<FileStats> ss) {
+  private void printLineStatistics( final List<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
       for (final FileStats ¢ : ss) {
@@ -257,7 +257,7 @@ final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  @SuppressWarnings("boxing") private void printChangeStatistics(@NotNull final List<FileStats> ss) {
+  @SuppressWarnings("boxing") private void printChangeStatistics( final List<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (!optIndividualStatistics)
       range.to(optRounds).forEach(i -> System.out
@@ -290,7 +290,7 @@ final class Application implements IApplication {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
 
-    @NotNull public String fileName() {
+     public String fileName() {
       return file.getName();
     }
 
@@ -305,7 +305,7 @@ final class Application implements IApplication {
     public int getRoundStat(final int $) {
       try {
         return roundStats.get($).intValue();
-      } catch (@NotNull final IndexOutOfBoundsException ¢) {
+      } catch ( final IndexOutOfBoundsException ¢) {
         ¢.printStackTrace();
         return 0;
       }

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import java.lang.annotation.*;
 
@@ -16,5 +16,5 @@ import java.lang.annotation.*;
     ElementType.CONSTRUCTOR, //
     ElementType.TYPE, })
 public @interface knows {
-  @NotNull String[] value();
+   String[] value();
 }

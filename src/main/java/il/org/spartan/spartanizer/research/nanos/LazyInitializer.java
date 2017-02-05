@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.Nullable;
+
 
 /** * @year 2016
  * @author Ori Marcovitch
@@ -26,7 +26,7 @@ public final class LazyInitializer extends NanoPatternTipper<Assignment> {
     return anyTips(tippers, x);
   }
 
-  @Override @Nullable public Tip pattern(final Assignment x) {
+  @Override  public Tip pattern(final Assignment x) {
     return firstTip(tippers, x);
   }
 

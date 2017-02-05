@@ -12,7 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation
@@ -21,11 +21,11 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-07-17 */
 public final class InfixSubtractionSort extends InfixExpressionSortingRest//
     implements TipperCategory.Sorting {
-  @Override protected boolean sort(@NotNull final List<Expression> ¢) {
+  @Override protected boolean sort( final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
 
-  @Override protected boolean suitable(@NotNull final InfixExpression ¢) {
+  @Override protected boolean suitable( final InfixExpression ¢) {
     return in(¢.getOperator(), MINUS2);
   }
 }

@@ -8,19 +8,19 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** converts {@code x==y?y:x} into {@code x}
  * @author Dan Abramovich
  * @since 27-11-2016 */
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.EmptyCycles {
-  @Override @Nullable public ASTNode replacement(@NotNull final ConditionalExpression ¢) {
+  @Override  public ASTNode replacement( final ConditionalExpression ¢) {
     return copy.of(¢.getElseExpression());
   }
 
-  @Override protected boolean prerequisite(@NotNull final ConditionalExpression x) {
+  @Override protected boolean prerequisite( final ConditionalExpression x) {
     final InfixExpression $ = az.infixExpression(x.getExpression());
     if (!iz.infixEquals($))
       return false;
@@ -37,7 +37,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     return wizard.same(elze, left) || wizard.same(elze, right);
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
+  @Override  public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate ternary expression that evaluates to the same value";
   }
 }

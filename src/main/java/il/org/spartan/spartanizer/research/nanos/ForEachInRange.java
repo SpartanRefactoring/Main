@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** For each element in range (a,b) apply some method
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -27,19 +27,19 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final ForStatement ¢) {
+  @Override  public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @Override @NotNull public String technicalName() {
+  @Override  public String technicalName() {
     return "ForEachFromL₁ToL₂ApplyS";
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Iterative;
   }
 

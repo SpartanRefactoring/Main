@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Removing redundant case branches in switch statement such as
  * {@code switch(x) { case a: x=1; break; case b: x=2; break; default: x=1;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-11-26 */
 public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
-  @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
+  @Override  public ASTNode replacement( final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
@@ -32,7 +32,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merge branches with same code";
   }
 }

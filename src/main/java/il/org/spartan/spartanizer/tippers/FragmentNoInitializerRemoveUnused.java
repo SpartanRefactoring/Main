@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Remove unused variable
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -22,11 +22,11 @@ public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<Varia
     return "Remove unused, uninitialized variable";
   }
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Remove unused variable: " + trivia.gist(¢);
   }
 
-  @Override public Tip tip(@NotNull final VariableDeclarationFragment f) {
+  @Override public Tip tip( final VariableDeclarationFragment f) {
     return !iz.variableDeclarationStatement(parent(f)) || f.getInitializer() != null || haz.annotation(f)
         || !collect.usesOf(f.getName()).in(scope.of(f)).isEmpty() ? null : new Tip(description(f), f.getName(), getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -35,7 +35,7 @@ public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<Varia
         };
   }
 
-  @Override protected boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
+  @Override protected boolean prerequisite( final VariableDeclarationFragment ¢) {
     return iz.variableDeclarationStatement(parent(¢)) && ¢.getInitializer() == null && !haz.annotation(¢)
         && collect.usesOf(¢.getName()).in(scope.of(¢)).isEmpty();
   }

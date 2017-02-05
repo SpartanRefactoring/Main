@@ -3,8 +3,8 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.
@@ -33,7 +33,7 @@ public class Table_Tippers {
     }
   }
 
-  @NotNull public static String name(@Nullable final Class<?> ¢) {
+   public static String name( final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }

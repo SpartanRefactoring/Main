@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.Nullable;
+
 
 /** if (!$X1.containsKey($X2)) <br>
  * <tab> $X1.put($X2, $X3); <br>
@@ -31,7 +31,7 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final IfStatement ¢) {
+  @Override  public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

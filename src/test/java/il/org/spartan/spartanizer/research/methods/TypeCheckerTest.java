@@ -38,7 +38,7 @@ public class TypeCheckerTest extends JavadocerTest {
   }
 
   @Test public void e() {
-    assert not("@Override public boolean apply(@Nullable Object ¢){ return ¢ == null;}");
+    assert not("@Override public boolean apply( Object ¢){ return ¢ == null;}");
   }
 
   @Test public void f() {

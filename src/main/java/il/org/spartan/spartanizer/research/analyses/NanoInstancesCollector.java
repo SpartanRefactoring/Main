@@ -17,18 +17,18 @@ import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
-import org.jetbrains.annotations.NotNull;
+
 
 public class NanoInstancesCollector extends FolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
   static final File out = new File(Table.temporariesFolder + system.fileSeparator + nano.getClass().getSimpleName() + ".txt");
 
-  public static void main(@NotNull final String[] args)
+  public static void main( final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
-      @Override @NotNull public Tip pattern(@NotNull final EnhancedForStatement ¢) {
+      @Override  public Tip pattern( final EnhancedForStatement ¢) {
         return new Tip("", ¢, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
@@ -48,7 +48,7 @@ public class NanoInstancesCollector extends FolderASTVisitor {
     FolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit( final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     spartanalyzer.fixedPoint(¢);
     return true;

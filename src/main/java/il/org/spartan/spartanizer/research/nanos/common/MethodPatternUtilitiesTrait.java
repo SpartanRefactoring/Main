@@ -10,8 +10,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -41,7 +41,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
-  @NotNull default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
+   default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return yieldDescendants.untilClass(ReturnStatement.class).from(¢);
   }
 
@@ -73,7 +73,7 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notStatic(@NotNull final MethodDeclaration ¢) {
+  default boolean notStatic( final MethodDeclaration ¢) {
     return !iz.static¢(¢);
   }
 
@@ -81,15 +81,15 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.voidType(returnType(¢));
   }
 
-  default boolean returnTypeSameAsParameter(@Nullable final MethodDeclaration ¢) {
+  default boolean returnTypeSameAsParameter( final MethodDeclaration ¢) {
     return ¢ != null && (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
-  default boolean returnTypeSameAs(@Nullable final MethodDeclaration ¢, @Nullable final Type t) {
+  default boolean returnTypeSameAs( final MethodDeclaration ¢,  final Type t) {
     return ¢ != null && t != null && (t + "").equals(returnType(¢) + "");
   }
 
-  default boolean same(@Nullable final ASTNode n, @Nullable final ASTNode b) {
+  default boolean same( final ASTNode n,  final ASTNode b) {
     return n != null && b != null && (n + "").equals(b + "");
   }
 
@@ -117,7 +117,7 @@ public interface MethodPatternUtilitiesTrait {
     return first(statements(¢));
   }
 
-  default boolean safeEquals(@Nullable final Object o1, @Nullable final Object o2) {
+  default boolean safeEquals( final Object o1,  final Object o2) {
     return o1 != null && o2 != null && o1.equals(o2);
   }
 

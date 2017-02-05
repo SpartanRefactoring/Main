@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 public class switchBranch {
   private final List<SwitchCase> cases;
@@ -81,7 +81,7 @@ public class switchBranch {
   /** @param ¢
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
-  private boolean compare(@NotNull final switchBranch ¢) {
+  private boolean compare( final switchBranch ¢) {
     if (hasDefault())
       return false;
     if (¢.hasDefault())
@@ -95,28 +95,28 @@ public class switchBranch {
     return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
   }
 
-  public boolean compareTo(@NotNull final switchBranch ¢) {
+  public boolean compareTo( final switchBranch ¢) {
     final boolean $ = compare(¢);
     return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
   }
 
-  private void addAll(@NotNull final List<Statement> ¢) {
+  private void addAll( final List<Statement> ¢) {
     ¢.addAll(cases.stream().map(copy::of).collect(Collectors.toList()));
     ¢.addAll(statements.stream().map(copy::of).collect(Collectors.toList()));
   }
 
-  private static void addAll(@NotNull final List<Statement> ss, @NotNull final List<switchBranch> bs) {
+  private static void addAll( final List<Statement> ss,  final List<switchBranch> bs) {
     bs.forEach(λ -> λ.addAll(ss));
   }
 
-  @NotNull public static SwitchStatement makeSwitchStatement(@NotNull final List<switchBranch> bs, final Expression x, @NotNull final AST t) {
+   public static SwitchStatement makeSwitchStatement( final List<switchBranch> bs, final Expression x,  final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
     return $;
   }
 
-  @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
+   @SuppressWarnings("null") public static List<switchBranch> intoBranches( final SwitchStatement n) {
     List<SwitchCase> c = null;
     List<Statement> s = null;
     final List<switchBranch> $ = new ArrayList<>();
@@ -154,11 +154,11 @@ public class switchBranch {
     return $;
   }
 
-  public boolean hasSameBody(@NotNull final switchBranch ¢) {
+  public boolean hasSameBody( final switchBranch ¢) {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 
-  @NotNull private List<Statement> functionalCommands() {
+   private List<Statement> functionalCommands() {
     final List<Statement> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < statements.size() - 1; ++¢)
       $.add(statements.get(¢));
@@ -171,7 +171,7 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
 
-  @Nullable public static Statement removeBreakSequencer(@NotNull final Statement s) {
+   public static Statement removeBreakSequencer( final Statement s) {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST a = s.getAST();
@@ -193,7 +193,7 @@ public class switchBranch {
     return $;
   }
 
-  @NotNull public static List<Statement> removeBreakSequencer(@NotNull final List<Statement> ss) {
+   public static List<Statement> removeBreakSequencer( final List<Statement> ss) {
     final List<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);

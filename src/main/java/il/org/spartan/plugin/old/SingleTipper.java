@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.*;
+
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,11 +30,11 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
     this.tipper = tipper;
   }
 
-  @Override protected boolean check(@NotNull final ASTNode ¢) {
+  @Override protected boolean check( final ASTNode ¢) {
     return Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
   }
 
-  @Override @SuppressWarnings("unchecked") @Nullable protected Tipper<N> getTipper(@NotNull final ASTNode ¢) {
+  @Override @SuppressWarnings("unchecked")  protected Tipper<N> getTipper( final ASTNode ¢) {
     assert check(¢);
     return !tipper.canTip((N) ¢) ? null : tipper;
   }
@@ -43,7 +43,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
    * @author Ori Roth
    * @since 2016 */
   public static class InDeclaration extends Resolution {
-    @Override @Nullable protected ITextSelection domain(@NotNull final IMarker m) {
+    @Override  protected ITextSelection domain( final IMarker m) {
       final ICompilationUnit u = eclipse.currentCompilationUnit();
       if (u == null)
         return null;
@@ -54,17 +54,17 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return $ == null ? null : new TextSelection($.getStartPosition(), $.getLength());
     }
 
-    @Override @NotNull public String getLabelSuffix() {
+    @Override  public String getLabelSuffix() {
       return "enclosing function";
     }
 
-    @Override public Selection getSelection(@NotNull final IMarker ¢) {
+    @Override public Selection getSelection( final IMarker ¢) {
       return Selection.Util.getCurrentCompilationUnit().setTextSelection(domain(¢));
     }
 
     private static InDeclaration instance;
 
-    @NotNull public static InDeclaration instance() {
+     public static InDeclaration instance() {
       return instance = instance != null ? instance : new InDeclaration();
     }
   }
@@ -77,7 +77,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return TextSelection.emptySelection();
     }
 
-    @Override @NotNull public String getLabelSuffix() {
+    @Override  public String getLabelSuffix() {
       return "compilation unit";
     }
 
@@ -87,7 +87,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
 
     private static InFile instance;
 
-    @NotNull public static InFile instance() {
+     public static InFile instance() {
       return instance = instance != null ? instance : new InFile();
     }
   }
@@ -100,7 +100,7 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return TextSelection.emptySelection();
     }
 
-    @Override @NotNull public String getLabelSuffix() {
+    @Override  public String getLabelSuffix() {
       return "entire project";
     }
 
@@ -108,13 +108,13 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return Selection.Util.getAllCompilationUnits();
     }
 
-    @Override @NotNull public String getOpeningMessage(@NotNull final Map<attribute, Object> ¢) {
+    @Override  public String getOpeningMessage( final Map<attribute, Object> ¢) {
       final int $ = getCUsCount(¢);
       return "Applying " + getTipperName(¢) + " to " + projectName(¢) + " with " + $ + " " + Linguistic.plurals("file", $) + "\n" //
           + "Tips before:\t" + ¢.get(attribute.TIPS_BEFORE);
     }
 
-    @Override @NotNull @SuppressWarnings("boxing") public String getEndingMessage(@NotNull final Map<attribute, Object> ¢) {
+    @Override  @SuppressWarnings("boxing") public String getEndingMessage( final Map<attribute, Object> ¢) {
       final int $ = getChangesCount(¢);
       return "Done applying " + getTipperName(¢) + " to " + projectName(¢) + "\n" + $ + " " + Linguistic.plurals("file", $) + " spartanized in "
           + ¢.get(attribute.PASSES) + " " + Linguistic.plurales("pass", (int) ¢.get(attribute.PASSES)) + "\n" + "Tips commited:\t"
@@ -122,12 +122,12 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
           + ¢.get(attribute.TIPS_AFTER);
     }
 
-    @Override @NotNull public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
-        @NotNull final ICompilationUnit currentCompilationUnit) {
+    @Override  public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
+         final ICompilationUnit currentCompilationUnit) {
       return wizard.completionIndex(currentCompilationUnits, currentCompilationUnit) + " : " + currentCompilationUnit.getElementName();
     }
 
-    @Override public int getProgressMonitorWork(@NotNull final List<ICompilationUnit> ¢) {
+    @Override public int getProgressMonitorWork( final List<ICompilationUnit> ¢) {
       return ¢.size();
     }
 
@@ -135,19 +135,19 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return true;
     }
 
-    @Override @Nullable public IRunnableWithProgress initialWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us,
+    @Override  public IRunnableWithProgress initialWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us,
         final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_BEFORE);
     }
 
-    @Override @Nullable public IRunnableWithProgress finalWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us,
+    @Override  public IRunnableWithProgress finalWork(final AbstractGUIApplicator a, final List<ICompilationUnit> us,
         final Map<attribute, Object> m) {
       return countTipsInProject(a, us, m, attribute.TIPS_AFTER);
     }
 
     private static InProject instance;
 
-    @NotNull public static InProject instance() {
+     public static InProject instance() {
       return instance = instance != null ? instance : new InProject();
     }
   }
@@ -157,19 +157,19 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return true;
     }
 
-    @Override @NotNull public String getLabel() {
+    @Override  public String getLabel() {
       return "Apply to " + getLabelSuffix();
     }
 
-    @Nullable protected abstract ITextSelection domain(IMarker m);
+     protected abstract ITextSelection domain(IMarker m);
 
-    @NotNull public abstract String getLabelSuffix();
+     public abstract String getLabelSuffix();
 
-    @Override @SuppressWarnings({ "unchecked", "rawtypes" }) @Nullable public AbstractGUIApplicator getApplicator(@NotNull final IMarker $) {
+    @Override @SuppressWarnings({ "unchecked", "rawtypes" })  public AbstractGUIApplicator getApplicator( final IMarker $) {
       try {
         assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
-      } catch (@NotNull final CoreException ¢) {
+      } catch ( final CoreException ¢) {
         monitor.log(¢);
       }
       return null;
@@ -179,10 +179,10 @@ public class SingleTipper<N extends ASTNode> extends Trimmer {
       return MANY_PASSES;
     }
 
-    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(@NotNull final Class<T> $) {
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper( final Class<T> $) {
       try {
         return new SingleTipper<>($.newInstance());
-      } catch (@NotNull InstantiationException | IllegalAccessException ¢) {
+      } catch ( InstantiationException | IllegalAccessException ¢) {
         monitor.log(¢);
       }
       return null;

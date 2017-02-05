@@ -4,7 +4,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
+
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  @Override @NotNull public String description(final PrefixExpression ¢) {
+  @Override  public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }
 
-  @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
+  @Override public ASTNode replacement( final PrefixExpression ¢) {
     return ¢.getOperator() != PLUS ? null : make.plant(copy.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 

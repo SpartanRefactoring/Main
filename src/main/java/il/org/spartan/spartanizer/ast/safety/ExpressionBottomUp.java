@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import org.jetbrains.annotations.Nullable;
+
 
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -33,7 +33,7 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  @Override @Nullable public T map(final Expression ¢) {
+  @Override  public T map(final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
@@ -70,15 +70,15 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  @Nullable protected T map(final PostfixExpression ¢) {
+   protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable protected T map(final PrefixExpression ¢) {
+   protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable protected T map(final InstanceofExpression ¢) {
+   protected T map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 }

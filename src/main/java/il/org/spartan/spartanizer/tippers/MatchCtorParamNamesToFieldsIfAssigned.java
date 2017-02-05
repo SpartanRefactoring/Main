@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Match c'tor parameters to fields, for example: Convert: class A { int x;
  * public A(int y) {this.x = y; } } to: class A { int x; public A(int x) {this.x
@@ -31,11 +31,11 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return false;
   }
 
-  @Override @NotNull public String description(final MethodDeclaration ¢) {
+  @Override  public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Override @Nullable public Tip tip(@NotNull final MethodDeclaration d) {
+  @Override  public Tip tip( final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList());

@@ -6,10 +6,10 @@ package il.org.spartan.spartanizer.tipping;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 
 abstract class InfixExpressionSorting extends ReplaceCurrentNode<InfixExpression> {
-  @Override @NotNull public final String description(@NotNull final InfixExpression ¢) {
+  @Override  public final String description( final InfixExpression ¢) {
     return "Reorder operands of " + ¢.getOperator();
   }
 

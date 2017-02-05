@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** sorts the arguments of an expression using the same sorting order as
  * {@link Operator#PLUS} expression, except that we do not worry about
@@ -22,11 +22,11 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015-07-17 */
 public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {
-  @Override protected boolean sort(@NotNull final List<Expression> ¢) {
+  @Override protected boolean sort( final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
 
-  @Override protected boolean suitable(@NotNull final InfixExpression ¢) {
+  @Override protected boolean suitable( final InfixExpression ¢) {
     return in(¢.getOperator(), OR, XOR, AND);
   }
 }

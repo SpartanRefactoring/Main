@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
  *         {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
@@ -29,11 +29,11 @@ import org.jetbrains.annotations.Nullable;
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
     //
     implements TipperCategory.Centification {
-  @Override @NotNull public String description(final SingleVariableDeclaration ¢) {
+  @Override  public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 
-  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final SingleVariableDeclaration d,  final ExclusionManager m) {
     final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
       return null;
@@ -66,7 +66,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     };
   }
 
-  private static boolean isNameDefined(@NotNull final Statement s, final SimpleName n) {
+  private static boolean isNameDefined( final Statement s, final SimpleName n) {
     final Statement $ = az.statement(s.getParent());
     return Environment
         .of($ == null ? s

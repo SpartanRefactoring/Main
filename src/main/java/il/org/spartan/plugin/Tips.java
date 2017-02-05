@@ -5,7 +5,7 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /
@@ -49,7 +49,7 @@ public final class Tips {
 
   /** @param name the name of the applicator
    * @return an instance of the class */
-  public static AbstractGUIApplicator get(@NotNull final String name) {
+  public static AbstractGUIApplicator get( final String name) {
     assert name != null;
     return map.get(name);
   }

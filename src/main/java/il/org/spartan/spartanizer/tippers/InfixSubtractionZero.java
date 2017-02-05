@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
+
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -29,12 +29,12 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return cons(make.minus(first(prune)), chop(prune));
   }
 
-  private static List<Expression> prune(@NotNull final List<Expression> ¢) {
+  private static List<Expression> prune( final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
     return $.size() != ¢.size() ? $ : null;
   }
 
-  private static ASTNode replacement(@NotNull final List<Expression> xs) {
+  private static ASTNode replacement( final List<Expression> xs) {
     final List<Expression> $ = prune(xs);
     if ($ == null)
       return null;
@@ -48,11 +48,11 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(MINUS2);
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;
   }
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override public ASTNode replacement( final InfixExpression ¢) {
     return ¢.getOperator() != MINUS ? null : replacement(operands(¢));
   }
 }

@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Configurable Report that uses {@link Listener.S}
  * @year 2016
@@ -51,7 +51,7 @@ public interface ConfigurableReport {
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
-    @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
@@ -137,7 +137,7 @@ public interface ConfigurableReport {
         return defaultValue();
       }
 
-      private void name(@NotNull final ASTNode i) {
+      private void name( final ASTNode i) {
         report().put("name", extract.name(i));
         report().put("category", extract.category(i));
       }
@@ -162,8 +162,8 @@ public interface ConfigurableReport {
         }
       }
 
-      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, @Nullable final String id,
-          @Nullable final BiFunction<Integer, Integer> bf) {
+      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n,  final String id,
+           final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;
@@ -190,7 +190,7 @@ public interface ConfigurableReport {
       }
     }
 
-    @NotNull public Action getAction() {
+     public Action getAction() {
       return new Action();
     }
 

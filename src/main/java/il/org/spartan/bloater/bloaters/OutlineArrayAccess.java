@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
-import org.jetbrains.annotations.Nullable;
+
 
 /** converts <code>
  * arr[i++] = y; arr[++i] = z;
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
-  @Override @SuppressWarnings("unused") @Nullable public String description(final ArrayAccess n) {
+  @Override @SuppressWarnings("unused")  public String description(final ArrayAccess n) {
     return null;
   }
 

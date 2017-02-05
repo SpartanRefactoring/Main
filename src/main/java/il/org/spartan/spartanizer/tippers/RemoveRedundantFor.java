@@ -7,8 +7,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Simplify for statements as much as possible (or remove them or parts of
  * them) if and only if </br>
@@ -17,11 +17,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09-26 */
 public class RemoveRedundantFor extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.EmptyCycles {
-  @Override @NotNull public String description(final ForStatement ¢) {
+  @Override  public String description(final ForStatement ¢) {
     return "remove :" + ¢;
   }
 
-  @Override @Nullable public ASTNode replacement(@Nullable final ForStatement ¢) {
+  @Override  public ASTNode replacement( final ForStatement ¢) {
     return ¢ == null || !sideEffects.free(¢.getExpression()) || !sideEffects.free(initializers(¢)) || !sideEffects.free(updaters(¢))
         || !sideEffects.free(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
