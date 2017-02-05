@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
-   private static ForStatement buildForWhithoutCondition( final ForStatement $) {
+   private static ForStatement buildForWithoutCondition( final ForStatement $) {
     $.setExpression(null);
     return $;
   }
@@ -29,6 +29,6 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
   }
 
   @Override  public ASTNode replacement(final ForStatement ¢) {
-    return buildForWhithoutCondition(copy.of(¢));
+    return buildForWithoutCondition(copy.of(¢));
   }
 }
