@@ -13,7 +13,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** takes care of of multiplicative terms with minus symbol in them.
  * <p>
@@ -29,7 +29,7 @@ public enum minus {
    * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  @NotNull public static Statement lastStatement(@NotNull final Statement $) {
+   public static Statement lastStatement( final Statement $) {
     if (!iz.block($))
       return make.emptyStatement($);
     final List<Statement> ss = step.statements(az.block($));
@@ -46,19 +46,19 @@ public enum minus {
                     : 0;
   }
 
-  public static int level(@NotNull final InfixExpression ¢) {
+  public static int level( final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  @SuppressWarnings("boxing") public static int level(@NotNull final List<Expression> xs) {
+  @SuppressWarnings("boxing") public static int level( final List<Expression> xs) {
     return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
   }
 
-  private static int level(@NotNull final PrefixExpression ¢) {
+  private static int level( final PrefixExpression ¢) {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
-  @NotNull public static Expression peel(final Expression $) {
+   public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
             : iz.nodeTypeEquals($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
@@ -66,19 +66,19 @@ public enum minus {
                     : $;
   }
 
-  @NotNull public static Expression peel(@NotNull final InfixExpression ¢) {
+   public static Expression peel( final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  private static List<Expression> peel(@NotNull final List<Expression> ¢) {
+  private static List<Expression> peel( final List<Expression> ¢) {
     return ¢.stream().map(minus::peel).collect(Collectors.toList());
   }
 
-  @NotNull public static Expression peel(@NotNull final NumberLiteral $) {
+   public static Expression peel( final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
-  @NotNull public static Expression peel(@NotNull final PrefixExpression $) {
+   public static Expression peel( final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 }

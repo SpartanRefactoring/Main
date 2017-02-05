@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
  * the current node and delegate to the parent unless it is null.
@@ -112,12 +112,12 @@ public final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  @NotNull static Namespace spawnFor(final Namespace $, final ForStatement s) {
+   static Namespace spawnFor(final Namespace $, final ForStatement s) {
     final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
     return s == null || x == null ? $ : $.spawn(for¢).put(x);
   }
 
-  @NotNull static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
+   static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());
   }
 

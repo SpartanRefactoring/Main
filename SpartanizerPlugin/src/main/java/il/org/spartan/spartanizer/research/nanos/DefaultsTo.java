@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** This is the ?? operator
  * @author Ori Marcovitch
@@ -30,7 +30,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
+  @Override  public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -50,7 +50,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public NanoPatternTipper.Category category() {
+  @Override  public NanoPatternTipper.Category category() {
     return Category.Default;
   }
 }

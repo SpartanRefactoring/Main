@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** A poor man's approximation of a mutable int, which is so much more
  * convenient than {@link Integer}
@@ -26,7 +26,7 @@ public final class Int {
 
   /** @param ¢ JD
    * @return */
-  @NotNull public static Int valueOf(final int ¢) {
+   public static Int valueOf(final int ¢) {
     final Int $ = new Int();
     $.inner = ¢;
     return $;
@@ -48,7 +48,7 @@ public final class Int {
     this.inner = inner;
   }
 
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     return inner + "";
   }
 

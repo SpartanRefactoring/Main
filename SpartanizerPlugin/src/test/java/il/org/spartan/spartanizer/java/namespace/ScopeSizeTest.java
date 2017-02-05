@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.meta.*;
 public class ScopeSizeTest extends MetaFixture {
   static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
 
-  public ScopeSizeTest(@NotNull final SimpleName name, @NotNull final Integer ScopeSize, final definition.Kind kind) {
+  public ScopeSizeTest( final SimpleName name,  final Integer ScopeSize, final definition.Kind kind) {
     assert name != null;
     assert ScopeSize != null;
     this.name = name;
@@ -31,8 +31,8 @@ public class ScopeSizeTest extends MetaFixture {
     this.kind = kind;
   }
 
-  @NotNull private final SimpleName name;
-  @NotNull private final Integer scopeSize;
+   private final SimpleName name;
+   private final Integer scopeSize;
   private final definition.Kind kind;
 
   @Test public void test() {
@@ -46,7 +46,7 @@ public class ScopeSizeTest extends MetaFixture {
         , scope.of(name).size(), is(scopeSize.intValue()));
   }
 
-  @NotNull @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
+   @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
     final List<Object[]> $ = new ArrayList<>();
     for (final Annotation a : new definitionTest().annotations()) {
       final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);

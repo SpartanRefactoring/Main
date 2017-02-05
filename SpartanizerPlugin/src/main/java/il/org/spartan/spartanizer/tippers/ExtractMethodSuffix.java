@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 // TODO Ori Roth: choose more suitable category
 // TODO Ori Roth: add tests for tipper
@@ -31,11 +31,11 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 
-  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
+  @Override  public String description( final MethodDeclaration ¢) {
     return "Split " + ¢.getName() + " into two logical parts";
   }
 
-  @Override @Nullable public List<ASTNode> go(@NotNull final ASTRewrite r, @NotNull final MethodDeclaration d,
+  @Override  public List<ASTNode> go( final ASTRewrite r,  final MethodDeclaration d,
       @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
@@ -48,7 +48,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return null;
   }
 
-  private static boolean isValid(@NotNull final MethodDeclaration ¢) {
+  private static boolean isValid( final MethodDeclaration ¢) {
     return !¢.isConstructor() && ¢.getBody() != null && statements(¢.getBody()).size() >= MINIMAL_STATEMENTS_COUNT;
   }
 
@@ -57,7 +57,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
    * @return <code><b>true</b></code> <em>iff</em> the method and the list
    *         contains same variables, in matters of type and quantity
    *         [[SuppressWarningsSpartan]] */
-  private static boolean sameParameters(@NotNull final MethodDeclaration d, @NotNull final List<VariableDeclaration> ds) {
+  private static boolean sameParameters( final MethodDeclaration d,  final List<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = ds.stream().map(
@@ -70,8 +70,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return true;
   }
 
-  @NotNull private static List<ASTNode> splitMethod(@NotNull final ASTRewrite r, @NotNull final MethodDeclaration d,
-      @NotNull final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
+   private static List<ASTNode> splitMethod( final ASTRewrite r,  final MethodDeclaration d,
+       final List<VariableDeclaration> ds, final Statement forkPoint, final boolean equalParams) {
     ds.sort(new NaturalVariablesOrder(d));
     final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = copy.of(d);
@@ -99,27 +99,27 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return $;
   }
 
-  private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, @NotNull final ASTRewrite r) {
+  private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx,  final ASTRewrite r) {
     statements(body(dx)).clear();
     statements(body(d)).forEach(λ -> statements(dx).add(az.statement(r.createCopyTarget(λ))));
   }
 
-  private static void fixName(@NotNull final MethodDeclaration d2, final boolean equalParams) {
+  private static void fixName( final MethodDeclaration d2, final boolean equalParams) {
     if (equalParams)
       d2.setName(d2.getAST().newSimpleName(fixName(d2.getName() + "")));
   }
 
-  private static void fixName(@NotNull final MethodInvocation i, final boolean equalParams) {
+  private static void fixName( final MethodInvocation i, final boolean equalParams) {
     if (equalParams)
       i.setName(i.getAST().newSimpleName(fixName(i.getName() + "")));
   }
 
-  @NotNull private static String fixName(@NotNull final String ¢) {
+   private static String fixName( final String ¢) {
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
 
-  private static void fixParameters(@NotNull final MethodDeclaration d, @NotNull final MethodDeclaration d2,
-      @NotNull final List<VariableDeclaration> ds) {
+  private static void fixParameters( final MethodDeclaration d,  final MethodDeclaration d2,
+       final List<VariableDeclaration> ds) {
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
       if (v instanceof SingleVariableDeclaration)
@@ -134,7 +134,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       }
   }
 
-  private static void fixJavadoc(@NotNull final MethodDeclaration d, @NotNull final List<VariableDeclaration> ds) {
+  private static void fixJavadoc( final MethodDeclaration d,  final List<VariableDeclaration> ds) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
@@ -172,12 +172,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     // TODO Ori Roth: get more suitable names for constants
     // 1.0 means all statements but the last.
     private static final double MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER = 1.0;// 2.0/3.0;
-    @NotNull final Map<VariableDeclaration, List<Statement>> uses;
-    @NotNull final List<VariableDeclaration> active;
-    @NotNull final List<VariableDeclaration> inactive;
+     final Map<VariableDeclaration, List<Statement>> uses;
+     final List<VariableDeclaration> active;
+     final List<VariableDeclaration> inactive;
     int variablesTerminated;
 
-    public MethodVariablesScanner(@NotNull final MethodDeclaration method) {
+    public MethodVariablesScanner( final MethodDeclaration method) {
       super(method);
       uses = new HashMap<>();
       active = new ArrayList<>();
@@ -192,7 +192,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       }
     }
 
-    @Override @NotNull public List<Statement> availableStatements() {
+    @Override  public List<Statement> availableStatements() {
       return statements.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * statements.size()) + 1, statements.size() - 2));
     }
 
@@ -225,17 +225,17 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return variablesTerminated > 0;// && active.isEmpty();
     }
 
-    @NotNull public List<VariableDeclaration> usedVariables() {
+     public List<VariableDeclaration> usedVariables() {
       final List<VariableDeclaration> $ = new ArrayList<>();
       $.addAll(uses.keySet());
       return $;
     }
 
-    @SuppressWarnings("boxing") private void setUsesMapping(@NotNull final VariableDeclaration d, final int starting) {
+    @SuppressWarnings("boxing") private void setUsesMapping( final VariableDeclaration d, final int starting) {
       range.from(starting).to(statements.size()).forEach(λ -> setUsesMapping(d, statements.get(λ)));
     }
 
-    private void setUsesMapping(@NotNull final VariableDeclaration d, final Statement s) {
+    private void setUsesMapping( final VariableDeclaration d, final Statement s) {
       if (collect.usesOf(d.getName()).in(s).isEmpty())
         return;
       uses.putIfAbsent(d, new ArrayList<>());
@@ -244,16 +244,16 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   }
 
   static class NaturalVariablesOrder implements Comparator<VariableDeclaration> {
-    @Nullable final List<SingleVariableDeclaration> ps;
-    @Nullable final List<Statement> ss;
+     final List<SingleVariableDeclaration> ps;
+     final List<Statement> ss;
 
-    NaturalVariablesOrder(@NotNull final MethodDeclaration method) {
+    NaturalVariablesOrder( final MethodDeclaration method) {
       assert method != null;
       ps = parameters(method);
       ss = body(method) != null ? statements(method) : new LinkedList<>();
     }
 
-    @Override public int compare(@NotNull final VariableDeclaration d1, @NotNull final VariableDeclaration d2) {
+    @Override public int compare( final VariableDeclaration d1,  final VariableDeclaration d2) {
       return ps.contains(d1) ? !ps.contains(d2) ? 1 : ps.indexOf(d1) - ps.indexOf(d2)
           : ps.contains(d2) ? -1
               : d1.getParent() != d2.getParent() ? ss.indexOf(d1.getParent()) - ss.indexOf(d2.getParent())

@@ -6,7 +6,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -27,7 +27,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
-  public static boolean booleanLiteral(@NotNull final Iterable<Expression> ¢) {
+  public static boolean booleanLiteral( final Iterable<Expression> ¢) {
     return az.stream(¢).anyMatch(iz::booleanLiteral);
   }
 
@@ -35,7 +35,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code> */
-  public static boolean falseLiteral(@NotNull final List<Expression> ¢) {
+  public static boolean falseLiteral( final List<Expression> ¢) {
     return az.stream(¢).anyMatch(iz.literal::false¢);
   }
 
@@ -51,7 +51,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
-  public static boolean literal(@NotNull final List<Expression> ¢) {
+  public static boolean literal( final List<Expression> ¢) {
     return ¢.stream().anyMatch(iz::literal);
   }
 
@@ -67,7 +67,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a numeric literal. */
-  public static boolean numericLiteral(@NotNull final Iterable<Expression> ¢) {
+  public static boolean numericLiteral( final Iterable<Expression> ¢) {
     return az.stream(¢).anyMatch(iz::numericLiteral);
   }
 
@@ -75,7 +75,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>true</b></code> */
-  public static boolean trueLiteral(@NotNull final List<Expression> ¢) {
+  public static boolean trueLiteral( final List<Expression> ¢) {
     return ¢.stream().anyMatch(iz.literal::true¢);
   }
 }

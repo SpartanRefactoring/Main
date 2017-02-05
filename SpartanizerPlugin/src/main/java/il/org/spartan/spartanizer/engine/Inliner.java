@@ -16,15 +16,15 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Replace a variable with an expression
  * @year 2015
  * @author Yossi Gil
  * @since Sep 13, 2016 */
 public final class Inliner {
-  @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode[] ns) {
+   static Wrapper<ASTNode>[] wrap( final ASTNode[] ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
     Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
@@ -45,7 +45,7 @@ public final class Inliner {
     this.editGroup = editGroup;
   }
 
-  @NotNull public InlinerWithValue byValue(final Expression replacement) {
+   public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
   }
 
@@ -57,7 +57,7 @@ public final class Inliner {
     return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
-  public static boolean isArrayInitWithUnmatchingTypes(@NotNull final VariableDeclarationFragment f) {
+  public static boolean isArrayInitWithUnmatchingTypes( final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
     final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
@@ -67,7 +67,7 @@ public final class Inliner {
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  @Nullable public static String getElTypeNameFromArrayType(final Type t) {
+   public static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
     final Type et = ((ArrayType) t).getElementType();
@@ -77,7 +77,7 @@ public final class Inliner {
     return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
-  @NotNull public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
+   public static Expression protect( final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
@@ -96,7 +96,7 @@ public final class Inliner {
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }
 
-  public static boolean variableNotUsedAfterStatement(@NotNull final Statement s, final SimpleName n) {
+  public static boolean variableNotUsedAfterStatement( final Statement s, final SimpleName n) {
     final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is not a block";
     final List<Statement> statements = statements(b);
@@ -133,7 +133,7 @@ public final class Inliner {
       return canInlineinto(¢) && unsafeUses(¢).isEmpty();
     }
 
-    @SafeVarargs public final void inlineInto(@NotNull final ASTNode... ¢) {
+    @SafeVarargs public final void inlineInto( final ASTNode... ¢) {
       inlineinto(wrap(¢));
     }
 
@@ -150,7 +150,7 @@ public final class Inliner {
       Arrays.asList(ns).forEach(λ -> inlineintoSingleton(get(), λ));
     }
 
-    private void inlineintoSingleton(final ASTNode replacement, @NotNull final Wrapper<ASTNode> n) {
+    private void inlineintoSingleton(final ASTNode replacement,  final Wrapper<ASTNode> n) {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(n.get());
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
@@ -158,11 +158,11 @@ public final class Inliner {
           .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
-    @Nullable private List<SimpleName> unsafeUses(final ASTNode... ¢) {
+     private List<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    @Nullable private List<SimpleName> uses(final ASTNode... ¢) {
+     private List<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

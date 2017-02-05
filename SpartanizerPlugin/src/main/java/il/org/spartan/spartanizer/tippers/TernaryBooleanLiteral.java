@@ -11,8 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** {@code
  * a ? b : c
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
-  private static boolean isTernaryOfBooleanLitreral(@Nullable final ConditionalExpression ¢) {
+  private static boolean isTernaryOfBooleanLitreral( final ConditionalExpression ¢) {
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
 
@@ -59,11 +59,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * }
    * </ol>
   */
-  @NotNull private static Expression simplifyTernary(@NotNull final ConditionalExpression ¢) {
+   private static Expression simplifyTernary( final ConditionalExpression ¢) {
     return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), copy.of(¢.getExpression()));
   }
 
-  @NotNull private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
+   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
@@ -78,7 +78,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return isTernaryOfBooleanLitreral(¢);
   }
 
-  @Override @NotNull public Expression replacement(@NotNull final ConditionalExpression ¢) {
+  @Override  public Expression replacement( final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }
 }

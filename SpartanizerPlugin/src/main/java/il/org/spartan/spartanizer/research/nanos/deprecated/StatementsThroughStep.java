@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.Nullable;
+
 
 /** * @year 2016
  * @author Ori Marcovitch
@@ -29,7 +29,7 @@ public final class StatementsThroughStep extends NanoPatternTipper<MethodInvocat
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final MethodInvocation ¢) {
+  @Override  public Tip pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 }

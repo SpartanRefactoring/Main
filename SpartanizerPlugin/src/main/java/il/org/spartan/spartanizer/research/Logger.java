@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** The purpose of this class is to gather information about NPs and summarize
  * it, so we can submit nice papers and win eternal fame.
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class Logger {
   public static int numMethods;
   private static String currentFile;
-  @NotNull private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
+   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
   private static final List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
@@ -51,7 +51,7 @@ public class Logger {
     return Integer.valueOf((currentFile + "." + getType() + name(¢) + parametersTypes(¢)).hashCode());
   }
 
-  @NotNull private static String getType() {
+   private static String getType() {
     return currentType == null || currentType.isEmpty() ? "" : currentType.peek() + "";
   }
 

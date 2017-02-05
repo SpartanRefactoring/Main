@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -33,7 +33,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     clazz = SortedSpartanizedMethodsCollector.class;
   }
 
-  public static void main(@NotNull final String[] args)
+  public static void main( final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     wizard.setParserResolveBindings();
     FolderASTVisitor.main(args);
@@ -53,7 +53,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
           .in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
-    } catch (@NotNull final AssertionError __) {
+    } catch ( final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -64,7 +64,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
       scope.pop();
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit( final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -93,7 +93,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null;
   }
 
-  private void logAll(@NotNull final ASTNode n, final String np) {
+  private void logAll( final ASTNode n, final String np) {
     if (containedInInstanceCreation(n))
       return;
     logNanoContainingMethodInfo(n, np);
@@ -134,34 +134,34 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     file.renameToCSV(outputFolder + "/methodStatistics");
   }
 
-  private static double fractionOfMethodsTouched(@NotNull final List<MethodRecord> rs) {
+  private static double fractionOfMethodsTouched( final List<MethodRecord> rs) {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(final int statementsTotal, @NotNull final Integer numStatements, @NotNull final List<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal,  final Integer numStatements,  final List<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 
-  private static double fractionOfMethods(final int methodsTotal, @NotNull final List<MethodRecord> rs) {
+  private static double fractionOfMethods(final int methodsTotal,  final List<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(@NotNull final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage( final List<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
+   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
   public static CSVStatistics openSummaryFile(final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
@@ -169,7 +169,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
 
   private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
 
-  private void logNPInfo(@NotNull final ASTNode n, final String np) {
+  private void logNPInfo( final ASTNode n, final String np) {
     if (!npStatistics.containsKey(np))
       npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);

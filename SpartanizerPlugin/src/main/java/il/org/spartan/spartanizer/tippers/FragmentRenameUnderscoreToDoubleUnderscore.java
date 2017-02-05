@@ -4,7 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Replaces name of variables named "_" into "__"
  * @author Ori Roth
@@ -17,11 +17,11 @@ public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends Variable
     return "Use double underscore instead a single underscore";
   }
 
-  @Override protected boolean change(@NotNull final N ¢) {
+  @Override protected boolean change( final N ¢) {
     return "_".equals(¢.getName() + "");
   }
 
-  @Override protected SimpleName replacement(@NotNull final N ¢) {
+  @Override protected SimpleName replacement( final N ¢) {
     return ¢.getAST().newSimpleName("__");
   }
 }

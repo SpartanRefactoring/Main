@@ -7,7 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** A function object representing a sequence of operations on an
  * {@link ASTRewrite} object.
@@ -18,18 +18,18 @@ public abstract class Tip extends Range {
    * {@link Range}
    * @param n arbitrary
    * @param ns */
-  static Range range(@NotNull final ASTNode n, final ASTNode... ns) {
+  static Range range( final ASTNode n, final ASTNode... ns) {
     return range(singleNodeRange(n), ns);
   }
 
-  static Range range(final Range r, @NotNull final ASTNode... ns) {
+  static Range range(final Range r,  final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode ¢ : ns)
       $ = $.merge(singleNodeRange(¢));
     return $;
   }
 
-  @NotNull static Range singleNodeRange(@NotNull final ASTNode ¢) {
+   static Range singleNodeRange( final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return new Range($, $ + ¢.getLength());
   }
@@ -46,7 +46,7 @@ public abstract class Tip extends Range {
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, @NotNull final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass,
+  public Tip(final String description,  final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass,
       final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);

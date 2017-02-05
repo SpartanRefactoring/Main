@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
   // building a replacement
-  private static ASTNode replacement(@NotNull final MethodInvocation i, @NotNull final List<Expression> xs) {
+  private static ASTNode replacement( final MethodInvocation i,  final List<Expression> xs) {
     if (xs.isEmpty())
       return make.makeEmptyString(i);
     if (xs.size() == 1)
@@ -53,7 +53,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    * @param x an Expression
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e */
-  @NotNull private Expression addParenthesisIfNeeded(@NotNull final Expression x) {
+   private Expression addParenthesisIfNeeded( final Expression x) {
     final AST a = x.getAST();
     if (!isParethesisNeeded(x))
       return x;
@@ -77,7 +77,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
   }
 
-  @Override public ASTNode replacement(@NotNull final MethodInvocation i) {
+  @Override public ASTNode replacement( final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
     final List<Expression> $ = new ArrayList<>();

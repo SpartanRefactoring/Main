@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Trivia includes in it spaces, tabs, newlines, comments, line comments, and
  * in general anything that is not a token of Java. Here we have a bunch of
@@ -38,7 +38,7 @@ public interface trivia {
     return (¢ + "").replaceAll("\\s+", "");
   }
 
-  static String essence(@NotNull final String codeFragment) {
+  static String essence( final String codeFragment) {
     return trivia.fixTideClean(tide.clean(trivia.removeComments2(codeFragment)));
   }
 
@@ -46,46 +46,46 @@ public interface trivia {
    * [^]
    * @param ¢
    * @return */
-  static String fixTideClean(@NotNull final String ¢) {
+  static String fixTideClean( final String ¢) {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
-  static String gist(@NotNull final ASTNode ¢) {
+  static String gist( final ASTNode ¢) {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
-  static String gist(@Nullable final Object ¢) {
+  static String gist( final Object ¢) {
     return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
-  @NotNull static <N extends ASTNode> N removeComments(@NotNull final N n) {
+   static <N extends ASTNode> N removeComments( final N n) {
     n.accept(new ASTVisitor() {
-      boolean delete(@NotNull final ASTNode ¢) {
+      boolean delete( final ASTNode ¢) {
         ¢.delete();
         return true;
       }
 
-      @Override public boolean visit(@NotNull final BlockComment ¢) {
+      @Override public boolean visit( final BlockComment ¢) {
         return delete(¢);
       }
 
-      @Override public boolean visit(@NotNull final Javadoc ¢) {
+      @Override public boolean visit( final Javadoc ¢) {
         return delete(¢);
       }
 
-      @Override public boolean visit(@NotNull final LineComment ¢) {
+      @Override public boolean visit( final LineComment ¢) {
         return delete(¢);
       }
     });
     return n;
   }
 
-  static String removeComments(@NotNull final String codeFragment) {
+  static String removeComments( final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
-  static String removeComments2(@NotNull final String codeFragment) {
+  static String removeComments2( final String codeFragment) {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Remove blocks that include only variable declarations: For example, remove
  * the block: {@code {int a=0;} }
@@ -25,11 +25,11 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
     return "Remove the block";
   }
 
-  @Override @NotNull public String description(@NotNull final Block ¢) {
+  @Override  public String description( final Block ¢) {
     return "Remove the block: " + trivia.gist(¢);
   }
 
-  @Override public Tip tip(@NotNull final Block n) {
+  @Override public Tip tip( final Block n) {
     final List<Statement> $ = statements(n);
     if ($.isEmpty())
       return null;
@@ -37,7 +37,7 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
       if (!iz.variableDeclarationStatement(¢))
         return null;
     return new Tip(description(), n, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         $.forEach(λ -> r.remove(λ, g));
       }
     };

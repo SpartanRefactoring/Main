@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -63,7 +63,7 @@ public class Issue0714 {
     assert determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class A {}")))));
   }
 
-  @NotNull private TypeDeclaration typeConvert(final String $) {
+   private TypeDeclaration typeConvert(final String $) {
     return (TypeDeclaration) first(types(az.compilationUnit(wizard.ast($))));
   }
 }

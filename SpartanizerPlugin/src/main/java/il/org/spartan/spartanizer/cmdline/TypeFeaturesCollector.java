@@ -10,8 +10,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Collects metrics at different level of granularity: File, Class, Method
  * @author Matteo Orru'
@@ -33,7 +33,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */
-  private void consider(@NotNull final TypeDeclaration ¢) {
+  private void consider( final TypeDeclaration ¢) {
     dotter.click();
     writer //
         .put("File", presentFile) //
@@ -69,7 +69,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
     writer.nl();
   }
 
-  @Override public void endVisit(@NotNull final TypeDeclaration node) {
+  @Override public void endVisit( final TypeDeclaration node) {
     --classNesting;
     consider(node);
     super.endVisit(node);
@@ -85,7 +85,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
     clazz = TypeFeaturesCollector.class;
   }
 
-  public static void main(@NotNull final String[] args)
+  public static void main( final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
   }
@@ -109,7 +109,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
         m("static", λ -> iz.static¢((BodyDeclaration) λ)));
   }
 
-  @Override @Nullable public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
+  @Override  public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
     // TODO Auto-generated method stub
     return null;
   }

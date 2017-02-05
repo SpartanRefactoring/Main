@@ -15,19 +15,19 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Tested by {@link Issue1115}
  * @author Yossi Gil
  * @since 2016-09 */
 public final class LambdaRenameSingleParameterToLambda extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {
-  @Override @NotNull public String description(final LambdaExpression ¢) {
+  @Override  public String description(final LambdaExpression ¢) {
     return "Rename parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
-  @Override public Tip tip(@NotNull final LambdaExpression x, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final LambdaExpression x,  final ExclusionManager m) {
     final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;

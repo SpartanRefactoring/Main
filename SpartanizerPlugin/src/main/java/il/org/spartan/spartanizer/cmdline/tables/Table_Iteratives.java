@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
-import org.jetbrains.annotations.NotNull;
+
 
 /** Generates a table for analyzing loops distribution and nano pattern applied
  * to loops.
@@ -48,7 +48,7 @@ public class Table_Iteratives extends FolderASTVisitor {
     summaryWriter.close();
   }
 
-  public static void logNPInfo(@NotNull final ASTNode n, final String np) {
+  public static void logNPInfo( final ASTNode n, final String np) {
     if (!iz.loop(n))
       return;
     all.logNPInfo(n, np);
@@ -62,7 +62,7 @@ public class Table_Iteratives extends FolderASTVisitor {
     if (!excludeMethod(¢))
       try {
         log(spartanalyze(¢ + ""));
-      } catch (@NotNull @SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
+      } catch ( @SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
         System.out.print("X");
       }
     return false;
@@ -70,7 +70,7 @@ public class Table_Iteratives extends FolderASTVisitor {
 
   private static void log(final String spartanized) {
     into.cu(spartanized).accept(new ASTVisitor() {
-      @Override public void preVisit(@NotNull final ASTNode ¢) {
+      @Override public void preVisit( final ASTNode ¢) {
         if (!iz.loop(¢))
           return;
         all.logNode(¢);

@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil
@@ -25,11 +25,11 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-09 */
 public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
     implements TipperCategory.Centification {
-  @Override @NotNull public String description(@NotNull final EnhancedForStatement ¢) {
+  @Override  public String description( final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final EnhancedForStatement s,  final ExclusionManager m) {
     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
@@ -53,7 +53,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     };
   }
 
-  public static SimpleName newCurrent(@NotNull final EnhancedForStatement ¢) {
+  public static SimpleName newCurrent( final EnhancedForStatement ¢) {
     return ¢.getAST().newSimpleName(namer.current);
   }
 }

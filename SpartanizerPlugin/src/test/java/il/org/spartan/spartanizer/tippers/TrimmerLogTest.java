@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -57,7 +57,7 @@ public class TrimmerLogTest {
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
+    } catch ( MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
@@ -80,7 +80,7 @@ public class TrimmerLogTest {
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
+    } catch ( MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
