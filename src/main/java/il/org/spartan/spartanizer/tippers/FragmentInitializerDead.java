@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Jan 24, 2017 */
-public final class FragmentDeadInitializer extends ReplaceCurrentNode<VariableDeclarationFragment>
+public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDeclarationFragment>
     //
     implements TipperCategory.SyntacticBaggage {
   @Override public String description() {

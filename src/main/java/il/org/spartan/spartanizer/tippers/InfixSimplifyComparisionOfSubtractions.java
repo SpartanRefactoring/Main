@@ -15,29 +15,28 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
- * a + 2 // ==//<//> 3
+ * a - b // ==//<//> c - d
  * } into {@code
- * a // ==//<//> 1
+ * a + d// ==//<//> c + b
  * }
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
-public class SimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression>//
+public class InfixSimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  @Override  public ASTNode replacement(final InfixExpression x) {
-    if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
-        || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
+  @Override  public ASTNode replacement( final InfixExpression x) {
+    if (!isLiegal(x) || !az.infixExpression(x.getLeftOperand()).extendedOperands().isEmpty()
+        || !az.infixExpression(x.getRightOperand()).extendedOperands().isEmpty())
       return null;
-    final Expression $ = left(az.infixExpression(left(x)));
-    Expression right;
-    if (iz.infixPlus(left(x)))
-      right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.MINUS);
-    else {
-      if (!iz.infixMinus(left(x)))
-        return null;
-      right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.PLUS);
-    }
-    final InfixExpression res = subject.pair($, right).to(operator(x));
+    final Expression $ = az.infixExpression(x.getLeftOperand()).getLeftOperand(), lr = az.infixExpression(x.getLeftOperand()).getRightOperand(),
+        rl = az.infixExpression(x.getRightOperand()).getLeftOperand(), rr = az.infixExpression(x.getRightOperand()).getRightOperand();
+    final InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($)
+        || iz.numberLiteral($) || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
+            : subject.pair(subject.pair($, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());
     return prerequisite(res) ? res : null;
+  }
+
+  private static boolean isLiegal( final InfixExpression ¢) {
+    return isLegalOperation(¢) && iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
   }
 
   private static boolean isLegalOperation(final InfixExpression ¢) {
