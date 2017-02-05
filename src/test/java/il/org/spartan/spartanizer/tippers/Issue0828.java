@@ -54,9 +54,9 @@ public class Issue0828 {
   }
 
   @Test public void replacementTest() {
-    assert s.replacement(simpleFor) == null;
-    assert s.replacement(falseFor) == null;
-    assert s.replacement(obviouseTrueStatement) == null;
-    assert ((ForStatement) s.replacement(trueFor)).getExpression() == null;
+    assert s.replacement(simpleFor) != null;
+    assert s.replacement(falseFor) != null;
+    assert s.replacement(obviouseTrueStatement) != null;
+    assert ((ForStatement) s.replacement(trueFor)).getExpression() != null;
   }
 }
