@@ -190,9 +190,8 @@ public interface Environment {
   }
 
   static Binding getHidden(final String s) {
-    final String shortName = s.substring(s.lastIndexOf(".") + 1);
     for (String ¢ = parentNameScope(s); !"".equals(¢); ¢ = parentNameScope(¢)) {
-      final Binding $ = get(upEnv, ¢ + "." + shortName);
+      final Binding $ = get(upEnv, ¢ + "." + s.substring(s.lastIndexOf(".") + 1));
       if ($ != null)
         return $;
     }
