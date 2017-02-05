@@ -66,8 +66,7 @@ public class AggregateTest {
   }
 
   @Test public void g() {
-    trimmingOf("int $ = init; for (final Statement ¢ : ss)    $ += base + horizontalComplexity(¢);"//
-    )//
+    trimmingOf("int $ = init; for (final Statement ¢ : ss)    $ += base + horizontalComplexity(¢);")//
         .using(EnhancedForStatement.class, new Aggregate())//
         .gives("int $=init;$+=ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
         .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
