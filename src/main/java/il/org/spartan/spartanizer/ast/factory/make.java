@@ -121,6 +121,16 @@ public enum make {
     return parser(text.toCharArray());
   }
 
+  public static VariableDeclarationExpression variableDeclarationExpression( final VariableDeclarationStatement ¢) {
+    if (¢ == null)
+      return null;
+    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(findFirst.elementOf(fragments(copy.of(¢)))));
+    fragments($).addAll(extract.nextFragmentsOf(¢));
+    $.setType(copy.of(step.type(¢)));
+    extendedModifiers($).addAll(az.modifiersOf(¢));
+    return $;
+  }
+
   static Expression makeInfix( final List<Expression> xs,  final AST t) {
     if (xs.size() == 1)
       return first(xs);

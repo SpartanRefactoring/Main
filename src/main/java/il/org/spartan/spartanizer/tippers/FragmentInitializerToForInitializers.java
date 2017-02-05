@@ -91,7 +91,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
     final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
     initializers($).clear();
-    initializers($).add(az.variableDeclarationExpression(s));
+    initializers($).add(make.variableDeclarationExpression(s));
     fragments(az.variableDeclarationExpression(findFirst.elementOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 

@@ -546,4 +546,10 @@ public enum extract {
   public static SimpleName simpleName( final PostfixExpression $) {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }
+
+  public static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    copy.into(fragments(¢), $);
+    return chop($);
+  }
 }
