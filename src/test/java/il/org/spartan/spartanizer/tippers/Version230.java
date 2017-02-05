@@ -118,7 +118,8 @@ public final class Version230 {
 
   @Test public void assignmentAssignmentChain5() {
     trimmingOf("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));")//
-        .gives("b1=b2=b3=((((b4=(b5=a1=(a2=(a3=(a4=13))))))));");
+        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(((b4=(b5=13)))););") //
+        .stays();
   }
 
   @Test public void assignmentAssignmentNew() {
@@ -1669,8 +1670,8 @@ public final class Version230 {
   }
 
   @Test public void issue49() {
-    trimmingOf("int f(){ int f=0;for(int i: X)$ +=f(i);return f;}")//
-        .gives("int f(){ int f=0;for(int ¢: X)$ +=f(¢);return f;}")//
+    trimmingOf("int g(){ int f=0;for(int i: X)$ +=f(i);return f;}")//
+        .gives("int g(){ int f=0;for(int ¢: X)$ +=f(¢);return f;}")//
         .stays();
   }
 
