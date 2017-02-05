@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundantFor extends ReplaceCurrentNode<ForStatement>//
+public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.EmptyCycles {
   @Override  public String description(final ForStatement ¢) {
     return "remove :" + ¢;

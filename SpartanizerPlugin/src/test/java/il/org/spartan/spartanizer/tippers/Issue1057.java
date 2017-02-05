@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** Test class for issue #1057, see {@link FragmentToForInitializers}.
+/** Test class for issue #1057, see {@link FragmentInitializerToForInitializers}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-01-16 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
