@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,7 +7,6 @@ import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** see issue #828 for more details
@@ -56,9 +54,9 @@ public class Issue0828 {
   }
 
   @Test public void replacementTest() {
-    azzert.that(null, is(s.replacement(simpleFor)));
-    azzert.that(null, is(s.replacement(falseFor)));
-    azzert.that(null, is(s.replacement(obviouseTrueStatement)));
-    azzert.that(null, is(((ForStatement) s.replacement(trueFor)).getExpression()));
+    assert s.replacement(simpleFor) == null;
+    assert s.replacement(falseFor) == null;
+    assert s.replacement(obviouseTrueStatement) == null;
+    assert ((ForStatement) s.replacement(trueFor)).getExpression() == null;
   }
 }
