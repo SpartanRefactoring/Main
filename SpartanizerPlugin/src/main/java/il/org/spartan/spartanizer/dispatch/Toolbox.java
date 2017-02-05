@@ -104,7 +104,7 @@ public class Toolbox {
             // TODO: Doron Meshulam - why do we have two similar tippers?
             // Perhaps the bug is here? --yg
             new EnhancedForRedundantContinue(), //
-            new EliminateConditionalContinueInEnhancedFor(), //
+            new EnhancedForEliminateConditionalContinue(), //
             new EnhancedForParameterRenameToCent(), //
             null)//
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
@@ -125,7 +125,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
             new EliminateConditionalContinueInFor(), //
@@ -321,7 +321,7 @@ public class Toolbox {
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
             new FragmentInitializerInlineIntoNext(), //
-            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new VariableDeclarationRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
             new FragmentToForInitializers(), //
             new WhileToForInitializers(), //
