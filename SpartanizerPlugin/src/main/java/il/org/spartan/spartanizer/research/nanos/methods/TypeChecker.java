@@ -7,9 +7,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** One statement method checking a parameter is of certain type
+ * @author Ori Marcovitch */
 public class TypeChecker extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     final ReturnStatement $ = az.returnStatement(onlyStatement(¢));
