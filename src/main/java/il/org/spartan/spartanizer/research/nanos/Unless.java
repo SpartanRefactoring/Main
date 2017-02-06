@@ -9,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** X false ? Y : null
  * @author Ori Marcovitch
@@ -35,7 +33,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -51,7 +49,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public Category category() {
+  @Override public Category category() {
     return Category.Safety;
   }
 }
