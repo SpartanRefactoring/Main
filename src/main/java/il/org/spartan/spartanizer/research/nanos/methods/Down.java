@@ -7,9 +7,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TDown Caster
- * @author Ori Marcovitch
- * @since 2016 */
+/** Down Caster
+ * @author Ori Marcovitch */
 public class Down {
   public static class Caster extends JavadocMarkerNanoPattern {
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
