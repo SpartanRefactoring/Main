@@ -4,16 +4,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Method returning this without doing anything else
+ * @author Ori Marcovitch */
 public class DoNothingReturnThis extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazOneStatement(¢) && returnsThis(¢);
+    return hazOneStatement(¢)//
+        && returnsThis(¢);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Default;
   }
 }
