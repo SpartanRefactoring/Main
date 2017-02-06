@@ -12,16 +12,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Catch exception, then throw it again
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public final class PercolateException extends NanoPatternTipper<CatchClause> {
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("try $B1 catch($T $N){ throw $N;}", "try $B1 catch($T $N){percolate($N);};", ""));
+      add(patternTipper("try $B1 catch($T $N1){ throw $N2;}", "try $B1 catch($T $N1){percolate($N2);};", ""));
     }
   };
 
@@ -29,11 +27,11 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  @Override  public Tip pattern(final CatchClause ¢) {
+  @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Exception;
   }
 
