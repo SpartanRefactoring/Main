@@ -11,9 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
-/** * @year 2016
+/** A field which is initialized only on first reference
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class CachingPattern extends NanoPatternTipper<IfStatement> {
@@ -26,11 +24,11 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
     return tipper.canTip(az.block(parent(x)));
   }
 
-  @Override  public Tip pattern(final IfStatement $) {
+  @Override public Tip pattern(final IfStatement $) {
     return tipper.tip(az.block(parent($)));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Field;
   }
 
