@@ -9,7 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link Exhaust}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
 @SuppressWarnings("static-method")
