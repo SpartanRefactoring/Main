@@ -4,9 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Tests {@link Cascading.Setter}
+ * @author Ori Marcovitch */
 @Ignore
 @SuppressWarnings("static-method")
 public class CascadingSetterTest extends JavadocerTest {
