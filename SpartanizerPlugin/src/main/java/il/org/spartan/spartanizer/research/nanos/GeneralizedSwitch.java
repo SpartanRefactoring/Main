@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
- * @year 2016
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTipper<N> {
