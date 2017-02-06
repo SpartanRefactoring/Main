@@ -21,6 +21,7 @@ public class Setter extends JavadocMarkerNanoPattern {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("this.$N1 = $N2", "", ""));
+      add(patternTipper("this.$N1 = $L", "", ""));
       add(patternTipper("$N1 = $N2", "", ""));
       add(patternTipper("$N1 = $L", "", ""));
     }
