@@ -182,7 +182,7 @@ public class Toolbox {
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
-            new InfixEmptyStringAdditionToString(), //
+            new InfixPlusEmptyString(), //
             new InfixConcatenationEmptyStringLeft(), //
             new InfixFactorNegatives(), //
             new InfixAdditionEvaluate(), //
