@@ -13,8 +13,6 @@ import org.eclipse.ui.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** Utility class for dialogs management.
  * @author Ori Roth
  * @since 2.6 */
@@ -27,7 +25,7 @@ enum Dialogs {
   /** Whether or not the {@link Dialogs#icon} has been initialized. */
   private static boolean iconInitialized;
   /** Icon used for button/dialogs. May not appear on some OSs. */
-   private static Image icon;
+  private static Image icon;
   /** Path of the {@link Dialogs#logo} used for dialogs. */
   private static final String LOGO_PATH = "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
   // private static final String LOGO_PATH =
@@ -35,20 +33,20 @@ enum Dialogs {
   /** Whether or not the {@link Dialogs#logo} has been initialized. */
   private static boolean logoInitialized;
   /** Logo used for dialogs. */
-   private static Image logo;
+  private static Image logo;
   /** Id for run in background button. */
   private static final int RIB_ID = 2;
 
   /** Lazy, dynamic loading of the dialogs' icon.
    * @return icon used by dialogs */
-   private static Image icon() {
+  private static Image icon() {
     if (!iconInitialized) {
       iconInitialized = true;
       try {
         final ImageData d = ImageDescriptor.createFromURL(new URL(ICON_PATH)).getImageData();
         if (d != null)
           icon = new Image(null, d);
-      } catch ( final MalformedURLException ¢) {
+      } catch (final MalformedURLException ¢) {
         monitor.log(¢);
       }
     }
@@ -57,14 +55,14 @@ enum Dialogs {
 
   /** Lazy, dynamic loading of the dialogs' logo.
    * @return icon used by dialogs */
-   static Image logo() {
+  static Image logo() {
     if (!logoInitialized) {
       logoInitialized = true;
       try {
         final ImageData d = ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData();
         if (d != null)
           logo = new Image(null, d);
-      } catch ( final MalformedURLException ¢) {
+      } catch (final MalformedURLException ¢) {
         monitor.log(¢);
       }
       // logo = new Image(null,
@@ -77,18 +75,18 @@ enum Dialogs {
    * message.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-   public static MessageDialog messageUnsafe(final String message) {
+  public static MessageDialog messageUnsafe(final String message) {
     return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
       }
 
-      @Override protected void createButtonsForButtonBar( final Composite ¢) {
+      @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, SWT.DEFAULT, "Cancel", false);
         super.createButtonsForButtonBar(¢);
       }
 
-      @Override  public Image getInfoImage() {
+      @Override public Image getInfoImage() {
         return logo();
       }
     };
@@ -97,7 +95,7 @@ enum Dialogs {
   /** Simple dialog, waits for user operation.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-   public static MessageDialog message(final String message) {
+  public static MessageDialog message(final String message) {
     return messageUnsafe(Linguistic.trim(message));
   }
 
@@ -105,7 +103,7 @@ enum Dialogs {
    * blocking).
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
-   public static MessageDialog messageOnTheRun(final String message) {
+  public static MessageDialog messageOnTheRun(final String message) {
     final MessageDialog $ = message(message);
     $.setBlockOnOpen(false);
     return $;
@@ -114,13 +112,13 @@ enum Dialogs {
   /** @param openOnRun whether this dialog should be open on run
    * @return dialog with progress bar, connected to a
    *         {@link IProgressMonitor} */
-   public static ProgressMonitorDialog progress(final boolean openOnRun) {
+  public static ProgressMonitorDialog progress(final boolean openOnRun) {
     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }
 
-      @Override protected void createButtonsForButtonBar( final Composite ¢) {
+      @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, RIB_ID, "Run in Background", false);
         super.createButtonsForButtonBar(¢);
       }
@@ -136,7 +134,7 @@ enum Dialogs {
         }
       }
 
-      @Override  public Image getInfoImage() {
+      @Override public Image getInfoImage() {
         return logo();
       }
     };
@@ -149,7 +147,7 @@ enum Dialogs {
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em> the user pressed any button
    *         except close button. */
-  public static boolean ok( final MessageDialog ¢) {
+  public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
   }
 
@@ -157,7 +155,7 @@ enum Dialogs {
    * @param okIndex index of button to be pressed
    * @return <code><b>true</b></code> <em>iff</em> the button selected has been
    *         pressed */
-  public static boolean ok( final MessageDialog ¢, final int okIndex) {
+  public static boolean ok(final MessageDialog ¢, final int okIndex) {
     return ¢.open() == okIndex;
   }
 }

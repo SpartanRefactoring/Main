@@ -3,8 +3,6 @@
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-
-
 import java.util.*;
 
 // TODO: Yossi Gil remove this class
@@ -17,7 +15,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     this.value = value;
   }
 
-  @Override public boolean equals( final Object ¢) {
+  @Override public boolean equals(final Object ¢) {
     return ¢ != null && ¢.getClass() == getClass()
         && (((Map.Entry<?, ?>) ¢).getKey() == null && key == null || key.equals(((Map.Entry<?, ?>) ¢).getKey()))
         && (((Map.Entry<?, ?>) ¢).getValue() == null && value == null || value.equals(((Map.Entry<?, ?>) ¢).getValue()));

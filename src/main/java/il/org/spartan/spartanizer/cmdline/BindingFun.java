@@ -13,14 +13,13 @@ import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-
 /** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 final class BindingFun implements IApplication {
-  private static void iterateMethodInvocations( final CompilationUnit u) {
+  private static void iterateMethodInvocations(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      @Override public boolean visit( final MethodInvocation ¢) {
+      @Override public boolean visit(final MethodInvocation ¢) {
         assert ¢.getAST().hasResolvedBindings();
         System.out.println(¢.resolveMethodBinding());
         return super.visit(¢);
@@ -28,17 +27,17 @@ final class BindingFun implements IApplication {
     });
   }
 
-  private static String getPackageNameFromSource( final String source) {
+  private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource($.createAST(null));
   }
 
-  private static String getPackageNameFromSource( final ASTNode n) {
+  private static String getPackageNameFromSource(final ASTNode n) {
     final Wrapper<String> $ = new Wrapper<>("");
     n.accept(new ASTVisitor() {
-      @Override public boolean visit( final PackageDeclaration ¢) {
+      @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -81,7 +80,7 @@ final class BindingFun implements IApplication {
 
   /** Discard compilation unit u
    * @param u */
-  void discardCompilationUnit( final ICompilationUnit u) {
+  void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
@@ -99,7 +98,7 @@ final class BindingFun implements IApplication {
     }
   }
 
-  private ICompilationUnit openCompilationUnit( final File ¢) throws JavaModelException, IOException {
+  private ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);

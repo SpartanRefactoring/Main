@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Jan 24, 2017 */
@@ -23,11 +22,11 @@ public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDe
     return "Remove default values initiliazing field";
   }
 
-  @Override  public String description( final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 
-  @Override public VariableDeclarationFragment replacement( final VariableDeclarationFragment f) {
+  @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;

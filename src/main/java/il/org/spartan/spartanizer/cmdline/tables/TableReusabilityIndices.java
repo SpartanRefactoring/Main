@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil
  * @since 2016 */
@@ -23,7 +22,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
   }
   private static Table writer;
 
-  public static boolean increment( final Map<String, Integer> category, final String key) {
+  public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
     return true;
   }
@@ -35,14 +34,14 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     writer.close();
   }
 
-   static int[] ranks( final Map<?, Integer> m) {
+  static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
     final int $[] = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
 
-  public static int rindex( final int... ranks) {
+  public static int rindex(final int... ranks) {
     Arrays.sort(ranks);
     int $ = 0;
     for (int ¢ = 0; ¢ < ranks.length; ++¢)
@@ -113,11 +112,11 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return increment(addIfNecessary(category, key), key);
   }
 
-   private String key( final InfixExpression ¢) {
+  private String key(final InfixExpression ¢) {
     return key(¢, wizard.arity(¢));
   }
 
-   private String key( final InfixExpression ¢, final int arity) {
+  private String key(final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return Vocabulary.mangle(¢.getOperator(), arity);
   }
@@ -138,31 +137,31 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return rindex(ranks(usage.get("METHOD")));
   }
 
-  @Override public void preVisit( final ASTNode ¢) {
+  @Override public void preVisit(final ASTNode ¢) {
     increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
   }
 
-  @Override public boolean visit( final Assignment ¢) {
+  @Override public boolean visit(final Assignment ¢) {
     return increment("ASSIGNMENT", Vocabulary.mangle(¢));
   }
 
-  @Override public boolean visit( final InfixExpression ¢) {
+  @Override public boolean visit(final InfixExpression ¢) {
     return increment("INFIX", key(¢));
   }
 
-  @Override public boolean visit( final MethodDeclaration ¢) {
+  @Override public boolean visit(final MethodDeclaration ¢) {
     return defined.add(Vocabulary.mangle(¢));
   }
 
-  @Override public boolean visit( final MethodInvocation ¢) {
+  @Override public boolean visit(final MethodInvocation ¢) {
     return increment("METHOD", Vocabulary.mangle(¢));
   }
 
-  @Override public boolean visit( final PostfixExpression ¢) {
+  @Override public boolean visit(final PostfixExpression ¢) {
     return increment("POSTFIX", Vocabulary.mangle(¢));
   }
 
-  @Override public boolean visit( final PrefixExpression ¢) {
+  @Override public boolean visit(final PrefixExpression ¢) {
     return increment("PREFIX", Vocabulary.mangle(¢));
   }
 }

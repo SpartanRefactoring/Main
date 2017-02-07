@@ -8,8 +8,6 @@ import java.util.*;
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil
  * @since 2016 */
@@ -18,23 +16,23 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-   static Process dumpOutput( final Process $) {
+  static Process dumpOutput(final Process $) {
     if (windows())
       return $;
     try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, $ + "");
     }
     return $;
   }
 
-   static String essenced(final String fileName) {
+  static String essenced(final String fileName) {
     return fileName + ".essence";
   }
 
-  static String folder2File( final String path) {
+  static String folder2File(final String path) {
     return path//
         .replaceAll("^[.]$", "CWD")//
         .replaceAll("^[.][.]$", "DOT-DOT")//
@@ -45,11 +43,11 @@ public interface system {
     ;
   }
 
-   static ProcessBuilder runScript() {
+  static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
 
-   static String runScript( final Process p) throws IOException {
+  static String runScript(final Process p) throws IOException {
     try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
       for (final StringBuilder $ = new StringBuilder();; $.append(¢))
@@ -58,11 +56,11 @@ public interface system {
     }
   }
 
-   static String runScript(final String pathname) throws IOException {
+  static String runScript(final String pathname) throws IOException {
     return runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
 
-  static int tokens( final String s) {
+  static int tokens(final String s) {
     int $ = 0;
     for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
       final Token t = tokenizer.next();
@@ -73,16 +71,16 @@ public interface system {
     }
   }
 
-  static boolean isTestFile( final File ¢) {
+  static boolean isTestFile(final File ¢) {
     return system.isTestSourceFile(¢.getName());
   }
 
-  static boolean isTestSourceFile( final String fileName) {
+  static boolean isTestSourceFile(final String fileName) {
     return fileName.contains("/test/") || fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$");
   }
 
-  static Process bash( final String shellCommand) {
+  static Process bash(final String shellCommand) {
     if (windows())
       return null;
     final String[] command = { "/bin/bash", "-c", shellCommand };
@@ -90,7 +88,7 @@ public interface system {
       final Process $ = Runtime.getRuntime().exec(command);
       if ($ != null)
         return dumpOutput($);
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.logProbableBug(shellCommand, ¢);
     }
     return null;
@@ -112,7 +110,7 @@ public interface system {
     return formatRelative(d1 / d2);
   }
 
-   static String format2(final double ¢) {
+  static String format2(final double ¢) {
     if (¢ < 0)
       return "-" + format2(-¢);
     final double $ = 100 * ¢;
@@ -160,7 +158,7 @@ public interface system {
     return n2 / n1;
   }
 
-   static Process shellEssenceMetrics(final String fileName) {
+  static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 
@@ -172,7 +170,7 @@ public interface system {
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted
    * @return the number of words the given string contains */
-  static int wc( final String $) {
+  static int wc(final String $) {
     return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 
@@ -184,7 +182,7 @@ public interface system {
    * @deprecated since Nov 14, 2016, replaced by {@link Essence#of(String)}
    * @param codeFragment code fragment represented as a string
    * @return essence of the code fragment */
-  @Deprecated static String essence( final String codeFragment) {
+  @Deprecated static String essence(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")//
         .replaceAll("^\\s*$", "")//

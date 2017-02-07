@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
 /** A DefaultParametersAdder method is such one that calls another method
  * (usually with same name) and just adds parameters to the method.
  * @author Ori Marcovitch */
@@ -50,7 +49,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
         .containsAll(parametersNames(¢));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Default;
   }
 }

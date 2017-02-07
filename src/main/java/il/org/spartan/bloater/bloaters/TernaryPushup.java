@@ -17,8 +17,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert <code>
  * a + (cond ? b : c)
-</code> to *
- * <code>
+</code> to * <code>
  * cond ? a + b : a + c
  *
  * <code>

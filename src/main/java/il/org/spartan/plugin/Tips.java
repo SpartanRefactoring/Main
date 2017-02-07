@@ -6,7 +6,6 @@ import java.util.stream.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /
  *         30.05.2014) (v3)
@@ -49,7 +48,7 @@ public final class Tips {
 
   /** @param name the name of the applicator
    * @return an instance of the class */
-  public static AbstractGUIApplicator get( final String name) {
+  public static AbstractGUIApplicator get(final String name) {
     assert name != null;
     return map.get(name);
   }

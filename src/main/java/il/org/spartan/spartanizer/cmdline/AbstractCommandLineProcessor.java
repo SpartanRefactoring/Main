@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 
-
 /** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
  * @since Jan 15, 2017 */
@@ -14,11 +13,11 @@ abstract class AbstractCommandLineProcessor {
 
   public abstract void apply();
 
-   protected String makeFile(final String fileName) {
+  protected String makeFile(final String fileName) {
     return outputFolder + system.fileSeparator + presentSourceName + "." + fileName;
   }
 
-  public static void main( final String[] args) {
+  public static void main(final String[] args) {
     if (args.length != 0)
       as.list(args).forEach(λ -> new BatchSpartanizer(λ).fire());
     else

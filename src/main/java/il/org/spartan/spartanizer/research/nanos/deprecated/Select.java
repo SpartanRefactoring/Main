@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 17, 2016 */
@@ -32,11 +30,11 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement ¢) {
+  @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

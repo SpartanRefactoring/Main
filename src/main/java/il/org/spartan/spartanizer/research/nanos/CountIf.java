@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** @nano for(A a : B ) if(X) ++Y;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
@@ -29,15 +27,15 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement ¢) {
+  @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return "Count elements in collection that satisfy some predicate";
   }
 
-  @Override  public String technicalName() {
+  @Override public String technicalName() {
     return "CountEInCSatisfyingX";
   }
 
