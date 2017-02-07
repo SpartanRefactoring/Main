@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -24,7 +23,4 @@ public final class InfixEmptyString extends ReplaceCurrentNode<InfixExpression>/
     return Tippers.eliminateLiteral(¢, true);
   }
 
-  @Override public TipperGroup tipperGroup() {
-    return null;
-  }
 }
