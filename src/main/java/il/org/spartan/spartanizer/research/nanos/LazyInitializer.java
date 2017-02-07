@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
 /** * @year 2016
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
@@ -26,7 +25,7 @@ public final class LazyInitializer extends NanoPatternTipper<Assignment> {
     return anyTips(tippers, x);
   }
 
-  @Override  public Tip pattern(final Assignment x) {
+  @Override public Tip pattern(final Assignment x) {
     return firstTip(tippers, x);
   }
 

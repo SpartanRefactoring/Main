@@ -16,18 +16,16 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
  * @author Yossi Gil
  * @since 2016-09 */
 public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {
-  @Override  public String description( final MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip( final MethodDeclaration d,  final ExclusionManager m) {
+  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -45,7 +43,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
       m.exclude(d);
     final SimpleName ¢ = namer.newCurrent(d);
     return new Tip("Rename paraemter " + $ + " to ¢ ", d, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);
       }

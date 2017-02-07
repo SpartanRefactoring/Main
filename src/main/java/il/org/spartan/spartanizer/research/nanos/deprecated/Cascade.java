@@ -14,8 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
@@ -29,7 +27,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
     return false;
   }
 
-  @Override  public Tip pattern(@SuppressWarnings("unused") final Block __) {
+  @Override public Tip pattern(@SuppressWarnings("unused") final Block __) {
     return null;
     // return new Tip("", x, getClass()) {
     // @Override public void go(ASTRewrite r, TextEditGroup g) {
@@ -50,12 +48,12 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
   }
 
   static final class Matcher {
-     private final List<Statement> ss;
+    private final List<Statement> ss;
     public String name;
     static final UserDefinedTipper<Expression> creation = patternTipper("$T1 $N = new $T2()", "$T $N = with(new $T2())", "");
     public int creationIdx;
 
-     public static Matcher matcher(final Block ¢) {
+    public static Matcher matcher(final Block ¢) {
       return new Matcher(¢);
     }
 
@@ -76,7 +74,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
       return creates(idx) && new Matcher(ss).creation(idx).usage(idx + 1);
     }
 
-     public Matcher creation(final int idx) {
+    public Matcher creation(final int idx) {
       name = creation.getMatching(ss.get(idx), "$N") + "";
       creationIdx = idx;
       return this;
@@ -89,7 +87,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
       return null;
     }
 
-     public static Matcher creation(final Block ¢) {
+    public static Matcher creation(final Block ¢) {
       return new Matcher(¢).findCreation();
     }
 

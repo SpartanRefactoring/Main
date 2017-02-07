@@ -8,14 +8,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @author Matteo Orru'
  * @since 2016 */
 public class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
-  public static void main( final String[] fileNames) {
+  public static void main(final String[] fileNames) {
     if (fileNames.length != 0)
       BatchSpartanizer.fire(fileNames); // change from main to fire
     else {
@@ -27,7 +26,7 @@ public class InteractiveSpartanizer {
     }
   }
 
-   static String read() {
+  static String read() {
     String $ = "";
     try (Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
@@ -39,7 +38,7 @@ public class InteractiveSpartanizer {
 
   public Toolbox toolbox = Toolbox.defaultInstance();
 
-   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
+  public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
     return this;
   }
@@ -55,7 +54,7 @@ public class InteractiveSpartanizer {
     return new Trimmer(toolbox).fixed(from + "");
   }
 
-   ASTVisitor collect(final List<Tip> $) {
+  ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Tipper<N> t = toolbox.firstTipper(n);
@@ -66,7 +65,7 @@ public class InteractiveSpartanizer {
 
   boolean changed;
 
-  @SafeVarargs  public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
@@ -74,7 +73,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @SafeVarargs  public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
@@ -82,7 +81,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @SafeVarargs  public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;

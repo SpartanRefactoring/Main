@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -28,13 +27,13 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 
-  @Override public Tip tip( final IfStatement s) {
+  @Override public Tip tip(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
     return $ == null || $.getExpression() != null ? null : new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, make.emptyStatement(s), g);
       }
     };

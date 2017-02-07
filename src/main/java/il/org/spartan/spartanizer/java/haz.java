@@ -166,7 +166,6 @@ public enum haz {
     return !sideEffects.free(¢);
   }
 
-
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block body = body(d);
     if (body != null)

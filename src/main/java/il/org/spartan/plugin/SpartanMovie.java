@@ -20,8 +20,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
  * @author Ori Roth
@@ -31,7 +29,7 @@ public class SpartanMovie extends AbstractHandler {
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
-  @Override  public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
@@ -68,7 +66,7 @@ public class SpartanMovie extends AbstractHandler {
               refresh(page);
               sleep(SLEEP_BETWEEN);
             }
-          } catch ( final CoreException ¢) {
+          } catch (final CoreException ¢) {
             monitor.log(¢);
           }
         }
@@ -76,7 +74,7 @@ public class SpartanMovie extends AbstractHandler {
         sleep(SLEEP_END);
         pm.done();
       });
-    } catch ( InvocationTargetException | InterruptedException ¢) {
+    } catch (InvocationTargetException | InterruptedException ¢) {
       monitor.log(¢);
       ¢.printStackTrace();
     }
@@ -92,14 +90,14 @@ public class SpartanMovie extends AbstractHandler {
    * @author Yossi Gil
    * @param ¢ JD */
   // sure this is the right behavior
-  public static void mightNotBeSlick( final IWorkbenchPage ¢) {
+  public static void mightNotBeSlick(final IWorkbenchPage ¢) {
     close(¢);
   }
 
-  private static IMarker[] getMarkers( final IFile $) {
+  private static IMarker[] getMarkers(final IFile $) {
     try {
       return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
-    } catch ( final CoreException m) {
+    } catch (final CoreException m) {
       monitor.log(m);
       return new IMarker[0];
     }
@@ -108,23 +106,23 @@ public class SpartanMovie extends AbstractHandler {
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
-    } catch ( final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.log(¢);
       return new ArrayList<>();
     }
   }
 
-  static boolean focus( final IWorkbenchPage p, final IFile f) {
+  static boolean focus(final IWorkbenchPage p, final IFile f) {
     try {
       IDE.openEditor(p, f, true);
-    } catch ( final PartInitException ¢) {
+    } catch (final PartInitException ¢) {
       monitor.log(¢);
       return false;
     }
     return true;
   }
 
-  static void close( final IWorkbenchPage ¢) {
+  static void close(final IWorkbenchPage ¢) {
     ¢.closeAllEditors(true);
   }
 
@@ -137,12 +135,12 @@ public class SpartanMovie extends AbstractHandler {
     try {
       Thread.sleep((int) (1000 * howMuch));
       return true;
-    } catch ( @SuppressWarnings("unused") final InterruptedException __) {
+    } catch (@SuppressWarnings("unused") final InterruptedException __) {
       return false;
     }
   }
 
-  static void refresh( final IWorkbenchPage ¢) {
+  static void refresh(final IWorkbenchPage ¢) {
     ¢.getWorkbenchWindow().getShell().update();
     ¢.getWorkbenchWindow().getShell().layout(true);
   }
@@ -157,13 +155,13 @@ public class SpartanMovie extends AbstractHandler {
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.
    * @author Ori Roth */
-  @SuppressWarnings("boxing") static IMarker getFirstMarker( final IMarker[] ms) {
+  @SuppressWarnings("boxing") static IMarker getFirstMarker(final IMarker[] ms) {
     int $ = 0;
     for (final Integer i : range.from(0).to(ms.length))
       try {
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
-      } catch ( final CoreException ¢) {
+      } catch (final CoreException ¢) {
         monitor.log(¢);
         break;
       }

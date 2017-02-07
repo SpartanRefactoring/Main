@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** removes empty return, provided that it is last in method.
  * @author Yossi Gil
  * @since 2015-7-17 */
@@ -20,7 +19,7 @@ public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     return "Remove redundant return statement";
   }
 
-  @Override public boolean prerequisite( final ReturnStatement ¢) {
+  @Override public boolean prerequisite(final ReturnStatement ¢) {
     if (¢.getExpression() != null)
       return false;
     final Block $ = az.block(¢.getParent());

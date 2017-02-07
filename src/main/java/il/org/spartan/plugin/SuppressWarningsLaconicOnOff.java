@@ -18,8 +18,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-
-
 /** A utility class used to add enablers/disablers to code automatically, with
  * AST scan based recursive algorithms. The automatic disabling mechanism is
  * offered in the marker quick fix menu, see {@link QuickFixer}. The change is
@@ -33,8 +31,7 @@ public enum SuppressWarningsLaconicOnOff {
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
    * @param tipper deactivation {@link Type} */
-  public static void deactivate( final IProgressMonitor pm,  final IMarker m,  final Type t)
-      throws IllegalArgumentException, CoreException {
+  public static void deactivate(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -49,7 +46,7 @@ public enum SuppressWarningsLaconicOnOff {
    * enablers from sub tree.
    * @param $ a rewrite to fill
    * @param d a {@link BodyDeclaration} to disable */
-  static void disable( final ASTRewrite $,  final BodyDeclaration d) {
+  static void disable(final ASTRewrite $, final BodyDeclaration d) {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
@@ -60,7 +57,7 @@ public enum SuppressWarningsLaconicOnOff {
       $.replace(d, $.createGroupNode(new ASTNode[] { $.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), $.createCopyTarget(d) }), null);
   }
 
-   private static String fixNL(final BodyDeclaration ¢) {
+  private static String fixNL(final BodyDeclaration ¢) {
     return ¢ instanceof EnumDeclaration || ¢ instanceof MethodDeclaration || ¢ instanceof EnumConstantDeclaration ? "\n" : "";
   }
 
@@ -68,7 +65,7 @@ public enum SuppressWarningsLaconicOnOff {
    * @return <code><b>true</b></code> <em>iff</em> the node is disabled by an
    *         ancestor {@link BodyDeclaration}, containing a disabler in its
    *         JavaDoc. */
-  static boolean disabledByAncestor( final ASTNode n) {
+  static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
@@ -84,7 +81,7 @@ public enum SuppressWarningsLaconicOnOff {
 
   /** @param j a {@link JavaDoc}
    * @return comment's text, without eneblers identifiers. */
-  static String enablersRemoved( final Javadoc j) {
+  static String enablersRemoved(final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
     for (final String e : getEnablers($)) {
       final String qe = Pattern.quote(e);
@@ -93,19 +90,19 @@ public enum SuppressWarningsLaconicOnOff {
     return $;
   }
 
-  static Set<String> getDisablers( final String ¢) {
+  static Set<String> getDisablers(final String ¢) {
     return getKeywords(¢, disabling.disablers);
   }
 
-  static Set<String> getEnablers( final String ¢) {
+  static Set<String> getEnablers(final String ¢) {
     return getKeywords(¢, disabling.enablers);
   }
 
-  static Set<String> getKeywords( final String c, final String[] kws) {
+  static Set<String> getKeywords(final String c, final String[] kws) {
     return Stream.of(kws).filter(c::contains).collect(Collectors.toSet());
   }
 
-  static void recursiveUnEnable( final ASTRewrite $,  final BodyDeclaration d) {
+  static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof BodyDeclaration)
@@ -114,12 +111,11 @@ public enum SuppressWarningsLaconicOnOff {
     });
   }
 
-  static void unEnable( final ASTRewrite $,  final BodyDeclaration d) {
+  static void unEnable(final ASTRewrite $, final BodyDeclaration d) {
     unEnable($, d.getJavadoc());
   }
 
-   private static ASTRewrite createRewrite( final IProgressMonitor pm,  final CompilationUnit u,  final IMarker m,
-       final Type t) {
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -128,15 +124,15 @@ public enum SuppressWarningsLaconicOnOff {
     return $;
   }
 
-   private static ASTRewrite createRewrite( final IProgressMonitor pm,  final IMarker m,  final Type t) {
+  private static ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
     return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
   }
 
-  private static void fillRewrite( final ASTRewrite $,  final CompilationUnit u,  final IMarker m,  final Type t) {
+  private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
     u.accept(new ASTVisitor() {
       boolean b;
 
-      @Override public void preVisit( final ASTNode n) {
+      @Override public void preVisit(final ASTNode n) {
         if (b || eclipse.facade.isNodeOutsideMarker(n, m))
           return;
         BodyDeclaration d;
@@ -161,7 +157,7 @@ public enum SuppressWarningsLaconicOnOff {
     });
   }
 
-  private static void unEnable( final ASTRewrite $,  final Javadoc j) {
+  private static void unEnable(final ASTRewrite $, final Javadoc j) {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);
   }

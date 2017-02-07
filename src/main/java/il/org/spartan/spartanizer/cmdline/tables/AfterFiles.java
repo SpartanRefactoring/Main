@@ -22,8 +22,6 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-
-
 /** Generates files after nano spartanization+replacing
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
@@ -56,7 +54,7 @@ public class AfterFiles extends FolderASTVisitor {
           .in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
-    } catch ( final AssertionError __) {
+    } catch (final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -67,7 +65,7 @@ public class AfterFiles extends FolderASTVisitor {
       scope.pop();
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -77,7 +75,7 @@ public class AfterFiles extends FolderASTVisitor {
     Logger.subscribe(this::logAll);
   }
 
-  @Override protected void done( final String path) {
+  @Override protected void done(final String path) {
     dotter.line();
     System.err.println("Done processing: " + path);
     Count.print();
@@ -96,7 +94,7 @@ public class AfterFiles extends FolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null;
   }
 
-  private void logAll( final ASTNode n, final String np) {
+  private void logAll(final ASTNode n, final String np) {
     if (containedInInstanceCreation(n))
       return;
     logNanoContainingMethodInfo(n, np);
@@ -107,7 +105,7 @@ public class AfterFiles extends FolderASTVisitor {
     scope.peek().markNP(n, np);
   }
 
-  @SuppressWarnings("boxing") private void summarizeSortedMethodStatistics( final String path) {
+  @SuppressWarnings("boxing") private void summarizeSortedMethodStatistics(final String path) {
     try (Table report = new Table(path)) {
       int statementsTotal = 0, methodsTotal = 0;
       for (final Integer numStatements : methods.keySet()) {
@@ -134,34 +132,34 @@ public class AfterFiles extends FolderASTVisitor {
     }
   }
 
-  private static double fractionOfMethodsTouched( final List<MethodRecord> rs) {
+  private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(final int statementsTotal,  final Integer numStatements,  final List<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final List<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 
-  private static double fractionOfMethods(final int methodsTotal,  final List<MethodRecord> rs) {
+  private static double fractionOfMethods(final int methodsTotal, final List<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage( final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-   private static CSVStatistics openNPSummaryFile(final String outputDir) {
+  private static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
   private static CSVStatistics openSummaryFile(final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
@@ -169,7 +167,7 @@ public class AfterFiles extends FolderASTVisitor {
 
   private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();
 
-  private void logNPInfo( final ASTNode n, final String np) {
+  private void logNPInfo(final ASTNode n, final String np) {
     if (!npStatistics.containsKey(np))
       npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);

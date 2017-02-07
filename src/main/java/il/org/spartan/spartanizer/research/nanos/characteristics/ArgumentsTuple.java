@@ -20,8 +20,8 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
     return yieldDescendants.untilClass(MethodInvocation.class).from(d).stream()//
         .map(ArgumentsTuple::stringify)//
         .allMatch(λ -> {
-            assert $ != null;
-            return λ != null && λ.contains($);
+          assert $ != null;
+          return λ != null && λ.contains($);
         });
   }
 

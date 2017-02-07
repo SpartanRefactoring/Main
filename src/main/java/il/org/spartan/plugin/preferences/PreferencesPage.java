@@ -22,8 +22,6 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** ??
  * @author Daniel Mittelman
  * @year 2016
@@ -149,11 +147,11 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
       });
     }
 
-    @Override  protected String[] parseString(final String stringList) {
+    @Override protected String[] parseString(final String stringList) {
       return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
-    @Override @SuppressWarnings("unused")  protected String getNewInputObject() {
+    @Override @SuppressWarnings("unused") protected String getNewInputObject() {
       if (dead.isEmpty() || composite == null)
         return null;
       final ListDialog d = new ListDialog(composite.getShell());

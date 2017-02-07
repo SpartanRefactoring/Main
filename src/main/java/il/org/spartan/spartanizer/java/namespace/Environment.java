@@ -15,8 +15,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree.
  * @author Yossi Gil <yossi.gil@gmail.com>
@@ -60,7 +58,7 @@ public interface Environment {
   }
 
   /** @return null iff the name is not in use in the {@link Environment} */
-   Binding get(String name);
+  Binding get(String name);
 
   /** Answer the question whether the name is in use in the current
    * {@link Environment} */
@@ -68,7 +66,7 @@ public interface Environment {
 
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
-   default Binding hiding(final String name) {
+  default Binding hiding(final String name) {
     return nest() == null ? null : nest().get(name);
   }
 
@@ -79,7 +77,7 @@ public interface Environment {
 
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
-   Environment nest();
+  Environment nest();
 
   /** Should return the hidden entry, or null if no entry hidden by this one.
    * Note: you will have to assume multiple definitions in the same block, this
@@ -161,7 +159,7 @@ public interface Environment {
   }
 
   /** @return set of entries declared in the node, including all hiding. */
-   static LinkedHashSet<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
+  static LinkedHashSet<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
     // Holds the declarations in the subtree and relevant siblings.
     final LinkedHashSet<Entry<String, Binding>> $ = new LinkedHashSet<>();
     ¢.accept(new EnvironmentVisitor($));
@@ -175,13 +173,13 @@ public interface Environment {
     return upEnv;
   }
 
-   static String fullName(final ASTNode ¢) {
+  static String fullName(final ASTNode ¢) {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
-   static Namespace genesis() {
+  static Namespace genesis() {
     return NULL.spawn();
   }
 
@@ -198,11 +196,11 @@ public interface Environment {
     return null;
   }
 
-   static Block getParentBlock(final ASTNode ¢) {
+  static Block getParentBlock(final ASTNode ¢) {
     return az.block(¢.getParent());
   }
 
-   static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
+  static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
 
@@ -214,7 +212,7 @@ public interface Environment {
     return ¢.getName() + "";
   }
 
-  static Namespace of( final ASTNode n) {
+  static Namespace of(final ASTNode n) {
     for (final ASTNode ¢ : ancestors.of(n)) {
       final Namespace $ = property.obtain(Namespace.class).from(¢);
       if ($ != null)
@@ -235,7 +233,7 @@ public interface Environment {
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-   static LinkedHashSet<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
+  static LinkedHashSet<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
     return new LinkedHashSet<>();
   }
 }

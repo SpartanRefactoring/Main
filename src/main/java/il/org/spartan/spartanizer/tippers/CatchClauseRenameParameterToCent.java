@@ -12,18 +12,16 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Convert {@code catch(Exceprion e){}} to {@code catch(Exceprion ¢){}}
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
     implements TipperCategory.Centification {
-  @Override  public String description( final CatchClause ¢) {
+  @Override public String description(final CatchClause ¢) {
     return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
   }
 
-  @Override public Tip tip( final CatchClause c,  final ExclusionManager m) {
+  @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))
       return null;

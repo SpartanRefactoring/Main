@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 
-
-
 /** convert {@code
  * int a = 2;
  * if (b)
@@ -26,12 +24,12 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerIfUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
-  @Override  public String description( final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f, final SimpleName n,
-       final Expression initializer,  final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = az.ifStatement(nextStatement);

@@ -6,24 +6,21 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Simplify for statements as much as possible (or remove them or parts of
- * them) if and only if toList
- * it doesn'tipper have any side-effect.
+ * them) if and only if toList it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.EmptyCycles {
-  @Override  public String description(final ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "remove :" + ¢;
   }
 
   @Override protected boolean prerequisite(ForStatement ¢) {
-    return sideEffects.free(¢); 
+    return sideEffects.free(¢);
   }
 
-  @Override  public ASTNode replacement( final ForStatement ¢) {
+  @Override public ASTNode replacement(final ForStatement ¢) {
     return ¢.getAST().newBlock();
   }
 }
