@@ -86,11 +86,11 @@ public interface disabling {
     return !disabling.hasJavaDocIdentifier(¢, disablers) && disabling.hasJavaDocIdentifier(¢, enablers);
   }
 
-  static boolean hasJavaDocIdentifier( final BodyDeclaration d, final String[] ids) {
+  static boolean hasJavaDocIdentifier( final BodyDeclaration d, final String... ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 
-  static boolean contains( final String s, final String[] ids) {
+  static boolean contains( final String s, final String... ids) {
     return Stream.of(ids).anyMatch(s::contains);
   }
 }

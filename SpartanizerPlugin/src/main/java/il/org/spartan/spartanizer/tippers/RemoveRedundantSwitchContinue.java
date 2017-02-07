@@ -12,16 +12,16 @@ import il.org.spartan.spartanizer.tipping.*;
 
 
 
-/** remove redundant continue in switch in loops. for example converts <code>
+/** remove redundant continue in switch in loops. for example converts {@code
  * while(b) { switch(x) { case 1: x=2; break; default: continue; } }
  *
- * </code>
+ * }
  * to
  *
- * <code>
+ * {@code
  * while(b) { switch(x) { case 1: x=2; break; } }
  *
- * </code>
+ * }
  * Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */

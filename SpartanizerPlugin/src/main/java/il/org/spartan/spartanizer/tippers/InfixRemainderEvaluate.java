@@ -16,12 +16,12 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Evaluate the $ of numbers according to the following rules 
  * 
- * <code>
- * int % int --> int 
- * long % long --> long 
- * int % long --> long 
- * long % int --> long 
- * </code>
+ * {@code
+ * int % int --> int
+ * long % long --> long
+ * int % long --> long
+ * long % int --> long
+ * }
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {

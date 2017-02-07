@@ -37,35 +37,35 @@ public class CommandLine$Applicator extends Generic$Applicator {
 
   public CommandLine$Applicator() {}
 
-  public CommandLine$Applicator(final String[] classes) {
+  public CommandLine$Applicator(final String... classes) {
     super(classes);
   }
 
-  public CommandLine$Applicator(final String[] classes, final String[] tipperGroups) {
+  public CommandLine$Applicator(final String[] classes, final String... tipperGroups) {
     super(classes, tipperGroups);
   }
 
-  public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String[] excludedTipperGroups) {
+  public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String... excludedTipperGroups) {
     super(classes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
   }
 
   public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String[] excludedTipperGroups,
-      final String[] excludedNanoPatterns) {
+      final String... excludedNanoPatterns) {
     // left intentionally empty
     super(classes, removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
   }
 
   private static String[] removeExcludedNanoPatternsAndTippers(final String[] tipperGroups, final String[] excludedTipperGroups,
-      final String[] excludedNanoPatterns) {
+      final String... excludedNanoPatterns) {
     return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
   }
 
-  private static String[] removeExcludedNanoPatterns( final String[] tipperGroups, final String[] excludedNanoPatterns) {
+  private static String[] removeExcludedNanoPatterns( final String[] tipperGroups, final String... excludedNanoPatterns) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
         .filter(λ -> !as.list(excludedNanoPatterns).contains(λ)).collect(Collectors.toList()).toArray(new String[] {});
   }
 
-  private static String[] removeExcludedTippers( final String[] tipperGroups, final String[] excludedTipperGroups) {
+  private static String[] removeExcludedTippers( final String[] tipperGroups, final String... excludedTipperGroups) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
         .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(Collectors.toList()).toArray(new String[] {});
   }

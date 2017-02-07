@@ -57,7 +57,7 @@ enum CollectClassMetrics {
     report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  private static void go(final String[] where) {
+  private static void go(final String... where) {
     new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
   }
 
