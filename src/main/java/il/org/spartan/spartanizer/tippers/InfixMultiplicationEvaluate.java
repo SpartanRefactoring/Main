@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.utils.*;
 
 
 /** Evaluate the multiplication of numbers according to the following rules :
- * </br>
- * </br>
+ * toList
+ * toList
  * {@code
  * int * int --> int
  * double * double --> double

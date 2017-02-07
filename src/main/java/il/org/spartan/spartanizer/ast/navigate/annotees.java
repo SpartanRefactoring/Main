@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.utils.*;
 
 
 /** Extract items to which a given annotation applies
@@ -42,7 +43,7 @@ public interface annotees {
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return of((VariableDeclarationStatement) $);
       default:
-        assert false : $.getClass().getSimpleName();
+        assert fault.unreachable() : fault.specifically("Unexpected type", $.getClass().getSimpleName());
         return null;
     }
   }

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 
-/** Remove curly braces from a lambda expression if and only if </br>
+/** Remove curly braces from a lambda expression if and only if toList
  * its body has only one statement.
  * @author Oren Afek
  * @since 2016-11-17 */

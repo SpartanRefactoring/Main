@@ -121,7 +121,7 @@ public enum BloatingTestUtilities {
       return null;
     }
 
-    /** Rename all the SimpleNames in a compilation-unit to </br>
+    /** Rename all the SimpleNames in a compilation-unit to toList
      * consistent names : v1,v2,....
      * @author Dor Ma'ayan
      * @since 19-01-2017

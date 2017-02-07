@@ -19,6 +19,6 @@ public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
   }
 
   @Override  public ASTNode replacement(final WhileStatement ¢) {
-    return ¢ == null || !sideEffects.free(¢.getExpression()) || haz.sideEffects(¢.getBody()) ? null : ¢.getAST().newBlock();
+    return haz.sideEffects(¢) ? null : ¢.getAST().newBlock();
   }
 }

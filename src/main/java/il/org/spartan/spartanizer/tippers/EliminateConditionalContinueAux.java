@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 
 
-/** Auxilary class for all tippers </br>
+/** Auxilary class for all tippers toList
  * Issue #1014
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */
