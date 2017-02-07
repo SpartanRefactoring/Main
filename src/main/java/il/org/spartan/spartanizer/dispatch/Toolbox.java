@@ -125,10 +125,10 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
+            new ForDeadRemove(), // 
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ForDeadRemove(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
@@ -138,7 +138,7 @@ public class Toolbox {
             new EliminateConditionalContinueInWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            new RemoveRedundantWhile(), //
+            new WhileDeadRemove(), //
             new WhileToForUpdaters(), //
             null) //
         .add(SwitchStatement.class, //
@@ -149,7 +149,8 @@ public class Toolbox {
             new SwitchWithOneCaseToIf(), //
             new SwitchBranchSort(), //
             null)
-        .add(SwitchCase.class, new RemoveRedundantSwitchCases(), //
+        .add(SwitchCase.class, //
+            new RemoveRedundantSwitchCases(), //
             new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
@@ -159,12 +160,10 @@ public class Toolbox {
             new AssignmentToPrefixIncrement(), //
             null) //
         .add(Block.class, //
-            // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
             // new CachingPattern(), // v 2.7
             // new BlockInlineStatementIntoNext(), //
-            // new BlockRemoveDeadVariables(), // v 2.7
             // new FindFirst(),
             null) //
         .add(PostfixExpression.class, new PostfixToPrefix()) //

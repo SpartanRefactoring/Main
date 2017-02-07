@@ -17,6 +17,6 @@ public class IfDeadRemove extends ReplaceCurrentNode<IfStatement>//
   }
 
   @Override public ASTNode replacement(final IfStatement ¢) {
-    return haz.sideEffects(¢) ? null : ¢.getAST().newBlock();
+    return !sideEffects.free(¢) ? null : ¢.getAST().newBlock();
   }
 }
