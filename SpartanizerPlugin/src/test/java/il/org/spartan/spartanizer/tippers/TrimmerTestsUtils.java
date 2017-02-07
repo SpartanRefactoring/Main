@@ -5,6 +5,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
+import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -52,9 +53,8 @@ public enum TrimmerTestsUtils {
     }
 
      public Operand gives( final String $) {
-      assert $ != null;
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       final String peeled = w.off(unpeeled);
@@ -62,7 +62,10 @@ public enum TrimmerTestsUtils {
         azzert.that("No trimming of " + get(), peeled, is(not(get())));
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-      assertSimilar($, peeled);
+      if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
+        System.err.printf("Quick cut and paste is .gives(\"%s\")\n", peeled);
+        azzert.that(essence(peeled), is(essence($)));
+      }
       return new Operand($);
     }
 

@@ -71,19 +71,32 @@ public enum sideEffects {
     });
     return $.get();
   }
+  public static boolean free(final IfStatement ¢) {
+    return free(¢.getExpression()) && free(then(¢)) && free(elze(¢));
+  }
+
+  public static boolean free(final ExpressionStatement ¢) {
+    return free(¢.getExpression());
+  }
 
   private static boolean free(final ArrayCreation ¢) {
     return free(step.dimensions(¢)) && free(step.expressions(¢.getInitializer()));
   }
 
   public static boolean free(final ASTNode ¢) {
-    return ¢ == null || //
-        (iz.expression(¢) ? sideEffects.free(az.expression(¢))
-            : iz.expressionStatement(¢) ? sideEffects.free(step.expression(az.expressionStatement(¢)))
-                : iz.isVariableDeclarationStatement(¢) ? sideEffects.free(az.variableDeclrationStatement(¢))
-                    : iz.block(¢) && sideEffects.free(az.block(¢)));
+    return ¢ == null ? true
+        : iz.expression(¢) ? free(az.expression(¢))
+            : iz.expressionStatement(¢) ? free(az.expressionStatement(¢))
+                : iz.ifStatement(¢) ? free(az.ifStatement(¢))
+                    : iz.whileStatement(¢) ? free(az.whileStatement(¢))
+                        : iz.forStatement(¢) ? free(az.forStatement(¢))
+                            : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢))
+                                : iz.block(¢) ? free(az.block(¢)) : false;
   }
 
+  private static boolean free(ForStatement ¢) {
+    return free(initializers(¢)) && free(¢.getExpression())  && free(updaters(¢)) && free(body(¢));
+  }
   public static boolean free(final Block ¢) {
     return statements(¢).stream().allMatch(sideEffects::free);
   }
@@ -146,5 +159,9 @@ public enum sideEffects {
 
   public static boolean free(final VariableDeclarationStatement s) {
     return fragments(s).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
+  }
+
+  public static boolean free(final WhileStatement ¢) {
+    return free(¢.getExpression()) && free(¢.getBody());
   }
 }

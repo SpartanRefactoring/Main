@@ -29,6 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if(done()) 
  * return XX; 
  * } 
+ * </code>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement>//

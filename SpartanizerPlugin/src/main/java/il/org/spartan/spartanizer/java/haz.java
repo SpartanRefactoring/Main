@@ -163,17 +163,9 @@ public enum haz {
   }
 
   public static boolean sideEffects(final Expression ¢) {
-    return ¢ != null && !sideEffects.free(¢);
+    return !sideEffects.free(¢);
   }
 
-  public static boolean sideEffects(final IfStatement ¢) {
-    return sideEffects(¢.getExpression()) || sideEffects(then(¢)) || sideEffects(elze(¢));
-  }
-
-  public static boolean sideEffects(final Statement ¢) {
-    final ExpressionStatement $ = az.expressionStatement(¢);
-    return $ != null && !sideEffects.free($.getExpression());
-  }
 
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block body = body(d);
@@ -223,9 +215,5 @@ public enum haz {
       }
     });
     return $.get().booleanValue();
-  }
-
-  public static boolean sideEffects(final WhileStatement ¢) {
-    return haz.sideEffects(¢.getExpression()) || haz.sideEffects(¢.getBody());
   }
 }

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.utils.Wrap.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -61,7 +61,7 @@ public enum TESTUtils {
    * @param actual JD */
   public static void assertSimilar( final String expected,  final String actual) {
     if (!expected.equals(actual))
-      azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
+      azzert.that(essence(actual), is(essence(expected)));
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the
