@@ -37,10 +37,10 @@ public enum cantTip {
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemov().canTip(λ));
+    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemove().canTip(λ));
   }
 
   public static boolean remvoeRedundantIf(final WhileStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemov().canTip(λ));
+    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemove().canTip(λ));
   }
 }
