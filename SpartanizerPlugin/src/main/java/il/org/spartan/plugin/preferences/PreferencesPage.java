@@ -150,7 +150,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     }
 
     @Override  protected String[] parseString(final String stringList) {
-      return stringList != null && !"".equals(stringList) ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
+      return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : alive.toArray(new String[alive.size()]);
     }
 
     @Override @SuppressWarnings("unused")  protected String getNewInputObject() {

@@ -17,14 +17,11 @@ import il.org.spartan.spartanizer.java.*;
 
 /** convert <code>
  * f(cond ? a : b)
- *
- * <code>
- * to
- *
+</code> to 
  * <code>
  * cond ? f(a) : f(b)
  *
- * <code>
+ * </code>
  * Test case is {@link Issue1091}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */
