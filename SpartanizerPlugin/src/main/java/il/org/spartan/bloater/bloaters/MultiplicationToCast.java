@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Covers Issues #1006 & #1007 </br>
+/** Covers Issues #1006 & #1007 toList
  * Convert : {@code
  * x * 1. / x * 1.0
  * x * 1L

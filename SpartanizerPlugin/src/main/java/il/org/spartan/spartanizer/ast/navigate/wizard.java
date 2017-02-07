@@ -743,4 +743,8 @@ public interface wizard {
   // return !iz.block(body(¢)) ? body(¢) :
   // last(statements(az.block(body(¢))));
   // }
+
+  static String nodeName(Class<? extends ASTNode> ¢) {
+    return ¢.getSimpleName();
+  }
 }

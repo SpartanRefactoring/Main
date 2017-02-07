@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 
 
-/** Convert Infinite loops with return sideEffects to shorter ones : </br>
+/** Convert Infinite loops with return sideEffects to shorter ones : toList
  * Convert 
  * {@code
  * for(;true;) {
