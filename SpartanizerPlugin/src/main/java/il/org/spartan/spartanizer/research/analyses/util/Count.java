@@ -6,7 +6,6 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
 
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
@@ -46,7 +45,7 @@ public enum Count {
     return d == 0 ? 1 : sumSratio / d;
   }
 
-   private static Pair<Int, Int> newPair() {
+  private static Pair<Int, Int> newPair() {
     return new Pair<>(new Int(), new Int());
   }
 }

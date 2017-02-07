@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Replace {@code s.equals("s")} by {@code "s".equals(s)}
  * @author Ori Roth
  * @since 2016/05/08 */
@@ -22,7 +21,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     implements TipperCategory.Idiomatic {
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
-   private static ASTNode replacement( final SimpleName n, final Expression ¢, final Expression x) {
+  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(copy.of(¢));
     $.setName(copy.of(n));
@@ -30,7 +29,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     return $;
   }
 
-  @Override  public String description(final MethodInvocation ¢) {
+  @Override public String description(final MethodInvocation ¢) {
     return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 

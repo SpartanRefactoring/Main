@@ -125,7 +125,7 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
-            new ForDeadRemove(), // 
+            new ForDeadRemove(), //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
@@ -377,7 +377,7 @@ public class Toolbox {
           String.format("Did you forget to use create an enum instance in %s \n" + "for the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
-              ¢.getClass().getSimpleName(), //
+              Toolbox.name(¢), //
               ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);
@@ -441,16 +441,15 @@ public class Toolbox {
 
   public static String intToClassName(final int $) {
     try {
-      return ASTNode.nodeClassForType($).getSimpleName(); 
+      return ASTNode.nodeClassForType($).getSimpleName();
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return "???";
     }
   }
 
   public static <T extends Tipper<? extends ASTNode>> String name(T ¢) {
-    return ¢.getClass().getSimpleName(); 
+    return ¢.getClass().getSimpleName();
   }
-
 
   public static String name(Class<? extends Tipper<?>> ¢) {
     return ¢.getSimpleName();

@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.*;
 
 import il.org.spartan.spartanizer.java.*;
 
-
 /** TODO: Artium Nihamkin please add a description
  * @author Artium Nihamkin
  * @since 2013/07/01 */
@@ -45,7 +44,7 @@ public final class Nature implements IProjectNature {
     project = ¢;
   }
 
-  private void set( final IProjectDescription d, final ICommand... cs) throws CoreException {
+  private void set(final IProjectDescription d, final ICommand... cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(append(cs, c));

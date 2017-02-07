@@ -4,16 +4,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-
 /** An additive term, which might be either negative or positive
  * @author Yossi Gil
  * @since 2016 */
 class Term {
-   static Term minus(final Expression ¢) {
+  static Term minus(final Expression ¢) {
     return new Term(true, ¢);
   }
 
-   static Term plus(final Expression ¢) {
+  static Term plus(final Expression ¢) {
     return new Term(false, ¢);
   }
 

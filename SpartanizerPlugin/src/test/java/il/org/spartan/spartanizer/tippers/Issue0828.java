@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public class Issue0828 {
   ForStatement simpleFor, trueFor, trueStatementFor, obviouseTrueStatement, numEqualTrueStatement, strEqualTrueStatement, falseFor;
   ForTrueConditionRemove forTrueConditionRemove;
-  
+
   String description() {
     return forTrueConditionRemove.description();
   }

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
@@ -8,14 +9,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
-   private static ForStatement buildForWhithoutLastStatement( final WhileStatement ¢) {
+  private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(copy.of(¢.getExpression()));
     updaters($).add(copy.of(az.expressionStatement(lastStatement(¢)).getExpression()));
@@ -23,9 +22,9 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return $;
   }
 
-  private static boolean fitting( final WhileStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢)
-        && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
+  private static boolean fitting(final WhileStatement ¢) {
+    return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
+        && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
@@ -37,15 +36,15 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     return hop.lastStatement(body(¢));
   }
 
-  @Override  public String description( final WhileStatement ¢) {
+  @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
-  @Override public boolean prerequisite( final WhileStatement ¢) {
+  @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
-  @Override  public ASTNode replacement( final WhileStatement ¢) {
+  @Override public ASTNode replacement(final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

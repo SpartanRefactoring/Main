@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** {@link HoldsForAny} Nano Pattern - holds P(c) for any c in C
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
@@ -34,11 +32,11 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, az.block(parent(x)));
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement $) {
+  @Override public Tip pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

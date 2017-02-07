@@ -14,7 +14,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jface.text.*;
 
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -38,11 +37,11 @@ public enum make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link makeAST} value to its corresponding {@link make}
-   * enum value
+  /** Converts the {@link makeAST} value to its corresponding {@link make} enum
+   * value
    * @param tipper The {@link makeAST} type
    * @return corresponding {@link make} value to the argument */
-  public static make from( final makeAST ¢) {
+  public static make from(final makeAST ¢) {
     switch (¢) {
       case CLASS_BODY_DECLARATIONS:
         return make.CLASS_BODY_DECLARATIONS;
@@ -66,7 +65,7 @@ public enum make {
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-   public ASTParser parser(final char[] text) {
+  public ASTParser parser(final char[] text) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(text);
     return $;
@@ -75,7 +74,7 @@ public enum make {
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
-   public ASTParser parser( final Document ¢) {
+  public ASTParser parser(final Document ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢.get().toCharArray());
     return $;
@@ -84,7 +83,7 @@ public enum make {
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
-   public ASTParser parser(final ICompilationUnit ¢) {
+  public ASTParser parser(final ICompilationUnit ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢);
     return $;
@@ -93,7 +92,7 @@ public enum make {
   /** Creates a binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
-   public ASTParser parserWithBinding(final ICompilationUnit ¢) {
+  public ASTParser parserWithBinding(final ICompilationUnit ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢);
     $.setResolveBindings(true);
@@ -103,25 +102,25 @@ public enum make {
   /** Creates a parser for a given {@link IFile}
    * @param f JD
    * @return created parser */
-   public ASTParser parser(final IFile ¢) {
+  public ASTParser parser(final IFile ¢) {
     return parser(JavaCore.createCompilationUnitFrom(¢));
   }
 
   /** Creates a parser for a given marked text.
    * @param m JD
    * @return created parser */
-   public ASTParser parser( final IMarker ¢) {
+  public ASTParser parser(final IMarker ¢) {
     return parser(makeAST.iCompilationUnit(¢));
   }
 
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-   public ASTParser parser( final String text) {
+  public ASTParser parser(final String text) {
     return parser(text.toCharArray());
   }
 
-  public static VariableDeclarationExpression variableDeclarationExpression( final VariableDeclarationStatement ¢) {
+  public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
     final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(findFirst.elementOf(fragments(copy.of(¢)))));
@@ -131,7 +130,7 @@ public enum make {
     return $;
   }
 
-  static Expression makeInfix( final List<Expression> xs,  final AST t) {
+  static Expression makeInfix(final List<Expression> xs, final AST t) {
     if (xs.size() == 1)
       return first(xs);
     final InfixExpression $ = t.newInfixExpression();
@@ -143,14 +142,13 @@ public enum make {
         return $;
   }
 
-  
-  public static Expression minus(final Expression x,  final NumberLiteral l) {
+  public static Expression minus(final Expression x, final NumberLiteral l) {
     return l == null ? minusOf(x) //
         : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
   }
 
-   static List<Expression> minus(final List<Expression> xs) {
+  static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
     $.addAll(az.stream(rest(xs)).map(λ -> minusOf(λ)).collect(Collectors.toList()));
@@ -161,18 +159,18 @@ public enum make {
     return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
   }
 
-   static NumberLiteral newLiteral( final ASTNode n,  final String token) {
+  static NumberLiteral newLiteral(final ASTNode n, final String token) {
     final NumberLiteral $ = n.getAST().newNumberLiteral();
     $.setToken(token);
     return $;
   }
 
-   private static String signAdjust( final String token) {
+  private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(token.startsWith("+") ? 1 : 0);
   }
 
-   public static Expression assignmentAsExpression( final Assignment ¢) {
+  public static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
     return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
@@ -183,27 +181,27 @@ public enum make {
    * @return a newly created expression with its operands thus swapped.
    * @throws IllegalArgumentException when the parameter has extra operands.
    * @see InfixExpression#hasExtendedOperands */
-  public static InfixExpression conjugate( final InfixExpression ¢) {
+  public static InfixExpression conjugate(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
     return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
   }
 
-  public static EmptyStatement emptyStatement( final ASTNode ¢) {
+  public static EmptyStatement emptyStatement(final ASTNode ¢) {
     return ¢.getAST().newEmptyStatement();
   }
 
-   public static make.FromAST from( final AST t) {
+  public static make.FromAST from(final AST t) {
     return new make.FromAST() {
-      @Override  public SimpleName identifier( final String identifier) {
+      @Override public SimpleName identifier(final String identifier) {
         return t.newSimpleName(identifier);
       }
-  
-      @Override  public NumberLiteral literal(final int ¢) {
+
+      @Override public NumberLiteral literal(final int ¢) {
         return t.newNumberLiteral(¢ + "");
       }
-  
-      @Override  public StringLiteral literal( final String ¢) {
+
+      @Override public StringLiteral literal(final String ¢) {
         final StringLiteral $ = t.newStringLiteral();
         $.setLiteralValue(¢);
         return $;
@@ -211,11 +209,11 @@ public enum make {
     };
   }
 
-   public static make.FromAST from( final ASTNode ¢) {
+  public static make.FromAST from(final ASTNode ¢) {
     return from(¢.getAST());
   }
 
-   public static IfStatement ifWithoutElse( final Statement s,  final InfixExpression condition) {
+  public static IfStatement ifWithoutElse(final Statement s, final InfixExpression condition) {
     final IfStatement $ = condition.getAST().newIfStatement();
     $.setExpression(condition);
     $.setThenStatement(s);
@@ -223,15 +221,15 @@ public enum make {
     return $;
   }
 
-   public static StringLiteral makeEmptyString( final ASTNode ¢) {
+  public static StringLiteral makeEmptyString(final ASTNode ¢) {
     return make.from(¢).literal("");
   }
 
-  public static NullLiteral makeNullLiteral( final ASTNode ¢) {
+  public static NullLiteral makeNullLiteral(final ASTNode ¢) {
     return ¢.getAST().newNullLiteral();
   }
 
-   public static Expression minus(final Expression ¢) {
+  public static Expression minus(final Expression ¢) {
     final PrefixExpression $ = az.prefixExpression(¢);
     return $ == null ? make.minus(¢, az.numberLiteral(¢))
         : $.getOperator() == wizard.MINUS1 ? $.getOperand() //
@@ -247,7 +245,7 @@ public enum make {
     return $$ == null ? $ : $$;
   }
 
-   public static ParenthesizedExpression parethesized( final Expression ¢) {
+  public static ParenthesizedExpression parethesized(final Expression ¢) {
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
     $.setExpression(step.parent(¢) == null ? ¢ : copy.of(¢));
     return $;
@@ -262,13 +260,13 @@ public enum make {
    * This function is a factory method recording the expression that might be
    * wrapped.
    * @param inner JD */
-   public static make.PlantingExpression plant(final Expression ¢) {
+  public static make.PlantingExpression plant(final Expression ¢) {
     return new make.PlantingExpression(¢);
   }
 
   /** Factory method recording the statement might be wrapped.
    * @param inner JD */
-   public static make.PlantingStatement plant(final Statement inner) {
+  public static make.PlantingStatement plant(final Statement inner) {
     return new make.PlantingStatement(inner);
   }
 
@@ -278,8 +276,7 @@ public enum make {
     return subject.operand(¢).toThrow();
   }
 
-   public static VariableDeclarationStatement variableDeclarationStatement( final Type t,  final String name,
-       final Expression x) {
+  public static VariableDeclarationStatement variableDeclarationStatement(final Type t, final String name, final Expression x) {
     final AST create = x.getAST();
     final VariableDeclarationFragment fragment = create.newVariableDeclarationFragment();
     fragment.setName(create.newSimpleName(name));
@@ -290,15 +287,15 @@ public enum make {
   }
 
   public interface FromAST {
-     default SimpleName identifier( final SimpleName ¢) {
+    default SimpleName identifier(final SimpleName ¢) {
       return identifier(¢.getIdentifier());
     }
-  
-     SimpleName identifier(String identifier);
-  
-     NumberLiteral literal(int i);
-  
-     StringLiteral literal(String literal);
+
+    SimpleName identifier(String identifier);
+
+    NumberLiteral literal(int i);
+
+    StringLiteral literal(String literal);
   }
 
   public static class PlantingExpression {
@@ -310,42 +307,42 @@ public enum make {
     public static boolean isStringConactingSafe(final Expression ¢) {
       return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }
-  
-    private static boolean isStringConcatingSafe( final InfixExpression ¢) {
+
+    private static boolean isStringConcatingSafe(final InfixExpression ¢) {
       return type.of(¢.getLeftOperand()) == Certain.STRING;
     }
-  
+
     private final Expression inner;
-  
+
     /** Instantiates this class, recording the expression that might be wrapped.
      * @param inner JD */
     public PlantingExpression(final Expression inner) {
       this.inner = inner;
     }
-  
+
     /** Executes conditional wrapping in parenthesis.
      * @param host the destined parent
      * @return either the expression itself, or the expression wrapped in
      *         parenthesis, depending on the relative precedences of the
      *         expression and its host. */
-     public Expression into(final ASTNode host) {
+    public Expression into(final ASTNode host) {
       return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
     }
-  
-     public Expression intoLeft(final InfixExpression host) {
+
+    public Expression intoLeft(final InfixExpression host) {
       return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
     }
-  
+
     private boolean noParenthesisRequiredIn(final ASTNode host) {
       return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
     }
-  
-     private ParenthesizedExpression parenthesize(final Expression ¢) {
+
+    private ParenthesizedExpression parenthesize(final Expression ¢) {
       final ParenthesizedExpression $ = inner.getAST().newParenthesizedExpression();
       $.setExpression(copy.of(¢));
       return $;
     }
-  
+
     /** Determines whether inner can be added to host without parenthesis
      * because host is a String concating InfixExpression and host is an infix
      * expression starting with a String
@@ -361,12 +358,12 @@ public enum make {
 
   public static class PlantingStatement {
     private final Statement inner;
-  
+
     public PlantingStatement(final Statement inner) {
       this.inner = inner;
     }
-  
-    public void intoThen( final IfStatement s) {
+
+    public void intoThen(final IfStatement s) {
       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }

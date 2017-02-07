@@ -71,6 +71,7 @@ public enum sideEffects {
     });
     return $.get();
   }
+
   public static boolean free(final IfStatement ¢) {
     return free(¢.getExpression()) && free(then(¢)) && free(elze(¢));
   }
@@ -95,8 +96,9 @@ public enum sideEffects {
   }
 
   public static boolean free(ForStatement ¢) {
-    return free(initializers(¢)) && free(¢.getExpression())  && free(updaters(¢)) && free(body(¢));
+    return free(initializers(¢)) && free(¢.getExpression()) && free(updaters(¢)) && free(body(¢));
   }
+
   public static boolean free(final Block ¢) {
     return statements(¢).stream().allMatch(sideEffects::free);
   }
@@ -132,7 +134,7 @@ public enum sideEffects {
       case INSTANCEOF_EXPRESSION:
         return sideEffects.free(left(az.instanceofExpression(¢)));
       default:
-        monitor.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + ¢.getClass().getSimpleName()));
+        monitor.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + wizard.nodeName(¢)));
         return false;
     }
   }
