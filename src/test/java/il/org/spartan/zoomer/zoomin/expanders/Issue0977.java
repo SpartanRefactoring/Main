@@ -11,44 +11,44 @@ import il.org.spartan.bloater.bloaters.*;
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
 public class Issue0977 {
-  @Test public void simpleSequencers() {
-    bloatingOf("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "case 2:\n" + "  f(2);\n" + "  break;\n" + "case 3:\n" + "  f(3);\n" + "case 4:\n"
-        + "  throw new Exception();\n" + "default:\n" + "}")
-            .gives("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "  f(2);\n" + "  break;\n" + "case 2:\n" + "  f(2);\n" + "  break;\n" + "case 3:\n"
-                + "  f(3);\n" + "case 4:\n" + "  throw new Exception();\n" + "default:\n" + "}")
-            .gives("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "  f(2);\n" + "  break;\n" + "case 2:\n" + "  f(2);\n" + "  break;\n" + "case 3:\n"
-                + "  f(3);\n" + "  throw new Exception();\n" + "case 4:\n" + "  throw new Exception();\n" + "default:\n" + "}")
-            .stays();
-  }
+ @Test public void simpleSequencers() {
+ bloatingOf("switch (x){case 1:f(1);case 2:f(2);break;case 3:f(3);case 4:"
+ + " throw new Exception();default:}")
+ .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:"
+ + " f(3);case 4:throw new Exception();default:}")
+ .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:"
+ + " f(3);throw new Exception();case 4:throw new Exception();default:}")
+ .stays();
+ }
 
-  @Test public void complexMerging() {
-    bloatingOf(
-        "switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "case 2:\n" + "  f(2);\n" + "default:\n" + "  f(3);\n" + "  throw new Exception();\n" + "}")
-            .gives("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "  f(2);\n" + "  f(3);\n" + "  throw new Exception();\n" + "case 2:\n" + "  f(2);\n"
-                + "default:\n" + "  f(3);\n" + "  throw new Exception();\n" + "}")
-            .gives("switch (x) {\n" + "case 1:\n" + "  f(1);\n" + "  f(2);\n" + "  f(3);\n" + "  throw new Exception();\n" + "case 2:\n" + "  f(2);\n"
-                + "  f(3);\n" + "  throw new Exception();\n" + "default:\n" + "  f(3);\n" + "  throw new Exception();\n" + "}")
-            .stays();
-  }
+ @Test public void complexMerging() {
+ bloatingOf(
+ "switch (x){case 1:f(1);case 2:f(2);default:f(3);throw new Exception();}")
+ .gives("switch (x){case 1:f(1);f(2);f(3);throw new Exception();case 2:f(2);"
+ + "default:f(3);throw new Exception();}")
+ .gives("switch (x){case 1:f(1);f(2);f(3);throw new Exception();case 2:f(2);"
+ + " f(3);throw new Exception();default:f(3);throw new Exception();}")
+ .stays();
+ }
 
-  // see issue #1046
-  @Test public void complexSequencer() {
-    bloatingOf("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n" + "case 2:\n"
-        + "  e();\n" + "}")//
-            .stays();
-  }
+ // see issue #1046
+ @Test public void complexSequencer() {
+ bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2:"
+ + " e();}")//
+ .stays();
+ }
 
-  // see issue #1046
-  @Test public void complexSequencerNotLast() {
-    bloatingOf("switch (a()) {\n" + "case 1:\n" + "  if (b()) {\n" + "    return c();\n" + "  } else {\n" + "    throw d();\n" + "  }\n" + "  f();\n"
-        + "case 2:\n" + "  e();\n" + "}")//
-            .stays();
-  }
+ // see issue #1046
+ @Test public void complexSequencerNotLast() {
+ bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} f();"
+ + "case 2:e();}")//
+ .stays();
+ }
 
-  // see issue #1031
-  @Test public void complexSequencerRealWorld() {
-    bloatingOf("switch (a()) {\n" + "case 1:\n" + "if (!parameters((MethodDeclaration) $).contains(¢)) {\n" + "  return Kind.method;\n" + "} else {\n"
-        + "  return Kind.parameter;\n" + "}\n" + "case 2:\n" + "  e();\n" + "}")//
-            .stays();
-  }
+ // see issue #1031
+ @Test public void complexSequencerRealWorld() {
+ bloatingOf("switch (a()){case 1:if (!parameters((MethodDeclaration) $).contains(¢)){return Kind.method;} else{"
+ + " return Kind.parameter;} case 2:e();}")//
+ .stays();
+ }
 }
