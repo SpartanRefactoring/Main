@@ -190,7 +190,7 @@ public interface Environment {
   }
 
   static Binding getHidden(final String s) {
-    for (String ¢ = parentNameScope(s); !"".equals(¢); ¢ = parentNameScope(¢)) {
+    for (String ¢ = parentNameScope(s); ¢ != null && !¢.isEmpty(); ¢ = parentNameScope(¢)) {
       final Binding $ = get(upEnv, ¢ + "." + s.substring(s.lastIndexOf(".") + 1));
       if ($ != null)
         return $;
@@ -230,8 +230,7 @@ public interface Environment {
   }
 
   static String parentNameScope(final String ¢) {
-    assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
-    return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+    return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 
   /** @return set of entries used in a given node. this includes the list of

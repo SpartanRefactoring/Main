@@ -100,7 +100,7 @@ public enum find {
     for (int i = 1; i < children1.size(); ++i) {
       final String diff = singleAtomicDifference(children1.get(i), children2.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
-      if (!$.equals(diff) && !"".equals(diff))
+      if (!$.equals(diff) && diff != null && !diff.isEmpty())
         return null;
     }
     return $;
@@ -122,7 +122,7 @@ public enum find {
     for (int i = 2; i < ns.size(); ++i) {
       final String diff = singleAtomicDifference(lisp.first(ns), ns.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
-      if (!$.equals(diff) && !"".equals(diff))
+      if (!$.equals(diff) && diff != null && !diff.isEmpty())
         return null;
     }
     return $;
@@ -132,7 +132,7 @@ public enum find {
     if (¢ == null || ¢.isEmpty())
       return false;
     final String $ = singleAtomicDifference(¢);
-    return $ != null && !"".equals($);
+    return $ != null && !$.isEmpty();
   }
 
   public static <N extends ASTNode> boolean differsInSingleExpression( final List<N> ¢) {
