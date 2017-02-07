@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since Sep 13, 2016 */
 public final class Inliner {
-   static Wrapper<ASTNode>[] wrap( final ASTNode[] ns) {
+   static Wrapper<ASTNode>[] wrap( final ASTNode... ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
     Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));

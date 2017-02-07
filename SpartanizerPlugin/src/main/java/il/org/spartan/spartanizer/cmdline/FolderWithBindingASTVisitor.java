@@ -57,7 +57,7 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
 
-  public abstract void Main(String[] args);
+  public abstract void Main(String... args);
 
   @Override public Object start(final IApplicationContext arg0) {
     ___.unused(arg0);

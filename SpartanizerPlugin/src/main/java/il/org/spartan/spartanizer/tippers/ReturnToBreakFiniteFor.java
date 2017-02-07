@@ -18,20 +18,20 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : </br>
  * Convert 
- * <code>
- * for (..) { 
- *  does(something); 
- *   return XX; 
- * } 
- *return XX; 
- * </code> to : 
- * <code>
- * for (..) { 
- *  does(something); 
- *   break; 
- * } 
- *return XX; 
- * </code>
+ * {@code
+ * for (..) {
+ *  does(something);
+ *   return XX;
+ * }
+ *return XX;
+ * } to :
+ * {@code
+ * for (..) {
+ *  does(something);
+ *   break;
+ * }
+ *return XX;
+ * }
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
 public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
