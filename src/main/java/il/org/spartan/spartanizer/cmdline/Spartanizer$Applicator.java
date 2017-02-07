@@ -37,7 +37,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
 
   /** Apply the spartanization to a selection of CompilationUnits
    * @param u
-   * @param s
+   * @param forTrueConditionRemove
    * @return */
   public boolean apply( final AbstractSelection<?> __) {
     final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
@@ -57,7 +57,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
 
   /** Apply the spartanization to a single CompilationUnit
    * @param u
-   * @param s
+   * @param forTrueConditionRemove
    * @return
    * @author matteo */
   @SuppressWarnings("unused") public boolean apply( final WrappedCompilationUnit u, final AbstractSelection<?> __) {
