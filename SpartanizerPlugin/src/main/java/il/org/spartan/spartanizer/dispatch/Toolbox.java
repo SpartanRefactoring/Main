@@ -226,7 +226,6 @@ public class Toolbox {
             null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
-            new IfDeadRemov(), //
             new IfDeadRemove(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
             new IfLastInMethodElseEndingWithEmptyReturn(), //
