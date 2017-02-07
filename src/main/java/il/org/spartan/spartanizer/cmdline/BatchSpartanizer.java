@@ -94,7 +94,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     System.out.println("");
   }
 
-  private static void parseCommandLineArgs( final String[] args) {
+  private static void parseCommandLineArgs( final String... args) {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
@@ -282,7 +282,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
   /** This method is called from outside, like in the case of
    * {@link InteractiveSpartanizer}
    * @param fileNames */
-  public static void fire(final String[] fileNames) {
+  public static void fire(final String... fileNames) {
     inputDir = fileNames[0];
     outputDir = folder;
     spartanize();

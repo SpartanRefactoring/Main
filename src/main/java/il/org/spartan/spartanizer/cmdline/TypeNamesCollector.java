@@ -67,7 +67,7 @@ public enum TypeNamesCollector {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  private static void collect(final String[] where) {
+  private static void collect(final String... where) {
     new FilesGenerator(".java").from(where).forEach(λ -> collect(λ));
   }
 }

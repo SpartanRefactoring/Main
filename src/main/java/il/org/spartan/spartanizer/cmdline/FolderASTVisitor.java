@@ -53,7 +53,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     visit(args.length != 0 ? args : defaultArguments);
   }
 
-  public static void visit(final String[] arguments) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+  public static void visit(final String... arguments) throws InstantiationException, IllegalAccessException, InvocationTargetException {
     for (final String ¢ : External.Introspector.extract(arguments, clazz))
       declaredConstructor().newInstance().visit(¢);// NANO - can't, throws
   }

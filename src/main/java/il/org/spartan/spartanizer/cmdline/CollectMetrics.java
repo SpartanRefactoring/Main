@@ -69,7 +69,7 @@ enum CollectMetrics {
     output.nl();
   }
 
-  private static void go(final String[] where) {
+  private static void go(final String... where) {
     new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
   }
 

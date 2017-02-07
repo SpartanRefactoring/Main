@@ -69,7 +69,7 @@ public final class Matcher {
     return patternMatcher(p, s, new Option[0]);
   }
 
-   public static Matcher patternMatcher( final String p,  final String s, final Option[] _options) {
+   public static Matcher patternMatcher( final String p,  final String s, final Option... _options) {
     return new Matcher(() -> extractStatementIfOne(ast(reformat(p))), s, _options);
   }
 
@@ -77,7 +77,7 @@ public final class Matcher {
     return blockMatcher(p, s, new Option[0]);
   }
 
-   public static Matcher blockMatcher( final String p,  final String s, final Option[] _options) {
+   public static Matcher blockMatcher( final String p,  final String s, final Option... _options) {
     return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
   }
 
