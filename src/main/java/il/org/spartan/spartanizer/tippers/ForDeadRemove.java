@@ -21,8 +21,11 @@ public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
     return "remove :" + ¢;
   }
 
+  @Override protected boolean prerequisite(ForStatement ¢) {
+    return sideEffects.free(¢); 
+  }
+
   @Override  public ASTNode replacement( final ForStatement ¢) {
-    return ¢ == null || !sideEffects.free(¢.getExpression()) || !sideEffects.free(initializers(¢)) || !sideEffects.free(updaters(¢))
-        || !sideEffects.free(¢.getBody()) ? null : ¢.getAST().newBlock();
+    return ¢.getAST().newBlock();
   }
 }
