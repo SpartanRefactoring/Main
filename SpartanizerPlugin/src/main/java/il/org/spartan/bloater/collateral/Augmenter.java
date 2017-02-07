@@ -115,7 +115,7 @@ public class Augmenter implements Application {
 
   /** Checks whether the local eclipse machine acknowledge the Spartan Library.
    * TODO Ori Roth: check project is UTF-8 (or higher?)
-   * @param s JD
+   * @param forTrueConditionRemove JD
    * @return true iff service is available */
   private static boolean checkServiceAvailableBeforeCalculation() {
     return LibrariesManagement.libraryExists();
