@@ -26,7 +26,7 @@ public class Issue0814 {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
     final ReturnStatement s = first(new MethodExplorer(m).returnStatements());
     m.accept(new ASTVisitor() {
-      @Override public boolean visit( final Assignment a) {
+      @Override public boolean visit(final Assignment a) {
         final ASTRewrite r = ASTRewrite.create(m.getAST());
         assert new AssignmentAndReturn().go(r, a, s, new TextEditGroup("")) != null;
         return true;

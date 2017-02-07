@@ -9,7 +9,6 @@ import org.eclipse.core.runtime.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** A command handler which toggles the spartanization nature
  * @see IHandler
  * @see AbstractHandler
@@ -17,7 +16,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
 public final class TipsOnOffToggle extends AbstractHandler {
-  @SuppressWarnings("boxing") private static void disableNature( final IProject p) throws CoreException {
+  @SuppressWarnings("boxing") private static void disableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
     for (final Integer i : range.from(0).to(natures.length))
@@ -32,13 +31,13 @@ public final class TipsOnOffToggle extends AbstractHandler {
       }
   }
 
-  public static void enableNature( final IProject p) throws CoreException {
+  public static void enableNature(final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     description.setNatureIds(append(description.getNatureIds(), Nature.NATURE_ID));
     p.setDescription(description, null);
   }
 
-  private static void toggleNature( final IProject p, final boolean state) throws CoreException {
+  private static void toggleNature(final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when
     // it's
     // already associated with the project, when asked to add the nature
@@ -56,7 +55,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
       return null;
     try {
       toggleNature(p, !p.hasNature(Nature.NATURE_ID));
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return null;

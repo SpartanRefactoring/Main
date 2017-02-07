@@ -17,8 +17,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** convert : {@code
  * array[i];
  * ++i;
@@ -33,9 +31,9 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return "Inline the prefix expression after the access to the array";
   }
 
-  @Override public Tip tip( final ArrayAccess a) {
+  @Override public Tip tip(final ArrayAccess a) {
     return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), a, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final PostfixExpression newpost = a.getAST().newPostfixExpression();
         newpost.setOperand(copy.of(a.getIndex()));
         newpost.setOperator(Operator.INCREMENT);
@@ -45,7 +43,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     };
   }
 
-  private static boolean checkInput( final ArrayAccess a) {
+  private static boolean checkInput(final ArrayAccess a) {
     if (a == null || extract.nextPrefix(a) == null || extract.nextPrefix(a).getOperand() == null
         || !wizard.same(extract.nextPrefix(a).getOperand(), a.getIndex()))
       return true;
@@ -62,7 +60,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return $.inner != 1;
   }
 
-  protected static boolean prerequisite( final ArrayAccess a) {
+  protected static boolean prerequisite(final ArrayAccess a) {
     if (a == null)
       return false;
     final SimpleName $ = az.simpleName(a.getIndex());

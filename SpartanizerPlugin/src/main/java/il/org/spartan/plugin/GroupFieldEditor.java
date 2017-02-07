@@ -13,8 +13,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-
-
 /** A {@link FieldEditor} designed to store multiple controls within a group
  * panel widget, to be used in conjunction with an
  * {@link FieldEditorPreferencePage} instance.
@@ -33,7 +31,7 @@ public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private int numColumns;
   private final List<FieldEditor> members = new ArrayList<>();
-   private final Group group;
+  private final Group group;
   private final Composite parent;
   private boolean initialized;
 
@@ -42,7 +40,7 @@ public final class GroupFieldEditor extends FieldEditor {
    *        no label, pass {@code null}
    * @param fieldEditorParent the widget's parent, usually
    *        {@link FieldEditorPreferencePage#getFieldEditorParent()} */
-  public GroupFieldEditor( final String labelText, final Composite fieldEditorParent) {
+  public GroupFieldEditor(final String labelText, final Composite fieldEditorParent) {
     final String title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
     numColumns = 0;
@@ -61,7 +59,7 @@ public final class GroupFieldEditor extends FieldEditor {
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
    * @return parent {@link Composite} object */
-   public Composite getFieldEditor() {
+  public Composite getFieldEditor() {
     return group;
   }
 
@@ -108,7 +106,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   /* (non-Javadoc) Method declared on FieldEditor. */
-  protected void doFillintoGrid( final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
+  protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
     final Int c = new Int(numColumns);
     if (members == null || members.isEmpty())
       return;

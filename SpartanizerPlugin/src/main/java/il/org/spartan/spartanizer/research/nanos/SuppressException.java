@@ -12,8 +12,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** Catch without body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
@@ -29,11 +27,11 @@ public final class SuppressException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  @Override  public Tip pattern(final CatchClause ¢) {
+  @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Exception;
   }
 

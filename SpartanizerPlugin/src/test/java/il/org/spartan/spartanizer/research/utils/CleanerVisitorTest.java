@@ -7,7 +7,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,14 +18,14 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
   private class ASTNodeWrapper {
-     public final ArrayList<ASTNode> inner;
+    public final ArrayList<ASTNode> inner;
 
     ASTNodeWrapper() {
       inner = new ArrayList<>();
     }
   }
 
-   private static ASTNode createAST(final String ¢) {
+  private static ASTNode createAST(final String ¢) {
     return wizard.ast(¢);
   }
 
@@ -38,7 +37,7 @@ public class CleanerVisitorTest {
     return λ -> λ instanceof Javadoc;
   }
 
-   private ASTNodeWrapper getChildren( final Predicate<ASTNode> p,  final ASTNode n) {
+  private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
     final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {

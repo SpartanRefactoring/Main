@@ -9,24 +9,23 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-
 /** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {
-   static Expression simplify(final InfixExpression ¢) {
+  static Expression simplify(final InfixExpression ¢) {
     return build(new FactorsCollector(¢));
   }
 
-   static Expression build(final FactorsCollector ¢) {
+  static Expression build(final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
 
-   static Expression build(final List<Expression> multipliers, final List<Expression> dividers) {
+  static Expression build(final List<Expression> multipliers, final List<Expression> dividers) {
     return buildDividers(buildMultipliers(multipliers), dividers);
   }
 
-   static Expression buildDividers(final Expression first, final List<Expression> rest) {
+  static Expression buildDividers(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
     if (rest.isEmpty())

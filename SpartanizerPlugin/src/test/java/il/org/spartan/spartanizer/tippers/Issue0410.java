@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.cmdline.GuessedContext.*;
 
-
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -27,7 +26,7 @@ public class Issue0410 {
     similar(trivia.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar( final String s1,  final String s2) {
+  private void similar(final String s1, final String s2) {
     azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
   }
 }

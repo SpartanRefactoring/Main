@@ -12,8 +12,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
@@ -28,9 +26,9 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
-  @Override  public Tip pattern( final InstanceofExpression ¢) {
+  @Override public Tip pattern(final InstanceofExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
         if (!izMethodExist(¢))
           addizMethod(¢, r, g);
@@ -38,7 +36,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     };
   }
 
-   static String izMethodName(final InstanceofExpression ¢) {
+  static String izMethodName(final InstanceofExpression ¢) {
     return "iz" + type(¢);
   }
 
@@ -51,7 +49,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return "boolean".equals(returnType + "");
   }
 
-  static void addizMethod(final InstanceofExpression ¢,  final ASTRewrite r, final TextEditGroup g) {
+  static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     wizard.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
@@ -59,13 +57,13 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
 
-   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
+  private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // TODO: Marco maybe in the future change to iz.java in package which will
     // be created automatically...
     return yieldAncestors.untilContainingType().from(¢);
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
     return "replace instanceof with iz()";
   }
 }

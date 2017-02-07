@@ -12,8 +12,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** Catch(...) { return;}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
@@ -30,12 +28,10 @@ public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  
   @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
-  
   @Override public Category category() {
     return Category.Exception;
   }

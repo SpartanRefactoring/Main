@@ -5,8 +5,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 
-
-
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.
  * @author Yossi Gil
@@ -24,7 +22,7 @@ public class TableTippers {
             if (¢ != null)
               r//
                   .col("Category", ¢.tipperGroup())//
-                  .col("Tipper", ¢.getClass().getSimpleName())//
+                  .col("Tipper", Toolbox.name(¢))//
                   .col("Node Type Number", i) //
                   .col("Node Class", Toolbox.intToClassName(i))//
                   .col("Actual class", wizard.nodeName(¢.myActualOperandsClass()))//

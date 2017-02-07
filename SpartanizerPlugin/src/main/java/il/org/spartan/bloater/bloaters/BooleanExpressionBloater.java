@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Expand Boolean Expressions : toList
- * Expand : {@code
+/** Expand Boolean Expressions : toList Expand : {@code
  * x && y()
  * } To : {@code
  *  boolean a = x;

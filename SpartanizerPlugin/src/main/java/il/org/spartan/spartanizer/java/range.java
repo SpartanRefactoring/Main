@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -9,45 +7,45 @@ import java.util.stream.*;
  * @author Dor Ma'ayan
  * @since 26-11-2016 */
 public class range {
-   public static <T> RangeIterator<?> of( final T[] ¢) {
+  public static <T> RangeIterator<?> of(final T[] ¢) {
     return from(0).to(¢.length);
   }
 
-   public static BeforeTo from(final int ¢) {
+  public static BeforeTo from(final int ¢) {
     return makeFrom(¢).new BeforeTo();
   }
 
-   public static RangeIterator<?> infinite(final int ¢) {
+  public static RangeIterator<?> infinite(final int ¢) {
     return from(¢).to(¢).step(0).inclusive();
   }
 
-   public static Infinite infinite() {
+  public static Infinite infinite() {
     return infiniteFrom(0, 1);
   }
 
-   static Infinite infiniteFrom(final int ¢, final int ¢2) {
+  static Infinite infiniteFrom(final int ¢, final int ¢2) {
     final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
     $.step(¢2);
     return $;
   }
 
-   public static RangeIterator<?> naturals() {
+  public static RangeIterator<?> naturals() {
     return from(0).to(-1).step(1);
   }
 
-   public static RangeIterator<?> numerals() {
+  public static RangeIterator<?> numerals() {
     return from(1).to(-1).step(1);
   }
 
-   public static RangeIterator<?> odds() {
+  public static RangeIterator<?> odds() {
     return from(1).to(-1).step(2);
   }
 
-   public static AfterTo to(final int to) {
+  public static AfterTo to(final int to) {
     return makeTo(to).new AfterTo();
   }
 
-   private static range makeFrom(final int ¢) {
+  private static range makeFrom(final int ¢) {
     return new range() {
       {
         from = ¢;
@@ -55,7 +53,7 @@ public class range {
     };
   }
 
-   private static range makeTo(final int ¢) {
+  private static range makeTo(final int ¢) {
     return new range() {
       {
         to = ¢;
@@ -70,83 +68,83 @@ public class range {
   boolean infinite;
 
   public class AfterTo extends RangeIterator<AfterTo> {
-     public Stream<Integer> stream() {
+    public Stream<Integer> stream() {
       return StreamSupport.stream(spliterator(), false);
     }
 
-     public AfterTo from(final int ¢) {
+    public AfterTo from(final int ¢) {
       to = ¢;
       return this;
     }
 
-     public AfterTo step(final int ¢) {
+    public AfterTo step(final int ¢) {
       step = ¢;
       return this;
     }
 
-     public Infinite infinite() {
+    public Infinite infinite() {
       return range.infiniteFrom(from, step);
     }
 
-    @Override  AfterTo self() {
+    @Override AfterTo self() {
       return this;
     }
   }
 
   public class BeforeTo extends RangeIterator<BeforeTo> {
-     public AfterTo step(final int ¢) {
+    public AfterTo step(final int ¢) {
       step = ¢;
       return new AfterTo();
     }
 
-     public AfterTo to(final int ¢) {
+    public AfterTo to(final int ¢) {
       to = ¢;
       return new AfterTo();
     }
 
-     public Infinite infinite() {
+    public Infinite infinite() {
       return range.infiniteFrom(from, step);
     }
 
-    @Override  BeforeTo self() {
+    @Override BeforeTo self() {
       return this;
     }
   }
 
   public class Infinite extends RangeIterator<Infinite> {
-     public Infinite step(final int ¢) {
+    public Infinite step(final int ¢) {
       step = ¢;
       return this;
     }
 
-     public Infinite from(final int ¢) {
+    public Infinite from(final int ¢) {
       from = ¢;
       step = 1;
       return this;
     }
 
-    @Override  Infinite self() {
+    @Override Infinite self() {
       return this;
     }
   }
 
   abstract class RangeIterator<Self extends RangeIterator<Self>> implements Iterable<Integer> {
-     public final Self exclusive() {
+    public final Self exclusive() {
       inclusive = false;
       return self();
     }
 
-     public final Self inclusive() {
+    public final Self inclusive() {
       inclusive = true;
       return self();
     }
 
-     public final Self infiniteRange() {
+    public final Self infiniteRange() {
       infinite = true;
       return self();
     }
 
-    @Override  public Iterator<Integer> iterator() {
+    @Override public Iterator<Integer> iterator() {
       return new Iterator<Integer>() {
         int next = from;
 
@@ -164,6 +162,6 @@ public class range {
       };
     }
 
-     abstract Self self();
+    abstract Self self();
   }
 }
