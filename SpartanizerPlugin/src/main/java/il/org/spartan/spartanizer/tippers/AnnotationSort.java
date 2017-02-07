@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
+import static java.util.stream.Collectors.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -64,7 +64,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
   }
 
   private static List<? extends IExtendedModifier> sort( final List<? extends IExtendedModifier> ¢) {
-    return ¢.stream().sorted(comp).collect(Collectors.toList());
+    return ¢.stream().sorted(comp).collect(toList());
   }
 
   @Override  public Tip tip( final N n) {
