@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * else
  *   throw c;
  * } into {@code
- * throw x? b : c
+ * throw x ? b : c
  * }
  * @author Yossi Gil
  * @since 2015-07-29 */

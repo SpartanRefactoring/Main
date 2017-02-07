@@ -12,13 +12,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * them) if and only if it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
-public class RemoveRedundentWhile extends ReplaceCurrentNode<WhileStatement>//
+public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.EmptyCycles {
   @Override  public String description(final WhileStatement ¢) {
     return "Remove :" + ¢;
   }
 
-  @Override  public ASTNode replacement( final WhileStatement ¢) {
+  @Override  public ASTNode replacement(final WhileStatement ¢) {
     return ¢ == null || !sideEffects.free(¢.getExpression()) || haz.sideEffects(¢.getBody()) ? null : ¢.getAST().newBlock();
   }
 }
