@@ -422,7 +422,7 @@ public class Selection extends AbstractSelection<Selection> {
      private static Selection by( final IPackageFragment $) {
       try {
         return $ == null ? empty()
-            : Selection.of($.getCompilationUnits()).setName(!"".equals($.getElementName()) ? $.getElementName() : DEFAULT_PACKAGE_NAME);
+            : Selection.of($.getCompilationUnits()).setName($.getElementName() != null && !$.getElementName().isEmpty() ? $.getElementName() : DEFAULT_PACKAGE_NAME);
       } catch ( final JavaModelException ¢) {
         monitor.log(¢);
         return empty();

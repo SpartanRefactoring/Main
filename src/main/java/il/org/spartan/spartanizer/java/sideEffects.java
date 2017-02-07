@@ -94,7 +94,7 @@ public enum sideEffects {
                                 : iz.block(¢) ? free(az.block(¢)) : false;
   }
 
-  private static boolean free(ForStatement ¢) {
+  public static boolean free(ForStatement ¢) {
     return free(initializers(¢)) && free(¢.getExpression())  && free(updaters(¢)) && free(body(¢));
   }
   public static boolean free(final Block ¢) {

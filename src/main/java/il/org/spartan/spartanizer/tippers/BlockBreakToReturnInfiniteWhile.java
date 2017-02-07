@@ -24,12 +24,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  *return XX;
  * } to :
- * <code> while (true) { 
- * doSomething(); 
- * if(done()) 
- * return XX; 
- * } 
- * </code>
+ * {@code while (true) {
+ * doSomething();
+ * if(done())
+ * return XX;
+ * }
+ * }
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement>//
