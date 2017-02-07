@@ -17,11 +17,11 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class haveTest {
   @Test public void booleanFalseLiteralTestFalse() {
-    assert !have.falseLiteral(ExpressionListMaker(new String[] { "true" }));
+    assert !have.falseLiteral(ExpressionListMaker("true"));
   }
 
   @Test public void booleanFalseLiteralTestTrue() {
-    assert have.falseLiteral(ExpressionListMaker(new String[] { "false" }));
+    assert have.falseLiteral(ExpressionListMaker("false"));
   }
 
   @Test public void booleanLiteralOneExpressionFail() {
@@ -41,31 +41,31 @@ public final class haveTest {
   }
 
   @Test public void booleanLiteralTestFalse() {
-    assert !have.booleanLiteral(ExpressionListMaker(new String[] { "1==1", "2==2" }));
+    assert !have.booleanLiteral(ExpressionListMaker("1==1", "2==2"));
   }
 
   @Test public void booleanLiteralTestTrue() {
-    assert have.booleanLiteral(ExpressionListMaker(new String[] { "1==1", "2==2", "true" }));
+    assert have.booleanLiteral(ExpressionListMaker("1==1", "2==2", "true"));
   }
 
   @Test public void booleanTrueLiteralTestFalse() {
-    assert !have.trueLiteral(ExpressionListMaker(new String[] { "false" }));
+    assert !have.trueLiteral(ExpressionListMaker("false"));
   }
 
   @Test public void booleanTrueLiteralTestTrue() {
-    assert have.trueLiteral(ExpressionListMaker(new String[] { "true" }));
+    assert have.trueLiteral(ExpressionListMaker("true"));
   }
 
-  public List<Expression> ExpressionListMaker(final String[] exps) {
+  public List<Expression> ExpressionListMaker(final String... exps) {
     return Stream.of(exps).map(into::e).collect(Collectors.toList());
   }
 
   @Test public void hasLiteralTestFalse() {
-    assert !have.literal(ExpressionListMaker(new String[] { "1==2" }));
+    assert !have.literal(ExpressionListMaker("1==2"));
   }
 
   @Test public void hasLiteralTestTrue() {
-    assert have.literal(ExpressionListMaker(new String[] { "2" }));
+    assert have.literal(ExpressionListMaker("2"));
   }
 
   @Test public void literalFailForNumericalLit2() {

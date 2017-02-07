@@ -37,7 +37,7 @@ public class Generic$Applicator {
     selectedNodeTypes = setAllNodeTypes();
   }
 
-  public Generic$Applicator( final String[] classes) {
+  public Generic$Applicator( final String... classes) {
     System.out.println("classes:" + Arrays.toString(classes));
     if (classes == null) {
       selectedNodeTypes = setAllNodeTypes();
@@ -48,7 +48,7 @@ public class Generic$Applicator {
     }
   }
 
-  public Generic$Applicator(final String[] classes,  final String[] tipperGroups) {
+  public Generic$Applicator(final String[] classes,  final String... tipperGroups) {
     this(classes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }

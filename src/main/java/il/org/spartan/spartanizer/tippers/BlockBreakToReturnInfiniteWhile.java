@@ -16,14 +16,14 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert Infinite loops with return sideEffects to shorter ones : </br>
  * Convert 
- * <code>
- * while (true) { 
- * doSomething(); 
- *    if(done()) 
- *    break; 
- * } 
- *return XX; 
- * </code> to : 
+ * {@code
+ * while (true) {
+ * doSomething();
+ *    if(done())
+ *    break;
+ * }
+ *return XX;
+ * } to :
  * <code> while (true) { 
  * doSomething(); 
  * if(done()) 

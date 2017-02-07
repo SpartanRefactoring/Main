@@ -42,7 +42,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
     return $;
   }
 
-  public static int rindex( final int[] ranks) {
+  public static int rindex( final int... ranks) {
     Arrays.sort(ranks);
     int $ = 0;
     for (int ¢ = 0; ¢ < ranks.length; ++¢)

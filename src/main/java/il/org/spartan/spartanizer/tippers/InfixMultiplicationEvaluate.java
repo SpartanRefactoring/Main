@@ -16,14 +16,14 @@ import il.org.spartan.spartanizer.utils.*;
 /** Evaluate the multiplication of numbers according to the following rules :
  * </br>
  * </br>
- * <code>
- * int * int --> int 
- * double * double --> double 
- * long * long --> long 
- * int * double --> double 
- * int * long --> long 
- * long * double --> double 
- * </code>
+ * {@code
+ * int * int --> int
+ * double * double --> double
+ * long * long --> long
+ * int * double --> double
+ * int * long --> long
+ * long * double --> double
+ * }
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
