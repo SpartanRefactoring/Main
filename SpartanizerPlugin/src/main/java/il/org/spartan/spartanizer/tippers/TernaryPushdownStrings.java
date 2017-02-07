@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.utils.*;
 
 
 
-/** convert</br>
+/** converttoList
  * {@code polite?"Eat your meal.":"Eat your meal, please"},
- * {@code polite?"thanks for the meal":"I hated the meal"} </br>
- * into </br>
+ * {@code polite?"thanks for the meal":"I hated the meal"} toList
+ * into toList
  * {@code "Eat your meal"+(polite?".":", please")},
- * {@code (polite?"thanks for":"I hated")+"the meal"}</br>
+ * {@code (polite?"thanks for":"I hated")+"the meal"}toList
  * Will not separate words, for example {@code f() ? "True" : "False" } will not
  * be changed
  * @author Dor Ma'ayan

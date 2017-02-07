@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -22,7 +20,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since 2016-09-12 */
 public enum haz {
   ;
-  public static boolean annotation( final VariableDeclarationFragment ¢) {
+  public static boolean annotation(final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }
 
@@ -32,18 +30,18 @@ public enum haz {
 
   /** @param ¢ JD
    * @return */
-  public static boolean anyStatements( final MethodDeclaration ¢) {
+  public static boolean anyStatements(final MethodDeclaration ¢) {
     return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
   }
 
-  public static boolean binding( final ASTNode ¢) {
+  public static boolean binding(final ASTNode ¢) {
     return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
 
   /** Determines whether the method's return type is boolean.
    * @param ¢ method
    * @return */
-  public static boolean booleanReturnType( final MethodDeclaration ¢) {
+  public static boolean booleanReturnType(final MethodDeclaration ¢) {
     return ¢ != null && step.returnType(¢) != null && iz.booleanType(step.returnType(¢));
   }
 
@@ -56,7 +54,7 @@ public enum haz {
    * @param ¢ JD
    * @return {@code true } iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
-  @SuppressWarnings("boxing") public static boolean ContinueStatement( final ASTNode ¢) {
+  @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
     return ¢ != null
         && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
@@ -65,33 +63,33 @@ public enum haz {
     return !collect.usesOf("$").inside(¢).isEmpty();
   }
 
-  public static boolean dollar( final List<SimpleName> ns) {
+  public static boolean dollar(final List<SimpleName> ns) {
     return ns.stream().anyMatch(λ -> "$".equals(identifier(λ)));
   }
 
   /** @param ¢ JD
    * @return */
-  public static boolean expression( final MethodInvocation ¢) {
+  public static boolean expression(final MethodInvocation ¢) {
     return ¢ != null && step.expression(¢) != null;
   }
 
-  public static boolean final¢( final List<IExtendedModifier> ms) {
+  public static boolean final¢(final List<IExtendedModifier> ms) {
     return ms.stream().anyMatch(λ -> IExtendedModifiersRank.find(λ) == IExtendedModifiersRank.FINAL);
   }
 
-  static boolean hasAnnotation( final List<IExtendedModifier> ¢) {
+  static boolean hasAnnotation(final List<IExtendedModifier> ¢) {
     return ¢.stream().anyMatch(IExtendedModifier::isAnnotation);
   }
 
-  public static boolean hasNoModifiers( final BodyDeclaration ¢) {
+  public static boolean hasNoModifiers(final BodyDeclaration ¢) {
     return !¢.modifiers().isEmpty();
   }
 
-  public static boolean hidings( final List<Statement> ss) {
+  public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
       final Set<String> dictionary = new HashSet<>();
 
-      boolean ¢( final CatchClause ¢) {
+      boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
       }
 
@@ -99,7 +97,7 @@ public enum haz {
         return ¢(step.initializers(¢));
       }
 
-      boolean ¢( final List<Expression> xs) {
+      boolean ¢(final List<Expression> xs) {
         return xs.stream().anyMatch(λ -> iz.variableDeclarationExpression(λ) && ¢(az.variableDeclarationExpression(λ)));
       }
 
@@ -140,19 +138,19 @@ public enum haz {
         return ¢¢¢¢(fragments(¢));
       }
 
-      boolean ¢¢( final List<CatchClause> cs) {
+      boolean ¢¢(final List<CatchClause> cs) {
         return cs.stream().anyMatch(this::¢);
       }
 
-      boolean ¢¢¢( final List<VariableDeclarationExpression> xs) {
+      boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
         return xs.stream().anyMatch(this::¢);
       }
 
-      boolean ¢¢¢¢( final List<VariableDeclarationFragment> fs) {
+      boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
         return fs.stream().anyMatch(this::¢);
       }
 
-      @Override public boolean test( final List<Statement> ¢¢) {
+      @Override public boolean test(final List<Statement> ¢¢) {
         return ¢¢.stream().anyMatch(this::¢);
       }
     }.test(ss);
@@ -164,13 +162,17 @@ public enum haz {
     return step.methods(¢) != null && !step.methods(¢).isEmpty();
   }
 
+  public static boolean sideEffects(final Expression ¢) {
+    return ¢ != null && !sideEffects.free(¢);
+  }
+
+  public static boolean sideEffects(final IfStatement ¢) {
+    return sideEffects(¢.getExpression()) || sideEffects(then(¢)) || sideEffects(elze(¢));
+  }
+
   public static boolean sideEffects(final Statement ¢) {
     final ExpressionStatement $ = az.expressionStatement(¢);
     return $ != null && !sideEffects.free($.getExpression());
-  }
-
-  public static boolean sideEffects( final Expression ¢) {
-    return ¢ != null && !sideEffects.free(¢);
   }
 
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
@@ -182,14 +184,14 @@ public enum haz {
     return false;
   }
 
-  public static boolean variableDefinition( final ASTNode n) {
+  public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
-      boolean continue¢( final List<VariableDeclarationFragment> fs) {
+      boolean continue¢(final List<VariableDeclarationFragment> fs) {
         return fs.stream().anyMatch(λ -> continue¢(step.name(λ)));
       }
 
-      boolean continue¢( final SimpleName ¢) {
+      boolean continue¢(final SimpleName ¢) {
         if (iz.identifier("$", ¢))
           return false;
         $.set(Boolean.TRUE);
@@ -204,7 +206,7 @@ public enum haz {
         return continue¢(fragments(node));
       }
 
-      @Override public boolean visit( final SingleVariableDeclaration node) {
+      @Override public boolean visit(final SingleVariableDeclaration node) {
         return continue¢(node.getName());
       }
 
@@ -221,5 +223,9 @@ public enum haz {
       }
     });
     return $.get().booleanValue();
+  }
+
+  public static boolean sideEffects(final WhileStatement ¢) {
+    return haz.sideEffects(¢.getExpression()) || haz.sideEffects(¢.getBody());
   }
 }
