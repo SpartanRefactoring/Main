@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 
 
-/** Eliminate conditional continue before last statement in a for loop </br>
+/** Eliminate conditional continue before last statement in a for loop toList
  * Issue #1014
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */

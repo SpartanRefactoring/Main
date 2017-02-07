@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 
 /** Simplify if statements as much as possible (or remove them or parts of them)
- * if and only if </br>
+ * if and only if toList
  * it doesn'tipper have any side-effect.
  * @author Dor Ma'ayan
  * @since 2016-09-26 */

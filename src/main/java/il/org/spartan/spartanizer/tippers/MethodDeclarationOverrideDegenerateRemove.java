@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Removes overriding methods that only call their counterpart in the parent
  * class, e.g., {@code @Override void foo(){super.foo();}}
+ * <p>
+ * Do not activate this class without checking with me (yg) or Ori Marcovitch. It interferes with nano detection.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2016-04-06 */
 public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTipper<MethodDeclaration>//

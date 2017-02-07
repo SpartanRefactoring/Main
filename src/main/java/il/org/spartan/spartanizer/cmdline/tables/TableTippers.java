@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import org.eclipse.jdt.core.dom.*;
-
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
@@ -27,23 +26,11 @@ public class TableTippers {
                   .col("Category", ¢.tipperGroup())//
                   .col("Tipper", ¢.getClass().getSimpleName())//
                   .col("Node Type Number", i) //
-                  .col("Node Class", intToClassName(i))//
-                  .col("Actual class", name(¢.myActualOperandsClass()))//
-                  .col("Abstract class", name(¢.myAbstractOperandsClass())) //
+                  .col("Node Class", Toolbox.intToClassName(i))//
+                  .col("Actual class", wizard.nodeName(¢.myActualOperandsClass()))//
+                  .col("Abstract class", wizard.nodeName(¢.myAbstractOperandsClass())) //
                   .nl();
       System.err.println("Output found in " + r.description());
     }
-  }
-
-   protected static String intToClassName(final int $) {
-    try {
-      return name(ASTNode.nodeClassForType($));
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return "???";
-    }
-  }
-
-   protected static String name( final Class<?> ¢) {
-    return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }
