@@ -7,13 +7,11 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
-
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch */
 public enum ASTutils {
   ;
-  public static ASTNode extractASTNode( final String s, final CompilationUnit u) {
+  public static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -29,7 +27,7 @@ public enum ASTutils {
     return null;
   }
 
-  public static String extractCode( final String s,  final Document d) {
+  public static String extractCode(final String s, final Document d) {
     switch (GuessedContext.find(s)) {
       case EXPRESSION_LOOK_ALIKE:
         return d.get().substring(23, d.get().length() - 3);
@@ -42,7 +40,7 @@ public enum ASTutils {
     }
   }
 
-  public static String wrapCode( final String ¢) {
+  public static String wrapCode(final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -59,14 +57,14 @@ public enum ASTutils {
     }
   }
 
-   private static <N extends ASTNode> N findSecond( final Class<?> c,  final ASTNode n) {
+  private static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;
     final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
     final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor() {
-      @Override public boolean preVisit2( final ASTNode ¢) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))

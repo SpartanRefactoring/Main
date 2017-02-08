@@ -9,25 +9,24 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
  * @since 2016 */
 public enum TermsReorganizer {
   ;
-   public static Expression simplify(final InfixExpression ¢) {
+  public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
 
-   private static Expression build(final List<Expression> plus, final List<Expression> minus) {
+  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-   private static Expression build(final TermsCollector ¢) {
+  private static Expression build(final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
-   private static Expression buildMinus(final Expression first, final List<Expression> rest) {
+  private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     if (rest.isEmpty())

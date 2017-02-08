@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
  * f(); } </code> provided that this <code><b>if</b></code> statement is the
  * last statement in a method.
@@ -20,11 +19,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
-  @Override  public String description( final IfStatement ¢) {
+  @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 
-  @Override protected ASTRewrite go( final ASTRewrite $,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
     final Statement then = then(s);

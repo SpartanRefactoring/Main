@@ -13,12 +13,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** @nano last index in collection, lisp style
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-20 */
-public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
+public final class LastIndex extends NanoPatternTipper<InfixExpression> {
   private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
     static final long serialVersionUID = 1L;
     {
@@ -31,11 +29,11 @@ public final class LispLastIndex extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 
-  @Override  public Tip pattern(final InfixExpression ¢) {
+  @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Functional;
   }
 

@@ -180,7 +180,7 @@ final class EnvironmentVisitor extends ASTVisitor {
    *
    * If no match is found, return null. */
   Binding getHidden(final String ¢) {
-    for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+    for (String s = parentNameScope(¢); s != null && !s.isEmpty(); s = parentNameScope(s)) {
       final Binding i = get($, s + "." + ¢.substring(¢.lastIndexOf(".") + 1));
       if (i != null)
         return i;
@@ -201,8 +201,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   static String parentNameScope(final String ¢) {
-    assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
-    return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+    return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 
   void restoreScopeName() {

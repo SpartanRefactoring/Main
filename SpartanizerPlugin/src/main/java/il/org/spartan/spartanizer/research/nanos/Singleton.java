@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** collection.size() == 1
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-28 */
@@ -28,7 +26,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final InfixExpression ¢) {
+  @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -48,7 +46,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override  public NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

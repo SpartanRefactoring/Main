@@ -13,15 +13,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code int a = 3; while(Panic) { ++OS.is.in.danger; } } to
  * {@code for(int a = 3; Panic;) { ++OS.is.in.danger; } }
  * @author Alex Kopzon
  * @since 2016 */
 public final class FragmentInitializerWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
-   private static ForStatement buildForStatement(final VariableDeclarationFragment f,  final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
@@ -33,7 +31,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return fragmentsUseFitting(s, ¢);
   }
 
-   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
+  private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
 
@@ -44,11 +42,11 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-   private static Expression Initializers(final VariableDeclarationFragment ¢) {
+  private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-   private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
@@ -56,7 +54,8 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     // TODO Dor: use extract.core
     return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from) ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+            : iz.parenthesizedExpression(from)
+                ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Determines whether a specific SimpleName was used in a
@@ -69,12 +68,12 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
-  @Override  public String description(final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,
-       final Statement nextStatement, final TextEditGroup g,  final ExclusionManager exclude) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
+      final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement vds = parent(f);

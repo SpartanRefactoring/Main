@@ -1,8 +1,6 @@
 package il.org.spartan.plugin;
-
 // TODO: Matteo: check this out, its Yossi's example for a configurable object.
 // See what you can get out of it.
-
 
 /** Demo of recommended use of {@link Listener.S} Copy the code, changing the
  * name {@link ConfigurableObjectTemplate} to whatever you need. provide.

@@ -13,11 +13,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert <code>
  * ++i; --i;
- *
- * <code>
- * to
- *
- * <code>
+</code> to * <code>
  * i+=1; i-=1;
  *
  * <code>

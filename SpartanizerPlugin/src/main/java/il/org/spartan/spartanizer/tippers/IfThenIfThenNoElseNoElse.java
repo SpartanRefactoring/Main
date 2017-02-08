@@ -15,8 +15,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code
  * if (x)
  *   if (a)
@@ -29,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
-  static void collapse( final IfStatement s,  final ASTRewrite r, final TextEditGroup g) {
+  static void collapse(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     final IfStatement then = az.ifStatement(extract.singleThen(s));
     r.replace(s.getExpression(), subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND), g);
     r.replace(then, copy.of(then(then)), g);
@@ -39,11 +37,11 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     return "Merge conditionals of nested if staement";
   }
 
-  @Override  public Tip tip( final IfStatement ¢) {
+  @Override public Tip tip(final IfStatement ¢) {
     return tip(¢, null);
   }
 
-  @Override public Tip tip( final IfStatement $,  final ExclusionManager exclude) {
+  @Override public Tip tip(final IfStatement $, final ExclusionManager exclude) {
     if (!iz.vacuousElse($))
       return null;
     final IfStatement then = az.ifStatement(extract.singleThen($));
@@ -52,7 +50,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     if (exclude != null)
       exclude.exclude(then);
     return new Tip(description($), $, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         collapse(Tippers.blockIfNeeded($, r, g), r, g);
       }
     };

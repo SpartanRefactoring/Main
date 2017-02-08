@@ -15,8 +15,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code switch (x) { case a: (commands) break; default: (other
  * commands) } } into {@code if(x == a) { (commands) } else { (other commands) }
  * } . Tested in {@link Issue0916}
@@ -24,11 +22,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
-  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
 
-  @Override  public ASTNode replacement( final SwitchStatement s) {
+  @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> l = switchBranch.intoBranches(s);
     if (l.size() != 2)
       return null;
@@ -50,7 +48,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return $;
   }
 
-   private static InfixExpression makeFrom(final SwitchStatement s,  final List<SwitchCase> cs) {
+  private static InfixExpression makeFrom(final SwitchStatement s, final List<SwitchCase> cs) {
     InfixExpression $ = null;
     for (final SwitchCase c : cs) {
       if (c.isDefault())

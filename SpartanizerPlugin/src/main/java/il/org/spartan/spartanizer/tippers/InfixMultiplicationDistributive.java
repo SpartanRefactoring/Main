@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Apply the distributive rule to multiplication: <code>
+/** Apply the distributive rule to multiplication: {@code
 * a*b + a*c
- * </code> to <code>
+ * } to <code>
 * <b>a * (b + c)</b>
  * </code> .
  * @author Matteo Orru'

@@ -12,8 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 
-
-
 /** convert {@code
  * int a = 3;
  * return a;
@@ -24,12 +22,12 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnVariable extends $FragementAndStatement//
     implements TipperCategory.Inlining {
-  @Override  public String description( final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f, final SimpleName n,
-       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);

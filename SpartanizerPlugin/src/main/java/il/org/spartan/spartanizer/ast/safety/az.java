@@ -17,8 +17,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-
-
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
@@ -112,7 +110,7 @@ public enum az {
     return !iz.nodeTypeEquals($, BLOCK) ? null : (Block) $;
   }
 
-   public static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
+  public static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return !(¢ instanceof BodyDeclaration) ? null : (BodyDeclaration) ¢;
   }
 
@@ -126,7 +124,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   public static CastExpression castExpression( final Expression ¢) {
+  public static CastExpression castExpression(final Expression ¢) {
     return ¢ == null || !iz.castExpression(¢) ? null : (CastExpression) ¢;
   }
 
@@ -138,7 +136,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static ClassInstanceCreation classInstanceCreation(final ASTNode $) {
+  public static ClassInstanceCreation classInstanceCreation(final ASTNode $) {
     return !($ instanceof ClassInstanceCreation) ? null : (ClassInstanceCreation) $;
   }
 
@@ -148,7 +146,7 @@ public enum az {
    * @param $ result
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */
-   public static InfixExpression comparison(final Expression $) {
+  public static InfixExpression comparison(final Expression $) {
     return !($ instanceof InfixExpression) ? null : az.comparison((InfixExpression) $);
   }
 
@@ -158,7 +156,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   public static CompilationUnit compilationUnit( final ASTNode ¢) {
+  public static CompilationUnit compilationUnit(final ASTNode ¢) {
     return ¢ == null ? null : (CompilationUnit) ¢;
   }
 
@@ -167,13 +165,13 @@ public enum az {
    * @param $ result
    * @return argument, but down-casted to a {@link ConditionalExpression}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
-   public static ConditionalExpression conditionalExpression(final ASTNode $) {
+  public static ConditionalExpression conditionalExpression(final ASTNode $) {
     return !($ instanceof ConditionalExpression) ? null : (ConditionalExpression) $;
   }
 
   /** @param ¢ JD
    * @return */
-   public static ContinueStatement continueStatement( final ASTNode ¢) {
+  public static ContinueStatement continueStatement(final ASTNode ¢) {
     return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
   }
 
@@ -193,13 +191,13 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static EnumConstantDeclaration enumConstantDeclaration(final ASTNode $) {
+  public static EnumConstantDeclaration enumConstantDeclaration(final ASTNode $) {
     return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
   }
 
   /** @param ¢ JD
    * @return */
-   public static EnumDeclaration enumDeclaration(final ASTNode ¢) {
+  public static EnumDeclaration enumDeclaration(final ASTNode ¢) {
     return !(¢ instanceof EnumDeclaration) ? null : (EnumDeclaration) ¢;
   }
 
@@ -207,7 +205,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static Expression expression(final ASTNode $) {
+  public static Expression expression(final ASTNode $) {
     return !($ instanceof Expression) ? null : (Expression) $;
   }
 
@@ -225,7 +223,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   public static FieldAccess fieldAccess( final ASTNode ¢) {
+  public static FieldAccess fieldAccess(final ASTNode ¢) {
     return ¢ == null || !iz.fieldAccess(¢) ? null : (FieldAccess) ¢;
   }
 
@@ -277,7 +275,7 @@ public enum az {
    * @param $ result
    * @return argument, but down-casted to a {@link MethodDeclaration}, or
    *         <code><b>null</b></code> if no such down-cast is possible.. */
-  public static MethodDeclaration methodDeclaration( final ASTNode $) {
+  public static MethodDeclaration methodDeclaration(final ASTNode $) {
     return $ == null ? null : eval(() -> ((MethodDeclaration) $)).when($ instanceof MethodDeclaration);
   }
 
@@ -285,7 +283,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static MethodInvocation methodInvocation(final ASTNode $) {
+  public static MethodInvocation methodInvocation(final ASTNode $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
   }
 
@@ -305,13 +303,13 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
-   public static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+  public static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
     final List<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;
   }
 
-   public static Name name(final ASTNode ¢) {
+  public static Name name(final ASTNode ¢) {
     return ¢ instanceof Name ? (Name) ¢ : null;
   }
 
@@ -319,7 +317,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static NormalAnnotation normalAnnotation(final Annotation $) {
+  public static NormalAnnotation normalAnnotation(final Annotation $) {
     return !($ instanceof NormalAnnotation) ? null : (NormalAnnotation) $;
   }
 
@@ -328,11 +326,11 @@ public enum az {
    * @param $ result
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */
-   public static PrefixExpression not(final Expression $) {
+  public static PrefixExpression not(final Expression $) {
     return !($ instanceof PrefixExpression) ? null : not(prefixExpression($));
   }
 
-   public static PrefixExpression not( final PrefixExpression $) {
+  public static PrefixExpression not(final PrefixExpression $) {
     return $ != null && $.getOperator() == NOT ? $ : null;
   }
 
@@ -370,13 +368,13 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   static PrimitiveType primitiveType( final Type ¢) {
+  static PrimitiveType primitiveType(final Type ¢) {
     return ¢ == null || !iz.primitiveType(¢) ? null : (PrimitiveType) ¢;
   }
 
   /** @param ¢ JD
    * @return */
-   public static QualifiedName qualifiedName( final ASTNode ¢) {
+  public static QualifiedName qualifiedName(final ASTNode ¢) {
     return ¢ == null || !iz.qualifiedName(¢) ? null : (QualifiedName) ¢;
   }
 
@@ -384,7 +382,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static ReturnStatement returnStatement( final ASTNode $) {
+  public static ReturnStatement returnStatement(final ASTNode $) {
     return $ == null || !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
@@ -400,11 +398,11 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static SingleMemberAnnotation singleMemberAnnotation(final Annotation $) {
+  public static SingleMemberAnnotation singleMemberAnnotation(final Annotation $) {
     return !($ instanceof SingleMemberAnnotation) ? null : (SingleMemberAnnotation) $;
   }
 
-   public static SingleVariableDeclaration singleVariableDeclaration(final ASTNode $) {
+  public static SingleVariableDeclaration singleVariableDeclaration(final ASTNode $) {
     return !($ instanceof SingleVariableDeclaration) ? null : (SingleVariableDeclaration) $;
   }
 
@@ -416,7 +414,7 @@ public enum az {
     return !iz.statement($) ? null : (Statement) $;
   }
 
-  public static <N> Stream<N> stream( final Iterable<N> ¢) {
+  public static <N> Stream<N> stream(final Iterable<N> ¢) {
     return StreamSupport.stream(¢.spliterator(), false);
   }
 
@@ -430,7 +428,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   public static SuperMethodInvocation superMethodInvocation( final Expression ¢) {
+  public static SuperMethodInvocation superMethodInvocation(final Expression ¢) {
     return ¢ == null || !iz.superMethodInvocation(¢) ? null : (SuperMethodInvocation) ¢;
   }
 
@@ -444,7 +442,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   public static SynchronizedStatement synchronizedStatement( final ASTNode ¢) {
+  public static SynchronizedStatement synchronizedStatement(final ASTNode ¢) {
     return ¢ == null || !iz.synchronizedStatement(¢) ? null : (SynchronizedStatement) ¢;
   }
 
@@ -466,7 +464,7 @@ public enum az {
 
   /** @param ¢ JD
    * @return */
-   public static Type type( final ASTNode ¢) {
+  public static Type type(final ASTNode ¢) {
     return ¢ == null || !iz.type(¢) ? null : (Type) ¢;
   }
 
@@ -484,7 +482,7 @@ public enum az {
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         <code><b>null</b></code> if no such down-casting is possible. */
-   public static UnionType UnionType(final ASTNode $) {
+  public static UnionType UnionType(final ASTNode $) {
     return !($ instanceof UnionType) ? null : (UnionType) $;
   }
 
@@ -498,13 +496,13 @@ public enum az {
     return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
 
-   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
+  public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
     return az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
   }
 
-   /** @param ¢ JD
+  /** @param ¢ JD
    * @return */
-   public static VariableDeclarationStatement variableDeclarationStatement( final ASTNode ¢) {
+  public static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
     return ¢ == null || !iz.variableDeclarationStatement(¢) ? null : (VariableDeclarationStatement) ¢;
   }
 
@@ -537,7 +535,7 @@ public enum az {
    * @author Yossi Gil
    * @year 2016 */
   public interface throwing {
-    static String chop¢necessaryQuestionMark( final String ¢) {
+    static String chop¢necessaryQuestionMark(final String ¢) {
       return ¢.substring(0, ¢.length() - 1);
     }
 
@@ -548,7 +546,7 @@ public enum az {
               : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
     }
 
-    static double double¢( final String token) throws NumberFormatException {
+    static double double¢(final String token) throws NumberFormatException {
       return Double.parseDouble(token);
     }
 
@@ -557,7 +555,7 @@ public enum az {
       return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
     }
 
-    static int int¢( final String token) throws NumberFormatException {
+    static int int¢(final String token) throws NumberFormatException {
       return Integer.parseInt(token);
     }
 
@@ -568,11 +566,11 @@ public enum az {
               : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
     }
 
-    static long long¢( final String token) throws NumberFormatException {
+    static long long¢(final String token) throws NumberFormatException {
       return Long.parseLong(token);
     }
 
-     static NumberLiteral negativeLiteral(final Expression ¢) {
+    static NumberLiteral negativeLiteral(final Expression ¢) {
       return throwing.negativeLiteral(prefixExpression(¢));
     }
 
@@ -584,7 +582,7 @@ public enum az {
       return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
     }
 
-    static String token( final NumberLiteral ¢) {
+    static String token(final NumberLiteral ¢) {
       return ¢.getToken();
     }
 
