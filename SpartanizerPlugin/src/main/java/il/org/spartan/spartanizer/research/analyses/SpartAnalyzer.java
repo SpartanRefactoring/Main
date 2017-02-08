@@ -70,7 +70,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             .add(MethodInvocation.class, //
                 new First(), //
                 new Last(), //
-                new Reduction(), //
+                new SelfReduction(), //
                 null) //
             .add(ReturnStatement.class, //
                 new ReturnPrevious(), //
