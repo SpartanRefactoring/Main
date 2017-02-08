@@ -51,7 +51,6 @@ public class Table_Summary extends TableReusabilityIndices {
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
-    // System.out.println(¢);
     try {
       final Integer key = Integer.valueOf(measure.statements(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
