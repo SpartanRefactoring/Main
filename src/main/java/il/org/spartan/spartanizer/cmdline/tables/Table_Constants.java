@@ -14,7 +14,7 @@ import il.org.spartan.tables.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-08 */
 public class Table_Constants extends FolderASTVisitor {
-  private static Table pWriter;
+  private static Table writer;
   public static int ints;
   public static int longs;
   public static int strings;
@@ -23,13 +23,13 @@ public class Table_Constants extends FolderASTVisitor {
   }
 
   private static void initializeWriter() {
-    pWriter = new Table(Table_Constants.class);
+    writer = new Table(Table_Constants.class);
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
-    pWriter.close();
+    writer.close();
   }
 
   @Override protected void done(final String path) {
@@ -49,15 +49,15 @@ public class Table_Constants extends FolderASTVisitor {
   }
 
   public static void summarizeNPStatistics(final String path) {
-    if (pWriter == null)
+    if (writer == null)
       initializeWriter();
-    pWriter.col("Project", path);
-    pWriter//
+    writer.col("Project", path);
+    writer//
         .col("Ints", ints)//
         .col("Longs", ints)//
         .col("Strings", strings)//
         .col("Total", ints + strings);
-    pWriter.nl();
+    writer.nl();
     ints = longs = strings = 0;
   }
 }
