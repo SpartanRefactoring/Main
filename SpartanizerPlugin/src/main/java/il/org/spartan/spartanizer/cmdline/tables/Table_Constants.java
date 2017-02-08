@@ -16,6 +16,7 @@ import il.org.spartan.tables.*;
 public class Table_Constants extends FolderASTVisitor {
   private static Table pWriter;
   public static int ints;
+  public static int longs;
   public static int strings;
   static {
     clazz = Table_Constants.class;
@@ -42,6 +43,8 @@ public class Table_Constants extends FolderASTVisitor {
         ++ints;
       else if (iz.stringType(type(¢)))
         ++strings;
+      else if (iz.longType(type(¢)))
+        ++longs;
     return super.visit(¢);
   }
 
@@ -51,9 +54,10 @@ public class Table_Constants extends FolderASTVisitor {
     pWriter.col("Project", path);
     pWriter//
         .col("Ints", ints)//
+        .col("Longs", ints)//
         .col("Strings", strings)//
         .col("Total", ints + strings);
     pWriter.nl();
-    ints = strings = 0;
+    ints = longs = strings = 0;
   }
 }
