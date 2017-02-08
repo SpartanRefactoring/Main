@@ -24,14 +24,13 @@ import il.org.spartan.spartanizer.tipping.*;
 public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
-  .gives("a+b-c")}, or 
-   * <code>trimming // See {@link trim} 
+  .gives("a+b-c")}, or <code>trimming // See {@link trim} 
    * .repeatedly //  See {@link trim.repeatedely} 
    * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
    * .of("a+(b-c)") //  See {@link #of(String)} 
    * .gives("a+b-c")</code> */
   interface repeatedly {
-     static fluentTrimmerApplication of(final String codeFragment) {
+    static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
@@ -43,7 +42,7 @@ public interface trim {
       };
     }
 
-    @SafeVarargs  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
       return new fluentTrimmer(clazz, ts) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           return super.checkAllConditions(pm);
@@ -96,16 +95,16 @@ public interface trim {
     }
   }
 
-  static int countOpportunities( final AbstractGUIApplicator a,  final CompilationUnit u) {
+  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
     return a.collectSuggestions(u).size();
   }
 
-   static fluentTrimmerApplication of(final String codeFragment) {
+  static fluentTrimmerApplication of(final String codeFragment) {
     return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
 
   @SafeVarargs //
-   static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
     return new fluentTrimmer(clazz, ts);
   }
 }

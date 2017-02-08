@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** convert {@code
  * b && true
  * } to {@code
@@ -30,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.CommnonFactoring {
-  private static Expression chopHead( final InfixExpression ¢) {
+  private static Expression chopHead(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     $.remove(0);
     return $.size() < 2 ? copy.of(first($)) : subject.operands($).to(¢.getOperator());
@@ -46,7 +45,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     return "Factor out common logical component of ||";
   }
 
-  @Override public Expression replacement( final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     final Operator $ = x.getOperator();
     if (!in($, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;

@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** convert {@code
  * if (x)
  *   return foo();
@@ -28,7 +27,7 @@ public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStateme
     return "Consolidate into a single 'return'";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     final ReturnStatement r1 = extract.returnStatement(then(s));

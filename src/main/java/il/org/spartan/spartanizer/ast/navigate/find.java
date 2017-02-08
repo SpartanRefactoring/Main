@@ -14,14 +14,12 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-
-
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-22 */
 public enum find {
   ;
-   public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
+  public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
     return new Operand<N>() {
       @Override public N under(final ASTNode ¢) {
         return lisp.first(yieldDescendants.untilClass(c).from(¢));
@@ -36,7 +34,7 @@ public enum find {
     public abstract N under(ASTNode n);
   }
 
-  public static <N extends ASTNode> Expression singleExpressionDifference( final List<N> ns) {
+  public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> ns) {
     Expression $;
     if (ns.size() < 2 || ($ = singleExpressionDifference(lisp.first(ns), ns.get(1))) == null)
       return null;
@@ -46,7 +44,7 @@ public enum find {
     return $;
   }
 
-   private static Expression singleExpressionDifference( final ASTNode n1,  final ASTNode n2) {
+  private static Expression singleExpressionDifference(final ASTNode n1, final ASTNode n2) {
     if (n1 == null || n2 == null)
       return null;
     if (areSelfDifferent(n1, n2))
@@ -68,13 +66,13 @@ public enum find {
     return $;
   }
 
-   public static <N extends ASTNode> List<String> singleAtomicDifferences( final List<N> ¢) {
+  public static <N extends ASTNode> List<String> singleAtomicDifferences(final List<N> ¢) {
     final List<String> $ = new ArrayList<>();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleAtomicDifference(λ, lisp.first(¢)) : singleAtomicDifference(lisp.first(¢), second(¢))));
     return $;
   }
 
-   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences( final List<N> ¢) {
+  public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
     final List<Expression> $ = new ArrayList<>();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleExpressionDifference(λ, lisp.first(¢)) : singleExpressionDifference(lisp.first(¢), second(¢))));
     return $;
@@ -83,7 +81,7 @@ public enum find {
   /** Gets two nodes and returns the identifier of the only name i n1 which is
    * different from n2. If the nodes subtrees differ with other then one name or
    * any node, -1 is returned. */
-   public static <N extends ASTNode> String singleAtomicDifference( final N n1,  final N n2) {
+  public static <N extends ASTNode> String singleAtomicDifference(final N n1, final N n2) {
     if (n1 == null || n2 == null)
       return null;
     if ((n1 + "").equals(n2 + ""))
@@ -100,7 +98,7 @@ public enum find {
     for (int i = 1; i < children1.size(); ++i) {
       final String diff = singleAtomicDifference(children1.get(i), children2.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
-      if (!$.equals(diff) && !"".equals(diff))
+      if (!$.equals(diff) && diff != null && !diff.isEmpty())
         return null;
     }
     return $;
@@ -113,7 +111,7 @@ public enum find {
   /** like the other one but for a list
    * @param ns
    * @return */
-  public static <N extends ASTNode> String singleAtomicDifference( final List<N> ns) {
+  public static <N extends ASTNode> String singleAtomicDifference(final List<N> ns) {
     if (ns.size() < 2)
       return null;
     String $ = singleAtomicDifference(lisp.first(ns), second(ns));
@@ -122,20 +120,20 @@ public enum find {
     for (int i = 2; i < ns.size(); ++i) {
       final String diff = singleAtomicDifference(lisp.first(ns), ns.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
-      if (!$.equals(diff) && !"".equals(diff))
+      if (!$.equals(diff) && diff != null && !diff.isEmpty())
         return null;
     }
     return $;
   }
 
-  public static <N extends ASTNode> boolean differsInSingleAtomic( final List<N> ¢) {
+  public static <N extends ASTNode> boolean differsInSingleAtomic(final List<N> ¢) {
     if (¢ == null || ¢.isEmpty())
       return false;
     final String $ = singleAtomicDifference(¢);
-    return $ != null && !"".equals($);
+    return $ != null && !$.isEmpty();
   }
 
-  public static <N extends ASTNode> boolean differsInSingleExpression( final List<N> ¢) {
+  public static <N extends ASTNode> boolean differsInSingleExpression(final List<N> ¢) {
     return ¢ != null && !¢.isEmpty() && singleExpressionDifference(¢) != null;
   }
 }

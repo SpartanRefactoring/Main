@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** Catches methods which their control flow is not affected by parameters
  * @author Ori Marcovitch */
 public class JDPattern extends JavadocMarkerNanoPattern {
@@ -27,7 +26,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     }
   };
 
-  @Override protected boolean prerequisites( final MethodDeclaration d) {
+  @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;
     final Set<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
@@ -59,13 +58,13 @@ public class JDPattern extends JavadocMarkerNanoPattern {
         return checkContainsParameter(expression(¢));
       }
 
-      boolean checkContainsParameter( final ASTNode ¢) {
+      boolean checkContainsParameter(final ASTNode ¢) {
         if (containsParameter(¢, set))
           $.inner = false;
         return false;
       }
 
-      boolean checkContainsParameter( final List<Expression> xs) {
+      boolean checkContainsParameter(final List<Expression> xs) {
         for (final Expression ¢ : xs)
           if (checkContainsParameter(¢))
             return true;
@@ -78,7 +77,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   /** @param root node to search in
    * @param ss variable names which are influenced by parameters
    * @return */
-  static boolean containsParameter( final ASTNode root,  final Set<String> ss) {
+  static boolean containsParameter(final ASTNode root, final Set<String> ss) {
     final Bool $ = new Bool();
     $.inner = false;
     root.accept(new ASTVisitor() {
@@ -90,7 +89,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $.inner;
   }
 
-   static Set<String> getInfluenced(final MethodDeclaration root,  final Set<String> ps) {
+  static Set<String> getInfluenced(final MethodDeclaration root, final Set<String> ps) {
     final Set<String> $ = new HashSet<>();
     $.addAll(ps);
     body(root).accept(new ASTVisitor() {
@@ -115,7 +114,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $;
   }
 
-   protected static String extractName( final Expression root) {
+  protected static String extractName(final Expression root) {
     final StringBuilder $ = new StringBuilder();
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName ¢) {

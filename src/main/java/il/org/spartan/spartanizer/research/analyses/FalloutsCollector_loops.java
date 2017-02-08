@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
-
 /** Find all loops not matched by a nano pattern
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 11, 2017 */
@@ -22,21 +21,21 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final File out = new File(Table.temporariesFolder + system.fileSeparator + "loops" + ".txt");
 
-  public static void main( final String[] args)
+  public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = FalloutsCollector_loops.class;
     blank(out);
     FolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
       yieldDescendants.untilClass(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
           .forEach(λ -> appendFile(out, λ + ""));
-    } catch ( @SuppressWarnings("unused") final AssertionError __) {
+    } catch (@SuppressWarnings("unused") final AssertionError __) {
       System.err.print("X");
-    } catch ( @SuppressWarnings("unused") final IllegalArgumentException __) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       System.err.print("I");
     }
     return true;

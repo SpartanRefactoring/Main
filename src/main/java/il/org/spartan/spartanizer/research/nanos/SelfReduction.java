@@ -17,11 +17,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * different number of parameters (overloading).
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-01 */
-public final class OverloadingDelegation extends NanoPatternTipper<MethodInvocation> {
+public final class SelfReduction extends NanoPatternTipper<MethodInvocation> {
   @Override public boolean canTip(final MethodInvocation ¢) {
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
-    return identifier($).equals(identifier(¢))//
-        && sameSize(parameters($), arguments(¢));
+    return $ != null && (identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢)));
   }
 
   private static boolean sameSize(final List<SingleVariableDeclaration> parameters, final List<Expression> arguments) {
@@ -34,7 +33,7 @@ public final class OverloadingDelegation extends NanoPatternTipper<MethodInvocat
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final MethodInvocation $ = copy.of(¢);
-        $.setName($.getAST().newSimpleName("self"));
+        $.setName($.getAST().newSimpleName("reduce¢"));
         r.replace(¢, $, g);
       }
     };

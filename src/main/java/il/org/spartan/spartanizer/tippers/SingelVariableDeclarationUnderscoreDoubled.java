@@ -14,8 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Rename unused variable to double underscore "__" VariableChangeName instead
  * of ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
@@ -41,7 +39,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return false;
   }
 
-  static MethodDeclaration getMethod( final SingleVariableDeclaration ¢) {
+  static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
     final ASTNode $ = ¢.getParent();
     return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
@@ -50,7 +48,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢);
   }
 
-   private static ASTNode replace( final SingleVariableDeclaration ¢) {
+  private static ASTNode replace(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
@@ -69,11 +67,11 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢) || iz.arrayInitializer(¢) && suppressing(az.arrayInitializer(¢));
   }
 
-  private static boolean suppressing( final NormalAnnotation a) {
+  private static boolean suppressing(final NormalAnnotation a) {
     return a != null && values(a).stream().anyMatch(λ -> iz.identifier("value", λ.getName()) && isUnused(λ.getValue()));
   }
 
-  private static boolean suppresssing( final SingleMemberAnnotation ¢) {
+  private static boolean suppresssing(final SingleMemberAnnotation ¢) {
     return suppressing(¢.getValue());
   }
 
@@ -81,15 +79,15 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "__";
   }
 
-  @Override  public String description( final SingleVariableDeclaration ¢) {
+  @Override public String description(final SingleVariableDeclaration ¢) {
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Override  public ASTNode replacement( final SingleVariableDeclaration ¢) {
+  @Override public ASTNode replacement(final SingleVariableDeclaration ¢) {
     return replacement(¢, null);
   }
 
-  @Override @SuppressWarnings("unused") public ASTNode replacement( final SingleVariableDeclaration $,  final ExclusionManager m) {
+  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $, final ExclusionManager m) {
     final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)
       return null;

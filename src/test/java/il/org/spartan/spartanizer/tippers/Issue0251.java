@@ -4,6 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
+
 /** TODO: Dor Ma'ayan please add a description
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
@@ -55,6 +58,8 @@ public class Issue0251 {
 
   @Test public void t07() {
     trimmingOf("if(b){int i;int j;}else{g();}")//
+        .gives("if(!b)g();else {int i;int j;}")//
+        .gives("if(!b)g();else{}")//
         .gives("if(!b)g();")//
         .stays();
   }
@@ -82,13 +87,17 @@ public class Issue0251 {
   }
 
   @Test public void t13() {
-    trimmingOf("if(b)" + "{int i" + ";int j;" + "if(s){" + "int q;" + "}" + "}else{int q;int tipper;}")//
-        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "if(s){" + "int q;" + "}}");
+    trimmingOf("if(b){int i;int j;if(s){int q;}}else{int q;int tipper;}")//
+        .gives("{}")//
+        .gives("")//
+        .stays();
   }
 
   @Test public void t14() {
-    trimmingOf("if(b)" + "{int i;" + "int j;" + "while(s){" + "int q;" + "}" + "}else{int q;int tipper;}")//
-        .gives("if(!b)" + "{int q;int tipper;}" + "else{int i" + ";int j;" + "while(s){" + "int q;" + "}}");
+    trimmingOf("if(b){int i;int j;while(s){int q;}}else{int q;int tipper;}")//
+        .gives("{}")//
+        .gives("")//
+        .stays();
   }
 
   @Test public void t15() {
@@ -103,10 +112,20 @@ public class Issue0251 {
   }
 
   @Test public void t17() {
-    trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
+    final String variable = "while(b==q){if(tipper==q()){int i;}}";
+    assert !sideEffects.free(into.s(variable));
+    trimmingOf(variable)//
         .gives("while(b==q)if(tipper==q()){int i;}")//
         .gives("while(b==q)if(tipper==q()){}")//
     ;
+  }
+
+  @Test public void t17a() {
+    assert !sideEffects.free(into.e("q()"));
+  }
+
+  @Test public void t17b() {
+    assert !sideEffects.free(into.s("while(b==q){if(tipper==q()){int i;}}"));
   }
 
   @Test public void t19() {

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("static-method")
 public class Issue1001 {
   /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("unused")
+  @SuppressWarnings({"unused", "TooBroadScope"})
   public static class Issue1001Aux extends MetaFixture {
     void x(final int y) {
       //

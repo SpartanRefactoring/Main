@@ -13,17 +13,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-/** Evaluate the subtraction of numbers according to the following rules 
- * 
- * <code>
- * int / int --> int 
- * double / double --> double 
- * long / long --> long 
- * int / double --> double 
- * int / long --> long 
- * long / double --> double 
- * </code>
+/** Evaluate the subtraction of numbers according to the following rules {@code
+ * int / int --> int
+ * double / double --> double
+ * long / long --> long
+ * int / double --> double
+ * int / long --> long
+ * long / double --> double
+ * }
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
@@ -36,7 +33,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.double¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -55,7 +52,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.int¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -74,7 +71,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.long¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

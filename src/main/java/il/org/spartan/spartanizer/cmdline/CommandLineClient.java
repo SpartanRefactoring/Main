@@ -12,7 +12,7 @@ final class CommandLineClient extends HeadlessSpartanizer {
     new CommandLineClient().go(args);
   }
 
-  private void go(final String[] args) {
+  private void go(final String... args) {
     if (args.length == 0) {
       System.err.println(usage(this, args, this));
       return;

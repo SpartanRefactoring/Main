@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-
-
 /** *An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase. Specifically, this class determines precedence
@@ -78,7 +76,7 @@ public enum precedence {
   /** Determine the precedence of the operator present on an {@link Expression}
    * @param x JD
    * @return precedence of the parameter */
-  public static int of( final Expression ¢) {
+  public static int of(final Expression ¢) {
     if (¢ == null)
       return UNDEFINED;
     switch (¢.getNodeType()) {
@@ -116,7 +114,7 @@ public enum precedence {
     return precedence.of(o) == precedence.of(x);
   }
 
-  private static int of( final Assignment ¢) {
+  private static int of(final Assignment ¢) {
     return of(¢.getOperator());
   }
 
@@ -127,7 +125,7 @@ public enum precedence {
     return of(¢ + "");
   }
 
-  private static int of( final InfixExpression ¢) {
+  private static int of(final InfixExpression ¢) {
     return of(¢.getOperator());
   }
 

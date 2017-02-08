@@ -19,23 +19,21 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of type String
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */
-public final class InfixEmptyStringAdditionToString extends ReplaceCurrentNode<InfixExpression>//
+public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onStrings {
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
-  @Override @SuppressWarnings("boxing") public Expression replacement( final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);

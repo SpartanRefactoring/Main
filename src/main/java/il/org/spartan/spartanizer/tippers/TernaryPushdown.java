@@ -20,27 +20,25 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Pushdown a ternary as far down as possible
  * @year 2015
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {
-   static Expression pushdown( final ConditionalExpression x) {
+  static Expression pushdown(final ConditionalExpression x) {
     if (x == null)
       return null;
     final Expression $ = core(then(x)), elze = core(elze(x));
     return wizard.same($, elze) ? null : pushdown(x, $, elze);
   }
 
-  static Expression pushdown( final ConditionalExpression x, final Assignment a1, final Assignment a2) {
+  static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return operator(a1) != operator(a2) || !wizard.same(to(a1), to(a2)) ? null
         : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(expression(x))).to(operator(a1))).into(x.getParent());
   }
 
-  @SuppressWarnings("unchecked")  private static <T extends Expression> T p(final ASTNode n,  final T $) {
+  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
     return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) wizard.parenthesize($);
   }
 
@@ -59,7 +57,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
-  private static Expression pushdown( final ConditionalExpression x,  final Expression e1,  final Expression e2) {
+  private static Expression pushdown(final ConditionalExpression x, final Expression e1, final Expression e2) {
     if (e1.getNodeType() != e2.getNodeType())
       return null;
     switch (e1.getNodeType()) {
@@ -104,7 +102,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return p(x, subject.operands(operands).to($.getOperator()));
   }
 
-  private static Expression pushdown(final ConditionalExpression x,  final MethodInvocation e1,  final MethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression x, final MethodInvocation e1, final MethodInvocation e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
@@ -128,8 +126,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression x,  final SuperMethodInvocation e1,
-       final SuperMethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression x, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!wizard.same(e1.getName(), e2.getName()))
       return null;
     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
@@ -148,7 +145,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return "Pushdown ?: into expression";
   }
 
-  @Override  public Expression replacement(final ConditionalExpression ¢) {
+  @Override public Expression replacement(final ConditionalExpression ¢) {
     return pushdown(¢);
   }
 }

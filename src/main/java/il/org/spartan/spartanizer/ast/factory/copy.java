@@ -12,15 +12,13 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-
-
 /** An empty <code><b>enum</b></code> with a variety of {@code public
  * static} functions for restructuring expressions.
  * @author Yossi Gil
  * @since 2015-07-21 */
 public enum copy {
   ;
-   static List<Expression> adjust(final Operator o,  final List<Expression> xs) {
+  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
     return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(Collectors.toList());
   }
 
@@ -28,18 +26,18 @@ public enum copy {
    * list.
    * @param from JD
    * @param into JD */
-  public static <N extends ASTNode> void into( final List<N> from,  final List<N> into) {
+  public static <N extends ASTNode> void into(final List<N> from, final List<N> into) {
     from.forEach(λ -> into(λ, into));
   }
 
   /** Duplicate a {@link Statement} into another list.
    * @param from JD
    * @param into JD */
-  public static <N extends ASTNode> void into(final N from,  final List<N> into) {
+  public static <N extends ASTNode> void into(final N from, final List<N> into) {
     into.add(copy.of(from));
   }
 
-  public static void modifiers( final List<IExtendedModifier> from,  final List<IExtendedModifier> to) {
+  public static void modifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
     for (final IExtendedModifier ¢ : from)
       if (¢.isModifier())
         to.add(copy.of((Modifier) ¢));
@@ -50,18 +48,18 @@ public enum copy {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked")  public static <¢ extends ASTNode> ¢ of( final ¢ ¢) {
+  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ of(final ¢ ¢) {
     return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of( final List<¢> ¢s) {
+  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
     return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(Collectors.toList());
   }
 
-   public static Expression ofWhileExpression(final WhileStatement ¢) {
+  public static Expression ofWhileExpression(final WhileStatement ¢) {
     return of(expression(¢));
   }
 }

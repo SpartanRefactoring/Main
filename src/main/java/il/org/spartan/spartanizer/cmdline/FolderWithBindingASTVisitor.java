@@ -12,18 +12,17 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-
 /** Like FolderASTVisitor but with binding. Needs to be run as an Application,
  * which is not fun at all. Not ready yet.
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor implements IApplication {
-  @Override void visit( final File ¢) {
+  @Override void visit(final File ¢) {
     dotter.click();
     collect(¢);
   }
 
-  void collect( final File f) {
+  void collect(final File f) {
     try {
       final ICompilationUnit u = openCompilationUnit(f);
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
@@ -35,17 +34,17 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
     }
   }
 
-  static String getPackageNameFromSource( final String source) {
+  static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource($.createAST(null));
   }
 
-  private static String getPackageNameFromSource( final ASTNode n) {
+  private static String getPackageNameFromSource(final ASTNode n) {
     final Wrapper<String> $ = new Wrapper<>("");
     n.accept(new ASTVisitor() {
-      @Override public boolean visit( final PackageDeclaration ¢) {
+      @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -57,7 +56,7 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
   IPackageFragmentRoot srcRoot;
   IPackageFragment pack;
 
-  public abstract void Main(String[] args);
+  public abstract void Main(String... args);
 
   @Override public Object start(final IApplicationContext arg0) {
     ___.unused(arg0);
@@ -83,7 +82,7 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
     }
   }
 
-  ICompilationUnit openCompilationUnit( final File ¢) throws IOException, JavaModelException {
+  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);

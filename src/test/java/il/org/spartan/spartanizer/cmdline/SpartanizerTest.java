@@ -26,51 +26,51 @@ public class SpartanizerTest {
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
-        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
+        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
 
-      @Override public boolean visit( final AnnotationTypeDeclaration node) {
+      @Override public boolean visit(final AnnotationTypeDeclaration node) {
         print("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true;// super.visit(node);
       }
 
-      @Override public boolean visit( final AnnotationTypeMemberDeclaration node) {
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
         print(AnnotationTypeMemberDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
-      @Override public boolean visit( final Assignment node) {
+      @Override public boolean visit(final Assignment node) {
         print(node.getOperator());
         return super.visit(node);
       }
 
-      @Override public boolean visit( final ImportDeclaration node) {
+      @Override public boolean visit(final ImportDeclaration node) {
         print(ImportDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
-      @Override public boolean visit( final MarkerAnnotation node) {
+      @Override public boolean visit(final MarkerAnnotation node) {
         print("MarkerAnnotation: " + node.getTypeName());
         print("parent: " + node.getParent().getNodeType());
         return super.visit(node);
       }
 
-      @Override public boolean visit( final MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         print(MethodDeclaration.class + ": " + node.getName());
         return !hasTestAnnotation(node);
       }
 
-      @Override public boolean visit( final MethodInvocation node) {
+      @Override public boolean visit(final MethodInvocation node) {
         print(MethodInvocation.class + ": " + node.getName());
         return super.visit(node);
       }
 
-      @Override public boolean visit( final NormalAnnotation node) {
+      @Override public boolean visit(final NormalAnnotation node) {
         print("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
 
-      @Override public boolean visit( final PackageDeclaration node) {
+      @Override public boolean visit(final PackageDeclaration node) {
         print(PackageDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
@@ -81,7 +81,7 @@ public class SpartanizerTest {
     ___.______unused(¢);
   }
 
-   String method = "";
+  String method = "";
   private final String test1 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
       + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
@@ -214,7 +214,7 @@ public class SpartanizerTest {
         return false;
       }
 
-      @Override public boolean visit( final MethodDeclaration ¢) {
+      @Override public boolean visit(final MethodDeclaration ¢) {
         return storeMethodName(¢.getName());
       }
     });
@@ -272,14 +272,14 @@ public class SpartanizerTest {
         .matches("[/A-Za-z0-9-_.]*test[/A-Za-z0-9-_.]*");
   }
 
-  private void visitASTNode( final ASTNode u1) {
+  private void visitASTNode(final ASTNode u1) {
     u1.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
-        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
+        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
 
-      @Override public boolean visit( final MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         print("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node) && countMethods();
       }
