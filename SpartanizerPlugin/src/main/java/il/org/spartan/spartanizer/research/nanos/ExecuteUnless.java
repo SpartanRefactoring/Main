@@ -14,8 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
  * @since Nov 7, 2016 */
@@ -53,7 +51,7 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override  public Tip pattern(final IfStatement x) {
+  @Override public Tip pattern(final IfStatement x) {
     return firstTip(tippers, x);
   }
 
@@ -69,7 +67,7 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return firstPattern(tippers);
   }
 
-  @Override  public NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Conditional;
   }
 

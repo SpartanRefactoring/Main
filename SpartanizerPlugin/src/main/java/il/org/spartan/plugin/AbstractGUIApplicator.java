@@ -26,8 +26,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-
-
 /** the base class for all GUI applicators contains common functionality
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
@@ -40,7 +38,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
-   private IMarker marker;
+  private IMarker marker;
   protected String name;
   private ITextSelection selection;
   private final List<Tip> tips = new ArrayList<>();
@@ -52,16 +50,15 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     this.name = name;
   }
 
-  public boolean apply( final ICompilationUnit cu) {
+  public boolean apply(final ICompilationUnit cu) {
     return apply(cu, new Range(0, 0));
   }
 
-  private boolean apply( final ICompilationUnit cu,  final Range r) {
+  private boolean apply(final ICompilationUnit cu, final Range r) {
     return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
   }
 
-  @Override  public RefactoringStatus checkFinalConditions( final IProgressMonitor pm)
-      throws CoreException, OperationCanceledException {
+  @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
@@ -74,7 +71,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return new RefactoringStatus();
   }
 
-  @Override  public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
+  @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
     if (iCompilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
@@ -86,13 +83,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
-   public final List<Tip> collectSuggestions( final CompilationUnit ¢) {
+  public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
   }
 
-   private IFile compilationUnitIFile() {
+  private IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
 
@@ -108,15 +105,15 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     setMarker(null);
     try {
       checkFinalConditions(progressMonitor);
-    } catch ( final OperationCanceledException ¢) {
+    } catch (final OperationCanceledException ¢) {
       monitor.logCancellationRequest(this, ¢);
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return totalChanges;
   }
 
-  @Override  public final Change createChange(final IProgressMonitor pm) throws OperationCanceledException {
+  @Override public final Change createChange(final IProgressMonitor pm) throws OperationCanceledException {
     progressMonitor = pm;
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
@@ -127,11 +124,11 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-   private ASTRewrite createRewrite( final CompilationUnit ¢, final Int counter) {
+  private ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, null, counter);
   }
 
-   public final ASTRewrite createRewrite( final CompilationUnit ¢) {
+  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
     return rewriterOf(¢, null, new Int());
   }
 
@@ -154,12 +151,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  public int fuzzyImplementationApply( final ICompilationUnit $,  final ITextSelection s) {
+  public int fuzzyImplementationApply(final ICompilationUnit $, final ITextSelection s) {
     try {
       setICompilationUnit($);
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule($);
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return 0;
@@ -169,7 +166,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
    * @since 2013/07/01
    * @return a quick fix for this instance */
-   public IMarkerResolution getFix() {
+  public IMarkerResolution getFix() {
     return new IMarkerResolution() {
       @Override public String getLabel() {
         return getName();
@@ -178,7 +175,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       @Override public void run(final IMarker m) {
         try {
           runAsMarkerFix(m);
-        } catch ( final CoreException ¢) {
+        } catch (final CoreException ¢) {
           monitor.logEvaluationError(this, ¢);
         }
       }
@@ -186,18 +183,18 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** @return a quick fix with a preview for this instance. */
-   public IMarkerResolution getFixWithPreview() {
+  public IMarkerResolution getFixWithPreview() {
     return getFixWithPreview(getName());
   }
 
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
-   private IMarkerResolution getFixWithPreview(final String s) {
+  private IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
       /** a quickfix which opens a refactoring wizard with the tipper
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
        *         (v2) */
-      @Override  public String getLabel() {
+      @Override public String getLabel() {
         return "Apply after preview";
       }
 
@@ -206,7 +203,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         try {
           new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
               "Laconization: " + s + AbstractGUIApplicator.this);
-        } catch ( final InterruptedException ¢) {
+        } catch (final InterruptedException ¢) {
           monitor.logCancellationRequest(this, ¢);
         }
       }
@@ -231,7 +228,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return selection;
   }
 
-   public List<Tip> getTips() {
+  public List<Tip> getTips() {
     return tips;
   }
 
@@ -259,8 +256,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param n the node which needs to be within the range of
    *        <code><b>m</b></code>
    * @return <code><b>true</b></code> <em>iff</em>the node is within range */
-  public final boolean inRange( final IMarker m,  final ASTNode n) {
-    return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+  public final boolean inRange(final IMarker m, final ASTNode n) {
+    return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
   }
 
   /** Performs the current tipper on the provided compilation unit
@@ -268,7 +265,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param pm progress monitor for long operations (could be
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the {@code pm} */
-  private int performRule( final ICompilationUnit u) throws CoreException {
+  private int performRule(final ICompilationUnit u) throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -281,7 +278,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-   private ASTRewrite rewriterOf( final CompilationUnit u, final IMarker m, final Int counter) {
+  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     consolidateTips($, u, m, counter);
@@ -294,7 +291,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m the marker for which the refactoring needs to system
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */
-   public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
+  public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
     return innerRunAsMarkerFix(¢, false);
   }
 
@@ -335,7 +332,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return <code><b>true</b></code> <em>iff</em>the node is not inside
    *         selection. If there is no selection at all will return false.
    * @DisableSpartan */
-  private boolean isNodeOutsideSelection( final ASTNode ¢) {
+  private boolean isNotSelected(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());
   }
 
@@ -352,7 +349,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   /** @param u JD
    * @throws CoreException */
-  private int scanCompilationUnit( final ICompilationUnit u,  final IProgressMonitor m) throws CoreException {
+  private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -389,7 +386,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * list
    * @throws IllegalArgumentException
    * @throws CoreException [[SuppressWarningsSpartan]] */
-  private void scanCompilationUnits( final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
+  private void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     progressMonitor.beginTask("Iterating over eligible compilation units...", us.size());
     for (final ICompilationUnit ¢ : us) // NANO - can't, throws...
       scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));
@@ -418,7 +415,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    *        refactoring
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
-   private ASTRewrite createRewrite(final IMarker ¢) {
+  private ASTRewrite createRewrite(final IMarker ¢) {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
@@ -430,7 +427,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-   private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
     scanCompilationUnitForMarkerFix(m, preview);
@@ -447,20 +444,20 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return selection != null && !selection.isEmpty();
   }
 
-  public int apply( final WrappedCompilationUnit $,  final AbstractSelection<?> s) {
+  public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
     if (s != null && s.textSelection != null)
       setSelection(s.textSelection);
     if (s instanceof TrackerSelection)
       return apply($, (TrackerSelection) s);
     try {
       return apply($);
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
       return 0;
     }
   }
 
-  private int apply( final WrappedCompilationUnit u) throws CoreException {
+  private int apply(final WrappedCompilationUnit u) throws CoreException {
     final TextFileChange textChange = init(u);
     assert textChange != null;
     final Int $ = new Int();
@@ -469,7 +466,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final ASTRewrite r = createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
-    } catch ( final AssertionError x) {
+    } catch (final AssertionError x) {
       assert unreachable() : dump() + //
           "\n x=" + x + //
           "\n $=" + $ + //
@@ -490,7 +487,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-   private TextFileChange init( final WrappedCompilationUnit ¢) {
+  private TextFileChange init(final WrappedCompilationUnit ¢) {
     setICompilationUnit(¢.descriptor);
     progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
@@ -498,7 +495,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  private int apply( final WrappedCompilationUnit u,  final TrackerSelection s) {
+  private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -509,7 +506,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       if (s != null)
         s.update();
       return $.get();
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
       return 0;
     } finally {

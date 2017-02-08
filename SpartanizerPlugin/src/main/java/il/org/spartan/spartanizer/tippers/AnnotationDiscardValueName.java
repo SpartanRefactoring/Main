@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class AnnotationDiscardValueName //
     extends ReplaceCurrentNode<NormalAnnotation>//
     implements TipperCategory.SyntacticBaggage {
-  @Override  public String description( final NormalAnnotation ¢) {
+  @Override public String description(final NormalAnnotation ¢) {
     return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @Override public ASTNode replacement( final NormalAnnotation a) {
+  @Override public ASTNode replacement(final NormalAnnotation a) {
     final MemberValuePair p = onlyOne(values(a));
     if (p == null || !"value".equals(p.getName() + ""))
       return null;

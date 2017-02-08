@@ -24,8 +24,6 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-
-
 /** Old class for some anlyzes, sort of deprecated since we use
  * {@link FolderASTVisitor}
  * @author Ori Marcovitch */
@@ -54,18 +52,18 @@ public enum Analyze {
     return a < d ? a : d;
   }
 
-   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-   public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
   public static CSVStatistics openSummaryFile(final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
@@ -139,7 +137,7 @@ public enum Analyze {
                 .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
-          } catch ( @SuppressWarnings("unused") final AssertionError __) {
+          } catch (@SuppressWarnings("unused") final AssertionError __) {
             //
           }
         Logger.finishedType();
@@ -182,7 +180,7 @@ public enum Analyze {
       Logger.logFile(¢.getName());
       try {
         appendFile(new File(outputDir() + "/after.java"), spartanize(cu));
-      } catch ( @SuppressWarnings("unused") final AssertionError __) {
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
         //
       }
       // @author matteo append also before */
@@ -209,7 +207,7 @@ public enum Analyze {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
                         .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
-                  } catch ( final AssertionError __) {
+                  } catch (final AssertionError __) {
                     ___.unused(__);
                     //
                   }

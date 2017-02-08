@@ -7,18 +7,19 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Nano to match setter method which returns this
+ * @author Ori Marcovitch */
 public class Cascading {
   public static class Setter extends JavadocMarkerNanoPattern {
     private static final Setter setter = new Setter();
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-      return hazAtLeastTwoStatements(¢) && fluent(¢) && setter(¢);
+      return hazAtLeastTwoStatements(¢)//
+          && cascading(¢)//
+          && setter(¢);
     }
 
-    private boolean fluent(final MethodDeclaration ¢) {
+    private boolean cascading(final MethodDeclaration ¢) {
       return lastReturnsThis(¢);
     }
 

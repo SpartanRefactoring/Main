@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,9 +20,9 @@ public class Issue0717 {
   private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int MAX_NAME_SIZE = 100;
   private static final int MAX_STAT_AMOUNT = 100;
-   final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
-   final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-   final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
+  final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
+  final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+  final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
 
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"));
@@ -37,13 +36,11 @@ public class Issue0717 {
     assert !determineIf.hasBigBlock(fourStatMethod);
   }
 
-   private String generateRandomString(final int maxLen) {
+  private String generateRandomString(final int maxLen) {
     final StringBuilder $ = new StringBuilder();
-    int len;
     final Random randomGenerator = new Random();
-    len = randomGenerator.nextInt(maxLen);
-    if (len <= 0)
-      len = 1;
+    final int len = Math.max(1, randomGenerator.nextInt(maxLen));
+
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
     range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
     return $ + "";

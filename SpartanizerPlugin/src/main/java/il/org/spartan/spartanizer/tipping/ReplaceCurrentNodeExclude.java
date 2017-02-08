@@ -8,17 +8,15 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
-  @Override public final Tip tip( final N n, final ExclusionManager m) {
+  @Override public final Tip tip(final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
     final ASTNode $ = replacement(n, m);
     return $ == null ? null : new Tip(description(n), n, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }
     };
@@ -28,5 +26,5 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
     return true;
   }
 
-   protected abstract ASTNode replacement(N n, ExclusionManager m);
+  protected abstract ASTNode replacement(N n, ExclusionManager m);
 }

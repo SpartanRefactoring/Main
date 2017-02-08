@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-
-
 /** Trivia includes in it spaces, tabs, newlines, comments, line comments, and
  * in general anything that is not a token of Java. Here we have a bunch of
  * function that deal with trivia in many ways.
@@ -38,7 +36,7 @@ public interface trivia {
     return (¢ + "").replaceAll("\\s+", "");
   }
 
-  static String essence( final String codeFragment) {
+  static String essence(final String codeFragment) {
     return trivia.fixTideClean(tide.clean(trivia.removeComments2(codeFragment)));
   }
 
@@ -46,46 +44,46 @@ public interface trivia {
    * [^]
    * @param ¢
    * @return */
-  static String fixTideClean( final String ¢) {
+  static String fixTideClean(final String ¢) {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
-  static String gist( final ASTNode ¢) {
+  static String gist(final ASTNode ¢) {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
-  static String gist( final Object ¢) {
+  static String gist(final Object ¢) {
     return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
-   static <N extends ASTNode> N removeComments( final N n) {
+  static <N extends ASTNode> N removeComments(final N n) {
     n.accept(new ASTVisitor() {
-      boolean delete( final ASTNode ¢) {
+      boolean delete(final ASTNode ¢) {
         ¢.delete();
         return true;
       }
 
-      @Override public boolean visit( final BlockComment ¢) {
+      @Override public boolean visit(final BlockComment ¢) {
         return delete(¢);
       }
 
-      @Override public boolean visit( final Javadoc ¢) {
+      @Override public boolean visit(final Javadoc ¢) {
         return delete(¢);
       }
 
-      @Override public boolean visit( final LineComment ¢) {
+      @Override public boolean visit(final LineComment ¢) {
         return delete(¢);
       }
     });
     return n;
   }
 
-  static String removeComments( final String codeFragment) {
+  static String removeComments(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
-  static String removeComments2( final String codeFragment) {
+  static String removeComments2(final String codeFragment) {
     return codeFragment//
         .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");

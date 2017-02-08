@@ -14,17 +14,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-/** Evaluate the subtraction of numbers according to the following rules 
- * 
- * <code>
- * int - int --> int 
- * double - double --> double 
- * long - long --> long 
- * int - double --> double 
- * int - long --> long 
- * long - double --> double 
- * </code>
+/** Evaluate the subtraction of numbers according to the following rules {@code
+ * int - int --> int
+ * double - double --> double
+ * long - long --> long
+ * int - double --> double
+ * int - long --> long
+ * long - double --> double
+ * }
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
@@ -32,7 +29,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     double $ = 0;
     try {
       $ = az.throwing.double¢(first(xs)) - az.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -47,7 +44,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ -= az.throwing.int¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -62,7 +59,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         $ -= az.throwing.long¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

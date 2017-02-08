@@ -4,9 +4,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Tests {@link DoNothingReturnParam}
+ * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
 public class DoNothingReturnParamTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

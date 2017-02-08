@@ -14,23 +14,17 @@ import java.util.*;
 
 import il.org.spartan.spartanizer.java.*;
 
-
-/** convert <code>
+/** convert {@code
  * f(cond ? a : b)
- *
- * <code>
- * to
- *
- * <code>
+} to {@code
  * cond ? f(a) : f(b)
  *
- * <code>
- * Test case is {@link Issue1091}
+ * } Test case is {@link Issue1091}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Bloater {
-  @Override  public ASTNode replacement(final MethodInvocation n) {
+  @Override public ASTNode replacement(final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;
     final List<Expression> l = arguments(n);

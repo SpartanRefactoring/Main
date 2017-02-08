@@ -1,13 +1,11 @@
 package il.org.spartan.spartanizer.utils;
 
-
-
 /** A poor man's approximation of a mutable String.
  * @year 2016
  * @author Ori Marcovitch
  * @since Oct 18, 2016 */
 public final class Str {
-   public String inner;
+  public String inner;
 
   public Str() {
     inner = null;

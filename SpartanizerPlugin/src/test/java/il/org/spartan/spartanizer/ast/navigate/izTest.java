@@ -105,10 +105,8 @@ public final class izTest {
   }
 
   @Test public void conditionalOrTest() {
-    final Expression e1 = null;
-    final InfixExpression e2 = null;
-    assert !iz.conditionalOr(e1);
-    assert !iz.conditionalOr(e2);
+    assert !iz.conditionalOr(null);
+    assert !iz.conditionalOr(null);
     assert iz.conditionalOr(e("true || false"));
     assert !iz.conditionalOr(e("x!=5"));
   }
@@ -140,7 +138,7 @@ public final class izTest {
 
   @Test public void emptyStringLiteral3() {
     final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
-    assert ¢ != null && "".equals(¢.getLiteralValue());
+    assert ¢ != null && ¢.getLiteralValue() != null && ¢.getLiteralValue().isEmpty();
   }
 
   @Test public void emptyStringLiteral4() {
@@ -148,7 +146,7 @@ public final class izTest {
   }
 
   @Test public void emptyStringLiteral5() {
-    assert "".equals(az.stringLiteral(e(EMPTY_STRING)).getLiteralValue());
+    assert az.stringLiteral(e(EMPTY_STRING)).getLiteralValue() != null && az.stringLiteral(e(EMPTY_STRING)).getLiteralValue().isEmpty();
   }
 
   @Test public void final¢Test() {

@@ -374,6 +374,7 @@ public class definitionTest extends MetaFixture {
 @Ignore
 @class¢
 @knows("type definitionTest")
+@SuppressWarnings("ALL")
 class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
   {

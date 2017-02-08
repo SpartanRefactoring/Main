@@ -15,13 +15,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** convert {@code { ; ; g(); {} { ; { ; { ; } } ; } } } into {@code g();}
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
-  static Statement reorganizeNestedStatement( final Statement ¢) {
+  static Statement reorganizeNestedStatement(final Statement ¢) {
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
       case 0:
@@ -33,22 +32,22 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     }
   }
 
-  @SuppressWarnings("boxing") private static boolean identical( final List<Statement> os1,  final List<Statement> os2) {
+  @SuppressWarnings("boxing") private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     return os1.size() == os2.size() && range.to(os1.size()).stream().allMatch(λ -> os1.get(λ) == os2.get(λ));
   }
 
-   private static Block reorganizeStatement( final Statement s) {
+  private static Block reorganizeStatement(final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     copy.into(ss, statements($));
     return $;
   }
 
-  @Override  public String description(final Block ¢) {
+  @Override public String description(final Block ¢) {
     return "Simplify block with  " + extract.statements(¢).size() + " sideEffects";
   }
 
-  @Override public Statement replacement( final Block b) {
+  @Override public Statement replacement(final Block b) {
     final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || haz.hidings(ss))
       return null;

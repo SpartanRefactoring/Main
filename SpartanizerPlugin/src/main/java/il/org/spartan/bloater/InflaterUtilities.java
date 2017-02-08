@@ -32,9 +32,8 @@ public enum InflaterUtilities {
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
   static boolean rewrite(final ASTRewrite r, final List<ASTNode> ns, final TextEditGroup __) {
+
     boolean $ = false;
-    if (ns.isEmpty())
-      return false;
     for (final ASTNode statement : ns) {
       final ReturnTernaryExpander cc = new ReturnTernaryExpander();
       if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {

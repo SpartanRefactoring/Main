@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** X == null ? Y : Z
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
@@ -31,7 +29,7 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
-  @Override  public Tip pattern(final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -47,7 +45,7 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
     return firstReplacement(tippers);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Default;
   }
 }

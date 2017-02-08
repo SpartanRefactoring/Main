@@ -13,15 +13,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-/** Evaluate the $ of numbers according to the following rules 
- * 
- * <code>
- * int % int --> int 
- * long % long --> long 
- * int % long --> long 
- * long % int --> long 
- * </code>
+/** Evaluate the $ of numbers according to the following rules {@code
+ * int % int --> int
+ * long % long --> long
+ * int % long --> long
+ * long % int --> long
+ * }
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
@@ -43,13 +40,13 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= int¢;
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
 
-  @Override long evaluateLong( final List<Expression> xs) throws IllegalArgumentException {
+  @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
     for (final Expression ¢ : xs)
       if (type.of(¢) == Certain.DOUBLE)
         throw new NumberFormatException("Expected long or int in " + xs + " but found: " + ¢);
@@ -62,7 +59,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Remainder in division by zero is undefined");
         $ %= long¢;
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

@@ -8,27 +8,25 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-
-
 /** Collect members of classes and the such
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
 public interface members {
-   static List<? extends ASTNode> of(final EnumDeclaration ¢) {
+  static List<? extends ASTNode> of(final EnumDeclaration ¢) {
     final ArrayList<ASTNode> $ = new ArrayList<>(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
   }
 
-   static List<? extends BodyDeclaration> of(final TypeDeclaration ¢) {
+  static List<? extends BodyDeclaration> of(final TypeDeclaration ¢) {
     return step.bodyDeclarations(¢);
   }
 
-   static List<? extends BodyDeclaration> of(final AnnotationTypeDeclaration ¢) {
+  static List<? extends BodyDeclaration> of(final AnnotationTypeDeclaration ¢) {
     return step.bodyDeclarations(¢);
   }
 
-   static List<? extends BodyDeclaration> of( final AnonymousClassDeclaration ¢) {
+  static List<? extends BodyDeclaration> of(final AnonymousClassDeclaration ¢) {
     assert ¢ != null;
     final List<BodyDeclaration> $ = step.bodyDeclarations(¢);
     assert $ != null;

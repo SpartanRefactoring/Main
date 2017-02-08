@@ -65,7 +65,7 @@ public class Issue0249 {
     azzert.that(az.block(into.s("{}")), iz("{}"));
   }
 
-  public int metricUnderTest( final String javaStatements) {
+  public int metricUnderTest(final String javaStatements) {
     return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }
 }
