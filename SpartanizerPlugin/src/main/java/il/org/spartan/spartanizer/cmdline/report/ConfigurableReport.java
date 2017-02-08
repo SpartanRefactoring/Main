@@ -98,6 +98,7 @@ public interface ConfigurableReport {
      * @author Yossi Gil
      * @author Matteo Orru'
      * @year 2016 */
+    @SuppressWarnings("TooBroadScope")
     public class Action extends Settings {
       /** real serialVersionUID comes much later in production code */
       private static final long serialVersionUID = 1L;
@@ -172,9 +173,10 @@ public interface ConfigurableReport {
       }
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-          for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-              final String a = system.p(¢.function().run(n1), ¢.function().run(n2)); // TODO Matteo: to be converted to double or float? -- Matteo
-              report().put(id + ¢.name() + " %", a);
+        String a; // TODO Matteo: to be converted to double or float? -- Matteo
+        for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+          a = system.p(¢.function().run(n1), ¢.function().run(n2));
+          report().put(id + ¢.name() + " %", a);
         }
       }
 

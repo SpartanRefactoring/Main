@@ -83,9 +83,8 @@ public interface system {
   static Process bash(final String shellCommand) {
     if (windows())
       return null;
-      try {
-          final String[] command = {"/bin/bash", "-c", shellCommand};
-          final Process $ = Runtime.getRuntime().exec(command);
+    try {
+      final Process $ = Runtime.getRuntime().exec(new String[] { "/bin/bash", "-c", shellCommand });
       if ($ != null)
         return dumpOutput($);
     } catch (final IOException ¢) {

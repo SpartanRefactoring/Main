@@ -120,10 +120,10 @@ public enum getAll {
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
-      if (d == null)
+    if (d == null)
       return null;
-      final List<VariableDeclaration> $ = new ArrayList<>();
-      d.accept(new ASTVisitor() {
+    final List<VariableDeclaration> $ = new ArrayList<>();
+    d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
           $.add((VariableDeclaration) ¢);

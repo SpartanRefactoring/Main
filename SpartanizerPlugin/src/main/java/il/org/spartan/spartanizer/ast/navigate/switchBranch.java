@@ -115,13 +115,13 @@ public class switchBranch {
   }
 
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
-      final List<Statement> l = step.statements(n);
-      assert iz.switchCase(lisp.first(l));
-      boolean nextBranch = true;
-      final List<switchBranch> $ = new ArrayList<>();
-      List<Statement> s = null;
-      List<SwitchCase> c = null;
-      for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
+    final List<Statement> l = step.statements(n);
+    assert iz.switchCase(lisp.first(l));
+    List<SwitchCase> c = null;
+    List<Statement> s = null;
+    final List<switchBranch> $ = new ArrayList<>();
+    boolean nextBranch = true;
+    for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
       if (nextBranch) {
         c = new ArrayList<>();
         s = new ArrayList<>();

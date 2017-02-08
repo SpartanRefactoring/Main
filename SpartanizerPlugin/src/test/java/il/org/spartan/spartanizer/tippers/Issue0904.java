@@ -26,22 +26,18 @@ public class Issue0904 {
 
   @Test public void t08() {
     trimmingOf("if(b){int i;int j;}else{g();int tipper;}")//
-        .gives("if(!b){g();int tipper;}")//
-        .gives("if(b)return;g();int tipper;")//
-        .gives("if(b)return;g();")//
-        .gives("if(b);else g();")//
-        .gives("if(!b)g();").stays() //
+        .gives("if(b){}else{g();}") //
+        .gives("if(!b)g();") //
+        .stays()//
     ;
   }
 
   @Test public void t09() {
     trimmingOf("if(b){int i;int j;g();}else{int q;int tipper;}")//
         .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//
-        .gives("if(b){int i;int j;g();}")//
-        .gives("if(!b)return;int i;int j;g();")//
-        .gives("if(!b)return;g();")//
-        .gives("if(!b);else g();")//
-        .gives("if(b)g();").stays() //
+        .gives("if(!b){}else{g();}") //
+        .gives("if(b)g();")//
+        .stays() //
     ;
   }
 
