@@ -594,6 +594,10 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final SimpleType ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
