@@ -23,7 +23,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   protected abstract <N extends ASTNode> boolean go(N n);
 
   protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
-    // overridden
+    // to be overridden
   }
 
   @Override public void preVisit(final ASTNode ¢) {

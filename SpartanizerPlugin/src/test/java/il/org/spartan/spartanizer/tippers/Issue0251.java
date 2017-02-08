@@ -59,6 +59,7 @@ public class Issue0251 {
   @Test public void t07() {
     trimmingOf("if(b){int i;int j;}else{g();}")//
         .gives("if(!b)g();else {int i;int j;}")//
+        .gives("if(!b)g();else{}")//
         .gives("if(!b)g();")//
         .stays();
   }
@@ -88,12 +89,14 @@ public class Issue0251 {
   @Test public void t13() {
     trimmingOf("if(b){int i;int j;if(s){int q;}}else{int q;int tipper;}")//
         .gives("{}")//
+        .gives("")//
         .stays();
   }
 
   @Test public void t14() {
     trimmingOf("if(b){int i;int j;while(s){int q;}}else{int q;int tipper;}")//
         .gives("{}")//
+        .gives("")//
         .stays();
   }
 
