@@ -17,8 +17,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code f() { x++; y++; if (a) { i++; j++; k++; } } } into {@code if
  * (x) { f(); return a; } g(); }
  * @author Yossi Gil
@@ -37,9 +35,9 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipp
     return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 
-  @Override  public Tip tip( final IfStatement s) {
+  @Override public Tip tip(final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
         final List<Statement> remainder = extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);

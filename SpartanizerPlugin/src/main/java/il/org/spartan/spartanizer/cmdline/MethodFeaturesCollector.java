@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
-
 /** Collects boolean features of methods
  * @year 2016
  * @author Yossi Gil
@@ -34,7 +33,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */
-  private void consider( final MethodDeclaration ¢) {
+  private void consider(final MethodDeclaration ¢) {
     dotter.click();
     final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
@@ -77,7 +76,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
     writer.nl();
   }
 
-  @Override public void endVisit( final MethodDeclaration node) {
+  @Override public void endVisit(final MethodDeclaration node) {
     --methodNesting;
     consider(node);
     super.endVisit(node);
@@ -89,7 +88,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
     System.err.println("Your output is in: " + writer.close());
   }
 
-  public static void main( final String[] args)
+  public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     // final String spartanized = new InteractiveSpartanizer().fixedPoint(s);

@@ -17,14 +17,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Common strategy of all evaluators$EvaluateExpression
  * @year 2016
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {
-  private static int indexForLeftEvaluation( final InfixExpression x) {
+  private static int indexForLeftEvaluation(final InfixExpression x) {
     int $ = 0;
     for (final Expression ¢ : extract.allOperands(x)) {
       if (!iz.number(¢))
@@ -34,7 +33,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return 0;
   }
 
-  private static int indexForRightEvaluation( final InfixExpression x) {
+  private static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
       if (!iz.number(es.get(¢)))
@@ -42,11 +41,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return -1;
   }
 
-  @Override  public final String description() {
+  @Override public final String description() {
     return "Evaluate " + operation();
   }
 
-  @Override  public final String description(final InfixExpression ¢) {
+  @Override public final String description(final InfixExpression ¢) {
     return description() + ":" + ¢;
   }
 
@@ -54,7 +53,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return step.operator(¢) == operator();
   }
 
-  @Override public final ASTNode replacement( final InfixExpression x) {
+  @Override public final ASTNode replacement(final InfixExpression x) {
     try {
       if (iz.validForEvaluation(x)) {
         final String $ = opportunisticReplacement(x);
@@ -87,7 +86,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
                 az.expression(x.getAST().newNumberLiteral(s))).to(operator());
         }
       }
-    } catch ( @SuppressWarnings("unused") final IllegalArgumentException __) {
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       // This is not a bug: exception must be ignored; it tells us, e.g.,
       // that we cannot divide by zero.
       // Uncomment next code line to debug; comment it out in production mode.
@@ -107,11 +106,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
 
   abstract long evaluateLong(List<Expression> xs) throws IllegalArgumentException;
 
-   abstract String operation();
+  abstract String operation();
 
   abstract Operator operator();
 
-  private String opportunisticReplacement( final InfixExpression ¢) throws IllegalArgumentException {
+  private String opportunisticReplacement(final InfixExpression ¢) throws IllegalArgumentException {
     return type.of(¢) == INT ? Integer.toString(evaluateInt(extract.allOperands(¢)))
         : type.of(¢) == DOUBLE ? Double.toString(evaluateDouble(extract.allOperands(¢)))
             : type.of(¢) == LONG ? Long.toString(evaluateLong(extract.allOperands(¢))) + "L" : null;

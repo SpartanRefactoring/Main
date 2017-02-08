@@ -17,8 +17,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
@@ -28,7 +26,7 @@ import il.org.spartan.spartanizer.utils.*;
 public final class SpartanizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;
   private final StringBuilder status = new StringBuilder();
-   private ICompilationUnit currentCompilationUnit;
+  private ICompilationUnit currentCompilationUnit;
   IJavaProject javaProject;
   final List<ICompilationUnit> todo = new ArrayList<>();
   private int initialCount;
@@ -53,13 +51,13 @@ public final class SpartanizeProject extends BaseHandler {
           $.set(0);
         λ.done();
       });
-    } catch ( InvocationTargetException | InterruptedException ¢) {
+    } catch (InvocationTargetException | InterruptedException ¢) {
       ¢.printStackTrace();
     }
     return $.get();
   }
 
-  @Override  public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
     done.clear();
@@ -67,7 +65,7 @@ public final class SpartanizeProject extends BaseHandler {
     return go();
   }
 
-   public Void go() {
+  public Void go() {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");
@@ -115,7 +113,7 @@ public final class SpartanizeProject extends BaseHandler {
         done.clear();
         pm.done();
       });
-    } catch ( final InterruptedException | InvocationTargetException ¢) {
+    } catch (final InterruptedException | InvocationTargetException ¢) {
       monitor.logEvaluationError(this, ¢);
       return true;
     }

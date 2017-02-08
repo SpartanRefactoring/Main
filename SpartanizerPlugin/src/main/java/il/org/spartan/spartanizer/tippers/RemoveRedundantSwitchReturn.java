@@ -10,24 +10,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
-/** remove redundant return from switch in void method. convert {@code
- * void a() { switch(x) { case 1: y=2; break; default: return; } }
- *
- * }
- * to
- *
- * {@code
- * void a() { switch(x) { case 1: y=2; break; } }
- *
- * }
- * Test case is {@link Issue1070}
+/** remove redundant return from switch in void method. convert {@code void a()
+ * { switch(x) { case 1: y=2; break; default: return; } } } to {@code void a() {
+ * switch(x) { case 1: y=2; break; } } } Test case is {@link Issue1070}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {
-  @Override  public ASTNode replacement( final SwitchStatement s) {
+  @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
     final Block b = az.block(s.getParent());
@@ -43,7 +33,7 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
     return null;
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

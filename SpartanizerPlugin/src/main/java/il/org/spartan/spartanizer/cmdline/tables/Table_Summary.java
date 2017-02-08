@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
@@ -63,7 +62,7 @@ public class Table_Summary extends TableReusabilityIndices {
           .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
         npDistributionStatistics.logNode(d);
-    } catch ( final AssertionError __) {
+    } catch (final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -74,7 +73,7 @@ public class Table_Summary extends TableReusabilityIndices {
       scope.pop();
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -164,7 +163,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return format.perc(totalMethodsTouched, totalMethods);
   }
 
-  private static double totalMethodsTouched( final List<MethodRecord> rs) {
+  private static double totalMethodsTouched(final List<MethodRecord> rs) {
     return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
   }
 
@@ -183,7 +182,7 @@ public class Table_Summary extends TableReusabilityIndices {
     }
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered( final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered(final List<MethodRecord> rs) {
     return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
   }
 

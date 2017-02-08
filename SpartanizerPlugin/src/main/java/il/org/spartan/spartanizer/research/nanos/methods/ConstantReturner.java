@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
 /** @nano a method returns some constant
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
@@ -28,7 +27,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
         && !rival.matches(¢);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Default;
   }
 }

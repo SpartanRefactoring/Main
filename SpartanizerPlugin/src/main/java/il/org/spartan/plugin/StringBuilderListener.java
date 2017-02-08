@@ -7,7 +7,6 @@ import il.org.spartan.Separator;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
-
 /** A kind of {@link Listener} that records a long string of the message it got.
  * @author Yossi Gil
  * @since 2016 */
@@ -15,7 +14,7 @@ public class StringBuilderListener implements Listener {
   private static final Tab tab = new Tab();
   private final StringBuilder $ = new StringBuilder();
 
-   public String $() {
+  public String $() {
     return $ + "";
   }
 

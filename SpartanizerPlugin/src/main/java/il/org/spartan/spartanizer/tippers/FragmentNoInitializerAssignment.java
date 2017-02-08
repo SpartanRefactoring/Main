@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-
-
 /** convert {@code
  * int a;
  * a = 3;
@@ -22,18 +20,18 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2015-08-07 */
 public final class FragmentNoInitializerAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {
-   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
+  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
     final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(copy.of(x));
     return $;
   }
 
-  @Override  public String description( final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f, final SimpleName n,
-       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
