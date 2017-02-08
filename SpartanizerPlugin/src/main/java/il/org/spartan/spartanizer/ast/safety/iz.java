@@ -641,6 +641,10 @@ public interface iz {
     return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
   }
 
+  static boolean longType(final Type ¢) {
+    return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.LONG);
+  }
+
   static boolean stringType(final Type ¢) {
     return ¢ instanceof SimpleType && "String".equals(step.identifier(step.name((SimpleType) ¢)));
   }
