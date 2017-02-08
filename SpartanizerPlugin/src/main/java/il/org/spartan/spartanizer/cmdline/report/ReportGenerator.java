@@ -118,27 +118,19 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-      for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          final double a = i.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
-// ¢.function().run(n2));
-      ReportGenerator.Util.report("metrics").put(id + ¢.name(), a);
-    }
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-      for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          final String a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // TODO Matteo: to be converted to double or float? -- Matteo // system.p(¢.function().run(n1),
-// ¢.function().run(n2));
-      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
-    }
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-      for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          final String a = system.p(¢.function().run(n1), ¢.function().run(n2)); // TODO Matteo: to be converted to double or float? -- Matteo
-          ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
-    }
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", system.p(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,

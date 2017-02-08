@@ -77,19 +77,18 @@ public enum eclipse {
     final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
-      for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
+    for (final IPackageFragmentRoot ¢ : rs)  // NANO - can't, throws
       compilationUnits(m, $, ¢);
-      final int n = 0;
-      return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
+    return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
 
   private static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
       throws JavaModelException {
-      m.worked(1);
+    m.worked(1);
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
       m.worked(1);
-      int $ = 0;
-      for (final IJavaElement ¢ : r.getChildren()) {
+    int $ = 0;
+    for (final IJavaElement ¢ : r.getChildren()) {
       m.worked(1);
       if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT && az.true¢(++$)) {
         ++$;
@@ -170,9 +169,8 @@ public enum eclipse {
   static ImageIcon icon() {
     if (!iconInitialized) {
       iconInitialized = true;
-        try {
-            final URL u = new URL(iconAddress);
-            final Image i = Toolkit.getDefaultToolkit().getImage(u);
+      try {
+        final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
         if (i != null)
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
