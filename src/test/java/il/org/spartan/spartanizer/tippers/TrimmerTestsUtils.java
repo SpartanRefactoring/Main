@@ -61,7 +61,7 @@ public enum TrimmerTestsUtils {
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
-        System.err.printf("Quick cut and paste is .gives(\"%s\")\n", peeled);
+        System.err.printf("Quick cut and paste is .gives(\"%s\")\n", essence(peeled));
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);

@@ -378,11 +378,10 @@ public final class Namespace implements Environment {
   }
 
   public String generateName(final String ¢) {
-    final String face = ¢;
     int postface = 0;
-    String $ = face + "" + ++postface;
+    String $ = ¢ + "" + ++postface;
     while (has($))
-      $ = face + "" + ++postface;
+      $ = ¢ + "" + ++postface;
     return $;
   }
 

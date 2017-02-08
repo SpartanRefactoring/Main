@@ -63,10 +63,15 @@ public interface namer {
   }
 
   static String shorten(final List<Type> ¢) {
-    return ¢.stream()
-        .filter(
-            λ -> ((λ + "").length() != 1 || !Character.isUpperCase(first(λ + ""))) && (!iz.wildcardType(λ) || az.wildcardType(λ).getBound() != null))
-        .map(namer::shorten).findFirst().orElse(null);
+    return ¢.stream().filter(λ -> interestingType(λ)).map(namer::shorten).findFirst().orElse(null);
+  }
+
+  static boolean interestingType(Type ¢) {
+    return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
+  }
+
+  static boolean usefulTypeName(String typeName) {
+    return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
   }
 
   static String shorten(final Name ¢) {

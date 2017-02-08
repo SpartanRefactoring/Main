@@ -42,8 +42,6 @@ public enum analyze {
   }
 
   public static List<String> dependencies(final List<Expression> arguments) {
-    if (arguments == null)
-      return new ArrayList<>();
     final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
       $.addAll(analyze.dependencies(¢));

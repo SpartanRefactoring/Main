@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** converts <code>
+/** converts {@code
  * arr[i++] = y; arr[++i] = z;
  *
- * </code> to <code>
+ * } to {@code
  * arr[i] = y; ++i; ++i; arr[i] = z;
  *
- * </code> does not expand if right hand side includes access index operand,
+ * } does not expand if right hand side includes access index operand,
  * such as in arr[i]=i. works only on ExpressionStatement, varible declaration
  * with assignment will be treated after outlining by other expanders . Test
  * case is {@link Issue1004}

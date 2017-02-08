@@ -1055,7 +1055,7 @@ public final class Version230 {
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimmingOf("if(b){ /* empty */; } // no else   throw new Exception(); ")//
+    trimmingOf("if(b){ /* empty */; } // no else\n   throw new Exception(); ")//
         .gives("throw new Exception();")//
         .stays();
   }
@@ -1069,7 +1069,8 @@ public final class Version230 {
 
   @Test public void ifEmptyThenThrowWitinIf() {
     trimmingOf("if(x)if(b){ /* empty */} else { throw new Excpetion(); } else { f();f();f();f();f();f();f();f();}")
-        .gives("if(x)if(!b)throw new Excpetion();else { f();f();f();f();f();f();f();f();}");
+        .gives("if(x){if(!b)throw new Excpetion();}else{f();f();f();f();f();f();f();f();}")//
+        .stays();
   }
 
   @Test public void ifFunctionCall() {

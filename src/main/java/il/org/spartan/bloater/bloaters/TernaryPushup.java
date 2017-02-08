@@ -15,9 +15,9 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** convert <code>
+/** convert {@code
  * a + (cond ? b : c)
-</code> to * <code>
+} to * <code>
  * cond ? a + b : a + c
  *
  * <code>
