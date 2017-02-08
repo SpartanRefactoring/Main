@@ -11,9 +11,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** convert <code>
+/** convert {@code
  * ++i; --i;
-</code> to * <code>
+} to * <code>
  * i+=1; i-=1;
  *
  * <code>

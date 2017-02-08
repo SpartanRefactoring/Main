@@ -533,12 +533,9 @@ public interface wizard {
                                 : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
-  // static Statement lastStatement(final ForStatement ¢) {
-  // return !iz.block(body(¢)) ? body(¢) :
-  // last(statements(az.block(body(¢))));
-  // }
+
   static String nodeName(ASTNode ¢) {
-    return nodeName(¢.getClass());
+    return ¢ == null ? "???" : nodeName(¢.getClass());
   }
 
   static String nodeName(Class<? extends ASTNode> ¢) {

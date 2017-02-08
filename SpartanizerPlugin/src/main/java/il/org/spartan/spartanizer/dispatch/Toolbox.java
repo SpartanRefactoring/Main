@@ -11,7 +11,6 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
