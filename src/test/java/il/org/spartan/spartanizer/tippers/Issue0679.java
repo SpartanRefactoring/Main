@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @since Nov 2, 2016 */
 @SuppressWarnings("static-method")
 public class Issue0679 {
-   public static CompilationUnit cu( final String program) {
+  public static CompilationUnit cu(final String program) {
     final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(program.toCharArray());
     return (CompilationUnit) $.createAST(null);

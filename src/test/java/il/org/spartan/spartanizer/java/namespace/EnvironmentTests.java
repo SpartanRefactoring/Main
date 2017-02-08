@@ -9,8 +9,6 @@ import java.util.*;
 
 import il.org.spartan.spartanizer.annotation.*;
 
-
-
 @SuppressWarnings("all")
 public final class EnvironmentTests {
   public static class EX10 {
@@ -45,13 +43,13 @@ public final class EnvironmentTests {
         try {
           s = "onoes";
           dangerousFunc("yay".equals(s));
-        } catch ( final UnsupportedOperationException e) {}
+        } catch (final UnsupportedOperationException e) {}
       }
 
       void foo() {
         try {
           dangerousFunc("yay".equals("onoes"));
-        } catch ( final UnsupportedOperationException e) {}
+        } catch (final UnsupportedOperationException e) {}
       }
     }
   }
@@ -319,7 +317,7 @@ public final class EnvironmentTests {
       class Inner {
         final Outer outer = Outer.this;
 
-        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func( final Inner p) {
+        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(final Inner p) {
           @Begin
           class m {}
           x = 0;
@@ -341,7 +339,7 @@ public final class EnvironmentTests {
         final Outer2 outer2 = Outer2.this;
 
         @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @OutOfOrderFlatENV({ "x",
-            "outer2" }) void func( final Inner2 p) {
+            "outer2" }) void func(final Inner2 p) {
           @Begin
           class A {}
           x = 0;
@@ -366,13 +364,13 @@ public final class EnvironmentTests {
       return n1;
     }
 
-     Integer x = 1;
+    Integer x = 1;
     Integer o = func(x, "Alex&Dan", new Complex());
   }
 
   public static class EX8 {
     class Arr {
-       String[] arr = new String[13];
+      String[] arr = new String[13];
 
       @NestedENV({ "EX8.Arr.arr#String[]" }) @OutOfOrderFlatENV({ "arr" }) void foo() {
         @Begin
@@ -400,7 +398,7 @@ public final class EnvironmentTests {
           /**/}
       }
 
-      @Override  public Iterator<Type> iterator() {
+      @Override public Iterator<Type> iterator() {
         return new Iterator<Type>() {
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
 
@@ -435,7 +433,7 @@ public final class EnvironmentTests {
         l: for (;;)
           for (;;)
             if (new Oompa_Loompa(l) {
-              @Override Oompa_Loompa Oompa_Loompa( final Oompa_Loompa ¢) {
+              @Override Oompa_Loompa Oompa_Loompa(final Oompa_Loompa ¢) {
                 return ¢ != null ? super.Oompa_Loompa(¢) : Oompa_Loompa.this.Oompa_Loompa(¢);
               }
             }.Oompa_Loompa(l) != null)

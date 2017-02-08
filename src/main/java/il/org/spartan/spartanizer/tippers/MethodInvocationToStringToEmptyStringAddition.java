@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -19,12 +18,12 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
-  @Override  public String description(final MethodInvocation ¢) {
+  @Override public String description(final MethodInvocation ¢) {
     final Expression $ = receiver(¢);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
 
-  @Override public ASTNode replacement( final MethodInvocation i) {
+  @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(step.name(i).getIdentifier()) || !arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
       return null;
     final Expression receiver = receiver(i);

@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-
 /** Expands terms of * or / expressions without reordering.
  * <p>
  * Functions named {@link #base} are non-recursive
@@ -23,11 +22,11 @@ enum FactorsExpander {
     return base(new FactorsCollector(¢));
   }
 
-   private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
+  private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
 
-   private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
+  private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
     final Expression ¢ = copy.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }

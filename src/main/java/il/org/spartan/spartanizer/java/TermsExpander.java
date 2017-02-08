@@ -12,8 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 
-
-
 /** Expands terms of +/- expressions without reordering, e.g., convert
  * {@code a + (b+c+(d-e))} into {@code a+b+c+d-e}
  * <p>
@@ -22,19 +20,19 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-08 */
 public enum TermsExpander {
   ;
-   public static Expression simplify( final InfixExpression ¢) {
+  public static Expression simplify(final InfixExpression ¢) {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
-   private static InfixExpression appendMinus( final Term ¢, final InfixExpression $) {
+  private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
     return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(PLUS2);
   }
 
-   private static InfixExpression appendPlus( final Term t, final InfixExpression $) {
+  private static InfixExpression appendPlus(final Term t, final InfixExpression $) {
     return t.positive() ? subject.append($, t.expression) : subject.pair($, t.expression).to(MINUS2);
   }
 
-   private static Expression base( final List<Term> ts) {
+  private static Expression base(final List<Term> ts) {
     assert ts != null;
     assert !ts.isEmpty();
     final Term first = first(ts);
@@ -46,7 +44,7 @@ public enum TermsExpander {
     return step(chop(chop(ts)), $);
   }
 
-   private static InfixExpression base( final Term t1,  final Term t2) {
+  private static InfixExpression base(final Term t1, final Term t2) {
     if (t1.positive())
       return subject.pair(t1.expression, t2.expression).to(t2.positive() ? PLUS2 : MINUS2);
     assert t1.negative();
@@ -56,7 +54,7 @@ public enum TermsExpander {
     ).to(MINUS2);
   }
 
-   private static Expression base( final TermsCollector ¢) {
+  private static Expression base(final TermsCollector ¢) {
     return base(¢.all());
   }
 
@@ -65,7 +63,7 @@ public enum TermsExpander {
    *        optimally
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-  private static Expression recurse( final List<Term> ts,  final Expression $) {
+  private static Expression recurse(final List<Term> ts, final Expression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())
       return $;
@@ -73,7 +71,7 @@ public enum TermsExpander {
     return recurse(ts, (InfixExpression) $);
   }
 
-  private static Expression recurse( final List<Term> ts,  final InfixExpression $) {
+  private static Expression recurse(final List<Term> ts, final InfixExpression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())
       return $;
@@ -87,7 +85,7 @@ public enum TermsExpander {
     return recurse(chop(ts), o == PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }
 
-   private static Expression step( final List<Term> ¢,  final Expression $) {
+  private static Expression step(final List<Term> ¢, final Expression $) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse(¢, $);
   }

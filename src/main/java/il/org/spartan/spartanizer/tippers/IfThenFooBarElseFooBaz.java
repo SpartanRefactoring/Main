@@ -19,8 +19,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Converts {@code if (X) { foo(); bar(); } else { foo(); baz(); } } into
  * {@code
  * foo();
@@ -33,7 +31,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
-   private static List<Statement> commonPrefix( final List<Statement> ss1,  final List<Statement> ss2) {
+  private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
       final Statement s1 = first(ss1);
@@ -49,7 +47,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
 
-  @Override public Tip tip( final IfStatement s) {
+  @Override public Tip tip(final IfStatement s) {
     final List<Statement> $ = extract.statements(then(s));
     if ($.isEmpty())
       return null;
@@ -60,7 +58,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     final List<Statement> commonPrefix = commonPrefix($, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
         : new Tip(description(s), s, getClass()) {
-          @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final IfStatement newIf = replacement();
             if (!iz.block(s.getParent())) {
               if (newIf != null)
@@ -74,12 +72,11 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
             }
           }
 
-           IfStatement replacement() {
+          IfStatement replacement() {
             return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
           }
 
-           IfStatement replacement(final Expression condition,  final Statement trimmedThen,
-               final Statement trimmedElse) {
+          IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
             return trimmedThen == null && trimmedElse == null ? null
                 : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
           }

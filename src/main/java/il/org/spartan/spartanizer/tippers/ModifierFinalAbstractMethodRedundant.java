@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2015-07-29 */
@@ -18,11 +17,11 @@ public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<M
     return "Remove redundant final modifier of paramaeter to abstract method";
   }
 
-  @Override  public String description(final Modifier ¢) {
+  @Override public String description(final Modifier ¢) {
     return "Remove redundant final '" + az.singleVariableDeclaration(parent(¢)) + "' (parameter to abstract method)";
   }
 
-  @Override public boolean prerequisite( final Modifier m) {
+  @Override public boolean prerequisite(final Modifier m) {
     if (!m.isFinal())
       return false;
     final SingleVariableDeclaration v = az.singleVariableDeclaration(parent(m));

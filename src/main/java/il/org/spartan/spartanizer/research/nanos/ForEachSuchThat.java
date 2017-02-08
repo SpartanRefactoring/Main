@@ -9,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
-
-
 /** @nano for(A a : B ) if(X) S;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
@@ -33,15 +31,15 @@ public class ForEachSuchThat extends ForEach {
         && nonTips(rivals, ¢);
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement ¢) {
+  @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override  public String technicalName() {
+  @Override public String technicalName() {
     return "ForEachEInCSatisfyingXApplyS";
   }
 
