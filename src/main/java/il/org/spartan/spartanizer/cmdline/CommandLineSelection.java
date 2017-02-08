@@ -113,9 +113,9 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   }
 
   public void createSelectionFromProjectDir(final String presentSourcePath) {
-      System.err.println("Loading selection ...");
-      final List<WrappedCompilationUnit> cuList = new ArrayList<>();
-      cuList.addAll(az.stream(new FilesGenerator(".java").from(presentSourcePath))
+    System.err.println("Loading selection ...");
+    final List<WrappedCompilationUnit> cuList = new ArrayList<>();
+    cuList.addAll(az.stream(new FilesGenerator(".java").from(presentSourcePath))
         .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(Collectors.toList()));
     // compilationUnits = cuList;
     inner = cuList;
