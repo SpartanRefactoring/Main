@@ -214,7 +214,6 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            new SelfReduction(), //
             null)//
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
@@ -312,8 +311,6 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
             null) //
-    //
-    //
     ;
   }
 
