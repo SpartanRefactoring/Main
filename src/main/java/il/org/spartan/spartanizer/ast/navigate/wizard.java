@@ -247,11 +247,11 @@ public interface wizard {
   static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
     final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
     final int last = Math.min(ns1.size(), ns2.size()) - 1;
-    final ASTNode $ = null;
-    for (int ¢ = 0; ¢ <= last; ++¢)
+      for (int ¢ = 0; ¢ <= last; ++¢)
       if (ns1.get(¢) != ns2.get(¢))
         break;
-    return $;
+      final ASTNode $ = null;
+      return $;
   }
 
   /** the function checks if all the given assignments have the same left hand
@@ -534,11 +534,11 @@ public interface wizard {
   }
 
 
-  static String nodeName(ASTNode ¢) {
+  static String nodeName(final ASTNode ¢) {
     return ¢ == null ? "???" : nodeName(¢.getClass());
   }
 
-  static String nodeName(Class<? extends ASTNode> ¢) {
+  static String nodeName(final Class<? extends ASTNode> ¢) {
     return ¢.getSimpleName();
   }
 

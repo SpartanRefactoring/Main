@@ -379,11 +379,11 @@ class ZZZ___Fixture_ModelClass {
   {
     // This should never happen
     if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode()) {
-      final int lemon = hashCode();
-      try (@ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
+        try (@ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
           @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding())) {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
-        @knows({ "localVariableInTryBlock", "myFirstFileReader" }) @local final int z = 2 * lemon * localVariableInTryBlock;
+            final int lemon = hashCode();
+            @knows({ "localVariableInTryBlock", "myFirstFileReader" }) @local final int z = 2 * lemon * localVariableInTryBlock;
         @knows("resourceInTry") @local int localVariableNewClass = resourceInTry.read() + new Object() {
           @ScopeSize(4) @field @knows("localVariableNewClass") int fieldInAnonymousClass;
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
@@ -409,19 +409,18 @@ class ZZZ___Fixture_ModelClass {
         --localVariableNewClass;
         localVariableNewClass ^= localVariableInTryBlock;
         @ScopeSize(5) @knows({ "localVariableNewClass", "raisin" }) @local int raisin = localVariableInTryBlock + localVariableNewClass;
-        @ScopeSize(3) @local int c8;
-        ++localVariableNewClass;
-        c8 = ++raisin;
-        if (localVariableInTryBlock == c8 * localVariableNewClass)
+          ++localVariableNewClass;
+          @ScopeSize(3) @local final int c8 = ++raisin;
+          if (localVariableInTryBlock == c8 * localVariableNewClass)
           throw new CloneNotSupportedException(c0 * raisin + "");
       } catch (@knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
         for (@foreign("resourceInTry") @knows({ "myIgnoredException", "water" }) @ScopeSize(3) @for¢ int water = 0; water < 10; --water) {
           @knows({ "water", "myIgnoredException", "fig" }) @local @ScopeSize(2) final int fig = 2 * water + hashCode();
           q(fig * fig + water * hashCode());
         }
-        for (@ScopeSize(4) @for¢ int orange = 0, apple; orange < 10; --orange) {
-          apple = 2 * orange + hashCode();
-          @knows({ "orange", "myIgnoredException", "apple" }) final int banana = 2 * apple * (apple - 21) + 2;
+        for (@ScopeSize(4) @for¢ int orange = 0; orange < 10; --orange) {
+            @ScopeSize(4) @for¢ final int apple = 2 * orange + hashCode();
+            @knows({ "orange", "myIgnoredException", "apple" }) final int banana = 2 * apple * (apple - 21) + 2;
           q(apple * apple + banana * banana * orange * hashCode());
           q(banana);
           q(apple * orange);
@@ -437,11 +436,11 @@ class ZZZ___Fixture_ModelClass {
           ¢ += melon;
           q(melon * hashCode() + variableInPlainFor * variableInPlainFor);
         }
-        for (@ScopeSize(8) @for¢ int pear, j = 0, variableInPlainFor = 12, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
+        for (@ScopeSize(8) @for¢ int j = 0, variableInPlainFor = 12, ¢ = 0 + j; ¢ < 10 * j; j *= 2, --j, ¢ = j) {
           @knows({ "variableInPlainFor", "pear", "j", "anotherVariableInAnotherPlainFor" }) int anotherVariableInAnotherPlainFor = 2 * hashCode() + j
               + variableInPlainFor;
-          pear = hashCode() * anotherVariableInAnotherPlainFor;
-          anotherVariableInAnotherPlainFor >>>= pear;
+            @ScopeSize(8) @for¢ int pear = hashCode() * anotherVariableInAnotherPlainFor;
+            anotherVariableInAnotherPlainFor >>>= pear;
           ¢ += j + anotherVariableInAnotherPlainFor;
           ++pear;
           q(pear + anotherVariableInAnotherPlainFor);

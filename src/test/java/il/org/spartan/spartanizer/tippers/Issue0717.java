@@ -38,10 +38,9 @@ public class Issue0717 {
 
   private String generateRandomString(final int maxLen) {
     final StringBuilder $ = new StringBuilder();
-    int len;
-    final Random randomGenerator = new Random();
-    len = randomGenerator.nextInt(maxLen);
-    if (len <= 0)
+      final Random randomGenerator = new Random();
+      int len = randomGenerator.nextInt(maxLen);
+      if (len <= 0)
       len = 1;
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
     range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));

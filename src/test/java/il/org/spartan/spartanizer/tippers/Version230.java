@@ -45,8 +45,8 @@ public final class Version230 {
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
-    final String from = "2 + a<b", expected = "a + 2<b";
-    final Wrap w = Wrap.Expression;
+    final String from = "2 + a<b";
+      final Wrap w = Wrap.Expression;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final String unpeeled = applyTrimmer(new Trimmer(), wrap);
@@ -56,7 +56,8 @@ public final class Version230 {
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
     azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), not(tide.clean(peeled)));
-    assertSimilar(expected, peeled);
+      final String expected = "a + 2<b";
+      assertSimilar(expected, peeled);
   }
 
   @Test public void andWithCLASS_CONSTANT() {

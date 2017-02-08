@@ -82,9 +82,9 @@ public final class SingleFlater {
   @SuppressWarnings({ "unchecked", "rawtypes" }) public boolean go(final ASTRewrite r, final TextEditGroup g) {
     if (root == null || operationsProvider == null)
       return false;
-    final List<Operation<?>> operations = new LinkedList<>();
-    disabling.scan(root);
-    root.accept(new DispatchingVisitor() {
+      disabling.scan(root);
+      final List<Operation<?>> operations = new LinkedList<>();
+      root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
