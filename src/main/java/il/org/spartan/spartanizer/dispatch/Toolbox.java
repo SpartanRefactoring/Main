@@ -10,14 +10,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-
-
 
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
@@ -44,12 +40,12 @@ public class Toolbox {
    * first tipper that applies to a node in the usual scan.
    * @param root JD
    * @return */
-   public ASTRewrite pickFirstTip( final ASTNode root) {
+  public ASTRewrite pickFirstTip(final ASTNode root) {
     disabling.scan(root);
     final AtomicBoolean done = new AtomicBoolean(false);
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
     root.accept(new ASTVisitor() {
-      @Override public boolean preVisit2( final ASTNode n) {
+      @Override public boolean preVisit2(final ASTNode n) {
         if (done.get())
           return false;
         if (disabling.on(n))
@@ -65,24 +61,24 @@ public class Toolbox {
     return $;
   }
 
-   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+  public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
-   public static Tip extractTip(final ASTNode n,  final Tipper<ASTNode> t) {
+  public static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
     return t.tip(n);
   }
 
-   public static Toolbox defaultInstance() {
+  public static Toolbox defaultInstance() {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-   public static Toolbox mutableDefaultInstance() {
+  public static Toolbox mutableDefaultInstance() {
     return freshCopyOfAllTippers();
   }
 
-   private static Toolbox emptyToolboox() {
+  private static Toolbox emptyToolboox() {
     return new Toolbox();
   }
 
@@ -90,14 +86,13 @@ public class Toolbox {
     return Stream.of(ts).filter(λ -> λ.canTip(n)).findFirst().orElse(null);
   }
 
-   public static Toolbox freshCopyOfAllTippers() {
+  public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
-        .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis())
-        .add(CatchClause.class, new CatchClauseRenameParameterToCent())
-        .add(Javadoc.class, new JavadocEmpty())
-        .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
+        .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()).add(CatchClause.class, new CatchClauseRenameParameterToCent())
+        .add(Javadoc.class, new JavadocEmpty()).add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne())
+        .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
@@ -129,10 +124,10 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
+            new ForDeadRemove(), //
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ForDeadRemove(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
@@ -142,7 +137,7 @@ public class Toolbox {
             new EliminateConditionalContinueInWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
-            new RemoveRedundantWhile(), //
+            new WhileDeadRemove(), //
             new WhileToForUpdaters(), //
             null) //
         .add(SwitchStatement.class, //
@@ -153,7 +148,8 @@ public class Toolbox {
             new SwitchWithOneCaseToIf(), //
             new SwitchBranchSort(), //
             null)
-        .add(SwitchCase.class, new RemoveRedundantSwitchCases(), //
+        .add(SwitchCase.class, //
+            new RemoveRedundantSwitchCases(), //
             new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
@@ -163,12 +159,10 @@ public class Toolbox {
             new AssignmentToPrefixIncrement(), //
             null) //
         .add(Block.class, //
-            // new BlockRemoveDeadVariables(), //
             new BlockSimplify(), //
             new BlockSingleton(), //
             // new CachingPattern(), // v 2.7
             // new BlockInlineStatementIntoNext(), //
-            // new BlockRemoveDeadVariables(), // v 2.7
             // new FindFirst(),
             null) //
         .add(PostfixExpression.class, new PostfixToPrefix()) //
@@ -182,7 +176,7 @@ public class Toolbox {
             new InfixComparisonSizeToZero(), //
             new InfixSubtractionZero(), //
             new InfixAdditionSubtractionExpand(), //
-            new InfixEmptyStringAdditionToString(), //
+            new InfixPlusEmptyString(), //
             new InfixConcatenationEmptyStringLeft(), //
             new InfixFactorNegatives(), //
             new InfixAdditionEvaluate(), //
@@ -219,7 +213,6 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            new OverloadingDelegation(), //
             null)//
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
@@ -230,7 +223,7 @@ public class Toolbox {
             null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
-            new IfDeadRemov(), //
+            new IfDeadRemove(), //
             new IfLastInMethodThenEndingWithEmptyReturn(), //
             new IfLastInMethodElseEndingWithEmptyReturn(), //
             new IfLastInMethod(), //
@@ -317,8 +310,6 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
             null) //
-    //
-    //
     ;
   }
 
@@ -327,7 +318,7 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @SafeVarargs  public static <N extends ASTNode> Toolbox make( final Class<N> clazz, final Tipper<N>... ts) {
+  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
     return emptyToolboox().add(clazz, ts);
   }
 
@@ -335,11 +326,11 @@ public class Toolbox {
     defaultInstance = freshCopyOfAllTippers();
   }
 
-  public static void refresh( final Trimmer ¢) {
+  public static void refresh(final Trimmer ¢) {
     ¢.toolbox = freshCopyOfAllTippers();
   }
 
-  private static void disable( final Class<? extends TipperCategory> c,  final List<Tipper<? extends ASTNode>> ts) {
+  private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
     removing: for (;;) {
       for (int ¢ = 0; ¢ < ts.size(); ++¢)
         if (c.isAssignableFrom(ts.get(¢).getClass())) {
@@ -350,7 +341,7 @@ public class Toolbox {
     }
   }
 
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n,  final List<Tipper<?>> ts) {
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
     return ts.stream().filter(λ -> ((Tipper<N>) λ).canTip(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
@@ -363,7 +354,7 @@ public class Toolbox {
    * @param c JD
    * @param ts JD
    * @return <code><b>this</b></code>, for easy chaining. */
-  @SafeVarargs  public final <N extends ASTNode> Toolbox add( final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
     final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //
         "\n c = " + c + //
@@ -374,7 +365,7 @@ public class Toolbox {
     return add($, ts);
   }
 
-  @SafeVarargs  public final <N extends ASTNode> Toolbox add( final Integer nodeType,  final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ts) {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
@@ -382,7 +373,7 @@ public class Toolbox {
           String.format("Did you forget to use create an enum instance in %s \n" + "for the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
-              ¢.getClass().getSimpleName(), //
+              Toolbox.name(¢), //
               ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);
@@ -390,21 +381,21 @@ public class Toolbox {
     return this;
   }
 
-  @SafeVarargs  public final <N extends ASTNode> Toolbox remove(final Class<N> c,  final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, final Tipper<N>... ts) {
     final Integer nodeType = wizard.classToNodeType.get(c);
     for (final Tipper<N> ¢ : ts)
       get(nodeType.intValue()).remove(¢);
     return this;
   }
 
-   public List<Tipper<? extends ASTNode>> getAllTippers() {
+  public List<Tipper<? extends ASTNode>> getAllTippers() {
     final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;
   }
 
-  public void disable( final Class<? extends TipperCategory> c) {
+  public void disable(final Class<? extends TipperCategory> c) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> disable(c, λ));
   }
 
@@ -412,11 +403,11 @@ public class Toolbox {
    * @param pattern JD
    * @return first {@link Tipper} for which the parameter is within scope, or
    *         <code><b>null</b></code> if no such {@link Tipper} is found. @ */
-  public <N extends ASTNode> Tipper<N> firstTipper( final N ¢) {
+  public <N extends ASTNode> Tipper<N> firstTipper(final N ¢) {
     return firstTipper(¢, get(¢));
   }
 
-   public List<Tipper<? extends ASTNode>> get(final int ¢) {
+  public List<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
@@ -440,19 +431,27 @@ public class Toolbox {
     return $;
   }
 
-   <N extends ASTNode> List<Tipper<? extends ASTNode>> get( final N ¢) {
+  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
     return get(¢.getNodeType());
   }
 
-   public static String intToClassName(final int $) {
+  public static String intToClassName(final int $) {
     try {
-      return Table_Tippers.name(ASTNode.nodeClassForType($));
-    } catch ( @SuppressWarnings("unused") final IllegalArgumentException __) {
+      return ASTNode.nodeClassForType($).getSimpleName();
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       return "???";
     }
   }
 
-   public static List<String> get( final TipperGroup ¢) {
+  public static <T extends Tipper<? extends ASTNode>> String name(final T ¢) {
+    return ¢.getClass().getSimpleName();
+  }
+
+  public static String name(final Class<? extends Tipper<?>> ¢) {
+    return ¢.getSimpleName();
+  }
+
+  public static List<String> get(final TipperGroup ¢) {
     final List<String> $ = new LinkedList<>();
     if (¢ == null)
       return $;

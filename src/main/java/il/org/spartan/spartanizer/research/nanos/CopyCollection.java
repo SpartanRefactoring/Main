@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -28,11 +27,11 @@ public final class CopyCollection extends NanoPatternTipper<Block> {
     return anyTips(tippers, x);
   }
 
-  @Override  public Tip pattern(final Block x) {
+  @Override public Tip pattern(final Block x) {
     return firstTip(tippers, x);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

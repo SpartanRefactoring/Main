@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** There are actually few forms of FindFirst<br>
  * If none, can return null,some default value or throw. <br>
  * Sometimes returned value is mapped, or a filed of it is extracted. <br>
@@ -57,11 +55,11 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     ;
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement $) {
+  @Override public Tip pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

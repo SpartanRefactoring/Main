@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** This is the ?? operator
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
@@ -30,7 +28,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -50,7 +48,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override  public NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Default;
   }
 }

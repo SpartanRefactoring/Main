@@ -18,8 +18,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code switch (x) { case a: } switch(x) { default: (some commands) }
  * } into {@code
  * (some commands)
@@ -28,9 +26,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
-  @Override  public Tip tip( final SwitchStatement s) {
+  @Override public Tip tip(final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(copy.of(expression(s)));
         if (noSideEffectCommands(s)) {
@@ -47,7 +45,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     };
   }
 
-   static String statementsToString( final List<Statement> ¢) {
+  static String statementsToString(final List<Statement> ¢) {
     final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";

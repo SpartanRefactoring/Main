@@ -84,10 +84,9 @@ public class Classifier extends ASTVisitor {
     final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
-      List<ASTNode> toRemove;
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        toRemove = new ArrayList<>();
+        final List<ASTNode> toRemove = new ArrayList<>();
         toRemove.addAll(forLoopsList.stream().filter(t::canTip).collect(Collectors.toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));

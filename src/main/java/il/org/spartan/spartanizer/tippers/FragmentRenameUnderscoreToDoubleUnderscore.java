@@ -6,7 +6,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Replaces name of variables named "_" into "__"
  * @author Ori Roth
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
@@ -18,11 +17,11 @@ public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends Variable
     return "Use double underscore instead of " + trivia.gist(¢);
   }
 
-  @Override protected boolean change( final N ¢) {
+  @Override protected boolean change(final N ¢) {
     return "_".equals(¢.getName() + "");
   }
 
-  @Override protected SimpleName replacement( final N ¢) {
+  @Override protected SimpleName replacement(final N ¢) {
     return ¢.getAST().newSimpleName("__");
   }
 }

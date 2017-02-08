@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.utils.Wrap.*;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -13,7 +14,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2015-07-17 */
@@ -22,7 +22,7 @@ public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
 
-  static String apply( final Trimmer t,  final String from) {
+  static String apply(final Trimmer t, final String from) {
     final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
     final Document d = new Document(from);
@@ -30,11 +30,11 @@ public enum TESTUtils {
     return TESTUtils.rewrite(t, $, d).get();
   }
 
-  public static void assertNoChange( final String input) {
+  public static void assertNoChange(final String input) {
     assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
   }
 
-  static void assertNoOpportunity(final AbstractGUIApplicator a,  final String from) {
+  static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     azzert.that(u + "", TrimmerTestsUtils.countOpportunities(a, u), is(0));
   }
@@ -43,7 +43,7 @@ public enum TESTUtils {
     azzert.that(tide.clean(actual), is(tide.clean(expected)));
   }
 
-  static void assertOneOpportunity(final AbstractGUIApplicator a,  final String from) {
+  static void assertOneOpportunity(final AbstractGUIApplicator a, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     azzert.that(TrimmerTestsUtils.countOpportunities(a, u), greaterThanOrEqualTo(1));
@@ -52,34 +52,34 @@ public enum TESTUtils {
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
-  public static void assertSimilar( final String expected,  final Document actual) {
+  public static void assertSimilar(final String expected, final Document actual) {
     assertSimilar(expected, actual.get());
   }
 
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
-  public static void assertSimilar( final String expected,  final String actual) {
+  public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      azzert.that(Wrap.essence(actual), is(Wrap.essence(expected)));
+      azzert.that(essence(actual), is(essence(expected)));
   }
 
   /** Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
    * @param statement a {@link String} that represents a Java statement
    * @return an {@link Statement} data structure representing the parameter. */
-  public static Statement asSingle( final String statement) {
+  public static Statement asSingle(final String statement) {
     assert statement != null;
     final ASTNode $ = makeAST.STATEMENTS.from(statement);
     assert $ != null;
     return extract.singleStatement($);
   }
 
-   public static Document rewrite( final AbstractGUIApplicator a,  final CompilationUnit u,  final Document $) {
+  public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
   }

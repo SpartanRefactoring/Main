@@ -14,8 +14,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-
-
 /** Actually contains {@link Select} and {@link CopyCollection}
  * @nano for(X x : Y) if(Z) w.add(x);
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -57,7 +55,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   };
 
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
-    @Override  protected Tip pattern(final EnhancedForStatement ¢) {
+    @Override protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
@@ -71,19 +69,19 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
         || anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement $) {
+  @Override public Tip pattern(final EnhancedForStatement $) {
     try {
       return firstTip(blockTippers, az.block(parent($)));
-    } catch ( @SuppressWarnings("unused") final NoSuchElementException __) {
+    } catch (@SuppressWarnings("unused") final NoSuchElementException __) {
       return firstTip(tippers, $);
     }
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 
-  @Override  public String technicalName() {
+  @Override public String technicalName() {
     return "collect C [s.t. P(·)]";
   }
 }

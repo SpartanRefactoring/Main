@@ -102,7 +102,7 @@ public final class WrapTest {
         "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar( final String s1,  final String s2) {
+  private void similar(final String s1, final String s2) {
     azzert.that(essence(s2), is(essence(s1)));
   }
 

@@ -9,8 +9,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code
  * if (x)
  *   return b;
@@ -27,12 +25,12 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     return "Replace if with a return of a conditional statement";
   }
 
-  @Override public boolean prerequisite( final IfStatement ¢) {
+  @Override public boolean prerequisite(final IfStatement ¢) {
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override public Statement replacement( final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(s.getExpression())).toReturn();
   }

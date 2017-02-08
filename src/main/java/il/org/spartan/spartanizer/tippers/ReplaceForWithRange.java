@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** replaces for loops with ranges
  * @author Dan Abramovich
  * @since 2016 */
@@ -67,7 +66,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
     return false;
   }
 
-  private static boolean ChangedInBlock(final String id,  final Block b) {
+  private static boolean ChangedInBlock(final String id, final Block b) {
     final Bool $ = new Bool();
     b.accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {
