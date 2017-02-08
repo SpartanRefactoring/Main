@@ -102,7 +102,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    writer = new Table(Table_Summary.class);
+    writer = new Table(clazz);
   }
 
   public void summarizeSortedMethodStatistics(final String path) {
