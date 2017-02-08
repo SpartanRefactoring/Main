@@ -172,10 +172,9 @@ public interface ConfigurableReport {
       }
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-        String a; // TODO Matteo: to be converted to double or float? -- Matteo
-        for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          a = system.p(¢.function().run(n1), ¢.function().run(n2));
-          report().put(id + ¢.name() + " %", a);
+          for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+              final String a = system.p(¢.function().run(n1), ¢.function().run(n2)); // TODO Matteo: to be converted to double or float? -- Matteo
+              report().put(id + ¢.name() + " %", a);
         }
       }
 

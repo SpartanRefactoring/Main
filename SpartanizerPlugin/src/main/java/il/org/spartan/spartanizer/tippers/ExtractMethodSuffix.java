@@ -70,8 +70,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d, final List<VariableDeclaration> ds,
       final Statement forkPoint, final boolean equalParams) {
     ds.sort(new NaturalVariablesOrder(d));
-    final List<ASTNode> $ = new ArrayList<>();
-    final MethodDeclaration d1 = copy.of(d);
+      final MethodDeclaration d1 = copy.of(d);
     fixStatements(d, d1, r);
     statements(d1).subList(statements(d).indexOf(forkPoint) + 1, statements(d).size()).clear();
     final MethodInvocation i = d.getAST().newMethodInvocation();
@@ -85,7 +84,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       s.setExpression(i);
       statements(d1).add(s);
     }
-    $.add(d1);
+      final List<ASTNode> $ = new ArrayList<>();
+      $.add(d1);
     final MethodDeclaration d2 = copy.of(d);
     fixStatements(d, d2, r);
     statements(d2).subList(0, statements(d).indexOf(forkPoint) + 1).clear();

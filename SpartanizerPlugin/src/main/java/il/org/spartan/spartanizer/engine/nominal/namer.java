@@ -66,11 +66,11 @@ public interface namer {
     return ¢.stream().filter(λ -> interestingType(λ)).map(namer::shorten).findFirst().orElse(null);
   }
 
-  static boolean interestingType(Type ¢) {
+  static boolean interestingType(final Type ¢) {
     return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
   }
 
-  static boolean usefulTypeName(String typeName) {
+  static boolean usefulTypeName(final String typeName) {
     return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
   }
 

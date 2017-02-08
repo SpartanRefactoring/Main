@@ -443,11 +443,11 @@ public class Toolbox {
     }
   }
 
-  public static <T extends Tipper<? extends ASTNode>> String name(T ¢) {
+  public static <T extends Tipper<? extends ASTNode>> String name(final T ¢) {
     return ¢.getClass().getSimpleName();
   }
 
-  public static String name(Class<? extends Tipper<?>> ¢) {
+  public static String name(final Class<? extends Tipper<?>> ¢) {
     return ¢.getSimpleName();
   }
 

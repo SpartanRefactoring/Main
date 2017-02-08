@@ -118,29 +118,26 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    double a;
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      a = i.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
-                                                               // ¢.function().run(n2));
+      for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+          final double a = i.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
+// ¢.function().run(n2));
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), a);
     }
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    String a; // TODO Matteo: to be converted to double or float? -- Matteo
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // system.p(¢.function().run(n1),
-                                                                    // ¢.function().run(n2));
+      for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+          final String a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // TODO Matteo: to be converted to double or float? -- Matteo // system.p(¢.function().run(n1),
+// ¢.function().run(n2));
       ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    String a; // TODO Matteo: to be converted to double or float? -- Matteo
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      a = system.p(¢.function().run(n1), ¢.function().run(n2));
-      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
+      for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+          final String a = system.p(¢.function().run(n1), ¢.function().run(n2)); // TODO Matteo: to be converted to double or float? -- Matteo
+          ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
     }
   }
 

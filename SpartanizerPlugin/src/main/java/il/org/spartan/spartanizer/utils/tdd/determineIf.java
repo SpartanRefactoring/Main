@@ -22,8 +22,7 @@ public enum determineIf {
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
   public static boolean loaded(final MethodDeclaration d) {
-    final int $ = 3, expectedNoOfVars = 5;
-    if (d == null)
+      if (d == null)
       return false;
     final Int declaredVarsCounter = new Int();
     declaredVarsCounter.inner = 0;
@@ -33,7 +32,9 @@ public enum determineIf {
         return true;
       }
     });
-    return d.parameters().size() >= $ && declaredVarsCounter.inner >= expectedNoOfVars;
+      final int expectedNoOfVars = 5;
+      final int $ = 3;
+      return d.parameters().size() >= $ && declaredVarsCounter.inner >= expectedNoOfVars;
   }
 
   // For you to implement! Let's TDD and get it on!
