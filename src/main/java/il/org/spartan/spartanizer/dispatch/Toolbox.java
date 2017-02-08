@@ -219,7 +219,7 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            new OverloadingDelegation(), //
+            new Reduction(), //
             null)//
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
