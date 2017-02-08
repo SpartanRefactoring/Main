@@ -641,6 +641,10 @@ public interface iz {
     return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
   }
 
+  static boolean stringType(final Type ¢) {
+    return ¢ instanceof SimpleType && "String".equals(step.identifier(step.name((SimpleType) ¢)));
+  }
+
   /** @param ¢ JD
    * @return <code><b>true</b></code> <em>iff</em>the given node is a method
    *         decleration or false otherwise */
@@ -1344,5 +1348,11 @@ public interface iz {
     if (new Object().hashCode() != 0)
       throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30).");
     return false;
+  }
+
+  /** @param ¢ is public static final
+   * @return */
+  static boolean constant(final FieldDeclaration ¢) {
+    return public¢(¢) && static¢(¢) && final¢(¢);
   }
 }

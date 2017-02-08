@@ -34,7 +34,7 @@ public final class Reduction extends NanoPatternTipper<MethodInvocation> {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final MethodInvocation $ = copy.of(¢);
-        $.setName($.getAST().newSimpleName("reduce"));
+        $.setName($.getAST().newSimpleName("reduce¢"));
         r.replace(¢, $, g);
       }
     };
