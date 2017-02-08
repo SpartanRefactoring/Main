@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2016-12 */
@@ -49,13 +48,13 @@ public interface scope {
     return $;
   }
 
-   static Block getBlock(final ASTNode ¢) {
+  static Block getBlock(final ASTNode ¢) {
     return az.block(delimiter(¢));
   }
 
   /** Bug in ternary spartanizing, do not remove the suppress
    * [[SuppressWarningsSpartan]] */
-   static Namespace getScopeNamespace(final ASTNode ¢) {
+  static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode $ = delimiter(¢);
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }

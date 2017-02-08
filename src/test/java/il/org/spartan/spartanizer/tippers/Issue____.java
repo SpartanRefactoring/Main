@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import java.util.*;
 
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -55,7 +54,7 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue____ {
-   private static Object object() {
+  private static Object object() {
     return new Object();
   }
 
@@ -79,7 +78,7 @@ public class Issue____ {
     return true;
   }
 
-   private Object sameSomeObject() {
+  private Object sameSomeObject() {
     return this;
   }
 

@@ -15,16 +15,20 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 14-11-16 */
 public class Issue0828 {
   ForStatement simpleFor, trueFor, trueStatementFor, obviouseTrueStatement, numEqualTrueStatement, strEqualTrueStatement, falseFor;
-  ForTrueConditionRemove s;
+  ForTrueConditionRemove forTrueConditionRemove;
+
+  String description() {
+    return forTrueConditionRemove.description();
+  }
 
   @Test public void descriptionTest() {
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(simpleFor));
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueFor));
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(trueStatementFor));
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(falseFor));
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(obviouseTrueStatement));
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(numEqualTrueStatement));
-    assert "Convert loop: 'for(?;true;?)' to 'for(?;;?)'".equals(s.description(strEqualTrueStatement));
+    assert description().equals(forTrueConditionRemove.description(simpleFor));
+    assert description().equals(forTrueConditionRemove.description(trueFor));
+    assert description().equals(forTrueConditionRemove.description(trueStatementFor));
+    assert description().equals(forTrueConditionRemove.description(falseFor));
+    assert description().equals(forTrueConditionRemove.description(obviouseTrueStatement));
+    assert description().equals(forTrueConditionRemove.description(numEqualTrueStatement));
+    assert description().equals(forTrueConditionRemove.description(strEqualTrueStatement));
   }
 
   @Before public void initialize() {
@@ -42,21 +46,21 @@ public class Issue0828 {
         statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{for(int i=0;!\"h\".equals(\"828\");i++){x=7;}}")).getBody()));
     falseFor = (ForStatement) statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{x=7; for(int i=0;false;i++){x=7;}}")).getBody())
         .get(1);
-    s = new ForTrueConditionRemove();
+    forTrueConditionRemove = new ForTrueConditionRemove();
   }
 
   @Test public void prerequisiteTest() {
-    assert !s.prerequisite(simpleFor);
-    assert s.prerequisite(trueFor);
-    assert !s.prerequisite(falseFor);
-    assert !s.prerequisite(obviouseTrueStatement);
-    assert !s.prerequisite(null);
+    assert !forTrueConditionRemove.prerequisite(simpleFor);
+    assert forTrueConditionRemove.prerequisite(trueFor);
+    assert !forTrueConditionRemove.prerequisite(falseFor);
+    assert !forTrueConditionRemove.prerequisite(obviouseTrueStatement);
+    assert !forTrueConditionRemove.prerequisite(null);
   }
 
   @Test public void replacementTest() {
-    assert s.replacement(simpleFor) != null;
-    assert s.replacement(falseFor) != null;
-    assert s.replacement(obviouseTrueStatement) != null;
-    assert ((ForStatement) s.replacement(trueFor)).getExpression() != null;
+    assert forTrueConditionRemove.replacement(simpleFor) != null;
+    assert forTrueConditionRemove.replacement(falseFor) != null;
+    assert forTrueConditionRemove.replacement(obviouseTrueStatement) != null;
+    assert ((ForStatement) forTrueConditionRemove.replacement(trueFor)).getExpression() != null;
   }
 }

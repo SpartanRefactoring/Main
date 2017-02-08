@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** convert {@code switch (x) { case a: case b: x = 5; break; case c: default:
  * case d: break; } switch (x) { case a: case b: x = 5; break; default: } } into
  * {@code
@@ -21,23 +19,23 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     implements TipperCategory.SyntacticBaggage {
-  @Override  public Tip tip( final SwitchCase n,  final ExclusionManager exclude) {
+  @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
     return new Tip(description(n), n, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove($.isDefault() ? n : $, g);
       }
     };
   }
 
-  @Override protected boolean prerequisite( final SwitchCase n) {
+  @Override protected boolean prerequisite(final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     return $ != null && ($.isDefault() || n.isDefault());
   }
 
-  @Override  @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "remove redundant switch case";
   }
 }

@@ -17,26 +17,25 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
-
 /** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
  * @since Jan 21, 2017 */
 public enum SpartanizationComparator {
   ;
-  @External(alias = "i", value = "input folder")  static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder")  static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") static String outputFolder = "/tmp";
   static String presentSourcePath;
   static String presentSourceName;
   static int methodNesting;
   static MethodDeclaration lastNode;
-   static Dotter dotter = new Dotter();
+  static Dotter dotter = new Dotter();
   private static final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
-   static String makeFile(final String fileName) {
+  static String makeFile(final String fileName) {
     return outputFolder + "/" + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
-  public static void main( final String[] where) {
+  public static void main(final String[] where) {
     collect(where.length != 0 ? where : as.array("."));
     System.err.println("Look for your output here: " + writer.close());
   }
@@ -55,26 +54,26 @@ public enum SpartanizationComparator {
       final String input = FileUtils.read(f);
       collect(input, "before");
       collect(new InteractiveSpartanizer().fixedPoint(input), "after");
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void collect( final String javaCode, final String id) {
+  private static void collect(final String javaCode, final String id) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
   }
 
-  private static void collect( final CompilationUnit u, final String id) {
+  private static void collect(final CompilationUnit u, final String id) {
     // dotter.click();
     u.accept(new ASTVisitor() {
-      @Override public boolean visit( final MethodDeclaration ¢) {
+      @Override public boolean visit(final MethodDeclaration ¢) {
         consider(¢, id);
         return true;
       }
     });
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider( final MethodDeclaration ¢, final String id) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider(final MethodDeclaration ¢, final String id) {
     ¢.getStartPosition();
     System.out.println(¢.getName());
     //
@@ -90,7 +89,7 @@ public enum SpartanizationComparator {
 
   static String presentFile;
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider2( final MethodDeclaration ¢) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider2(final MethodDeclaration ¢) {
     writer.put("File", presentFile).put("Name", ¢.getName()).put("Path", presentSourcePath);
     for (final NamedFunction f : functions())
       writer.put(f.name(), f.function().run(¢));
@@ -108,7 +107,7 @@ public enum SpartanizationComparator {
         m("tide - ", λ -> clean(λ + "").length()));//
   }
 
-  static void consider( final MethodDeclaration ¢) {
+  static void consider(final MethodDeclaration ¢) {
     final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
         .put("Name", ¢.getName()) //
@@ -150,7 +149,7 @@ public enum SpartanizationComparator {
     writer.nl();
   }
 
-   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
 

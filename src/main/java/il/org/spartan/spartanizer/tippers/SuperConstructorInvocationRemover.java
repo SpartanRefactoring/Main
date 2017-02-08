@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Removes {@code super()} calls which take no arguments, as typically created
  * by Eclipse's template for constructors.
  * @author Daniel Mittelman
@@ -19,13 +18,13 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
     return "Remove vacuous 'super()' invocation";
   }
 
-  @Override public boolean prerequisite( final SuperConstructorInvocation ¢) {
+  @Override public boolean prerequisite(final SuperConstructorInvocation ¢) {
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 
-  @Override  public Tip tip( final SuperConstructorInvocation i) {
+  @Override public Tip tip(final SuperConstructorInvocation i) {
     return new Tip(description(i), i, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }
     };

@@ -35,7 +35,7 @@ public class Issue0777 {
     return $.get();
   }
 
-  private void azzertEquals( final String expected,  final String actual) {
+  private void azzertEquals(final String expected, final String actual) {
     azzert.that(actual.replaceAll("[\n\t\r ]", ""), is(expected.replaceAll("[\n\t\r ]", "")));
   }
 

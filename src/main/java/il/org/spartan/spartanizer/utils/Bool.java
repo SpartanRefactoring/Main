@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.utils;
 
-
-
 /** A poor man's approximation of a mutable boolean, which is so much more
  * convenient than {@link Boolean}
  * @year 2016
@@ -20,11 +18,11 @@ public final class Bool {
     return inner;
   }
 
-   Bool set() {
+  Bool set() {
     return set(true);
   }
 
-   private Bool set(final boolean ¢) {
+  private Bool set(final boolean ¢) {
     inner = ¢;
     return this;
   }
@@ -34,11 +32,11 @@ public final class Bool {
     return Boolean.valueOf(inner);
   }
 
-   public static Bool valueOf(final boolean ¢) {
+  public static Bool valueOf(final boolean ¢) {
     return new Bool(¢);
   }
 
-   public Bool clear() {
+  public Bool clear() {
     return set(false);
   }
 }

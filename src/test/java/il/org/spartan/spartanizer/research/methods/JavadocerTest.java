@@ -6,7 +6,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 18, 2016 */
@@ -15,11 +14,11 @@ public abstract class JavadocerTest {
                                                        // initialize
   static final SpartAnalyzer spartanizer = new SpartAnalyzer();
 
-  private static boolean javadoced( final String ¢) {
+  private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
   }
 
-  private static String spartanized( final String ¢) {
+  private static String spartanized(final String ¢) {
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 

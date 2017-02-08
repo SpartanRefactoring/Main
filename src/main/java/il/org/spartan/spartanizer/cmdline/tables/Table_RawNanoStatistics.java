@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-
 /** Generates a table that shows how many times each nano occurred in each
  * project
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -48,15 +47,15 @@ public class Table_RawNanoStatistics extends FolderASTVisitor {
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch ( @SuppressWarnings("unused") final AssertionError __) {
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch ( @SuppressWarnings("unused") final IllegalArgumentException __) {
+      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }

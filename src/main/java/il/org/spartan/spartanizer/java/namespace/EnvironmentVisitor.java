@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** Three groups of visitors here: 1. Non-declarations with a name. 2.
  * Non-declarations without a name. 3. Actual Declarations. First two groups are
  * those in which variable declarations can be made. Since we want to be able to
@@ -83,7 +82,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(trivia.condense(¢.getType())));
   }
 
-   Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
+  Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
     // VariableDeclarationFragment, that comes from either FieldDeclaration,
     // VariableDeclarationStatement or VariableDeclarationExpression,
     // does not contain its type. Hence, the type is sent from the parent in
@@ -181,7 +180,7 @@ final class EnvironmentVisitor extends ASTVisitor {
    *
    * If no match is found, return null. */
   Binding getHidden(final String ¢) {
-    for (String s = parentNameScope(¢); !"".equals(s); s = parentNameScope(s)) {
+    for (String s = parentNameScope(¢); s != null && !s.isEmpty(); s = parentNameScope(s)) {
       final Binding i = get($, s + "." + ¢.substring(¢.lastIndexOf(".") + 1));
       if (i != null)
         return i;
@@ -202,8 +201,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   static String parentNameScope(final String ¢) {
-    assert "".equals(¢) || ¢.lastIndexOf(".") != -1 : "nameScope malfunction!";
-    return "".equals(¢) ? "" : ¢.substring(0, ¢.lastIndexOf("."));
+    return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 
   void restoreScopeName() {

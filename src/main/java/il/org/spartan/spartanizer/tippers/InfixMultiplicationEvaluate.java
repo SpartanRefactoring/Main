@@ -12,11 +12,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** Evaluate the multiplication of numbers according to the following rules :
- * </br>
- * </br>
- * {@code
+ * toList toList {@code
  * int * int --> int
  * double * double --> double
  * long * long --> long
@@ -27,16 +24,16 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
-  @Override @SuppressWarnings("boxing") double evaluateDouble( final List<Expression> $) {
+  @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> $) {
     try {
       return $.stream().map(az.throwing::double¢).reduce(1.0, (x, y) -> x * y);
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return 1;
   }
 
-  @Override int evaluateInt( final List<Expression> xs) {
+  @Override int evaluateInt(final List<Expression> xs) {
     int $ = 1;
     try {
       for (final Expression ¢ : xs) {
@@ -44,13 +41,13 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
           throw new NumberFormatException();
         $ *= az.throwing.int¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
 
-  @Override long evaluateLong( final List<Expression> xs) {
+  @Override long evaluateLong(final List<Expression> xs) {
     long $ = 1;
     try {
       for (final Expression ¢ : xs) {
@@ -58,7 +55,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
           throw new NumberFormatException();
         $ *= az.throwing.long¢(¢);
       }
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

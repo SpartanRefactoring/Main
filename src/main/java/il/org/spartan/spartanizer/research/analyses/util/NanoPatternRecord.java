@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-
 /** Collects statistics for a nano.
  * @author Ori Marcovitch
  * @since 2016 */
@@ -14,9 +13,9 @@ public class NanoPatternRecord {
   public int occurences;
   public int numNPStatements;
   public int numNPExpressions;
-   public final String className;
+  public final String className;
 
-  public NanoPatternRecord(final String name,  final Class<? extends ASTNode> cl) {
+  public NanoPatternRecord(final String name, final Class<? extends ASTNode> cl) {
     this.name = name;
     className = cl.getSimpleName();
   }

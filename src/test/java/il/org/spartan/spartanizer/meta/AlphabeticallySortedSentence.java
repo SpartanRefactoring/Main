@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -29,8 +28,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
-   public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
-   public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
+  public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
+  public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
@@ -115,7 +114,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     forbidden();
   }
 
-   public static Vocabulary reify(final AnonymousClassDeclaration cd) {
+  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
     final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
@@ -136,7 +135,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     return $;
   }
 
-  public static Vocabulary reify( final ClassInstanceCreation ¢) {
+  public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
     return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }

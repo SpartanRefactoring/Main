@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
@@ -141,7 +140,7 @@ public interface definition {
         return $;
       }
     };
-     public List<? extends ASTNode> scope(final SimpleName ¢) {
+    public List<? extends ASTNode> scope(final SimpleName ¢) {
       final List<? extends ASTNode> $ = specificScope(¢);
       assert $ != null : fault.dump() + //
           "\n\t this = " + this + //
@@ -154,7 +153,7 @@ public interface definition {
       return $;
     }
 
-    @SuppressWarnings("static-method")  List<? extends ASTNode> specificScope(final SimpleName ¢) {
+    @SuppressWarnings("static-method") List<? extends ASTNode> specificScope(final SimpleName ¢) {
       return members.of(parent(parent(¢)));
     }
 
@@ -241,7 +240,7 @@ public interface definition {
     }
   }
 
-   static List<? extends ASTNode> scope(final SimpleName ¢) {
+  static List<? extends ASTNode> scope(final SimpleName ¢) {
     return kind(¢).scope(¢);
   }
 
