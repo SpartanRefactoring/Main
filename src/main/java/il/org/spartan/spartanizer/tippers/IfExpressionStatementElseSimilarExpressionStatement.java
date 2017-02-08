@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** convert {@code
  * if (x)
  *   f(a);
@@ -28,7 +27,7 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
     return "Consolidate two branches of 'if' into a ternary exrpession";
   }
 
-  @Override public Statement replacement( final IfStatement s) {
+  @Override public Statement replacement(final IfStatement s) {
     final Expression then = expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;

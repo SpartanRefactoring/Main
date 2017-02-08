@@ -12,75 +12,73 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-
-
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
-   protected T map( final ArrayAccess ¢) {
+  protected T map(final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-   protected T map( final ArrayCreation ¢) {
+  protected T map(final ArrayCreation ¢) {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
 
-   private T reduce( final List<Expression> xs) {
+  private T reduce(final List<Expression> xs) {
     T $ = neutralElement();
     for (final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
 
-   protected T map(final AssertStatement ¢) {
+  protected T map(final AssertStatement ¢) {
     return mapAtomic(¢);
   }
 
-   protected T map(final Assignment ¢) {
+  protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
-   protected T map(final Block b) {
+  protected T map(final Block b) {
     T $ = neutralElement();
     for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
 
-   protected T map(final BreakStatement ¢) {
+  protected T map(final BreakStatement ¢) {
     return mapAtomic(¢);
   }
 
-   protected T map( final ClassInstanceCreation ¢) {
+  protected T map(final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduce(arguments(¢)));
   }
 
-   protected T map( final ConditionalExpression ¢) {
+  protected T map(final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-   protected T map(final ConstructorInvocation ¢) {
+  protected T map(final ConstructorInvocation ¢) {
     return mapAtomic(¢);
   }
 
-   protected T map(final ContinueStatement ¢) {
+  protected T map(final ContinueStatement ¢) {
     return mapAtomic(¢);
   }
 
-   protected T map( final DoStatement ¢) {
+  protected T map(final DoStatement ¢) {
     return map(¢.getBody());
   }
 
-   protected T map(final EmptyStatement ¢) {
+  protected T map(final EmptyStatement ¢) {
     return mapAtomic(¢);
   }
 
-   protected T map( final EnhancedForStatement ¢) {
+  protected T map(final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
 
-   T map( final Expression ¢) {
+  T map(final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
@@ -113,39 +111,39 @@ public abstract class StatementReduce<T> {
     }
   }
 
-   protected T map( final InstanceofExpression ¢) {
+  protected T map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 
-   protected T map(final ExpressionStatement ¢) {
+  protected T map(final ExpressionStatement ¢) {
     return mapAtomic(¢);
   }
 
-   protected T map(final IfStatement ¢) {
+  protected T map(final IfStatement ¢) {
     return reduceIfStatement(expression(¢), then(¢), elze(¢));
   }
 
-   protected T map( final LabeledStatement ¢) {
+  protected T map(final LabeledStatement ¢) {
     return map(¢.getBody());
   }
 
-   protected T map(final MethodInvocation ¢) {
+  protected T map(final MethodInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-   protected T map(final PostfixExpression ¢) {
+  protected T map(final PostfixExpression ¢) {
     return map(step.expression(¢));
   }
 
-   protected T map(final PrefixExpression ¢) {
+  protected T map(final PrefixExpression ¢) {
     return map(step.expression(¢));
   }
 
-   protected T map(final ReturnStatement ¢) {
+  protected T map(final ReturnStatement ¢) {
     return mapAtomic(¢);
   }
 
-  public final T map( final Statement ¢) {
+  public final T map(final Statement ¢) {
     switch (¢.getNodeType()) {
       case ASSERT_STATEMENT:
         return map((AssertStatement) ¢);
@@ -174,38 +172,38 @@ public abstract class StatementReduce<T> {
       case SUPER_CONSTRUCTOR_INVOCATION:
         return map((SuperConstructorInvocation) ¢);
       default:
-        assert fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", ¢.getClass().getSimpleName()));
+        assert fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", wizard.nodeName(¢)));
         return null;
     }
   }
 
-   protected T map(final SuperConstructorInvocation ¢) {
+  protected T map(final SuperConstructorInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-   protected T map(final SuperMethodInvocation ¢) {
+  protected T map(final SuperMethodInvocation ¢) {
     return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
   }
 
-   protected T mapAtomic(final Statement i) {
+  protected T mapAtomic(final Statement i) {
     ___.______unused(i);
     return neutralElement();
   }
 
-   protected T neutralElement() {
+  protected T neutralElement() {
     return null;
   }
 
-   protected abstract T reduce(T t1, T t2);
+  protected abstract T reduce(T t1, T t2);
 
-  @SafeVarargs  protected final T reduce(final T t1, final T t2,  final T... ts) {
+  @SafeVarargs protected final T reduce(final T t1, final T t2, final T... ts) {
     T $ = reduce(t1, t2);
     for (final T ¢ : ts)
       $ = reduce($, ¢);
     return $;
   }
 
-   protected T reduceIfStatement( final Expression x,  final Statement then,  final Statement elze) {
+  protected T reduceIfStatement(final Expression x, final Statement then, final Statement elze) {
     return reduce(map(x), reduce(map(then), map(elze)));
   }
 }

@@ -8,8 +8,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** converts 'for(?;true;?)' to 'for(?;;?)'";
  * @author Alex Kopzon
  * @since 2016 */
@@ -17,7 +15,7 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
   public static final String DESCRIPTION = "Simplify 'for(?;true;?)' to 'for(?;;?)'";
 
-  private static ForStatement buildForWithoutCondition( final ForStatement $) {
+  private static ForStatement buildForWithoutCondition(final ForStatement $) {
     $.setExpression(null);
     return $;
   }
@@ -26,15 +24,15 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     return DESCRIPTION;
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return DESCRIPTION;
   }
 
-  @Override public boolean prerequisite( final ForStatement ¢) {
+  @Override public boolean prerequisite(final ForStatement ¢) {
     return iz.literal.true¢(step.expression(¢));
   }
 
-  @Override  public ASTNode replacement(final ForStatement ¢) {
+  @Override public ASTNode replacement(final ForStatement ¢) {
     return buildForWithoutCondition(copy.of(¢));
   }
 }

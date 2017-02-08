@@ -6,19 +6,17 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-
-
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
  * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2016 */
 public interface containing {
-   static CompilationUnit compilationUnit(final ASTNode ¢) {
+  static CompilationUnit compilationUnit(final ASTNode ¢) {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
 
-   static String package¢(final CastExpression ¢) {
+  static String package¢(final CastExpression ¢) {
     return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 

@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
-
 /** Demonstrates iteration through files.
  * @year 2015
  * @author Yossi Gil
@@ -22,7 +21,7 @@ public enum TypeNamesCollector {
   static final Map<String, Integer> longNames = new TreeMap<>();
   static final Map<String, Set<String>> shortToFull = new TreeMap<>();
 
-  public static void main( final String[] where) throws IOException {
+  public static void main(final String[] where) throws IOException {
     collect(where.length != 0 ? where : as.array("."));
     final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
@@ -38,9 +37,9 @@ public enum TypeNamesCollector {
     System.err.println("Look for your output here: " + w.close());
   }
 
-  private static void collect( final CompilationUnit u) {
+  private static void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
-      @Override public boolean visit( final SimpleType ¢) {
+      @Override public boolean visit(final SimpleType ¢) {
         record(hop.simpleName(¢) + "");
         return true;
       }
@@ -58,12 +57,12 @@ public enum TypeNamesCollector {
   private static void collect(final File f) {
     try {
       collect(FileUtils.read(f));
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void collect( final String javaCode) {
+  private static void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 

@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-
 /** Hack to stop the trimmer from making more tips. The class should die. It
  * serves the purpose of disabling tips of spartanization in a method, whose
  * parameters are changed. But this disabling does not belong here.
@@ -20,7 +19,7 @@ public final class ExclusionManager {
     inner.add(¢);
   }
 
-  public void excludeAll( final List<? extends ASTNode> ¢) {
+  public void excludeAll(final List<? extends ASTNode> ¢) {
     inner.addAll(¢);
   }
 

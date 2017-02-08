@@ -11,8 +11,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-
-
 /** TODO: Dor Ma'ayan please add a description
  * @author Dor Ma'ayan
  * @since 2016 */
@@ -20,7 +18,7 @@ public final class Recurser<T> {
   /** Get a list of some of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-   public static List<? extends ASTNode> children( final ASTNode n) {
+  public static List<? extends ASTNode> children(final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
@@ -38,7 +36,7 @@ public final class Recurser<T> {
   /** Operators cannot be retrieved because they are not nodes...
    * @param ¢
    * @return */
-  @SuppressWarnings("unchecked")  public static List<ASTNode> allChildren(final ASTNode ¢) {
+  @SuppressWarnings("unchecked") public static List<ASTNode> allChildren(final ASTNode ¢) {
     final List<ASTNode> $ = (List<ASTNode>) children(¢);
     if (iz.methodInvocation(¢)) {
       $.addAll(arguments(az.methodInvocation(¢)));
@@ -57,10 +55,10 @@ public final class Recurser<T> {
     return $;
   }
 
-  private static List<? extends ASTNode> march( final ASTNode $) {
+  private static List<? extends ASTNode> march(final ASTNode $) {
     try {
       return marchingList($);
-    } catch ( final NullPointerException ¢) {
+    } catch (final NullPointerException ¢) {
       assert ¢ != null;
       return null;
     }
@@ -79,7 +77,7 @@ public final class Recurser<T> {
     this.current = current;
   }
 
-   public Recurser<T> from(final T value) {
+  public Recurser<T> from(final T value) {
     current = value;
     return this;
   }
@@ -92,7 +90,7 @@ public final class Recurser<T> {
     return root;
   }
 
-  public void postVisit( final Consumer<Recurser<T>> f) {
+  public void postVisit(final Consumer<Recurser<T>> f) {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty()) {
       f.accept(this);
@@ -109,7 +107,7 @@ public final class Recurser<T> {
     f.accept(this);
   }
 
-  public T postVisit( final Function<Recurser<T>, T> $) {
+  public T postVisit(final Function<Recurser<T>, T> $) {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current = $.apply(this);
@@ -124,7 +122,7 @@ public final class Recurser<T> {
     return current = $.apply(this);
   }
 
-  public void preVisit( final Consumer<Recurser<T>> f) {
+  public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
@@ -134,7 +132,7 @@ public final class Recurser<T> {
     rs.forEach(λ -> λ.preVisit(f));
   }
 
-  public T preVisit( final Function<Recurser<T>, T> r) {
+  public T preVisit(final Function<Recurser<T>, T> r) {
     current = r.apply(this);
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())

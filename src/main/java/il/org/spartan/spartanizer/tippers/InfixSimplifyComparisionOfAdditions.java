@@ -11,8 +11,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
  * a + 2 // ==//<//> 3
@@ -23,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 18-11-2016 */
 public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  @Override  public ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
       return null;
@@ -44,12 +42,12 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
-  @Override public boolean prerequisite( final InfixExpression ¢) {
+  @Override public boolean prerequisite(final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }
 }

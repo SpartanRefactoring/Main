@@ -82,7 +82,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
           void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
               final TextEditGroup g) {
-            // TODO Ori Roth: Use subject to block. 
+            // TODO Ori Roth: Use subject to block.
             final Block b = p.getAST().newBlock();
             statements(b).add(s);
             statements(b).add(ns);
