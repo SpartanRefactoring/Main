@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** x true ? 1 : 0 <br>
  * This is actually a casting from boolean to int
  * @author Ori Marcovitch
@@ -29,15 +27,15 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return "Casting a boolean into an int";
   }
 
-  @Override  public String technicalName() {
+  @Override public String technicalName() {
     return "CastXFromBooleanToInt";
   }
 
@@ -49,7 +47,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Functional;
   }
 }

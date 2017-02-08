@@ -120,7 +120,7 @@ public final class Version230 {
     trimmingOf("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));")//
         .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));") //
         .stays()//
-        ;
+    ;
   }
 
   @Test public void assignmentAssignmentNew() {
@@ -1215,11 +1215,10 @@ public final class Version230 {
     trimmingOf("if(a)break;else throw e;")//
         .gives("if(!a)throw e;break;");
   }
-  
+
   @Test public void ifThrowFooElseThrowBar() {
     trimmingOf("if(a)throw foo;else throw bar;")//
         .gives("throw a ? foo : bar;");
-    
   }
 
   @Test public void ifThrowNoElseThrow() {

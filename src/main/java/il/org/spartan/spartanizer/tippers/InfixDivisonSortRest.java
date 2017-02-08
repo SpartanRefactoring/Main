@@ -12,17 +12,16 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
  * @author Yossi Gil
  * @since 2015-09-05 */
 public final class InfixDivisonSortRest extends InfixExpressionSortingRest//
     implements TipperCategory.Sorting {
-  @Override protected boolean sort( final List<Expression> ¢) {
+  @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);
   }
 
-  @Override protected boolean suitable( final InfixExpression ¢) {
+  @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), DIVIDE);
   }
 }

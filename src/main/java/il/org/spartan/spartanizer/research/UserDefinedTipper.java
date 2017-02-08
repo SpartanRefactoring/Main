@@ -8,11 +8,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
-  @Override public final boolean canTip( final N ¢) {
+  @Override public final boolean canTip(final N ¢) {
     return ¢ != null && prerequisite(¢);
   }
 
@@ -28,7 +26,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
 
   public abstract ASTNode getMatching(ASTNode n);
 
-   public abstract String pattern();
+  public abstract String pattern();
 
-   public abstract String replacement();
+  public abstract String replacement();
 }

@@ -9,21 +9,20 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Replace this pattern {@code try {} catch(..) {a;} ... finally {x;}} with
  * {@code {x;}}, or nothing, if there is nothing in {@code x;}
  * @author Sapir Bismot
  * @since 2016-11-21 */
 public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TryStatement>//
     implements TipperCategory.SyntacticBaggage {
-  @Override public boolean prerequisite( final TryStatement ¢) {
+  @Override public boolean prerequisite(final TryStatement ¢) {
     final Block $ = ¢.getBody();
     return $ != null && statements($).isEmpty();
   }
 
-  @Override  public Tip tip( final TryStatement s) {
+  @Override public Tip tip(final TryStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block finallyBlock = s.getFinally();
         if (finallyBlock == null || statements(finallyBlock).isEmpty())
           r.remove(s, g);

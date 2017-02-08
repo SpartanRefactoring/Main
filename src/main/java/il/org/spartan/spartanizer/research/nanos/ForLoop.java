@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** Like {@link FindFirst} but for ForStatement
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-25 */
@@ -50,19 +48,19 @@ public final class ForLoop {
       ;
     }
 
-    @Override  public Tip pattern(final ForStatement $) {
+    @Override public Tip pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @Override  public Category category() {
+    @Override public Category category() {
       return Category.Iterative;
     }
 
-    @Override  public String description() {
+    @Override public String description() {
       return "Iterate a collection for the first element matching some predicate";
     }
 
-    @Override  public String technicalName() {
+    @Override public String technicalName() {
       return "ReturnFirstInCSatisfyingXIfNoneY";
     }
 

@@ -57,7 +57,7 @@ public class TrimmerLogTest {
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
@@ -80,7 +80,7 @@ public class TrimmerLogTest {
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;

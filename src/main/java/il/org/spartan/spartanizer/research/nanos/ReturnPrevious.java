@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** * @year 2016
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
@@ -30,11 +28,11 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
     return anyTips(tippers, az.block(parent(x)));
   }
 
-  @Override  public Tip pattern(final ReturnStatement $) {
+  @Override public Tip pattern(final ReturnStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Field;
   }
 

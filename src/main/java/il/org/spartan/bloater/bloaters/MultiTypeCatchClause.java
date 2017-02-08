@@ -11,10 +11,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** Issue #970 
- * 
- * Expand : {@code catch(Type1 | Type2 e){block} } To: {@code catch(Type1
- * e){block}catch(Type2 e){block} } Tested in {@link Issue0970}
+/** Issue #970 Expand : {@code catch(Type1 | Type2 e){block} } To:
+ * {@code catch(Type1 e){block}catch(Type2 e){block} } Tested in
+ * {@link Issue0970}
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-25 */
 public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//

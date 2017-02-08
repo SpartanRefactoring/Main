@@ -19,8 +19,6 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add
  * TextEditGroup support (?)
@@ -92,7 +90,7 @@ public class Augmenter implements Application {
    * as list of lists of statements.
    * @param ss statements to be collateralized
    * @return collateralization output as list of lists of statements */
-   public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
+  public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
 
@@ -170,7 +168,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
-   private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
+  private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }

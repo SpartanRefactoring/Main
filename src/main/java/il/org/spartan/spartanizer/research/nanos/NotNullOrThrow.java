@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** if(X == null) throw Exception;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
@@ -27,11 +25,11 @@ public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final IfStatement ¢) {
+  @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Exception;
   }
 

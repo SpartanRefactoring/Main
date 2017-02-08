@@ -18,15 +18,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-
-
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil
  * @since 2015-07-17 */
 public enum Tippers {
   ;
-  public static void addAllReplacing( final List<Statement> to,  final List<Statement> from, final Statement substitute,
-      final Statement by1,  final List<Statement> by2) {
+  public static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
+      final List<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
         copy.into(¢, to);
@@ -36,7 +34,7 @@ public enum Tippers {
       }
   }
 
-   public static IfStatement blockIfNeeded( final IfStatement s,  final ASTRewrite r, final TextEditGroup g) {
+  public static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
     final Block $ = subject.statement(s).toBlock();
@@ -44,7 +42,7 @@ public enum Tippers {
     return (IfStatement) first(statements($));
   }
 
-  public static Expression eliminateLiteral( final InfixExpression x, final boolean b) {
+  public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
     final List<Expression> $ = extract.allOperands(x);
     wizard.removeAll(b, $);
     switch ($.size()) {
@@ -57,26 +55,24 @@ public enum Tippers {
     }
   }
 
-   public static ListRewrite insertAfter( final Statement where,  final List<Statement> what,  final ASTRewrite r,
-      final TextEditGroup g) {
+  public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
       if (¢ < 0)
         return $;
   }
 
-   public static ListRewrite insertBefore( final Statement where,  final List<Statement> what,  final ASTRewrite r,
-      final TextEditGroup g) {
+  public static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
   }
 
-   public static IfStatement invert( final IfStatement ¢) {
+  public static IfStatement invert(final IfStatement ¢) {
     return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
   }
 
-   public static IfStatement makeShorterIf( final IfStatement s) {
+  public static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
     final IfStatement $ = invert(s);
     if (then.isEmpty())
@@ -88,7 +84,7 @@ public enum Tippers {
     return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
-  public static boolean mixedLiteralKind( final List<Expression> xs) {
+  public static boolean mixedLiteralKind(final List<Expression> xs) {
     if (xs.size() <= 2)
       return false;
     int previousKind = -1;
@@ -109,8 +105,7 @@ public enum Tippers {
         .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[] {}));
   }
 
-   public static ASTRewrite replaceTwoStatements( final ASTRewrite r,  final Statement what, final Statement by,
-      final TextEditGroup g) {
+  public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = az.block(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
@@ -123,12 +118,12 @@ public enum Tippers {
     return r;
   }
 
-  public static boolean shoudlInvert( final IfStatement s) {
+  public static boolean shoudlInvert(final IfStatement s) {
     final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !Tippers.thenIsShorter(s);
   }
 
-  public static boolean thenIsShorter( final IfStatement s) {
+  public static boolean thenIsShorter(final IfStatement s) {
     final Statement then = then(s), elze = elze(s);
     if (elze == null)
       return true;
@@ -148,19 +143,19 @@ public enum Tippers {
     return positivePrefixLength($) >= positivePrefixLength(invert($));
   }
 
-  private static int positivePrefixLength( final IfStatement $) {
+  private static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
   }
 
-  private static int sequencerRank( final ASTNode ¢) {
+  private static int sequencerRank(final ASTNode ¢) {
     return iz.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
-  public static void remove( final ASTRewrite r,  final Statement s, final TextEditGroup g) {
+  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 
-  public static <T> void removeLast( final List<T> ¢) {
+  public static <T> void removeLast(final List<T> ¢) {
     ¢.remove(¢.size() - 1);
   }
 }
