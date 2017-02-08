@@ -18,8 +18,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Abbreviates the name of a method parameter that is a viable candidate for
  * abbreviation (meaning that its name is suitable for renaming, and isn'tipper
  * the desired name). The abbreviated name is the first character in the last
@@ -30,8 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015/09/24 */
 public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
-  static void fixJavadoc( final MethodDeclaration d, final SimpleName oldName, final String newName,  final ASTRewrite r,
-      final TextEditGroup g) {
+  static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
@@ -46,7 +43,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
             }
   }
 
-   private static String getExtraDimensions(final SingleVariableDeclaration d) {
+  private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (String ¢ = d + ""; ¢.endsWith("[]");) {
       $ += "s";
@@ -55,12 +52,12 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return $;
   }
 
-  private static boolean isShort( final SingleVariableDeclaration ¢) {
+  private static boolean isShort(final SingleVariableDeclaration ¢) {
     final String $ = namer.shorten(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(¢.getName().getIdentifier());
   }
 
-  private static boolean legal( final SingleVariableDeclaration $,  final MethodDeclaration d) {
+  private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
     if (namer.shorten($.getType()) == null)
       return false;
     for (final SimpleName ¢ : new MethodExplorer(d).localVariables())
@@ -72,19 +69,19 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
-   private static String pluralVariadic( final SingleVariableDeclaration ¢) {
+  private static String pluralVariadic(final SingleVariableDeclaration ¢) {
     return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
-  private static boolean suitable( final SingleVariableDeclaration ¢) {
+  private static boolean suitable(final SingleVariableDeclaration ¢) {
     return JavaTypeNameParser.make(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
 
-  @Override  public String description( final SingleVariableDeclaration ¢) {
+  @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip( final SingleVariableDeclaration d,  final ExclusionManager exclude) {
+  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
@@ -93,7 +90,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, make.from(d).identifier(newName), $, r, g);
         fixJavadoc($, oldName, newName, r, g);
       }

@@ -12,8 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** {@code
  * a ? b : c
  * } is the same as {@code
@@ -35,13 +33,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
-  private static boolean isTernaryOfBooleanLitreral( final ConditionalExpression ¢) {
+  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
     return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
   }
 
   /** Consider an expression {@code
-     * a ? b : c
-     * } in a sense it is the same as {@code
+      * a ? b : c
+      * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>
@@ -59,11 +57,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * }
    * </ol>
   */
-   private static Expression simplifyTernary( final ConditionalExpression ¢) {
+  private static Expression simplifyTernary(final ConditionalExpression ¢) {
     return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), copy.of(¢.getExpression()));
   }
 
-   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
+  private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
@@ -78,7 +76,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return isTernaryOfBooleanLitreral(¢);
   }
 
-  @Override  public Expression replacement( final ConditionalExpression ¢) {
+  @Override public Expression replacement(final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }
 }

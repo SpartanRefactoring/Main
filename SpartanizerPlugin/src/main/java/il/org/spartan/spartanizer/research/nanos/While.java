@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** like {@link CountIf but for while loops}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-29 */
@@ -30,15 +28,15 @@ public class While {
       return anyTips(tippers, ¢);
     }
 
-    @Override  public Tip pattern(final WhileStatement ¢) {
+    @Override public Tip pattern(final WhileStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
-    @Override  public String description() {
+    @Override public String description() {
       return "Count elements in collection that satisfy some predicate";
     }
 
-    @Override  public String technicalName() {
+    @Override public String technicalName() {
       return "CountEInCSatisfyingX";
     }
 

@@ -13,25 +13,23 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Replace {@code (long)X} by {@code 1L*X}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
 public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpression>//
     implements TipperCategory.NOP {
-   private static NumberLiteral literal( final Expression ¢) {
+  private static NumberLiteral literal(final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1L");
     return $;
   }
 
-   private static InfixExpression replacement( final Expression $) {
+  private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @Override  public String description(final CastExpression ¢) {
+  @Override public String description(final CastExpression ¢) {
     return "Use 1L*" + expression(¢) + " instead of (long)" + expression(¢);
   }
 

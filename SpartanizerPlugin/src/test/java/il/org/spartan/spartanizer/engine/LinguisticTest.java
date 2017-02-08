@@ -50,7 +50,6 @@ public class LinguisticTest {
     azzert.that(Linguistic.time(0), is(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(0)));
   }
 
-
   @Test public void testTimeMAX() {
     azzert.that(Linguistic.time(Long.MAX_VALUE), is(new DecimalFormat(Linguistic.DOUBLE_FORMAT).format(9223372036.85)));
   }

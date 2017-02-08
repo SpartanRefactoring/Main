@@ -11,8 +11,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
  * a <= length - 1
@@ -23,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2-12-2016 */
 public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
-  @Override  public ASTNode replacement(final InfixExpression ¢) {
+  @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixPlus(right(¢))//
         || !"1".equals(token(az.numberLiteral(right(az.infixExpression(right(¢))))))//
@@ -35,7 +33,7 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     return iz.infixLess(¢);
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }
 }

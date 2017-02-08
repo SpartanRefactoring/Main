@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-29 */
@@ -50,17 +49,17 @@ public class Table_NanosDistribution extends FolderASTVisitor {
       try {
         npStatistics
             .logNode(findFirst.instanceOf(MethodDeclaration.class).in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
-      } catch ( @SuppressWarnings("unused") final AssertionError __) {
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch ( @SuppressWarnings("unused") final NullPointerException ¢) {
+      } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
         System.err.print("N");
-      } catch ( @SuppressWarnings("unused") final IllegalArgumentException ¢) {
+      } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(cleanerVisitor);
     return true;
   }

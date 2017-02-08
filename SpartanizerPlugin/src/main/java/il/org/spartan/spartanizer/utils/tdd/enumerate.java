@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Oct 28, 2016 */
@@ -36,7 +35,7 @@ public enum enumerate {
    * @author Noam Yefet
    * @param ¢
    * @since Nov 1, 2016 */
-  public static int statements( final ASTNode n) {
+  public static int statements(final ASTNode n) {
     if (n == null)
       return 0;
     final Int $ = new Int();
@@ -127,7 +126,7 @@ public enum enumerate {
   }
   // For you to implement! Let's TDD and get it on!
 
-  public static int ifStatements( final ASTNode ¢) {
+  public static int ifStatements(final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
@@ -140,7 +139,7 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int loops( final ASTNode n) {
+  public static int loops(final ASTNode n) {
     if (n == null)
       return 0;
     final Int $ = new Int();
@@ -169,7 +168,7 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int ternaries( final ASTNode ¢) {
+  public static int ternaries(final ASTNode ¢) {
     if (¢ == null)
       return 0;
     final Int $ = new Int();

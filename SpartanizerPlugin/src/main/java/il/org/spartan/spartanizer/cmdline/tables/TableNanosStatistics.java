@@ -18,8 +18,6 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
-
-
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
@@ -54,15 +52,15 @@ public class TableNanosStatistics extends FolderASTVisitor {
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch ( @SuppressWarnings("unused") final AssertionError __) {
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch ( @SuppressWarnings("unused") final IllegalArgumentException __) {
+      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -96,7 +94,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
         .forEach(λ -> pWriter.col(λ, 0));
   }
 
-  private static boolean anyTips( final Collection<JavadocMarkerNanoPattern> ps,  final MethodDeclaration d) {
+  private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
   }
 }

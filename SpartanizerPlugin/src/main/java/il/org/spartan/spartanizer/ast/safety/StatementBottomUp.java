@@ -11,68 +11,66 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-29 */
 public abstract class StatementBottomUp<R> extends Reducer<R> {
-   protected R map( final AssertStatement ¢) {
+  protected R map(final AssertStatement ¢) {
     return atomic(¢.getExpression(), ¢.getMessage());
   }
 
-   protected R map(final Block b) {
+  protected R map(final Block b) {
     R $ = reduce();
     for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
 
-   protected R map( final BreakStatement ¢) {
+  protected R map(final BreakStatement ¢) {
     return atomic(¢.getLabel());
   }
 
-   protected R map(final ConstructorInvocation ¢) {
+  protected R map(final ConstructorInvocation ¢) {
     return reduceExpressions(step.arguments(¢));
   }
 
-   protected R map( final ContinueStatement ¢) {
+  protected R map(final ContinueStatement ¢) {
     return atomic(¢.getLabel());
   }
 
-   protected R map( final DoStatement ¢) {
+  protected R map(final DoStatement ¢) {
     return map(¢.getBody());
   }
 
-   protected R map(@SuppressWarnings("unused") final EmptyStatement __) {
+  protected R map(@SuppressWarnings("unused") final EmptyStatement __) {
     return atomic();
   }
 
-   protected R map( final EnhancedForStatement ¢) {
+  protected R map(final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
 
-   protected R map(@SuppressWarnings("unused") final Expression __) {
+  protected R map(@SuppressWarnings("unused") final Expression __) {
     return reduce();
   }
 
-   protected R map( final ExpressionStatement ¢) {
+  protected R map(final ExpressionStatement ¢) {
     return atomic(¢.getExpression());
   }
 
-   protected R map(final IfStatement ¢) {
+  protected R map(final IfStatement ¢) {
     return reduce(map(expression(¢)), map(then(¢)), map(elze(¢)));
   }
 
-   protected R map( final LabeledStatement ¢) {
+  protected R map(final LabeledStatement ¢) {
     return reduce(map(¢.getLabel()), map(¢.getBody()));
   }
 
-   protected R map( final ReturnStatement ¢) {
+  protected R map(final ReturnStatement ¢) {
     return atomic(¢.getExpression());
   }
 
-   public final R map( final Statement ¢) {
+  public final R map(final Statement ¢) {
     if (¢ == null)
       return reduce();
     switch (¢.getNodeType()) {
@@ -115,7 +113,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
       case WHILE_STATEMENT:
         return map((WhileStatement) ¢);
       default:
-        assert fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", ¢.getClass().getSimpleName()));
+        assert fault.unreachable() : fault.specifically(String.format("Missing 'case' in switch for class: %s", wizard.nodeName(¢)));
         return reduce();
     }
   }
@@ -124,15 +122,15 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return reduce(fragments(¢));
   }
 
-   protected R map(final SuperConstructorInvocation ¢) {
+  protected R map(final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-   protected R map(final SuperMethodInvocation ¢) {
+  protected R map(final SuperMethodInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-   protected R reduceExpressions( final List<Expression> xs) {
+  protected R reduceExpressions(final List<Expression> xs) {
     R $ = reduce();
     if (xs != null)
       for (final Expression ¢ : xs)
@@ -140,11 +138,11 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return $;
   }
 
-   protected R map( final SynchronizedStatement ¢) {
+  protected R map(final SynchronizedStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 
-   protected R map( final TryStatement ¢) {
+  protected R map(final TryStatement ¢) {
     return reduce(//
         reduceResources(¢), //
         map(¢.getBody()), //
@@ -161,7 +159,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return reduce(fragments(¢));
   }
 
-  protected R reduce( final List<VariableDeclarationFragment> ¢) {
+  protected R reduce(final List<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclarationFragment::getInitializer).map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
@@ -169,19 +167,19 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return catchClauses(¢).stream().map(CatchClause::getBody).map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
-   protected R atomic(@SuppressWarnings("unused") final TypeDeclarationStatement __) {
+  protected R atomic(@SuppressWarnings("unused") final TypeDeclarationStatement __) {
     return reduce();
   }
 
-   protected R map( final WhileStatement ¢) {
+  protected R map(final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 
-   protected R atom() {
+  protected R atom() {
     return reduce();
   }
 
-   protected R atomic(final Expression... ¢) {
+  protected R atomic(final Expression... ¢) {
     return reduce(atom(), reduceExpressions(as.list(¢)));
   }
 }

@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
 /** Testing utils for expanders Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-12-19 */
@@ -41,7 +40,7 @@ public enum BloatingTestUtilities {
       this.classText = classText;
     }
 
-     public Operand gives(final String $) {
+    public Operand gives(final String $) {
       assert $ != null;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
@@ -68,7 +67,7 @@ public enum BloatingTestUtilities {
       return null;
     }
 
-     public Operand givesWithBinding(final String $) {
+    public Operand givesWithBinding(final String $) {
       assert $ != null;
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
@@ -95,7 +94,7 @@ public enum BloatingTestUtilities {
      * @param f tested method name. expanders will be applied only for this
      *        method
      * @return */
-     public Operand givesWithBinding(final String $, final String f) {
+    public Operand givesWithBinding(final String $, final String f) {
       assert $ != null;
       final CompilationUnit u = az.compilationUnit(ast);
       final String wrap = classText;
@@ -121,13 +120,13 @@ public enum BloatingTestUtilities {
       return null;
     }
 
-    /** Rename all the SimpleNames in a compilation-unit to toList
-     * consistent names : v1,v2,....
+    /** Rename all the SimpleNames in a compilation-unit to toList consistent
+     * names : v1,v2,....
      * @author Dor Ma'ayan
      * @since 19-01-2017
      * @param b
      * @return */
-     private static CompilationUnit rename(final CompilationUnit u) {
+    private static CompilationUnit rename(final CompilationUnit u) {
       if (u == null)
         return null;
       counter = 0;

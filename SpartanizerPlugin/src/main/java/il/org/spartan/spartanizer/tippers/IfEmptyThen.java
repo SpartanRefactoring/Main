@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** convert {@code if (x) ; else {a;} } into {@code
  * if (!x)
  * a;
@@ -26,7 +25,7 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement>//
     return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 
-  @Override  public Statement replacement( final IfStatement ¢) {
+  @Override public Statement replacement(final IfStatement ¢) {
     final IfStatement $ = subject.pair(elze(¢), null).toNot(¢.getExpression());
     return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
   }

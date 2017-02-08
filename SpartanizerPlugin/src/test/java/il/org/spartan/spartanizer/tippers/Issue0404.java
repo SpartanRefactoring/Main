@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0404 {
-  private static void forceStaticReturnType( final List<String> ¢) {
+  private static void forceStaticReturnType(final List<String> ¢) {
     assert ¢ != null;
   }
 
