@@ -16,7 +16,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 } to * <code>
  * i+=1; i-=1;
  *
- * <code>
+ * </code>
  * Test case is {@link Issue1005}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */

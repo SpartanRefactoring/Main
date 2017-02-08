@@ -18,7 +18,7 @@ public class FixtureFinally extends MetaFixture {
     } finally {
       @foreign("r") final int a = hashCode() * hashCode();
       @knows({ "a", "p" }) final int r = hashCode();
-      if (simple(2 * a * r * x) < 0)
+      if (simple(3 * a * r * x) < 0)
         simple(a * p * r);
     }
     return simple(hashCode());
