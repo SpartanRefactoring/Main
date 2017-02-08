@@ -88,12 +88,20 @@ public enum enumerate {
    * @author Osher Hajaj
    * @since 16-11-07 */
   @SuppressWarnings("boxing") public static int blockTypes(final MethodDeclaration d) {
-    int $ = 0;
-    final List<?> l = step.statements(step.body(d));
+      final List<?> l = step.statements(step.body(d));
     final boolean[] arr = new boolean[10];
-    final int BLOCK = 0, IFSTATE = 1, FORSTATE = 2, WHILESTATE = 3, SWITCHSTATE = 4, DOSTATE = 5, SYNC = 6, TRY = 7, LAMBDA = 7;
-    range.to(arr.length).forEach(λ -> arr[λ] = false);
-    for (final Object ¢ : l)
+      range.to(arr.length).forEach(λ -> arr[λ] = false);
+      final int LAMBDA = 7;
+      final int TRY = 7;
+      final int SYNC = 6;
+      final int DOSTATE = 5;
+      final int SWITCHSTATE = 4;
+      final int WHILESTATE = 3;
+      final int FORSTATE = 2;
+      final int IFSTATE = 1;
+      final int BLOCK = 0;
+      int $ = 0;
+      for (final Object ¢ : l)
       if (¢ instanceof Block && !arr[BLOCK]) {
         ++$;
         arr[BLOCK] = true;

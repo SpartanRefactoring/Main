@@ -106,9 +106,9 @@ public final class izTest {
 
   @Test public void conditionalOrTest() {
     final Expression e1 = null;
-    final InfixExpression e2 = null;
-    assert !iz.conditionalOr(e1);
-    assert !iz.conditionalOr(e2);
+      assert !iz.conditionalOr(e1);
+      final InfixExpression e2 = null;
+      assert !iz.conditionalOr(e2);
     assert iz.conditionalOr(e("true || false"));
     assert !iz.conditionalOr(e("x!=5"));
   }

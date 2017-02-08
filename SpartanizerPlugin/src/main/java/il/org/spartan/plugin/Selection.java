@@ -102,12 +102,12 @@ public class Selection extends AbstractSelection<Selection> {
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset(), l = o + textSelection.getLength();
-    int no = o, nl = l;
-    try {
+      try {
       final IMarker[] ms = r.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
       boolean changed = false;
       int i = 0;
-      for (; i < ms.length; ++i) {
+          int no = o;
+          for (; i < ms.length; ++i) {
         if (ms[i] == null)
           continue;
         final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END);
@@ -120,7 +120,8 @@ public class Selection extends AbstractSelection<Selection> {
           break;
         }
       }
-      for (; i < ms.length; ++i) {
+          int nl = l;
+          for (; i < ms.length; ++i) {
         final int ce = ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue();
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() <= l && ce >= l) {
           nl = ce;

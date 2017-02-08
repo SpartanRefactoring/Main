@@ -24,33 +24,26 @@ public class Issue1001 {
     }
 
     void f2() {
-      int a;
-      int b;
-      a = 0;
-      b = 0;
-      x(a += b += 1);
+        int a = 0;
+        int b = 0;
+        x(a += b += 1);
     }
 
     void f3() {
-      int a;
-      a = 0;
-      x(a += 1);
+        int a = 0;
+        x(a += 1);
     }
 
     void f4() {
-      int a;
-      int b;
-      a = 0;
-      b = 0;
-      x(a %= b |= 1);
+        int a = 0;
+        int b = 0;
+        x(a %= b |= 1);
     }
 
     void f5() {
-      int a;
-      double b;
-      a = 0;
-      b = 0;
-      x(a += b += 1);
+        int a = 0;
+        double b = 0;
+        x(a += b += 1);
     }
 
     public static Issue1001Aux instance() {

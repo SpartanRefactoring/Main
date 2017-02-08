@@ -79,11 +79,13 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
     assert e1 != null;
     assert e2 != null;
-    final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>(), es1 = extract.allOperands(e1);
+    final List<Expression> es1 = extract.allOperands(e1);
     assert es1 != null;
     final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
-    for (final Expression ¢ : es1) {
+      final List<Expression> different = new ArrayList<>();
+      final List<Expression> $ = new ArrayList<>();
+      for (final Expression ¢ : es1) {
       assert ¢ != null;
       (isIn(¢, es2) ? $ : different).add(¢);
     }
@@ -131,14 +133,14 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     Expression addition = null;
     for (final Integer ¢ : range.from(0).to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
-    Expression multiplication = null;
-    if ($.isEmpty())
+      if ($.isEmpty())
       return addition;
     if ($.size() == 1)
       return subject.pair(first($), addition).to(Operator.TIMES);
     if ($.size() <= 1)
       return null;
-    for (int ¢ = 0; ¢ < $.size() - 1;) {
+      Expression multiplication = null;
+      for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
       multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1)))
           .to(Operator.TIMES);
