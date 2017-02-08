@@ -20,7 +20,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 } to * <code>
  * cond ? a + b : a + c
  *
- * <code>
+ * </code>
  * Test case is {@link Issue1049}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */

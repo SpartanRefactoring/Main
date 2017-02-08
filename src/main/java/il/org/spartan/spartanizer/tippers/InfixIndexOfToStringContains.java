@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -31,19 +30,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
   /** Indicates if the infix expression contains two strings with string
    * operation between them */
   @Override public boolean canTip(final InfixExpression x) {
-    return tippers.stream().anyMatch(λ -> λ.canTip(x) && stringOperands(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
-  }
-
-  private static boolean stringOperands(final ASTNode n1, final ASTNode n2) {
-    return stringOperand(n1) && stringOperand(n2);
-  }
-
-  private static boolean stringOperand(final ASTNode ¢) {
-    return iz.name(¢) && isStringType(¢) || iz.stringLiteral(¢);
-  }
-
-  private static boolean isStringType(final ASTNode ¢) {
-    return "String".equals(analyze.type(az.simpleName(¢)));
+    return tippers.stream().anyMatch(λ -> λ.canTip(x) && certain.string(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
   }
 
   /** Operates the first tip that can be implemented. */
