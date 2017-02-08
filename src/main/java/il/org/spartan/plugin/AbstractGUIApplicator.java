@@ -257,7 +257,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    *        <code><b>m</b></code>
    * @return <code><b>true</b></code> <em>iff</em>the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNotSelected(n);
+    return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
   }
 
   /** Performs the current tipper on the provided compilation unit
