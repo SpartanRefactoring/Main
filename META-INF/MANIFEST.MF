@@ -20,7 +20,9 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  lib/spartan-1.2.jar,
- lib/cli-1.02.jar
+ lib/cli-1.02.jar,
+ lib/mockito-all-2.0.2-beta.jar,
+ lib/hamcrest-all-1.3.jar
 Export-Package: il.org.spartan.bloater;version="2.8.1";,
  il.org.spartan.bloater.collateral;version="2.8.1";,
  il.org.spartan.bloater.inflate;version="2.8.1";,
