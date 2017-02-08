@@ -7,7 +7,6 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
-
 /** TODO: Matteo Orru' please add a description
  * @author Matteo Orru'
  * @since 2016 */
@@ -59,7 +58,7 @@ public final class Tips2 {
 
   /** @param name the name of the applicator
    * @return an instance of the class */
-  public static AbstractGUIApplicator get( final String name) {
+  public static AbstractGUIApplicator get(final String name) {
     assert name != null;
     return map.get(name);
   }

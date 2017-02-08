@@ -6,7 +6,6 @@ import java.util.Arrays;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 
-
 /** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
  * @author Matteo Orru'
@@ -29,7 +28,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
     this(".");
   }
 
-  HeadlessSpartanizer( final String path) {
+  HeadlessSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
@@ -69,7 +68,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
         defaultApplicator2.defaultListenerNoisy()
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
             .defaultRunAction(new CommandLine$Applicator()).go();
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       ¢.printStackTrace();
     }
   }

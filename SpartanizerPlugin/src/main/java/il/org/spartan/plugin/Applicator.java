@@ -5,7 +5,6 @@ import java.util.function.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-
 /** Configurable applicator.
  * @param <L> I think we do not need this one. It couples classes too much.
  * @author Ori Roth
@@ -53,7 +52,7 @@ public abstract class Applicator {
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator runContext(final Consumer<Runnable> ¢) {
+  public Applicator runContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
     return this;
   }
@@ -66,7 +65,7 @@ public abstract class Applicator {
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
+  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
   }
@@ -79,7 +78,7 @@ public abstract class Applicator {
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator passes(final int ¢) {
+  public Applicator passes(final int ¢) {
     passes = ¢;
     return this;
   }
@@ -92,7 +91,7 @@ public abstract class Applicator {
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator listener(final Listener ¢) {
+  public Applicator listener(final Listener ¢) {
     listener = ¢;
     return this;
   }
@@ -105,7 +104,7 @@ public abstract class Applicator {
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator selection(final Selection ¢) {
+  public Applicator selection(final Selection ¢) {
     selection = ¢;
     return this;
   }
@@ -114,7 +113,7 @@ public abstract class Applicator {
    * @param ¢ JD
    * @author Matteo Orru'
    * @return <code><b>this</b></code> applicator */
-   protected Applicator selection(final AbstractSelection<?> ¢) {
+  protected Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
   }
@@ -127,7 +126,7 @@ public abstract class Applicator {
   /** Name this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator name(final String ¢) {
+  public Applicator name(final String ¢) {
     name = ¢;
     return this;
   }
@@ -140,7 +139,7 @@ public abstract class Applicator {
   /** Name this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-   public Applicator operationName(final Linguistic.Activity ¢) {
+  public Applicator operationName(final Linguistic.Activity ¢) {
     operationName = ¢;
     return this;
   }

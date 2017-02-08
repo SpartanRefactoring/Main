@@ -4,8 +4,9 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** A test class regarding a bug with {@link FragmentInitializerToForInitializers}. Desired
- * behavior is not to allow inlining if the modifiers are different.
+/** A test class regarding a bug with
+ * {@link FragmentInitializerToForInitializers}. Desired behavior is not to
+ * allow inlining if the modifiers are different.
  * @author Dan Greenstein
  * @since 2016 */
 @Ignore // TODO Yossi Gil

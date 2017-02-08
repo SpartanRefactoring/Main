@@ -17,14 +17,13 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** Replace {@code x = x # a } by {@code x #= a } where # can be any operator.
  * Tested in {@link Issue103}
  * @author Alex Kopzon
  * @since 2016 */
 public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment>//
     implements TipperCategory.SyntacticBaggage {
-  private static List<Expression> dropAnyIfSame( final List<Expression> xs, final Expression left) {
+  private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)
       if (same(¢, left)) {
@@ -34,27 +33,27 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     return null;
   }
 
-  private static List<Expression> dropFirstIfSame( final Expression ¢, final List<Expression> xs) {
+  private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
     return !same(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
   }
 
-  private static Expression reduce(final InfixExpression x,  final Expression deleteMe) {
+  private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
     final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
     return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
   }
 
-  private static ASTNode replacement( final Expression to, final InfixExpression from) {
+  private static ASTNode replacement(final Expression to, final InfixExpression from) {
     if (iz.arrayAccess(to) || !sideEffects.free(to))
       return null;
     final Expression $ = reduce(from, to);
     return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
   }
 
-  @Override  public String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Replace x = x " + operator(¢) + "a; with x " + operator(¢) + "= a;";
   }
 
-  @Override public ASTNode replacement( final Assignment ¢) {
+  @Override public ASTNode replacement(final Assignment ¢) {
     return ¢.getOperator() != ASSIGN || az.infixExpression(from(¢)) == null ? null : replacement(to(¢), az.infixExpression(from(¢)));
   }
 }

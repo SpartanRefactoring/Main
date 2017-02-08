@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** For each element in range (a,b) apply some method
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-12 */
@@ -27,19 +25,19 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final ForStatement ¢) {
+  @Override public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @Override  public String technicalName() {
+  @Override public String technicalName() {
     return "ForEachFromL₁ToL₂ApplyS";
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

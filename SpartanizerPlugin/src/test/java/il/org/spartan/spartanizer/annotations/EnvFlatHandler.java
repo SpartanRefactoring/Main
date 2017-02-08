@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 
-
-
 /** TODO: Dan Greenstein please add a description Implements the handler of
  * flatEnv outer annotation. * @author Dan Greenstein
  * @author Alex Kopzon
@@ -35,14 +33,14 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢ - Node that will be searched for suitable annotations.
    * @param es - Set to compare against. */
-  public EnvFlatHandler(final ASTNode ¢,  final LinkedHashSet<Entry<String, Binding>> es) {
+  public EnvFlatHandler(final ASTNode ¢, final LinkedHashSet<Entry<String, Binding>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = ¢;
     runTest();
   }
 
-  public EnvFlatHandler( final String ¢) {
+  public EnvFlatHandler(final String ¢) {
     userProvidedSet = null;
     n = getCompilationUnit(¢);
     runTest();
@@ -53,14 +51,14 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢
    * @param es */
-  public EnvFlatHandler( final String ¢,  final LinkedHashSet<Entry<String, Binding>> es) {
+  public EnvFlatHandler(final String ¢, final LinkedHashSet<Entry<String, Binding>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = getCompilationUnit(¢);
     runTest();
   }
 
-  @Override  protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
+  @Override protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
 
@@ -71,12 +69,12 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param $ JD */
-  private void handler( final SingleMemberAnnotation a) {
+  private void handler(final SingleMemberAnnotation a) {
     if (a == null || !"FlatEnvUse".equals(a.getTypeName() + ""))
       return;
     foundTestedAnnotation = true;
     a.accept(new ASTVisitor() {
-      @Override public boolean visit( final NormalAnnotation ¢) {
+      @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(step.values(¢));
         return true;

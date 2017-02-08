@@ -118,8 +118,9 @@ public final class Version230 {
 
   @Test public void assignmentAssignmentChain5() {
     trimmingOf("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));")//
-        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(((b4=(b5=13)))));") //
-        .stays();
+        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));") //
+        .stays()//
+    ;
   }
 
   @Test public void assignmentAssignmentNew() {
@@ -208,61 +209,61 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod() {
-    trimmingOf(" @Override public void messageFinished(final LocalMessage myMessage, final int __, final int ofTotal){\n"
-        + "  if(!isMessageSuppressed(myMessage)){\n" + //
-        "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(myMessage);\n"
-        + "  stats.unreadMessageCount +=myMessage.isSet(Flag.SEEN)? 0 : 1;\n"
-        + "  stats.flaggedMessageCount +=myMessage.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null)\n"
+    trimmingOf(" @Override public void messageFinished(final LocalMessage myMessage, final int __, final int ofTotal){ "
+        + "  if(!isMessageSuppressed(myMessage)){ " + //
+        "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(myMessage); "
+        + "  stats.unreadMessageCount +=myMessage.isSet(Flag.SEEN)? 0 : 1; "
+        + "  stats.flaggedMessageCount +=myMessage.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
             .gives(
                 "@Override public void messageFinished(final LocalMessage myMessage,final int __,final int ofTotal){if(isMessageSuppressed(myMessage))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(myMessage);stats.unreadMessageCount+=myMessage.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=myMessage.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod2() {
-    trimmingOf(" public void f(){  if(!g(message)){\n" + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message);\n"
-        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1;\n"
-        + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null)\n"
+    trimmingOf(" public void f(){  if(!g(message)){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
+        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
+        + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
             .gives(
                 "public void f(){if(g(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod3() {
-    trimmingOf(" public void f(){  if(!g(a)){\n" + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message);\n"
-        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1;\n"
-        + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null)\n"
+    trimmingOf(" public void f(){  if(!g(a)){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
+        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
+        + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
             .gives(
                 "public void f(){if(g(a))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod4() {
-    trimmingOf(" public void f(){  if(!g){\n" + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message);\n"
-        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1;\n"
-        + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null)\n"
+    trimmingOf(" public void f(){  if(!g){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
+        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
+        + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
             .gives(
                 "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void bugInLastIfInMethod5() {
-    trimmingOf(" public void f(){  if(!g){\n" + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages2.add(message);\n"
-        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1;\n" + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; } }")//
+    trimmingOf(" public void f(){  if(!g){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages2.add(message); "
+        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; " + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; } }")//
             .gives(
                 "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod6() {
-    trimmingOf(" public void f(){  if(!g){  final int messages=3;\n"
-        + "  messages2.add(message); stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1;\n"
+    trimmingOf(" public void f(){  if(!g){  final int messages=3; "
+        + "  messages2.add(message); stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
         + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; } }")//
             .gives(
                 "public void f(){if(g)return;final int messages=3;messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
 
   @Test public void bugInLastIfInMethod7() {
-    trimmingOf("public void f(){\n" + //
-        "  if(!g){  foo();\n" + //
+    trimmingOf("public void f(){ " + //
+        "  if(!g){  foo(); " + //
         "  bar(); } }")
             //
             .gives("public void f(){if(g)return;foo();bar();}");
@@ -570,22 +571,22 @@ public final class Version230 {
   }
 
   @Test public void commonSuffixIfBranches() {
-    trimmingOf("if(a){ \n++i;\nf();\n} else {\n++j;\nf();\n}").gives("if(a)\n++i;\nelse \n++j;\n\nf();");
+    trimmingOf("if(a){  ++i; f(); } else { ++j; f(); }").gives("if(a) ++i; else  ++j;  f();");
   }
 
   @Test public void commonSuffixIfBranchesDisappearingElse() {
-    trimmingOf("if(a){ \n++i;\nf();\n} else {\nf();\n}")//
-        .gives("if(a)\n++i;\n\nf();");
+    trimmingOf("if(a){  ++i; f(); } else { f(); }")//
+        .gives("if(a) ++i;  f();");
   }
 
   @Test public void commonSuffixIfBranchesDisappearingThen() {
-    trimmingOf("if(a){ \nf();\n} else {\n++j;\nf();\n}")//
-        .gives("if(!a)\n++j;\n\nf();");
+    trimmingOf("if(a){  f(); } else { ++j; f(); }")//
+        .gives("if(!a) ++j;  f();");
   }
 
   @Test public void commonSuffixIfBranchesDisappearingThenWithinIf() {
-    trimmingOf("if(x)if(a){ \nf();\n} else {\n++j;\nf();\n} else { h();++i;++j;++k;if(a)f();else g();}")
-        .gives("if(x){ if(!a)\n++j;\n\nf();} else { h();++i;++j;++k;if(a)f();else g();}");
+    trimmingOf("if(x)if(a){  f(); } else { ++j; f(); } else { h();++i;++j;++k;if(a)f();else g();}")
+        .gives("if(x){ if(!a) ++j;  f();} else { h();++i;++j;++k;if(a)f();else g();}");
   }
 
   @Test public void compareWithBoolean00() {
@@ -904,17 +905,17 @@ public final class Version230 {
   }
 
   @Test public void doNotConsolidateNewArrayActual() {
-    trimmingOf("occupied=new boolean[capacity];\nplaceholder=new boolean[capacity];")//
+    trimmingOf("occupied=new boolean[capacity]; placeholder=new boolean[capacity];")//
         .stays();
   }
 
   @Test public void doNotConsolidateNewArraySimplifiedl() {
-    trimmingOf("a=new int[1];\nb=new int[1];")//
+    trimmingOf("a=new int[1]; b=new int[1];")//
         .stays();
   }
 
   @Test public void doNotConsolidatePlainNew() {
-    trimmingOf("a=new A();\nb=new B();")//
+    trimmingOf("a=new A(); b=new B();")//
         .stays();
   }
 
@@ -924,7 +925,7 @@ public final class Version230 {
   }
 
   @Test public void doNotInlineWithDeclaration() {
-    trimmingOf(" private Class<? extends T> retrieveClazz()throws ClassNotFoundException { nonnull(className);\n"
+    trimmingOf(" private Class<? extends T> retrieveClazz()throws ClassNotFoundException { nonnull(className); "
         + " @SuppressWarnings(\"unchecked\")final Class<T> $=(Class<T>)findClass(className);return $;}")//
             .stays();
   }
@@ -949,7 +950,7 @@ public final class Version230 {
   }
 
   @Test public void duplicatePartialIfBranches() {
-    trimmingOf(" if(a){ f();g();++i;} else { f();g();\n" + " --i;}")//
+    trimmingOf(" if(a){ f();g();++i;} else { f();g(); " + " --i;}")//
         .gives(" f();g();if(a)++i;else  --i;");
   }
 
@@ -1012,30 +1013,30 @@ public final class Version230 {
 
   @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
     trimmingOf(
-        "public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');\n" + " ++i;} else { i +=2;System.h('@');System.h('@');++i;}\n}")//
-            .gives("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');\n"
+        "public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!'); " + " ++i;} else { i +=2;System.h('@');System.h('@');++i;} }")//
+            .gives("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!'); "
                 + " } else { i +=2;System.h('@');System.h('@');} ++i;}");
   }
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
-    trimmingOf("public final static final void f(){ if(tr()){ int i=0;System.h(i + 0);++i;\n" + " } else { int i=1;System.h(i * 1);++i;}\n}");
+    trimmingOf("public final static final void f(){ if(tr()){ int i=0;System.h(i + 0);++i; " + " } else { int i=1;System.h(i * 1);++i;} }");
   }
 
   @Test public void ifBugSecondTry() {
     trimmingOf(
-        " final int c=2;if(c==c + 1){ if(c==c + 2)return null;c=f().charAt(3);\n" + " } else if(Character.digit(c, 16)==-1)return null;return null;")
-            .gives(" final int c=2;if(c !=c + 1){ if(Character.digit(c, 16)==-1)return null;\n"
-                + " } else { if(c==c + 2)return null;c=f().charAt(3);}\n" + " return null;");
+        " final int c=2;if(c==c + 1){ if(c==c + 2)return null;c=f().charAt(3); " + " } else if(Character.digit(c, 16)==-1)return null;return null;")
+            .gives(" final int c=2;if(c !=c + 1){ if(Character.digit(c, 16)==-1)return null; "
+                + " } else { if(c==c + 2)return null;c=f().charAt(3);} " + " return null;");
   }
 
   @Test public void ifBugSimplified() {
-    trimmingOf(" if(x){ if(z)return null;c=f().charAt(3);} else if(y)return;\n")
-        .gives(" if(!x){ if(y)return;} else { if(z)return null;\n" + " c=f().charAt(3);}\n");
+    trimmingOf(" if(x){ if(z)return null;c=f().charAt(3);} else if(y)return; ")
+        .gives(" if(!x){ if(y)return;} else { if(z)return null; " + " c=f().charAt(3);} ");
   }
 
   @Test public void ifBugWithPlainEmptyElse() {
-    trimmingOf(" if(z)f();else  ;\n")//
-        .gives(" if(z)f();\n");
+    trimmingOf(" if(z)f();else  ; ")//
+        .gives(" if(z)f(); ");
   }
 
   @Test public void ifDegenerateThenInIf() {
@@ -1049,25 +1050,25 @@ public final class Version230 {
   }
 
   @Test public void ifEmptyThenThrow() {
-    trimmingOf("if(b){ /* empty */} else { throw new Excpetion();\n}")//
+    trimmingOf("if(b){ /* empty */} else { throw new Excpetion(); }")//
         .gives("if(!b)throw new Excpetion();");
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimmingOf("if(b){ /* empty */;\n} // no else\n  throw new Exception();\n")//
+    trimmingOf("if(b){ /* empty */; } // no else   throw new Exception(); ")//
         .gives("throw new Exception();")//
         .stays();
   }
 
   @Test public void ifEmptyThenThrowVariant1() {
-    trimmingOf("if(b){;} throw new Exception();\n")//
+    trimmingOf("if(b){;} throw new Exception(); ")//
         .gives("throw new Exception();")//
         .stays()//
     ;
   }
 
   @Test public void ifEmptyThenThrowWitinIf() {
-    trimmingOf("if(x)if(b){ /* empty */} else { throw new Excpetion();\n} else { f();f();f();f();f();f();f();f();}")
+    trimmingOf("if(x)if(b){ /* empty */} else { throw new Excpetion(); } else { f();f();f();f();f();f();f();f();}")
         .gives("if(x)if(!b)throw new Excpetion();else { f();f();f();f();f();f();f();f();}");
   }
 
@@ -1215,8 +1216,13 @@ public final class Version230 {
         .gives("if(!a)throw e;break;");
   }
 
+  @Test public void ifThrowFooElseThrowBar() {
+    trimmingOf("if(a)throw foo;else throw bar;")//
+        .gives("throw a ? foo : bar;");
+  }
+
   @Test public void ifThrowNoElseThrow() {
-    trimmingOf("if(!(e.getCause()instanceof Error))throw e;\nthrow(Error)e.getCause();")
+    trimmingOf("if(!(e.getCause()instanceof Error))throw e; throw(Error)e.getCause();")
         .gives(" throw !(e.getCause()instanceof Error)?e:(Error)e.getCause();");
   }
 
@@ -1246,14 +1252,14 @@ public final class Version230 {
   }
 
   @Test public void infiniteLoopBug1() {
-    trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet){\n"
-        + " return hasAnnotation((VariableDeclarationStatement)f.getParent());\n}")//
+    trimmingOf("static boolean hasAnnotation(final VariableDeclarationFragment zet){ "
+        + " return hasAnnotation((VariableDeclarationStatement)f.getParent()); }")//
             .stays();
   }
 
   @Test public void infiniteLoopBug2() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd){ return hasAnnotation(n.modifiers());\n" + " }")
-        .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd){\n" + " return hasAnnotation(s.modifiers());}");
+    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd){ return hasAnnotation(n.modifiers()); " + " }")
+        .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd){ " + " return hasAnnotation(s.modifiers());}");
   }
 
   @Test public void infiniteLoopBug3() {
@@ -1273,38 +1279,38 @@ public final class Version230 {
   }
 
   @Test public void inline01() {
-    trimmingOf(" public int y(){ final Z u=new Z(6);S.h(u.j);return u;}\n").gives(" public int y(){ final Z $=new Z(6);S.h($.j);return $;}\n");
+    trimmingOf(" public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives(" public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
   @Ignore @Test public void inlineArrayInitialization1() {
-    trimmingOf("public void multiDimensionalIntArraysAreEqual(){\n" //
-        + " int[][] int1={{1, 2, 3}, {4, 5, 6}};\n" //
-        + " int[][] int2={{1, 2, 3}, {4, 5, 6}};\n" //
-        + " assertArrayEquals(int1, int2);\n" //
+    trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
+        + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
+        + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
+        + " assertArrayEquals(int1, int2); " //
         + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){\n" //
+            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
                 + " int[][] int1={{1, 2, 3}, {4, 5, 6}}" //
-                + " , int2={{1, 2, 3}, {4, 5, 6}};\n" //
-                + " assertArrayEquals(int1, int2);\n" //
+                + " , int2={{1, 2, 3}, {4, 5, 6}}; " //
+                + " assertArrayEquals(int1, int2); " //
                 + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){\n" //
-                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}});\n" //
+            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
+                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}}); " //
                 + "}");
   }
 
   @Test public void inlineArrayInitialization2() {
-    trimmingOf("public double[] solve(){\n" //
-        + " final SimpleRegression regress=new SimpleRegression(true);\n" //
-        + " for(double[] dxx : points)\n" //
-        + " regress.addData(d[0], d[1]);\n" //
-        + " final double[] $={ regress.getSlope(), regress.getIntercept()};\n" //
-        + " return $;\n" //
+    trimmingOf("public double[] solve(){ " //
+        + " final SimpleRegression regress=new SimpleRegression(true); " //
+        + " for(double[] dxx : points) " //
+        + " regress.addData(d[0], d[1]); " //
+        + " final double[] $={ regress.getSlope(), regress.getIntercept()}; " //
+        + " return $; " //
         + "}")
-            .gives("public double[] solve(){\n" //
-                + " final SimpleRegression regress=new SimpleRegression(true);\n" //
-                + " for(double[] dxx : points)\n" //
-                + " regress.addData(d[0], d[1]);\n" //
-                + " return new double[] { regress.getSlope(), regress.getIntercept()};\n" //
+            .gives("public double[] solve(){ " //
+                + " final SimpleRegression regress=new SimpleRegression(true); " //
+                + " for(double[] dxx : points) " //
+                + " regress.addData(d[0], d[1]); " //
+                + " return new double[] { regress.getSlope(), regress.getIntercept()}; " //
                 + "}");
   }
 
@@ -1325,14 +1331,14 @@ public final class Version230 {
 
   /** START OF STABLING TESTS */
   @Test public void inlineintoInstanceCreation() {
-    trimmingOf("public Statement methodBlock(FrameworkMethod m){ final Statement statement=methodBlock(m);\n"
-        + " return new Statement(){ public void evaluate()throws Throwable { try {  statement.evaluate();\n"
-        + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){  handleAssumptionViolation(e);\n"
-        + " } catch(Throwable e){  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));}\n" + " } };\n}")
-            .gives("public Statement methodBlock(FrameworkMethod m){ final Statement $=methodBlock(m);return new Statement(){\n"
-                + " public void evaluate()throws Throwable { try {  $.evaluate();\n"
-                + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){\n" + "  handleAssumptionViolation(e);} catch(Throwable e){\n"
-                + "  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));} } };\n}");
+    trimmingOf("public Statement methodBlock(FrameworkMethod m){ final Statement statement=methodBlock(m); "
+        + " return new Statement(){ public void evaluate()throws Throwable { try {  statement.evaluate(); "
+        + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){  handleAssumptionViolation(e); "
+        + " } catch(Throwable e){  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));} " + " } }; }")
+            .gives("public Statement methodBlock(FrameworkMethod m){ final Statement $=methodBlock(m);return new Statement(){ "
+                + " public void evaluate()throws Throwable { try {  $.evaluate(); "
+                + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){ " + "  handleAssumptionViolation(e);} catch(Throwable e){ "
+                + "  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));} } }; }");
   }
 
   @Test public void inlineintoNextStatementWithSideEffects() {
@@ -1624,7 +1630,7 @@ public final class Version230 {
   }
 
   @Test public void issue38() {
-    trimmingOf(" return o==null ? null : o==CONDITIONAL_AND ? CONDITIONAL_OR \n" + "  : o==CONDITIONAL_OR ? CONDITIONAL_AND   : null;")//
+    trimmingOf(" return o==null ? null : o==CONDITIONAL_AND ? CONDITIONAL_OR  " + "  : o==CONDITIONAL_OR ? CONDITIONAL_AND   : null;")//
         .stays();
   }
 
@@ -1633,25 +1639,25 @@ public final class Version230 {
   }
 
   @Test public void issue39base() {
-    trimmingOf("if(name==null){ if(other.name !=null)return false;\n} else if(!name.equals(other.name))\n" + " return false;\nreturn true;")//
+    trimmingOf("if(name==null){ if(other.name !=null)return false; } else if(!name.equals(other.name)) " + " return false; return true;")//
         .stays();
   }
 
   public void issue39baseDual() {
-    trimmingOf("if(name !=null){ if(!name.equals(other.name))return false;\n} else if(other.name !=null)\n" + " return false;\nreturn true;")
-        .gives("if(name==null){ if(other.name !=null)return false;\n} else if(!name.equals(other.name))\n" + " return false;\nreturn true;");
+    trimmingOf("if(name !=null){ if(!name.equals(other.name))return false; } else if(other.name !=null) " + " return false; return true;")
+        .gives("if(name==null){ if(other.name !=null)return false; } else if(!name.equals(other.name)) " + " return false; return true;");
   }
 
   @Test(timeout = 100) public void issue39versionA() {
-    trimmingOf("if(varArgs){ if(argumentTypes.length<parameterTypes.length - 1){ return false;}\n"
-        + "} else if(parameterTypes.length !=argumentTypes.length){ return false;\n}")
-            .gives("if(!varArgs){ if(parameterTypes.length !=argumentTypes.length){ return false;}\n"
-                + "} else if(argumentTypes.length<parameterTypes.length - 1){ return false;\n}");
+    trimmingOf("if(varArgs){ if(argumentTypes.length<parameterTypes.length - 1){ return false;} "
+        + "} else if(parameterTypes.length !=argumentTypes.length){ return false; }")
+            .gives("if(!varArgs){ if(parameterTypes.length !=argumentTypes.length){ return false;} "
+                + "} else if(argumentTypes.length<parameterTypes.length - 1){ return false; }");
   }
 
   public void issue39versionAdual() {
-    trimmingOf("if(!varArgs){ if(parameterTypes.length !=argumentTypes.length){ return false;}\n"
-        + "} else if(argumentTypes.length<parameterTypes.length - 1){ return false;\n}")//
+    trimmingOf("if(!varArgs){ if(parameterTypes.length !=argumentTypes.length){ return false;} "
+        + "} else if(argumentTypes.length<parameterTypes.length - 1){ return false; }")//
             .stays();
   }
 
@@ -1666,7 +1672,7 @@ public final class Version230 {
   }
 
   @Test public void issue46() {
-    trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;}\n}").gives("int f(){ ++x;++y;if(!a)return;++i;++j; ++k;\n}");
+    trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;} }").gives("int f(){ ++x;++y;if(!a)return;++i;++j; ++k; }");
   }
 
   @Test public void issue49() {
@@ -2380,8 +2386,8 @@ public final class Version230 {
   }
 
   @Test public void pushdowConditionalActualExampleFirstPass() {
-    trimmingOf("return determineEncoding(bytes)==Encoding.B ? f((ENC_WORD_PREFIX + mimeCharset + B), text, charset, bytes)\n"
-        + ": f((ENC_WORD_PREFIX + mimeCharset + Q), text, charset, bytes)\n;")
+    trimmingOf("return determineEncoding(bytes)==Encoding.B ? f((ENC_WORD_PREFIX + mimeCharset + B), text, charset, bytes) "
+        + ": f((ENC_WORD_PREFIX + mimeCharset + Q), text, charset, bytes) ;")
             .gives("return f( determineEncoding(bytes)==Encoding.B ? ENC_WORD_PREFIX+mimeCharset+B"
                 + " : ENC_WORD_PREFIX+mimeCharset+Q,text,charset,bytes);");
   }
@@ -2798,27 +2804,27 @@ public final class Version230 {
   }
 
   @Test public void redundantButNecessaryBrackets1() {
-    trimmingOf("if(windowSize !=INFINITE_WINDOW){ if(getN()==windowSize)eDA.addElementRolling(variableDeclarationFragment);\n"
-        + " else if(getN()<windowSize)eDA.addElement(variableDeclarationFragment);\n} else { System.h('!');\n"
-        + " System.h('!');System.h('!');System.h('!');System.h('!');System.h('!');System.h('!');\n"
-        + " eDA.addElement(variableDeclarationFragment);\n}")//
+    trimmingOf("if(windowSize !=INFINITE_WINDOW){ if(getN()==windowSize)eDA.addElementRolling(variableDeclarationFragment); "
+        + " else if(getN()<windowSize)eDA.addElement(variableDeclarationFragment); } else { System.h('!'); "
+        + " System.h('!');System.h('!');System.h('!');System.h('!');System.h('!');System.h('!'); "
+        + " eDA.addElement(variableDeclarationFragment); }")//
             .stays();
   }
 
   @Test public void redundantButNecessaryBrackets2() {
-    trimmingOf("if(windowSize !=INFINITE_WINDOW){ if(getN()==windowSize)eDA.addElementRolling(variableDeclarationFragment);\n"
-        + "} else { System.h('!');System.h('!');System.h('!');System.h('!');System.h('!');\n"
-        + " System.h('!');System.h('!');eDA.addElement(variableDeclarationFragment);\n}")//
+    trimmingOf("if(windowSize !=INFINITE_WINDOW){ if(getN()==windowSize)eDA.addElementRolling(variableDeclarationFragment); "
+        + "} else { System.h('!');System.h('!');System.h('!');System.h('!');System.h('!'); "
+        + " System.h('!');System.h('!');eDA.addElement(variableDeclarationFragment); }")//
             .stays();
   }
 
   @Test public void redundantButNecessaryBrackets3() {
     trimmingOf(
-        "if(b1)if(b2)print1('!');else { if(b3)print3('#');}\nelse {\n" + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$');\n"
-            + " print4('$');print4('$');print4('$');print4('$');print4('$');\n}")
-                .gives("if(b1)if(b2)print1('!');else  if(b3)print3('#');\nelse {\n"
-                    + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$');\n"
-                    + " print4('$');print4('$');print4('$');print4('$');print4('$');\n}");
+        "if(b1)if(b2)print1('!');else { if(b3)print3('#');} else { " + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$'); "
+            + " print4('$');print4('$');print4('$');print4('$');print4('$'); }")
+                .gives("if(b1)if(b2)print1('!');else  if(b3)print3('#'); else { "
+                    + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$'); "
+                    + " print4('$');print4('$');print4('$');print4('$');print4('$'); }");
   }
 
   @Test public void removeSuper() {
@@ -2842,12 +2848,12 @@ public final class Version230 {
   }
 
   @Test public void renameToDollarActual() {
-    trimmingOf(" public static DeletePolicy fromInt(int initialSetting){  for(DeletePolicy policy: values()){\n"
-        + "  if(policy.setting==initialSetting){   return policy; }\n"
+    trimmingOf(" public static DeletePolicy fromInt(int initialSetting){  for(DeletePolicy policy: values()){ "
+        + "  if(policy.setting==initialSetting){   return policy; } "
         + "  }  throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\");}")
-            .gives(" public static DeletePolicy fromInt(int initialSetting){  for(DeletePolicy $: values()){\n"
-                + "  if($.setting==initialSetting){   return $; }\n"
-                + "  }  throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\");\n" + " }");
+            .gives(" public static DeletePolicy fromInt(int initialSetting){  for(DeletePolicy $: values()){ "
+                + "  if($.setting==initialSetting){   return $; } "
+                + "  }  throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\"); " + " }");
   }
 
   @Test public void renameToDollarEnhancedFor() {
@@ -2966,7 +2972,7 @@ public final class Version230 {
   }
 
   @Test public void shortestBranchInIf() {
-    trimmingOf(" int a=0;if(s.equals(known)){ S.console();} else { a=3;}\n").gives("int a=0;if(!s.equals(known))a=3;else S.console();");
+    trimmingOf(" int a=0;if(s.equals(known)){ S.console();} else { a=3;} ").gives("int a=0;if(!s.equals(known))a=3;else S.console();");
   }
 
   @Test public void shortestFirstAlignment() {
@@ -2999,32 +3005,32 @@ public final class Version230 {
   @Test public void shortestIfBranchFirst02() {
     trimmingOf("if(!s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2;"
         + " else if(s.charAt(i)=='d')u -=1;return u;} else { return 8;}")
-            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i)\n" + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d')\n"
-                + "  u -=1;return u;\n");
+            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i) " + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
+                + "  u -=1;return u; ");
   }
 
   @Test public void shortestIfBranchFirst02a() {
-    trimmingOf(" if(!s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i)\n" + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d')\n"
+    trimmingOf(" if(!s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i) " + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
         + "  u -=1;return u;} return 8;")
-            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i)\n" + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d')\n"
-                + "  u -=1;return u;\n");
+            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i) " + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
+                + "  u -=1;return u; ");
   }
 
   @Test public void shortestIfBranchFirst02b() {
-    trimmingOf(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2;\n" + " else if(s.charAt(i)=='d')--u;return u;\n")
-        .gives(" int u=0;for(int ¢=0;¢<s.length();++¢)if(s.charAt(¢)=='a')u +=2;\n" + " else if(s.charAt(¢)=='d')--u;return u;\n").stays();
+    trimmingOf(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2; " + " else if(s.charAt(i)=='d')--u;return u; ")
+        .gives(" int u=0;for(int ¢=0;¢<s.length();++¢)if(s.charAt(¢)=='a')u +=2; " + " else if(s.charAt(¢)=='d')--u;return u; ").stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
-        .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')\n" + "  u +=2;else if(s.charAt(i)=='d')u -=1;return u;\n"));
+        .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a') " + "  u +=2;else if(s.charAt(i)=='d')u -=1;return u; "));
     assert f != null;
     azzert.that(f, iz(" u=0"));
-    azzert.that(extract.nextStatement(f), iz(" for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2;\n" + " else if(s.charAt(i)=='d')u -=1;\n"));
+    azzert.that(extract.nextStatement(f), iz(" for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2; " + " else if(s.charAt(i)=='d')u -=1; "));
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
-    trimmingOf("if(a){ f();g();h();return a;}\nreturn c;").gives("if(!a)return c;f();g();h();return a;");
+    trimmingOf("if(a){ f();g();h();return a;} return c;").gives("if(!a)return c;f();g();h();return a;");
   }
 
   @Test public void shortestOperand01() {
@@ -3430,7 +3436,7 @@ public final class Version230 {
   }
 
   @Test public void synchronizedBraces() {
-    trimmingOf(" synchronized(variables){ for(final String key : variables.keySet())\n" + " $.variables.put(key, variables.get(key));}")//
+    trimmingOf(" synchronized(variables){ for(final String key : variables.keySet()) " + " $.variables.put(key, variables.get(key));}")//
         .stays();
   }
 
@@ -3520,7 +3526,7 @@ public final class Version230 {
   /* @Test public void ternarize16(){
    * trimmingOf("String u=m;int num2;if(m.equals(f()))num2=2;"). stays();} */
 
-  /* @Test public void ternarize16a(){ trimmingOf("int n1, n2=0, n3;\n" +
+  /* @Test public void ternarize16a(){ trimmingOf("int n1, n2=0, n3; " +
    * " if(d)n2=2;")// .gives("int n1, n2=d ? 2: 0, n3;");} */
   public void ternarize18() {
     trimmingOf("final String u=s;System.h(s.equals(u)?tH3+u:h2A+u+0);")//
@@ -3584,7 +3590,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize46() {
-    trimmingOf(" int a , b=0;if(m.equals(NG)==true)if(b==3){ return 3;} else {\n" + " a+=7;} else if(b==3){ return 2;} else { a=7;}")
+    trimmingOf(" int a , b=0;if(m.equals(NG)==true)if(b==3){ return 3;} else { " + " a+=7;} else if(b==3){ return 2;} else { a=7;}")
         .gives("int a;if(m.equals(NG)==true)if(0==3){return 3;}else{a+=7;}else if(0==3){return 2;}else{a=7;}");
   }
 
@@ -3604,7 +3610,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize55() {
-    trimmingOf("if(key.equals(markColumn))to.put(key, a.toString());\nelse to.put(key, missing(key, a)? Z2 : get(key, a));")
+    trimmingOf("if(key.equals(markColumn))to.put(key, a.toString()); else to.put(key, missing(key, a)? Z2 : get(key, a));")
         .gives("to.put(key,key.equals(markColumn)?a.toString():missing(key,a)?Z2:get(key,a));");
   }
 
@@ -3641,10 +3647,10 @@ public final class Version230 {
   }
 
   @Test public void unsafeBlockSimlify() {
-    trimmingOf("public void testParseInteger(){ String source=\"10\";use(source);{\n" + " BigFraction c=properFormat.parse(source);assert c !=null;\n"
-        + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());\n" + " azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());} {\n"
-        + " BigFraction c=improperFormat.parse(source);assert c !=null;\n" + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());\n"
-        + " azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());}\n}")//
+    trimmingOf("public void testParseInteger(){ String source=\"10\";use(source);{ " + " BigFraction c=properFormat.parse(source);assert c !=null; "
+        + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator()); " + " azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());} { "
+        + " BigFraction c=improperFormat.parse(source);assert c !=null; " + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator()); "
+        + " azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());} }")//
             .stays();
   }
 

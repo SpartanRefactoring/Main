@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** reorder comparisons so that the specific value is placed on the right.
  * Specific value means a literal, or any of the two keywords <code>
  * <b>this</b>
@@ -27,12 +26,12 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
     return "Exchange left and right operands of comparison";
   }
 
-  @Override public boolean prerequisite( final InfixExpression ¢) {
+  @Override public boolean prerequisite(final InfixExpression ¢) {
     return specifity.compare(left(¢), right(¢)) < 0 && !¢.hasExtendedOperands() && iz.comparison(¢)
         && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
 
-  @Override public Expression replacement( final InfixExpression ¢) {
+  @Override public Expression replacement(final InfixExpression ¢) {
     return make.conjugate(¢);
   }
 }

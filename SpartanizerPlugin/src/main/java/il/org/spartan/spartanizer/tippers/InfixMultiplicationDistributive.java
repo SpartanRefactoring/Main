@@ -19,11 +19,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
-/** Apply the distributive rule to multiplication: <code>
-* <b>a*b + a*c</b>
- * </code> to <code>
+/** Apply the distributive rule to multiplication: {@code
+* a*b + a*c
+ * } to <code>
 * <b>a * (b + c)</b>
  * </code> .
  * @author Matteo Orru'
@@ -31,11 +29,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>
     //
     implements TipperCategory.Arithmetic, TipperCategory.CommnonFactoring {
-  private static boolean IsSimpleMultiplication( final Expression $) {
+  private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-   private static List<Expression> removeFirstElement( final List<Expression> ¢) {
+  private static List<Expression> removeFirstElement(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first
     return $;
@@ -45,40 +43,40 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "a*b + a*c => a * (b + c)";
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Apply the distributive rule to " + ¢;
   }
 
-  @Override public boolean prerequisite( final InfixExpression $) {
+  @Override public boolean prerequisite(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
 
-  @Override public ASTNode replacement( final InfixExpression ¢) {
+  @Override public ASTNode replacement(final InfixExpression ¢) {
     return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
-  private void addCommon(final Expression op,  final List<Expression> common) {
+  private void addCommon(final Expression op, final List<Expression> common) {
     addNewInList(op, common);
   }
 
-  private void addDifferent(final Expression op,  final List<Expression> different) {
+  private void addDifferent(final Expression op, final List<Expression> different) {
     addNewInList(op, different);
   }
 
-  private void addNewInList(final Expression item,  final List<Expression> xs) {
+  private void addNewInList(final Expression item, final List<Expression> xs) {
     if (!isIn(item, xs))
       xs.add(item);
   }
 
-  @SuppressWarnings("static-method") private boolean isIn(final Expression op,  final List<Expression> allOperands) {
+  @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
     return allOperands.stream().anyMatch(λ -> wizard.same(op, λ));
   }
 
-  @SuppressWarnings("static-method") private void removeElFromList( final List<Expression> items,  final List<Expression> from) {
+  @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
     items.forEach(from::remove);
   }
 
-  private ASTNode replacement( final InfixExpression e1,  final InfixExpression e2) {
+  private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
     assert e1 != null;
     assert e2 != null;
     final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>(), es1 = extract.allOperands(e1);
@@ -110,7 +108,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     );
   }
 
-  @SuppressWarnings("boxing") private ASTNode replacement( final List<Expression> xs) {
+  @SuppressWarnings("boxing") private ASTNode replacement(final List<Expression> xs) {
     if (xs.size() == 1)
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)

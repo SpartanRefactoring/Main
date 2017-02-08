@@ -10,8 +10,6 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
-
 /** Generic applicator
  * @author Matteo Orru'
  * @since 2016 */
@@ -22,12 +20,12 @@ public class Generic$Applicator {
   private static List<String> selectedTipperGroups;
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
-  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes( final String... ss) {
+  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
     final List<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
       for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
-    } catch ( final ClassNotFoundException ¢) {
+    } catch (final ClassNotFoundException ¢) {
       ¢.printStackTrace();
     }
     return as.list($); // useless?
@@ -37,7 +35,7 @@ public class Generic$Applicator {
     selectedNodeTypes = setAllNodeTypes();
   }
 
-  public Generic$Applicator( final String... classes) {
+  public Generic$Applicator(final String... classes) {
     System.out.println("classes:" + Arrays.toString(classes));
     if (classes == null) {
       selectedNodeTypes = setAllNodeTypes();
@@ -48,7 +46,7 @@ public class Generic$Applicator {
     }
   }
 
-  public Generic$Applicator(final String[] classes,  final String... tipperGroups) {
+  public Generic$Applicator(final String[] classes, final String... tipperGroups) {
     this(classes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
@@ -96,13 +94,13 @@ public class Generic$Applicator {
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
-   private static List<String> setSelectedTipperGroups(final String... ¢) {
+  private static List<String> setSelectedTipperGroups(final String... ¢) {
     final List<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;
   }
 
-   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = toolbox.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();
     if (!selectedTipperGroups.contains(g.name()))
