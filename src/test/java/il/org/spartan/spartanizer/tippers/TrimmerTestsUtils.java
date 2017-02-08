@@ -46,22 +46,29 @@ public enum TrimmerTestsUtils {
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);
-      if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
-        assertSimilar(get(), peeled);
+      if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
+        return;
+      final String expected = get();
+      if (expected.equals(peeled) || !essence(peeled).equals(essence(expected)))
+        return;
+      System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(expected));
+      azzert.that(essence(peeled), is(essence(expected)));
     }
 
     public Operand gives(final String $) {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
-      if (wrap.equals(unpeeled))
+      if (wrap.equals(unpeeled)) {
+        System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;");
         azzert.fail("Nothing done on " + get());
+      }
       final String peeled = w.off(unpeeled);
       if (peeled.equals(get()))
         azzert.that("No trimming of " + get(), peeled, is(not(get())));
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
-        System.err.printf("Quick cut and paste is .gives(\"%s\")\n", essence(peeled));
+        System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(peeled));
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);

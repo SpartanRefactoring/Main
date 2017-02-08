@@ -59,16 +59,16 @@ final class BindingFun implements IApplication {
     }
     for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\workspace\\testAddComments"))
       try {
-          final ICompilationUnit u = openCompilationUnit(f);
-          final ASTParser parser = ASTParser.newParser(AST.JLS8);
-      parser.setResolveBindings(true);
-      parser.setSource(u);
-      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-      ___.______unused();
-      iterateMethodInvocations(cu);
-   } catch (JavaModelException | IOException ¢) {
-      ¢.printStackTrace();
-   }
+        final ICompilationUnit u = openCompilationUnit(f);
+        final ASTParser parser = ASTParser.newParser(AST.JLS8);
+        parser.setResolveBindings(true);
+        parser.setSource(u);
+        final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        ___.______unused();
+        iterateMethodInvocations(cu);
+      } catch (JavaModelException | IOException ¢) {
+        ¢.printStackTrace();
+      }
     return IApplication.EXIT_OK;
   }
 

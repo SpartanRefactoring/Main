@@ -23,6 +23,7 @@ import il.org.spartan.utils.*;
  * @year 2016
  * @author Matteo Orru'
  * @since */
+@SuppressWarnings("TooBroadScope")
 final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";
   private static final String script = "./essence";
@@ -221,7 +222,7 @@ final class BatchSpartanizerApplication implements IApplication {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
-    final int tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
+    final int length2 = out.length(), tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
         wordCount = system.wc(Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
     final int nodes2 = count.nodes(from), body2 = metrics.bodySize(from);
@@ -229,8 +230,7 @@ final class BatchSpartanizerApplication implements IApplication {
     befores.print(in);
     afters.print(out);
     report.summaryFileName();
-      final int length2 = out.length();
-      report//
+    report//
         .put("TipperCategory", extract.category(in))//
         .put("Name", extract.name(in))//
         .put("Nodes1", nodes)//
