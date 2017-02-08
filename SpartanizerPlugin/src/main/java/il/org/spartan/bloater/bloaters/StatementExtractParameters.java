@@ -82,7 +82,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
           void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
               final TextEditGroup g) {
-            // TODO Ori Roth: Use subject to block. 
+            // TODO Ori Roth: Use subject to block.
             final Block b = p.getAST().newBlock();
             statements(b).add(s);
             statements(b).add(ns);
@@ -102,11 +102,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
-    final List<Expression> $ = new LinkedList<>();
     final List<ASTNode> excludedParents = new LinkedList<>();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
+    final List<Expression> $ = new LinkedList<>();
     s.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)

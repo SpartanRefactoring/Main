@@ -8,13 +8,13 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
-
+import il.org.spartan.spartanizer.utils.*;
 
 /** Extract items to which a given annotation applies
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
 public interface annotees {
-  static List<SimpleName> names( final List<VariableDeclarationFragment> ¢) {
+  static List<SimpleName> names(final List<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclaration::getName).collect(Collectors.toList());
   }
 
@@ -42,24 +42,24 @@ public interface annotees {
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return of((VariableDeclarationStatement) $);
       default:
-        assert false : $.getClass().getSimpleName();
+        assert fault.unreachable() : fault.specifically("Unexpected type", wizard.nodeName($));
         return null;
     }
   }
 
-  static List<SimpleName> of( final AnnotationTypeMemberDeclaration $) {
+  static List<SimpleName> of(final AnnotationTypeMemberDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of( final AnnotationTypeDeclaration $) {
+  static List<SimpleName> of(final AnnotationTypeDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of( final EnumConstantDeclaration $) {
+  static List<SimpleName> of(final EnumConstantDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of( final EnumDeclaration $) {
+  static List<SimpleName> of(final EnumDeclaration $) {
     return as.list($.getName());
   }
 
@@ -67,15 +67,15 @@ public interface annotees {
     return names(fragments($));
   }
 
-  static List<SimpleName> of( final MethodDeclaration $) {
+  static List<SimpleName> of(final MethodDeclaration $) {
     return as.list($.getName());
   }
 
-  static List<SimpleName> of( final SingleVariableDeclaration ¢) {
+  static List<SimpleName> of(final SingleVariableDeclaration ¢) {
     return as.list(¢.getName());
   }
 
-  static List<SimpleName> of( final TypeDeclaration $) {
+  static List<SimpleName> of(final TypeDeclaration $) {
     return as.list($.getName());
   }
 

@@ -7,7 +7,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-
 /** convert {@code
  * b || false
  * } to {@code
@@ -21,7 +20,7 @@ public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpre
     return "Remove 'false' argument to '||'";
   }
 
-  @Override public boolean prerequisite( final InfixExpression ¢) {
+  @Override public boolean prerequisite(final InfixExpression ¢) {
     return iz.conditionalOr(¢) && have.falseLiteral(extract.allOperands(¢));
   }
 

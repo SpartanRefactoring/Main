@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** @nano last element in collection, lisp style.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-20 */
@@ -27,11 +25,11 @@ public final class Last extends NanoPatternTipper<MethodInvocation> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final MethodInvocation ¢) {
+  @Override public Tip pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

@@ -7,8 +7,6 @@ import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 
-
-
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, type of subclass
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
@@ -18,7 +16,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     reset();
   }
 
-  public Self col( final Accumulator ¢) {
+  public Self col(final Accumulator ¢) {
     return col(¢.name(), ¢.value());
   }
 
@@ -51,7 +49,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Adds a key and a <code><b>double</b><code> value to this instance 
-        * @param key The key to be added; must not be <code><b>null</b></code>
+         * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
   public Self col(final String key, final double value) {
@@ -71,7 +69,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
-  public final Self col(final String key,  final Integer value) {
+  public final Self col(final String key, final Integer value) {
     return value == null ? col(key) : col(key, value.intValue());
   }
 
@@ -88,18 +86,18 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
-  public final Self col(final String key,  final Object value) {
+  public final Self col(final String key, final Object value) {
     if (value == null)
       return col(key);
     super.put(key, value);
     return self();
   }
 
-  public final Self col(final String key,  final Object a[], final int i) {
+  public final Self col(final String key, final Object a[], final int i) {
     return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
 
-  public final Self col(final String key,  final Object[] os) {
+  public final Self col(final String key, final Object... os) {
     return col(key, os == null || os.length == 0 ? null : (Object) os);
   }
 

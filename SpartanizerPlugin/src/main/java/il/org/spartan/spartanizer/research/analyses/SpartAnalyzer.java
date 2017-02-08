@@ -62,7 +62,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                new LispLastIndex(), //
+                new LastIndex(), //
                 new Infix.SafeReference(), //
                 new Empty(), //
                 new Singleton(), //
@@ -70,7 +70,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             .add(MethodInvocation.class, //
                 new First(), //
                 new Last(), //
-                new OverloadingDelegation(), //
+                new SelfReduction(), //
                 null) //
             .add(ReturnStatement.class, //
                 new ReturnPrevious(), //

@@ -11,8 +11,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-
-
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 8, 2016 */
@@ -41,7 +39,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
-   default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
+  default List<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return yieldDescendants.untilClass(ReturnStatement.class).from(¢);
   }
 
@@ -73,7 +71,7 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notStatic( final MethodDeclaration ¢) {
+  default boolean notStatic(final MethodDeclaration ¢) {
     return !iz.static¢(¢);
   }
 
@@ -81,15 +79,15 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.voidType(returnType(¢));
   }
 
-  default boolean returnTypeSameAsParameter( final MethodDeclaration ¢) {
+  default boolean returnTypeSameAsParameter(final MethodDeclaration ¢) {
     return ¢ != null && (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
-  default boolean returnTypeSameAs( final MethodDeclaration ¢,  final Type t) {
+  default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
     return ¢ != null && t != null && (t + "").equals(returnType(¢) + "");
   }
 
-  default boolean same( final ASTNode n,  final ASTNode b) {
+  default boolean same(final ASTNode n, final ASTNode b) {
     return n != null && b != null && (n + "").equals(b + "");
   }
 
@@ -117,7 +115,7 @@ public interface MethodPatternUtilitiesTrait {
     return first(statements(¢));
   }
 
-  default boolean safeEquals( final Object o1,  final Object o2) {
+  default boolean safeEquals(final Object o1, final Object o2) {
     return o1 != null && o2 != null && o1.equals(o2);
   }
 

@@ -10,8 +10,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-
-
 /** There's also {@link Infix.SafeReference} which catches the same
  * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
@@ -40,7 +38,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -56,7 +54,7 @@ public final class SafeReference extends NanoPatternTipper<ConditionalExpression
     return firstReplacement(tippers);
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Safety;
   }
 }

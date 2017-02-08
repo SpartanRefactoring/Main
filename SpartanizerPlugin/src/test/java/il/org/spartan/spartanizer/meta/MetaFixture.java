@@ -19,8 +19,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
 
-
-
 /** An abstract class that allows a class to apply testing on its own code. To
  * use, extend it. See examples of current extenders to see how.
  * <p>
@@ -33,7 +31,7 @@ public abstract class MetaFixture {
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
 
-   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
+  public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
     final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
@@ -69,15 +67,15 @@ public abstract class MetaFixture {
     return first(yieldDescendants.untilClass(¢).from(reflectedCompilationUnit()));
   }
 
-   public List<SingleMemberAnnotation> singleMemberAnnotations() {
+  public List<SingleMemberAnnotation> singleMemberAnnotations() {
     return yieldDescendants.untilClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 
-   public List<Annotation> annotations() {
+  public List<Annotation> annotations() {
     return yieldDescendants.untilClass(Annotation.class).from(reflectedCompilationUnit());
   }
 
-  public static int value( final SingleMemberAnnotation ¢) {
+  public static int value(final SingleMemberAnnotation ¢) {
     return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
 
@@ -87,7 +85,7 @@ public abstract class MetaFixture {
         .reduce((x, y) -> x + y).get();
   }
 
-  private static CompilationUnit loadAST( final String fileName) {
+  private static CompilationUnit loadAST(final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
@@ -99,30 +97,30 @@ public abstract class MetaFixture {
     return null;
   }
 
-  private static String loadText( final String fileName) {
+  private static String loadText(final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;
   }
 
-  private static IPath getSrcPath( final File ¢) {
+  private static IPath getSrcPath(final File ¢) {
     IPath $ = new Path(¢.getAbsolutePath());
     while (!$.isEmpty() && !"src".equals($.lastSegment()))
       $ = $.removeLastSegments(1);
     return $;
   }
 
-   protected static String[] values( final SingleMemberAnnotation ¢) {
+  protected static String[] values(final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
 
-   private static String[] values( final Expression $) {
+  private static String[] values(final Expression $) {
     return $ == null ? new String[] {} : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
   }
 
-  private static String[] values( final StringLiteral ¢) {
+  private static String[] values(final StringLiteral ¢) {
     return as.array(¢.getLiteralValue());
   }
 
@@ -130,11 +128,11 @@ public abstract class MetaFixture {
     return values(step.expressions(¢));
   }
 
-  private static String[] values( final List<Expression> xs) {
+  private static String[] values(final List<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
-   protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -143,7 +141,7 @@ public abstract class MetaFixture {
       new KnowsTest(null, null, null), //
   };
 
-   protected static Collection<Object[]> collect(final String annotationName,  final MetaFixture... fs) {
+  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
