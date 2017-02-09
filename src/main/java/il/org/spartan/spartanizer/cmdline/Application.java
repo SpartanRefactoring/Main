@@ -136,6 +136,7 @@ final class Application implements IApplication {
         ++failed;
       } catch (final Exception ¢) {
         System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
+
         ¢.printStackTrace();
         ++failed;
       } finally {

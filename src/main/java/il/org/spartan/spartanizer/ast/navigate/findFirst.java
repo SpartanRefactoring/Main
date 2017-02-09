@@ -29,7 +29,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
+   *         <code><b>null</b></code> if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode ¢) {
     return instanceOf(AssertStatement.class).in(¢);
   }
@@ -78,7 +78,7 @@ public interface findFirst {
   /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
    * @param pattern JD
    * @return first {@link Expression} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
+   *         <code><b>null</b></code> if there is no such statement. */
   static Expression expression(final ASTNode ¢) {
     return findFirst.instanceOf(Expression.class).in(¢);
   }
@@ -87,7 +87,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
+   *         <code><b>null</b></code> if there is no such statement. */
   static ForStatement forStatement(final ASTNode ¢) {
     return instanceOf(ForStatement.class).in(¢);
   }
@@ -96,7 +96,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
+   *         <code><b>null</b></code> if there is no such statement. */
   static IfStatement ifStatement(final ASTNode ¢) {
     return instanceOf(IfStatement.class).in(¢);
   }
@@ -166,7 +166,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b> if there is no such statement. */
+   *         <code><b>null</b></code> if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
     return instanceOf(WhileStatement.class).in(¢);
   }

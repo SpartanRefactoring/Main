@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-28 */
+@SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
   ;
   /** Retrieve all operands, including parenthesized ones, under an expression
