@@ -102,7 +102,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
-    final List<ASTNode> excludedParents = new LinkedList<>();
+    final Collection<ASTNode> excludedParents = new LinkedList<>();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
@@ -138,7 +138,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         }
       }
 
-      void consider(final List<Expression> $, final Expression x) {
+      void consider(final Collection<Expression> $, final Expression x) {
         if (!excludedParents.contains(x.getParent()) // TODO Ori Roth: check
                                                      // whether
                                                      // legitimate
@@ -146,7 +146,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           $.add(x);
       }
 
-      void consider(final List<Expression> $, final List<Expression> xs) {
+      void consider(final List<Expression> $, final Iterable<Expression> xs) {
         xs.forEach(λ -> consider($, λ));
       }
     });
@@ -160,7 +160,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param g
    * @param ilr */
   static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
-    final List<String> idns = new LinkedList<>();
+    final Collection<String> idns = new LinkedList<>();
     if (r.getAddedImports() != null)
       idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)

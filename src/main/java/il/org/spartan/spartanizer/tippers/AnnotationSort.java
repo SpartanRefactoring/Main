@@ -62,7 +62,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
 
-  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
+  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(toList());
   }
 

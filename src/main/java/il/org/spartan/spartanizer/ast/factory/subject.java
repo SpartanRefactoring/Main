@@ -26,7 +26,7 @@ public enum subject {
     return $;
   }
 
-  public static InfixExpression append(final InfixExpression base, final List<Expression> adds) {
+  public static InfixExpression append(final InfixExpression base, final Iterable<Expression> adds) {
     final Wrapper<InfixExpression> $ = new Wrapper<>(base);
     adds.forEach(λ -> $.set(append($.get(), λ)));
     return $.get();

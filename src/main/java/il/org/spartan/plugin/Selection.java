@@ -89,7 +89,7 @@ public class Selection extends AbstractSelection<Selection> {
 
   /** @param ¢ JD
    * @return name for selection, extracted from the compilation unit */
-  private static String getName(final ICompilationUnit ¢) {
+  private static String getName(final IJavaElement ¢) {
     return ¢ == null ? null : ¢.getElementName();
   }
 
@@ -343,7 +343,7 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param s JD
      * @return selection by tree selection */
-    private static Selection by(final ITreeSelection s) {
+    private static Selection by(final IStructuredSelection s) {
       final List<?> ss = s.toList();
       if (ss.size() == 1) {
         final Object o = first(ss);
@@ -435,7 +435,7 @@ public class Selection extends AbstractSelection<Selection> {
       return $ == null ? empty() : Selection.of(¢.getCompilationUnit(), new TextSelection($.getOffset(), $.getLength())).setName(¢.getElementName());
     }
 
-    public static ISourceRange makertToRange(final IMember $) {
+    public static ISourceRange makertToRange(final ISourceReference $) {
       try {
         return $.getSourceRange();
       } catch (final JavaModelException ¢) {
@@ -476,8 +476,8 @@ public class Selection extends AbstractSelection<Selection> {
      * @param us list of files in selection
      * @param ms list of members in selection
      * @return name for the selection */
-    private static String getMultiSelectionName(final List<MarkerItem> is, final List<IJavaProject> ps, final List<IPackageFragmentRoot> rs,
-        final List<IPackageFragment> hs, final List<ICompilationUnit> us, final List<IMember> ms) {
+    private static String getMultiSelectionName(final Collection<MarkerItem> is, final Iterable<IJavaProject> ps, final Collection<IPackageFragmentRoot> rs,
+                                                final Collection<IPackageFragment> hs, final Collection<ICompilationUnit> us, final Collection<IMember> ms) {
       final List<String> $ = new LinkedList<>();
       ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())

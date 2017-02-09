@@ -73,11 +73,11 @@ public class WrappedCompilationUnit {
    * @author matteo
    * @param ¢ JD
    * @return an instance created by the parameter */
-  public static List<WrappedCompilationUnit> ov(final List<CompilationUnit> ¢) {
+  public static List<WrappedCompilationUnit> ov(final Collection<CompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
-  public static List<WrappedCompilationUnit> of(final List<ICompilationUnit> ¢) {
+  public static List<WrappedCompilationUnit> of(final Collection<ICompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
   }
 
