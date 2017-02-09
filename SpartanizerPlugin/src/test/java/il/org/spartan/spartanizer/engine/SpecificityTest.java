@@ -11,10 +11,12 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
+import java.util.Comparator;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SpecificityTest {
-  private static final specificity SPECIFICITY = new specificity();
+  private static final Comparator SPECIFICITY = new specificity();
 
   @Test public void characterGreaterThanNull() {
     azzert.that(SPECIFICITY.compare(e("'a'"), e("null")), greaterThan(0));

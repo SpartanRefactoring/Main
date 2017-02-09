@@ -90,11 +90,11 @@ public enum SuppressWarningsLaconicOnOff {
     return $;
   }
 
-  static Set<String> getDisablers(final String ¢) {
+  static Collection<String> getDisablers(final String ¢) {
     return getKeywords(¢, disabling.disablers);
   }
 
-  static Set<String> getEnablers(final String ¢) {
+  static Iterable<String> getEnablers(final String ¢) {
     return getKeywords(¢, disabling.enablers);
   }
 
