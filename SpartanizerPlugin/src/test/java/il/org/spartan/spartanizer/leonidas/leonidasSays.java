@@ -176,7 +176,7 @@ public enum leonidasSays {
     }
   }
 
-  static void azzertEquals(final String s, final Document d) {
+  static void azzertEquals(final String s, final IDocument d) {
     String actual = null;
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:

@@ -25,7 +25,7 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     implements TipperCategory.Sorting {
   private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
 
-  private static boolean isSortedAndDistinct(final List<? extends IExtendedModifier> ms) {
+  private static boolean isSortedAndDistinct(final Iterable<? extends IExtendedModifier> ms) {
     int previousRank = -1;
     for (final IExtendedModifier current : ms) {
       final int currentRank = rank(current);
@@ -36,7 +36,7 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return true;
   }
 
-  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
+  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
   }
 
@@ -60,7 +60,7 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private N go(final N $) {
-    final List<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
+    final Collection<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);

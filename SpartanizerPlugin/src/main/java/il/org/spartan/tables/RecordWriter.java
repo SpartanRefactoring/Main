@@ -1,6 +1,7 @@
 package il.org.spartan.tables;
 
 import java.io.*;
+import java.util.Map;
 
 import il.org.spartan.*;
 
@@ -63,7 +64,7 @@ public class RecordWriter implements Closeable {
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
 
-  private void writeData(final Row<?> ¢) {
+  private void writeData(final Map<String, Object> ¢) {
     write(renderer.renderRow(¢.values()));
   }
 
@@ -74,10 +75,10 @@ public class RecordWriter implements Closeable {
         renderer.afterHeader());
   }
 
-  private String writeHeaderInner(final Row<?> r) {
+  private String writeHeaderInner(final Map<String, Object> m) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();
-    r.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));
+    m.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));
     return $ + "";
   }
 }

@@ -63,7 +63,7 @@ public enum haz {
     return !collect.usesOf("$").inside(¢).isEmpty();
   }
 
-  public static boolean dollar(final List<SimpleName> ns) {
+  public static boolean dollar(final Collection<SimpleName> ns) {
     return ns.stream().anyMatch(λ -> "$".equals(identifier(λ)));
   }
 
@@ -73,11 +73,11 @@ public enum haz {
     return ¢ != null && step.expression(¢) != null;
   }
 
-  public static boolean final¢(final List<IExtendedModifier> ms) {
+  public static boolean final¢(final Collection<IExtendedModifier> ms) {
     return ms.stream().anyMatch(λ -> IExtendedModifiersRank.find(λ) == IExtendedModifiersRank.FINAL);
   }
 
-  static boolean hasAnnotation(final List<IExtendedModifier> ¢) {
+  static boolean hasAnnotation(final Collection<IExtendedModifier> ¢) {
     return ¢.stream().anyMatch(IExtendedModifier::isAnnotation);
   }
 
@@ -87,7 +87,7 @@ public enum haz {
 
   public static boolean hidings(final List<Statement> ss) {
     return new Predicate<List<Statement>>() {
-      final Set<String> dictionary = new HashSet<>();
+      final Collection<String> dictionary = new HashSet<>();
 
       boolean ¢(final CatchClause ¢) {
         return ¢(¢.getException());
@@ -97,7 +97,7 @@ public enum haz {
         return ¢(step.initializers(¢));
       }
 
-      boolean ¢(final List<Expression> xs) {
+      boolean ¢(final Collection<Expression> xs) {
         return xs.stream().anyMatch(λ -> iz.variableDeclarationExpression(λ) && ¢(az.variableDeclarationExpression(λ)));
       }
 
@@ -138,15 +138,15 @@ public enum haz {
         return ¢¢¢¢(fragments(¢));
       }
 
-      boolean ¢¢(final List<CatchClause> cs) {
+      boolean ¢¢(final Collection<CatchClause> cs) {
         return cs.stream().anyMatch(this::¢);
       }
 
-      boolean ¢¢¢(final List<VariableDeclarationExpression> xs) {
+      boolean ¢¢¢(final Collection<VariableDeclarationExpression> xs) {
         return xs.stream().anyMatch(this::¢);
       }
 
-      boolean ¢¢¢¢(final List<VariableDeclarationFragment> fs) {
+      boolean ¢¢¢¢(final Collection<VariableDeclarationFragment> fs) {
         return fs.stream().anyMatch(this::¢);
       }
 
@@ -178,7 +178,7 @@ public enum haz {
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {
-      boolean continue¢(final List<VariableDeclarationFragment> fs) {
+      boolean continue¢(final Collection<VariableDeclarationFragment> fs) {
         return fs.stream().anyMatch(λ -> continue¢(step.name(λ)));
       }
 

@@ -22,7 +22,7 @@ public class Logger {
   public static int numMethods;
   private static String currentFile;
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
-  private static final List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
+  private static final Collection<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
    * invoked.

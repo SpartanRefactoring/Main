@@ -21,6 +21,6 @@ public interface certain {
   }
 
   static boolean string(final Expression ¢) {
-    return (¢) == null ? false : iz.stringLiteral(¢) || type.isString(¢) || iz.name(¢) && wizard.isString(analyze.type(az.simpleName(¢)));
+    return ¢ == null ? false : iz.stringLiteral(¢) || type.isString(¢) || iz.name(¢) && wizard.isString(analyze.type(az.simpleName(¢)));
   }
 }

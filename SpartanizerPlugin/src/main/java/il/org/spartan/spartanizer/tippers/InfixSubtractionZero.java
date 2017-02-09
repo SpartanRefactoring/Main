@@ -28,7 +28,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return cons(make.minus(first(prune)), chop(prune));
   }
 
-  private static List<Expression> prune(final List<Expression> ¢) {
+  private static List<Expression> prune(final Collection<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
     return $.size() != ¢.size() ? $ : null;
   }

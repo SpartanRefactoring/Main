@@ -1,7 +1,6 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
-import java.util.List;
 
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.preference.*;
@@ -30,7 +29,7 @@ import il.org.spartan.utils.*;
 public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private int numColumns;
-  private final List<FieldEditor> members = new ArrayList<>();
+  private final Collection<FieldEditor> members = new ArrayList<>();
   private final Group group;
   private final Composite parent;
   private boolean initialized;
