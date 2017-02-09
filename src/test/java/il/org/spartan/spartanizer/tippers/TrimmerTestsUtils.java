@@ -19,6 +19,45 @@ import il.org.spartan.spartanizer.utils.*;
 
 public enum TrimmerTestsUtils {
   ;
+  static String apply(final Tipper<? extends ASTNode> t, final String from) {
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert $ != null;
+    return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
+  }
+
+  public static String applyTrimmer(final Trimmer t, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert u != null;
+    final Document $ = TESTUtils.rewrite(t, u, new Document(from));
+    assert $ != null;
+    return $.get();
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  static void assertSimplifiesTo(final String from, final String expected, final Tipper<? extends ASTNode> n, final Wrap w) {
+    final String wrap = w.on(from), unpeeled = apply(n, wrap);
+    if (wrap.equals(unpeeled))
+      azzert.fail("Nothing done on " + from);
+    final String peeled = w.off(unpeeled);
+    if (peeled.equals(from))
+      azzert.that("No similification of " + from, peeled, is(not(from)));
+    if (tide.clean(peeled).equals(tide.clean(from)))
+      azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), is(not(tide.clean(peeled))));
+    assertSimilar(expected, peeled);
+  }
+
+  public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+    return a.collectSuggestions(u).size();
+  }
+
+  static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
+    return new OperandToTipper<>(from, clazz);
+  }
+
+  public static Operand trimmingOf(final String from) {
+    return new Operand(from);
+  }
+
   public static class Operand extends Wrapper<String> {
     private final Trimmer trimmer;
 
@@ -40,19 +79,10 @@ public enum TrimmerTestsUtils {
       assertSimilar(expected, peeled);
     }
 
-    public void stays() {
+    public void doesNotCrash() {
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
-      if (wrap.equals(unpeeled))
-        return;
-     final String peeled = w.off(unpeeled);
-      if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
-        return;
-      final String expected = get();
-      if (expected.equals(peeled) || !essence(peeled).equals(essence(expected)))
-        return;
-      System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(expected));
-      azzert.that(essence(peeled), is(essence(expected)));
+      assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()),
+          Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
     public Operand gives(final String $) {
@@ -97,10 +127,19 @@ public enum TrimmerTestsUtils {
       return null;
     }
 
-    public void doesNotCrash() {
+    public void stays() {
       final Wrap w = Wrap.find(get());
-      assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()),
-          Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
+      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      if (wrap.equals(unpeeled))
+        return;
+      final String peeled = w.off(unpeeled);
+      if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
+        return;
+      final String expected = get();
+      if (expected.equals(peeled) || !essence(peeled).equals(essence(expected)))
+        return;
+      System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(expected));
+      azzert.that(essence(peeled), is(essence(expected)));
     }
 
     public <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N> ¢) {
@@ -166,44 +205,5 @@ public enum TrimmerTestsUtils {
       azzert.that(¢.canTip(findNode(¢)), is(false));
       return this;
     }
-  }
-
-  static String apply(final Tipper<? extends ASTNode> t, final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert $ != null;
-    return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
-  }
-
-  public static String applyTrimmer(final Trimmer t, final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert u != null;
-    final Document $ = TESTUtils.rewrite(t, u, new Document(from));
-    assert $ != null;
-    return $.get();
-  }
-
-  /** [[SuppressWarningsSpartan]] */
-  static void assertSimplifiesTo(final String from, final String expected, final Tipper<? extends ASTNode> n, final Wrap w) {
-    final String wrap = w.on(from), unpeeled = apply(n, wrap);
-    if (wrap.equals(unpeeled))
-      azzert.fail("Nothing done on " + from);
-    final String peeled = w.off(unpeeled);
-    if (peeled.equals(from))
-      azzert.that("No similification of " + from, peeled, is(not(from)));
-    if (tide.clean(peeled).equals(tide.clean(from)))
-      azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), is(not(tide.clean(peeled))));
-    assertSimilar(expected, peeled);
-  }
-
-  public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggestions(u).size();
-  }
-
-  static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
-    return new OperandToTipper<>(from, clazz);
-  }
-
-  public static Operand trimmingOf(final String from) {
-    return new Operand(from);
   }
 }

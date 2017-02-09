@@ -10,30 +10,14 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings("static-method")
 public final class Issue0107 {
+  @Test public void a() {
+    trimmingOf("a+=1;")//
+        .stays();
+  }
+
   @Test public void b() {
     trimmingOf("for(int c = 0; c <5; c-=1)\n" + "c*=2;")//
         .gives("for(int c = 0; c <5; --c)\n" + "c*=2;")//
-        .stays();
-  }
-
-  @Test public void i() {
-    trimmingOf("a-=1;")//
-        .gives("--a;")//
-        .stays();
-  }
-
-  @Test public void j() {
-    trimmingOf("for(int a ; a<10 ; a-=1){}")//
-        .gives("for(int a ; a<10 ; --a){}");
-  }
-
-  @Test public void l() {
-    trimmingOf("while((x-=1) > 0){}")//
-        .gives("while((--x) > 0){}");
-  }
-
-  @Test public void a() {
-    trimmingOf("a+=1;")//
         .stays();
   }
 
@@ -52,9 +36,25 @@ public final class Issue0107 {
         .stays();
   }
 
+  @Test public void i() {
+    trimmingOf("a-=1;")//
+        .gives("--a;")//
+        .stays();
+  }
+
+  @Test public void j() {
+    trimmingOf("for(int a ; a<10 ; a-=1){}")//
+        .gives("for(int a ; a<10 ; --a){}");
+  }
+
   @Test public void k() {
     trimmingOf("a-=2;")//
         .stays();
+  }
+
+  @Test public void l() {
+    trimmingOf("while((x-=1) > 0){}")//
+        .gives("while((--x) > 0){}");
   }
 
   @Test public void m() {
