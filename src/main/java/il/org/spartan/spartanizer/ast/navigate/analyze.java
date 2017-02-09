@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 public enum analyze {
   ;
   public static Collection<String> dependencies(final ASTNode n) {
-    final Set<String> $ = new HashSet<>();
+    final Collection<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))

@@ -22,7 +22,7 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final ConstructorInvocation ¢) {
+  @SuppressWarnings("unchecked") public static Iterable<Expression> arguments(final ConstructorInvocation ¢) {
     return ¢ == null ? null : ¢.arguments();
   }
 
@@ -33,7 +33,7 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperConstructorInvocation ¢) {
+  @SuppressWarnings("unchecked") public static Iterable<Expression> arguments(final SuperConstructorInvocation ¢) {
     return ¢.arguments();
   }
 
@@ -116,7 +116,7 @@ public enum step {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
-  public static List<ConditionalExpression> branches(final ConditionalExpression ¢) {
+  public static Collection<ConditionalExpression> branches(final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
@@ -140,7 +140,7 @@ public enum step {
    * Retreives all If branches
    * @param ¢ JD
    * @return */
-  public static List<IfStatement> branches(final IfStatement ¢) {
+  public static Collection<IfStatement> branches(final IfStatement ¢) {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
@@ -185,7 +185,7 @@ public enum step {
     return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
   }
 
-  @SuppressWarnings("unchecked") public static List<Expression> dimensions(final ArrayCreation ¢) {
+  @SuppressWarnings("unchecked") public static Iterable<Expression> dimensions(final ArrayCreation ¢) {
     return ¢ == null ? null : ¢.dimensions();
   }
 

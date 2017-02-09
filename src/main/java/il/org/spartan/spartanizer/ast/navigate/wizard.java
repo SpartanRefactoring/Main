@@ -107,10 +107,10 @@ public interface wizard {
   List<Predicate<Modifier>> visibilityModifiers = as.list(isPublic, isPrivate, isProtected);
   PrefixExpression.Operator MINUS1 = PrefixExpression.Operator.MINUS;
   InfixExpression.Operator MINUS2 = InfixExpression.Operator.MINUS;
-  NullProgressMonitor nullProgressMonitor = new NullProgressMonitor();
+  IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   PrefixExpression.Operator PLUS1 = PrefixExpression.Operator.PLUS;
   InfixExpression.Operator PLUS2 = InfixExpression.Operator.PLUS;
-  Set<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
+  Collection<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
     static final long serialVersionUID = 1L;
     {
       for (final String ¢ : new String[] { "String" }) {
@@ -171,7 +171,7 @@ public interface wizard {
   static void addMethodToFile(final String fileName, final MethodDeclaration m) {
     try {
       final String str = readFromFile(fileName);
-      final Document d = new Document(str);
+      final IDocument d = new Document(str);
       final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
       final ASTRewrite r = ASTRewrite.create(t.getAST());
       wizard.addMethodToType(t, m, r, null);
@@ -406,7 +406,7 @@ public interface wizard {
   }
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
-    final List<MethodDeclaration> $ = new ArrayList<>();
+    final Collection<MethodDeclaration> $ = new ArrayList<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);

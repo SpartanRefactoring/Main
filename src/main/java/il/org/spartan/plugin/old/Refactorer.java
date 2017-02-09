@@ -185,8 +185,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
-      final List<ICompilationUnit> doneCompilationUnits = new ArrayList<>();
-      final Collection<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
+      final Collection<ICompilationUnit> doneCompilationUnits = new ArrayList<>(), modifiedCompilationUnits = new HashSet<>();
       for (pass = 0; pass < $ && !finish(pm); ++pass) {
         pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
         final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);

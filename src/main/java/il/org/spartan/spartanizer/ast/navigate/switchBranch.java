@@ -103,11 +103,11 @@ public class switchBranch {
     ¢.addAll(statements.stream().map(copy::of).collect(Collectors.toList()));
   }
 
-  private static void addAll(final List<Statement> ss, final Iterable<switchBranch> bs) {
+  private static void addAll(final Collection<Statement> ss, final Iterable<switchBranch> bs) {
     bs.forEach(λ -> λ.addAll(ss));
   }
 
-  public static SwitchStatement makeSwitchStatement(final List<switchBranch> bs, final Expression x, final AST t) {
+  public static SwitchStatement makeSwitchStatement(final Iterable<switchBranch> bs, final Expression x, final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
@@ -192,7 +192,7 @@ public class switchBranch {
   }
 
   public static Collection<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> $ = new ArrayList<>();
+    final Collection<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);
       if (s != null)
