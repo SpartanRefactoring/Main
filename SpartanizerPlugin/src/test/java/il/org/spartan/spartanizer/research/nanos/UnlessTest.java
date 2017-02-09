@@ -17,6 +17,14 @@ public class UnlessTest {
         .stays();
   }
 
+  @Test public void basic2() {
+    trimmingOf("return ($ == null) ? null : $.size();")//
+        .using(ConditionalExpression.class, new Unless())//
+        .gives("return unless(($==null)).eval(()->$.size()).defaultTo(null);")//
+        .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
+        .stays();
+  }
+
   @Test public void respect() {
     trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new Unless())//
@@ -28,14 +36,6 @@ public class UnlessTest {
   @Test public void respect2() {
     trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new Unless())//
-        .stays();
-  }
-
-  @Test public void basic2() {
-    trimmingOf("return ($ == null) ? null : $.size();")//
-        .using(ConditionalExpression.class, new Unless())//
-        .gives("return unless(($==null)).eval(()->$.size()).defaultTo(null);")//
-        .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
         .stays();
   }
 }

@@ -32,26 +32,6 @@ public final class findTest {
     azzert.that(singleAtomicDifference(ast("f(a+b,a(g))"), ast("f(c+b,c(g))")), is("a"));
   }
 
-  @Test public void f() {
-    azzert.isNull(singleAtomicDifference(ast("f(a+b,d)"), ast("f(c+b,c)")));
-  }
-
-  @Test public void g() {
-    azzert.that(singleAtomicDifference(ast("f(a+b,c)"), ast("f(a+b,c)")), is(""));
-  }
-
-  @Test public void h() {
-    azzert.that(singleAtomicDifference(ast("bools(a == 0)"), ast("bools(a == 1)")), is("0"));
-  }
-
-  @Test public void i() {
-    azzert.that(singleAtomicDifference(as.list(ast("bools(a == 0)"), ast("bools(a == 1)"), ast("bools(a == 2)"))), is("0"));
-  }
-
-  @Test public void j() {
-    azzert.isNull(singleAtomicDifference(as.list(ast("a + b"), ast("a * b"))));
-  }
-
   @Test public void e0() {
     azzert.that(singleExpressionDifference(as.list(ast("a + b"), ast("a * b"))) + "", is("a + b"));
   }
@@ -79,5 +59,25 @@ public final class findTest {
 
   @Test public void e6() {
     azzert.that(singleExpressionDifference(as.list(ast("x(f,g + 1) * 6 > a + b"), ast("x(t,g + 1) * 6 > a + b"))) + "", is("f"));
+  }
+
+  @Test public void f() {
+    azzert.isNull(singleAtomicDifference(ast("f(a+b,d)"), ast("f(c+b,c)")));
+  }
+
+  @Test public void g() {
+    azzert.that(singleAtomicDifference(ast("f(a+b,c)"), ast("f(a+b,c)")), is(""));
+  }
+
+  @Test public void h() {
+    azzert.that(singleAtomicDifference(ast("bools(a == 0)"), ast("bools(a == 1)")), is("0"));
+  }
+
+  @Test public void i() {
+    azzert.that(singleAtomicDifference(as.list(ast("bools(a == 0)"), ast("bools(a == 1)"), ast("bools(a == 2)"))), is("0"));
+  }
+
+  @Test public void j() {
+    azzert.isNull(singleAtomicDifference(as.list(ast("a + b"), ast("a * b"))));
   }
 }
