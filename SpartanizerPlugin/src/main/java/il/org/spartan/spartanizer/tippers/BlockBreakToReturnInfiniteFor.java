@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert Infinite loops with return sideEffects to shorter ones : toList
  * Convert {@code for(;true;) { doSomething(); if(done()) break; } return XX; }
- * to : <code> for(;true;) { doSomething(); if(done()) return XX; }
+ * to : <code> for(;true;) { doSomething(); if(done()) return XX; }</code>
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement>//

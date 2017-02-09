@@ -22,7 +22,7 @@ import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
-
+// TODO: Ori Roth why so many fields? --yg
 public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
   private static final Function<Device, Color> DEFLATE_COLOR = λ -> new Color(λ, 200, 255, 200);

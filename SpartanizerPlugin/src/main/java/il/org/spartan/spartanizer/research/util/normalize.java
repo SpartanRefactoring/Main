@@ -110,7 +110,7 @@ public enum normalize {
     }
   }
 
-  public static void main(final String args[]) {
+  public static void main(final String[] args) {
     System.out.println("enter whatever:");
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";

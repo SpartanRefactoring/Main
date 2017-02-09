@@ -45,7 +45,7 @@ public enum TrimmerTestsUtils {
       final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
-      final String peeled = w.off(unpeeled);
+     final String peeled = w.off(unpeeled);
       if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
         return;
       final String expected = get();

@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 public class FixturePlainFor extends MetaFixture {
-  int f(final int a[]) {
+  int f(final int[] a) {
     @knows({ "f/1", "$" }) int $ = 12;
     for (@knows({ "f/1", "$", "i" }) int i = 0; i < a.length; ++i)
       for (@knows({ "f/1", "$", "i", "j" }) int j = 0; j < a.length; ++j) {
