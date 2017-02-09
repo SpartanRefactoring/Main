@@ -56,7 +56,7 @@ public final class haveTest {
     assert have.trueLiteral(ExpressionListMaker("true"));
   }
 
-  public List<Expression> ExpressionListMaker(final String... exps) {
+  public Collection<Expression> ExpressionListMaker(final String... exps) {
     return Stream.of(exps).map(into::e).collect(Collectors.toList());
   }
 

@@ -356,12 +356,12 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       final Selection $ = Selection.empty();
-      final List<MarkerItem> is = new LinkedList<>();
-      final List<IJavaProject> ps = new LinkedList<>();
-      final List<IPackageFragmentRoot> rs = new LinkedList<>();
-      final List<IPackageFragment> hs = new LinkedList<>();
-      final List<ICompilationUnit> cs = new LinkedList<>();
-      final List<IMember> ms = new LinkedList<>();
+      final Collection<MarkerItem> is = new LinkedList<>();
+      final Collection<IJavaProject> ps = new LinkedList<>();
+      final Collection<IPackageFragmentRoot> rs = new LinkedList<>();
+      final Collection<IPackageFragment> hs = new LinkedList<>();
+      final Collection<ICompilationUnit> cs = new LinkedList<>();
+      final Collection<IMember> ms = new LinkedList<>();
       for (final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)

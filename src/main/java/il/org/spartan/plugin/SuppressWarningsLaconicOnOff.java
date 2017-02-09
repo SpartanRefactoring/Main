@@ -98,7 +98,7 @@ public enum SuppressWarningsLaconicOnOff {
     return getKeywords(¢, disabling.enablers);
   }
 
-  static Set<String> getKeywords(final String c, final String[] kws) {
+  static Collection<String> getKeywords(final String c, final String[] kws) {
     return Stream.of(kws).filter(c::contains).collect(Collectors.toSet());
   }
 

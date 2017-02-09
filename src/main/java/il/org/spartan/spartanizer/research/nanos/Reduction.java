@@ -23,7 +23,7 @@ public final class Reduction extends NanoPatternTipper<MethodInvocation> {
     return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
 
-  private static boolean sameSize(final List<SingleVariableDeclaration> parameters, final List<Expression> arguments) {
+  private static boolean sameSize(final Collection<SingleVariableDeclaration> parameters, final Collection<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();

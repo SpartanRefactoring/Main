@@ -47,7 +47,7 @@ public class SpartanMovie extends AbstractHandler {
         // --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
           mightNotBeSlick(page);
-          final IFile file = (IFile) currentCompilationUnit.getResource();
+          final IResource file = currentCompilationUnit.getResource();
           try {
             IMarker[] markers = getMarkers(file);
             if (markers.length > 0)

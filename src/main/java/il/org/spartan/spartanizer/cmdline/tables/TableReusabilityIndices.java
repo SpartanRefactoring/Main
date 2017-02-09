@@ -51,7 +51,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   private int maxArity;
   private final Map<String, Map<String, Integer>> usage = new LinkedHashMap<>();
-  private final Set<String> defined = new LinkedHashSet<>();
+  private final Collection<String> defined = new LinkedHashSet<>();
 
   public Map<String, Integer> addIfNecessary(final String category, final String key) {
     usage.putIfAbsent(category, new LinkedHashMap<>());

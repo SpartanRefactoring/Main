@@ -127,7 +127,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     return this;
   }
 
-  public static AbstractSelection<?> of(final List<CompilationUnit> ¢) {
+  public static AbstractSelection<?> of(final Collection<CompilationUnit> ¢) {
     return new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
   }
 }

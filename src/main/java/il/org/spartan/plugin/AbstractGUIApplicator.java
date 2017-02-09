@@ -83,7 +83,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
-  public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
+  public final Collection<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
@@ -419,7 +419,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
-  private List<ICompilationUnit> getUnits() throws JavaModelException {
+  private Collection<ICompilationUnit> getUnits() throws JavaModelException {
     if (!isTextSelected())
       return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
     final List<ICompilationUnit> $ = new ArrayList<>();

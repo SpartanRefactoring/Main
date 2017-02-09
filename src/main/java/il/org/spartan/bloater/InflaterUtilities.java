@@ -65,7 +65,7 @@ public enum InflaterUtilities {
   /** @param u - the WrappedCompilationUnit which is bloated
    * @param ns - the list of statements which were selected and might be
    *        changed */
-  static void commitChanges(final WrappedCompilationUnit u, final List<ASTNode> ns) {
+  static void commitChanges(final WrappedCompilationUnit u, final Iterable<ASTNode> ns) {
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");

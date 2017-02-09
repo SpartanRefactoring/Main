@@ -236,7 +236,7 @@ public enum eclipse {
     return null;
   }
 
-  Collection<ICompilationUnit> compilationUnits(final ICompilationUnit $) {
+  Collection<ICompilationUnit> compilationUnits(final IJavaElement $) {
     try {
       return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {

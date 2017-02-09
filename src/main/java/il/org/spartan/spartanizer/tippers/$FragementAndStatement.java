@@ -47,7 +47,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   }
 
   private static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
       if (brother == f) {

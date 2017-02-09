@@ -75,7 +75,7 @@ public enum BloatingTestUtilities {
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
         if (wrap.equals(unpeeled))

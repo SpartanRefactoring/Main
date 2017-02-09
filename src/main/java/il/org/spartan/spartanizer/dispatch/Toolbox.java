@@ -389,7 +389,7 @@ public class Toolbox {
   }
 
   public Collection<Tipper<? extends ASTNode>> getAllTippers() {
-    final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
+    final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;
@@ -431,7 +431,7 @@ public class Toolbox {
     return $;
   }
 
-  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
+  <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(final N ¢) {
     return get(¢.getNodeType());
   }
 
