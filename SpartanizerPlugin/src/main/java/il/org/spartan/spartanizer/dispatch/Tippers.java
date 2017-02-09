@@ -23,8 +23,8 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-07-17 */
 public enum Tippers {
   ;
-  public static void addAllReplacing(final List<Statement> to, final List<Statement> from, final Statement substitute, final Statement by1,
-      final List<Statement> by2) {
+  public static void addAllReplacing(final List<Statement> to, final Iterable<Statement> from, final Statement substitute, final Statement by1,
+                                     final List<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
         copy.into(¢, to);
@@ -62,7 +62,7 @@ public enum Tippers {
         return $;
   }
 
-  public static ListRewrite insertBefore(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
+  public static ListRewrite insertBefore(final Statement where, final Iterable<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
@@ -84,7 +84,7 @@ public enum Tippers {
     return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
-  public static boolean mixedLiteralKind(final List<Expression> xs) {
+  public static boolean mixedLiteralKind(final Collection<Expression> xs) {
     if (xs.size() <= 2)
       return false;
     int previousKind = -1;

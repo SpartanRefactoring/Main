@@ -98,12 +98,12 @@ public class switchBranch {
     return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
   }
 
-  private void addAll(final List<Statement> ¢) {
+  private void addAll(final Collection<Statement> ¢) {
     ¢.addAll(cases.stream().map(copy::of).collect(Collectors.toList()));
     ¢.addAll(statements.stream().map(copy::of).collect(Collectors.toList()));
   }
 
-  private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
+  private static void addAll(final List<Statement> ss, final Iterable<switchBranch> bs) {
     bs.forEach(λ -> λ.addAll(ss));
   }
 
@@ -191,7 +191,7 @@ public class switchBranch {
     return $;
   }
 
-  public static List<Statement> removeBreakSequencer(final List<Statement> ss) {
+  public static Collection<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);

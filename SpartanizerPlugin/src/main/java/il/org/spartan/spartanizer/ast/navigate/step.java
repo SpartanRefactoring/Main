@@ -44,7 +44,7 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  private static boolean balanced(final String s) {
+  private static boolean balanced(final CharSequence s) {
     int $ = 0;
     for (final Integer ¢ : range.from(0).to(s.length()))
       if (s.charAt(¢.intValue()) == '<')
@@ -181,7 +181,7 @@ public enum step {
     return $;
   }
 
-  public static List<MethodDeclaration> constructors(final ASTNode ¢) {
+  public static Collection<MethodDeclaration> constructors(final ASTNode ¢) {
     return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
   }
 
@@ -352,7 +352,7 @@ public enum step {
   /** FieldDeclarations names of type
    * @param ¢ JD
    * @return */
-  public static List<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
+  public static Collection<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
     return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(new ArrayList<>(), (x, y) -> {
       x.addAll(y);
       return x;
@@ -437,7 +437,7 @@ public enum step {
             .collect(Collectors.toList());
   }
 
-  @SuppressWarnings("unchecked") public static List<ImportDeclaration> imports(final CompilationUnit ¢) {
+  @SuppressWarnings("unchecked") public static Collection<ImportDeclaration> imports(final CompilationUnit ¢) {
     return ¢ == null ? null : ¢.imports();
   }
 
@@ -448,7 +448,7 @@ public enum step {
     return ¢ == null ? null : ¢.getInitializer();
   }
 
-  public static List<Initializer> initializers(final ASTNode ¢) {
+  public static Collection<Initializer> initializers(final ASTNode ¢) {
     return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
   }
 
@@ -463,7 +463,7 @@ public enum step {
     return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
   }
 
-  public static List<Initializer> initializersInstance(final ASTNode n) {
+  public static Collection<Initializer> initializersInstance(final ASTNode n) {
     return Arrays.asList(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
   }
 
@@ -534,11 +534,11 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  private static List<String> methodNames(final AbstractTypeDeclaration ¢) {
+  private static Collection<String> methodNames(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(Collectors.toList());
   }
 
-  public static List<String> methodNames(final CompilationUnit u) {
+  public static Collection<String> methodNames(final CompilationUnit u) {
     if (u == null)
       return null;
     final List<String> $ = new ArrayList<>();
@@ -548,7 +548,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
+  @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
@@ -578,7 +578,7 @@ public enum step {
     return $;
   }
 
-  public static List<?> modifiers(final FieldDeclaration ¢) {
+  public static Collection<?> modifiers(final FieldDeclaration ¢) {
     return ¢ == null ? null : ¢.modifiers();
   }
 
