@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
+@SuppressWarnings("ClassWithTooManyMethods")
 public enum az {
   ;
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
