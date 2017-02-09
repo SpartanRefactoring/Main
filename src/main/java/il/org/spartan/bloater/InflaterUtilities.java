@@ -31,7 +31,7 @@ public enum InflaterUtilities {
    *         more expanders should be added to the change ASTNode in a "for
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
-  static boolean rewrite(final ASTRewrite r, final List<ASTNode> ns, final TextEditGroup __) {
+  static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup __) {
 
     boolean $ = false;
     for (final ASTNode statement : ns) {
@@ -125,7 +125,7 @@ public enum InflaterUtilities {
 
   /** @param ns ASTNodes in compilation unit which might be relevant
    * @return list of selected ASTNodes */
-  static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
+  static List<ASTNode> selectedStatements(final Collection<ASTNode> ns) {
     return ns.stream().filter(λ -> intervalsIntersect(λ.getStartPosition(), λ.getLength(), Selection.Util.current().textSelection.getOffset(),
         Selection.Util.current().textSelection.getLength())).collect(Collectors.toList());
   }

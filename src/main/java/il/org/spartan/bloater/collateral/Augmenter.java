@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class Augmenter implements Application {
-  private final NullProgressMonitor npm = new NullProgressMonitor();
+  private final IProgressMonitor npm = new NullProgressMonitor();
   private static final int MIN_STATEMENTS_COUNT = 2;
 
   @Override public Integer commitChanges(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
@@ -160,7 +160,7 @@ public class Augmenter implements Application {
    * when it has less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
    * @return true iff list of statements should be discarded */
-  static boolean discardOptimization(final List<Statement> ¢) {
+  static boolean discardOptimization(final Collection<Statement> ¢) {
     return ¢ == null || ¢.size() < MIN_STATEMENTS_COUNT;
   }
 

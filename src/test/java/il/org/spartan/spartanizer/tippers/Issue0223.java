@@ -196,7 +196,7 @@ public final class Issue0223 {
     final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-    final Document d = new Document(wrap);
+    final IDocument d = new Document(wrap);
     assert d != null;
     final Trimmer a = new Trimmer();
     try {
@@ -214,7 +214,7 @@ public final class Issue0223 {
     final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-    final Document d = new Document(wrap);
+    final IDocument d = new Document(wrap);
     assert d != null;
     final Trimmer a = new Trimmer();
     try {

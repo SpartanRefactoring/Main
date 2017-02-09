@@ -102,7 +102,7 @@ public enum normalize {
     return ASTutils.extractCode(s, $);
   }
 
-  private static void applyChanges(final Document d, final ASTRewrite r) {
+  private static void applyChanges(final IDocument d, final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

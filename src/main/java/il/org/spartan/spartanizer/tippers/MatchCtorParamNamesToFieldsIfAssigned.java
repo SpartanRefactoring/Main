@@ -38,7 +38,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList());
     final List<Statement> bodyStatements = statements(d);
-    final List<String> definedLocals = new ArrayList<>();
+    final Collection<String> definedLocals = new ArrayList<>();
     final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {

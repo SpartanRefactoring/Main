@@ -90,7 +90,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static Statement addAllBlocks(final IfStatement s, final List<Block> collectInto) {
+  private static Statement addAllBlocks(final IfStatement s, final Collection<Block> collectInto) {
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
       final Statement then = copy.of(then(az.ifStatement($)));

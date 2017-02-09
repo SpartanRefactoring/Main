@@ -67,7 +67,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
   /** Add compilation units for this selection.
    * @param ¢ JD
    * @return <code><b>this</b></code> selection */
-  public Self add(final List<WrappedCompilationUnit> ¢) {
+  public Self add(final Collection<WrappedCompilationUnit> ¢) {
     if (¢ != null)
       inner.addAll(¢);
     return self();

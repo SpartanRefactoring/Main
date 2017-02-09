@@ -339,7 +339,7 @@ public class definitionTest extends MetaFixture {
     }
   }
 
-  List<MarkerAnnotation> markers() {
+  Collection<MarkerAnnotation> markers() {
     return yieldDescendants.untilClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }

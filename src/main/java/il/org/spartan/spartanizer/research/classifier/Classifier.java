@@ -18,16 +18,16 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
   private final Map<String, List<String>> forLoops = new HashMap<>();
-  private final List<ASTNode> forLoopsList = new ArrayList<>();
+  private final Collection<ASTNode> forLoopsList = new ArrayList<>();
   private int forLoopsAmount;
   private static final Scanner input = new Scanner(System.in);
-  private static final List<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
+  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new ForEach());
     }
   };
-  private static final List<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
+  private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new CopyArray());
@@ -86,7 +86,7 @@ public class Classifier extends ASTVisitor {
       again = false;
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        final List<ASTNode> toRemove = new ArrayList<>();
+        final Collection<ASTNode> toRemove = new ArrayList<>();
         toRemove.addAll(forLoopsList.stream().filter(t::canTip).collect(Collectors.toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));

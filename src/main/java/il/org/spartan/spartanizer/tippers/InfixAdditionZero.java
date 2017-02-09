@@ -61,7 +61,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
+  private static List<Expression> gather(final Iterable<Expression> xs, final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }

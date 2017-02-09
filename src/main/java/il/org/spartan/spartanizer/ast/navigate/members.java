@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016-12-22 */
 public interface members {
   static List<? extends ASTNode> of(final EnumDeclaration ¢) {
-    final ArrayList<ASTNode> $ = new ArrayList<>(enumConstants(¢));
+    final List<ASTNode> $ = new ArrayList<>(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
   }

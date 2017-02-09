@@ -146,7 +146,7 @@ public enum getAll {
     return $;
   }
 
-  private static ASTVisitor publicFieldsCollector(final List<String> $) {
+  private static ASTVisitor publicFieldsCollector(final Collection<String> $) {
     return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))

@@ -81,7 +81,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   /** [[SuppressWarningsSpartan]] */
-  List<? extends ASTNode> branchesWrapper(final N ¢) {
+  Collection<? extends ASTNode> branchesWrapper(final N ¢) {
     return !iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢));
   }
 
@@ -95,7 +95,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
 
-  static String replaceAll(final String target, final String oldString, final String newString) {
+  static String replaceAll(final String target, final CharSequence oldString, final CharSequence newString) {
     String $ = target;
     while (!$.replace(oldString, newString).equals($))
       $ = $.replace(oldString, newString);
