@@ -157,15 +157,15 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
             });
-        })).expand(EventMapper.inspectorOf(event.run_start).does(¢ -> {
+        })).expand(EventMapper.inspectorOf(event.run_start).does(λ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
-            if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(¢.get(event.visit_root)))))
+            if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(λ.get(event.visit_root)))))
               $.stop();
             else {
               runAsynchronouslyInUIThread(d::open);
               openDialog.set(true);
             }
-        })).expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
+        })).expand(EventMapper.inspectorOf(event.run_finish).does(λ -> {
           if (openDialog.get())
             runAsynchronouslyInUIThread(d::close);
         }).does(¢ -> {
