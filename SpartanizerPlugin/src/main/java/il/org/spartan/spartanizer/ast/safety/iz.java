@@ -1354,9 +1354,16 @@ public interface iz {
     return false;
   }
 
-  /** @param ¢ is public static final
-   * @return */
+  /** @param ¢ JD
+   * @return is public static final */
   static boolean constant(final FieldDeclaration ¢) {
     return public¢(¢) && static¢(¢) && final¢(¢);
+  }
+
+  /** @param ¢ JD
+   * @return is boxed type */
+  static boolean boxedType(final Type ¢) {
+    return ¢ instanceof SimpleType && Arrays.asList("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
+        .contains(step.identifier(step.name((SimpleType) ¢)));
   }
 }

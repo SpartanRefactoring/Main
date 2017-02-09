@@ -46,6 +46,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new HoldsForAll(), //
                 new HoldsForAny(), //
                 null) //
+            .add(FieldDeclaration.class, //
+                new Constant(), //
+                null) //
             .add(ForStatement.class, //
                 new ForLoop.FindFirst(), //
                 new ForEachInRange(), //
