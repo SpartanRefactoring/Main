@@ -60,7 +60,7 @@ public final class Issue0165 {
 }  
  
 @Test public void a09b() {
-  trimmingOf("int a(int $) { $;}")
+  trimmingOf("int a(int $) { return $ > 0;}")
       .stays();
 }  
 @Test public void a09c() {
