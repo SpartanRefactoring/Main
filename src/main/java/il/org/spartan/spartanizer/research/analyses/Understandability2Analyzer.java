@@ -15,7 +15,7 @@ public class Understandability2Analyzer extends IntegerMetricalAnalyzer {
     return metrics.subtreeUnderstandability2(¢);
   }
 
-  public static void main(final String args[]) {
+  public static void main(final String[] args) {
     System.out.println("Enter whatever you want:");
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";
