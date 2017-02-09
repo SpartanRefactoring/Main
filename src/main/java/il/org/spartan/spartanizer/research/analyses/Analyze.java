@@ -97,7 +97,7 @@ public enum Analyze {
     report.close();
   }
 
-  public static void main(final String args[]) {
+  public static void main(final String[] args) {
     AnalyzerOptions.parseArguments(args);
     initializeSpartanizer();
     createOutputDirIfNeeded();
