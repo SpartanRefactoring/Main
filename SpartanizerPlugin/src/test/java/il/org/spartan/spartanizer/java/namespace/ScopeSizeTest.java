@@ -47,7 +47,7 @@ public class ScopeSizeTest extends MetaFixture {
   }
 
   @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
-    final List<Object[]> $ = new ArrayList<>();
+    final Collection<Object[]> $ = new ArrayList<>();
     for (final Annotation a : new definitionTest().annotations()) {
       final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
       if (sma != null && (sma.getTypeName() + "").equals(SCOPE_SIZE)) {
