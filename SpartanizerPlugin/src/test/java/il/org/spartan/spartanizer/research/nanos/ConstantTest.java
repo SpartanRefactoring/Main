@@ -13,7 +13,7 @@ public class ConstantTest {
   @Test public void basic() {
     trimmingOf("class C{public static final int a = 7;}")//
         .using(FieldDeclaration.class, new Constant())//
-        .gives("")//
+        .gives("class C{}")//
         .stays();
   }
 }
