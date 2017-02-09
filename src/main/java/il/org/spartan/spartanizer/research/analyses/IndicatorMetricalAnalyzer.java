@@ -20,7 +20,7 @@ public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
     getSafe(histogram, measure.statements(before)).add(Int.valueOf(metric(before) < metric(after) ? 0 : 1));
   }
 
-  private static List<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
+  private static Collection<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
     m.putIfAbsent(i, new ArrayList<>());
     return m.get(i);
   }

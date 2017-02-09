@@ -90,7 +90,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return $;
   }
 
-  private static List<Expression> gather(final List<Expression> xs, final List<Expression> $) {
+  private static List<Expression> gather(final Iterable<Expression> xs, final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }

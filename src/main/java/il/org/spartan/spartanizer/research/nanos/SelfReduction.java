@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class SelfReduction extends NanoPatternTipper<MethodInvocation> {
   @Override public boolean canTip(final MethodInvocation ¢) {
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
-    return $ != null && (identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢)));
+    return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
 
   private static boolean sameSize(final List<SingleVariableDeclaration> parameters, final List<Expression> arguments) {

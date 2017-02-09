@@ -67,11 +67,11 @@ public abstract class MetaFixture {
     return first(yieldDescendants.untilClass(¢).from(reflectedCompilationUnit()));
   }
 
-  public List<SingleMemberAnnotation> singleMemberAnnotations() {
+  public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return yieldDescendants.untilClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 
-  public List<Annotation> annotations() {
+  public Iterable<Annotation> annotations() {
     return yieldDescendants.untilClass(Annotation.class).from(reflectedCompilationUnit());
   }
 
@@ -128,7 +128,7 @@ public abstract class MetaFixture {
     return values(step.expressions(¢));
   }
 
-  private static String[] values(final List<Expression> xs) {
+  private static String[] values(final Collection<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
@@ -142,7 +142,7 @@ public abstract class MetaFixture {
   };
 
   protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
+    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
         for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())

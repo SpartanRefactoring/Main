@@ -51,7 +51,7 @@ public abstract class ENVTestEngineAbstract {
    * @param contains JD
    * @return <code><b>true</b></code> <em>iff</em> the sets specified, are
    *         equally the same. */
-  private static void compareInOrder(final LinkedHashSet<Entry<String, Binding>> contains, final LinkedHashSet<Entry<String, Binding>> contained) {
+  private static void compareInOrder(final Set<Entry<String, Binding>> contains, final Iterable<Entry<String, Binding>> contained) {
     assert contained != null;
     assert contains != null;
     final Iterator<Entry<String, Binding>> s = contains.iterator();
@@ -77,7 +77,7 @@ public abstract class ENVTestEngineAbstract {
    * @param contains JD
    * @return <code><b>true</b></code> <em>iff</em> the specified
    *         {@link LinkedHashSet} contains testSet. */
-  private static void compareOutOfOrder(final LinkedHashSet<Entry<String, Binding>> contains, final LinkedHashSet<Entry<String, Binding>> contained) {
+  private static void compareOutOfOrder(final Collection<Entry<String, Binding>> contains, final Collection<Entry<String, Binding>> contained) {
     assert contains != null;
     assert contained != null;
     if (contains.containsAll(contained))
@@ -151,7 +151,7 @@ public abstract class ENVTestEngineAbstract {
     n.accept(new ASTVisitor() {
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */
-      void checkAnnotations(final List<Annotation> as) {
+      void checkAnnotations(final Iterable<Annotation> as) {
         as.forEach(λ -> handler(λ));
       }
 

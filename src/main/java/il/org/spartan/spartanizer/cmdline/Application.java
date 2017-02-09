@@ -184,7 +184,7 @@ final class Application implements IApplication {
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private boolean parseArguments(final List<String> args) {
+  private boolean parseArguments(final Collection<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
@@ -232,7 +232,7 @@ final class Application implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  private void printLineStatistics(final List<FileStats> ss) {
+  private void printLineStatistics(final Iterable<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
       for (final FileStats ¢ : ss) {
@@ -255,7 +255,7 @@ final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  @SuppressWarnings("boxing") private void printChangeStatistics(final List<FileStats> ss) {
+  @SuppressWarnings("boxing") private void printChangeStatistics(final Collection<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (!optIndividualStatistics)
       range.to(optRounds).forEach(i -> System.out

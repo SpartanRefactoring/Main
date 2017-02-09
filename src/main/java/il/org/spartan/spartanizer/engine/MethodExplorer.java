@@ -51,7 +51,7 @@ public final class MethodExplorer {
         return true;
       }
 
-      boolean add(final List<? extends Expression> xs) {
+      boolean add(final Iterable<? extends Expression> xs) {
         xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
@@ -61,7 +61,7 @@ public final class MethodExplorer {
         return true;
       }
 
-      void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> $.add(λ.getName()));
       }
     });

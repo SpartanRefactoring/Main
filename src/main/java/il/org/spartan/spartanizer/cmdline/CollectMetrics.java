@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -106,7 +105,7 @@ enum CollectMetrics {
     output.put(prefix + "No Imports", count.noimports(¢));
   }
 
-  private static void reportTips(final List<Tip> ¢) {
+  private static void reportTips(final Iterable<Tip> ¢) {
     for (final Tip $ : ¢) {
       Tips.put("description", $.description);
       Tips.put("from", $.from);

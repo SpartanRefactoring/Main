@@ -111,7 +111,7 @@ public enum determineIf {
   public static boolean returnsNull(final MethodDeclaration mDec) {
     if (mDec == null)
       return false;
-    final List<ReturnStatement> $ = new ArrayList<>();
+    final Collection<ReturnStatement> $ = new ArrayList<>();
     mDec.accept(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;

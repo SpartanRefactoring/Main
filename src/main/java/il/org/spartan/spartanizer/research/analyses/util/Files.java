@@ -34,7 +34,7 @@ public enum Files {
     return getProperty("outputDir");
   }
 
-  public static Set<File> inputFiles() {
+  public static Collection<File> inputFiles() {
     return getJavaFiles(getProperty("inputDir"));
   }
 

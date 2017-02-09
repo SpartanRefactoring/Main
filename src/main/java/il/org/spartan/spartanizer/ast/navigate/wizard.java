@@ -500,7 +500,7 @@ public interface wizard {
    * @return
    *         <p>
    *         [[SuppressWarningsSpartan]] */
-  static boolean isString(String typeName) {
+  static boolean isString(final String typeName) {
     switch (typeName) {
       case "String":
       case "java.lang.String":

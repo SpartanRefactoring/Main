@@ -68,11 +68,11 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       xs.add(item);
   }
 
-  @SuppressWarnings("static-method") private boolean isIn(final Expression op, final List<Expression> allOperands) {
+  @SuppressWarnings("static-method") private boolean isIn(final Expression op, final Collection<Expression> allOperands) {
     return allOperands.stream().anyMatch(λ -> wizard.same(op, λ));
   }
 
-  @SuppressWarnings("static-method") private void removeElFromList(final List<Expression> items, final List<Expression> from) {
+  @SuppressWarnings("static-method") private void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
     items.forEach(from::remove);
   }
 
