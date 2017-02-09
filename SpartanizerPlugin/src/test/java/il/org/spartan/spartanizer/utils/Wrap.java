@@ -43,7 +43,7 @@ public enum Wrap {
     for (final Wrap $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
-    azzert.fail("Cannot parse '\n" + codeFragment + "\n********* I tried the following options:" + options(codeFragment));
+    azzert.fail("Cannot parse '\n" + codeFragment + "\n W********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
   }
 

@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public interface namer {
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
-  String forbidden = "_", //
-      anonymous = "__", //
-      return¢ = "$", //
-      current = "¢", //
-      lambda = "λ", //
-      specials[] = { forbidden, return¢, anonymous, current, lambda };
+  String forbidden = "_"; //
+  String anonymous = "__"; //
+  String return¢ = "$"; //
+  String current = "¢"; //
+  String lambda = "λ"; //
+  String[] specials = {forbidden, return¢, anonymous, current, lambda};
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
