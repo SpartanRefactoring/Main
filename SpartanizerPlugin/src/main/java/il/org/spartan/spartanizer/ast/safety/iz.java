@@ -31,6 +31,7 @@ import il.org.spartan.utils.*;
  * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
+@SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
   List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };

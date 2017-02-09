@@ -108,7 +108,7 @@ public final class Matcher {
   }
 
   private boolean containsOption(final Option o) {
-    return Stream.of(options).anyMatch(λ -> λ.equals(o));
+    return Stream.of(options).anyMatch(λ -> λ == o);
   }
 
   private static boolean blockMatches(final ASTNode p, final Block n) {
