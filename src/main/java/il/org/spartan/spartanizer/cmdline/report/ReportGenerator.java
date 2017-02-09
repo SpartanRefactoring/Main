@@ -29,7 +29,7 @@ public class ReportGenerator implements ConfigurableReport {
   protected String beforeFileName;
   protected String spectrumFileName;
   protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
-  protected static final HashMap<String, PrintWriter> files = new HashMap<>();
+  protected static final Map<String, PrintWriter> files = new HashMap<>();
   @SuppressWarnings("rawtypes") protected static HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
 
   @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {

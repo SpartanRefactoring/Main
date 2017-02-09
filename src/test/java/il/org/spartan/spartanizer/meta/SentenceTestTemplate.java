@@ -26,7 +26,7 @@ public enum SentenceTestTemplate {
   ;
   public static final Trimmer trimmer = new Trimmer();
 
-  static List<List<MethodDeclaration>> allSentences() {
+  static Iterable<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());
   }
 
@@ -91,7 +91,7 @@ public enum SentenceTestTemplate {
       return (first + "").replace(disabling.disabler, "");
     }
 
-    String firstName() {
+    CharSequence firstName() {
       return first.getName() + "";
     }
 
@@ -99,7 +99,7 @@ public enum SentenceTestTemplate {
       return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
     }
 
-    String secondName() {
+    CharSequence secondName() {
       return second.getName() + "";
     }
 
