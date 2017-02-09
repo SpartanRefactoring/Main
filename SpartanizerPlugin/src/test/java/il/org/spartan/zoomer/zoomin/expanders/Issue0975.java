@@ -12,6 +12,16 @@ import il.org.spartan.bloater.bloaters.*;
  * @since 26-12-16 */
 @SuppressWarnings("static-method")
 public class Issue0975 {
+  @Test public void notSimpleShouldAddTest() {
+    bloatingOf("for(Double i : lili) a=5; b=7;")//
+        .gives("for(Double i : lili){a=5;}b=7;");
+  }
+
+  @Test public void notSimpleShouldntAddTest() {
+    bloatingOf("for(Double i : lili){ a=5;b=3;}")//
+        .stays();
+  }
+
   @Test public void simpleBlockTest() {
     bloatingOf("for(int i : lili) a=5;")//
         .gives("for(int i : lili){a=5;}")//
@@ -21,15 +31,5 @@ public class Issue0975 {
   @Test public void simpleShouldntAddTest() {
     bloatingOf("for(int i : lili){ a=5;}")//
         .stays();
-  }
-
-  @Test public void notSimpleShouldntAddTest() {
-    bloatingOf("for(Double i : lili){ a=5;b=3;}")//
-        .stays();
-  }
-
-  @Test public void notSimpleShouldAddTest() {
-    bloatingOf("for(Double i : lili) a=5; b=7;")//
-        .gives("for(Double i : lili){a=5;}b=7;");
   }
 }

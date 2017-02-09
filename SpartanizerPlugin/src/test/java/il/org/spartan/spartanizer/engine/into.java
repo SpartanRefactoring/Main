@@ -47,6 +47,13 @@ public enum into {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(cu);
   }
 
+  /** @param p a {@link String} that represents a Java Compilation unit
+   * @return {@link CompilationUnit} data structure representing the
+   *         parameter. */
+  public static CompilationUnit cuWithBinding(final String cu) {
+    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
+  }
+
   /** Convert a given {@link String} into an {@link MethodDeclaration} by
    * appropriately wrapping it with text to make it a reasonably looking
    * {@link CompilationUnit}, parsing it, and then extracting the first method
@@ -116,12 +123,5 @@ public enum into {
 
   public static Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
-  }
-
-  /** @param p a {@link String} that represents a Java Compilation unit
-   * @return {@link CompilationUnit} data structure representing the
-   *         parameter. */
-  public static CompilationUnit cuWithBinding(final String cu) {
-    return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
   }
 }

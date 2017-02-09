@@ -9,32 +9,6 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 public class FixtureCatchBlock extends MetaFixture {
-  int f(final Object f) {
-    return f(f);
-  }
-
-  private int f(final int f) {
-    return f(f);
-  }
-
-  void simple() {
-    try (FileReader r = new FileReader(toString())) {
-      r.read();
-    } catch (final FileNotFoundException x) {
-      @foreign("r") final int a1 = hashCode() * hashCode() * x.hashCode();
-      f(a1 * a1 * a1);
-    } catch (final IOException x) {
-      @knows({ "a2", "x" }) @foreign("r") final int a2 = hashCode() * hashCode();
-      f(a2 * x.hashCode());
-      @knows({ "a2", "x" }) final int r = hashCode();
-      f(r * a2 * a2 + r);
-    } finally {
-      @foreign("r") final int a = hashCode() * hashCode();
-      @knows("a") final int r = hashCode();
-      f(a * a * r + r);
-    }
-  }
-
   @knows("f/0") private int f() {
     try (@knows("fileReader") FileReader fileReader = new FileReader(toString())) {
       try (@knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
@@ -80,5 +54,31 @@ public class FixtureCatchBlock extends MetaFixture {
       f(a * z + z + hashCode());
     }
     return 3;
+  }
+
+  private int f(final int f) {
+    return f(f);
+  }
+
+  int f(final Object f) {
+    return f(f);
+  }
+
+  void simple() {
+    try (FileReader r = new FileReader(toString())) {
+      r.read();
+    } catch (final FileNotFoundException x) {
+      @foreign("r") final int a1 = hashCode() * hashCode() * x.hashCode();
+      f(a1 * a1 * a1);
+    } catch (final IOException x) {
+      @knows({ "a2", "x" }) @foreign("r") final int a2 = hashCode() * hashCode();
+      f(a2 * x.hashCode());
+      @knows({ "a2", "x" }) final int r = hashCode();
+      f(r * a2 * a2 + r);
+    } finally {
+      @foreign("r") final int a = hashCode() * hashCode();
+      @knows("a") final int r = hashCode();
+      f(a * a * r + r);
+    }
   }
 }

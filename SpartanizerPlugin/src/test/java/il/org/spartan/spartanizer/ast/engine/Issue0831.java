@@ -18,16 +18,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Alex V.
  * @since 16-11-14 */
 public class Issue0831 {
-  protected class MethodScannerIExt extends MethodScanner {
-    public MethodScannerIExt(final MethodDeclaration method) {
-      super(method);
-    }
-
-    @Override protected List<Statement> availableStatements() {
-      return statements;
-    }
-  }
-
   final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
   final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
@@ -58,5 +48,15 @@ public class Issue0831 {
 
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
     assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null;
+  }
+
+  protected class MethodScannerIExt extends MethodScanner {
+    public MethodScannerIExt(final MethodDeclaration method) {
+      super(method);
+    }
+
+    @Override protected List<Statement> availableStatements() {
+      return statements;
+    }
   }
 }

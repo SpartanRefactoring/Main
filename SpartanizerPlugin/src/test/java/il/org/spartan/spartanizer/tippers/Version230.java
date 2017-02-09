@@ -29,16 +29,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({"static-method", "javadoc", "OverlyComplexClass"}) //
+@SuppressWarnings({ "static-method", "javadoc", "OverlyComplexClass" }) //
 public final class Version230 {
-  @Ignore
-  static class NotWorking {
-    @Test public void issue74d() {
-      trimmingOf("int[] a=new int[] {2,3};")//
-          .gives("");
-    }
-  }
-
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
         .stays();
@@ -3668,5 +3660,13 @@ public final class Version230 {
   @Test public void xorSortClassConstantsAtEnd() {
     trimmingOf("f(a,b,c,d)^ BOB")//
         .stays();
+  }
+
+  @Ignore
+  static class NotWorking {
+    @Test public void issue74d() {
+      trimmingOf("int[] a=new int[] {2,3};")//
+          .gives("");
+    }
   }
 }

@@ -21,14 +21,6 @@ public class Issue0147 {
   private static final ForStatement FOR1 = findFirst.forStatement(INPUT1);
   private static final ForRedundantContinue TIPPER = new ForRedundantContinue();
 
-  @Ignore
-  static class NotWorking {
-    @Test public void a() {
-      trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
-          .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
-    }
-  }
-
   @Test public void a$() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){x.fuanc(); if(bool) continue;}")//
         .stays();
@@ -58,5 +50,13 @@ public class Issue0147 {
 
   @Test public void notEligible() {
     assert !TIPPER.canTip(FOR1);
+  }
+
+  @Ignore
+  static class NotWorking {
+    @Test public void a() {
+      trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
+          .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
+    }
   }
 }

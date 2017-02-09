@@ -14,23 +14,23 @@ public abstract class JavadocerTest {
                                                        // initialize
   static final SpartAnalyzer spartanizer = new SpartAnalyzer();
 
+  protected static boolean is(final String ¢) {
+    return javadoced("public class A{" + ¢ + "}");
+  }
+
   private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
   }
 
-  private static String spartanized(final String ¢) {
-    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
+  protected static boolean not(final String ¢) {
+    return !is(¢);
   }
 
   protected static void setNano(final JavadocMarkerNanoPattern ¢) {
     spartanizer.add(MethodDeclaration.class, JAVADOCER = ¢);
   }
 
-  protected static boolean is(final String ¢) {
-    return javadoced("public class A{" + ¢ + "}");
-  }
-
-  protected static boolean not(final String ¢) {
-    return !is(¢);
+  private static String spartanized(final String ¢) {
+    return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 }

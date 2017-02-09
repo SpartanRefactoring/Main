@@ -23,29 +23,6 @@ import il.org.spartan.spartanizer.meta.*;
 public class ScopeSizeTest extends MetaFixture {
   static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
 
-  public ScopeSizeTest(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
-    assert name != null;
-    assert ScopeSize != null;
-    this.name = name;
-    scopeSize = ScopeSize;
-    this.kind = kind;
-  }
-
-  private final SimpleName name;
-  private final Integer scopeSize;
-  private final definition.Kind kind;
-
-  @Test public void test() {
-    azzert.that(
-        "\n name = " + name + //
-            "\n expected = " + scopeSize + //
-            "\n got = " + scope.of(name).size() + //
-            "\n\t kind = " + kind + //
-            MetaFixture.ancestry(name) + //
-            "\n\t scope = " + scope.of(name)//
-        , scope.of(name).size(), is(scopeSize.intValue()));
-  }
-
   @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
     final Collection<Object[]> $ = new ArrayList<>();
     for (final Annotation a : new definitionTest().annotations()) {
@@ -60,5 +37,28 @@ public class ScopeSizeTest extends MetaFixture {
       }
     }
     return $;
+  }
+
+  private final SimpleName name;
+  private final Integer scopeSize;
+  private final definition.Kind kind;
+
+  public ScopeSizeTest(final SimpleName name, final Integer ScopeSize, final definition.Kind kind) {
+    assert name != null;
+    assert ScopeSize != null;
+    this.name = name;
+    scopeSize = ScopeSize;
+    this.kind = kind;
+  }
+
+  @Test public void test() {
+    azzert.that(
+        "\n name = " + name + //
+            "\n expected = " + scopeSize + //
+            "\n got = " + scope.of(name).size() + //
+            "\n\t kind = " + kind + //
+            MetaFixture.ancestry(name) + //
+            "\n\t scope = " + scope.of(name)//
+        , scope.of(name).size(), is(scopeSize.intValue()));
   }
 }
