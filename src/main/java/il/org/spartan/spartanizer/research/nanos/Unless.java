@@ -21,7 +21,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
       add(patternTipper("$X1  ? $X2 : $D", "unless(!$X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"));
     }
   };
-  private static final List<NanoPatternTipper<ConditionalExpression>> rivals = new ArrayList<NanoPatternTipper<ConditionalExpression>>() {
+  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = new ArrayList<NanoPatternTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
       add(new DefaultsTo());

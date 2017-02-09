@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-10-22 */
 public class Setter extends JavadocMarkerNanoPattern {
-  private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("this.$N1 = $N2", "", ""));
@@ -35,7 +35,7 @@ public class Setter extends JavadocMarkerNanoPattern {
         && statements(¢).stream().allMatch(λ -> anyTips(tippers, expression(λ)) && isRightSideOK(right(az.assignment(expression(λ))), $));
   }
 
-  private static boolean isRightSideOK(final Expression $, final List<String> paramNames) {
+  private static boolean isRightSideOK(final Expression $, final Collection<String> paramNames) {
     return iz.literal($) || paramNames.contains(identifier(az.name($)));
   }
 }

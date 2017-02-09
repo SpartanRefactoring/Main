@@ -341,7 +341,7 @@ public class Toolbox {
     }
   }
 
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final Collection<Tipper<?>> ts) {
     return ts.stream().filter(λ -> ((Tipper<N>) λ).canTip(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
@@ -388,7 +388,7 @@ public class Toolbox {
     return this;
   }
 
-  public List<Tipper<? extends ASTNode>> getAllTippers() {
+  public Collection<Tipper<? extends ASTNode>> getAllTippers() {
     final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
