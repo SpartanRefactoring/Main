@@ -48,7 +48,7 @@ public final class IfEmptyThenEmptyElseTest {
 
   @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
     final String input = Wrap.Statement.on(INPUT + "");
-    final Document d = new Document(input);
+    final IDocument d = new Document(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
     final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));

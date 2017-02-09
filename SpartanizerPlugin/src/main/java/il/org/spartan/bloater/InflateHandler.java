@@ -60,7 +60,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static List<Listener> getListeners(final StyledText t) {
-    final ArrayList<Listener> $ = new ArrayList<>();
+    final List<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
     final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
@@ -71,12 +71,12 @@ public class InflateHandler extends AbstractHandler {
     return $;
   }
 
-  protected static void addListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
+  protected static void addListeners(final StyledText t, final Iterable<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
       as.list(types).forEach(i -> ls.forEach(λ -> t.addListener(i.intValue(), λ)));
   }
 
-  protected static void removeListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
+  protected static void removeListeners(final StyledText t, final Iterable<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
       ls.forEach(¢ -> as.list(types).forEach(λ -> t.removeListener(λ.intValue(), ¢)));
   }
@@ -188,7 +188,7 @@ public class InflateHandler extends AbstractHandler {
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 
-  private static List<ITextEditor> getOpenedEditors() {
+  private static Iterable<ITextEditor> getOpenedEditors() {
     final List<ITextEditor> $ = new LinkedList<>();
     final IWorkbenchPage p = getPage();
     if (p != null)

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum analyze {
   ;
-  public static Set<String> dependencies(final ASTNode n) {
+  public static Collection<String> dependencies(final ASTNode n) {
     final Set<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
@@ -41,7 +41,7 @@ public enum analyze {
     return $;
   }
 
-  public static List<String> dependencies(final List<Expression> arguments) {
+  public static Collection<String> dependencies(final Iterable<Expression> arguments) {
     final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
       $.addAll(analyze.dependencies(¢));

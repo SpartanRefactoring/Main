@@ -48,7 +48,7 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
             unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
@@ -102,7 +102,7 @@ public enum BloatingTestUtilities {
       MethodDeclaration m = getMethod(u, f);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
@@ -165,7 +165,7 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
@@ -184,7 +184,7 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))

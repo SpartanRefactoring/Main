@@ -74,7 +74,7 @@ public enum make {
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
-  public ASTParser parser(final Document ¢) {
+  public ASTParser parser(final IDocument ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢.get().toCharArray());
     return $;

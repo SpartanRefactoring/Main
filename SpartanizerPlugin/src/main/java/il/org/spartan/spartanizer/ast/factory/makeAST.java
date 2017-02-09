@@ -110,7 +110,7 @@ public enum makeAST {
   /** Parses a given {@link Document}.
    * @param d JD
    * @return {@link ASTNode} obtained by parsing */
-  public ASTNode from(final Document ¢) {
+  public ASTNode from(final IDocument ¢) {
     return from(¢.get());
   }
 

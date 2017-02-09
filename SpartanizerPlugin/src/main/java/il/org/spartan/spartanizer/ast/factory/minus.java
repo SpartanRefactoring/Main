@@ -49,7 +49,7 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  @SuppressWarnings("boxing") public static int level(final List<Expression> xs) {
+  @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
     return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
   }
 
@@ -69,7 +69,7 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  private static List<Expression> peel(final List<Expression> ¢) {
+  private static List<Expression> peel(final Collection<Expression> ¢) {
     return ¢.stream().map(minus::peel).collect(Collectors.toList());
   }
 

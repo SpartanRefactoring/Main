@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 public interface NanoPatternsConfiguration {
-  Set<JavadocMarkerNanoPattern> skipped = new HashSet<JavadocMarkerNanoPattern>() {
+  Collection<JavadocMarkerNanoPattern> skipped = new HashSet<JavadocMarkerNanoPattern>() {
     static final long serialVersionUID = 1L;
     {
       add(new HashCodeMethod());

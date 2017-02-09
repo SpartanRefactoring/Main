@@ -64,7 +64,7 @@ public enum eclipse {
    *        operation times use {@link wizard@nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor m) throws JavaModelException {
+  public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
@@ -82,7 +82,7 @@ public enum eclipse {
     return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
 
-  private static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
+  private static int compilationUnits(final IProgressMonitor m, final Collection<ICompilationUnit> us, final IPackageFragmentRoot r)
       throws JavaModelException {
     m.worked(1);
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
@@ -236,7 +236,7 @@ public enum eclipse {
     return null;
   }
 
-  List<ICompilationUnit> compilationUnits(final ICompilationUnit $) {
+  Collection<ICompilationUnit> compilationUnits(final ICompilationUnit $) {
     try {
       return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {

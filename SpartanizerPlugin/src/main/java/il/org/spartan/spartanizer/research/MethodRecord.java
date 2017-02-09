@@ -18,7 +18,7 @@ public class MethodRecord {
   public final String methodClassName;
   public int numNPStatements;
   public int numNPExpressions;
-  public final List<String> nps = new ArrayList<>();
+  public final Collection<String> nps = new ArrayList<>();
   public final int numParameters;
   public final int numStatements;
   public final int numExpressions;

@@ -26,18 +26,18 @@ public enum copy {
    * list.
    * @param from JD
    * @param into JD */
-  public static <N extends ASTNode> void into(final List<N> from, final List<N> into) {
+  public static <N extends ASTNode> void into(final Iterable<N> from, final List<N> into) {
     from.forEach(λ -> into(λ, into));
   }
 
   /** Duplicate a {@link Statement} into another list.
    * @param from JD
    * @param into JD */
-  public static <N extends ASTNode> void into(final N from, final List<N> into) {
+  public static <N extends ASTNode> void into(final N from, final Collection<N> into) {
     into.add(copy.of(from));
   }
 
-  public static void modifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
+  public static void modifiers(final Iterable<IExtendedModifier> from, final Collection<IExtendedModifier> to) {
     for (final IExtendedModifier ¢ : from)
       if (¢.isModifier())
         to.add(copy.of((Modifier) ¢));
@@ -55,7 +55,7 @@ public enum copy {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
+  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> Collection<¢> of(final Collection<¢> ¢s) {
     return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(Collectors.toList());
   }
 

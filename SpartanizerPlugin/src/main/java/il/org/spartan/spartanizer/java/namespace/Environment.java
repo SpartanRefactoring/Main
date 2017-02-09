@@ -31,7 +31,7 @@ public interface Environment {
 
   List<Entry<String, Binding>> entries();
 
-  default List<Entry<String, Binding>> fullEntries() {
+  default Collection<Entry<String, Binding>> fullEntries() {
     final List<Entry<String, Binding>> $ = new ArrayList<>(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
@@ -46,7 +46,7 @@ public interface Environment {
   }
 
   /** @return all the full names of the {@link Environment}. */
-  default LinkedHashSet<String> fullNames() {
+  default Collection<String> fullNames() {
     final LinkedHashSet<String> $ = new LinkedHashSet<>(keys());
     if (nest() != null)
       $.addAll(nest().fullNames());
@@ -142,7 +142,7 @@ public interface Environment {
    *         contained ({@link Block}s. If the {@link Statement} is a
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
-  static List<Entry<String, Binding>> declarationsOf(final Statement ¢) {
+  static Collection<Entry<String, Binding>> declarationsOf(final Statement ¢) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
     if (¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT)
       return $;
@@ -150,7 +150,7 @@ public interface Environment {
     return $;
   }
 
-  static List<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
+  static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
     final List<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(type(s)));
     final String path = fullName(s);
@@ -159,7 +159,7 @@ public interface Environment {
   }
 
   /** @return set of entries declared in the node, including all hiding. */
-  static LinkedHashSet<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
+  static Set<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
     // Holds the declarations in the subtree and relevant siblings.
     final LinkedHashSet<Entry<String, Binding>> $ = new LinkedHashSet<>();
     ¢.accept(new EnvironmentVisitor($));
@@ -179,7 +179,7 @@ public interface Environment {
 
   /** Spawns the first nested {@link Environment}. Should be used when the first
    * block is opened. */
-  static Namespace genesis() {
+  static Environment genesis() {
     return NULL.spawn();
   }
 
@@ -233,7 +233,7 @@ public interface Environment {
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  static LinkedHashSet<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
+  static Set<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
     return new LinkedHashSet<>();
   }
 }

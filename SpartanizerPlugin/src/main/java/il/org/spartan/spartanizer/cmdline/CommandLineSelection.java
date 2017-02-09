@@ -102,7 +102,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       return $;
     }
 
-    public static void getCompilationUnit(final File f, final List<CompilationUnit> $) {
+    public static void getCompilationUnit(final File f, final Collection<CompilationUnit> $) {
       try {
         $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {

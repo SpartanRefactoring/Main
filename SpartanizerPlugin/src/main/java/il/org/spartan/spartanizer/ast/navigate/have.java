@@ -34,7 +34,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>false</b></code> */
-  public static boolean falseLiteral(final List<Expression> ¢) {
+  public static boolean falseLiteral(final Iterable<Expression> ¢) {
     return az.stream(¢).anyMatch(iz.literal::false¢);
   }
 
@@ -50,7 +50,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a literal. */
-  public static boolean literal(final List<Expression> ¢) {
+  public static boolean literal(final Collection<Expression> ¢) {
     return ¢.stream().anyMatch(iz::literal);
   }
 
@@ -74,7 +74,7 @@ public enum have {
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements is
    *         the boolean literal <code><b>true</b></code> */
-  public static boolean trueLiteral(final List<Expression> ¢) {
+  public static boolean trueLiteral(final Collection<Expression> ¢) {
     return ¢.stream().anyMatch(iz.literal::true¢);
   }
 }

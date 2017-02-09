@@ -213,7 +213,7 @@ public interface ConfigurableReport {
       output = ¢;
     }
 
-    public static ArrayList<ASTNode> getInputList() {
+    public static List<ASTNode> getInputList() {
       return inputList;
     }
 
@@ -221,7 +221,7 @@ public interface ConfigurableReport {
       Settings.inputList = inputList;
     }
 
-    public static ArrayList<ASTNode> getOutputList() {
+    public static List<ASTNode> getOutputList() {
       return outputList;
     }
 
