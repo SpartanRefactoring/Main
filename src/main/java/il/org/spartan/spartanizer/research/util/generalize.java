@@ -76,7 +76,7 @@ public enum generalize {
     return ASTutils.extractCode(s, d);
   }
 
-  public static void main(final String args[]) {
+  public static void main(final String[] args) {
     System.out.println("enter whatever:");
     System.out.println(generalize.code(m()));
   }
