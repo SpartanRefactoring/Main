@@ -52,7 +52,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     ) && arguments.stream().anyMatch(λ -> helps(parametersNames, λ));
   }
 
-  private static boolean helps(final List<String> parametersNames, final Expression ¢) {
+  private static boolean helps(final Collection<String> parametersNames, final Expression ¢) {
     return arguments(az.methodInvocation(¢)) != null//
         && !arguments(az.methodInvocation(¢)).isEmpty()//
         && parametersContainAllArguments(parametersNames, ¢);

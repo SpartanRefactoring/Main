@@ -46,7 +46,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
         && parametersNames(d).containsAll(analyze.dependencies(arguments(az.methodInvocation($))));
   }
 
-  private static boolean arePseudoAtomic(final Collection<Expression> arguments, final List<String> parametersNames) {
+  private static boolean arePseudoAtomic(final Collection<Expression> arguments, final Collection<String> parametersNames) {
     return arguments.stream()//
         .allMatch(//
             λ -> iz.name(λ) || iz.methodInvocation(λ) && safeContains(parametersNames, λ)//

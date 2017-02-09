@@ -32,7 +32,7 @@ public interface Environment {
   List<Entry<String, Binding>> entries();
 
   default Collection<Entry<String, Binding>> fullEntries() {
-    final List<Entry<String, Binding>> $ = new ArrayList<>(entries());
+    final Collection<Entry<String, Binding>> $ = new ArrayList<>(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
     return $;
@@ -47,7 +47,7 @@ public interface Environment {
 
   /** @return all the full names of the {@link Environment}. */
   default Collection<String> fullNames() {
-    final LinkedHashSet<String> $ = new LinkedHashSet<>(keys());
+    final Collection<String> $ = new LinkedHashSet<>(keys());
     if (nest() != null)
       $.addAll(nest().fullNames());
     return $;
@@ -143,7 +143,7 @@ public interface Environment {
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
   static Collection<Entry<String, Binding>> declarationsOf(final Statement ¢) {
-    final List<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     if (¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT)
       return $;
     $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
@@ -151,7 +151,7 @@ public interface Environment {
   }
 
   static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
-    final List<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(type(s)));
     final String path = fullName(s);
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(Collectors.toList()));

@@ -30,7 +30,7 @@ public enum SentenceTestTemplate {
     return collectSentences(new Issue1008());
   }
 
-  static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
+  static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
       for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {

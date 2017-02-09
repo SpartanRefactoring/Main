@@ -63,7 +63,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     addNewInList(op, different);
   }
 
-  private void addNewInList(final Expression item, final List<Expression> xs) {
+  private void addNewInList(final Expression item, final Collection<Expression> xs) {
     if (!isIn(item, xs))
       xs.add(item);
   }
