@@ -11,13 +11,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0359 {
-  @Test public void t20() {
-    trimmingOf("for(;b==q;){int i;}")//
-        .gives("{}")//
-        .gives("")//
-        .stays();
-  }
-
   @Test public void b() {
     trimmingOf("int i;++i;")//
         .stays();
@@ -25,6 +18,13 @@ public class Issue0359 {
 
   @Test public void d() {
     trimmingOf("int i=f();")//
+        .stays();
+  }
+
+  @Test public void t20() {
+    trimmingOf("for(;b==q;){int i;}")//
+        .gives("{}")//
+        .gives("")//
         .stays();
   }
 }

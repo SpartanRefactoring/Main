@@ -16,6 +16,10 @@ import il.org.spartan.spartanizer.cmdline.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {
+  @Test public void bug() {
+    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
+  }
+
   @Test public void complicated() {
     azzert.that(GuessedContext.find("public static int getFuzzyDistance(final CharSequence term,final CharSequence query,final Locale l){" //
         + "if (term == null || query == null)" //
@@ -47,6 +51,10 @@ public final class GuessedContextTest {
 
   @Test public void dealWithComment() {
     azzert.that(find("if (b) {\n"), is(STATEMENTS_LOOK_ALIKE));
+  }
+
+  @Test(expected = AssertionError.class) public void error2() {
+    GuessedContext.find("willBeResumed ? listeners : rImpl.atmosphereResourceEventListener().stream().forEach(¢ -> l.onBroadcast(e));");
   }
 
   @Test public void essenceTest() {
@@ -181,22 +189,6 @@ public final class GuessedContextTest {
     ), is(METHOD_LOOK_ALIKE));
   }
 
-  @Test public void statement2() {
-    azzert.that(GuessedContext.find(//
-        "\"//\""), is(EXPRESSION_LOOK_ALIKE));
-  }
-
-  @Test(expected = AssertionError.class) public void error2() {
-    GuessedContext.find("willBeResumed ? listeners : rImpl.atmosphereResourceEventListener().stream().forEach(¢ -> l.onBroadcast(e));");
-  }
-
-  @Test public void statement3() {
-    azzert.that(
-        GuessedContext.find(//
-            "willBeResumed ? listeners : rImpl.atmosphereResourceEventListener().stream().forEach(¢ -> l.onBroadcast(e))"),
-        is(EXPRESSION_LOOK_ALIKE));
-  }
-
   @Test public void methodInvocation() {
     azzert.that(GuessedContext.find("fuo()"), is(GuessedContext.EXPRESSION_LOOK_ALIKE));
   }
@@ -209,7 +201,15 @@ public final class GuessedContextTest {
     azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
   }
 
-  @Test public void bug() {
-    azzert.that(STATEMENTS_LOOK_ALIKE.off(STATEMENTS_LOOK_ALIKE.on("int a;")), is("int a;"));
+  @Test public void statement2() {
+    azzert.that(GuessedContext.find(//
+        "\"//\""), is(EXPRESSION_LOOK_ALIKE));
+  }
+
+  @Test public void statement3() {
+    azzert.that(
+        GuessedContext.find(//
+            "willBeResumed ? listeners : rImpl.atmosphereResourceEventListener().stream().forEach(¢ -> l.onBroadcast(e))"),
+        is(EXPRESSION_LOOK_ALIKE));
   }
 }

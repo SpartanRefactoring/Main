@@ -17,14 +17,6 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author michalcohen
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
-  private class ASTNodeWrapper {
-    public final ArrayList<ASTNode> inner;
-
-    ASTNodeWrapper() {
-      inner = new ArrayList<>();
-    }
-  }
-
   private static ASTNode createAST(final String ¢) {
     return wizard.ast(¢);
   }
@@ -54,5 +46,13 @@ public class CleanerVisitorTest {
 
   @Test public void test2() {
     new CleanerVisitor().visit((ImportDeclaration) first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
+  }
+
+  private class ASTNodeWrapper {
+    public final ArrayList<ASTNode> inner;
+
+    ASTNodeWrapper() {
+      inner = new ArrayList<>();
+    }
   }
 }

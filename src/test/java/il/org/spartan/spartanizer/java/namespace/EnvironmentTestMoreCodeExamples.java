@@ -6,12 +6,12 @@ import il.org.spartan.spartanizer.annotations.*;
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Dec 26, 2016 */
 final class EnvironmentTestMoreCodeExamples {
+  {
+    new A().hashCode();
+  }
+
   class A {
     @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void foo() {
       /**/}
-  }
-
-  {
-    new A().hashCode();
   }
 }

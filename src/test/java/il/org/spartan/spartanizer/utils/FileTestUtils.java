@@ -14,75 +14,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @author Yossi GIl */
 @SuppressWarnings({ "unused" })
 public class FileTestUtils {
-  /** An abstract class to be extended and implemented by client, while
-   * overriding {@link #go(List,File)} as per customer's need.
-   * @seTestUtils.SATestSuite.Files
-   * @see FileTestUtils.Traverse
-   * @author Yossi Gil
-   * @since 2014/05/24 */
-  public abstract static class Directories extends FileTestUtils.Traverse {
-    /** Adds a test case to the collection of all test cases generated in the
-     * traversal */
-    @Override public final void go(final List<Object[]> $, final File f) {
-      if (!f.isDirectory())
-        return;
-      final Object[] c = makeCase(f);
-      if (c != null)
-        $.add(c);
-    }
-
-    abstract Object[] makeCase(File d);
-  }
-
-  /** An abstract class to be extended and implemented by client, while
-   * overriding {@link #go(List,File)} as per customer's need.
-   * @seTestUtils.SATestSuite.Directories
-   * @see FileTestUtils.Traverse
-   * @author Yossi Gil
-   * @since 2014/05/24 */
-  public abstract static class Files extends FileTestUtils.Traverse {
-    @Override public void go(final List<Object[]> $, final File d) {
-      for (final File f : d.listFiles()) // NANO
-        if (f != null && f.isFile() && f.exists()) {
-          final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
-          if (c != null)
-            $.add(c);
-        }
-    }
-
-    abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
-  }
-
-  /* Auxiliary function for test suite inherited classes */
-  enum TestDirection {
-    In, Out
-  }
-
-  /** An abstract class representing the concept of traversing the
-   * {@link #location} while generating test cases.
-   * @seTestUtils.SATestSuite.Files
-   * @seTestUtils.SATestSuite.Directories
-   * @author Yossi Gil
-   * @since 2014/05/24 */
-  public abstract static class Traverse extends FileTestUtils {
-    /** @return a collection of all test cases generated in the traversal */
-    public final Collection<Object[]> go() {
-      assert location != null;
-      assert location.listFiles() != null;
-      final List<Object[]> $ = new ArrayList<>();
-      for (final File ¢ : location.listFiles()) {
-        assert ¢ != null;
-        go($, ¢);
-      }
-      return $;
-    }
-
-    /** Collect test cases from each file in {@link #location}
-     * @param $ where to save the collected test cases
-     * @param f an entry in {@link #location} */
-    public abstract void go(List<Object[]> $, File f);
-  }
-
   /** A String determines whereas we are at the IN or OUT side of the test See
    * TestCases test files for reference. */
   static final String testKeyword = "<Test Result>";
@@ -186,5 +117,74 @@ public class FileTestUtils {
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);
+  }
+
+  /** An abstract class to be extended and implemented by client, while
+   * overriding {@link #go(List,File)} as per customer's need.
+   * @seTestUtils.SATestSuite.Files
+   * @see FileTestUtils.Traverse
+   * @author Yossi Gil
+   * @since 2014/05/24 */
+  public abstract static class Directories extends FileTestUtils.Traverse {
+    /** Adds a test case to the collection of all test cases generated in the
+     * traversal */
+    @Override public final void go(final List<Object[]> $, final File f) {
+      if (!f.isDirectory())
+        return;
+      final Object[] c = makeCase(f);
+      if (c != null)
+        $.add(c);
+    }
+
+    abstract Object[] makeCase(File d);
+  }
+
+  /** An abstract class to be extended and implemented by client, while
+   * overriding {@link #go(List,File)} as per customer's need.
+   * @seTestUtils.SATestSuite.Directories
+   * @see FileTestUtils.Traverse
+   * @author Yossi Gil
+   * @since 2014/05/24 */
+  public abstract static class Files extends FileTestUtils.Traverse {
+    @Override public void go(final List<Object[]> $, final File d) {
+      for (final File f : d.listFiles()) // NANO
+        if (f != null && f.isFile() && f.exists()) {
+          final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
+          if (c != null)
+            $.add(c);
+        }
+    }
+
+    abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
+  }
+
+  /* Auxiliary function for test suite inherited classes */
+  enum TestDirection {
+    In, Out
+  }
+
+  /** An abstract class representing the concept of traversing the
+   * {@link #location} while generating test cases.
+   * @seTestUtils.SATestSuite.Files
+   * @seTestUtils.SATestSuite.Directories
+   * @author Yossi Gil
+   * @since 2014/05/24 */
+  public abstract static class Traverse extends FileTestUtils {
+    /** @return a collection of all test cases generated in the traversal */
+    public final Collection<Object[]> go() {
+      assert location != null;
+      assert location.listFiles() != null;
+      final List<Object[]> $ = new ArrayList<>();
+      for (final File ¢ : location.listFiles()) {
+        assert ¢ != null;
+        go($, ¢);
+      }
+      return $;
+    }
+
+    /** Collect test cases from each file in {@link #location}
+     * @param $ where to save the collected test cases
+     * @param f an entry in {@link #location} */
+    public abstract void go(List<Object[]> $, File f);
   }
 }

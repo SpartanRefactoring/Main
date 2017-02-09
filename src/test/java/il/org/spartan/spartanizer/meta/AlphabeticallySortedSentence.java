@@ -38,12 +38,38 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     }
   };
 
-  private AlphabeticallySortedSentence(final Void __) {
-    ___.unused(__);
+  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
+    final Vocabulary $ = new Vocabulary();
+    for (final BodyDeclaration bd : bodyDeclarations(cd)) {
+      assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
+      final MethodDeclaration md = (MethodDeclaration) bd;
+      final String mangle = mangle(md), model = extract.name(reflection);
+      assert stencil.containsKey(mangle) //
+      : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
+          , md, stencil);
+      final String javaDoc = " have JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + model;
+      if (disabling.specificallyDisabled(stencil.get(mangle)))
+        assert disabling.specificallyDisabled(md) //
+        : fault.specifically("Method " + mangle + " must " + javaDoc, md, stencil);
+      else
+        assert !disabling.specificallyDisabled(md) //
+        : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stencil);
+      $.put(mangle + "", md);
+    }
+    return $;
+  }
+
+  public static Vocabulary reify(final ClassInstanceCreation ¢) {
+    final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
+    return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }
 
   public AlphabeticallySortedSentence() {
     forbidden();
+  }
+
+  private AlphabeticallySortedSentence(final Void __) {
+    ___.unused(__);
   }
 
   private void forbidden() {
@@ -112,31 +138,5 @@ public class AlphabeticallySortedSentence extends MetaFixture {
 
   protected void trimmingStopsAt() {
     forbidden();
-  }
-
-  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
-    final Vocabulary $ = new Vocabulary();
-    for (final BodyDeclaration bd : bodyDeclarations(cd)) {
-      assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
-      final MethodDeclaration md = (MethodDeclaration) bd;
-      final String mangle = mangle(md), model = extract.name(reflection);
-      assert stencil.containsKey(mangle) //
-      : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
-          , md, stencil);
-      final String javaDoc = " have JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + model;
-      if (disabling.specificallyDisabled(stencil.get(mangle)))
-        assert disabling.specificallyDisabled(md) //
-        : fault.specifically("Method " + mangle + " must " + javaDoc, md, stencil);
-      else
-        assert !disabling.specificallyDisabled(md) //
-        : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stencil);
-      $.put(mangle + "", md);
-    }
-    return $;
-  }
-
-  public static Vocabulary reify(final ClassInstanceCreation ¢) {
-    final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
-    return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }
 }

@@ -16,38 +16,6 @@ public class DelegatorTest extends JavadocerTest {
     assert is("boolean foo(){return bar();}");
   }
 
-  @Test public void basic2() {
-    assert is("boolean foo(int a){return bar(a);}");
-  }
-
-  @Test public void basic3() {
-    assert is("boolean foo(int a){return bar(a,a);}");
-  }
-
-  @Test public void basic4() {
-    assert not("boolean foo(int a){return bar(a,f(a));}");
-  }
-
-  @Test public void basic5() {
-    assert not("boolean foo(int a){if(a == 7) return bar(a);}");
-  }
-
-  @Test public void basic6() {
-    assert not("boolean foo(int a){return bar(a,b);}");
-  }
-
-  @Test public void basic7() {
-    assert not("boolean foo(int a){return bar(a,f(b));} ");
-  }
-
-  @Test public void basic8() {
-    assert not("boolean foo(int a){return bar(a,f(f(b)));} ");
-  }
-
-  @Test public void basic9() {
-    assert is("void foo(int a){return bar(a);}");
-  }
-
   @Test public void basic10() {
     assert is("@Override public Set<E> inEdges(){return incidentEdges();} ");
   }
@@ -88,6 +56,10 @@ public class DelegatorTest extends JavadocerTest {
     assert is("@Deprecated @Override public void writeBytes(String ¢) throws IOException {    ((DataOutputStream)out).writeBytes(¢);}");
   }
 
+  @Test public void basic2() {
+    assert is("boolean foo(int a){return bar(a);}");
+  }
+
   @Test public void basic20() {
     assert is("@Override public int size(){synchronized (mutex) {    return delegate().size();}}");
   }
@@ -122,5 +94,33 @@ public class DelegatorTest extends JavadocerTest {
 
   @Test public void basic28() {
     assert is("@SuppressWarnings({\"a\"}) public void bar() {      use();    }");
+  }
+
+  @Test public void basic3() {
+    assert is("boolean foo(int a){return bar(a,a);}");
+  }
+
+  @Test public void basic4() {
+    assert not("boolean foo(int a){return bar(a,f(a));}");
+  }
+
+  @Test public void basic5() {
+    assert not("boolean foo(int a){if(a == 7) return bar(a);}");
+  }
+
+  @Test public void basic6() {
+    assert not("boolean foo(int a){return bar(a,b);}");
+  }
+
+  @Test public void basic7() {
+    assert not("boolean foo(int a){return bar(a,f(b));} ");
+  }
+
+  @Test public void basic8() {
+    assert not("boolean foo(int a){return bar(a,f(f(b)));} ");
+  }
+
+  @Test public void basic9() {
+    assert is("void foo(int a){return bar(a);}");
   }
 }

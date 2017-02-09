@@ -26,6 +26,7 @@ public abstract class ENVTestEngineAbstract {
   protected static LinkedHashSet<Entry<String, Binding>> testSet;
   // Optionally provided by the user, in order to test the test engine.
   protected static LinkedHashSet<Entry<String, Binding>> userProvidedSet;
+  private static final String rOOT = "./src/test/java/il/org/spartan/spartanizer/java/namespace/";
 
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */
@@ -128,7 +129,6 @@ public abstract class ENVTestEngineAbstract {
   // test on a node with
   // potential annotations.
   protected ASTNode n;
-  private static final String rOOT = "./src/test/java/il/org/spartan/spartanizer/java/namespace/";
 
   protected abstract LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(BodyDeclaration $);
 

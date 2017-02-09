@@ -5,23 +5,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.meta.*;
 
-/** Unit test of {@link Namespace}
- * @author Yossi Gil
- * @since 2016-12-15 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
-public class NamespaceTest extends MetaFixture {
-  private final Namespace fixture = Environment.of(reflectedCompilationUnit());
-
-  @Test public void a01() {
-    assert fixture != null;
-  }
-
-  @Test public void a02() {
-    fixture.description().hashCode();
-  }
-}
-
 class NamespaceFixture {
   {
     int $ = 2;
@@ -40,10 +23,6 @@ class NamespaceFixture {
     return a >>> hashCode();
   }
 
-  class X {
-    int b;
-  }
-
   interface B {
     enum C {
       ;
@@ -51,6 +30,27 @@ class NamespaceFixture {
         int a;
       }
     }
+  }
+
+  class X {
+    int b;
+  }
+}
+
+/** Unit test of {@link Namespace}
+ * @author Yossi Gil
+ * @since 2016-12-15 */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SuppressWarnings({ "javadoc" })
+public class NamespaceTest extends MetaFixture {
+  private final Namespace fixture = Environment.of(reflectedCompilationUnit());
+
+  @Test public void a01() {
+    assert fixture != null;
+  }
+
+  @Test public void a02() {
+    fixture.description().hashCode();
   }
 }
 

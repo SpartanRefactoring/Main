@@ -40,7 +40,6 @@ public class Issue0717 {
     final StringBuilder $ = new StringBuilder();
     final Random randomGenerator = new Random();
     final int len = Math.max(1, randomGenerator.nextInt(maxLen));
-
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
     range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
     return $ + "";

@@ -24,6 +24,12 @@ public class Issue0904 {
         .stays();
   }
 
+  @Ignore // TODO: Raviv Rachmiel
+  @Test public void issue075h() {
+    trimmingOf("int i = +0;")//
+        .gives("");
+  }
+
   @Test public void t08() {
     trimmingOf("if(b){int i;int j;}else{g();int tipper;}")//
         .gives("if(b){}else{g();}") //
@@ -39,11 +45,5 @@ public class Issue0904 {
         .gives("if(b)g();")//
         .stays() //
     ;
-  }
-
-  @Ignore // TODO: Raviv Rachmiel
-  @Test public void issue075h() {
-    trimmingOf("int i = +0;")//
-        .gives("");
   }
 }

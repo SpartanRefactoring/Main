@@ -27,6 +27,33 @@ import il.org.spartan.spartanizer.cmdline.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0413 {
+  /** There are no established rules on names of test methods. Here are some
+   * recommendations:
+   * <ul>
+   * <li><b>DRY</b>: Don't Repeat Yourself; if a method is annotated with a
+   * {@code @Test}, it is a matter of DRY to include the word `test` in the
+   * method's name
+   * <li><b>Flavors</b>: name a test that prove that something is not done,
+   * {@code chocolate()}. If there are several, by names {@code chocolate01},
+   * code>chocolate02</code>, etc
+   * </ul>
+  */
+  @Test public void chocolate0() {
+    azzert.that(Essence.stringRemove("abc"), iz("abc"));
+  }
+
+  @Test public void chocolate1() {
+    azzert.that(Essence.stringRemove("abc"), instanceOf(String.class));
+  }
+
+  @Test public void chocolate2() {
+    azzert.that(Essence.stringRemove(Essence.stringRemove("hello")), instanceOf(String.class));
+  }
+
+  @Test public void idempotent() {
+    as.list(new String[] { "This", "This 'is'", "This \"is" }).forEach(λ -> azzert.that(Essence.stringRemove(Essence.stringRemove(λ)), iz(λ)));
+  }
+
   /** Where all not-yet working tests are.
    * <p/>
    * On the long-run, this class should loose all its members, but still remain
@@ -57,32 +84,5 @@ public class Issue0413 {
       azzert.that(Essence.stringRemove("\"Who\" is on \"First\""), //
           is("is on"));
     }
-  }
-
-  /** There are no established rules on names of test methods. Here are some
-   * recommendations:
-   * <ul>
-   * <li><b>DRY</b>: Don't Repeat Yourself; if a method is annotated with a
-   * {@code @Test}, it is a matter of DRY to include the word `test` in the
-   * method's name
-   * <li><b>Flavors</b>: name a test that prove that something is not done,
-   * {@code chocolate()}. If there are several, by names {@code chocolate01},
-   * code>chocolate02</code>, etc
-   * </ul>
-  */
-  @Test public void chocolate0() {
-    azzert.that(Essence.stringRemove("abc"), iz("abc"));
-  }
-
-  @Test public void chocolate1() {
-    azzert.that(Essence.stringRemove("abc"), instanceOf(String.class));
-  }
-
-  @Test public void chocolate2() {
-    azzert.that(Essence.stringRemove(Essence.stringRemove("hello")), instanceOf(String.class));
-  }
-
-  @Test public void idempotent() {
-    as.list(new String[] { "This", "This 'is'", "This \"is" }).forEach(λ -> azzert.that(Essence.stringRemove(Essence.stringRemove(λ)), iz(λ)));
   }
 }

@@ -48,16 +48,16 @@ public final class analyzeTest {
     azzert.that(s.size(), is(5));
   }
 
+  @Test public void findFirst() {
+    azzert.that(find.first(VariableDeclaration.class).under(AST).getName(), iz("y"));
+  }
+
   @Test public void findFirst1() {
     azzert.that(find//
         .first(SingleVariableDeclaration.class)//
         .under(wizard.ast("public void m(int y){ y=5;}")//
         ).getType(), iz("int")//
     );
-  }
-
-  @Test public void findFirst() {
-    azzert.that(find.first(VariableDeclaration.class).under(AST).getName(), iz("y"));
   }
 
   @Test public void findFirst2() {
