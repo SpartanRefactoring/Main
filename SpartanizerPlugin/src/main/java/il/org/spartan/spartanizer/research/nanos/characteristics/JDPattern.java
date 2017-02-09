@@ -29,7 +29,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;
-    final Set<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
+    final Collection<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
     final Bool $ = new Bool();
     $.inner = true;
@@ -90,7 +90,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   }
 
   static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
-    final Set<String> $ = new HashSet<>();
+    final Collection<String> $ = new HashSet<>();
     $.addAll(ps);
     body(root).accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {

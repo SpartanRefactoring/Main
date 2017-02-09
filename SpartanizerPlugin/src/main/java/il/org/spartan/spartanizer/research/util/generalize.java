@@ -34,7 +34,7 @@ public enum generalize {
   }
 
   public static String generalizeIdentifiers(final String s) {
-    final Document d = new Document(ASTutils.wrapCode(s));
+    final IDocument d = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(d.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);

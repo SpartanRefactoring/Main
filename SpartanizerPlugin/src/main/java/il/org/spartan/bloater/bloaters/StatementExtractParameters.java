@@ -146,7 +146,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           $.add(x);
       }
 
-      void consider(final List<Expression> $, final Iterable<Expression> xs) {
+      void consider(final Collection<Expression> $, final Iterable<Expression> xs) {
         xs.forEach(λ -> consider($, λ));
       }
     });

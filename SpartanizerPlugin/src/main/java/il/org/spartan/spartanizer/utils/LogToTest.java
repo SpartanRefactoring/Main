@@ -38,7 +38,7 @@ public enum LogToTest {
       return;
     }
     System.out.println("Creating test cases...");
-    final Set<String> xs = new HashSet<>();
+    final Collection<String> xs = new HashSet<>();
     final List<String> ts = new LinkedList<>();
     final Map<String, Integer> nu = new HashMap<>();
     for (final File element : fs)
@@ -74,7 +74,7 @@ public enum LogToTest {
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
   }
 
-  private static void analyze(final Collection<String> xs, final List<String> ts, final Map<String, Integer> nu, final List<String> ss) {
+  private static void analyze(final Collection<String> xs, final Collection<String> ts, final Map<String, Integer> nu, final List<String> ss) {
     final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
         errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))

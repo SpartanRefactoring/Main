@@ -95,7 +95,7 @@ public class Generic$Applicator {
   }
 
   private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
-    final List<String> $ = new ArrayList<>();
+    final Collection<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;
   }

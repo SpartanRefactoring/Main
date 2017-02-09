@@ -304,7 +304,7 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
-  public static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+  public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
     final List<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;

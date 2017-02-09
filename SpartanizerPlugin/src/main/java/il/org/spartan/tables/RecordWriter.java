@@ -56,7 +56,7 @@ public class RecordWriter implements Closeable {
     writeData(¢);
   }
 
-  public void writeFooter(final Row<?> ¢) {
+  public void writeFooter(final Map<String, Object> ¢) {
     if (!footerPrinted) {
       write(renderer.beforeFooter());
       footerPrinted = true;
@@ -68,7 +68,7 @@ public class RecordWriter implements Closeable {
     write(renderer.renderRow(¢.values()));
   }
 
-  private void writeHeader(final Row<?> ¢) {
+  private void writeHeader(final Map<String, Object> ¢) {
     renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //

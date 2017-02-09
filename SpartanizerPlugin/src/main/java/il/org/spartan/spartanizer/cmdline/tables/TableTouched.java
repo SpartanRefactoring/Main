@@ -49,7 +49,7 @@ public class TableTouched extends TableNanosCoverage {
     touchedWriter.nl();
   }
 
-  private static double fractionOfMethodsTouched(final List<MethodRecord> ¢) {
+  private static double fractionOfMethodsTouched(final Collection<MethodRecord> ¢) {
     return safe.div(totalMethodsTouched(¢), ¢.size());
   }
 

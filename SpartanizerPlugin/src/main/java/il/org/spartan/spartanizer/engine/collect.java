@@ -267,7 +267,7 @@ public enum collect {
    * @param what JD
    * @return ASTVisitor that adds uses by name of the SimpleName 'what' to the
    *         list 'into' */
-  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
+  static ASTVisitor lexicalUsesCollector(final Collection<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
 
@@ -391,7 +391,7 @@ public enum collect {
       }
 
       Collection<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
-        final List<VariableDeclarationFragment> $ = new ArrayList<>();
+        final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration ¢) {
             $.addAll(fragments(¢));
