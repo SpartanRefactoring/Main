@@ -53,7 +53,7 @@ public class TableTouched extends TableNanosCoverage {
     return safe.div(totalMethodsTouched(¢), ¢.size());
   }
 
-  private static double totalMethodsTouched(final List<MethodRecord> rs) {
+  private static double totalMethodsTouched(final Collection<MethodRecord> rs) {
     return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
   }
 }

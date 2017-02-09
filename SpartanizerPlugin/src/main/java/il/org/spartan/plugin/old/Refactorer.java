@@ -169,7 +169,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return $;
   }
 
-  private boolean doWork(final IRunnableWithProgress p, final ProgressMonitorDialog d) {
+  private boolean doWork(final IRunnableWithProgress p, final IRunnableContext d) {
     if (p != null)
       try {
         d.run(true, true, p);
@@ -186,7 +186,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       final int $ = passesCount();
       int pass, totalTips = 0;
       final List<ICompilationUnit> doneCompilationUnits = new ArrayList<>();
-      final Set<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
+      final Collection<ICompilationUnit> modifiedCompilationUnits = new HashSet<>();
       for (pass = 0; pass < $ && !finish(pm); ++pass) {
         pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
         final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
@@ -239,7 +239,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return $;
   }
 
-  private static List<ICompilationUnit> currentCompilationUnits(final List<ICompilationUnit> us, final List<ICompilationUnit> ds) {
+  private static List<ICompilationUnit> currentCompilationUnits(final Collection<ICompilationUnit> us, final Collection<ICompilationUnit> ds) {
     final List<ICompilationUnit> $ = new ArrayList<>();
     $.addAll(us);
     $.removeAll(ds);

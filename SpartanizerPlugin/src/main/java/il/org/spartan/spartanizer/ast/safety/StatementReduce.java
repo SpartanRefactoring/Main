@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -24,7 +22,7 @@ public abstract class StatementReduce<T> {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  private T reduce(final List<Expression> xs) {
+  private T reduce(final Iterable<Expression> xs) {
     T $ = neutralElement();
     for (final Expression ¢ : xs)
       $ = reduce($, map(¢));
