@@ -13,7 +13,7 @@ public class UnlessTest {
   @Test public void basic() {
     trimmingOf("return k == null ? null : new SynchronizedEntry<K,V>(k,mutex);")//
         .using(ConditionalExpression.class, new Unless())//
-        .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex));")//
+        .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex)).defaultTo(null);")//
         .stays();
   }
 
@@ -34,8 +34,8 @@ public class UnlessTest {
   @Test public void basic2() {
     trimmingOf("return ($ == null) ? null : $.size();")//
         .using(ConditionalExpression.class, new Unless())//
-        .gives("return unless(($==null)).eval(()->$.size());")//
-        .gives("return unless($==null).eval(()->$.size());")//
+        .gives("return unless(($==null)).eval(()->$.size()).defaultTo(null);")//
+        .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
         .stays();
   }
 }
