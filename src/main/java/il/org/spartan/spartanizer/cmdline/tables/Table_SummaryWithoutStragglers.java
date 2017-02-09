@@ -40,7 +40,7 @@ public class Table_SummaryWithoutStragglers extends Table_Summary {
             null)//
         .remove(MethodInvocation.class, //
             new Last(), //
-            new SelfReduction(), //
+            new Reduction(), //
             null) //
         .remove(ReturnStatement.class, //
             new ReturnPrevious(), //

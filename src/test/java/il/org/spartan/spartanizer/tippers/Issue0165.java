@@ -16,12 +16,86 @@ public final class Issue0165 {
         .gives(" public static boolean f(final VariableDeclarationStatement ¢) {\n" + "return (Modifier.FINAL & ¢.getModifiers()) != 0;}");
   }
 
-  @Test public void seriesA_02_dollar() {
+  @Test public void a01() {
     trimmingOf(" public static boolean __final(final VariableDeclarationStatement $) {\n" + "return (Modifier.FINAL & $.getModifiers()) != 0;}")
         .stays();
   }
+  @Test public void a02() {
+    trimmingOf(" public static boolean a(final V $) { return (Modifier.FINAL & $.getModifiers()) != 0;}")
+        .stays();
+  }
+  @Test public void a03() {
+    trimmingOf(" public static boolean a(final V $) { return (Modifier.FINAL & $.getModifiers()) != 0;}")
+        .stays();
+  }
+@Test public void a04() {
+    trimmingOf("boolean a(final V $) { return (Modifier.FINAL & $.getModifiers()) != 0;}")
+        .stays();
+  }  
+ @Test public void a05() {
+    trimmingOf("boolean a(V $) { return (Modifier.FINAL & $.getModifiers()) != 0;}")
+        .stays();
+  }  
+@Test public void a06() {
+    trimmingOf("boolean a(V $) { return (F & $.g()) != 0;}")
+        .stays();
+  }  
+@Test public void a07() {
+    trimmingOf("boolean a(V $) { return $.g() != 0;}")
+        .stays();
+  }  
 
-  @Test public void seriesA_03_single_underscore() {
+@Test public void a08() {
+    trimmingOf("boolean a(int $) { return $.g() != 0;}")
+        .stays();
+  }  
+   
+@Test public void a09() {
+    trimmingOf("boolean a(int $) { return $ != 0;}")
+        .stays();
+  }  
+@Test public void a09a() {
+  trimmingOf("boolean a(int $) { return $ > 0;}")
+      .stays();
+}  
+ 
+@Test public void a09b() {
+  trimmingOf("int a(int $) { $;}")
+      .stays();
+}  
+@Test public void a09c() {
+  trimmingOf("int a(int $) { return $;}")
+      .stays();
+}  
+@Test public void a09d() {
+  trimmingOf("boolean a(int $) { return true;}")
+      .stays();
+}  
+@Test public void a09da() {
+  trimmingOf("void a(int $) {}")
+      .stays();
+}
+@Test public void a09db() {
+  trimmingOf("void a(boolean $) {}")
+      .stays();
+}
+@Test public void a09dc() {
+  trimmingOf("void a(T $) {}")
+      .stays();
+}
+@Test public void a09dd() {
+  trimmingOf("void a(String $) {}")
+      .stays();
+}
+@Test public void a09de() {
+  trimmingOf("void a() {String $ = \"ABC\"; $.hashCode();}")
+      .stays();
+}
+@Test public void a09e() {
+  trimmingOf("boolean a(int b) { return $;}")
+      .stays();
+}  
+@Test public void seriesA_03_single_underscore() {
     trimmingOf("void f(int _){}")//
         .gives("void f(int __){}")//
         .stays();

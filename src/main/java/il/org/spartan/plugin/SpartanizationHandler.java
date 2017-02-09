@@ -91,7 +91,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 $.stop();
               else {
                 dialogOpen = true;
-                runAsynchronouslyInUIThread(() -> d.open());
+                runAsynchronouslyInUIThread(d::open);
               }
             startTime = System.nanoTime();
             break;
@@ -162,12 +162,12 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(¢.get(event.visit_root)))))
               $.stop();
             else {
-              runAsynchronouslyInUIThread(() -> d.open());
+              runAsynchronouslyInUIThread(d::open);
               openDialog.set(true);
             }
         })).expand(EventMapper.inspectorOf(event.run_finish).does(¢ -> {
           if (openDialog.get())
-            runAsynchronouslyInUIThread(() -> d.close());
+            runAsynchronouslyInUIThread(d::close);
         }).does(¢ -> {
           if (openDialog.get())
             Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root))
