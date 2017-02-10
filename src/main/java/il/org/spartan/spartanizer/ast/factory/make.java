@@ -65,6 +65,7 @@ public enum make {
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
+  @SuppressWarnings("MethodCanBeVariableArityMethod")
   public ASTParser parser(final char[] text) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(text);

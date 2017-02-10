@@ -6,7 +6,6 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Configurable applicator.
- * @param <L> I think we do not need this one. It couples classes too much.
  * @author Ori Roth
  * @since 2.6 */
 public abstract class Applicator {
