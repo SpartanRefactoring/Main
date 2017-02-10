@@ -192,7 +192,7 @@ public enum BloatingTestUtilities {
         if (!unpeeled.equals(get()) && unpeeled.equals(get()))
           assertSimilar(get(), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.logProbableBug(this, ¢); ;
+        monitor.logProbableBug(this, ¢);
       }
     }
 
