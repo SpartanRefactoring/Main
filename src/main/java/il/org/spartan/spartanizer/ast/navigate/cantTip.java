@@ -24,11 +24,11 @@ public enum cantTip {
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
-    return extract.fragments(step.body(s)).stream().allMatch(λ -> !new FragmentInitializerDead().canTip(λ));
+    return extract.fragments(step.body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().canTip(λ));
   }
 
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
-    return extract.fragments(step.body(s)).stream().allMatch(λ -> !new FragmentInitializerDead().canTip(λ));
+    return extract.fragments(step.body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().canTip(λ));
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
@@ -37,10 +37,10 @@ public enum cantTip {
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemove().canTip(λ));
+    return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().canTip(λ));
   }
 
   public static boolean remvoeRedundantIf(final WhileStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemove().canTip(λ));
+    return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().canTip(λ));
   }
 }

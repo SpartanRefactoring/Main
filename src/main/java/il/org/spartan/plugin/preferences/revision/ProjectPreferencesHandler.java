@@ -137,7 +137,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         @Override public void selectionChanged(SelectionChangedEvent e) {
           ISelection s = e.getSelection();
           Object oo = e.getSource();
-          if (s == null || oo == null || s.isEmpty() || !(s instanceof TreeSelection) || !(oo instanceof ContainerCheckedTreeViewer))
+          if (s == null || s.isEmpty() || !(s instanceof TreeSelection) || !(oo instanceof ContainerCheckedTreeViewer))
             return;
           Control v = ((ContainerCheckedTreeViewer) oo).getControl();
           if (v == null)

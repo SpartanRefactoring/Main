@@ -33,7 +33,7 @@ public enum guessName {
   }
 
   public static guessName of(final String nameOfSomething) {
-    if (nameOfSomething == null || nameOfSomething.length() == 0)
+    if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
     if (nameOfSomething.matches("[_]+")) //
       return guessName.ANONYMOUS;

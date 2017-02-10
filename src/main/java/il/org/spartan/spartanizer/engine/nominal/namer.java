@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2016 */
+@SuppressWarnings("InfiniteRecursion")
 public interface namer {
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
   String forbidden = "_"; //
