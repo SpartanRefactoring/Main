@@ -5,7 +5,6 @@ import java.util.function.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 6, 2016 */
-@SuppressWarnings("static-method")
 public enum If {
   ;
   public static <N> If0 Null(final N ¢) {
