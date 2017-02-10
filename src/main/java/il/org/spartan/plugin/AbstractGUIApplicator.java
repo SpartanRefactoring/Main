@@ -33,6 +33,7 @@ import il.org.spartan.utils.*;
  *         2013/07/10
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
+@SuppressWarnings("ALL")
 public abstract class AbstractGUIApplicator extends Refactoring {
   public IProgressMonitor progressMonitor = nullProgressMonitor;
   private final Collection<TextFileChange> changes = new ArrayList<>();
@@ -226,10 +227,6 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** @return selection */
   public ITextSelection getSelection() {
     return selection;
-  }
-
-  public List<Tip> getTips() {
-    return tips;
   }
 
   public int go() throws CoreException {

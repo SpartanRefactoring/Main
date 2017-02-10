@@ -17,7 +17,8 @@ public class FixtureBlock extends MetaFixture {
   }
 
   int g(@knows("ps") final int... ps) throws IOException {
-    for (;;) {
+      //noinspection ForLoopReplaceableByWhile
+      for (;;) {
       @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
       @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();
       @knows({ "a", "b", "ps", "f/1" }) final int c = ps[2] + b * hashCode();
