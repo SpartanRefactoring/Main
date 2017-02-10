@@ -27,10 +27,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     if (d == null)
       return null;
     d.open();
-    Set<String> es = new HashSet<>();
     Object[] os = d.getResult();
     if (os == null)
       return null;
+    Set<String> es = new HashSet<>();
     for (Object ¢ : os)
       if (¢ instanceof SpartanTipper)
         es.add(((SpartanTipper) ¢).name());
@@ -99,22 +99,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setInput(new Object()); // vio: very important object
     List<SpartanElement> et = new ArrayList<>();
     for (SpartanCategory c : m.keySet()) {
-      boolean disabledTipper = false;
+      boolean enabled = true;
       for (SpartanTipper t : m.get(c))
         if (t.enabled())
           et.add(t);
         else
-          disabledTipper = true;
-      if (!disabledTipper)
+          enabled = false;
+      if (enabled)
         et.add(c);
     }
     $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
     $.setHelpAvailable(false);
-    $.setComparator(new ViewerComparator(new Comparator<String>() {
-      @Override public int compare(String o1, String o2) {
-        return o1.compareToIgnoreCase(o2);
-      }
-    }));
+    $.setComparator(new ViewerComparator((o1, o2) -> o1.compareToIgnoreCase(o2)));
     return $;
   }
 }
