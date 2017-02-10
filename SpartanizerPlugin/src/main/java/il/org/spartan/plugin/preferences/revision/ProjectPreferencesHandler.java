@@ -110,7 +110,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
     $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
     $.setHelpAvailable(false);
-    $.setComparator(new ViewerComparator((o1, o2) -> o1.compareToIgnoreCase(o2)));
+    $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
     return $;
   }
 }

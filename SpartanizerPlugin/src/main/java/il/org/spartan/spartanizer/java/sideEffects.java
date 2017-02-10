@@ -91,7 +91,7 @@ public enum sideEffects {
             : iz.whileStatement(¢) ? free(az.whileStatement(¢))
             : iz.forStatement(¢) ? free(az.forStatement(¢))
             : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢))
-            : iz.block(¢) ? free(az.block(¢)) : false);
+            : iz.block(¢) && free(az.block(¢)));
   }
 
   public static boolean free(final ForStatement ¢) {
