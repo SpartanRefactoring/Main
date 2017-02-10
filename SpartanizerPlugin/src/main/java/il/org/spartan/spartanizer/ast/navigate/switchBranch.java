@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 public class switchBranch {
-  private final List<SwitchCase> cases;
-  private final List<Statement> statements;
+  public final List<SwitchCase> cases;
+  public final List<Statement> statements;
   private int hasDefault;
   private int numOfStatements;
   private int numOfNodes;
@@ -26,14 +26,6 @@ public class switchBranch {
     this.cases = cases;
     this.statements = statements;
     hasDefault = numOfNodes = numOfStatements = depth = sequencerLevel = -1;
-  }
-
-  public List<SwitchCase> cases() {
-    return cases;
-  }
-
-  public List<Statement> statements() {
-    return statements;
   }
 
   @SuppressWarnings("boxing") public boolean hasDefault() {
@@ -95,7 +87,7 @@ public class switchBranch {
 
   public boolean compareTo(final switchBranch ¢) {
     final boolean $ = compare(¢);
-    return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
+    return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases) + "") < 0;
   }
 
   private void addAll(final Collection<Statement> ¢) {

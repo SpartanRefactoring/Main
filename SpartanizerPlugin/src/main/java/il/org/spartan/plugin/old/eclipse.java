@@ -23,7 +23,6 @@ import org.eclipse.ui.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -44,8 +43,8 @@ public enum eclipse {
   static final boolean showDialogMenu = true;
   static final boolean takeFocusOnOpen = false;
   private static final String iconAddress = "platform:/plugin/org.eclipse.compare/icons/full/wizban/applypatch_wizban.png";
-  private static boolean iconInitialized;
-  private static boolean iconNonBusyInitialized;
+  private static boolean iconInvalid = true;
+  private static boolean iconNotBusyInvalid = true;
 
   /** Add nature to one project */
   public static void addNature(final IProject p) throws CoreException {
@@ -61,7 +60,7 @@ public enum eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param m A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link wizard@nullProgressMonitor}
+   *        operation times use {@link wizard#nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
@@ -167,8 +166,8 @@ public enum eclipse {
   }
 
   static ImageIcon icon() {
-    if (!iconInitialized) {
-      iconInitialized = true;
+    if (iconInvalid) {
+      iconInvalid = false;
       try {
         final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
         if (i != null)
@@ -182,8 +181,8 @@ public enum eclipse {
   }
 
   static org.eclipse.swt.graphics.Image iconNonBusy() {
-    if (!iconNonBusyInitialized) {
-      iconNonBusyInitialized = true;
+    if (iconNotBusyInvalid) {
+      iconNotBusyInvalid = false;
       try {
         iconNonBusy = new org.eclipse.swt.graphics.Image(null,
             ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
