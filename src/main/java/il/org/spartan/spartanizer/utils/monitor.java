@@ -112,7 +112,7 @@ public enum monitor {
     return now.debugMessage(message);
   }
 
-  public static <T> T infoIOException(Exception ¢) {
+  public static <T> T infoIOException(final Exception ¢) {
     return now.info(//
         "   Got an exception of type : " + className(¢) + //
             "\n      (probably I/O exception)" //
@@ -130,7 +130,7 @@ public enum monitor {
     );
   }
 
-  public static <T> T infoIOException(IOException ¢) {
+  public static <T> T infoIOException(final IOException ¢) {
     return now.info(//
         "   Got an exception of type : " + className(¢) + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + ¢ + "'" //
@@ -203,7 +203,7 @@ public enum monitor {
     LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
   }
 
-  public static <T> T null¢(@SuppressWarnings("unused") Object... __) {
+  public static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
     return null;
   }
 

@@ -19,7 +19,7 @@ public class Table_Tippers {
 
   public void go() {
     try (Table t = new Table(this)) {
-      List<Tipper<? extends ASTNode>>[] implementation = Toolbox.defaultInstance().implementation;
+      final List<Tipper<? extends ASTNode>>[] implementation = Toolbox.defaultInstance().implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])

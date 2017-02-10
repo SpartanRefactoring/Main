@@ -25,7 +25,7 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
     if (x == null)
       return null;
     final SingleMemberAnnotation $ = copy.of(a);
-    $.setValue(x);
+    $.setValue(copy.of(x));
     return $;
   }
 }

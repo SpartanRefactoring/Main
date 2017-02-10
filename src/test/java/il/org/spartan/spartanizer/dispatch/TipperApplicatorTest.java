@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Yossi GIl
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public final class TipperApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
   private final TipperApplicator it = new TipperApplicator(new BlockSimplify());
