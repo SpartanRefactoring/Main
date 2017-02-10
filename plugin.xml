@@ -434,7 +434,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-  <menu id="org.eclipse.jdt.ui.refactoring.menj" label="Refactor">
+  <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor">
     <menu label="Spartanizer" mnemonic="S">
       <menu label="Spartanize..." mnemonic="S">
         <command commandId="il.org.spartan.LaconizeSelection" style="push" mnemonic="S"/>
