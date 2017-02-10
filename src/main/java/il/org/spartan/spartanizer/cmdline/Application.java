@@ -102,7 +102,8 @@ final class Application implements IApplication {
   private int optRounds = 20;
   private String optPath;
 
-  @Override public Object start(final IApplicationContext arg0) {
+  @Override
+  @SuppressWarnings("OverlyComplexMethod") public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     try {
