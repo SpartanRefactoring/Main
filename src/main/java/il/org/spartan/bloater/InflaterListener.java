@@ -124,7 +124,6 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
       for (final Listener ¢ : l)
         if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
           tl = (TypedListener) ¢;
-      if (tl != null)
         l.remove(tl);
       externalListeners.put(i, l);
     }
