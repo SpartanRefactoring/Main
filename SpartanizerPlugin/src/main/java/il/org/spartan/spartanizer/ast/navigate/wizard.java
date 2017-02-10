@@ -259,7 +259,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
    *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    return !hasNull(base, as) && Stream.of(as).allMatch(λ -> !incompatible(base, λ));
+    return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> incompatible(base, λ));
   }
 
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {

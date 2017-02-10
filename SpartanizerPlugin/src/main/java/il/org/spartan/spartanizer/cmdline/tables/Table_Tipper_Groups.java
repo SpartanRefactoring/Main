@@ -41,8 +41,8 @@ public class Table_Tipper_Groups {
     categories.put(key, box.it(categories.get(key).intValue() + 1));
   }
 
-  private static <T> Stream<T> flow(final Collection<T> ts) {
-    return ts.stream().filter(Objects::nonNull);
+  private static <T> Stream<T> flow(final Collection<T> ¢) {
+    return ¢.stream().filter(Objects::nonNull);
   }
 
 }
