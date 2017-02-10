@@ -23,13 +23,14 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-01 */
 public class XMLSpartan {
-  private static final String CURRENT_VERSION = "1";
-  private static final String FILE_NAME = ".spartan";
+  private static final String CURRENT_VERSION = "1.0";
+  private static final String FILE_NAME = "spartan.xml";
   private static final String TIPPER = "tipper";
   private static final String CATEGORY = "category";
   private static final String ENABLED = "enabled";
-  private static final String TIPPER_ID = "tipper_id";
-  private static final String CATEGORY_ID = "category_id";
+  private static final String TIPPER_ID = "id";
+  private static final String CATEGORY_ID = "id";
+  private static final String TIPPER_DESCRIPTION = "description";
 
   /** TODO Ori Roth: Stub 'XMLSpartan::getTippersByCategories' (created on
    * 2017-02-10)." );
@@ -56,7 +57,8 @@ public class XMLSpartan {
       if (ll != null)
         for (int j = 0; j < ll.getLength(); ++j) {
           Element ee = (Element) ll.item(j);
-          SpartanTipper st = new SpartanTipper(ee.getAttribute(TIPPER_ID), Boolean.parseBoolean(ee.getAttribute(ENABLED)), se);
+          SpartanTipper st = new SpartanTipper(ee.getAttribute(TIPPER_ID), Boolean.parseBoolean(ee.getAttribute(ENABLED)), se,
+              ee.getAttribute(TIPPER_DESCRIPTION));
           ts.add(st);
           se.addChild(st);
         }
@@ -159,7 +161,8 @@ public class XMLSpartan {
       if (i == null)
         return null;
       fl.create(new ByteArrayInputStream("".getBytes()), false, new NullProgressMonitor());
-      commit(fl, i);
+      if (!commit(fl, i) || !fl.exists())
+        return null;
     }
     Document $ = b.parse(fl.getContents());
     if ($ == null)
@@ -173,8 +176,8 @@ public class XMLSpartan {
 
   /** TODO Ori Roth: Stub 'XMLSpartan::initialize' (created on 2017-02-01)." );
    * <p>
-   * @param di 
-   * @param di 
+   * @param di
+   * @param di
    * @param newDocument
    * @return
    *         <p>
@@ -217,6 +220,7 @@ public class XMLSpartan {
       return;
     $.setAttribute(ENABLED, (t instanceof Core) + "");
     $.setAttribute(TIPPER_ID, n);
+    $.setAttribute(TIPPER_DESCRIPTION, t.description());
     seen.add(n);
     groups.get(Toolbox.groupFor(t.getClass())).appendChild($);
   }
@@ -268,7 +272,7 @@ public class XMLSpartan {
       return false;
     }
   }
-  
+
   /** TODO Ori Roth: Stub 'XMLSpartan::commit' (created on 2017-02-01)." );
    * <p>
    * @param p
@@ -310,14 +314,20 @@ public class XMLSpartan {
 
   public static class SpartanTipper extends SpartanElement {
     private SpartanCategory parent;
+    private String description;
 
-    public SpartanTipper(String name, boolean enabled, SpartanCategory parent) {
+    public SpartanTipper(String name, boolean enabled, SpartanCategory parent, String description) {
       super(name, enabled);
       this.parent = parent;
+      this.description = description;
     }
 
     public SpartanCategory parent() {
       return parent;
+    }
+
+    public String description() {
+      return description;
     }
   }
 
