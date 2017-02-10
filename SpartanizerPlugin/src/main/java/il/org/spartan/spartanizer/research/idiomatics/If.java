@@ -7,11 +7,11 @@ import java.util.function.*;
  * @since Dec 6, 2016 */
 public enum If {
   ;
-  public <N> If0 Null(final N ¢) {
+  public static <N> If0 Null(final N ¢) {
     return new If0(¢ == null);
   }
 
-  public If0 True(final boolean ¢) {
+  public static If0 True(final boolean ¢) {
     return new If0(¢);
   }
 
@@ -26,7 +26,7 @@ public enum If {
       //
     }
 
-    public <N extends Exception> void throwz(final Supplier<N> ¢) throws N {
+    public static <N extends Exception> void throwz(final Supplier<N> ¢) throws N {
       throw ¢.get();
     }
 

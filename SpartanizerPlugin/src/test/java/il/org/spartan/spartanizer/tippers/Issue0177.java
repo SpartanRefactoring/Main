@@ -17,14 +17,7 @@ import il.org.spartan.*;
 public class Issue0177 {
   @Test @SuppressWarnings("unused") public void BitWiseAnd_withSideEffectsEXT() {
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) & 1, is(0));
-        azzert.that(in.a, is(1));
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -49,6 +42,13 @@ public class Issue0177 {
           }
           return new C().h();
         }
+      }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) & 1, is(0));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -80,14 +80,7 @@ public class Issue0177 {
 
   @Test @SuppressWarnings("unused") public void BitWiseOr_withSideEffectsEXT() {
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) | 1, is(3));
-        azzert.that(in.a, is(1));
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -112,6 +105,13 @@ public class Issue0177 {
           }
           return new C().h();
         }
+      }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) | 1, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -121,14 +121,7 @@ public class Issue0177 {
 
   @Test @SuppressWarnings("unused") public void BitWiseXor_withSideEffectsEXT() {
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) ^ 1, is(3));
-        azzert.that(in.a, is(1));
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -153,6 +146,13 @@ public class Issue0177 {
           }
           return new C().h();
         }
+      }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) ^ 1, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -191,14 +191,7 @@ public class Issue0177 {
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
     @SuppressWarnings("PointlessBooleanExpression")
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.nay(in.f(true) & true);
-        azzert.aye(in.a == 1);
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -211,6 +204,13 @@ public class Issue0177 {
           return false;
         }
       }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.nay(in.f(true) & true);
+        azzert.aye(in.a == 1);
+      }
     }
     new Class();
     trimmingOf("a=a && b")//
@@ -220,14 +220,7 @@ public class Issue0177 {
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEXT() {
     @SuppressWarnings("PointlessBooleanExpression")
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.nay(in.f(true) & true);
-        azzert.that(in.a, is(1));
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -252,6 +245,13 @@ public class Issue0177 {
           }
           return new C().h();
         }
+      }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.nay(in.f(true) & true);
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
@@ -290,14 +290,7 @@ public class Issue0177 {
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
     @SuppressWarnings("PointlessBooleanExpression")
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.aye(in.f(false) | false);
-        azzert.that(in.a, is(1));
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -310,6 +303,13 @@ public class Issue0177 {
           return true;
         }
       }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.aye(in.f(false) | false);
+        azzert.that(in.a, is(1));
+      }
     }
     new Class();
     trimmingOf("a=a||b")//
@@ -318,14 +318,7 @@ public class Issue0177 {
 
   @Test @SuppressWarnings("unused") public void LogicalOr_withSideEffectsEXT() {
     class Class {
-      final Inner in = new Inner(0);
-
-      Class() {
-        azzert.that(in.f(1) | 1, is(3));
-        azzert.that(in.a, is(1));
-      }
-
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -350,6 +343,13 @@ public class Issue0177 {
           }
           return new C().h();
         }
+      }
+
+      final Inner in = new Inner(0);
+
+      Class() {
+        azzert.that(in.f(1) | 1, is(3));
+        azzert.that(in.a, is(1));
       }
     }
     new Class();
