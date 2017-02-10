@@ -255,7 +255,7 @@ public class XMLSpartan {
    *         [[SuppressWarningsSpartan]] */
   private static boolean commit(final IProject p, final Document d) {
     final IFile f = p.getFile(FILE_NAME);
-    return f == null || !f.exists() ? false : commit(f, d);
+    return !(f == null || !f.exists()) && commit(f, d);
   }
 
   public abstract static class SpartanElement {

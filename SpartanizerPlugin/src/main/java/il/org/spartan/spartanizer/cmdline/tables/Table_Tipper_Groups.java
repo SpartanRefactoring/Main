@@ -21,15 +21,15 @@ public class Table_Tipper_Groups {
   }
 
   public void go() {
-    final Map<TipperGroup, Integer> categories = new TreeMap<>();
-    Toolbox.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(categories, λ)));
-    final int total = categories.values().stream().mapToInt(λ -> λ.intValue()).reduce((x, y) -> (x + y)).getAsInt();
+    final Map<TipperGroup, Integer>  groups= new TreeMap<>();
+    Toolbox.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(, λ)));
+    final int total = groups.values().stream().mapToInt(Integer::intValue).reduce((x, y) -> (x + y)).getAsInt();
     try (Table t = new Table(this)) {
-      categories.keySet()
+  groups    .keySet()
           .forEach(λ -> t//
               .col("Category", λ)//
-              .col("Count", categories.get(λ))//
-              .col("Fraction", 1. * categories.get(λ).intValue() / total).nl());
+              .col("Count",groups .get(λ))//
+              .col("Fraction", 1. * .get(λ).intValue() / total).nl());
       System.err.println(t.description());
     }
     system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
