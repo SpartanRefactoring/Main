@@ -39,19 +39,19 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
     final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
     final List<Expression> $ = new ArrayList<>();
-    boolean isString = false;
+    boolean isArithmetic = true;
     for (final Integer i : range.from(0).to(es.size())) {
       final Expression e = es.get(i);
       if (!iz.emptyStringLiteral(e)) {
         $.add(e);
         if (type.of(e) == Certain.STRING)
-          isString = true;
+          isArithmetic = false;
       } else {
         if (i < es.size() - 1 && type.of(es.get(i + 1)) == Certain.STRING)
           continue;
-        if (!isString) {
+        if (isArithmetic) {
           $.add(e);
-          isString = true;
+          isArithmetic = false;
         }
       }
     }

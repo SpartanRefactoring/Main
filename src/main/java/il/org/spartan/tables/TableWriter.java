@@ -3,8 +3,6 @@ package il.org.spartan.tables;
 import java.io.*;
 import java.util.Map;
 
-import il.org.spartan.*;
-
 /** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
@@ -34,7 +32,7 @@ public class TableWriter implements Closeable {
   public final String fileName;
   public final OutputStreamWriter writer;
   public final TableRenderer renderer;
-  private boolean headerPrinted;
+  private boolean shouldPrintHeader = true;
   private boolean footerPrinted;
 
   @Override public void close() {
@@ -49,8 +47,8 @@ public class TableWriter implements Closeable {
   }
 
   public void write(final Row<?> ¢) {
-    if (!headerPrinted) {
-      headerPrinted = true;
+    if (shouldPrintHeader) {
+      shouldPrintHeader = false;
       writeHeader(¢);
     }
     writeData(¢);

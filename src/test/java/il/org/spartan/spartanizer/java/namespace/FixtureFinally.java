@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 
+@SuppressWarnings({"ALL", "TooBroadScope", "all"})
 public class FixtureFinally extends MetaFixture {
   int simple(@knows("p") final int p) throws IOException {
     final int x = 2 * p;
@@ -18,6 +19,7 @@ public class FixtureFinally extends MetaFixture {
     } finally {
       @foreign("r") final int a = hashCode() * hashCode();
       @knows({ "a", "p" }) final int r = hashCode();
+      //noinspection InconsistentLineSeparators
       if (simple(3 * a * r * x) < 0)
         simple(a * p * r);
     }
