@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 
 /** Configurable Report that uses {@link Listener.S}
- * @year 2016
+ * 
  * @author Yossi Gil
  * @author Matteo Orru'
  * @since Nov 14, 2016 */
@@ -97,7 +97,7 @@ public interface ConfigurableReport {
      * @see #go()
      * @author Yossi Gil
      * @author Matteo Orru'
-     * @year 2016 */
+     *  */
     @SuppressWarnings("TooBroadScope")
     public class Action extends Settings {
       /** real serialVersionUID comes much later in production code */

@@ -19,13 +19,13 @@ import static java.util.stream.Collectors.*;
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Dec 25, 2016 */
 public interface Environment {
-  /** @return true iff {@link Environment} doesn't have an entry with a given
+  /** @return true iff this instance doesn't have an entry with a given
    *         name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
 
-  /** Return true iff {@link Environment} is empty. */
+  /** Return true iff this instance is empty. */
   boolean empty();
 
   List<Entry<String, Binding>> entries();
@@ -37,14 +37,14 @@ public interface Environment {
     return $;
   }
 
-  /** Get full path of the current {@link Environment} (all scope hierarchy).
+  /** Get full path of the current this instance (all scope hierarchy).
    * Used for full names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
   }
 
-  /** @return all the full names of the {@link Environment}. */
+  /** @return all the full names of the this instance. */
   default Collection<String> fullNames() {
     final Collection<String> $ = new LinkedHashSet<>(keys());
     if (nest() != null)
@@ -56,11 +56,11 @@ public interface Environment {
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  /** @return null iff the name is not in use in the {@link Environment} */
+  /** @return null iff the name is not in use in the this instance */
   Binding get(String name);
 
   /** Answer the question whether the name is in use in the current
-   * {@link Environment} */
+   * this instance */
   boolean has(String name);
 
   /** @return null iff the name is not hiding anything from outer scopes,
@@ -176,7 +176,7 @@ public interface Environment {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
-  /** Spawns the first nested {@link Environment}. Should be used when the first
+  /** Spawns the first nested this instance. Should be used when the first
    * block is opened. */
   static Environment genesis() {
     return NULL.spawn();

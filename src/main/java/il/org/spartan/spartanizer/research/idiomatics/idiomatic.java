@@ -91,15 +91,10 @@ public interface idiomatic {
     return new Runner(¢);
   }
 
-  /** @param <T> JD
-   * @param ¢ JD
-   * @return Yielder<T> */
   static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
 
-  /** @param condition JD
-   * @return */
   static Trigger unless(final boolean condition) {
     return vhen(!condition);
   }
