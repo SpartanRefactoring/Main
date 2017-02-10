@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-02-10 */
 @SuppressWarnings("boxing")
 public class CharacterShortcut extends AbstractHandler {
-  private static final Function<Character, Character> key = λ -> (char) (((int) λ) - ((int) 'a') + 1);
+  private static final Function<Character, Character> key = λ -> (char) ((int) λ - (int) 'a' + 1);
   private static final Map<Character, Character> shortcutsMap = new HashMap<>();
   static {
     shortcutsMap.put(key.apply('c'), '¢');
@@ -32,14 +32,14 @@ public class CharacterShortcut extends AbstractHandler {
    * 
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Override public Object execute(ExecutionEvent e) {
+  @Override public Object execute(final ExecutionEvent e) {
     if (e == null)
       return null;
-    Object $ = e.getTrigger();
+    final Object $ = e.getTrigger();
     if (!($ instanceof Event))
       return null;
-    ISelection is = Selection.Util.getSelection();
-    Selection s = Selection.Util.getCurrentCompilationUnit();
+    final ISelection is = Selection.Util.getSelection();
+    final Selection s = Selection.Util.getCurrentCompilationUnit();
     return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
         : insertCharacter(shortcutsMap.get(((Event) $).character), s.setTextSelection((ITextSelection) is));
   }
@@ -49,19 +49,19 @@ public class CharacterShortcut extends AbstractHandler {
    * @param c the character to write in the file
    * @param s the file and text location selected
    * @return null [[SuppressWarningsSpartan]] */
-  private static Object insertCharacter(char c, Selection s) {
+  private static Object insertCharacter(final char c, final Selection s) {
     if (s == null || s.isEmpty() || s.textSelection == null)
       return null;
-    List<ICompilationUnit> us = s.getCompilationUnits();
+    final List<ICompilationUnit> us = s.getCompilationUnits();
     if (us == null || us.size() != 1)
       return null;
-    ICompilationUnit u = us.get(0);
-    MultiTextEdit m = new MultiTextEdit();
+    final ICompilationUnit u = us.get(0);
+    final MultiTextEdit m = new MultiTextEdit();
     m.addChild(new DeleteEdit(s.textSelection.getOffset(), s.textSelection.getLength()));
     m.addChild(new InsertEdit(s.textSelection.getOffset(), c + ""));
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
-    } catch (JavaModelException x) {
+    } catch (final JavaModelException x) {
       monitor.log(x);
       return null;
     }
@@ -72,11 +72,11 @@ public class CharacterShortcut extends AbstractHandler {
    * selection.
    * @param i text selection required location
    * @return null */
-  private static Object fixSelection(int i) {
-    IEditorPart p = Selection.Util.getEditorPart();
+  private static Object fixSelection(final int i) {
+    final IEditorPart p = Selection.Util.getEditorPart();
     if (!(p instanceof ITextEditor))
       return null;
-    ITextEditor e = (ITextEditor) p;
+    final ITextEditor e = (ITextEditor) p;
     e.getSelectionProvider().setSelection(new TextSelection(i, 0));
     return null;
   }

@@ -68,9 +68,9 @@ final class BindingFun implements IApplication {
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
         ___.______unused();
         iterateMethodInvocations(cu);
-      } catch (IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢, f + "");
-      } catch (JavaModelException ¢) {
+      } catch (final JavaModelException ¢) {
         ¢.printStackTrace();
       }
     return IApplication.EXIT_OK;

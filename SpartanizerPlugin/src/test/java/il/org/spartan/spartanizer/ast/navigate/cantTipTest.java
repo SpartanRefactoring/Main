@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yosef Raisman
  * @author Entony Lekhtman
  * @since Nov 14, 2016 */
-@SuppressWarnings({ "static-method" })
+@SuppressWarnings("static-method")
 public class cantTipTest {
   @Test public void testNullPrecedingFragmentInTerminalScopeStatement() {
     assert cantTip.declarationInitializerStatementTerminatingScope(findFirst.forStatement(into.s("{for(;;){}}")));
