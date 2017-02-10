@@ -220,7 +220,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     runWordCount();
     System.err.printf("\n Our batch applicator had %d tippers dispersed over %d hooks\n", //
         box.it(interactiveSpartanizer.toolbox.tippersCount()), //
-        box.it(interactiveSpartanizer.toolbox.hooksCount())//
+        box.it(Toolbox.hooksCount())//
     );
   }
 

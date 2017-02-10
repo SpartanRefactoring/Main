@@ -24,19 +24,19 @@ public class Table_Nanos {
 
   public void go() {
     final List<Tipper<? extends ASTNode>>[] implementation = Analyze.toolboxWithNanoPatterns().implementation;
-    try (Table r = new Table(this)) {
+    try (Table t = new Table(this)) {
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])
             if (¢ instanceof NanoPatternTipper)
-              r//
+              t//
                   .col("Name", name(¢.getClass()))//
                   .col("Node Class", Toolbox.intToClassName(i))//
                   .col("Description", ¢.description())//
                   .col("Example", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//
                   .col("Replacement", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//
                   .nl();
-      System.err.println(r.description());
+      System.err.println(t.description());
     }
     system.dumpOutput(system.bash("column -s \\& -t /tmp/nanos.tex"));
   }

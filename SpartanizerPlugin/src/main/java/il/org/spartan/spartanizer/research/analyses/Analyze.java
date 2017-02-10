@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
