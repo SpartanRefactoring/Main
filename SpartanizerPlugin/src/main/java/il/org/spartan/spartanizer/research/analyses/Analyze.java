@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.research.analyses;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -130,7 +129,7 @@ public enum Analyze {
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
-        for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(Collectors.toList()))
+        for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(toList()))
           try {
             Count.before(¢);
             final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
@@ -144,9 +143,9 @@ public enum Analyze {
       });
     }
     methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
-    writeFile(new File(outputDir() + "/after.java"), methods.stream().map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
+    writeFile(new File(outputDir() + "/after.java"), methods.stream().map(λ -> format.code(λ .toString())).reduce("", (x, y) -> x + y));
     writeFile(new File(outputDir() + "/notTagged.java"),
-        methods.stream().filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
+        methods.stream().filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ .toString())).reduce("", (x, y) -> x + y));
     // Logger.summarizeSortedMethodStatistics(outputDir());
     // Logger.summarizeNPStatistics(outputDir());
     Count.print();
@@ -202,7 +201,7 @@ public enum Analyze {
             .filter(haz::methods)
             .forEach(t -> methods(t).stream()//
                 .filter(λ -> !λ.isConstructor())//
-                .collect(Collectors.toList())//
+                .collect(toList())//
                 .forEach(¢ -> {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)

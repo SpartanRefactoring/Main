@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -36,7 +36,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    return inner.stream().map(λ -> λ.descriptor).collect(Collectors.toList());
+    return inner.stream().map(λ -> λ.descriptor).collect(toList());
   }
 
   /** Factory method.

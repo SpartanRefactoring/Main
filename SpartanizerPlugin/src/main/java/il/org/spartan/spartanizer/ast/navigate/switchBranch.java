@@ -2,9 +2,8 @@
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -91,8 +90,8 @@ public class switchBranch {
   }
 
   private void addAll(final Collection<Statement> ¢) {
-    ¢.addAll(cases.stream().map(copy::of).collect(Collectors.toList()));
-    ¢.addAll(statements.stream().map(copy::of).collect(Collectors.toList()));
+    ¢.addAll(cases.stream().map(copy::of).collect(toList()));
+    ¢.addAll(statements.stream().map(copy::of).collect(toList()));
   }
 
   private static void addAll(final Collection<Statement> ss, final Iterable<switchBranch> bs) {

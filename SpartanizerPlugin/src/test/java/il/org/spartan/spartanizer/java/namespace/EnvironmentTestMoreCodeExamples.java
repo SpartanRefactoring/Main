@@ -10,7 +10,7 @@ final class EnvironmentTestMoreCodeExamples {
     new A().hashCode();
   }
 
-  class A {
+  static class A {
     @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void foo() {
       /**/}
   }

@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -45,7 +44,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
-    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> identifier(az.name(λ))).collect(Collectors.toList())
+    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> identifier(az.name(λ))).collect(toList())
         .containsAll(parametersNames(¢));
   }
 

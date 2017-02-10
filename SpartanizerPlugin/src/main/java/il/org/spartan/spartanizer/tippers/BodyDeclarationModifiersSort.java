@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import il.org.spartan.spartanizer.java.IExtendedModifiersRank;
 import org.eclipse.jdt.core.dom.*;
@@ -37,7 +36,7 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
-    return pruneDuplicates(¢.stream().sorted(comp).collect(Collectors.toList()));
+    return pruneDuplicates(¢.stream().sorted(comp).collect(toList()));
   }
 
   private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> $) {

@@ -49,11 +49,11 @@ public enum ReflectionAnalyzer {
     return $;
   }
 
-  class InnerClass {
+  static class InnerClass {
     // Nothing here.
   }
 
-  class StaticInnerClass {
+  static class StaticInnerClass {
     // Nothing here.
   }
 }

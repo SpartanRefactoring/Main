@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.ast.factory;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -297,7 +296,7 @@ public enum subject {
     public Several(final List<Expression> operands) {
       super(first(operands));
       this.operands = new ArrayList<>();
-      this.operands.addAll(operands.stream().map(this::claim).collect(Collectors.toList()));
+      this.operands.addAll(operands.stream().map(this::claim).collect(toList()));
     }
 
     /** Create an infix expression from the given operator and the operands
@@ -327,7 +326,7 @@ public enum subject {
     public SeveralStatements(final List<Statement> inner) {
       super(first(inner));
       this.inner = new ArrayList<>();
-      this.inner.addAll(inner.stream().map(this::claim).collect(Collectors.toList()));
+      this.inner.addAll(inner.stream().map(this::claim).collect(toList()));
     }
 
     /** Transform the inner into a block

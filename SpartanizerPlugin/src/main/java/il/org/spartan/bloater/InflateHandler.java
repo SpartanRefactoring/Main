@@ -1,10 +1,8 @@
 package il.org.spartan.bloater;
-
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -18,6 +16,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
@@ -67,7 +67,7 @@ public class InflateHandler extends AbstractHandler {
     if (ls == null)
       return $;
     $.addAll(ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener)
-        .collect(Collectors.toList()));
+        .collect(toList()));
     return $;
   }
 
@@ -102,7 +102,7 @@ public class InflateHandler extends AbstractHandler {
   protected static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
-    final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);
+    final Control $ = ¢.getAdapter(Control.class);
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 
