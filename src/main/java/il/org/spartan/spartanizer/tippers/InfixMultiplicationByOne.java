@@ -1,10 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -21,7 +20,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
     implements TipperCategory.NOP.onNumbers {
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
-    $.addAll(xs.stream().filter(λ -> !iz.literal1(λ)).collect(Collectors.toList()));
+    $.addAll(xs.stream().filter(λ -> !iz.literal1(λ)).collect(toList()));
     return $.size() == xs.size() ? null : $.isEmpty() ? copy.of(first(xs)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
@@ -413,10 +413,12 @@ public class Toolbox {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
-  @SuppressWarnings("boxing") public int hooksCount() {
-    return Stream.of(implementation).map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
+  public static long hooksCount() {
+    return defaultTipperLists().count(); 
   }
-
+public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
+    return Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
+  }
   public int tippersCount() {
     int $ = 0;
     for (final List<?> ¢ : implementation)
@@ -460,7 +462,7 @@ public class Toolbox {
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
     Stream.of(t.implementation).filter(Objects::nonNull)
-        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
+        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(toList())));
     return $;
   }
 

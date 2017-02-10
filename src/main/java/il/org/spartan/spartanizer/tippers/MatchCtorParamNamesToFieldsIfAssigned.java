@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.stream.*;
@@ -36,7 +36,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
-    final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList());
+    final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
     final List<Statement> bodyStatements = statements(d);
     final Collection<String> definedLocals = new ArrayList<>();
     final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
@@ -44,7 +44,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
           definedLocals
-              .addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList()));
+              .addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         continue;
       }
       final Expression e = expression(az.expressionStatement(s));

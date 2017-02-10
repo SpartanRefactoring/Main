@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.ast.factory;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -70,7 +69,7 @@ public enum minus {
   }
 
   private static List<Expression> peel(final Collection<Expression> ¢) {
-    return ¢.stream().map(minus::peel).collect(Collectors.toList());
+    return ¢.stream().map(minus::peel).collect(toList());
   }
 
   public static Expression peel(final NumberLiteral $) {

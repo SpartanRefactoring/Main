@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
- * @year 2016
+ * 
  * @author Yossi Gil
  * @since Oct 3, 2016 */
 enum CollectMetrics {
@@ -68,7 +68,7 @@ enum CollectMetrics {
   }
 
   private static void go(final String... where) {
-    new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
+    new FilesGenerator(".java").from(where).forEach(CollectMetrics::go);
   }
 
   private static CSVStatistics init(final String $, final String property) {

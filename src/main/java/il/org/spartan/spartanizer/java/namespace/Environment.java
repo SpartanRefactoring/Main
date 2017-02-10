@@ -4,7 +4,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 import java.util.Map.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -14,19 +13,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-
+import static java.util.stream.Collectors.*;
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree.
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Dec 25, 2016 */
 public interface Environment {
-  /** @return true iff {@link Environment} doesn't have an entry with a given
+  /** @return true iff this instance doesn't have an entry with a given
    *         name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
 
-  /** Return true iff {@link Environment} is empty. */
+  /** Return true iff this instance is empty. */
   boolean empty();
 
   List<Entry<String, Binding>> entries();
@@ -38,14 +37,14 @@ public interface Environment {
     return $;
   }
 
-  /** Get full path of the current {@link Environment} (all scope hierarchy).
+  /** Get full path of the current this instance (all scope hierarchy).
    * Used for full names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
   }
 
-  /** @return all the full names of the {@link Environment}. */
+  /** @return all the full names of the this instance. */
   default Collection<String> fullNames() {
     final Collection<String> $ = new LinkedHashSet<>(keys());
     if (nest() != null)
@@ -57,11 +56,11 @@ public interface Environment {
     return size() + (nest() == null ? 0 : nest().fullSize());
   }
 
-  /** @return null iff the name is not in use in the {@link Environment} */
+  /** @return null iff the name is not in use in the this instance */
   Binding get(String name);
 
   /** Answer the question whether the name is in use in the current
-   * {@link Environment} */
+   * this instance */
   boolean has(String name);
 
   /** @return null iff the name is not hiding anything from outer scopes,
@@ -154,7 +153,7 @@ public interface Environment {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(type(s)));
     final String path = fullName(s);
-    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(toList()));
     return $;
   }
 
@@ -177,7 +176,7 @@ public interface Environment {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
-  /** Spawns the first nested {@link Environment}. Should be used when the first
+  /** Spawns the first nested this instance. Should be used when the first
    * block is opened. */
   static Environment genesis() {
     return NULL.spawn();

@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.classifier;
-
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.patterns.*;
@@ -87,7 +87,7 @@ public class Classifier extends ASTVisitor {
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
         final Collection<ASTNode> toRemove = new ArrayList<>();
-        toRemove.addAll(forLoopsList.stream().filter(t::canTip).collect(Collectors.toList()));
+        toRemove.addAll(forLoopsList.stream().filter(t::canTip).collect(toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);

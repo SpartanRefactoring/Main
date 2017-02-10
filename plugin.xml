@@ -364,6 +364,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <!--<command id="il.org.spartan.AthensCollateral" name="Athens Collateral handler" />-->
      <command id="il.org.spartan.AthensInflate" name="Athens Inflater handler" />
+     <command id="il.org.spartan.PreferencesChooser" name="Preferences Initiator" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -380,6 +381,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.SpartanizationHandler"/>
    <!--<handler commandId="il.org.spartan.AthensCollateral" class="il.org.spartan.zoomer.collateral.CollateralHandler"/>-->
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.bloater.InflateHandler" />
+   <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
 </extension>
 
 <!-- Menus -->
@@ -478,6 +480,23 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         style="push"
         mnemonic="O"
         label="Spartanization tips off">
+      <visibleWhen checkEnabled="false">
+        <with variable="activeMenuSelection">
+         <iterate ifEmpty="false" operator="and">
+           <adapt type="org.eclipse.core.resources.IProject">
+             <test
+                 property="org.eclipse.core.resources.projectNature"
+                 value="il.org.spartan.nature"/>
+           </adapt>
+         </iterate>
+        </with>       
+      </visibleWhen>
+    </command>
+    <command
+        commandId="il.org.spartan.PreferencesChooser"
+        style="push"
+        mnemonic="P"
+        label="Spartanization preferences">
       <visibleWhen checkEnabled="false">
         <with variable="activeMenuSelection">
          <iterate ifEmpty="false" operator="and">

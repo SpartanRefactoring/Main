@@ -1,7 +1,6 @@
 package il.org.spartan.plugin;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
@@ -74,11 +73,11 @@ public class WrappedCompilationUnit {
    * @param ¢ JD
    * @return an instance created by the parameter */
   public static List<WrappedCompilationUnit> ov(final Collection<CompilationUnit> ¢) {
-    return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
+    return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
 
   public static List<WrappedCompilationUnit> of(final Collection<ICompilationUnit> ¢) {
-    return ¢.stream().map(WrappedCompilationUnit::new).collect(Collectors.toList());
+    return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
 
   public static WrappedCompilationUnit of(final CompilationUnit from) {

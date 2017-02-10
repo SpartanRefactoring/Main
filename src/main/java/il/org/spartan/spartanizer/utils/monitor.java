@@ -10,67 +10,66 @@ import il.org.spartan.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
- * @year 2016
  * @author Yossi Gil
  * @since Nov 13, 2016 */
 public enum monitor {
-  /** Not clear why we need this */
-  LOG_TO_STDOUT {
-    @Override public monitor debugMessage(final String message) {
-      return info(message);
-    }
-
-    @Override public monitor error(final String message) {
-      System.out.println(message);
-      return this;
-    }
-  },
   /** Log to external file if in debug mode, see issue #196 */
   LOG_TO_FILE {
-    final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
     final boolean FILE_EXISTING = new File("logs").exists();
+    final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
 
-    @Override public monitor debugMessage(final String message) {
+    @Override public <T> T debugMessage(final String message) {
       return logToFile(message);
     }
 
-    @Override public monitor error(final String message) {
+    @Override public <T> T error(final String message) {
       return logToFile(message);
     }
 
-    monitor logToFile(final String s) {
+    <T> T logToFile(final String s) {
       if (!FILE_EXISTING)
-        return this;
+        return null¢();
       try (Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
         w.write(s + "\n");
       } catch (final IOException ¢) {
         log(¢);
       }
-      return this;
+      return null¢();
+    }
+  },
+  /** Not clear why we need this */
+  LOG_TO_STDOUT {
+    @Override public <T> T debugMessage(final String message) {
+      return info(message);
+    }
+
+    @Override public <T> T error(final String message) {
+      System.out.println(message);
+      return null¢();
     }
   },
   /** Used for real headless system; logs are simply ignore */
   OBLIVIOUS {
-    @Override public monitor error(@SuppressWarnings("unused") final String __) {
-      return this;
+    @Override public <T> T error(final String message) {
+      return null¢(message);
     }
   },
   /** For release versions, we keep a log of errors in stderr, but try to
    * proceed */
   PRODUCTION {
-    @Override public monitor error(final String message) {
+    @Override public <T> T error(final String message) {
       System.err.println(message);
-      return this;
+      return null¢();
     }
   },
   /** Used for debugging; program exits immediately with the first logged
    * message */
   SUPER_TOUCHY {
-    @Override public monitor debugMessage(final String message) {
+    @Override public <T> T debugMessage(final String message) {
       return info(message);
     }
 
-    @Override public monitor error(final String message) {
+    @Override public <T> T error(final String message) {
       System.err.println(message);
       System.exit(1);
       throw new RuntimeException(message);
@@ -79,16 +78,27 @@ public enum monitor {
   /** Used for debugging; program throws a {@link RuntimeException} with the
    * first logged message */
   TOUCHY {
-    @Override public monitor debugMessage(final String message) {
+    @Override public <T> T debugMessage(final String message) {
       return info(message);
     }
 
-    @Override public monitor error(final String message) {
+    @Override public <T> T error(final String message) {
       throw new RuntimeException(message);
     }
   };
-  public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
+  @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
+    return null¢(message);
+  }
+
+  public abstract <T> T error(String message);
+
+  @SuppressWarnings("static-method") public <T> T info(final String message) {
+    System.out.println(message);
+    return null¢();
+  }
+
   public static final String FILE_SEPARATOR = "######################################################################################################";
+  public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
   public static final monitor now = monitor.PRODUCTION;
 
   public static String className(final Class<?> ¢) {
@@ -109,11 +119,11 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  public static monitor debug(final String message) {
+  public static <T> T debug(final String message) {
     return now.debugMessage(message);
   }
 
-  public static monitor infoIOException(final Exception x, final String message) {
+  public static <T> T infoIOException(final Exception x, final String message) {
     return now.info(//
         "   Got an exception of type : " + x.getClass().getSimpleName() + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + x + "'" + //
@@ -122,30 +132,24 @@ public enum monitor {
     );
   }
 
-  /** logs an error in the plugin
-   * @param tipper an error */
-  public static void log(final Throwable ¢) {
-    now.error(¢ + "");
+  public static <T> T infoIOException(IOException ¢) {
+    return now.info(//
+        "   Got an exception of type : " + className(¢) + //
+            "\n      (probably I/O exception)" + "\n   The exception says: '" + ¢ + "'" //
+    );
   }
 
-  /** logs an error in the plugin into an external file
+  /** logs an error in the plugin
    * @param tipper an error */
-  public static void logToFile(final Throwable t, final Object... os) {
-    final StringWriter w = new StringWriter();
-    t.printStackTrace(new PrintWriter(w));
-    final Object[] nos = new Object[os.length + 2];
-    System.arraycopy(os, 0, nos, 2, os.length);
-    nos[0] = t + "";
-    nos[1] = (w + "").trim();
-    LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)) //
-        .debugMessage(FILE_SEPARATOR);
+  public static <T> T log(final Throwable ¢) {
+    return now.error(¢ + "");
   }
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
-  public static void logCancellationRequest(final Object o, final Exception x) {
-    now.info(//
+  public static <T> T logCancellationRequest(final Object o, final Exception x) {
+    return now.info(//
         "An instance of " + className(o) + //
             "\n was hit by a " + x.getClass().getSimpleName() + //
             " (probably cancellation) exception." + //
@@ -153,7 +157,7 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  public static monitor logEvaluationError(final Object o, final Throwable t) {
+  public static <T> T logEvaluationError(final Object o, final Throwable t) {
     System.err.println(//
         dump() + //
             "\n An instance of " + className(o) + //
@@ -163,11 +167,19 @@ public enum monitor {
             "\n   o = " + o + "'" + //
             done(t) //
     );
-    return now;
+    return null¢();
   }
 
-  public static monitor logEvaluationError(final Throwable ¢) {
+  public static <T> T logEvaluationError(final Throwable ¢) {
     return logEvaluationError(now, ¢);
+  }
+
+  public static <T> T logProbableBug(final Throwable x) {
+    return now.error(//
+        "A static method was hit by a " + x.getClass().getSimpleName() + //
+            " exception, which may indicate a bug somwhwere." + //
+            "\n x = '" + x + "'" //
+    );
   }
 
   public static void logProbableBug(final Object o, final Throwable t) {
@@ -179,14 +191,20 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  public abstract monitor error(String message);
-
-  public monitor info(final String message) {
-    System.out.println(message);
-    return this;
+  public static <T> T null¢(@SuppressWarnings("unused") Object... __) {
+    return null;
   }
 
-  monitor debugMessage(@SuppressWarnings("unused") final String __) {
-    return this;
+  /** logs an error in the plugin into an external file
+   * @param tipper an error */
+  public static void logToFile(final Throwable t, final Object... os) {
+    final StringWriter w = new StringWriter();
+    t.printStackTrace(new PrintWriter(w));
+    final Object[] nos = new Object[os.length + 2];
+    System.arraycopy(os, 0, nos, 2, os.length);
+    nos[0] = t + "";
+    nos[1] = (w + "").trim();
+    LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
+    LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
   }
 }
