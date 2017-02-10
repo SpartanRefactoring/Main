@@ -175,7 +175,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
       final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
-        azzert.that(x + ": " + annotees.of(x) + MetaFixture.ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
+        azzert.that(x + ": " + annotees.of(x) + ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
             is(MetaFixture.value(x)));
     }
   }
@@ -290,7 +290,7 @@ public class definitionTest extends MetaFixture {
         final SimpleName n = first(annotees.of(x));
         if (!"fenum".equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
       }
     }
   }
@@ -304,7 +304,7 @@ public class definitionTest extends MetaFixture {
           continue;
         final int size = scope.of(n).size();
         assert size >= 0;
-        azzert.that(x + ": " + n + "/" + definition.kind(n) + MetaFixture.ancestry(n), size, is(MetaFixture.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n) + ancestry(n), size, is(value(x)));
       }
     }
   }
@@ -316,7 +316,7 @@ public class definitionTest extends MetaFixture {
         final SimpleName n = first(annotees.of(x));
         if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
           continue;
-        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(MetaFixture.value(x)));
+        azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
       }
     }
   }
@@ -440,8 +440,14 @@ class ZZZ___Fixture_ModelClass {
     // This should never happen
     if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode()) {
       final int lemon = hashCode();
-      try (@ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
-          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding())) {
+      try (
+          /** First resource */
+          @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
+          /** Second resource */
+          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding())
+      )
+      /* Try body */
+      {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
         @knows({ "localVariableInTryBlock", "myFirstFileReader" }) @local final int z = 2 * lemon * localVariableInTryBlock;
         @knows("resourceInTry") @local int localVariableNewClass = resourceInTry.read() + new Object() {
@@ -507,13 +513,9 @@ class ZZZ___Fixture_ModelClass {
           q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
-      } catch (@catch¢ final IOException ¢) {
+      } catch (@catch¢ final IOException|CloneNotSupportedException ¢) {
         monitor.infoIOException(¢);
-      } catch (final CloneNotSupportedException ¢) {
-        // TODO Yossi: this exception was previously caught on the above catch
-        // clause. Check if OK --or
-        monitor.log(¢);
-      }
+      } 
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
       q(a * a);
     }
