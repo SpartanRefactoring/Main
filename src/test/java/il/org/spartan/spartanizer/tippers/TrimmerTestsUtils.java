@@ -13,6 +13,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -98,7 +99,13 @@ public enum TrimmerTestsUtils {
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
-        System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(peeled));
+        System.err.printf(//
+            "Quick fix by mark, copy and paste is:\n" + //
+                "\n        .gives(\"%s\") //\n\n\n" + //
+                "Compare with current " + //
+                "\n        .gives(\"%s\") //\n",
+            trivia.escapeQuotes(essence(peeled)), //
+            trivia.escapeQuotes(essence($)));
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);
@@ -138,7 +145,13 @@ public enum TrimmerTestsUtils {
       final String expected = get();
       if (expected.equals(peeled) || !essence(peeled).equals(essence(expected)))
         return;
-      System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(expected));
+      System.err.printf(
+          "Quick fix by mark, copy and paste is:\n" + //
+              "        .gives(\"%s\") //\n\n\n\n" + //
+              "Compare with \n" + //
+              "        .gives(\"%s\") //\n", //
+          essence(peeled), //
+          essence(expected));
       azzert.that(essence(peeled), is(essence(expected)));
     }
 

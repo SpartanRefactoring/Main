@@ -8,6 +8,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -17,22 +18,15 @@ import il.org.spartan.spartanizer.research.*;
 public enum normalize {
   ;
   public static String testcase(final String name, final String raw) {
-    return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
+    return wrapTest(name, linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
   public static String unwarpedTestcase(final String raw) {
-    return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
+    return linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
   public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
-  }
-
-  /** escapes all "s
-   * @param ¢
-   * @return */
-  private static String escapeQuotes(final String ¢) {
-    return ¢.replace("\"", "\\\"");
   }
 
   private static String wrapTest(final String name, final String code) {
