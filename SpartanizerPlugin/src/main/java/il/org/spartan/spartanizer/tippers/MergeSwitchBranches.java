@@ -23,7 +23,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     for (int i = 0; i < $.size(); ++i)
       for (int j = i + 1; j < $.size(); ++j)
         if ($.get(i).hasSameBody($.get(j))) {
-          $.get(i).cases().addAll($.get(j).cases());
+          $.get(i).cases.addAll($.get(j).cases);
           $.remove(j);
           return switchBranch.makeSwitchStatement($, step.expression(s), s.getAST());
         }
