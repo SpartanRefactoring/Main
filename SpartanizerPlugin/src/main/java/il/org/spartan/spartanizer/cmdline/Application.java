@@ -94,7 +94,7 @@ final class Application implements IApplication {
   private IJavaProject javaProject;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;
-  private boolean optDoNotOverwrite;
+  private boolean optOverwrite = true;
   private boolean optIndividualStatistics;
   private boolean optVerbose;
   private boolean optStatsLines;
@@ -157,7 +157,7 @@ final class Application implements IApplication {
   }
 
   String determineOutputFilename(final String path) {
-    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
+    return optOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   /** Discard compilation unit u
@@ -193,7 +193,7 @@ final class Application implements IApplication {
     }
     for (final String a : args) {
       if ("-N".equals(a))
-        optDoNotOverwrite = true;
+        optOverwrite = false;
       if ("-E".equals(a))
         optIndividualStatistics = true;
       try {

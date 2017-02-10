@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 public class FixtureBlock extends MetaFixture {
+  @SuppressWarnings("InfiniteRecursion")
   private int f(@knows("ps") final int... ps) throws IOException {
     @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
     @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();
