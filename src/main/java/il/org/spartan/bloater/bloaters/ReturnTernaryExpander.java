@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** converts (a?b:c;) to (if(a) b; else c;) relevant to return <ternary> also
+/** converts (a?b:c;) to (if(a) b; else c;) relevant to return <em>ternary</em> also
  * relevant for return (ternary>) Issue #883 {@link Issue0883}
  * @author Raviv Rachmiel
  * @author Yuval Simon

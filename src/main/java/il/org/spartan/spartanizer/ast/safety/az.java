@@ -534,7 +534,7 @@ public enum az {
   /** A fluent API to parse numeric literals, including provisions for unary
    * minus.
    * @author Yossi Gil
-   * @year 2016 */
+   *  */
   public interface throwing {
     static String chop¢necessaryQuestionMark(final String ¢) {
       return ¢.substring(0, ¢.length() - 1);

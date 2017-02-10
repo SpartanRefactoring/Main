@@ -424,6 +424,9 @@ public interface wizard {
   static boolean hasSafeVarags(final MethodDeclaration d) {
     return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
   }
+  static boolean compatible(final Assignment a1, final Assignment a2) {
+    return !incompatible(a1, a2); 
+  }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));

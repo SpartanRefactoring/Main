@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
- * @year 2016
+ * 
  * @author Yossi Gil
  * @author Matteo Orru'
  * @since Oct 2, 2016 */

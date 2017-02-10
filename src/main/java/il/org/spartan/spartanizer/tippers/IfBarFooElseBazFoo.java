@@ -89,21 +89,21 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
   }
 
   private class DefinitionsCollector extends ASTVisitor {
-    private boolean notAllDefined;
-    private final Statement[] l;
+    private boolean allDefined = true;
+    private final Statement[] statements;
 
-    DefinitionsCollector(final List<Statement> l) {
-      notAllDefined = false;
-      this.l = l.toArray(new Statement[l.size()]);
+    DefinitionsCollector(final List<Statement> statements) {
+      allDefined = true;
+      this.statements = statements.toArray(new Statement[statements.size()]);
     }
 
     public boolean notAllDefined() {
-      return notAllDefined;
+      return !allDefined;
     }
 
     @Override public boolean visit(final SimpleName ¢) {
-      if (!collect.declarationsOf(¢).in(l).isEmpty())
-        notAllDefined = true;
+      if (!collect.declarationsOf(¢).in(statements).isEmpty())
+        allDefined = false;
       return false;
     }
   }

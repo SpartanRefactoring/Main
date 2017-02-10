@@ -9,7 +9,7 @@ import java.util.*;
  * @see #push(Object...)
  * @see #pop(Object...)
  * @see #empty()
- * @year 2016
+ * 
  * @author Yossi Gil
  * @since Oct 22, 2016 */
 public class TicksStack {
