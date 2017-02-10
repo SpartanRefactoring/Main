@@ -1,5 +1,9 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -15,12 +19,13 @@ public class TableTippers {
   }
 
   public void go() {
-    try (Table r = new Table(this)) {
-      for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
-        if (Toolbox.defaultInstance().implementation[i] != null)
-          for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
+    try (Table t = new Table(this)) {
+      List<Tipper<? extends ASTNode>>[] implementation = Toolbox.defaultInstance().implementation;
+      for (int i = 0; i < implementation.length; ++i)
+        if (implementation[i] != null)
+          for (final Tipper<?> ¢ : implementation[i])
             if (¢ != null)
-              r//
+              t//
                   .col("Category", ¢.tipperGroup())//
                   .col("Tipper", Toolbox.name(¢))//
                   .col("Node Type Number", i) //
@@ -28,7 +33,7 @@ public class TableTippers {
                   .col("Actual class", wizard.nodeName(¢.myActualOperandsClass()))//
                   .col("Abstract class", wizard.nodeName(¢.myAbstractOperandsClass())) //
                   .nl();
-      System.err.println("Output found in " + r.description());
+      System.err.println("Output found in " + t.description());
     }
   }
 }

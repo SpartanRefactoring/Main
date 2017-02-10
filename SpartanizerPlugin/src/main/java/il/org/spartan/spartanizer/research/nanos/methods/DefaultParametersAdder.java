@@ -3,7 +3,6 @@ import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
