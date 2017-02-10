@@ -25,7 +25,8 @@ public final class wizardTest {
     assert !same(null, e("a"));
   }
 
-  @Test public void sameOfNulls() {
+  @Test
+  @SuppressWarnings("RedundantCast") public void sameOfNulls() {
     assert same((ASTNode) null, (ASTNode) null);
   }
 

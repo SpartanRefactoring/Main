@@ -699,6 +699,7 @@ public interface wizard {
    * @param ¢ JD
    * @param xs JD */
   static void removeAll(final boolean ¢, final List<Expression> xs) {
+    //noinspection ForLoopReplaceableByWhile
     for (;;) {
       final Expression x = find(¢, xs);
       if (x == null)

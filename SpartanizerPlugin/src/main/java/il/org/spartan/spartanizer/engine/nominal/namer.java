@@ -63,7 +63,7 @@ public interface namer {
   }
 
   static String shorten(final List<Type> ¢) {
-    return ¢.stream().filter(λ -> interestingType(λ)).map(namer::shorten).findFirst().orElse(null);
+    return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
   }
 
   static boolean interestingType(final Type ¢) {

@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.research.util.*;
 public enum LogToTest {
   ;
   // TODO Ori Roth: replace "\\\\" with File.separator (bug in Java???)
-  private static String TESTS_FOLDER = "src.test.java.il.org.spartan.automatic".replaceAll("\\.", "\\\\");
-  private static Supplier<String> TEST_NAMER = () -> "Automatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+  private static final String TESTS_FOLDER = "src.test.java.il.org.spartan.automatic".replaceAll("\\.", "\\\\");
+  private static final Supplier<String> TEST_NAMER = () -> "Automatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
 
   public static void main(final String[] args) {
     if (!new File(TESTS_FOLDER).exists()) {
