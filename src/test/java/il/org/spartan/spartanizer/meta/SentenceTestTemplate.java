@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.meta;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
@@ -50,7 +50,7 @@ public enum SentenceTestTemplate {
   public static class Changes {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
-      allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(Collectors.toList())));
+      allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
 
@@ -126,7 +126,7 @@ public enum SentenceTestTemplate {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(
-          sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(Collectors.toList())));
+          sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
     }
 

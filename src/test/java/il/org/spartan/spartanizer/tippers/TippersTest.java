@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -29,7 +28,7 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class TippersTest {
-  @Test public void countInEnhancedFor() throws IllegalArgumentException, MalformedTreeException {
+  @Test public void countInEnhancedFor() {
     final String input = "int f() { for (int a: as) return a; }";
     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
     azzert.that(m, iz(input));
@@ -83,7 +82,7 @@ public final class TippersTest {
     azzert.that(mixedLiteralKind(es("1")), is(false));
   }
 
-  @Test public void renameInEnhancedFor() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+  @Test public void renameInEnhancedFor() throws Exception {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = Wrap.Method.intoDocument(input);
     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
@@ -100,7 +99,7 @@ public final class TippersTest {
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
 
-  @Test public void renameintoDoWhile() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+  @Test public void renameintoDoWhile() throws Exception {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = Wrap.Method.intoDocument(input);
     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));

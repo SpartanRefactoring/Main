@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
-
+import static java.util.stream.Collectors.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public enum copy {
   ;
   static Iterable<Expression> adjust(final Operator o, final List<Expression> xs) {
-    return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(Collectors.toList());
+    return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(toList());
   }
 
   /** Duplicate all {@link ASTNode} objects found in a given list into another
@@ -56,7 +56,7 @@ public enum copy {
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
   @SuppressWarnings("unchecked") public static <¢ extends ASTNode> Collection<¢> of(final Collection<¢> ¢s) {
-    return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(Collectors.toList());
+    return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(toList());
   }
 
   public static Expression ofWhileExpression(final WhileStatement ¢) {

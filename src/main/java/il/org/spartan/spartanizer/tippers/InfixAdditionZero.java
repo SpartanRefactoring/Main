@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * 0 + X = X
  * } or {@code
  * X + 0 = X
- * } to <code> X </i> or {@code
+ * } or {@code
  * X + 0 + Y
  * } to {@code
  * X + Y

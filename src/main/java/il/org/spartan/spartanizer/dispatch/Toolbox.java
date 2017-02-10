@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
@@ -458,7 +458,7 @@ public class Toolbox {
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
     Stream.of(t.implementation).filter(Objects::nonNull)
-        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
+        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(toList())));
     return $;
   }
 

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -48,7 +48,7 @@ public enum analyze {
       if (iz.name(¢))
         $.add(az.name(¢) + "");
     }
-    return new ArrayList<>($).stream().collect(Collectors.toList());
+    return new ArrayList<>($).stream().collect(toList());
   }
 
   public static String type(final Name n) {
