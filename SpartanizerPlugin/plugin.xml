@@ -497,17 +497,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         style="push"
         mnemonic="P"
         label="Spartanization preferences">
-      <visibleWhen checkEnabled="false">
-        <with variable="activeMenuSelection">
-         <iterate ifEmpty="false" operator="and">
-           <adapt type="org.eclipse.core.resources.IProject">
-             <test
-                 property="org.eclipse.core.resources.projectNature"
-                 value="il.org.spartan.nature"/>
-           </adapt>
-         </iterate>
-        </with>       
-      </visibleWhen>
     </command>
   </menu>
 </menuContribution>
