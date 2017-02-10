@@ -42,7 +42,7 @@ public class Table_Tipper_Groups {
   }
 
   private static <T> Stream<T> flow(final Collection<T> ts) {
-    return ts.stream().filter(λ -> λ != null);
+    return ts.stream().filter(Objects::nonNull);
   }
 
 }
