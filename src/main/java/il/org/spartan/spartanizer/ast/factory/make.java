@@ -148,10 +148,10 @@ public enum make {
     ;
   }
 
-  static List<Expression> minus(final List<Expression> xs) {
+  static List<Expression> minus(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(first(xs));
-    $.addAll(az.stream(rest(xs)).map(make::minusOf).collect(toList()));
+    $.add(first(¢));
+    $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
     return $;
   }
 

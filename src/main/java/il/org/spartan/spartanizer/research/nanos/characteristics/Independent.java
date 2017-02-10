@@ -22,7 +22,7 @@ public class Independent extends JavadocMarkerNanoPattern {
     for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
         $.addAll(parametersNames(az.methodDeclaration(¢)));
-    return $.stream().allMatch(¢ -> !analyze.dependencies(body(d)).stream().map(String::toString).collect(Collectors.toSet()).contains(¢));
+    return $.stream().allMatch(λ -> !analyze.dependencies(body(d)).stream().map(String::toString).collect(Collectors.toSet()).contains(λ));
   }
 
   private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {
