@@ -66,7 +66,7 @@ public class Issue0686 {
         .getName().getIdentifier(), is("s1"));
   }
 
-  public class NotAString<T> extends ArrayList<T> {
+  public static class NotAString<T> extends ArrayList<T> {
     private static final long serialVersionUID = 1L;
   }
 }

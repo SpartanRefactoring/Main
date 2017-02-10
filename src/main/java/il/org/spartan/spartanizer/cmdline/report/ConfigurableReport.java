@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Configurable Report that uses {@link Listener.S}
  * 
@@ -85,7 +86,7 @@ public interface ConfigurableReport {
       try {
         report = new CSVStatistics(reportFilename, header);
       } catch (final IOException ¢) {
-        ¢.printStackTrace();
+        monitor.infoIOException(¢, header);
       }
     }
 
