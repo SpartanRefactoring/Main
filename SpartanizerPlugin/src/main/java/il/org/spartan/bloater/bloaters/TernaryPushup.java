@@ -17,10 +17,10 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert {@code
  * a + (cond ? b : c)
-} to * <code>
+} to * {@code
  * cond ? a + b : a + c
  *
- * </code>
+ * }
  * Test case is {@link Issue1049}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */

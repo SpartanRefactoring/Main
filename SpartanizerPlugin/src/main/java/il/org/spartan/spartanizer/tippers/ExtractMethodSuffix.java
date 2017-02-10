@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -59,7 +59,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return false;
     final List<String> ts = ds.stream().map(
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
-        .collect(Collectors.toList());
+        .collect(toList());
     // NANO: to rest of function
     for (final SingleVariableDeclaration ¢ : parameters(d))
       if (!ts.contains(¢.getType() + ""))
@@ -135,7 +135,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (j == null)
       return;
     final List<TagElement> ts = step.tags(j);
-    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(Collectors.toList());
+    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
     final Collection<TagElement> xs = new ArrayList<>();

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -21,14 +22,14 @@ public class Table_Tipper_Groups {
 
   public void go() {
     final Map<String, Integer> categories = new TreeMap<>();
-    for (final List<Tipper<? extends ASTNode>> element : Toolbox.defaultInstance().implementation)
-      if (element != null)
-        for (final Tipper<?> ¢ : element)
-          if (¢ != null) {
-            final String key = ¢.tipperGroup() + "";
-            categories.putIfAbsent(key, box.it(0));
-            categories.put(key, box.it(categories.get(key).intValue() + 1));
-          }
+      Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null).forEach((final List<Tipper<? extends ASTNode>> element) -> {
+          for (final Tipper<?> ¢ : element)
+              if (¢ != null) {
+                  final String key = ¢.tipperGroup() + "";
+                  categories.putIfAbsent(key, box.it(0));
+                  categories.put(key, box.it(categories.get(key).intValue() + 1));
+              }
+      });
     final int total = categories.values().stream().reduce((x, y) -> box.it(x.intValue() + y.intValue())).get().intValue();
     try (Table r = new Table(this)) {
       categories.keySet()

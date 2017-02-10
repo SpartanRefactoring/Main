@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12-22 */
 public interface annotees {
   static List<SimpleName> names(final List<VariableDeclarationFragment> ¢) {
-    return ¢.stream().map(VariableDeclaration::getName).collect(Collectors.toList());
+    return ¢.stream().map(VariableDeclaration::getName).collect(toList());
   }
 
   static List<SimpleName> of(final Annotation ¢) {

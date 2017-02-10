@@ -6,6 +6,8 @@ import il.org.spartan.spartanizer.ast.navigate.containing;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
 
+import java.util.Objects;
+
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-24 */
@@ -56,6 +58,6 @@ public enum BindingUtils {
     if (Modifier.isProtected(ms) && $.getPackage().equals(getPackage(u)))
       return true;
     final ITypeBinding nc = container(n);
-    return nc != null && nc.equals($);
+    return Objects.equals(nc, $);
   }
 }

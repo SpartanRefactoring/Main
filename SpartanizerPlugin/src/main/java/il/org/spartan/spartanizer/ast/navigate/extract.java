@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -518,7 +518,7 @@ public enum extract {
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
-    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
+    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
   }
 
   /** @param n a node to extract an expression from

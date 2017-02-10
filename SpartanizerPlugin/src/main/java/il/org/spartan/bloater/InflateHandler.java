@@ -1,5 +1,5 @@
 package il.org.spartan.bloater;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
@@ -67,7 +67,7 @@ public class InflateHandler extends AbstractHandler {
     if (ls == null)
       return $;
     $.addAll(ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener)
-        .collect(Collectors.toList()));
+        .collect(toList()));
     return $;
   }
 
