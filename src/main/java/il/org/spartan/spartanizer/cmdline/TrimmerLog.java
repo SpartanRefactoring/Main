@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Logging stuff
  * 
@@ -127,10 +128,9 @@ public enum TrimmerLog {
 
   private static CSVStatistics init() {
     try {
-      output = new CSVStatistics(outputDir, "Tips");
-    } catch (final IOException ¢) {
-      monitor.infoIOException(¢);
+      return output = new CSVStatistics(outputDir, "Tips"); 
+    } catch (final IOException $) {
+      return monitor.infoIOException($);
     }
-    return null;
   }
 }

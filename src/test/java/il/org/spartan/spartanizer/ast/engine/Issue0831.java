@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Nikita Dizhur
  * @author Alex V.
  * @since 16-11-14 */
+  @SuppressWarnings("static-method")
 public class Issue0831 {
   final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
   final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
