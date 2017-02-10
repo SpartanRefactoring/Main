@@ -429,3 +429,4 @@ org.eclipse.jdt.core.formatter.wrap_outer_expressions_when_nested=true
 org.eclipse.jdt.core.incompatibleJDKLevel=error
 org.eclipse.jdt.core.incompleteClasspath=error
 org.eclipse.jdt.core.javaFormatter=org.eclipse.jdt.core.defaultJavaFormatter
+org.eclipse.objectteams.otdt.compiler.option.pure_java=enabled

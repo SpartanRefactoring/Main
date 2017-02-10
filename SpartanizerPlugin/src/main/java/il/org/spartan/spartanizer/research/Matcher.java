@@ -468,7 +468,7 @@ public final class Matcher {
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
-    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(λ -> λ + "").reduce("", (x, y) -> x + y);
+    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(ASTNode::toString).reduce("", (x, y) -> x + y);
   }
 
   public ASTNode getMatching(final ASTNode n, final String s) {

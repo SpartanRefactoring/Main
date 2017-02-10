@@ -59,7 +59,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
   }
 
   private static boolean parametersContainAllArguments(final Collection<String> parametersNames, final Expression ¢) {
-    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(λ -> λ + "").collect(toList()));
+    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(ASTNode::toString).collect(toList()));
   }
 
   private static boolean safeContainsCallee(final Collection<String> parametersNames, final Expression ¢) {

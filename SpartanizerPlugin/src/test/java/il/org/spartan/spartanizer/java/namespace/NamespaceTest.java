@@ -26,13 +26,13 @@ class NamespaceFixture {
   interface B {
     enum C {
       ;
-      class D {
+      static class D {
         int a;
       }
     }
   }
 
-  class X {
+  static class X {
     int b;
   }
 }

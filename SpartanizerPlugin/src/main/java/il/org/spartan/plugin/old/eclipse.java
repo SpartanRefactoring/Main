@@ -175,7 +175,7 @@ public enum eclipse {
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
       } catch (final MalformedURLException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(¢); 
       }
     }
     return icon;
