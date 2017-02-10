@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2014-08-25 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public final class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);

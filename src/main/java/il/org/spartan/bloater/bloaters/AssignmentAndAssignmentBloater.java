@@ -35,7 +35,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         for (; iz.assignment(right(az.assignment(right(p)))); p = az.assignment(right(p))) {
           //
         }
-        Assignment  newHead = copy.of(az.assignment(right(p)));
+        final Assignment  newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead )));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);

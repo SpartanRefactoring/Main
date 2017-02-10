@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * {@link #preBindingVisit()}
  * @author Yossi Gil
  * @since 2016-08-08 18:11:23 +0300 */
-@SuppressWarnings({ "unused" })
+@SuppressWarnings("unused")
 public abstract class VariableBindingVisitor extends ASTVisitor {
   /** stores binding information of all nodes */
   final Map<ASTNode, Binding> environmentOf = new HashMap<>();
