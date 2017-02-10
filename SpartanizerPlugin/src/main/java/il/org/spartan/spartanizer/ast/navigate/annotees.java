@@ -18,6 +18,7 @@ public interface annotees {
     return ¢.stream().map(VariableDeclaration::getName).collect(Collectors.toList());
   }
 
+  @SuppressWarnings("OverlyComplexMethod")
   static List<SimpleName> of(final Annotation ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
