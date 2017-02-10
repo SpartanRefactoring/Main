@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author AnnaBel7
  * @author michalcohen
  * @since Nov 14, 2016 */
-  @SuppressWarnings("static-method")
 public class CleanerVisitorTest {
   private static ASTNode createAST(final String ¢) {
     return wizard.ast(¢);
@@ -30,7 +29,7 @@ public class CleanerVisitorTest {
     return λ -> λ instanceof Javadoc;
   }
 
-  private static ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
+  @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
     final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
