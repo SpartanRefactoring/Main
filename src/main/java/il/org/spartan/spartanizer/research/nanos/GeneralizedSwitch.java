@@ -4,7 +4,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -19,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
+import static java.util.stream.Collectors.*;
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
@@ -36,7 +35,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   List<Expression> branchesExpressions(final N ¢) {
-    return branchesWrapper(¢).stream().map(step::expression).collect(Collectors.toList());
+    return branchesWrapper(¢).stream().map(step::expression).collect(toList());
   }
 
   @Override public Tip pattern(final N ¢) {

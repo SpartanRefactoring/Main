@@ -50,7 +50,7 @@ public class Issue0831 {
     assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null;
   }
 
-  protected class MethodScannerIExt extends MethodScanner {
+  protected static class MethodScannerIExt extends MethodScanner {
     public MethodScannerIExt(final MethodDeclaration method) {
       super(method);
     }

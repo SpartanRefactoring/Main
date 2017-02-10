@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
- * @year 2016
+ * 
  * @author Yossi Gil
  * @author Matteo Orru'
  * @since Oct 2, 2016 */
@@ -220,7 +220,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     runWordCount();
     System.err.printf("\n Our batch applicator had %d tippers dispersed over %d hooks\n", //
         box.it(interactiveSpartanizer.toolbox.tippersCount()), //
-        box.it(interactiveSpartanizer.toolbox.hooksCount())//
+        box.it(Toolbox.hooksCount())//
     );
   }
 
@@ -255,9 +255,9 @@ final class BatchSpartanizer extends FolderASTVisitor {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
-      new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> collect(λ));
+      new FilesGenerator(".java").from(presentSourcePath).forEach(this::collect);
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+      monitor.infoIOException(¢, beforeFileName + "|" + afterFileName);
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();

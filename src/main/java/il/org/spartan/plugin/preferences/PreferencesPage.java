@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** ??
  * @author Daniel Mittelman
- * @year 2016
+ * 
  * @author Ori Roth
  * @since 2.6 */
 public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {

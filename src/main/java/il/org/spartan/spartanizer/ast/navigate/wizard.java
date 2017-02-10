@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.utils.FileUtils.*;
@@ -209,7 +209,7 @@ public interface wizard {
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
-    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(Collectors.toList())).to(wizard.negate(operator($)));
+    return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(wizard.negate(operator($)));
   }
 
   static int arity(final InfixExpression ¢) {
@@ -423,6 +423,9 @@ public interface wizard {
 
   static boolean hasSafeVarags(final MethodDeclaration d) {
     return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
+  }
+  static boolean compatible(final Assignment a1, final Assignment a2) {
+    return !incompatible(a1, a2); 
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {

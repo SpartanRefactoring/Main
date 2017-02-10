@@ -29,8 +29,9 @@ public class Issue0404 {
   /** Ensure that there is a type named {@link dig}
    * <p>
    * Meta information: There are no established rules on names of test methods.
-   * This class demonstrates the <b>Dewey<b> notation: A pattern of -of naming
-   * methods as follows (variations are possible):
+   * This class demonstrates the <b>Dewey</b> notation: A pattern,
+   * with many variations, for generarting method naems, e.g.,
+   * variations are possible):
    * <ul>
    * <li><code>a()<code>, <code>b<()code>, <code>c()<code>, ...
    * <li>and then, when you need to study a failure of {@code w()} better,

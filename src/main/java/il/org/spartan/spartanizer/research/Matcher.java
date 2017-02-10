@@ -327,6 +327,7 @@ public final class Matcher {
    * <td>n</td>
    * <td>Resulting mapping</td>
    * </tr>
+   * <tr>
    * <td>$X ? y == 17 : $X2</td>
    * <td>x == 7 ? y == 17 : 9</td>
    * <td>{'$X':'x == 7', '$X2':'9'}</td>
@@ -467,7 +468,7 @@ public final class Matcher {
   }
 
   private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
-    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(λ -> λ + "").reduce("", (x, y) -> x + y);
+    return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(ASTNode::toString).reduce("", (x, y) -> x + y);
   }
 
   public ASTNode getMatching(final ASTNode n, final String s) {

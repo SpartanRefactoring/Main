@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -26,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * 0 + X = X
  * } or {@code
  * X + 0 = X
- * } to <code> X </i> or {@code
+ * } to {@code X } or {@code
  * X + 0 + Y
  * } to {@code
  * X + Y
@@ -41,7 +40,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     extract.allOperands(x);
     extract.allOperators(x);
     final List<Expression> ops = extract.allOperands(x),
-        ops2 = range.to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(Collectors.toList());
+        ops2 = range.to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
@@ -58,7 +57,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
 
   @SuppressWarnings("boxing") public static ASTNode replacement2(final InfixExpression x) {
     final List<Expression> ops = extract.allOperands(x),
-        ops2 = range.from(0).to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(Collectors.toList());
+        ops2 = range.from(0).to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
