@@ -28,7 +28,7 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
-  private static final Set<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
+  private static final Collection<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
     static final long serialVersionUID = 1L;
     {
       add(new HashCodeMethod());

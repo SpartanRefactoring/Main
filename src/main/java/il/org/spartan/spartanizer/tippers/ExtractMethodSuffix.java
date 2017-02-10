@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -54,12 +53,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
    * @return <code><b>true</b></code> <em>iff</em> the method and the list
    *         contains same variables, in matters of type and quantity
    *         [[SuppressWarningsSpartan]] */
-  private static boolean sameParameters(final MethodDeclaration d, final List<VariableDeclaration> ds) {
+  private static boolean sameParameters(final MethodDeclaration d, final Collection<VariableDeclaration> ds) {
     if (d.parameters().size() != ds.size())
       return false;
     final List<String> ts = ds.stream().map(
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
-        .collect(Collectors.toList());
+        .collect(toList());
     // NANO: to rest of function
     for (final SingleVariableDeclaration ¢ : parameters(d))
       if (!ts.contains(¢.getType() + ""))
@@ -70,7 +69,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d, final List<VariableDeclaration> ds,
       final Statement forkPoint, final boolean equalParams) {
     ds.sort(new NaturalVariablesOrder(d));
-    final List<ASTNode> $ = new ArrayList<>();
     final MethodDeclaration d1 = copy.of(d);
     fixStatements(d, d1, r);
     statements(d1).subList(statements(d).indexOf(forkPoint) + 1, statements(d).size()).clear();
@@ -85,6 +83,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       s.setExpression(i);
       statements(d1).add(s);
     }
+    final List<ASTNode> $ = new ArrayList<>();
     $.add(d1);
     final MethodDeclaration d2 = copy.of(d);
     fixStatements(d, d2, r);
@@ -115,7 +114,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
 
-  private static void fixParameters(final MethodDeclaration d, final MethodDeclaration d2, final List<VariableDeclaration> ds) {
+  private static void fixParameters(final MethodDeclaration d, final MethodDeclaration d2, final Iterable<VariableDeclaration> ds) {
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
       if (v instanceof SingleVariableDeclaration)
@@ -130,15 +129,15 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       }
   }
 
-  private static void fixJavadoc(final MethodDeclaration d, final List<VariableDeclaration> ds) {
+  private static void fixJavadoc(final MethodDeclaration d, final Collection<VariableDeclaration> ds) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
     final List<TagElement> ts = step.tags(j);
-    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(Collectors.toList());
+    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
-    final List<TagElement> xs = new ArrayList<>();
+    final Collection<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
         hasParamTags = true;
@@ -193,7 +192,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("unchecked") public void update() {
-      final List<VariableDeclaration> vs = new ArrayList<>();
+      final Collection<VariableDeclaration> vs = new ArrayList<>();
       vs.addAll(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
         if ((!(currentStatement instanceof ExpressionStatement) || !(((ExpressionStatement) currentStatement).getExpression() instanceof Assignment))

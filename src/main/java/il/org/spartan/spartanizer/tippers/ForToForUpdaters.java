@@ -57,7 +57,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static void setUpdaters(final ForStatement $) {
-    final List<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
+    final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
     step.updaters($).clear();
     step.updaters($).add(updaterFromBody($));
     step.updaters($).addAll(oldUpdaters);

@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.ast.factory;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
@@ -74,7 +73,7 @@ public enum make {
   /** Creates a parser for a given {@link Document}
    * @param d JD
    * @return created parser */
-  public ASTParser parser(final Document ¢) {
+  public ASTParser parser(final IDocument ¢) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(¢.get().toCharArray());
     return $;
@@ -151,7 +150,7 @@ public enum make {
   static List<Expression> minus(final List<Expression> xs) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(xs));
-    $.addAll(az.stream(rest(xs)).map(λ -> minusOf(λ)).collect(Collectors.toList()));
+    $.addAll(az.stream(rest(xs)).map(make::minusOf).collect(toList()));
     return $;
   }
 

@@ -4,7 +4,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -19,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-
+import static java.util.stream.Collectors.*;
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
@@ -36,7 +35,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   List<Expression> branchesExpressions(final N ¢) {
-    return branchesWrapper(¢).stream().map(step::expression).collect(Collectors.toList());
+    return branchesWrapper(¢).stream().map(step::expression).collect(toList());
   }
 
   @Override public Tip pattern(final N ¢) {
@@ -81,7 +80,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   /** [[SuppressWarningsSpartan]] */
-  List<? extends ASTNode> branchesWrapper(final N ¢) {
+  Collection<? extends ASTNode> branchesWrapper(final N ¢) {
     return !iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢));
   }
 
@@ -95,7 +94,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
 
-  static String replaceAll(final String target, final String oldString, final String newString) {
+  static String replaceAll(final String target, final CharSequence oldString, final CharSequence newString) {
     String $ = target;
     while (!$.replace(oldString, newString).equals($))
       $ = $.replace(oldString, newString);

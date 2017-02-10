@@ -105,10 +105,8 @@ public final class izTest {
   }
 
   @Test public void conditionalOrTest() {
-    final Expression e1 = null;
-    final InfixExpression e2 = null;
-    assert !iz.conditionalOr(e1);
-    assert !iz.conditionalOr(e2);
+    assert !iz.conditionalOr(null);
+    assert !iz.conditionalOr(null);
     assert iz.conditionalOr(e("true || false"));
     assert !iz.conditionalOr(e("x!=5"));
   }
@@ -254,58 +252,36 @@ public final class izTest {
     azzert.that(iz.numericLiteral(e("1")), is(true));
   }
 
-  @Test public void plainAssignmentTest() {
-    assert !iz.plainAssignment(null);
-    assert iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("a = 5;")));
-    assert !iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("a++;")));
+  @Test public void parseIntB1() {
+    azzert.that(iz.parseInt("0b10101"), is(0b10101));
   }
 
-  @Test public void postfixExpressionTest() {
-    assert !iz.postfixExpression(null);
-    assert iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(wizard.ast("i++;")));
-    assert !iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(wizard.ast("public static void main() { }")));
+  @Test public void parseIntB2() {
+    azzert.that(iz.parseInt("-0b10101"), is(-0b10101));
   }
 
-  @Test public void rightOfAssignmentTest() {
-    assert !iz.rightOfAssignment(null);
+  @Test public void parseIntB3() {
+    azzert.that(iz.parseInt("+0b10101"), is(0b10101));
   }
 
-  @Test public void seriesA_3() {
-    assert !iz.infixPlus(e("(i+j)"));
-    assert iz.infixPlus(core(e("(i+j)")));
-    assert !iz.infixMinus(e("(i-j)"));
-    assert iz.infixMinus(core(e("(i-j)")));
+  @Test public void parseIntB4() {
+    azzert.that(iz.parseInt("   0b10101    "), is(0b10101));
   }
 
-  @Test public void singletonStatementTest() {
-    assert !iz.singletonStatement(null);
-    assert iz.singletonStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("i = 6;")));
-    assert !iz.singletonStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("i = 6; j = 9;")));
+  @Test public void parseIntB5() {
+    azzert.that(iz.parseInt("0B10101"), is(0B10101));
   }
 
-  @Test public void singletonThenTest() {
-    assert !iz.singletonThen(null);
-    assert iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(wizard.ast("if (true) { i = 6; }")));
-    assert !iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(wizard.ast("if (true) { i = 6; j = 9; }")));
+  @Test public void parseIntB6() {
+    azzert.that(iz.parseInt("-0B10101"), is(-0B10101));
   }
 
-  @Test public void singleVariableDeclarationTest() {
-    assert !iz.singleVariableDeclaration(null);
-    assert iz.singleVariableDeclaration(findFirst.instanceOf(SingleVariableDeclaration.class).in(wizard.ast("try {} catch (Exception e){}")));
-    assert !iz.singleVariableDeclaration(findFirst.instanceOf(Statement.class).in(wizard.ast("Integer a; String b;")));
+  @Test public void parseIntB7() {
+    azzert.that(iz.parseInt("+0B10101"), is(0B10101));
   }
 
-  @Test public void stringLiteralTest() {
-    assert !iz.stringLiteral(null);
-    assert iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(wizard.ast("\"5\"")));
-    assert !iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(wizard.ast("false")));
-  }
-
-  @Test public void thisOrNullTest() {
-    assert !iz.thisOrNull(null);
-    assert iz.thisOrNull(e("null"));
-    assert iz.thisOrNull(e("this"));
-    assert !iz.thisOrNull(e("i+5"));
+  @Test public void parseIntB8() {
+    azzert.that(iz.parseInt("   0B10101    "), is(0B10101));
   }
 
   @Test public void parseIntD1() {
@@ -372,36 +348,36 @@ public final class izTest {
     azzert.that(iz.parseInt("   0X10101    "), is(0X10101));
   }
 
-  @Test public void parseIntB1() {
-    azzert.that(iz.parseInt("0b10101"), is(0b10101));
+  @Test public void parseLongB1() {
+    azzert.that(iz.parseLong("0b10101L"), is(0b10101L));
   }
 
-  @Test public void parseIntB2() {
-    azzert.that(iz.parseInt("-0b10101"), is(-0b10101));
+  @Test public void parseLongB2() {
+    azzert.that(iz.parseLong("-0b10101L"), is(-0b10101L));
   }
 
-  @Test public void parseIntB3() {
-    azzert.that(iz.parseInt("+0b10101"), is(0b10101));
+  @Test public void parseLongB3() {
+    azzert.that(iz.parseLong("+0b10101L"), is(0b10101L));
   }
 
-  @Test public void parseIntB4() {
-    azzert.that(iz.parseInt("   0b10101    "), is(0b10101));
+  @Test public void parseLongB4() {
+    azzert.that(iz.parseLong("   0b10101L    "), is(0b10101L));
   }
 
-  @Test public void parseIntB5() {
-    azzert.that(iz.parseInt("0B10101"), is(0B10101));
+  @Test public void parseLongB5() {
+    azzert.that(iz.parseLong("0B10101L"), is(0B10101L));
   }
 
-  @Test public void parseIntB6() {
-    azzert.that(iz.parseInt("-0B10101"), is(-0B10101));
+  @Test public void parseLongB6() {
+    azzert.that(iz.parseLong("-0B10101L"), is(-0B10101L));
   }
 
-  @Test public void parseIntB7() {
-    azzert.that(iz.parseInt("+0B10101"), is(0B10101));
+  @Test public void parseLongB7() {
+    azzert.that(iz.parseLong("+0B10101L"), is(0B10101L));
   }
 
-  @Test public void parseIntB8() {
-    azzert.that(iz.parseInt("   0B10101    "), is(0B10101));
+  @Test public void parseLongB8() {
+    azzert.that(iz.parseLong("   0B10101L    "), is(0B10101L));
   }
 
   @Test public void parseLongD1() {
@@ -468,35 +444,57 @@ public final class izTest {
     azzert.that(iz.parseLong("   0X10101L    "), is(0X10101L));
   }
 
-  @Test public void parseLongB1() {
-    azzert.that(iz.parseLong("0b10101L"), is(0b10101L));
+  @Test public void plainAssignmentTest() {
+    assert !iz.plainAssignment(null);
+    assert iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("a = 5;")));
+    assert !iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("a++;")));
   }
 
-  @Test public void parseLongB2() {
-    azzert.that(iz.parseLong("-0b10101L"), is(-0b10101L));
+  @Test public void postfixExpressionTest() {
+    assert !iz.postfixExpression(null);
+    assert iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(wizard.ast("i++;")));
+    assert !iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(wizard.ast("public static void main() { }")));
   }
 
-  @Test public void parseLongB3() {
-    azzert.that(iz.parseLong("+0b10101L"), is(0b10101L));
+  @Test public void rightOfAssignmentTest() {
+    assert !iz.rightOfAssignment(null);
   }
 
-  @Test public void parseLongB4() {
-    azzert.that(iz.parseLong("   0b10101L    "), is(0b10101L));
+  @Test public void seriesA_3() {
+    assert !iz.infixPlus(e("(i+j)"));
+    assert iz.infixPlus(core(e("(i+j)")));
+    assert !iz.infixMinus(e("(i-j)"));
+    assert iz.infixMinus(core(e("(i-j)")));
   }
 
-  @Test public void parseLongB5() {
-    azzert.that(iz.parseLong("0B10101L"), is(0B10101L));
+  @Test public void singletonStatementTest() {
+    assert !iz.singletonStatement(null);
+    assert iz.singletonStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("i = 6;")));
+    assert !iz.singletonStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("i = 6; j = 9;")));
   }
 
-  @Test public void parseLongB6() {
-    azzert.that(iz.parseLong("-0B10101L"), is(-0B10101L));
+  @Test public void singletonThenTest() {
+    assert !iz.singletonThen(null);
+    assert iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(wizard.ast("if (true) { i = 6; }")));
+    assert !iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(wizard.ast("if (true) { i = 6; j = 9; }")));
   }
 
-  @Test public void parseLongB7() {
-    azzert.that(iz.parseLong("+0B10101L"), is(0B10101L));
+  @Test public void singleVariableDeclarationTest() {
+    assert !iz.singleVariableDeclaration(null);
+    assert iz.singleVariableDeclaration(findFirst.instanceOf(SingleVariableDeclaration.class).in(wizard.ast("try {} catch (Exception e){}")));
+    assert !iz.singleVariableDeclaration(findFirst.instanceOf(Statement.class).in(wizard.ast("Integer a; String b;")));
   }
 
-  @Test public void parseLongB8() {
-    azzert.that(iz.parseLong("   0B10101L    "), is(0B10101L));
+  @Test public void stringLiteralTest() {
+    assert !iz.stringLiteral(null);
+    assert iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(wizard.ast("\"5\"")));
+    assert !iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(wizard.ast("false")));
+  }
+
+  @Test public void thisOrNullTest() {
+    assert !iz.thisOrNull(null);
+    assert iz.thisOrNull(e("null"));
+    assert iz.thisOrNull(e("this"));
+    assert !iz.thisOrNull(e("i+5"));
   }
 }

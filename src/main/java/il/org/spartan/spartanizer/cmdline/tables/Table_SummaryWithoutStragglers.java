@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.research.nanos.methods.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-07 */
 public class Table_SummaryWithoutStragglers extends Table_Summary {
-  public static final int iii = 7;
   static {
     clazz = Table_SummaryWithoutStragglers.class;
     removeMethodPatterns()

@@ -19,7 +19,7 @@ public enum file {
     try {
       Files.move(source, source.resolveSibling(to));
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+      monitor.infoIOException(¢);
     }
   }
 

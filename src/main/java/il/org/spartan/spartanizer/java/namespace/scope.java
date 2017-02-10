@@ -30,7 +30,7 @@ public interface scope {
   }
 
   static List<ASTNode> of(final SingleVariableDeclaration x) {
-    final ArrayList<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = new ArrayList<>();
     $.add(x);
     return $;
   }

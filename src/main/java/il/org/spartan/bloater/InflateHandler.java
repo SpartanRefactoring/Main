@@ -1,10 +1,8 @@
 package il.org.spartan.bloater;
-
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -18,6 +16,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
@@ -60,23 +60,23 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static List<Listener> getListeners(final StyledText t) {
-    final ArrayList<Listener> $ = new ArrayList<>();
+    final List<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
     final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
     if (ls == null)
       return $;
     $.addAll(ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener)
-        .collect(Collectors.toList()));
+        .collect(toList()));
     return $;
   }
 
-  protected static void addListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
+  protected static void addListeners(final StyledText t, final Iterable<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
       as.list(types).forEach(i -> ls.forEach(λ -> t.addListener(i.intValue(), λ)));
   }
 
-  protected static void removeListeners(final StyledText t, final List<Listener> ls, final Integer... types) {
+  protected static void removeListeners(final StyledText t, final Iterable<Listener> ls, final Integer... types) {
     if (t != null && ls != null)
       ls.forEach(¢ -> as.list(types).forEach(λ -> t.removeListener(λ.intValue(), ¢)));
   }
@@ -102,7 +102,7 @@ public class InflateHandler extends AbstractHandler {
   protected static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
-    final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);
+    final Control $ = ¢.getAdapter(Control.class);
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 
@@ -188,8 +188,8 @@ public class InflateHandler extends AbstractHandler {
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 
-  private static List<ITextEditor> getOpenedEditors() {
-    final List<ITextEditor> $ = new LinkedList<>();
+  private static Iterable<ITextEditor> getOpenedEditors() {
+    final Collection<ITextEditor> $ = new LinkedList<>();
     final IWorkbenchPage p = getPage();
     if (p != null)
       for (final IEditorReference r : p.getEditorReferences()) {

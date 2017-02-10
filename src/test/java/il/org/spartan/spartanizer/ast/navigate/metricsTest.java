@@ -56,8 +56,8 @@ public final class metricsTest {
   @Test public void horizontalComplexityTest() {
     // Test a null list and a null Statement
     final Statement s = null;
-    List<Statement> st = null;
     azzert.that(metrics.horizontalComplexity(0, s), is(0));
+    List<Statement> st = null;
     azzert.that(metrics.horizontalComplexity(0, st), is(0));
     // Test a list with one null statement
     st = new ArrayList<>();

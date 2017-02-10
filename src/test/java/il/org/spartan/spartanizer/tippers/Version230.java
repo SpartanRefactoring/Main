@@ -29,23 +29,15 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" }) //
+@SuppressWarnings({ "static-method", "javadoc", "OverlyComplexClass" }) //
 public final class Version230 {
-  @Ignore
-  static class NotWorking {
-    @Test public void issue74d() {
-      trimmingOf("int[] a=new int[] {2,3};")//
-          .gives("");
-    }
-  }
-
   @Test public void actualExampleForSortAddition() {
     trimmingOf("1 + b.statements().indexOf(declarationStmt)")//
         .stays();
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
-    final String from = "2 + a<b", expected = "a + 2<b";
+    final String from = "2 + a<b";
     final Wrap w = Wrap.Expression;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
@@ -56,7 +48,7 @@ public final class Version230 {
     if (peeled.equals(from))
       azzert.that("No similification of " + from, from, is(not(peeled)));
     azzert.that("Simpification of " + from + " is just reformatting", tide.clean(from), not(tide.clean(peeled)));
-    assertSimilar(expected, peeled);
+    assertSimilar("a + 2<b", peeled);
   }
 
   @Test public void andWithCLASS_CONSTANT() {
@@ -118,7 +110,7 @@ public final class Version230 {
 
   @Test public void assignmentAssignmentChain5() {
     trimmingOf("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));")//
-        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));") //
+        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(((b4=(b5=13))));") //
         .stays()//
     ;
   }
@@ -1055,7 +1047,7 @@ public final class Version230 {
   }
 
   @Test public void ifEmptyThenThrowVariant() {
-    trimmingOf("if(b){ /* empty */; } // no else   throw new Exception(); ")//
+    trimmingOf("if(b){ /* empty */; } // no else\n   throw new Exception(); ")//
         .gives("throw new Exception();")//
         .stays();
   }
@@ -1069,7 +1061,8 @@ public final class Version230 {
 
   @Test public void ifEmptyThenThrowWitinIf() {
     trimmingOf("if(x)if(b){ /* empty */} else { throw new Excpetion(); } else { f();f();f();f();f();f();f();f();}")
-        .gives("if(x)if(!b)throw new Excpetion();else { f();f();f();f();f();f();f();f();}");
+        .gives("if(x){if(!b)throw new Excpetion();}else{f();f();f();f();f();f();f();f();}")//
+        .stays();
   }
 
   @Test public void ifFunctionCall() {
@@ -3667,5 +3660,13 @@ public final class Version230 {
   @Test public void xorSortClassConstantsAtEnd() {
     trimmingOf("f(a,b,c,d)^ BOB")//
         .stays();
+  }
+
+  @Ignore
+  static class NotWorking {
+    @Test public void issue74d() {
+      trimmingOf("int[] a=new int[] {2,3};")//
+          .gives("");
+    }
   }
 }

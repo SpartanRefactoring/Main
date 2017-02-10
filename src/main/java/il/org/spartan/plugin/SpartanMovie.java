@@ -47,7 +47,7 @@ public class SpartanMovie extends AbstractHandler {
         // --yg
         for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
           mightNotBeSlick(page);
-          final IFile file = (IFile) currentCompilationUnit.getResource();
+          final IResource file = currentCompilationUnit.getResource();
           try {
             IMarker[] markers = getMarkers(file);
             if (markers.length > 0)
@@ -94,7 +94,7 @@ public class SpartanMovie extends AbstractHandler {
     close(¢);
   }
 
-  private static IMarker[] getMarkers(final IFile $) {
+  private static IMarker[] getMarkers(final IResource $) {
     try {
       return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
     } catch (final CoreException m) {

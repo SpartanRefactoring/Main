@@ -57,7 +57,7 @@ public interface Listener {
          *
          * <code>
                  <b>public final</b> {@link Listener}  listeners = {@link Listener.S}.{@link #empty()}
-         * </code> <code>
+         * </code> 
      * @return an empty new instance */
     public static Listener.S empty() {
       return new Listener.S();

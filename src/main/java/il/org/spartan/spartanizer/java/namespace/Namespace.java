@@ -35,12 +35,12 @@ public final class Namespace implements Environment {
     this.name = name;
   }
 
-  Namespace addAll(final List<BodyDeclaration> ¢) {
+  Namespace addAll(final Iterable<BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;
   }
 
-  protected Namespace addAllReources(final List<VariableDeclarationExpression> ¢) {
+  protected Namespace addAllReources(final Iterable<VariableDeclarationExpression> ¢) {
     ¢.forEach(this::put);
     return this;
   }
@@ -54,7 +54,7 @@ public final class Namespace implements Environment {
     return children.get(¢);
   }
 
-  protected Namespace addConstants(final EnumDeclaration d, final List<EnumConstantDeclaration> ds) {
+  protected Namespace addConstants(final EnumDeclaration d, final Iterable<EnumConstantDeclaration> ds) {
     @knows("¢") final type t = type.bring(d.getName() + "");
     ds.forEach(λ -> put(step.name(λ) + "", new Binding(t)));
     return this;
@@ -275,7 +275,7 @@ public final class Namespace implements Environment {
     return this;
   }
 
-  protected Namespace put(final List<? extends BodyDeclaration> ¢) {
+  protected Namespace put(final Iterable<? extends BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;
   }
@@ -337,14 +337,14 @@ public final class Namespace implements Environment {
   }
 
   Namespace spawn(final String childName) {
-    return addChild(new Namespace(Namespace.this, childName));
+    return addChild(new Namespace(this, childName));
   }
 
   @Override public String toString() {
     return name + "" + flat;
   }
 
-  static boolean init(final Namespace n, final List<? extends ASTNode> children) {
+  static boolean init(final Namespace n, final Iterable<? extends ASTNode> children) {
     children.forEach(n::fillScope);
     return false;
   }
@@ -378,11 +378,10 @@ public final class Namespace implements Environment {
   }
 
   public String generateName(final String ¢) {
-    final String face = ¢;
     int postface = 0;
-    String $ = face + "" + ++postface;
+    String $ = ¢ + "" + ++postface;
     while (has($))
-      $ = face + "" + ++postface;
+      $ = ¢ + "" + ++postface;
     return $;
   }
 

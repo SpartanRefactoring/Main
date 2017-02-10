@@ -17,14 +17,6 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author michalcohen
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
-  private class ASTNodeWrapper {
-    public final ArrayList<ASTNode> inner;
-
-    ASTNodeWrapper() {
-      inner = new ArrayList<>();
-    }
-  }
-
   private static ASTNode createAST(final String ¢) {
     return wizard.ast(¢);
   }
@@ -37,7 +29,7 @@ public class CleanerVisitorTest {
     return λ -> λ instanceof Javadoc;
   }
 
-  private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
+  @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
     final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
@@ -54,5 +46,13 @@ public class CleanerVisitorTest {
 
   @Test public void test2() {
     new CleanerVisitor().visit((ImportDeclaration) first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
+  }
+
+  private static class ASTNodeWrapper {
+    public final ArrayList<ASTNode> inner;
+
+    ASTNodeWrapper() {
+      inner = new ArrayList<>();
+    }
   }
 }

@@ -3,8 +3,6 @@
  * @since Jan 15, 2017 */
 package il.org.spartan.bloater;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
@@ -20,9 +18,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
-
+// TODO: Ori Roth why so many fields? --yg
 public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
   private static final Function<Device, Color> DEFLATE_COLOR = λ -> new Color(λ, 200, 255, 200);

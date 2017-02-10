@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -96,7 +95,7 @@ public enum getAll {
   }
 
   /** Takes a single parameter d, which is a MethodDeclaration. Returns a
-   * List<CastExpression> which is all casts in d.
+   * a {@Link List} of {@link CastExpression} which is all casts in d.
    * @param d a MethodDeclaration
    * @author Inbal Matityahu
    * @author Or Troyaner
@@ -120,9 +119,9 @@ public enum getAll {
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
-    final List<VariableDeclaration> $ = new ArrayList<>();
     if (d == null)
       return null;
+    final List<VariableDeclaration> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
@@ -146,11 +145,11 @@ public enum getAll {
     return $;
   }
 
-  private static ASTVisitor publicFieldsCollector(final List<String> $) {
+  private static ASTVisitor publicFieldsCollector(final Collection<String> $) {
     return new ASTVisitor() {
       @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))
-          $.addAll(fragments(d).stream().map(λ -> step.name(λ) + "").collect(Collectors.toList()));
+          $.addAll(fragments(d).stream().map(λ -> step.name(λ) + "").collect(toList()));
         return true;
       }
     };
@@ -187,7 +186,7 @@ public enum getAll {
     d.accept(new ASTVisitor() { // traverse all FieldDeclaration
       @Override public boolean visit(final FieldDeclaration current) {
         if (current.getModifiers() == Modifier.PRIVATE)
-          $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(Collectors.toList()));
+          $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         return true;
       }
     });

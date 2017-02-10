@@ -34,7 +34,7 @@ public enum Files {
     return getProperty("outputDir");
   }
 
-  public static Set<File> inputFiles() {
+  public static Collection<File> inputFiles() {
     return getJavaFiles(getProperty("inputDir"));
   }
 
@@ -105,7 +105,7 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
    * @return All java files nested inside the outputFolder */
-  private static Set<File> getJavaFiles(final String dirName) {
+  private static Collection<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
 

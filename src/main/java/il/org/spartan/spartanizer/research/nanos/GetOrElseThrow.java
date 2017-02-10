@@ -39,7 +39,7 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Statement next = next(¢);
-        next.delete();
+        r.remove(next, g);
         r.replace(¢, extract.singleStatement(ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }
     };

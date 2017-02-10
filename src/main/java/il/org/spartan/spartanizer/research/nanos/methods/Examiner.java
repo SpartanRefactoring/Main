@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** One statement method returning boolean expressio
  * @author Ori Marcovitch */
 public class Examiner extends JavadocMarkerNanoPattern {
-  private static final Set<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("return $X;", "", ""));

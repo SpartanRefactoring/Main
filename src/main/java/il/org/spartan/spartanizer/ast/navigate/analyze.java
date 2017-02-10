@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -18,8 +17,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum analyze {
   ;
-  public static Set<String> dependencies(final ASTNode n) {
-    final Set<String> $ = new HashSet<>();
+  public static Collection<String> dependencies(final ASTNode n) {
+    final Collection<String> $ = new HashSet<>();
     n.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))
@@ -41,16 +40,14 @@ public enum analyze {
     return $;
   }
 
-  public static List<String> dependencies(final List<Expression> arguments) {
-    if (arguments == null)
-      return new ArrayList<>();
+  public static Collection<String> dependencies(final Iterable<Expression> arguments) {
     final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
       $.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
         $.add(az.name(¢) + "");
     }
-    return new ArrayList<>($).stream().collect(Collectors.toList());
+    return new ArrayList<>($).stream().collect(toList());
   }
 
   public static String type(final Name n) {

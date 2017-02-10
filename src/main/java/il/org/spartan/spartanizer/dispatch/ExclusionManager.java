@@ -19,7 +19,7 @@ public final class ExclusionManager {
     inner.add(¢);
   }
 
-  public void excludeAll(final List<? extends ASTNode> ¢) {
+  public void excludeAll(final Collection<? extends ASTNode> ¢) {
     inner.addAll(¢);
   }
 

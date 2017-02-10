@@ -11,6 +11,12 @@ import org.junit.*;
  * @since 2016-12-08 */
 @SuppressWarnings("static-method")
 public class Issue0914 {
+  @Test public void actualBug() {
+    trimmingOf("  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {" + "ASTNode $ = ¢;"
+        + "while (!iz.methodDeclaration($) && $ != null)" + "$ = $.getParent();" + "return az.methodDeclaration($);" + "}")//
+            .stays();
+  }
+
   @Test public void challenge_while_d() {
     trimmingOf("static X f(final S ¢) {X $ = ¢.elze();" + //
         "while ($ instanceof S)$ = ((S) $).elze();return $;}")//
@@ -35,11 +41,5 @@ public class Issue0914 {
   @Test public void test0() {
     trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")//
         .stays();
-  }
-
-  @Test public void actualBug() {
-    trimmingOf("  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {" + "ASTNode $ = ¢;"
-        + "while (!iz.methodDeclaration($) && $ != null)" + "$ = $.getParent();" + "return az.methodDeclaration($);" + "}")//
-            .stays();
   }
 }

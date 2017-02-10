@@ -16,7 +16,7 @@ public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
     return "remove :" + ¢;
   }
 
-  @Override protected boolean prerequisite(ForStatement ¢) {
+  @Override protected boolean prerequisite(final ForStatement ¢) {
     return sideEffects.free(¢);
   }
 

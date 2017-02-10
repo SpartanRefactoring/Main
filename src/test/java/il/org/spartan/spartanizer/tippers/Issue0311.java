@@ -11,28 +11,6 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0311 {
-  @Test public void challenge_for_i_initialization_expression_3a() {
-    trimmingOf("boolean b;for(;b=true;)$.ap(line).ap(ls);")//
-        .gives("for(boolean b=true;b;)$.ap(line).ap(ls);")//
-        .gives("for(boolean ¢=true;¢;)$.ap(line).ap(ls);")//
-        .stays();
-  }
-
-  @Test public void challenge_for_i_initialization_expression_3b() {
-    trimmingOf("boolean b;for(;b=true;)$.ap(line).ap(ls);")//
-        .gives("for(boolean b=true;b;)$.ap(line).ap(ls);")//
-        .gives("for(boolean ¢=true;¢;)$.ap(line).ap(ls);")//
-        .stays();
-  }
-
-  @Test public void challenge_for_i_initialization_expression_3c() {
-    trimmingOf("boolean b;for(;(b==true);)$.ap(line).ap(ls);")//
-        .gives("for(boolean b;(b==true);)$.ap(line).ap(ls);")//
-        .gives("for(boolean ¢;(¢==true);)$.ap(line).ap(ls);")//
-        .gives("for(boolean ¢;(¢);)$.ap(line).ap(ls);")//
-    ;
-  }
-
   @Test public void a() {
     trimmingOf("while(zq<ng.l()&&m.f(zq)){int x=m.zq();int eA=m.z();int lE=eA-x;p(lE);I[] ch=y(x,lE);if((c==null)||c.k(ch))st.$(ch);zq=eA;}")//
         .gives("while(zq<ng.l()&&m.f(zq)){int x=m.zq(),eA=m.z();int lE=eA-x;p(lE);I[] ch=y(x,lE);if((c==null)||c.k(ch))st.$(ch);zq=eA;}") //
@@ -56,6 +34,28 @@ public class Issue0311 {
             .gives("for(int ¢=0;¢<20;++¢){a3xZ(s.l(c),not(r4(f)));" + //
                 "c[¢]=f;new F(f,\"a.txt\").g();a(f.e());}")
             .stays();
+  }
+
+  @Test public void challenge_for_i_initialization_expression_3a() {
+    trimmingOf("boolean b;for(;b=true;)$.ap(line).ap(ls);")//
+        .gives("for(boolean b=true;b;)$.ap(line).ap(ls);")//
+        .gives("for(boolean ¢=true;¢;)$.ap(line).ap(ls);")//
+        .stays();
+  }
+
+  @Test public void challenge_for_i_initialization_expression_3b() {
+    trimmingOf("boolean b;for(;b=true;)$.ap(line).ap(ls);")//
+        .gives("for(boolean b=true;b;)$.ap(line).ap(ls);")//
+        .gives("for(boolean ¢=true;¢;)$.ap(line).ap(ls);")//
+        .stays();
+  }
+
+  @Test public void challenge_for_i_initialization_expression_3c() {
+    trimmingOf("boolean b;for(;(b==true);)$.ap(line).ap(ls);")//
+        .gives("for(boolean b;(b==true);)$.ap(line).ap(ls);")//
+        .gives("for(boolean ¢;(¢==true);)$.ap(line).ap(ls);")//
+        .gives("for(boolean ¢;(¢);)$.ap(line).ap(ls);")//
+    ;
   }
 
   @Test public void d() {
@@ -82,6 +82,42 @@ public class Issue0311 {
   @Test public void e_Modifiers_in_2b() {
     trimmingOf("c(int i){int p=i;while(p<10)++i;return false;}")//
         .gives("c(int i){for(int p=i;p<10;)++i;return false;}")//
+        .stays();
+  }
+
+  @Test public void for_1() {
+    trimmingOf("c(N n){N p=n;for(;p!=null;){if(dns.c(p))return true;++i;}return false;}")
+        .gives("c(N n){for(N p=n;p!=null;){if(dns.c(p))return true;++i;}return false;}")//
+        .stays();
+  }
+
+  @Test public void for_2() {
+    trimmingOf("c(int i){int p=i;for(;p<10;)++p;return false;}")//
+        .gives("c(int i){for(int p=i;p<10;)++p;return false;}")//
+        .stays();
+  }
+
+  @Test public void for_3a() {
+    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;}return false;}").gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;}return false;}")
+        .gives("c(int i){for(int p=i,a=0;p<10;--a){++p;}return false;}")//
+        .gives("c(int i){for(int p=i,a=0;p<10;--a)++p;return false;}")//
+        .stays();
+  }
+
+  @Test public void for_3b() {
+    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;k+=p+a;}return false;}")
+        .gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;k+=p+a;}return false;}")//
+        .stays();
+  }
+
+  @Test public void for_4() {
+    trimmingOf("c(N i){N p=i;int a=5;++a;for(;p<10;)p=p.e();return false;}")//
+        .stays();
+  }
+
+  @Test public void for_5() {
+    trimmingOf("c(int i){int p=i;for(int k=2;p<10;){++nE;++p;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;){++nE;++p;}return false;}")
+        .gives("c(int i){for(int p=i,k=2;p<10;++p){++nE;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;++p)++nE;return false;}")//
         .stays();
   }
 
@@ -173,72 +209,6 @@ public class Issue0311 {
         .stays();
   }
 
-  @Test public void for_1() {
-    trimmingOf("c(N n){N p=n;for(;p!=null;){if(dns.c(p))return true;++i;}return false;}")
-        .gives("c(N n){for(N p=n;p!=null;){if(dns.c(p))return true;++i;}return false;}")//
-        .stays();
-  }
-
-  @Test public void for_2() {
-    trimmingOf("c(int i){int p=i;for(;p<10;)++p;return false;}")//
-        .gives("c(int i){for(int p=i;p<10;)++p;return false;}")//
-        .stays();
-  }
-
-  @Test public void for_3a() {
-    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;}return false;}").gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;}return false;}")
-        .gives("c(int i){for(int p=i,a=0;p<10;--a){++p;}return false;}")//
-        .gives("c(int i){for(int p=i,a=0;p<10;--a)++p;return false;}")//
-        .stays();
-  }
-
-  @Test public void for_3b() {
-    trimmingOf("c(int i){int p=i,a=0;for(;p<10;){++p;--a;k+=p+a;}return false;}")
-        .gives("c(int i){for(int p=i,a=0;p<10;){++p;--a;k+=p+a;}return false;}")//
-        .stays();
-  }
-
-  @Test public void for_4() {
-    trimmingOf("c(N i){N p=i;int a=5;++a;for(;p<10;)p=p.e();return false;}")//
-        .stays();
-  }
-
-  @Test public void for_5() {
-    trimmingOf("c(int i){int p=i;for(int k=2;p<10;){++nE;++p;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;){++nE;++p;}return false;}")
-        .gives("c(int i){for(int p=i,k=2;p<10;++p){++nE;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;++p)++nE;return false;}")//
-        .stays();
-  }
-
-  @Test public void while_1() {
-    trimmingOf("c(N n){N p=n;while(p!=null){if(dns.c(p))return true;++i;}return false;}")
-        .gives("c(N n){for(N p=n;p!=null;){if(dns.c(p))return true;++i;}return false;}").stays();
-  }
-
-  @Test public void while_2() {
-    trimmingOf("c(int i){int p=i;while(p<10)++p;return false;}")//
-        .gives("c(int i){for(int p=i;p<10;)++p;return false;}")//
-        .stays();
-  }
-
-  @Test public void while_3() {
-    trimmingOf("c(int i){int p=i,a=0;++a;while(p<10)++p;return false;}")//
-        .stays();
-  }
-
-  @Test public void while_4() {
-    trimmingOf("c(N i){N p=i;int a=5;++a;while(p<10)p=p.e();return false;}")//
-        .stays();
-  }
-
-  @Test public void with_aay_a() {
-    trimmingOf("int[] a=new int[]{1,2,3,4,5};for(int i=0;;){a[i]=0;++i;}")//
-        .gives("for(int i=0;;){(new int[]{1,2,3,4,5})[i]=0;++i;}")//
-        .gives("for(int ¢=0;;){(new int[]{1,2,3,4,5})[¢]=0;++¢;}")//
-        .gives("for(int ¢=0;;++¢){(new int[]{1,2,3,4,5})[¢]=0;}")//
-        .gives("for(int ¢=0;;++¢)(new int[]{1,2,3,4,5})[¢]=0;")//
-        .stays();
-  }
-
   @Test public void t03a() {
     trimmingOf("S t(S g){B sb=new B(g);int l=sb.l();for(int i=0;i<l;++i)if(sb.t(i)=='.')sb.s(i,'/');return sb+\"\";")
         .gives("S t(S g){B $=new B(g);int l=$.l();for(int i=0;i<l;++i)if($.t(i)=='.')$.s(i,'/');return $+\"\";")
@@ -293,6 +263,36 @@ public class Issue0311 {
 
   @Test public void t06c() {
     trimmingOf("c(int i){int p=i;while(p!=null){++p;--i;h(p);}return false;}").gives("c(int i){for(int p=i;p!=null;){++p;--i;h(p);}return false;}")//
+        .stays();
+  }
+
+  @Test public void while_1() {
+    trimmingOf("c(N n){N p=n;while(p!=null){if(dns.c(p))return true;++i;}return false;}")
+        .gives("c(N n){for(N p=n;p!=null;){if(dns.c(p))return true;++i;}return false;}").stays();
+  }
+
+  @Test public void while_2() {
+    trimmingOf("c(int i){int p=i;while(p<10)++p;return false;}")//
+        .gives("c(int i){for(int p=i;p<10;)++p;return false;}")//
+        .stays();
+  }
+
+  @Test public void while_3() {
+    trimmingOf("c(int i){int p=i,a=0;++a;while(p<10)++p;return false;}")//
+        .stays();
+  }
+
+  @Test public void while_4() {
+    trimmingOf("c(N i){N p=i;int a=5;++a;while(p<10)p=p.e();return false;}")//
+        .stays();
+  }
+
+  @Test public void with_aay_a() {
+    trimmingOf("int[] a=new int[]{1,2,3,4,5};for(int i=0;;){a[i]=0;++i;}")//
+        .gives("for(int i=0;;){(new int[]{1,2,3,4,5})[i]=0;++i;}")//
+        .gives("for(int ¢=0;;){(new int[]{1,2,3,4,5})[¢]=0;++¢;}")//
+        .gives("for(int ¢=0;;++¢){(new int[]{1,2,3,4,5})[¢]=0;}")//
+        .gives("for(int ¢=0;;++¢)(new int[]{1,2,3,4,5})[¢]=0;")//
         .stays();
   }
 }

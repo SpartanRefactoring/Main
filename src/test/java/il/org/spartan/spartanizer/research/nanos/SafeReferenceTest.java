@@ -52,20 +52,6 @@ public class SafeReferenceTest {
         .stays();
   }
 
-  @Test public void respect() {
-    trimmingOf("return x ==null ? null : x.field;")//
-        .using(ConditionalExpression.class, //
-            new Unless(), //
-            new DefaultsTo(), //
-            new SafeReference())//
-        .gives("return safe(x).get(()->x.field);")//
-        .using(ConditionalExpression.class, //
-            new Unless(), //
-            new DefaultsTo(), //
-            new SafeReference())//
-        .stays();
-  }
-
   @Test public void method() {
     trimmingOf("return x == null ? null : x.y();")//
         .using(ConditionalExpression.class, new SafeReference())//
@@ -112,6 +98,20 @@ public class SafeReferenceTest {
     trimmingOf("(x != null) && x.y()")//
         .using(InfixExpression.class, new Infix.SafeReference())//
         .gives("safe(x).invoke(()->x.y())")//
+        .stays();
+  }
+
+  @Test public void respect() {
+    trimmingOf("return x ==null ? null : x.field;")//
+        .using(ConditionalExpression.class, //
+            new Unless(), //
+            new DefaultsTo(), //
+            new SafeReference())//
+        .gives("return safe(x).get(()->x.field);")//
+        .using(ConditionalExpression.class, //
+            new Unless(), //
+            new DefaultsTo(), //
+            new SafeReference())//
         .stays();
   }
 }

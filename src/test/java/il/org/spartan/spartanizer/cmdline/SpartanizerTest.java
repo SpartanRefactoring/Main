@@ -26,7 +26,7 @@ public class SpartanizerTest {
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
-        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
+        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ .toString()).contains("@Test"));
       }
 
       @Override public boolean visit(final AnnotationTypeDeclaration node) {
@@ -276,7 +276,7 @@ public class SpartanizerTest {
     u1.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
-        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
+        return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ .toString()).contains("@Test"));
       }
 
       @Override public boolean visit(final MethodDeclaration node) {

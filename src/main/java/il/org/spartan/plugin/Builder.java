@@ -42,7 +42,7 @@ public final class Builder extends IncrementalProjectBuilder {
    *         Resource changes are disallowed during certain types of resource
    *         change event notification¢ See {@link IResourceChangeEvent}¢for
    *         more details. */
-  public static void deleteMarkers(final IFile ¢) throws CoreException {
+  public static void deleteMarkers(final IResource ¢) throws CoreException {
     ¢.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
   }
 
@@ -79,7 +79,7 @@ public final class Builder extends IncrementalProjectBuilder {
     addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
   }
 
-  private static void addMarkers(final IFile f, final CompilationUnit u) throws CoreException {
+  private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
     for (final AbstractGUIApplicator s : Tips.all())
       for (final Tip ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {

@@ -55,14 +55,14 @@ public final class CollectedTests {
         .stays();
   }
 
+  @Test public void i() {
+    trimmingOf("switch (a) { default: }")//
+        .gives("");
+  }
+
   @Test public void shortestOperand09() {
     trimmingOf("return 2 - 4 <50 - 20 - 10 - 5;")//
         .gives("return  -2<15;") //
         .stays();
-  }
-
-  @Test public void i() {
-    trimmingOf("switch (a) { default: }")//
-        .gives("");
   }
 }

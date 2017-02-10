@@ -99,7 +99,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   }
 
   private String fixedPoint(final String from) {
-    for (final Document $ = new Document(from);;) {
+    for (final IDocument $ = new Document(from);;) {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);

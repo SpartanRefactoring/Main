@@ -26,7 +26,7 @@ public class Issue0810 {
   }
 
   @Test public void test1() {
-    final List<SimpleName> lst = new ArrayList<>();
+    final Collection<SimpleName> lst = new ArrayList<>();
     lst.add(az.simpleName(wizard.ast("abc")));
     assert !haz.dollar(lst);
     lst.add(az.simpleName(wizard.ast("$")));
