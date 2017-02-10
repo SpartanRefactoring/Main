@@ -411,10 +411,12 @@ public class Toolbox {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
-  @SuppressWarnings("boxing") public int hooksCount() {
-    return Stream.of(implementation).map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
+  public static long hooksCount() {
+    return defaultTipperLists().count(); 
   }
-
+public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
+    return Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
+  }
   public int tippersCount() {
     int $ = 0;
     for (final List<?> ¢ : implementation)

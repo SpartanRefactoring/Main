@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.research;
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 

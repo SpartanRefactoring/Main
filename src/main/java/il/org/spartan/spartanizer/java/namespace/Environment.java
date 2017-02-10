@@ -4,7 +4,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
 import java.util.Map.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
