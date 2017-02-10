@@ -121,7 +121,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     ReportGenerator.nl("methods");
   }
 
-  @SuppressWarnings({ "boxing" }) private void computeMetrics(final ASTNode input, final ASTNode output) {
+  @SuppressWarnings("boxing") private void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     // ReportGenerator.report("tips").put("Name", extract.name(input));
     // ReportGenerator.report("tips").put("Category", extract.category(input));

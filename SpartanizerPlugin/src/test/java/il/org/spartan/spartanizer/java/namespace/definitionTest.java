@@ -21,9 +21,9 @@ import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** @formatter:off */
-@Target({ ElementType.TYPE }) @annotation @interface annotation { /**/ }
+@Target(ElementType.TYPE) @annotation @interface annotation { /**/ }
 
-@Target({ ElementType.METHOD }) @annotation @interface annotationMemberDeclaration { /**/ }
+@Target(ElementType.METHOD) @annotation @interface annotationMemberDeclaration { /**/ }
 @Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE }) @annotation @interface catch¢ { /**/ }
 @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface class¢ { /**/ }
 /** TDD of {@link definition}

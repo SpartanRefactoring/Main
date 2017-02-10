@@ -30,9 +30,9 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
       parser.setResolveBindings(true);
       parser.setSource(u);
       collect(az.compilationUnit(parser.createAST(null)));
-    } catch (JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       ¢.printStackTrace();
-    } catch (IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, f + "");
     }
   }

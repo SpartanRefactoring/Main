@@ -71,7 +71,7 @@ public class ReportGenerator implements ConfigurableReport {
       return reports.get(¢);
     }
 
-    @SuppressWarnings({ "unchecked" }) public static NamedFunction<ASTNode> find(final String ¢) {
+    @SuppressWarnings("unchecked") public static NamedFunction<ASTNode> find(final String ¢) {
       return Stream.of(ReportGenerator.Util.functions("")).filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
     }
   }

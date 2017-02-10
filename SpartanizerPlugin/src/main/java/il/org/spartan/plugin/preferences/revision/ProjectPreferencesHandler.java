@@ -25,17 +25,17 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * 
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Override public Object execute(@SuppressWarnings("unused") ExecutionEvent __) {
-    IProject p = Selection.Util.project();
-    SpartanPreferencesDialog d = getDialog(p);
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    final IProject p = Selection.Util.project();
+    final SpartanPreferencesDialog d = getDialog(p);
     if (d == null)
       return null;
     d.open();
-    Object[] os = d.getResult();
+    final Object[] os = d.getResult();
     if (os == null || d.getReturnCode() != Window.OK)
       return null;
-    Set<String> es = new HashSet<>();
-    for (Object ¢ : os)
+    final Set<String> es = new HashSet<>();
+    for (final Object ¢ : os)
       if (¢ instanceof SpartanTipper)
         es.add(((SpartanTipper) ¢).name());
     XMLSpartan.updateEnabledTippers(p, es);
@@ -49,18 +49,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @return
    *         <p>
    *         [[SuppressWarningsSpartan]] */
-  private static SpartanPreferencesDialog getDialog(IProject p) {
+  private static SpartanPreferencesDialog getDialog(final IProject p) {
     final Shell s = Display.getCurrent().getActiveShell();
-    Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p, false);
+    final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p, false);
     if (s == null || m == null)
       return null;
-    SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
-    SpartanPreferencesDialog $ = new SpartanPreferencesDialog(s, new ILabelProvider() {
-      @Override public void removeListener(@SuppressWarnings("unused") ILabelProviderListener listener) {
+    final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
+    final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(s, new ILabelProvider() {
+      @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener listener) {
         //
       }
 
-      @SuppressWarnings("unused") @Override public boolean isLabelProperty(Object element, String property) {
+      @SuppressWarnings("unused") @Override public boolean isLabelProperty(final Object element, final String property) {
         return false;
       }
 
@@ -68,31 +68,31 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         //
       }
 
-      @Override public void addListener(@SuppressWarnings("unused") ILabelProviderListener listener) {
+      @Override public void addListener(@SuppressWarnings("unused") final ILabelProviderListener listener) {
         //
       }
 
-      @Override public String getText(Object element) {
+      @Override public String getText(final Object element) {
         return element == null ? "" : element instanceof SpartanElement ? ((SpartanElement) element).name() : element.toString();
       }
 
-      @Override public Image getImage(@SuppressWarnings("unused") Object __) {
+      @Override public Image getImage(@SuppressWarnings("unused") final Object __) {
         return null;
       }
     }, new ITreeContentProvider() {
-      @Override public boolean hasChildren(Object element) {
+      @Override public boolean hasChildren(final Object element) {
         return element instanceof SpartanCategory && ((SpartanCategory) element).hasChildren();
       }
 
-      @Override public Object getParent(Object element) {
+      @Override public Object getParent(final Object element) {
         return element instanceof SpartanTipper ? ((SpartanTipper) element).parent() : null;
       }
 
-      @Override public Object[] getElements(@SuppressWarnings("unused") Object __) {
+      @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
         return es;
       }
 
-      @Override public Object[] getChildren(Object parentElement) {
+      @Override public Object[] getChildren(final Object parentElement) {
         return parentElement instanceof SpartanCategory ? m.get(parentElement) : null;
       }
     });
@@ -101,10 +101,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setEmptyListMessage("No tippers available...");
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
-    List<SpartanElement> et = new ArrayList<>();
-    for (SpartanCategory c : m.keySet()) {
+    final List<SpartanElement> et = new ArrayList<>();
+    for (final SpartanCategory c : m.keySet()) {
       boolean enabled = true;
-      for (SpartanTipper t : m.get(c))
+      for (final SpartanTipper t : m.get(c))
         if (t.enabled())
           et.add(t);
         else
@@ -122,7 +122,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-10 */
   static class SpartanPreferencesDialog extends CheckedTreeSelectionDialog {
-    public SpartanPreferencesDialog(Shell parent, ILabelProvider labelProvider, ITreeContentProvider contentProvider) {
+    public SpartanPreferencesDialog(final Shell parent, final ILabelProvider labelProvider, final ITreeContentProvider contentProvider) {
       super(parent, labelProvider, contentProvider);
     }
 
@@ -131,40 +131,38 @@ public class ProjectPreferencesHandler extends AbstractHandler {
      * @see
      * org.eclipse.ui.dialogs.CheckedTreeSelectionDialog#createTreeViewer(org.
      * eclipse.swt.widgets.Composite) */
-    @Override protected CheckboxTreeViewer createTreeViewer(Composite parent) {
-      CheckboxTreeViewer $ = super.createTreeViewer(parent);
-      $.addSelectionChangedListener(new ISelectionChangedListener() {
-        @Override public void selectionChanged(SelectionChangedEvent e) {
-          ISelection s = e.getSelection();
-          Object oo = e.getSource();
-          if (s == null || s.isEmpty() || !(s instanceof TreeSelection) || !(oo instanceof ContainerCheckedTreeViewer))
-            return;
-          Control v = ((ContainerCheckedTreeViewer) oo).getControl();
-          if (v == null)
-            return;
-          Object o = ((TreeSelection) s).getFirstElement();
-          if (o instanceof SpartanTipper)
-            tipperClicked((SpartanTipper) o, v);
-        }
+    @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
+      final CheckboxTreeViewer $ = super.createTreeViewer(parent);
+      $.addSelectionChangedListener(e -> {
+        final ISelection s = e.getSelection();
+        final Object oo = e.getSource();
+        if (s == null || s.isEmpty() || !(s instanceof TreeSelection) || !(oo instanceof ContainerCheckedTreeViewer))
+          return;
+        final Control v = ((ContainerCheckedTreeViewer) oo).getControl();
+        if (v == null)
+          return;
+        final Object o = ((TreeSelection) s).getFirstElement();
+        if (o instanceof SpartanTipper)
+          tipperClicked((SpartanTipper) o, v);
       });
       return $;
     }
 
-    void tipperClicked(SpartanTipper t, Control v) {
-      Display d = Display.getCurrent();
+    void tipperClicked(final SpartanTipper t, final Control v) {
+      final Display d = Display.getCurrent();
       if (d == null)
         return;
-      Point p = d.getCursorLocation();
+      final Point p = d.getCursorLocation();
       if (p == null)
         return;
-      ToolTip tt = new ToolTip(getShell(), SWT.BALLOON);
+      final ToolTip tt = new ToolTip(getShell(), SWT.BALLOON);
       tt.setMessage(t.description());
       tt.setLocation(p);
       tt.setAutoHide(false);
       // it is possible to set a delay, see
       // http://stackoverflow.com/questions/1351245/setting-swt-tooltip-delays
       v.addListener(SWT.MouseMove, new Listener() {
-        @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+        @Override public void handleEvent(@SuppressWarnings("unused") final Event __) {
           v.removeListener(SWT.MouseMove, this);
           if (tt.isDisposed())
             return;

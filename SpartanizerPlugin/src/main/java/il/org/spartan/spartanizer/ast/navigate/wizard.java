@@ -119,7 +119,7 @@ public interface wizard {
       }
     }
   };
-  @SuppressWarnings({ "unchecked" }) //
+  @SuppressWarnings("unchecked")
   Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     static final long serialVersionUID = 1L;

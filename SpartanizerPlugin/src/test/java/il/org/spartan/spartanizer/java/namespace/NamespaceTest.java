@@ -41,7 +41,7 @@ class NamespaceFixture {
  * @author Yossi Gil
  * @since 2016-12-15 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public class NamespaceTest extends MetaFixture {
   private final Namespace fixture = Environment.of(reflectedCompilationUnit());
 
