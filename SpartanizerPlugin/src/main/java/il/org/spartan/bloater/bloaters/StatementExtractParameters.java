@@ -244,7 +244,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   // TODO Ori Roth: move class to utility file
-  protected class ASTMatcherSpecific extends ASTMatcher {
+  protected static class ASTMatcherSpecific extends ASTMatcher {
     ASTNode toMatch;
     Consumer<ASTNode> onMatch;
 

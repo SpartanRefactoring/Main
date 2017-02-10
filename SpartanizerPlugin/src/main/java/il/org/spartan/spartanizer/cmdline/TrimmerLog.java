@@ -129,7 +129,7 @@ public enum TrimmerLog {
     try {
       output = new CSVStatistics(outputDir, "Tips");
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+      monitor.infoIOException(¢);
     }
     return null;
   }

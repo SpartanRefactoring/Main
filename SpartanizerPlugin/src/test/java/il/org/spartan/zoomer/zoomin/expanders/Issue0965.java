@@ -18,7 +18,7 @@ public class Issue0965 {
         .staysWithBinding();
   }
 
-  class TestClass extends MetaFixture {
+  static class TestClass extends MetaFixture {
     final List<Integer> lst = new ArrayList<>();
 
     public String check1() {

@@ -77,7 +77,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ .toString()));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {

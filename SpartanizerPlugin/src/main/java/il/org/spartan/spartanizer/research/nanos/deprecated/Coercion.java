@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.deprecated;
-
+import static il.org.spartan.spartanizer.utils.monitor.*;
 import java.io.*;
 import java.nio.file.*;
 
@@ -156,10 +156,14 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static File createFileFromTemplate(final File $) {
     // TODO: Marco update package declaration to match actual package...
     try {
-      Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
+      Files.copy(new File(System.getProperty("user.dir") + 
+          "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template"
+          
+          ).toPath(),
           $.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+           monitor.infoIOException(¢, "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template"
+               );
     }
     return $;
   }

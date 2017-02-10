@@ -15,7 +15,7 @@ public enum If {
     return new If0(¢);
   }
 
-  class If0 {
+  static class If0 {
     final boolean b;
 
     If0(final boolean b) {

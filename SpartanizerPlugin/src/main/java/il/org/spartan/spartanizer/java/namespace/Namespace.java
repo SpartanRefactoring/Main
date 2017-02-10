@@ -337,7 +337,7 @@ public final class Namespace implements Environment {
   }
 
   Namespace spawn(final String childName) {
-    return addChild(new Namespace(Namespace.this, childName));
+    return addChild(new Namespace(this, childName));
   }
 
   @Override public String toString() {
