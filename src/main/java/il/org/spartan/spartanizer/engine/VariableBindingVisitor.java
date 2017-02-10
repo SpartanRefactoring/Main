@@ -45,7 +45,7 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
     return environmentOf.containsKey(¢);
   }
 
-  public final class Binding {
+  public static final class Binding {
     // To be written
   }
 }

@@ -48,7 +48,7 @@ public class CleanerVisitorTest {
     new CleanerVisitor().visit((ImportDeclaration) first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
   }
 
-  private class ASTNodeWrapper {
+  private static class ASTNodeWrapper {
     public final ArrayList<ASTNode> inner;
 
     ASTNodeWrapper() {

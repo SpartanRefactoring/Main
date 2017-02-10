@@ -102,7 +102,7 @@ public class InflateHandler extends AbstractHandler {
   protected static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
-    final Control $ = ¢.getAdapter(org.eclipse.swt.widgets.Control.class);
+    final Control $ = ¢.getAdapter(Control.class);
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 

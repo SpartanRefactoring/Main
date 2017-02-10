@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * {@link EventApplicator}
  * 
  * @author Matteo Orru'
- * @since */
+ * */
 @SuppressWarnings("TooBroadScope")
 final class BatchSpartanizerApplication implements IApplication {
   private static final String folder = "/tmp";

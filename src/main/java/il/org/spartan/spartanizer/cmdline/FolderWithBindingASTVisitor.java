@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Like FolderASTVisitor but with binding. Needs to be run as an Application,
@@ -29,8 +30,10 @@ public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor imple
       parser.setResolveBindings(true);
       parser.setSource(u);
       collect(az.compilationUnit(parser.createAST(null)));
-    } catch (JavaModelException | IOException ¢) {
+    } catch (JavaModelException ¢) {
       ¢.printStackTrace();
+    } catch (IOException ¢) {
+      monitor.infoIOException(¢, f + "");
     }
   }
 

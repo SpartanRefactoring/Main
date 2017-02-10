@@ -68,7 +68,7 @@ enum CollectMetrics {
   }
 
   private static void go(final String... where) {
-    new FilesGenerator(".java").from(where).forEach(λ -> go(λ));
+    new FilesGenerator(".java").from(where).forEach(CollectMetrics::go);
   }
 
   private static CSVStatistics init(final String $, final String property) {

@@ -31,7 +31,7 @@ public final class Issue0221 {
         .stays();
   }
 
-  class D {
+  static class D {
     int i1, i2, i3 = 2, i4, i5 = 3;
     boolean b1, b2, b3 = true, b4;
     boolean b5;

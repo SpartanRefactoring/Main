@@ -442,7 +442,7 @@ public interface iz {
   }
 
   static boolean emptyStringLiteral(final StringLiteral ¢) {
-    return ¢ != null && ¢.getLiteralValue().length() == 0;
+    return ¢ != null && ¢.getLiteralValue().isEmpty();
   }
 
   static boolean enhancedFor(final ASTNode ¢) {

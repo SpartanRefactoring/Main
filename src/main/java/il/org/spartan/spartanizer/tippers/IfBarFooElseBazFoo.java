@@ -88,7 +88,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     return super.tip(s, exclude);
   }
 
-  private class DefinitionsCollector extends ASTVisitor {
+  private static class DefinitionsCollector extends ASTVisitor {
     private boolean allDefined = true;
     private final Statement[] statements;
 

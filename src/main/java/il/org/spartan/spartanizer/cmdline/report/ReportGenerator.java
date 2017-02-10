@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Generator for reports
  * @author Matteo Orru'
@@ -39,10 +40,10 @@ public class ReportGenerator implements ConfigurableReport {
   public enum Util {
     ;
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
-          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+      return as.array(m("length" + id, λ -> (λ .toString()).length()), m("essence" + id, λ -> Essence.of(λ .toString()).length()),
+          m("tokens" + id, λ -> metrics.tokens(λ .toString())), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
           m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-          m("tide" + id, λ -> clean(λ + "").length()));//
+          m("tide" + id, λ -> clean(λ .toString()).length()));//
     }
 
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
@@ -173,7 +174,7 @@ public class ReportGenerator implements ConfigurableReport {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+      monitor.infoIOException(¢, id);
     }
   }
 
@@ -288,7 +289,7 @@ public class ReportGenerator implements ConfigurableReport {
     ReportGenerator.report(reportName).nl();
   }
 
-  public class LineWriter implements Consumer<Object> {
+  public static class LineWriter implements Consumer<Object> {
     @Override public void accept(@SuppressWarnings("unused") final Object __) {
       // erased
     }

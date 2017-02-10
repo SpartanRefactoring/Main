@@ -255,9 +255,9 @@ final class BatchSpartanizer extends FolderASTVisitor {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
-      new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> collect(λ));
+      new FilesGenerator(".java").from(presentSourcePath).forEach(this::collect);
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+      monitor.infoIOException(¢, beforeFileName + "|" + afterFileName);
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();

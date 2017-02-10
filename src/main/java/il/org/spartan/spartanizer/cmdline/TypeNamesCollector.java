@@ -67,6 +67,6 @@ public enum TypeNamesCollector {
   }
 
   private static void collect(final String... where) {
-    new FilesGenerator(".java").from(where).forEach(λ -> collect(λ));
+    new FilesGenerator(".java").from(where).forEach(TypeNamesCollector::collect);
   }
 }
