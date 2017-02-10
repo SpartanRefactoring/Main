@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.Map.*;
 import java.util.stream.*;
@@ -53,7 +53,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(d.getType()));
-    $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
@@ -65,7 +65,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(x.getType()));
-    $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
@@ -73,7 +73,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(s.getType()));
-    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 

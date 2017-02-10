@@ -10,7 +10,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -23,7 +22,7 @@ import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
-
+import static java.util.stream.Collectors.*;
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @author Dor Maayan
@@ -596,7 +595,7 @@ public interface type {
 
       Uncertain(final String description, final Primitive... ps) {
         this.description = description;
-        as.list(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(λ -> !options.contains(λ)).collect(Collectors.toList())));
+        as.list(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(λ -> !options.contains(λ)).collect(toList())));
       }
 
       @Override public boolean canB(final Certain ¢) {

@@ -54,7 +54,7 @@ public class Issue0873 {
     assert new ParameterObject<>(new MyType(2)).hasDefault();
   }
 
-  class MyType {
+  static class MyType {
     final int i;
 
     MyType(final int val) {

@@ -67,8 +67,7 @@ public enum LogToTest {
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
-      System.out.println("IO problem!");
+      monitor.infoIOException(¢);
       return;
     }
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");

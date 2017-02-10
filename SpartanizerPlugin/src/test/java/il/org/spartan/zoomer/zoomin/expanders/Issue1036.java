@@ -20,7 +20,7 @@ public class Issue1036 {
             "check1");
   }
 
-  class TestClass extends MetaFixture {
+  static class TestClass extends MetaFixture {
     final List<Integer> children1 = new ArrayList<>();
     List<Integer> children2 = new ArrayList<>();
     String $ = "";
