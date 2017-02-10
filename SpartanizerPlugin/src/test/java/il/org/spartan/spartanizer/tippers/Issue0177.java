@@ -24,7 +24,7 @@ public class Issue0177 {
         azzert.that(in.a, is(1));
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -87,7 +87,7 @@ public class Issue0177 {
         azzert.that(in.a, is(1));
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -128,7 +128,7 @@ public class Issue0177 {
         azzert.that(in.a, is(1));
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -198,7 +198,7 @@ public class Issue0177 {
         azzert.aye(in.a == 1);
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -227,7 +227,7 @@ public class Issue0177 {
         azzert.that(in.a, is(1));
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -297,7 +297,7 @@ public class Issue0177 {
         azzert.that(in.a, is(1));
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {
@@ -325,7 +325,7 @@ public class Issue0177 {
         azzert.that(in.a, is(1));
       }
 
-      static class Inner {
+      class Inner {
         int a;
 
         Inner(final int i) {

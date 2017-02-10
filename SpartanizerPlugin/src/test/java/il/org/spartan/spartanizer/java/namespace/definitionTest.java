@@ -507,8 +507,12 @@ class ZZZ___Fixture_ModelClass {
           q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
-      } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
+      } catch (@catch¢ final IOException ¢) {
         monitor.infoIOException(¢);
+      } catch (final CloneNotSupportedException ¢) {
+        // TODO Yossi: this exception was previously caught on the above catch
+        // clause. Check if OK --or
+        monitor.log(¢);
       }
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
       q(a * a);
