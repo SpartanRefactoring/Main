@@ -44,7 +44,6 @@ public abstract class yieldDescendants<N extends ASTNode> {
 
     @Override public List<N> from(final ASTNode ¢) {
       final List<N> $ = inclusiveFrom(¢);
-      if ($.contains(¢))
         $.remove(¢);
       return $;
     }
