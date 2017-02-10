@@ -10,6 +10,7 @@ import javax.xml.transform.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -23,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-02-01 */
 public class XMLSpartan {
   private static final String CURRENT_VERSION = "1";
-  private static final String FILE_NAME = "spartan.xml";
+  private static final String FILE_NAME = ".spartan";
   private static final String TIPPER = "tipper";
   private static final String CATEGORY = "category";
   private static final String ENABLED = "enabled";
@@ -62,6 +63,28 @@ public class XMLSpartan {
       if (includeEmptyCategories || !ts.isEmpty())
         $.put(se, ts.toArray(new SpartanTipper[ts.size()]));
     }
+    return $;
+  }
+
+  @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
+    final Set<Class<Tipper<? extends ASTNode>>> $ = new HashSet<>();
+    for (final Tipper<? extends ASTNode> ¢ : Toolbox.freshCopyOfAllTippers().getAllTippers())
+      $.add((Class<Tipper<? extends ASTNode>>) ¢.getClass());
+    if (p == null)
+      return $;
+    Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p, false);
+    if (m == null)
+      return $;
+    Set<String> ets = new HashSet<>();
+    for (SpartanTipper[] ts : m.values())
+      for (SpartanTipper ¢ : ts)
+        if (¢.enabled())
+          ets.add(¢.name());
+    List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
+    l.addAll($);
+    for (Class<Tipper<? extends ASTNode>> ¢ : l)
+      if (!ets.contains(¢.getSimpleName()))
+        $.remove(¢);
     return $;
   }
 
