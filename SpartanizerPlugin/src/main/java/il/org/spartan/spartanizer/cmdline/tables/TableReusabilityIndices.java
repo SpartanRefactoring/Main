@@ -36,7 +36,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
-    final int $[] = new int[m.size()];
+      final int[] $ = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
@@ -51,7 +51,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   private int maxArity;
   private final Map<String, Map<String, Integer>> usage = new LinkedHashMap<>();
-  private final Set<String> defined = new LinkedHashSet<>();
+  private final Collection<String> defined = new LinkedHashSet<>();
 
   public Map<String, Integer> addIfNecessary(final String category, final String key) {
     usage.putIfAbsent(category, new LinkedHashMap<>());

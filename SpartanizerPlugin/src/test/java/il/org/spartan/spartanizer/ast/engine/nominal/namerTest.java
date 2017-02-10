@@ -33,12 +33,6 @@ public final class namerTest {
     azzert.that(namer.components("with_bTable"), equalTo(new String[] { "with", "b", "Table" }));
   }
 
-  @Test public void test2() {
-    final String[] components = namer.components("Table_NanosByCategories");
-    azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
-    azzert.that(separate.these(lisp.rest(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
-  }
-
   @Test public void listOfInts() {
     azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
   }
@@ -77,5 +71,11 @@ public final class namerTest {
 
   @Test public void shortNameQualifiedType() {
     azzert.that(namer.shorten(t("org.eclipse.jdt.core.dom.InfixExpression __;")), equalTo("x"));
+  }
+
+  @Test public void test2() {
+    final String[] components = namer.components("Table_NanosByCategories");
+    azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
+    azzert.that(separate.these(lisp.rest(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
   }
 }

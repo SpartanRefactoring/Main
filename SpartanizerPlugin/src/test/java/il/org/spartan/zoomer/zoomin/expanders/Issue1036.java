@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2016-01-12 */
 @Ignore
+@SuppressWarnings("static-method")
 public class Issue1036 {
   @Test public void test0() {
     bloatingOf(new TestClass()) //
@@ -20,7 +21,7 @@ public class Issue1036 {
             "check1");
   }
 
-  class TestClass extends MetaFixture {
+  static class TestClass extends MetaFixture {
     final List<Integer> children1 = new ArrayList<>();
     List<Integer> children2 = new ArrayList<>();
     String $ = "";

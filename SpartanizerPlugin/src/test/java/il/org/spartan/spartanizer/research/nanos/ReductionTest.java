@@ -13,28 +13,28 @@ public class ReductionTest {
   @Test public void a() {
     trimmingOf("void foo(){ foo(a);}")//
         .using(MethodInvocation.class, new Reduction())//
-        .gives("void foo(){self(a);}")//
+        .gives("void foo(){reduce¢(a);}")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("void foo(){ return foo(a) + foo(a,b);}")//
         .using(MethodInvocation.class, new Reduction())//
-        .gives("void foo(){ return self(a) + self(a,b);}")//
+        .gives("void foo(){ return reduce¢(a) + reduce¢(a,b);}")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("void foo(){ return foo(a) + foo(a,b) == 7 ? foo() : bar();}")//
         .using(MethodInvocation.class, new Reduction())//
-        .gives("void foo(){ return self(a) + self(a,b) == 7 ? foo() : bar();}")//
+        .gives("void foo(){ return reduce¢(a) + reduce¢(a,b) == 7 ? foo() : bar();}")//
         .stays();
   }
 
   @Test public void d() {
     trimmingOf("void foo(int a){ return foo(a) + foo(a,b) == 7 ? foo() : barar();}")//
         .using(MethodInvocation.class, new Reduction())//
-        .gives("void foo(int a){ return foo(a) + self(a,b) == 7 ? self() : barar();}")//
+        .gives("void foo(int a){ return foo(a) + reduce¢(a,b) == 7 ? reduce¢() : barar();}")//
         .stays();
   }
 }

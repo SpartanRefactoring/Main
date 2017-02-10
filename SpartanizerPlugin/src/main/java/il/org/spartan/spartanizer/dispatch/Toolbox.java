@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
@@ -11,7 +11,6 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -214,7 +213,6 @@ public class Toolbox {
             new MethodInvocationValueOfBooleanConstant(), //
             new MethodInvocationToStringToEmptyStringAddition(), //
             new StringFromStringBuilder(), //
-            new Reduction(), //
             null)//
         .add(TryStatement.class, //
             new TryBodyEmptyLeaveFinallyIfExists(), //
@@ -312,8 +310,6 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new FragmentNoInitializerRemoveUnused(), //
             null) //
-    //
-    //
     ;
   }
 
@@ -345,7 +341,7 @@ public class Toolbox {
     }
   }
 
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final Collection<Tipper<?>> ts) {
     return ts.stream().filter(λ -> ((Tipper<N>) λ).canTip(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
@@ -392,8 +388,8 @@ public class Toolbox {
     return this;
   }
 
-  public List<Tipper<? extends ASTNode>> getAllTippers() {
-    final List<Tipper<? extends ASTNode>> $ = new ArrayList<>();
+  public Collection<Tipper<? extends ASTNode>> getAllTippers() {
+    final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;
@@ -415,10 +411,12 @@ public class Toolbox {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
-  @SuppressWarnings("boxing") public int hooksCount() {
-    return Stream.of(implementation).map(λ -> as.bit(λ != null && !λ.isEmpty())).reduce((x, y) -> x + y).get();
+  public static long hooksCount() {
+    return defaultTipperLists().count(); 
   }
-
+public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
+    return Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
+  }
   public int tippersCount() {
     int $ = 0;
     for (final List<?> ¢ : implementation)
@@ -435,7 +433,7 @@ public class Toolbox {
     return $;
   }
 
-  <N extends ASTNode> List<Tipper<? extends ASTNode>> get(final N ¢) {
+  <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(final N ¢) {
     return get(¢.getNodeType());
   }
 
@@ -447,11 +445,11 @@ public class Toolbox {
     }
   }
 
-  public static <T extends Tipper<? extends ASTNode>> String name(T ¢) {
+  public static <T extends Tipper<? extends ASTNode>> String name(final T ¢) {
     return ¢.getClass().getSimpleName();
   }
 
-  public static String name(Class<? extends Tipper<?>> ¢) {
+  public static String name(final Class<? extends Tipper<?>> ¢) {
     return ¢.getSimpleName();
   }
 
@@ -462,7 +460,7 @@ public class Toolbox {
     final Toolbox t = freshCopyOfAllTippers();
     assert t.implementation != null;
     Stream.of(t.implementation).filter(Objects::nonNull)
-        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(Collectors.toList())));
+        .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::myName).collect(toList())));
     return $;
   }
 

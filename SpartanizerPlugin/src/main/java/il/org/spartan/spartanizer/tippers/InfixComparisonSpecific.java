@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+import java.util.Comparator;
+
 /** reorder comparisons so that the specific value is placed on the right.
  * Specific value means a literal, or any of the two keywords <code>
  * <b>this</b>
@@ -20,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  private static final specificity specifity = new specificity();
+  private static final Comparator<Expression> specifity = new specificity();
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";

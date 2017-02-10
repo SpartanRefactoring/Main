@@ -156,11 +156,11 @@ public final class Inliner {
           .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
-    private List<SimpleName> unsafeUses(final ASTNode... ¢) {
+    private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    private List<SimpleName> uses(final ASTNode... ¢) {
+    private Collection<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

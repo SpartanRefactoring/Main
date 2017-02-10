@@ -52,7 +52,7 @@ public enum TESTUtils {
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
-  public static void assertSimilar(final String expected, final Document actual) {
+  public static void assertSimilar(final String expected, final IDocument actual) {
     assertSimilar(expected, actual.get());
   }
 

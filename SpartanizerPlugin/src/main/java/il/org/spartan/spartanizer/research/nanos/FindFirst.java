@@ -41,7 +41,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
           "returnFirstIfAny($X1).matches($N -> $X2).map($N -> $X3);", description));
     }
   };
-  private static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
+  private static final Collection<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(new HoldsForAll());

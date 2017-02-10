@@ -22,6 +22,12 @@ public class Issue1067 {
         .stays();
   }
 
+  static class Issue0364 {
+    @Test public void notTerminating() {
+      trimmingOf("void f() {\n  String[] x = {\"\"};  g(x);  h();}").gives("void f() {\n  g(new String[] {\"\"});  h();}");
+    }
+  }
+
   static class Issue0856 {
     @Test public void e() {
       trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
@@ -32,12 +38,6 @@ public class Issue1067 {
                       "return 0;" //
               )//
               .stays();
-    }
-  }
-
-  static class Issue0364 {
-    @Test public void notTerminating() {
-      trimmingOf("void f() {\n  String[] x = {\"\"};  g(x);  h();}").gives("void f() {\n  g(new String[] {\"\"});  h();}");
     }
   }
 

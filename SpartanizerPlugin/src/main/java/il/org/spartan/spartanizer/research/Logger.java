@@ -1,8 +1,7 @@
 package il.org.spartan.spartanizer.research;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -22,7 +21,7 @@ public class Logger {
   public static int numMethods;
   private static String currentFile;
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
-  private static final List<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
+  private static final Collection<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
    * invoked.
@@ -66,7 +65,7 @@ public class Logger {
   public static void logType(final AbstractTypeDeclaration d) {
     currentType.push(d);
     final List<MethodDeclaration> ms = step.methods(d).stream().filter(λ -> enumerate.statements(λ) != 0 && !λ.isConstructor())
-        .collect(Collectors.toList());
+        .collect(toList());
     ms.forEach(Logger::logMethodInfo);
     numMethods += ms.size();
   }

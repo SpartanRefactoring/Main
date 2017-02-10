@@ -11,18 +11,6 @@ import il.org.spartan.*;
  * @since 27-11-2016 */
 @SuppressWarnings({ "static-method" })
 public class Issue0873 {
-  class MyType {
-    final int i;
-
-    MyType(final int val) {
-      i = val;
-    }
-
-    public int getVal() {
-      return i;
-    }
-  }
-
   @Test public void test0() {
     azzert.that(new ParameterObject<>(new MyType(4)).objectValue().getVal(), is(4));
   }
@@ -64,5 +52,17 @@ public class Issue0873 {
 
   @Test public void test8() {
     assert new ParameterObject<>(new MyType(2)).hasDefault();
+  }
+
+  static class MyType {
+    final int i;
+
+    MyType(final int val) {
+      i = val;
+    }
+
+    public int getVal() {
+      return i;
+    }
   }
 }

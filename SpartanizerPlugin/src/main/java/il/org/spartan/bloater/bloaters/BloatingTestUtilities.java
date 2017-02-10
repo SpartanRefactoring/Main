@@ -48,7 +48,7 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
             unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
@@ -62,7 +62,7 @@ public enum BloatingTestUtilities {
         assertSimilar($1, peeled1);
         return new Operand($1);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        ¢.printStackTrace();
+       monitor.logProbableBug(this, ¢); 
       }
       return null;
     }
@@ -75,7 +75,7 @@ public enum BloatingTestUtilities {
       SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
         final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
         if (wrap.equals(unpeeled))
@@ -102,7 +102,7 @@ public enum BloatingTestUtilities {
       MethodDeclaration m = getMethod(u, f);
       SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
@@ -115,7 +115,7 @@ public enum BloatingTestUtilities {
         p.setResolveBindings(true);
         return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(this, ¢); 
       }
       return null;
     }
@@ -165,7 +165,7 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
@@ -174,7 +174,7 @@ public enum BloatingTestUtilities {
         if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
           assertSimilar(get(), peeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(this, ¢); 
       }
     }
 
@@ -184,7 +184,7 @@ public enum BloatingTestUtilities {
       final ASTRewrite r = ASTRewrite.create(u.getAST());
       SingleFlater.in(u).from(new InflaterProvider()).go(r, textEditGroup);
       try {
-        final Document doc = new Document(wrap);
+        final IDocument doc = new Document(wrap);
         r.rewriteAST(doc, null).apply(doc);
         final String unpeeled = doc.get();
         if (wrap.equals(unpeeled))
@@ -192,7 +192,7 @@ public enum BloatingTestUtilities {
         if (!unpeeled.equals(get()) && unpeeled.equals(get()))
           assertSimilar(get(), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(this, ¢);
       }
     }
 

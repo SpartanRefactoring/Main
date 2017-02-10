@@ -43,7 +43,7 @@ public enum flatten {
         : flatten.into(o, copy.adjust(o, hop.operands(inner)), $);
   }
 
-  private static List<Expression> into(final Operator o, final List<Expression> xs, final List<Expression> $) {
+  private static List<Expression> into(final Operator o, final Iterable<Expression> xs, final List<Expression> $) {
     xs.forEach(λ -> into(o, λ, $));
     return $;
   }

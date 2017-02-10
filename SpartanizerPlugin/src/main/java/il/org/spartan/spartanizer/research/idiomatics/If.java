@@ -5,6 +5,7 @@ import java.util.function.*;
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 6, 2016 */
+@SuppressWarnings("static-method")
 public enum If {
   ;
   public <N> If0 Null(final N ¢) {
@@ -15,7 +16,7 @@ public enum If {
     return new If0(¢);
   }
 
-  class If0 {
+  static class If0 {
     final boolean b;
 
     If0(final boolean b) {

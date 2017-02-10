@@ -31,6 +31,7 @@ import il.org.spartan.utils.*;
  * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
+@SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
   List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
@@ -441,7 +442,7 @@ public interface iz {
   }
 
   static boolean emptyStringLiteral(final StringLiteral ¢) {
-    return ¢ != null && ¢.getLiteralValue().length() == 0;
+    return ¢ != null && ¢.getLiteralValue().isEmpty();
   }
 
   static boolean enhancedFor(final ASTNode ¢) {
@@ -1354,9 +1355,16 @@ public interface iz {
     return false;
   }
 
-  /** @param ¢ is public static final
-   * @return */
+  /** @param ¢ JD
+   * @return is public static final */
   static boolean constant(final FieldDeclaration ¢) {
     return public¢(¢) && static¢(¢) && final¢(¢);
+  }
+
+  /** @param ¢ JD
+   * @return is boxed type */
+  static boolean boxedType(final Type ¢) {
+    return ¢ instanceof SimpleType && Arrays.asList("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
+        .contains(step.identifier(step.name((SimpleType) ¢)));
   }
 }

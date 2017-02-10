@@ -17,6 +17,11 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 final class BindingFun implements IApplication {
+  /**
+   * 
+   */
+  private static final String C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS = "C:\\Users\\sorimar\\workspace\\testAddComments";
+
   private static void iterateMethodInvocations(final CompilationUnit u) {
     u.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodInvocation ¢) {
@@ -57,20 +62,20 @@ final class BindingFun implements IApplication {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
-    for (final File f : new FilesGenerator(".java", ".JAVA").from("C:\\Users\\sorimar\\workspace\\testAddComments")) {
-      ICompilationUnit u;
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
       try {
-        u = openCompilationUnit(f);
+        final ICompilationUnit u = openCompilationUnit(f);
         final ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setResolveBindings(true);
         parser.setSource(u);
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
         ___.______unused();
         iterateMethodInvocations(cu);
-      } catch (JavaModelException | IOException ¢) {
+      } catch (IOException ¢) {
+        monitor.infoIOException(¢, f + "");
+      } catch (JavaModelException ¢) {
         ¢.printStackTrace();
       }
-    }
     return IApplication.EXIT_OK;
   }
 

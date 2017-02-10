@@ -20,7 +20,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
     implements TipperCategory.Idiomatic {
   private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
   private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";
-  private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
+  private static final Collection<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
 
   public ReplaceForWithRange() {
     if (!tippers.isEmpty())

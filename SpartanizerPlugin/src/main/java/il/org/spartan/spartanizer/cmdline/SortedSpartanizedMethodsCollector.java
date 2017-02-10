@@ -79,7 +79,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     writeFile(new File(makeFile("after.java")),
         methods.values().stream().map(li -> li.stream().map(λ -> format.code(λ.after + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(
-        li -> li.stream().map(λ -> λ.after).filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y))
+        li -> li.stream().map(λ -> λ.after).filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ .toString())).reduce("", (x, y) -> x + y))
         .reduce("", (x, y) -> x + y));
     summarizeSortedMethodStatistics();
     summarizeNPStatistics();
@@ -132,19 +132,19 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     file.renameToCSV(outputFolder + "/methodStatistics");
   }
 
-  private static double fractionOfMethodsTouched(final List<MethodRecord> rs) {
+  private static double fractionOfMethodsTouched(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final List<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final Collection<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 
-  private static double fractionOfMethods(final int methodsTotal, final List<MethodRecord> rs) {
+  private static double fractionOfMethods(final int methodsTotal, final Collection<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 

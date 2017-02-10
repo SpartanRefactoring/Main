@@ -53,11 +53,6 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   // TODO: Yossi Gil
-  @Ignore @Test public void fullSize() {
-    azzert.that(e0.fullSize(), is(0));
-  }
-
-  // TODO: Yossi Gil
   @Ignore @Test public void defaultSize() {
     azzert.that(e0.size(), is(0));
     azzert.that(e0.fullSize(), is(0));
@@ -94,6 +89,11 @@ public final class EnvironmentTestSpawningAndManualAddition {
   @Test public void emptyTestNestEmptyFlatNot() {
     ee1.put("Dan", new Binding());
     azzert.that(ee1.empty(), is(false));
+  }
+
+  // TODO: Yossi Gil
+  @Ignore @Test public void fullSize() {
+    azzert.that(e0.fullSize(), is(0));
   }
 
   @Test public void get() {

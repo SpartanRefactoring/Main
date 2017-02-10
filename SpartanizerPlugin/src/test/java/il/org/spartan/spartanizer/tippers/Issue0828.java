@@ -61,6 +61,5 @@ public class Issue0828 {
     assert forTrueConditionRemove.replacement(simpleFor) != null;
     assert forTrueConditionRemove.replacement(falseFor) != null;
     assert forTrueConditionRemove.replacement(obviouseTrueStatement) != null;
-    assert ((ForStatement) forTrueConditionRemove.replacement(trueFor)).getExpression() != null;
   }
 }

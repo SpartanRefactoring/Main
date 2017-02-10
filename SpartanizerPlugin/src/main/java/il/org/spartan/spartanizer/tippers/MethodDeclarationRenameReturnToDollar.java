@@ -85,7 +85,7 @@ abstract class AbstractRenamePolicy {
 }
 
 class Aggressive extends AbstractRenamePolicy {
-  private static SimpleName bestCandidate(final List<SimpleName> ns, final List<ReturnStatement> ss) {
+  private static SimpleName bestCandidate(final Collection<SimpleName> ns, final List<ReturnStatement> ss) {
     final int bestScore = bestScore(ns, ss);
     if (bestScore > 0)
       for (final SimpleName $ : ns)
@@ -94,18 +94,18 @@ class Aggressive extends AbstractRenamePolicy {
     return null;
   }
 
-  private static int bestScore(final List<SimpleName> ns, final List<ReturnStatement> ss) {
+  private static int bestScore(final Iterable<SimpleName> ns, final Collection<ReturnStatement> ss) {
     int $ = 0;
     for (final SimpleName ¢ : ns)
       $ = Math.max($, score(¢, ss));
     return $;
   }
 
-  private static boolean noRivals(final SimpleName candidate, final List<SimpleName> ns, final List<ReturnStatement> ss) {
+  private static boolean noRivals(final SimpleName candidate, final Collection<SimpleName> ns, final Collection<ReturnStatement> ss) {
     return ns.stream().allMatch(λ -> λ == candidate || score(λ, ss) < score(candidate, ss));
   }
 
-  @SuppressWarnings("boxing") private static int score(final SimpleName n, final List<ReturnStatement> ss) {
+  @SuppressWarnings("boxing") private static int score(final SimpleName n, final Collection<ReturnStatement> ss) {
     return ss.stream().map(λ -> collect.BOTH_LEXICAL.of(n).in(λ).size()).reduce((x, y) -> x + y).get();
   }
 

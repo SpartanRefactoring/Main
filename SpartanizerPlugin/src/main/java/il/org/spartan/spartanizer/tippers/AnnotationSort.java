@@ -23,22 +23,22 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     implements TipperCategory.Sorting {
-  private static final HashSet<String> rankTable[] = as.array(//
-      new HashSet<>(as.list("Deprecated")), //
-      new HashSet<>(as.list("Override")), //
-      new HashSet<>(as.list("Documented", "FunctionalInterface", "Inherited", "Retention", "Repeatable", "SafeVarargs", "Target")),
-      new HashSet<>(as.list("$USER_DEFINED_ANNOTATION$")),
-      new HashSet<>(as.list("Action", "Addressing", "BindingType", "ConstructorProperties", "DescriptorKey", "FaultAction", "Generated",
-          "HandlerChain", "InitParam", "MTOM", "MXBean", "Oneway", "PostConstruct", "PreDestroy", "RequestWrapper", "Resource", "Resources",
-          "RespectBinding", "ResponseWrapper", "ServiceMode", "SOAPBinding", "SOAPMessageHandler", "SOAPMessageHandlers", "SupportedAnnotationTypes",
-          "SupportedOptions", "SupportedSourceVersion", "Transient", "WebEndpoint", "WebFault", "WebMethod", "WebParam", "WebResult", "WebService",
-          "WebServiceClient", "WebServiceFeatureAnnotation", "WebServiceProvider", "WebServiceRef", "WebServiceRefs", "XmlAccessorOrder",
-          "XmlAccessorType", "XmlAnyAttribute", "XmlAnyElement", "XmlAttachmentRef", "XmlAttribute", "XmlElement", "XmlElementDecl", "XmlElementRef",
-          "XmlElementRefs", "XmlElements", "XmlElementWrapper", "XmlEnum", "XmlEnumValue", "XmlID", "XmlIDREF", "XmlInlineBinaryData",
-          "XmlJavaTypeAdapter", "XmlJavaTypeAdapters", "XmlList", "XmlMimeType", "XmlMixed", "XmlNs", "XmlRegistry", "XmlRootElement", "XmlSchema",
-          "XmlSchemaType", "XmlSchemaTypes", "XmlSeeAlso", "XmlTransient", "XmlType", "XmlValue")),
-      new HashSet<>(as.list("SuppressWarnings")), //
-      new HashSet<>(as.list("NonNull", "Nullable")));
+    private static final HashSet<String>[] rankTable = as.array(//
+            new HashSet<>(as.list("Deprecated")), //
+            new HashSet<>(as.list("Override")), //
+            new HashSet<>(as.list("Documented", "FunctionalInterface", "Inherited", "Retention", "Repeatable", "SafeVarargs", "Target")),
+            new HashSet<>(as.list("$USER_DEFINED_ANNOTATION$")),
+            new HashSet<>(as.list("Action", "Addressing", "BindingType", "ConstructorProperties", "DescriptorKey", "FaultAction", "Generated",
+                    "HandlerChain", "InitParam", "MTOM", "MXBean", "Oneway", "PostConstruct", "PreDestroy", "RequestWrapper", "Resource", "Resources",
+                    "RespectBinding", "ResponseWrapper", "ServiceMode", "SOAPBinding", "SOAPMessageHandler", "SOAPMessageHandlers", "SupportedAnnotationTypes",
+                    "SupportedOptions", "SupportedSourceVersion", "Transient", "WebEndpoint", "WebFault", "WebMethod", "WebParam", "WebResult", "WebService",
+                    "WebServiceClient", "WebServiceFeatureAnnotation", "WebServiceProvider", "WebServiceRef", "WebServiceRefs", "XmlAccessorOrder",
+                    "XmlAccessorType", "XmlAnyAttribute", "XmlAnyElement", "XmlAttachmentRef", "XmlAttribute", "XmlElement", "XmlElementDecl", "XmlElementRef",
+                    "XmlElementRefs", "XmlElements", "XmlElementWrapper", "XmlEnum", "XmlEnumValue", "XmlID", "XmlIDREF", "XmlInlineBinaryData",
+                    "XmlJavaTypeAdapter", "XmlJavaTypeAdapters", "XmlList", "XmlMimeType", "XmlMixed", "XmlNs", "XmlRegistry", "XmlRootElement", "XmlSchema",
+                    "XmlSchemaType", "XmlSchemaTypes", "XmlSeeAlso", "XmlTransient", "XmlType", "XmlValue")),
+            new HashSet<>(as.list("SuppressWarnings")), //
+            new HashSet<>(as.list("NonNull", "Nullable")));
 
   private static int rankAnnotation(final IExtendedModifier ¢) {
     return rankAnnotation(identifier(typeName(az.annotation(¢))));
@@ -62,7 +62,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
 
-  private static List<? extends IExtendedModifier> sort(final List<? extends IExtendedModifier> ¢) {
+  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(toList());
   }
 

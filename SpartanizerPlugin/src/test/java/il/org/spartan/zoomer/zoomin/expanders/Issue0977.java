@@ -11,13 +11,6 @@ import il.org.spartan.bloater.bloaters.*;
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
 public class Issue0977 {
-  @Test public void simpleSequencers() {
-    bloatingOf("switch (x){case 1:f(1);case 2:f(2);break;case 3:f(3);case 4:" + " throw new Exception();default:}")
-        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:" + " f(3);case 4:throw new Exception();default:}")
-        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:" + " f(3);throw new Exception();case 4:throw new Exception();default:}")
-        .stays();
-  }
-
   @Test public void complexMerging() {
     bloatingOf("switch (x){case 1:f(1);case 2:f(2);default:f(3);throw new Exception();}")
         .gives("switch (x){case 1:f(1);f(2);f(3);throw new Exception();case 2:f(2);" + "default:f(3);throw new Exception();}")
@@ -43,5 +36,12 @@ public class Issue0977 {
     bloatingOf("switch (a()){case 1:if (!parameters((MethodDeclaration) $).contains(¢)){return Kind.method;} else{"
         + " return Kind.parameter;} case 2:e();}")//
             .stays();
+  }
+
+  @Test public void simpleSequencers() {
+    bloatingOf("switch (x){case 1:f(1);case 2:f(2);break;case 3:f(3);case 4:" + " throw new Exception();default:}")
+        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:" + " f(3);case 4:throw new Exception();default:}")
+        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:" + " f(3);throw new Exception();case 4:throw new Exception();default:}")
+        .stays();
   }
 }

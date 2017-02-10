@@ -1,10 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -17,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Replace {@code X-0} by {@code X} and {@code 0-X} by <code>-X<code>
+/** Replace {@code X-0} by {@code X} and {@code 0-X} by {@code -X}
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @author Dor Ma'ayan
@@ -28,8 +27,8 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return cons(make.minus(first(prune)), chop(prune));
   }
 
-  private static List<Expression> prune(final List<Expression> ¢) {
-    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
+  private static List<Expression> prune(final Collection<Expression> ¢) {
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
     return $.size() != ¢.size() ? $ : null;
   }
 

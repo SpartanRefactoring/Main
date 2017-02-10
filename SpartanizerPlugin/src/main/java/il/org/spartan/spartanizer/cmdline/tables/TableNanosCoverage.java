@@ -73,7 +73,7 @@ public class TableNanosCoverage extends FolderASTVisitor {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ .toString()));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -107,11 +107,11 @@ public class TableNanosCoverage extends FolderASTVisitor {
     }
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
     return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
   }
 

@@ -21,7 +21,7 @@ public class ParseASTTest {
     assert u != null;
     u.accept(new ASTVisitor() {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        return extendedModifiers(d).stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test") && (λ + "").contains("@Test"));
+        return extendedModifiers(d).stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ .toString()).contains("@Test"));
       }
 
       /* (non-Javadoc)
@@ -117,6 +117,10 @@ public class ParseASTTest {
     });
   }
 
+  static void print(final Object ¢) {
+    ___.______unused(¢);
+  }
+
   @Test @SuppressWarnings("static-method") public void testStepMethod_01() {
     makeAST.COMPILATION_UNIT.from(
         "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
@@ -133,9 +137,5 @@ public class ParseASTTest {
             return super.visit($);
           }
         });
-  }
-
-  static void print(final Object ¢) {
-    ___.______unused(¢);
   }
 }

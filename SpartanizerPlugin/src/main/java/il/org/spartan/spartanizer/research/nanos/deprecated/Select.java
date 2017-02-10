@@ -18,10 +18,10 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($N3);", //
-          "$N2.addAll($X1.stream().filter($N1 -> $X2).collect(Collectors.toList()));", //
+          "$N2.addAll($X1.stream().filter($N1 -> $X2).collect(toList()));", //
           "Go Fluent: filter pattern"));
       add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($X3);", //
-          "$N2.addAll($X1.stream().filter($N1 -> $X2).map($N1 -> $X3).collect(Collectors.toList()));", //
+          "$N2.addAll($X1.stream().filter($N1 -> $X2).map($N1 -> $X3).collect(toList()));", //
           "Go Fluent: filter pattern"));
     }
   };

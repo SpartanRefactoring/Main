@@ -43,7 +43,7 @@ public interface NanoPatternUtil {
 
   UserDefinedTipper<Expression> nullComparison = patternTipper("$X == null", "", "");
   UserDefinedTipper<Expression> nullComparisonOr = patternTipper("$X1 == null || $X2", "", "");
-  List<UserDefinedTipper<Statement>> defaultReturns = new ArrayList<UserDefinedTipper<Statement>>() {
+  Collection<UserDefinedTipper<Statement>> defaultReturns = new ArrayList<UserDefinedTipper<Statement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("return;", "", ""));

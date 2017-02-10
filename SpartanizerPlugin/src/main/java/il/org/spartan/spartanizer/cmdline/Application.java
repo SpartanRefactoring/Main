@@ -105,7 +105,6 @@ final class Application implements IApplication {
   @Override public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
-    final List<FileStats> fileStats = new ArrayList<>();
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {
@@ -113,6 +112,7 @@ final class Application implements IApplication {
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
+    final List<FileStats> fileStats = new ArrayList<>();
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
       ICompilationUnit u = null;
       try {
@@ -136,6 +136,7 @@ final class Application implements IApplication {
         ++failed;
       } catch (final Exception ¢) {
         System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
+
         ¢.printStackTrace();
         ++failed;
       } finally {
@@ -184,7 +185,7 @@ final class Application implements IApplication {
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private boolean parseArguments(final List<String> args) {
+  private boolean parseArguments(final Collection<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
@@ -232,7 +233,7 @@ final class Application implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  private void printLineStatistics(final List<FileStats> ss) {
+  private void printLineStatistics(final Iterable<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
       for (final FileStats ¢ : ss) {
@@ -255,7 +256,7 @@ final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  @SuppressWarnings("boxing") private void printChangeStatistics(final List<FileStats> ss) {
+  @SuppressWarnings("boxing") private void printChangeStatistics(final Collection<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (!optIndividualStatistics)
       range.to(optRounds).forEach(i -> System.out

@@ -46,7 +46,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
           && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
     }
   };
-  private static final specificity specificity = new specificity();
+  private static final Comparator<Expression> specificity = new specificity();
   /** Threshold for comparing nodes; a difference in the number of nodes between
    * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;

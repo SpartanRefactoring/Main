@@ -30,6 +30,87 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
+  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+      new FixturePlainFor(), //
+      new FixtureCatchBlock(), //
+      new FixtureFinally(), //
+      new NamespaceTest(), //
+      new definitionTest(), //
+      new KnowsTest(null, null, null), //
+  };
+
+  public static String ancestry(final ASTNode n) {
+    final Int $ = new Int();
+    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
+        .reduce((x, y) -> x + y).get();
+  }
+
+  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
+    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
+    for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
+      if (t != null)
+        for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
+          if ((a.getTypeName() + "").equals(annotationName))
+            for (@knows({ "t", "a", "s" }) final String s : values(a))
+              for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
+                $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
+    return $;
+  }
+
+  private static IPath getSrcPath(final File ¢) {
+    IPath $ = new Path(¢.getAbsolutePath());
+    while (!$.isEmpty() && !"src".equals($.lastSegment()))
+      $ = $.removeLastSegments(1);
+    return $;
+  }
+
+  private static CompilationUnit loadAST(final String fileName) {
+    for (final File $ : new FilesGenerator(".java").from("."))
+      if ($.getAbsolutePath().endsWith(fileName)) {
+        final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
+        p.setResolveBindings(true);
+        p.setUnitName(fileName);
+        p.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
+        return (CompilationUnit) p.createAST(null);
+      }
+    return null;
+  }
+
+  private static String loadText(final String fileName) {
+    for (final File $ : new FilesGenerator(".java").from("."))
+      if ($.getAbsolutePath().endsWith(fileName))
+        return makeAST.string($);
+    return null;
+  }
+
+  public static int value(final SingleMemberAnnotation ¢) {
+    return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
+  }
+
+  private static String[] values(final ArrayInitializer ¢) {
+    return values(step.expressions(¢));
+  }
+
+  private static String[] values(final Collection<Expression> xs) {
+    return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
+  }
+
+  private static String[] values(final Expression $) {
+    return $ == null ? new String[] {} : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
+        iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
+  }
+
+  protected static String[] values(final SingleMemberAnnotation ¢) {
+    return values(¢.getValue());
+  }
+
+  private static String[] values(final StringLiteral ¢) {
+    return as.array(¢.getLiteralValue());
+  }
+
+  public Iterable<Annotation> annotations() {
+    return yieldDescendants.untilClass(Annotation.class).from(reflectedCompilationUnit());
+  }
 
   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
@@ -39,6 +120,10 @@ public abstract class MetaFixture {
       $.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
     }
     return $;
+  }
+
+  protected final <N extends ASTNode> N find(final Class<N> ¢) {
+    return first(yieldDescendants.untilClass(¢).from(reflectedCompilationUnit()));
   }
 
   public String name() {
@@ -63,93 +148,7 @@ public abstract class MetaFixture {
     return classToText.get(c);
   }
 
-  protected final <N extends ASTNode> N find(final Class<N> ¢) {
-    return first(yieldDescendants.untilClass(¢).from(reflectedCompilationUnit()));
-  }
-
-  public List<SingleMemberAnnotation> singleMemberAnnotations() {
+  public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return yieldDescendants.untilClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
-  }
-
-  public List<Annotation> annotations() {
-    return yieldDescendants.untilClass(Annotation.class).from(reflectedCompilationUnit());
-  }
-
-  public static int value(final SingleMemberAnnotation ¢) {
-    return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
-  }
-
-  public static String ancestry(final ASTNode n) {
-    final Int $ = new Int();
-    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
-        .reduce((x, y) -> x + y).get();
-  }
-
-  private static CompilationUnit loadAST(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
-      if ($.getAbsolutePath().endsWith(fileName)) {
-        final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
-        p.setResolveBindings(true);
-        p.setUnitName(fileName);
-        p.setEnvironment(new String[] { JAVA_HOME + "/lib/rt.jar" }, new String[] { getSrcPath($) + "" }, new String[] { "UTF-8" }, true);
-        return (CompilationUnit) p.createAST(null);
-      }
-    return null;
-  }
-
-  private static String loadText(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
-      if ($.getAbsolutePath().endsWith(fileName))
-        return makeAST.string($);
-    return null;
-  }
-
-  private static IPath getSrcPath(final File ¢) {
-    IPath $ = new Path(¢.getAbsolutePath());
-    while (!$.isEmpty() && !"src".equals($.lastSegment()))
-      $ = $.removeLastSegments(1);
-    return $;
-  }
-
-  protected static String[] values(final SingleMemberAnnotation ¢) {
-    return values(¢.getValue());
-  }
-
-  private static String[] values(final Expression $) {
-    return $ == null ? new String[] {} : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
-        iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
-  }
-
-  private static String[] values(final StringLiteral ¢) {
-    return as.array(¢.getLiteralValue());
-  }
-
-  private static String[] values(final ArrayInitializer ¢) {
-    return values(step.expressions(¢));
-  }
-
-  private static String[] values(final List<Expression> xs) {
-    return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
-  }
-
-  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
-      new FixturePlainFor(), //
-      new FixtureCatchBlock(), //
-      new FixtureFinally(), //
-      new NamespaceTest(), //
-      new definitionTest(), //
-      new KnowsTest(null, null, null), //
-  };
-
-  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final List<Object[]> $ = new ArrayList<>();
-    for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
-      if (t != null)
-        for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
-          if ((a.getTypeName() + "").equals(annotationName))
-            for (@knows({ "t", "a", "s" }) final String s : values(a))
-              for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
-                $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
-    return $;
   }
 }

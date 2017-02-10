@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -56,8 +56,8 @@ public final class haveTest {
     assert have.trueLiteral(ExpressionListMaker("true"));
   }
 
-  public List<Expression> ExpressionListMaker(final String... exps) {
-    return Stream.of(exps).map(into::e).collect(Collectors.toList());
+  public Collection<Expression> ExpressionListMaker(final String... exps) {
+    return Stream.of(exps).map(into::e).collect(toList());
   }
 
   @Test public void hasLiteralTestFalse() {

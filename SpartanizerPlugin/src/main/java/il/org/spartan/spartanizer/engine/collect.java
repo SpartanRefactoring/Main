@@ -137,7 +137,7 @@ public enum collect {
    * @param into - The ASTVisitor's output parameter
    * @param n JD
    * @return <b>ASTVisitor</b> as described above. */
-  static ASTVisitor declarationsCollector(final List<SimpleName> into, final ASTNode n) {
+  static ASTVisitor declarationsCollector(final Collection<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final ForStatement ¢) {
         return consider(initializers(¢));
@@ -172,7 +172,7 @@ public enum collect {
       /** Tries to add to the list provided by the closure (into) the names of
        * the {@VariableDeclarationFragment}s given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
-      void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> add(step.name(λ)));
       }
 
@@ -184,7 +184,7 @@ public enum collect {
        * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
-      boolean consider(final List<? extends Expression> xs) {
+      boolean consider(final Iterable<? extends Expression> xs) {
         xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
@@ -194,7 +194,7 @@ public enum collect {
   /** @see {@link declarationsCollector} specific comments are provided to
    *      methods which are not taking place in the
    *      {@link declarationsCollector}. */
-  static ASTVisitor definitionsCollector(final List<SimpleName> into, final ASTNode n) {
+  static ASTVisitor definitionsCollector(final Collection<SimpleName> into, final ASTNode n) {
     return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment ¢) {
         return consider(to(¢));
@@ -238,7 +238,7 @@ public enum collect {
         return true;
       }
 
-      void addFragments(final List<VariableDeclarationFragment> fs) {
+      void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> add(step.name(λ)));
       }
 
@@ -252,7 +252,7 @@ public enum collect {
         return add(az.simpleName(¢));
       }
 
-      boolean consider(final List<? extends Expression> initializers) {
+      boolean consider(final Iterable<? extends Expression> initializers) {
         initializers.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
@@ -267,7 +267,7 @@ public enum collect {
    * @param what JD
    * @return ASTVisitor that adds uses by name of the SimpleName 'what' to the
    *         list 'into' */
-  static ASTVisitor lexicalUsesCollector(final List<SimpleName> into, final SimpleName what) {
+  static ASTVisitor lexicalUsesCollector(final Collection<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
 
@@ -278,7 +278,7 @@ public enum collect {
    * @param lexicalOnly - True if only explicit matches (by name) are required.
    * @return ASTVisitor that adds all the uses of the SimpleName to the provided
    *         list. */
-  private static ASTVisitor usesCollector(final SimpleName what, final List<SimpleName> into, final boolean lexicalOnly) {
+  private static ASTVisitor usesCollector(final SimpleName what, final Collection<SimpleName> into, final boolean lexicalOnly) {
     return new ASTVisitor() {
       int loopDepth;
 
@@ -372,7 +372,7 @@ public enum collect {
         return true;
       }
 
-      boolean collect(final List<?> os) {
+      boolean collect(final Iterable<?> os) {
         os.forEach(this::add);
         return true;
       }
@@ -390,8 +390,8 @@ public enum collect {
           into.add(¢);
       }
 
-      List<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
-        final List<VariableDeclarationFragment> $ = new ArrayList<>();
+      Collection<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
+        final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
         classNode.accept(new ASTVisitor() {
           @Override public boolean visit(final FieldDeclaration ¢) {
             $.addAll(fragments(¢));
@@ -460,7 +460,7 @@ public enum collect {
       return new ArrayList<>();
     }
 
-    public final List<SimpleName> in(final List<? extends ASTNode> ¢) {
+    public final Collection<SimpleName> in(final List<? extends ASTNode> ¢) {
       return in(¢.toArray(new ASTNode[¢.size()]));
     }
 

@@ -20,16 +20,16 @@ public class Issue1117 {
     ;
   }
 
-  @Test public void c() {
-    trimmingOf("(λ)->λ")//
-        .gives("λ->λ")//
+  @Test public void b() {
+    trimmingOf("(final int x)->x")//
+        .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
         .stays()//
     ;
   }
 
-  @Test public void b() {
-    trimmingOf("(final int x)->x")//
-        .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
+  @Test public void c() {
+    trimmingOf("(λ)->λ")//
+        .gives("λ->λ")//
         .stays()//
     ;
   }

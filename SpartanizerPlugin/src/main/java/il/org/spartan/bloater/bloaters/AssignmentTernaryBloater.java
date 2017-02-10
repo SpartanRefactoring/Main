@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** converts (a?b:c;) to (if(a) b; else c;) relevant for assignment <ternary>
- * also relevant for assignment (<ternary>) s.e $ = (<ternary) Issue #883
+/** converts {@code (a?b:c;)} to {@code (if(a) b; else c;)} relevant for assignment <em>ternary</em>
+ * also relevant for assignment (<em>ternary</em>) s.e $ = (<ternary) Issue #883
  * {@link Issue883}
  * @author Raviv Rachmiel
  * @since 23-12-16 */

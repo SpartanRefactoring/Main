@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Fixture for testing plain for testing resources in try statement
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
+@SuppressWarnings("TooBroadScope")
 public class FixtureFinally extends MetaFixture {
   int simple(@knows("p") final int p) throws IOException {
     final int x = 2 * p;
@@ -17,7 +18,7 @@ public class FixtureFinally extends MetaFixture {
     } finally {
       @foreign("r") final int a = hashCode() * hashCode();
       @knows({ "a", "p" }) final int r = hashCode();
-      if (simple(2 * a * r * x) < 0)
+      if (simple(3 * a * r * x) < 0)
         simple(a * p * r);
     }
     return simple(hashCode());
