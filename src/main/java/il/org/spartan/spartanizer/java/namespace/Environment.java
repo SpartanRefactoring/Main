@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
-
+import static java.util.stream.Collectors.*;
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree.
  * @author Yossi Gil <yossi.gil@gmail.com>
@@ -154,7 +154,7 @@ public interface Environment {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(type(s)));
     final String path = fullName(s);
-    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(toList()));
     return $;
   }
 

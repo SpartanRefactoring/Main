@@ -13,10 +13,10 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert {@code
  * ++i; --i;
-} to * <code>
+} to * {@code
  * i+=1; i-=1;
  *
- * </code>
+ * }
  * Test case is {@link Issue1005}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-24 */

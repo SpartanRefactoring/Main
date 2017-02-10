@@ -46,7 +46,7 @@ public final class IfEmptyThenEmptyElseTest {
     azzert.that(INPUT, instanceOf(Block.class));
   }
 
-  @Test public void runGo() throws IllegalArgumentException, MalformedTreeException, BadLocationException {
+  @Test public void runGo() throws Exception {
     final String input = Wrap.Statement.on(INPUT + "");
     final IDocument d = new Document(input);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
