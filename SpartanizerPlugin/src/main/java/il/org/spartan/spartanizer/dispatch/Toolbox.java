@@ -88,6 +88,7 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
         .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()).add(CatchClause.class, new CatchClauseRenameParameterToCent())
@@ -286,7 +287,8 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort<>(), //
+        .add(AnnotationTypeDeclaration.class, //
+            new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null)
         .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort<>(), //
