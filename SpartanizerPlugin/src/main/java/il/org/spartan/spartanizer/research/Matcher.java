@@ -327,6 +327,7 @@ public final class Matcher {
    * <td>n</td>
    * <td>Resulting mapping</td>
    * </tr>
+   * <tr>
    * <td>$X ? y == 17 : $X2</td>
    * <td>x == 7 ? y == 17 : 9</td>
    * <td>{'$X':'x == 7', '$X2':'9'}</td>

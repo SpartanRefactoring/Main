@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
-
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
@@ -59,7 +59,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
   }
 
   private static boolean parametersContainAllArguments(final Collection<String> parametersNames, final Expression ¢) {
-    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(λ -> λ + "").collect(Collectors.toList()));
+    return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(λ -> λ + "").collect(toList()));
   }
 
   private static boolean safeContainsCallee(final Collection<String> parametersNames, final Expression ¢) {

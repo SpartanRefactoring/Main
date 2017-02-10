@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.research.analyses;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
 import java.io.*;
@@ -130,7 +130,7 @@ public enum Analyze {
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
-        for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(Collectors.toList()))
+        for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(toList()))
           try {
             Count.before(¢);
             final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
@@ -202,7 +202,7 @@ public enum Analyze {
             .filter(haz::methods)
             .forEach(t -> methods(t).stream()//
                 .filter(λ -> !λ.isConstructor())//
-                .collect(Collectors.toList())//
+                .collect(toList())//
                 .forEach(¢ -> {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)

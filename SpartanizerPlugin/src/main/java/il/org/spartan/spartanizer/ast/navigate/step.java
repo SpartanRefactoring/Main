@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -434,7 +434,7 @@ public enum step {
   @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(final CompilationUnit ¢) {
     return ¢ == null ? null
         : ((List<ImportDeclaration>) ¢.imports()).stream().map(λ -> (!λ.isStatic() ? "" : "static ") + λ.getName() + (!λ.isOnDemand() ? "" : ".*"))
-            .collect(Collectors.toList());
+            .collect(toList());
   }
 
   @SuppressWarnings("unchecked") public static Collection<ImportDeclaration> imports(final CompilationUnit ¢) {
@@ -535,7 +535,7 @@ public enum step {
   /** @param ¢ JD
    * @return */
   private static Collection<String> methodNames(final AbstractTypeDeclaration ¢) {
-    return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(Collectors.toList());
+    return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(toList());
   }
 
   public static Collection<String> methodNames(final CompilationUnit u) {
@@ -552,7 +552,7 @@ public enum step {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(Collectors.toList()) : null;
+                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
   }
 
   /** @param ¢ JD
@@ -643,7 +643,7 @@ public enum step {
   }
 
   private static List<String> names(final FieldDeclaration d) {
-    return d == null ? null : fragments(d).stream().map(λ -> identifier(name(λ))).collect(Collectors.toList());
+    return d == null ? null : fragments(d).stream().map(λ -> identifier(name(λ))).collect(toList());
   }
 
   public static int nodeType(final ASTNode ¢) {
@@ -694,14 +694,14 @@ public enum step {
    * @param d JD
    * @return */
   public static List<String> parametersNames(final MethodDeclaration d) {
-    return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(λ -> λ.getName() + "").collect(Collectors.toList()));
+    return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(λ -> λ.getName() + "").collect(toList()));
   }
 
   /** Expose the list of parameters types in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return */
   public static List<Type> parametersTypes(final MethodDeclaration ¢) {
-    return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(Collectors.toList()));
+    return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(toList()));
   }
 
   /** Shorthand for {@link ASTNode#getParent()}
