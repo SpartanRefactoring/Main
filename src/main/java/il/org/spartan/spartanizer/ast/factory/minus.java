@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.ast.factory;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -49,7 +48,7 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  @SuppressWarnings("boxing") public static int level(final List<Expression> xs) {
+  @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
     return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
   }
 
@@ -69,8 +68,8 @@ public enum minus {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  private static List<Expression> peel(final List<Expression> ¢) {
-    return ¢.stream().map(minus::peel).collect(Collectors.toList());
+  private static List<Expression> peel(final Collection<Expression> ¢) {
+    return ¢.stream().map(minus::peel).collect(toList());
   }
 
   public static Expression peel(final NumberLiteral $) {

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.Map.*;
 import java.util.stream.*;
@@ -49,10 +49,11 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
-    final List<Entry<String, Binding>> $ = new ArrayList<>();
+  @SuppressWarnings("hiding")
+  Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
+    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(d.getType()));
-    $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
@@ -60,17 +61,19 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
-    final List<Entry<String, Binding>> $ = new ArrayList<>();
+  @SuppressWarnings("hiding")
+  Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
+    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(x.getType()));
-    $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
-  @SuppressWarnings("hiding") List<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
-    final List<Entry<String, Binding>> $ = new ArrayList<>();
+  @SuppressWarnings("hiding")
+  Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
+    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(s.getType()));
-    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(Collectors.toList()));
+    $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
@@ -157,7 +160,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return scopePath + "." + $;
   }
 
-  static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
+  static Binding get(final Collection<Entry<String, Binding>> ss, final String s) {
     return ss.stream().filter(λ -> s.equals(λ.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 

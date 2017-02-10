@@ -13,9 +13,10 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Configurable Report that uses {@link Listener.S}
- * @year 2016
+ * 
  * @author Yossi Gil
  * @author Matteo Orru'
  * @since Nov 14, 2016 */
@@ -85,7 +86,7 @@ public interface ConfigurableReport {
       try {
         report = new CSVStatistics(reportFilename, header);
       } catch (final IOException ¢) {
-        ¢.printStackTrace();
+        monitor.infoIOException(¢, header);
       }
     }
 
@@ -97,7 +98,8 @@ public interface ConfigurableReport {
      * @see #go()
      * @author Yossi Gil
      * @author Matteo Orru'
-     * @year 2016 */
+     *  */
+    @SuppressWarnings("TooBroadScope")
     public class Action extends Settings {
       /** real serialVersionUID comes much later in production code */
       private static final long serialVersionUID = 1L;
@@ -212,7 +214,7 @@ public interface ConfigurableReport {
       output = ¢;
     }
 
-    public static ArrayList<ASTNode> getInputList() {
+    public static List<ASTNode> getInputList() {
       return inputList;
     }
 
@@ -220,7 +222,7 @@ public interface ConfigurableReport {
       Settings.inputList = inputList;
     }
 
-    public static ArrayList<ASTNode> getOutputList() {
+    public static List<ASTNode> getOutputList() {
       return outputList;
     }
 

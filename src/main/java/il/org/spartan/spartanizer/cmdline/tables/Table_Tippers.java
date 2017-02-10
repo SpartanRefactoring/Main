@@ -1,5 +1,9 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
@@ -14,12 +18,13 @@ public class Table_Tippers {
   }
 
   public void go() {
-    try (Table r = new Table(this)) {
-      for (int i = 0; i < Toolbox.defaultInstance().implementation.length; ++i)
-        if (Toolbox.defaultInstance().implementation[i] != null)
-          for (final Tipper<?> ¢ : Toolbox.defaultInstance().implementation[i])
+    try (Table t = new Table(this)) {
+      List<Tipper<? extends ASTNode>>[] implementation = Toolbox.defaultInstance().implementation;
+      for (int i = 0; i < implementation.length; ++i)
+        if (implementation[i] != null)
+          for (final Tipper<?> ¢ : implementation[i])
             if (¢ != null && !(¢ instanceof TipperCategory.Bloater))
-              r //
+              t //
                   .col("Category", ¢.tipperGroup())//
                   .col("Tipper", Toolbox.name(¢))//
                   .col("Node Type Number", i + "") //
@@ -27,7 +32,7 @@ public class Table_Tippers {
                   .col("Actual class", name(¢.myActualOperandsClass()))//
                   .col("Abstract class", name(¢.myAbstractOperandsClass()))//
                   .nl();
-      System.err.println(r.description());
+      System.err.println(t.description());
     }
   }
 

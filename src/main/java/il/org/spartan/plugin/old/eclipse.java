@@ -64,7 +64,7 @@ public enum eclipse {
    *        operation times use {@link wizard@nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits(final ICompilationUnit u, final IProgressMonitor m) throws JavaModelException {
+  public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
@@ -77,18 +77,17 @@ public enum eclipse {
     final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
-    final int n = 0;
-    for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
+    for (final IPackageFragmentRoot ¢ : rs)  // NANO - can't, throws
       compilationUnits(m, $, ¢);
-    return done(m, $, "Found " + n + " package roots, and " + $.size() + " packages");
+    return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
 
-  private static int compilationUnits(final IProgressMonitor m, final List<ICompilationUnit> us, final IPackageFragmentRoot r)
+  private static int compilationUnits(final IProgressMonitor m, final Collection<ICompilationUnit> us, final IPackageFragmentRoot r)
       throws JavaModelException {
-    int $ = 0;
     m.worked(1);
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
       m.worked(1);
+    int $ = 0;
     for (final IJavaElement ¢ : r.getChildren()) {
       m.worked(1);
       if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT && az.true¢(++$)) {
@@ -170,15 +169,13 @@ public enum eclipse {
   static ImageIcon icon() {
     if (!iconInitialized) {
       iconInitialized = true;
-      URL u;
       try {
-        u = new URL(iconAddress);
-        final Image i = Toolkit.getDefaultToolkit().getImage(u);
+        final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
         if (i != null)
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
       } catch (final MalformedURLException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(¢); 
       }
     }
     return icon;
@@ -239,7 +236,7 @@ public enum eclipse {
     return null;
   }
 
-  List<ICompilationUnit> compilationUnits(final ICompilationUnit $) {
+  Collection<ICompilationUnit> compilationUnits(final IJavaElement $) {
     try {
       return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {

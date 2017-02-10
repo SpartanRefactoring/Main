@@ -13,7 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTipper<TryStatement>//
     implements TipperCategory.SyntacticBaggage {
   @Override public boolean prerequisite(final TryStatement ¢) {
-    return statements(body(¢)).isEmpty() && ¢.catchClauses().isEmpty() && (¢.getFinally() == null || statements(¢.getFinally()).isEmpty());
+    final Block $ = ¢.getFinally();
+    return statements(body(¢)).isEmpty() && ¢.catchClauses().isEmpty() && ($ == null || statements($).isEmpty());
   }
 
   @Override public String description(final TryStatement ¢) {

@@ -22,13 +22,26 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
+  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+    return a.collectSuggestions(u).size();
+  }
+
+  static fluentTrimmerApplication of(final String codeFragment) {
+    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
+  }
+
+  @SafeVarargs //
+  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+    return new fluentTrimmer(clazz, ts);
+  }
+
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-   * .repeatedly //  See {@link trim.repeatedely} 
-   * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-   * .of("a+(b-c)") //  See {@link #of(String)} 
-   * .gives("a+b-c")</code> */
+    * .repeatedly //  See {@link trim.repeatedely} 
+    * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+    * .of("a+(b-c)") //  See {@link #of(String)} 
+    * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
@@ -93,18 +106,5 @@ public interface trim {
       trim.repeatedly.of("int b = 3; int a = b; return  a;")//
           .gives("return 3;");
     }
-  }
-
-  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggestions(u).size();
-  }
-
-  static fluentTrimmerApplication of(final String codeFragment) {
-    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
-  }
-
-  @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
-    return new fluentTrimmer(clazz, ts);
   }
 }

@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
+@SuppressWarnings("ClassWithTooManyMethods")
 public enum az {
   ;
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
@@ -303,7 +304,7 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
-  public static List<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+  public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
     final List<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;
@@ -533,7 +534,7 @@ public enum az {
   /** A fluent API to parse numeric literals, including provisions for unary
    * minus.
    * @author Yossi Gil
-   * @year 2016 */
+   *  */
   public interface throwing {
     static String chop¢necessaryQuestionMark(final String ¢) {
       return ¢.substring(0, ¢.length() - 1);

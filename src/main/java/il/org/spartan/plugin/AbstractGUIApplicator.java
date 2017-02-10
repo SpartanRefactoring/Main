@@ -83,7 +83,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
-  public final List<Tip> collectSuggestions(final CompilationUnit ¢) {
+  public final Collection<Tip> collectSuggestions(final CompilationUnit ¢) {
     final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
@@ -257,7 +257,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    *        <code><b>m</b></code>
    * @return <code><b>true</b></code> <em>iff</em>the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !eclipse.facade.isNodeOutsideMarker(n, m) : !isTextSelected() || !isNodeOutsideSelection(n);
+    return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
   }
 
   /** Performs the current tipper on the provided compilation unit
@@ -331,8 +331,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** Determines if the node is outside of the selected text.
    * @return <code><b>true</b></code> <em>iff</em>the node is not inside
    *         selection. If there is no selection at all will return false.
-   * @DisableSpartan */
-  private boolean isNodeOutsideSelection(final ASTNode ¢) {
+   *  */
+  private boolean isNotSelected(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());
   }
 
@@ -386,7 +386,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * list
    * @throws IllegalArgumentException
    * @throws CoreException [[SuppressWarningsSpartan]] */
-  private void scanCompilationUnits(final List<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
+  private void scanCompilationUnits(final Collection<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     progressMonitor.beginTask("Iterating over eligible compilation units...", us.size());
     for (final ICompilationUnit ¢ : us) // NANO - can't, throws...
       scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));
@@ -419,7 +419,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
-  private List<ICompilationUnit> getUnits() throws JavaModelException {
+  private Collection<ICompilationUnit> getUnits() throws JavaModelException {
     if (!isTextSelected())
       return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
     final List<ICompilationUnit> $ = new ArrayList<>();

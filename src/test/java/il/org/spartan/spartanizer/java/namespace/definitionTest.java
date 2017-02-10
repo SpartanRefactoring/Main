@@ -20,6 +20,12 @@ import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerE
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
 
+/** @formatter:off */
+@Target({ ElementType.TYPE }) @annotation @interface annotation { /**/ }
+
+@Target({ ElementType.METHOD }) @annotation @interface annotationMemberDeclaration { /**/ }
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE }) @annotation @interface catch¢ { /**/ }
+@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface class¢ { /**/ }
 /** TDD of {@link definition}
  * @author Yossi Gil
  * @since 2016-12-15 */
@@ -29,6 +35,7 @@ public class definitionTest extends MetaFixture {
   @field private final Initializer initializer = find(Initializer.class);
   @field private final TypeDeclaration clazz = find(TypeDeclaration.class);
   @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
+    @field static final long serialVersionUID = 1L;
     {
       put("@Test", null);
       put("@Ignore", null);
@@ -39,7 +46,6 @@ public class definitionTest extends MetaFixture {
       put("@interface¢", null);
       as.list(definition.Kind.values()).forEach(λ -> put("@" + λ, null));
     }
-    @field static final long serialVersionUID = 1L;
   };
 
   @Test public void a01() {
@@ -98,32 +104,32 @@ public class definitionTest extends MetaFixture {
   }
 
   @ScopeSize(41) @Test public void a13() {
-    markers().forEach(λ -> annotations.put(λ + "", λ));
+    markers().forEach(λ -> annotations.put(("" + λ), λ));
     assert annotations.get("@try¢") != null;
   }
 
   @Test @method public void a14() {
-    markers().forEach(λ -> annotations.put(λ + "", λ));
+    markers().forEach(λ -> annotations.put(("" + λ), λ));
     assert annotations.get("@catch¢") != null;
   }
 
   @Test public void a15() {
-    markers().forEach(λ -> annotations.put(λ + "", λ));
+    markers().forEach(λ -> annotations.put(("" + λ), λ));
     assert annotations.get("@field") != null;
   }
 
   @Test @method public void a16() {
-    markers().forEach(λ -> annotations.put(λ + "", λ));
+    markers().forEach(λ -> annotations.put(("" + λ), λ));
     assert annotations.get("@Ignore") != null;
   }
 
   @Test @method public void a17() {
-    markers().forEach(λ -> annotations.put(λ + "", λ));
+    markers().forEach(λ -> annotations.put(("" + λ), λ));
     assert annotations.get("@enumConstant") != null;
   }
 
   @Test public void a18() {
-    markers().stream().filter(λ -> definition.Kind.has((λ + "").substring(1))).forEach(a -> annotees.of(a)
+    markers().stream().filter(λ -> definition.Kind.has(("" + λ).substring(1))).forEach(a -> annotees.of(a)
         .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
@@ -156,12 +162,12 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a25() {
-    markers().stream().filter(λ -> "@for¢".equals(λ + "")).forEach(a -> annotees.of(a)
+    markers().stream().filter(λ -> "@for¢".equals(("" + λ))).forEach(a -> annotees.of(a)
         .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
   @Test public void a26() {
-    markers().stream().filter(λ -> "@try¢".equals(λ + "")).forEach(a -> annotees.of(a)
+    markers().stream().filter(λ -> "@try¢".equals(("" + λ))).forEach(a -> annotees.of(a)
         .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
@@ -339,41 +345,95 @@ public class definitionTest extends MetaFixture {
     }
   }
 
-  List<MarkerAnnotation> markers() {
+  Collection<MarkerAnnotation> markers() {
     return yieldDescendants.untilClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }
-
-/** @formatter:off */
-@Target({ ElementType.TYPE }) @annotation @interface annotation { /**/ }
-@Target({ ElementType.METHOD }) @annotation @interface annotationMemberDeclaration { /**/ }
-@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE }) @annotation @interface catch¢ { /**/ }
-@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface class¢ { /**/ }
-@ScopeSize(23) @annotation @interface DummyAnnotation { /**/}
-@ScopeSize(23) @class¢ class DummyClass { /**/}
-@ScopeSize(23) @enum¢ enum DummyEnum { /**/ }
-@ScopeSize(23) @interface¢ interface DummyInterface {/**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface enum¢ { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @annotation @interface enumConstant { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE }) @annotation @interface field { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE}) @annotation @interface for¢ { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @annotation @interface foreach { /**/ }
-@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface interface¢ { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface lambda { /** lambda parameter */ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface local { /** local variable */ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD }) @annotation @interface method { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface parameter { /**/ }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface ScopeSize { int value(); }
-@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, }) @interface try¢ { /**/ }
-
 // @formatter:off
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
 @annotation @interface delme { String[] value(); }
 // @formatter:on
+@ScopeSize(23)
+@annotation
+@interface DummyAnnotation {
+  /**/}
+
+@ScopeSize(23)
+@class¢
+class DummyClass { /**/}
+
+@ScopeSize(23)
+@enum¢
+enum DummyEnum {
+  /**/ }
+
+@ScopeSize(23)
+@interface¢
+interface DummyInterface {/**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
+@annotation
+@interface enum¢ {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
+@annotation
+@interface enumConstant {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
+@annotation
+@interface field {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.TYPE })
+@annotation
+@interface for¢ {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
+@annotation
+@interface foreach {
+  /**/ }
+
+@Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
+@annotation
+@interface interface¢ {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
+@interface lambda {
+  /** lambda parameter */
+}
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
+@interface local {
+  /** local variable */
+}
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD })
+@annotation
+@interface method {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
+@interface parameter {
+  /**/ }
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE })
+@annotation
+@interface ScopeSize {
+  int value();
+}
+
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
+@interface try¢ {
+  /**/ }
 
 @Ignore
 @class¢
 @knows("type definitionTest")
+@SuppressWarnings("ALL")
 class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
   {
@@ -447,12 +507,20 @@ class ZZZ___Fixture_ModelClass {
           q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
-      } catch (@catch¢ final CloneNotSupportedException | IOException ¢) {
-        ¢.printStackTrace();
+      } catch (@catch¢ final IOException ¢) {
+        monitor.infoIOException(¢);
+      } catch (final CloneNotSupportedException ¢) {
+        // TODO Yossi: this exception was previously caught on the above catch
+        // clause. Check if OK --or
+        monitor.log(¢);
       }
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
       q(a * a);
     }
+  }
+
+  private void q(final int ¢) {
+    q(¢);
   }
 
   @annotation
@@ -460,6 +528,7 @@ class ZZZ___Fixture_ModelClass {
     @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) int bar = 12;
     @ScopeSize(5) @field int foo = bar;
     @ScopeSize(5) @field int fubar = foo << bar;
+    @ScopeSize(5) @field Bar acuda = Bar.abra, cadbara = Bar.cadabra;
 
     @ScopeSize(5)
     @enum¢
@@ -473,23 +542,6 @@ class ZZZ___Fixture_ModelClass {
       @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
         return vaz();
       }
-    }
-
-    @ScopeSize(5) @field Bar acuda = Bar.abra, cadbara = Bar.cadabra;
-  }
-
-  @interface¢
-  interface InnerInterface {
-    @ScopeSize(4) @method int methodInInnerInterface();
-
-    @ScopeSize(4) @field int staticFieldInInnerInterface = 0;
-
-    @ScopeSize(4) @method static int staticMethodInInnerInterface() {
-      return 12;
-    }
-
-    @ScopeSize(4) @method default int defaultMethodInInnerInterface() {
-      return 12;
     }
   }
 
@@ -516,17 +568,16 @@ class ZZZ___Fixture_ModelClass {
     @ScopeSize(6)
     @annotation
     @interface AnnotationInAnEnum {
+      @ScopeSize(7) @field int aaaaa = 1;
+      @ScopeSize(7) @field int bbbbb = 2 * aaaaa, ccccc = aaaaa * bbbbb, ddddd = 2;
+
+      // @formatter:on
       // @formatter:off
       @annotationMemberDeclaration @ScopeSize(7) int u1();
       @annotationMemberDeclaration @ScopeSize(7) int u2();
       @annotationMemberDeclaration @ScopeSize(7) int u3();
       @annotationMemberDeclaration @ScopeSize(7) int u4();
       @annotationMemberDeclaration @ScopeSize(7) int u5() default 1;
-      @ScopeSize(7) @field
-      int  aaaaa = 1;
-      @ScopeSize(7) @field
-      int  bbbbb = 2* aaaaa, ccccc =  aaaaa * bbbbb, ddddd=2;
-      // @formatter:on
     }
 
     @ScopeSize(6)
@@ -541,7 +592,18 @@ class ZZZ___Fixture_ModelClass {
     }
   }
 
-  private void q(final int ¢) {
-    q(¢);
+  @interface¢
+  interface InnerInterface {
+    @ScopeSize(4) @field int staticFieldInInnerInterface = 0;
+
+    @ScopeSize(4) @method static int staticMethodInInnerInterface() {
+      return 12;
+    }
+
+    @ScopeSize(4) @method default int defaultMethodInInnerInterface() {
+      return 12;
+    }
+
+    @ScopeSize(4) @method int methodInInnerInterface();
   }
 }

@@ -28,8 +28,8 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
 
   @Override @SuppressWarnings("boxing") public void printAccumulated() {
     final int max1 = getMax(beforeHistogram), max2 = getMax(afterHistogram), max = max1 > max2 ? max1 : max2;
-    double acc1 = 0, acc2 = 0;
     System.out.println();
+    double acc1 = 0, acc2 = 0;
     for (int ¢ = 0; ¢ < max; ++¢)
       if (beforeHistogram.containsKey(¢) || afterHistogram.containsKey(¢))
         System.out.println("[" + ¢ + "] " + tidy(acc1 += !beforeHistogram.containsKey(¢) ? 0 : enumElement(beforeHistogram.get(¢))) + " -> "

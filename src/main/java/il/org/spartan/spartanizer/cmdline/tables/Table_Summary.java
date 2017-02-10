@@ -51,7 +51,6 @@ public class Table_Summary extends TableReusabilityIndices {
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
-    // System.out.println(¢);
     try {
       final Integer key = Integer.valueOf(measure.statements(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
@@ -93,7 +92,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ .toString()));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -102,7 +101,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    writer = new Table(Table_Summary.class);
+    writer = new Table(clazz);
   }
 
   public void summarizeSortedMethodStatistics(final String path) {
@@ -163,7 +162,7 @@ public class Table_Summary extends TableReusabilityIndices {
     return format.perc(totalMethodsTouched, totalMethods);
   }
 
-  private static double totalMethodsTouched(final List<MethodRecord> rs) {
+  private static double totalMethodsTouched(final Collection<MethodRecord> rs) {
     return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
   }
 
@@ -182,7 +181,7 @@ public class Table_Summary extends TableReusabilityIndices {
     }
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(final List<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
     return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
   }
 

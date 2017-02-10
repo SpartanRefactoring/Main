@@ -1,10 +1,11 @@
 package il.org.spartan.bloater;
 
-import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;

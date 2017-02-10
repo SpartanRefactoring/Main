@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
    * @author Yossi Gil
-   * @year 2016 */
+   *  */
   @Ignore
   public static class NotWorkingYet {
     // All test work now

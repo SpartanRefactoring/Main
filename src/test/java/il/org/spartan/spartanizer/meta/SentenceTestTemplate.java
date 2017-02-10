@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.meta;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -26,11 +25,11 @@ public enum SentenceTestTemplate {
   ;
   public static final Trimmer trimmer = new Trimmer();
 
-  static List<List<MethodDeclaration>> allSentences() {
+  static Iterable<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());
   }
 
-  static List<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
+  static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
     final List<List<MethodDeclaration>> $ = new ArrayList<>();
     for (final MetaFixture f : fs)
       for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
@@ -48,6 +47,16 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
+    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+      final Collection<Object[]> $ = new ArrayList<>();
+      allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
+      return $;
+    }
+
+    public static Object[] ____(final MethodDeclaration changes) {
+      return new Object[] { changes.getName() + "", changes };
+    }
+
     @Parameter(1) public MethodDeclaration changes;
     @Parameter(0) public String name;
 
@@ -58,16 +67,6 @@ public enum SentenceTestTemplate {
       azzert.that("No trimming of " + name, peeled, is(not(from)));
       azzert.that("Trimming of " + name + " is just reformatting", tide.clean(from), is(not(tide.clean(peeled))));
     }
-
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
-      allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(Collectors.toList())));
-      return $;
-    }
-
-    public static Object[] ____(final MethodDeclaration changes) {
-      return new Object[] { changes.getName() + "", changes };
-    }
   }
 
   /** A phrase is made of two consecutive words. If a sentence has n words, then
@@ -77,6 +76,19 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class ChangesTo {
+    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+      final Collection<Object[]> $ = new ArrayList<>();
+      for (final List<MethodDeclaration> sentence : allSentences())
+        for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
+          if (disabling.specificallyDisabled(sentence.get(¢)))
+            $.add(____(sentence.get(¢), sentence.get(¢ + 1)));
+      return $;
+    }
+
+    public static Object[] ____(final MethodDeclaration from, final MethodDeclaration to) {
+      return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
+    }
+
     @Parameter(1) public MethodDeclaration first;
     @Parameter(0) public String name;
     @Parameter(2) public MethodDeclaration second;
@@ -91,7 +103,7 @@ public enum SentenceTestTemplate {
       return (first + "").replace(disabling.disabler, "");
     }
 
-    String firstName() {
+    CharSequence firstName() {
       return first.getName() + "";
     }
 
@@ -99,21 +111,8 @@ public enum SentenceTestTemplate {
       return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
     }
 
-    String secondName() {
+    CharSequence secondName() {
       return second.getName() + "";
-    }
-
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
-      for (final List<MethodDeclaration> sentence : allSentences())
-        for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
-          if (disabling.specificallyDisabled(sentence.get(¢)))
-            $.add(____(sentence.get(¢), sentence.get(¢ + 1)));
-      return $;
-    }
-
-    public static Object[] ____(final MethodDeclaration from, final MethodDeclaration to) {
-      return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
   }
 
@@ -123,6 +122,17 @@ public enum SentenceTestTemplate {
    * @since 2017-01-18 */
   @RunWith(Parameterized.class)
   public static class Stays {
+    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+      final Collection<Object[]> $ = new ArrayList<>();
+      allSentences().forEach(
+          sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
+      return $;
+    }
+
+    public static Object[] ____(final MethodDeclaration stays) {
+      return new Object[] { stays.getName() + "", stays, };
+    }
+
     @Parameter(0) public String name;
     @Parameter(1) public MethodDeclaration stays;
 
@@ -133,17 +143,6 @@ public enum SentenceTestTemplate {
       final String peeled = Wrap.Method.off(unpeeled);
       if (!peeled.equals(from) && !tide.clean(peeled).equals(tide.clean(from)))
         azzert.that(Wrap.essence(peeled), is(Wrap.essence(from)));
-    }
-
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
-      allSentences().forEach(
-          sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(Collectors.toList())));
-      return $;
-    }
-
-    public static Object[] ____(final MethodDeclaration stays) {
-      return new Object[] { stays.getName() + "", stays, };
     }
   }
 }

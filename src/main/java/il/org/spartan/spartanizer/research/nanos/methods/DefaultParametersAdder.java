@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -17,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * (usually with same name) and just adds parameters to the method.
  * @author Ori Marcovitch */
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
-  private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$N($A)", "", ""));
@@ -45,7 +44,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   }
 
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
-    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> identifier(az.name(λ))).collect(Collectors.toList())
+    return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> identifier(az.name(λ))).collect(toList())
         .containsAll(parametersNames(¢));
   }
 

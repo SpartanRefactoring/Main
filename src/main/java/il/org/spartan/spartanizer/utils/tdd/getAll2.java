@@ -62,7 +62,7 @@ public enum getAll2 {
    *        list of it's public fields names.
    * @param d - the TypeDeclaration argument */
   public static List<String> publicFields(final TypeDeclaration d) {
-    final ArrayList<String> $ = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;
     for (final FieldDeclaration fd : d.getFields()) // TOUGH

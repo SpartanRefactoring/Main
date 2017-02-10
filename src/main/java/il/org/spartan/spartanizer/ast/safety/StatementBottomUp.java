@@ -130,7 +130,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  protected R reduceExpressions(final List<Expression> xs) {
+  protected R reduceExpressions(final Iterable<Expression> xs) {
     R $ = reduce();
     if (xs != null)
       for (final Expression ¢ : xs)
@@ -159,7 +159,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
     return reduce(fragments(¢));
   }
 
-  protected R reduce(final List<VariableDeclarationFragment> ¢) {
+  protected R reduce(final Collection<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclarationFragment::getInitializer).map(this::map).reduce(this::reduce).orElse(reduce());
   }
 

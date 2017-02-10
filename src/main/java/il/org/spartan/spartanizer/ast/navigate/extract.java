@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -22,6 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-28 */
+@SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
   ;
   /** Retrieve all operands, including parenthesized ones, under an expression
@@ -32,7 +32,7 @@ public enum extract {
     return hop.operands(flatten.of(¢));
   }
 
-  public static List<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
+  public static Collection<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
     assert ¢ != null;
     final List<InfixExpression.Operator> $ = new ArrayList<>();
     extract.findOperators(¢, $);
@@ -43,8 +43,8 @@ public enum extract {
     return annotations(step.extendedModifiers(¢));
   }
 
-  private static List<Annotation> annotations(final List<IExtendedModifier> ms) {
-    final ArrayList<Annotation> $ = new ArrayList<>();
+  private static List<Annotation> annotations(final Iterable<IExtendedModifier> ms) {
+    final List<Annotation> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : ms) {
       final Annotation a = az.annotation(¢);
       if (a != null)
@@ -53,7 +53,7 @@ public enum extract {
     return $;
   }
 
-  public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
+  public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(step.extendedModifiers(¢));
   }
 
@@ -259,7 +259,7 @@ public enum extract {
   /** Extract list of {@link IfStatement}s in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  public static List<IfStatement> ifStatements(final Statement ¢) {
+  public static Collection<IfStatement> ifStatements(final Statement ¢) {
     final List<IfStatement> $ = new ArrayList<>();
     switch (¢.getNodeType()) {
       case BLOCK:
@@ -310,8 +310,8 @@ public enum extract {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
 
-  public static List<Modifier> modifiers(final BodyDeclaration d) {
-    final ArrayList<Modifier> $ = new ArrayList<>();
+  public static Collection<Modifier> modifiers(final BodyDeclaration d) {
+    final List<Modifier> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : extendedModifiers(d)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
@@ -321,7 +321,7 @@ public enum extract {
   }
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
-    final ArrayList<Modifier> $ = new ArrayList<>();
+    final List<Modifier> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : extendedModifiers(d)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
@@ -331,7 +331,7 @@ public enum extract {
   }
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
-    final ArrayList<Modifier> $ = new ArrayList<>();
+    final List<Modifier> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : extendedModifiers(s)) {
       final Modifier a = az.modifier((ASTNode) ¢);
       if (a != null)
@@ -517,7 +517,7 @@ public enum extract {
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
-    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(Collectors.toList());
+    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
   }
 
   /** @param n a node to extract an expression from
@@ -544,7 +544,7 @@ public enum extract {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }
 
-  public static List<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
+  public static Collection<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     copy.into(fragments(¢), $);
     return chop($);

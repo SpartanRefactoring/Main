@@ -1,8 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
-
+import static java.util.stream.Collectors.*;
 import java.io.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -25,7 +24,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   }
 
   public List<CompilationUnit> getCompilationUnits() {
-    return inner.stream().map(λ -> λ.compilationUnit).collect(Collectors.toList());
+    return inner.stream().map(λ -> λ.compilationUnit).collect(toList());
   }
 
   public List<WrappedCompilationUnit> get() {
@@ -87,7 +86,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
         final String path) {
       return new CommandLineSelection(az.stream(new FilesGenerator(".java").from(path)).filter(λ -> !system.isTestFile(λ))
           .map(λ -> WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(λ), λ.getName(), λ.getAbsolutePath()))
-          .collect(Collectors.toList()), "selection");
+          .collect(toList()), "selection");
     }
 
     public static List<CompilationUnit> getAllCompilationUnits(final String path) {
@@ -102,7 +101,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       return $;
     }
 
-    public static void getCompilationUnit(final File f, final List<CompilationUnit> $) {
+    public static void getCompilationUnit(final File f, final Collection<CompilationUnit> $) {
       try {
         $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {
@@ -113,10 +112,10 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   }
 
   public void createSelectionFromProjectDir(final String presentSourcePath) {
-    final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     System.err.println("Loading selection ...");
+    final List<WrappedCompilationUnit> cuList = new ArrayList<>();
     cuList.addAll(az.stream(new FilesGenerator(".java").from(presentSourcePath))
-        .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(Collectors.toList()));
+        .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(toList()));
     // compilationUnits = cuList;
     inner = cuList;
     System.err.println("Loading selection: done!");
@@ -127,7 +126,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     return this;
   }
 
-  public static AbstractSelection<?> of(final List<CompilationUnit> ¢) {
+  public static AbstractSelection<?> of(final Collection<CompilationUnit> ¢) {
     return new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
   }
 }

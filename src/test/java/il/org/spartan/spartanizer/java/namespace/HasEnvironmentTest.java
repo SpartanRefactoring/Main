@@ -20,26 +20,12 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends MetaFixture {
-  public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
-    this.name = name;
-  }
-
-  private final ASTNode name;
-
-  @Test public void notNullNode() {
-    assert Environment.of(name) != null : //
-    "\n name = " + name + //
-        MetaFixture.ancestry(name) + //
-        "\n\t environment = " + Environment.of(name)//
-    ;
-  }
-
-  private static final Set<String> signature = new HashSet<>();
+  private static final Collection<String> signature = new HashSet<>();
 
   private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
-    final List<Object[]> $ = new ArrayList<>();
-    Arrays.asList(fs).forEach(t -> yieldDescendants.untilClass(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
+    final Collection<Object[]> $ = new ArrayList<>();
+    as.list(fs).forEach(t -> yieldDescendants.untilClass(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
         .filter(λ -> !signature.contains(signature(λ))).forEach(λ -> {
           signature.add(signature(λ));
           $.add(as.array(λ, signature(λ)));
@@ -53,5 +39,19 @@ public class HasEnvironmentTest extends MetaFixture {
 
   private static String signature(final ASTNode ¢) {
     return separate.these(wizard.nodeName(¢), wizard.nodeName(parent(¢)), wizard.nodeName(parent(parent(¢)))).by('/');
+  }
+
+  private final ASTNode name;
+
+  public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
+    this.name = name;
+  }
+
+  @Test public void notNullNode() {
+    assert Environment.of(name) != null : //
+    "\n name = " + name + //
+        MetaFixture.ancestry(name) + //
+        "\n\t environment = " + Environment.of(name)//
+    ;
   }
 }

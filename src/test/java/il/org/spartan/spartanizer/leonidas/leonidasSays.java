@@ -27,6 +27,106 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public enum leonidasSays {
   ;
+  static void azzertEquals(final String s, final IDocument d) {
+    String actual = null;
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
+        actual = d.get();
+        break;
+      case EXPRESSION_LOOK_ALIKE:
+        actual = d.get().substring(23, d.get().length() - 3);
+        break;
+      case METHOD_LOOK_ALIKE:
+        actual = d.get().substring(9, d.get().length() - 2);
+        break;
+      case STATEMENTS_LOOK_ALIKE:
+        actual = extractStatementIfOne(findFirst.instanceOf(Statement.class).in(wizard.ast(d.get()))) + "";
+        break;
+      default:
+        azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
+    }
+  }
+
+  static ASTNode extractASTNode(final String s, final CompilationUnit u) {
+    switch (GuessedContext.find(s)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
+        return u;
+      case METHOD_LOOK_ALIKE:
+        return findSecond(MethodDeclaration.class, u);
+      case EXPRESSION_LOOK_ALIKE:
+        return findSecond(Expression.class, findFirst.instanceOf(MethodDeclaration.class).in(u));
+      case STATEMENTS_LOOK_ALIKE:
+        return extractStatementIfOne(findFirst.instanceOf(Block.class).in(u));
+      default:
+        return null;
+    }
+  }
+
+  static ASTNode extractStatementIfOne(final ASTNode ¢) {
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : (ASTNode) first(statements(az.block(¢)));
+  }
+
+  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
+    if (n == null)
+      return null;
+    final Wrapper<Boolean> foundFirst = new Wrapper<>();
+    foundFirst.set(Boolean.FALSE);
+    final Wrapper<ASTNode> $ = new Wrapper<>();
+    n.accept(new ASTVisitor() {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if ($.get() != null)
+          return false;
+        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
+          return true;
+        if (foundFirst.get().booleanValue()) {
+          $.set(¢);
+          assert $.get() == ¢;
+          return false;
+        }
+        foundFirst.set(Boolean.TRUE);
+        return true;
+      }
+    });
+    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
+    return $$;
+  }
+
+  public static statementsTipper statementsTipper(final String p, final String s, final String d) {
+    return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
+  }
+
+  public static expression that(final String ¢) {
+    return new expression(¢);
+  }
+
+  public static tipper tipper(final String p, final String s, final String d) {
+    return new tipper(p, s, d);
+  }
+
+  public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
+    return new tipper(¢);
+  }
+
+  static String wrapCode(final String ¢) {
+    switch (GuessedContext.find(¢)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+      case OUTER_TYPE_LOOKALIKE:
+        return ¢;
+      case EXPRESSION_LOOK_ALIKE:
+        return "class X{int f(){return " + ¢ + ";}}";
+      case METHOD_LOOK_ALIKE:
+        return "class X{" + ¢ + "}";
+      case STATEMENTS_LOOK_ALIKE:
+        return "class X{int f(){" + ¢ + "}}";
+      default:
+        fail(¢ + " is not like anything I know...");
+        break;
+    }
+    return null;
+  }
+
   public static class blockTurns {
     final Tipper<Block> tipper;
     final String string;
@@ -174,105 +274,5 @@ public enum leonidasSays {
       }
       azzertEquals(expected, document);
     }
-  }
-
-  static void azzertEquals(final String s, final Document d) {
-    String actual = null;
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-      case OUTER_TYPE_LOOKALIKE:
-        actual = d.get();
-        break;
-      case EXPRESSION_LOOK_ALIKE:
-        actual = d.get().substring(23, d.get().length() - 3);
-        break;
-      case METHOD_LOOK_ALIKE:
-        actual = d.get().substring(9, d.get().length() - 2);
-        break;
-      case STATEMENTS_LOOK_ALIKE:
-        actual = extractStatementIfOne(findFirst.instanceOf(Statement.class).in(wizard.ast(d.get()))) + "";
-        break;
-      default:
-        azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
-    }
-  }
-
-  static ASTNode extractASTNode(final String s, final CompilationUnit u) {
-    switch (GuessedContext.find(s)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-      case OUTER_TYPE_LOOKALIKE:
-        return u;
-      case METHOD_LOOK_ALIKE:
-        return findSecond(MethodDeclaration.class, u);
-      case EXPRESSION_LOOK_ALIKE:
-        return findSecond(Expression.class, findFirst.instanceOf(MethodDeclaration.class).in(u));
-      case STATEMENTS_LOOK_ALIKE:
-        return extractStatementIfOne(findFirst.instanceOf(Block.class).in(u));
-      default:
-        return null;
-    }
-  }
-
-  static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : (ASTNode) first(statements(az.block(¢)));
-  }
-
-  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
-    if (n == null)
-      return null;
-    final Wrapper<Boolean> foundFirst = new Wrapper<>();
-    foundFirst.set(Boolean.FALSE);
-    final Wrapper<ASTNode> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
-      @Override public boolean preVisit2(final ASTNode ¢) {
-        if ($.get() != null)
-          return false;
-        if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
-          return true;
-        if (foundFirst.get().booleanValue()) {
-          $.set(¢);
-          assert $.get() == ¢;
-          return false;
-        }
-        foundFirst.set(Boolean.TRUE);
-        return true;
-      }
-    });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
-    return $$;
-  }
-
-  public static statementsTipper statementsTipper(final String p, final String s, final String d) {
-    return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
-  }
-
-  public static expression that(final String ¢) {
-    return new expression(¢);
-  }
-
-  public static tipper tipper(final String p, final String s, final String d) {
-    return new tipper(p, s, d);
-  }
-
-  public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
-    return new tipper(¢);
-  }
-
-  static String wrapCode(final String ¢) {
-    switch (GuessedContext.find(¢)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-      case OUTER_TYPE_LOOKALIKE:
-        return ¢;
-      case EXPRESSION_LOOK_ALIKE:
-        return "class X{int f(){return " + ¢ + ";}}";
-      case METHOD_LOOK_ALIKE:
-        return "class X{" + ¢ + "}";
-      case STATEMENTS_LOOK_ALIKE:
-        return "class X{int f(){" + ¢ + "}}";
-      default:
-        fail(¢ + " is not like anything I know...");
-        break;
-    }
-    return null;
   }
 }

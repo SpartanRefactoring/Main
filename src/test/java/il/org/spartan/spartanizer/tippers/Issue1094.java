@@ -20,25 +20,29 @@ public class Issue1094 extends MetaFixture {
         .stays();
   }
 
+  @Test public void b1() {
+    trimmingOf("void f(){ try {} finally{}}")//
+        .gives("void f(){ }")//
+        .stays();
+  }
+
+  @Test public void b1a() {
+    trimmingOf("void f(){ try(File f = new File()) {} finally{}}")//
+        .gives("void f(){ }")//
+        .stays();
+  }
+
+  @Test public void ba() {
+    trimmingOf("void f(){ try {} finally{}}")//
+        .gives("void f(){ }")//
+        .stays();
+  }
+
   @Test public void c() {
     trimmingOf("void f() { try { a(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
-        .stays();
-  }
-
-  @Test public void d() {
-    trimmingOf("void f() { try { a(); b(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
-        .gives("void f(){{ a();b();} }")//
-        .gives("void f(){ a();b(); }")//
-        .stays();
-  }
-
-  @Test public void b1() {
-    trimmingOf("void f(){ try {} finally{}}")//
-        .gives("void f(){ }")//
         .stays();
   }
 
@@ -50,10 +54,29 @@ public class Issue1094 extends MetaFixture {
         .stays();
   }
 
+  @Test public void c1a() {
+    trimmingOf("void f() { try(File f = new File()) { a(); } finally { }}") //
+        .stays();
+  }
+
   @Test public void c1x() {
     trimmingOf("void f() { try { a(); } finally { }}") //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
+        .stays();
+  }
+
+  @Test public void ca() {
+    trimmingOf("void f() { try(File f = new File()) { a(); } finally { }}") //
+        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("void f() { try { a(); b(); } finally { }}") //
+        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .gives("void f(){{ a();b();} }")//
+        .gives("void f(){ a();b(); }")//
         .stays();
   }
 
@@ -65,37 +88,14 @@ public class Issue1094 extends MetaFixture {
         .stays();
   }
 
-  @Test public void ba() {
-    trimmingOf("void f(){ try {} finally{}}")//
-        .gives("void f(){ }")//
-        .stays();
-  }
-
-  @Test public void ca() {
-    trimmingOf("void f() { try(File f = new File()) { a(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+  @Test public void d1a() {
+    trimmingOf("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
         .stays();
   }
 
   @Test public void da() {
     trimmingOf("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
-        .stays();
-  }
-
-  @Test public void b1a() {
-    trimmingOf("void f(){ try(File f = new File()) {} finally{}}")//
-        .gives("void f(){ }")//
-        .stays();
-  }
-
-  @Test public void c1a() {
-    trimmingOf("void f() { try(File f = new File()) { a(); } finally { }}") //
-        .stays();
-  }
-
-  @Test public void d1a() {
-    trimmingOf("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
         .stays();
   }
 }

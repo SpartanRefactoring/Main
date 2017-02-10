@@ -50,6 +50,6 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
   }
 
   private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
-    return l1.size() == l2.size() && l1.stream().allMatch(λ -> (λ + "").equals(l2.get(l1.indexOf(λ)) + ""));
+    return l1.size() == l2.size() && l1.stream().allMatch(λ -> (λ .toString()).equals(l2.get(l1.indexOf(λ)) + ""));
   }
 }

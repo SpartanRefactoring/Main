@@ -2,9 +2,8 @@
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -98,16 +97,16 @@ public class switchBranch {
     return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases()) + "") < 0;
   }
 
-  private void addAll(final List<Statement> ¢) {
-    ¢.addAll(cases.stream().map(copy::of).collect(Collectors.toList()));
-    ¢.addAll(statements.stream().map(copy::of).collect(Collectors.toList()));
+  private void addAll(final Collection<Statement> ¢) {
+    ¢.addAll(cases.stream().map(copy::of).collect(toList()));
+    ¢.addAll(statements.stream().map(copy::of).collect(toList()));
   }
 
-  private static void addAll(final List<Statement> ss, final List<switchBranch> bs) {
+  private static void addAll(final Collection<Statement> ss, final Iterable<switchBranch> bs) {
     bs.forEach(λ -> λ.addAll(ss));
   }
 
-  public static SwitchStatement makeSwitchStatement(final List<switchBranch> bs, final Expression x, final AST t) {
+  public static SwitchStatement makeSwitchStatement(final Iterable<switchBranch> bs, final Expression x, final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
@@ -115,12 +114,12 @@ public class switchBranch {
   }
 
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
+    final List<Statement> l = step.statements(n);
+    assert iz.switchCase(lisp.first(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
     final List<switchBranch> $ = new ArrayList<>();
-    final List<Statement> l = step.statements(n);
     boolean nextBranch = true;
-    assert iz.switchCase(lisp.first(l));
     for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
       if (nextBranch) {
         c = new ArrayList<>();
@@ -191,8 +190,8 @@ public class switchBranch {
     return $;
   }
 
-  public static List<Statement> removeBreakSequencer(final List<Statement> ss) {
-    final List<Statement> $ = new ArrayList<>();
+  public static Collection<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
+    final Collection<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);
       if (s != null)

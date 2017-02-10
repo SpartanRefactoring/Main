@@ -43,7 +43,7 @@ public interface metrics {
     if (n == null)
       return 0;
     final Recurser<Integer> $ = new Recurser<>(n, 0);
-    final Set<Integer> nodesTypeSet = new HashSet<>();
+    final Collection<Integer> nodesTypeSet = new HashSet<>();
     return $.preVisit(λ -> {
       if (nodesTypeSet.contains(λ.getRoot().getNodeType()))
         return λ.getCurrent();
