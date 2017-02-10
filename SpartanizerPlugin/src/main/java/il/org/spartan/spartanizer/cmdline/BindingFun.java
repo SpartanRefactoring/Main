@@ -17,9 +17,6 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 final class BindingFun implements IApplication {
-  /**
-   * 
-   */
   private static final String C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS = "C:\\Users\\sorimar\\workspace\\testAddComments";
 
   private static void iterateMethodInvocations(final CompilationUnit u) {

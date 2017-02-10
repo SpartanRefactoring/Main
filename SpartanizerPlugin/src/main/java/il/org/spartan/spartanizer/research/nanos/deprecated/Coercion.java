@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.research.nanos.deprecated;
-import static il.org.spartan.spartanizer.utils.monitor.*;
 import java.io.*;
 import java.nio.file.*;
 
@@ -15,6 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Coercion pattern <br>
  * Whenever we have ((Clazz)obj) turn into az.Clazz(obj) <br>
@@ -162,8 +162,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
           ).toPath(),
           $.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (final IOException ¢) {
-           monitor.infoIOException(¢, "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template"
-               );
+         monitor.infoIOException(¢);
     }
     return $;
   }

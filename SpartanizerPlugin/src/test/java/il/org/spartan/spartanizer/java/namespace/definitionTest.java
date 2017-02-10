@@ -104,32 +104,32 @@ public class definitionTest extends MetaFixture {
   }
 
   @ScopeSize(41) @Test public void a13() {
-    markers().forEach(λ -> annotations.put(("" + λ), λ));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@try¢") != null;
   }
 
   @Test @method public void a14() {
-    markers().forEach(λ -> annotations.put(("" + λ), λ));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@catch¢") != null;
   }
 
   @Test public void a15() {
-    markers().forEach(λ -> annotations.put(("" + λ), λ));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@field") != null;
   }
 
   @Test @method public void a16() {
-    markers().forEach(λ -> annotations.put(("" + λ), λ));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@Ignore") != null;
   }
 
   @Test @method public void a17() {
-    markers().forEach(λ -> annotations.put(("" + λ), λ));
+    markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@enumConstant") != null;
   }
 
   @Test public void a18() {
-    markers().stream().filter(λ -> definition.Kind.has(("" + λ).substring(1))).forEach(a -> annotees.of(a)
+    markers().stream().filter(λ -> definition.Kind.has((λ + "").substring(1))).forEach(a -> annotees.of(a)
         .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
@@ -162,12 +162,12 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a25() {
-    markers().stream().filter(λ -> "@for¢".equals(("" + λ))).forEach(a -> annotees.of(a)
+    markers().stream().filter(λ -> "@for¢".equals(λ + "")).forEach(a -> annotees.of(a)
         .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
   @Test public void a26() {
-    markers().stream().filter(λ -> "@try¢".equals(("" + λ))).forEach(a -> annotees.of(a)
+    markers().stream().filter(λ -> "@try¢".equals(λ + "")).forEach(a -> annotees.of(a)
         .forEach(λ -> azzert.that(a + "\n\t" + λ + "/" + λ.getClass() + ":\n\t" + definition.kind(λ), "@" + definition.kind(λ), is(a + ""))));
   }
 
