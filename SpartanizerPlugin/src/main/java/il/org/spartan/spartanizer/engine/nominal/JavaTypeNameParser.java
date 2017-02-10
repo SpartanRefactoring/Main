@@ -78,7 +78,7 @@ public final class JavaTypeNameParser {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
 
-  String lastName() {
+  CharSequence lastName() {
     return typeName.substring(lastNameIndex());
   }
 

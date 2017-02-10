@@ -51,12 +51,6 @@ public class AggregateTest {
         .stays();
   }
 
-  @Test public void respect() {
-    trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
-        .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
-        .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
-  }
-
   @Test public void f() {
     trimmingOf("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();")//
         .using(EnhancedForStatement.class, new Aggregate())//
@@ -71,5 +65,11 @@ public class AggregateTest {
         .gives("int $=init;$+=ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
         .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
     ;
+  }
+
+  @Test public void respect() {
+    trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
+        .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
+        .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
   }
 }

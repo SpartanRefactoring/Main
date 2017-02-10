@@ -85,17 +85,16 @@ public enum sideEffects {
   }
 
   public static boolean free(final ASTNode ¢) {
-    return ¢ == null ? true
-        : iz.expression(¢) ? free(az.expression(¢))
+    return ¢ == null || (iz.expression(¢) ? free(az.expression(¢))
             : iz.expressionStatement(¢) ? free(az.expressionStatement(¢))
-                : iz.ifStatement(¢) ? free(az.ifStatement(¢))
-                    : iz.whileStatement(¢) ? free(az.whileStatement(¢))
-                        : iz.forStatement(¢) ? free(az.forStatement(¢))
-                            : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢))
-                                : iz.block(¢) ? free(az.block(¢)) : false;
+            : iz.ifStatement(¢) ? free(az.ifStatement(¢))
+            : iz.whileStatement(¢) ? free(az.whileStatement(¢))
+            : iz.forStatement(¢) ? free(az.forStatement(¢))
+            : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢))
+            : iz.block(¢) && free(az.block(¢)));
   }
 
-  public static boolean free(ForStatement ¢) {
+  public static boolean free(final ForStatement ¢) {
     return free(initializers(¢)) && free(¢.getExpression()) && free(updaters(¢)) && free(body(¢));
   }
 

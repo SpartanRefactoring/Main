@@ -23,6 +23,11 @@ public final class InitializerTest {
   }
   static int b;
   static int c;
+
+  static void print(final Object ¢) {
+    ___.______unused(¢);
+  }
+
   final int e;
   {
     // Instance Initializer can union some operations which are required for
@@ -43,9 +48,5 @@ public final class InitializerTest {
   @Test public void T_01() {
     i = new InitializerTest();
     azzert.that(InitializerTest.a, is(0));
-  }
-
-  static void print(final Object ¢) {
-    ___.______unused(¢);
   }
 }

@@ -46,8 +46,8 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
     return initializer == null || haz.annotation(f);
   }
 
-  private static List<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+  private static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
+    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
       if (brother == f) {

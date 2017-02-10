@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016 */
 public interface namer {
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
-  String forbidden = "_", //
-      anonymous = "__", //
-      return¢ = "$", //
-      current = "¢", //
-      lambda = "λ", //
-      specials[] = { forbidden, return¢, anonymous, current, lambda };
+  String forbidden = "_"; //
+  String anonymous = "__"; //
+  String return¢ = "$"; //
+  String current = "¢"; //
+  String lambda = "λ"; //
+  String[] specials = {forbidden, return¢, anonymous, current, lambda};
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
@@ -63,10 +63,15 @@ public interface namer {
   }
 
   static String shorten(final List<Type> ¢) {
-    return ¢.stream()
-        .filter(
-            λ -> ((λ + "").length() != 1 || !Character.isUpperCase(first(λ + ""))) && (!iz.wildcardType(λ) || az.wildcardType(λ).getBound() != null))
-        .map(namer::shorten).findFirst().orElse(null);
+    return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
+  }
+
+  static boolean interestingType(final Type ¢) {
+    return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
+  }
+
+  static boolean usefulTypeName(final String typeName) {
+    return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
   }
 
   static String shorten(final Name ¢) {

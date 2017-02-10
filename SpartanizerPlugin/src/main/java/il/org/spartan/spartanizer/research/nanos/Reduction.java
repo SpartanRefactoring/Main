@@ -20,11 +20,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Reduction extends NanoPatternTipper<MethodInvocation> {
   @Override public boolean canTip(final MethodInvocation ¢) {
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
-    return identifier($).equals(identifier(¢))//
-        && sameSize(parameters($), arguments(¢));
+    return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
 
-  private static boolean sameSize(final List<SingleVariableDeclaration> parameters, final List<Expression> arguments) {
+  private static boolean sameSize(final Collection<SingleVariableDeclaration> parameters, final Collection<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();

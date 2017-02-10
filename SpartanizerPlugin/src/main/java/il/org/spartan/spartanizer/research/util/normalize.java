@@ -73,8 +73,7 @@ public enum normalize {
   }
 
   public static String shortenIdentifiers(final String s) {
-    final Map<String, String> renaming = new HashMap<>();
-    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
+      final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
     final Document $ = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
@@ -82,7 +81,8 @@ public enum normalize {
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
-    n.accept(new ASTVisitor() {
+      final Map<String, String> renaming = new HashMap<>();
+      n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;
@@ -102,7 +102,7 @@ public enum normalize {
     return ASTutils.extractCode(s, $);
   }
 
-  private static void applyChanges(final Document d, final ASTRewrite r) {
+  private static void applyChanges(final IDocument d, final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
@@ -110,7 +110,7 @@ public enum normalize {
     }
   }
 
-  public static void main(final String args[]) {
+  public static void main(final String[] args) {
     System.out.println("enter whatever:");
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";

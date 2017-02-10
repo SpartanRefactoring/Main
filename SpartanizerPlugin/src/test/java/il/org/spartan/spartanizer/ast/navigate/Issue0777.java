@@ -22,12 +22,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0777 {
-  @Test public void a() throws MalformedTreeException, IllegalArgumentException, BadLocationException {
+  @Test public void a() throws Exception {
     azzertEquals("class C{void foo(){}}", addMethodToType("class C{}", "void foo(){}"));
   }
 
   private String addMethodToType(final String type, final String method) throws BadLocationException {
-    final Document $ = new Document(type);
+    final IDocument $ = new Document(type);
     final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
     wizard.addMethodToType(d, az.methodDeclaration(ast(method)), r, null);

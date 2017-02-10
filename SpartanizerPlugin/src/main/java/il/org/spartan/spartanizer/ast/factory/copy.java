@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.ast.factory;
-
+import static java.util.stream.Collectors.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -18,26 +17,26 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2015-07-21 */
 public enum copy {
   ;
-  static List<Expression> adjust(final Operator o, final List<Expression> xs) {
-    return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(Collectors.toList());
+  static Iterable<Expression> adjust(final Operator o, final List<Expression> xs) {
+    return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(toList());
   }
 
   /** Duplicate all {@link ASTNode} objects found in a given list into another
    * list.
    * @param from JD
    * @param into JD */
-  public static <N extends ASTNode> void into(final List<N> from, final List<N> into) {
+  public static <N extends ASTNode> void into(final Iterable<N> from, final Collection<N> into) {
     from.forEach(λ -> into(λ, into));
   }
 
   /** Duplicate a {@link Statement} into another list.
    * @param from JD
    * @param into JD */
-  public static <N extends ASTNode> void into(final N from, final List<N> into) {
+  public static <N extends ASTNode> void into(final N from, final Collection<N> into) {
     into.add(copy.of(from));
   }
 
-  public static void modifiers(final List<IExtendedModifier> from, final List<IExtendedModifier> to) {
+  public static void modifiers(final Iterable<IExtendedModifier> from, final Collection<IExtendedModifier> to) {
     for (final IExtendedModifier ¢ : from)
       if (¢.isModifier())
         to.add(copy.of((Modifier) ¢));
@@ -55,8 +54,8 @@ public enum copy {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢s JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> List<¢> of(final List<¢> ¢s) {
-    return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(Collectors.toList());
+  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> Collection<¢> of(final Collection<¢> ¢s) {
+    return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(toList());
   }
 
   public static Expression ofWhileExpression(final WhileStatement ¢) {

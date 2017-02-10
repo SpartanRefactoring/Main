@@ -27,7 +27,7 @@ public enum ASTutils {
     return null;
   }
 
-  public static String extractCode(final String s, final Document d) {
+  public static String extractCode(final String s, final IDocument d) {
     switch (GuessedContext.find(s)) {
       case EXPRESSION_LOOK_ALIKE:
         return d.get().substring(23, d.get().length() - 3);

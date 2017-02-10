@@ -57,13 +57,13 @@ public interface definition {
     },
     for¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        final List<ASTNode> $ = new ArrayList<>();
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
         assert f != null;
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
         assert e != null;
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
+        final List<ASTNode> $ = new ArrayList<>();
         wizard.addRest($, f, fragments(e));
         wizard.addRest($, e, initializers(s));
         $.add(expression(s));

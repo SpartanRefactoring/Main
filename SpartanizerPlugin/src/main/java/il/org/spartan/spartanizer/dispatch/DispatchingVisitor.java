@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
  * we do not because some of the tests rely on the functions here returning
  * false/true, or for no reason. No one really know...
  * @contributor Oren Afek
- * @year 2016
+ * 
  * @see ExclusionManager
  * @author Yossi Gil
  * @since Sep 18, 2016 */
@@ -23,7 +23,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   protected abstract <N extends ASTNode> boolean go(N n);
 
   protected void initialization(@SuppressWarnings("unused") final ASTNode __) {
-    // overridden
+    // to be overridden
   }
 
   @Override public void preVisit(final ASTNode ¢) {

@@ -93,7 +93,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return self();
   }
 
-  public final Self col(final String key, final Object a[], final int i) {
+  public final Self col(final String key, final Object[] a, final int i) {
     return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
 

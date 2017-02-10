@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
@@ -19,19 +20,14 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
     ___.nothing();
     return yieldDescendants.untilClass(MethodInvocation.class).from(d).stream()//
         .map(ArgumentsTuple::stringify)//
-        .allMatch(λ -> {
-          assert $ != null;
-          return λ != null && λ.contains($);
-        });
+        .allMatch(λ -> λ != null && λ.contains($));
   }
 
   private static String stringify(final MethodDeclaration ¢) {
-    final String $ = parametersNames(¢) + "";
-    return $.length() <= 2 ? null : "," + $.substring(1, $.length() - 1).replaceAll(" ", "") + ",";
+    return separate.these(parametersNames(¢)).by(", ");
   }
 
   private static String stringify(final MethodInvocation ¢) {
-    final String $ = arguments(¢) + "";
-    return $.length() <= 2 ? null : "," + $.substring(1, $.length() - 1).replaceAll(" ", "") + ",";
+    return separate.these(arguments(¢)).by(", ");
   }
 }

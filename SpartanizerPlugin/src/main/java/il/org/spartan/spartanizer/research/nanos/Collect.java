@@ -19,37 +19,37 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-18 */
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
-  private static final List<UserDefinedTipper<Block>> blockTippers = new ArrayList<UserDefinedTipper<Block>>() {
+  private static final Collection<UserDefinedTipper<Block>> blockTippers = new ArrayList<UserDefinedTipper<Block>>() {
     static final long serialVersionUID = 1L;
     {
       add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
-          "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).collect(Collectors.toList());", //
+          "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).collect(toList());", //
           "Go Fluent: filter pattern"));
       add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($X3);", //
-          "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).map($N2 -> $X3).collect(Collectors.toList());", //
+          "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).map($N2 -> $X3).collect(toList());", //
           "Go Fluent: filter pattern"));
       add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($N2);", //
-          "$T1 $N1 = ($X1).stream().collect(Collectors.toList());", //
+          "$T1 $N1 = ($X1).stream().collect(toList());", //
           "Go Fluent: filter pattern"));
       add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($X3);", //
-          "$T1 $N1 = ($X1).stream().map($N2 -> $X3).collect(Collectors.toList());", //
+          "$T1 $N1 = ($X1).stream().map($N2 -> $X3).collect(toList());", //
           "Go Fluent: filter pattern"));
     }
   };
-  static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+  static final Collection<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
-          "$N1.addAll(($X1).stream().filter($N2 -> $X2).collect(Collectors.toList()));", //
+          "$N1.addAll(($X1).stream().filter($N2 -> $X2).collect(toList()));", //
           "Go Fluent: filter pattern"));
       add(patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($X3);", //
-          "$N1.addAll(($X1).stream().filter($N2 -> $X2).map($N2->$X3).collect(Collectors.toList()));", //
+          "$N1.addAll(($X1).stream().filter($N2 -> $X2).map($N2->$X3).collect(toList()));", //
           "Go Fluent: filter pattern"));
       add(patternTipper("for($T1 $N2 : $X1) $N1.add($N2);", //
-          "$N1.addAll(($X1).stream().collect(Collectors.toList()));", //
+          "$N1.addAll(($X1).stream().collect(toList()));", //
           "Go Fluent: filter pattern"));
       add(patternTipper("for($T1 $N2 : $X1) $N1.add($X3);", //
-          "$N1.addAll(($X1).stream().map($N2->$X3).collect(Collectors.toList()));", //
+          "$N1.addAll(($X1).stream().map($N2->$X3).collect(toList()));", //
           "Go Fluent: filter pattern"));
     }
   };

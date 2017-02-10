@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -52,7 +52,7 @@ public class Generic$Applicator {
   }
 
   protected static List<String> setAllTipperGroups() {
-    return Stream.of(TipperGroup.values()).map(Enum::name).collect(Collectors.toList());
+    return Stream.of(TipperGroup.values()).map(Enum::name).collect(toList());
   }
 
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {
@@ -94,8 +94,8 @@ public class Generic$Applicator {
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
-  private static List<String> setSelectedTipperGroups(final String... ¢) {
-    final List<String> $ = new ArrayList<>();
+  private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
+    final Collection<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;
   }

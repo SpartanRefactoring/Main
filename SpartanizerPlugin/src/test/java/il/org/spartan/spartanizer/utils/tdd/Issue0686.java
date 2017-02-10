@@ -19,10 +19,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0686 {
-  public class NotAString<T> extends ArrayList<T> {
-    private static final long serialVersionUID = 1L;
-  }
-
   @Test public void a() {
     assert getAll.stringVariables(az.methodDeclaration(wizard.ast("static void foo();"))) != null;
   }
@@ -68,5 +64,9 @@ public class Issue0686 {
   @Test public void k() {
     azzert.that(first(getAll.stringVariables(az.methodDeclaration(wizard.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
         .getName().getIdentifier(), is("s1"));
+  }
+
+  public static class NotAString<T> extends ArrayList<T> {
+    private static final long serialVersionUID = 1L;
   }
 }

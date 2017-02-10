@@ -4,7 +4,6 @@ import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -16,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
+import static java.util.stream.Collectors.*;
 /** Replace {@code 0+X}, {@code X+0}
  * @author Alex Kopzon
  * @author Dan Greenstein
@@ -24,7 +23,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
   private static ASTNode replacement(final List<Expression> ¢) {
-    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(Collectors.toList());
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
     return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
   }
 

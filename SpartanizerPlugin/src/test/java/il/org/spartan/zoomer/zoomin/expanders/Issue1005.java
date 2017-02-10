@@ -14,6 +14,38 @@ public class Issue1005 {
         .gives("i+=1;");
   }
 
+  @Test public void t10() {
+    bloatingOf("x = ++y;")//
+        .stays();
+  }
+
+  @Test public void t11() {
+    bloatingOf("int x = ++y;")//
+        .gives("int x; x=++y;")//
+        .stays();
+  }
+
+  @Test public void t12() {
+    bloatingOf("int x = ++y + 1;")//
+        .gives("int x; x=++y + 1;")//
+        .stays();
+  }
+
+  @Test public void t13() {
+    bloatingOf("for(;;){ --x;}")//
+        .gives("for(;;){ x-=1;}");
+  }
+
+  @Test public void t14() {
+    bloatingOf("--x;")//
+        .gives("x-=1;");
+  }
+
+  @Test public void t15() {
+    bloatingOf("for(String s=f(); !\"\".equals(s); s = f2(s)) {}")//
+        .stays();
+  }
+
   @Test public void t2() {
     bloatingOf("while(++i < 0) { x=f(i); }")//
         .stays();
@@ -52,37 +84,5 @@ public class Issue1005 {
   @Test public void t9() {
     bloatingOf("for(;;) {++x;}")//
         .gives("for(;;){ x+=1;}");
-  }
-
-  @Test public void t10() {
-    bloatingOf("x = ++y;")//
-        .stays();
-  }
-
-  @Test public void t11() {
-    bloatingOf("int x = ++y;")//
-        .gives("int x; x=++y;")//
-        .stays();
-  }
-
-  @Test public void t12() {
-    bloatingOf("int x = ++y + 1;")//
-        .gives("int x; x=++y + 1;")//
-        .stays();
-  }
-
-  @Test public void t13() {
-    bloatingOf("for(;;){ --x;}")//
-        .gives("for(;;){ x-=1;}");
-  }
-
-  @Test public void t14() {
-    bloatingOf("--x;")//
-        .gives("x-=1;");
-  }
-
-  @Test public void t15() {
-    bloatingOf("for(String s=f(); !\"\".equals(s); s = f2(s)) {}")//
-        .stays();
   }
 }

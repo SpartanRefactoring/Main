@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
@@ -68,7 +69,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
         }
       };
     } catch (final Exception ¢) {
-      ¢.printStackTrace();
+      monitor.logProbableBug(this, ¢); 
     }
     return null;
   }

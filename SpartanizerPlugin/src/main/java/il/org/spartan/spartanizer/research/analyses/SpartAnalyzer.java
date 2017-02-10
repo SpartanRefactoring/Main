@@ -46,6 +46,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new HoldsForAll(), //
                 new HoldsForAny(), //
                 null) //
+            .add(FieldDeclaration.class, //
+                new Constant(), //
+                null) //
             .add(ForStatement.class, //
                 new ForLoop.FindFirst(), //
                 new ForEachInRange(), //
@@ -134,7 +137,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  public List<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
+  public Collection<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(λ -> λ instanceof NanoPatternTipper).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;

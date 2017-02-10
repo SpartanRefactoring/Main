@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+import java.util.Objects;
+
 /** convert {@code if (a) { f(); return; } } into {@code
  * if (a)
  *   f();
@@ -34,7 +36,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<I
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     final ReturnStatement $ = az.returnStatement(hop.lastStatement(then(s)));
-    return $ == null || $.getExpression() != null || exclude != null && exclude.equals(s) ? null : new Tip(description(s), $, getClass()) {
+    return $ == null || $.getExpression() != null || Objects.equals(exclude, s) ? null : new Tip(description(s), $, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, make.emptyStatement($), g);
       }

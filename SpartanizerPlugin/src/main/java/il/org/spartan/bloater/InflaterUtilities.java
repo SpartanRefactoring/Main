@@ -1,7 +1,5 @@
 package il.org.spartan.bloater;
-
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -9,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.plugin.*;
@@ -31,10 +31,9 @@ public enum InflaterUtilities {
    *         more expanders should be added to the change ASTNode in a "for
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
-  static boolean rewrite(final ASTRewrite r, final List<ASTNode> ns, final TextEditGroup __) {
+  static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup __) {
+
     boolean $ = false;
-    if (ns.isEmpty())
-      return false;
     for (final ASTNode statement : ns) {
       final ReturnTernaryExpander cc = new ReturnTernaryExpander();
       if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {
@@ -66,7 +65,7 @@ public enum InflaterUtilities {
   /** @param u - the WrappedCompilationUnit which is bloated
    * @param ns - the list of statements which were selected and might be
    *        changed */
-  static void commitChanges(final WrappedCompilationUnit u, final List<ASTNode> ns) {
+  static void commitChanges(final WrappedCompilationUnit u, final Iterable<ASTNode> ns) {
     try {
       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
@@ -126,9 +125,9 @@ public enum InflaterUtilities {
 
   /** @param ns ASTNodes in compilation unit which might be relevant
    * @return list of selected ASTNodes */
-  static List<ASTNode> selectedStatements(final List<ASTNode> ns) {
+  static List<ASTNode> selectedStatements(final Collection<ASTNode> ns) {
     return ns.stream().filter(λ -> intervalsIntersect(λ.getStartPosition(), λ.getLength(), Selection.Util.current().textSelection.getOffset(),
-        Selection.Util.current().textSelection.getLength())).collect(Collectors.toList());
+        Selection.Util.current().textSelection.getLength())).collect(toList());
   }
 
   public static void aux_go(final CompilationUnit u, final OperationsProvider p) {

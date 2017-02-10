@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.*;
 /** Method delegating to super
  * @author Ori Marcovitch */
 public class SuperDelegator extends Delegator {
-  private static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("super.$N($A)", "", ""));

@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Generator for reports
  * @author Matteo Orru'
@@ -29,7 +30,7 @@ public class ReportGenerator implements ConfigurableReport {
   protected String beforeFileName;
   protected String spectrumFileName;
   protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
-  protected static final HashMap<String, PrintWriter> files = new HashMap<>();
+  protected static final Map<String, PrintWriter> files = new HashMap<>();
   @SuppressWarnings("rawtypes") protected static HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
 
   @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
@@ -39,10 +40,10 @@ public class ReportGenerator implements ConfigurableReport {
   public enum Util {
     ;
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
-          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+      return as.array(m("length" + id, λ -> (λ .toString()).length()), m("essence" + id, λ -> Essence.of(λ .toString()).length()),
+          m("tokens" + id, λ -> metrics.tokens(λ .toString())), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
           m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-          m("tide" + id, λ -> clean(λ + "").length()));//
+          m("tide" + id, λ -> clean(λ .toString()).length()));//
     }
 
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
@@ -118,30 +119,19 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    double a;
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      a = i.apply(¢.function().run(n1), ¢.function().run(n2)); // system.d(¢.function().run(n1),
-                                                               // ¢.function().run(n2));
-      ReportGenerator.Util.report("metrics").put(id + ¢.name(), a);
-    }
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    String a; // TODO Matteo: to be converted to double or float? -- Matteo
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      a = i.apply(¢.function().run(n1), ¢.function().run(n2)) + ""; // system.p(¢.function().run(n1),
-                                                                    // ¢.function().run(n2));
-      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
-    }
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    String a; // TODO Matteo: to be converted to double or float? -- Matteo
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-      a = system.p(¢.function().run(n1), ¢.function().run(n2));
-      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", a);
-    }
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", system.p(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
@@ -184,7 +174,7 @@ public class ReportGenerator implements ConfigurableReport {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
+      monitor.infoIOException(¢, id);
     }
   }
 
@@ -299,7 +289,7 @@ public class ReportGenerator implements ConfigurableReport {
     ReportGenerator.report(reportName).nl();
   }
 
-  public class LineWriter implements Consumer<Object> {
+  public static class LineWriter implements Consumer<Object> {
     @Override public void accept(@SuppressWarnings("unused") final Object __) {
       // erased
     }

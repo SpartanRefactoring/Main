@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -36,7 +36,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   public List<ICompilationUnit> getCompilationUnits() {
-    return inner.stream().map(λ -> λ.descriptor).collect(Collectors.toList());
+    return inner.stream().map(λ -> λ.descriptor).collect(toList());
   }
 
   /** Factory method.
@@ -89,7 +89,7 @@ public class Selection extends AbstractSelection<Selection> {
 
   /** @param ¢ JD
    * @return name for selection, extracted from the compilation unit */
-  private static String getName(final ICompilationUnit ¢) {
+  private static String getName(final IJavaElement ¢) {
     return ¢ == null ? null : ¢.getElementName();
   }
 
@@ -102,11 +102,10 @@ public class Selection extends AbstractSelection<Selection> {
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset(), l = o + textSelection.getLength();
-    int no = o, nl = l;
     try {
       final IMarker[] ms = r.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
       boolean changed = false;
-      int i = 0;
+      int i = 0, no = o;
       for (; i < ms.length; ++i) {
         if (ms[i] == null)
           continue;
@@ -120,6 +119,7 @@ public class Selection extends AbstractSelection<Selection> {
           break;
         }
       }
+      int nl = l;
       for (; i < ms.length; ++i) {
         final int ce = ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue();
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() <= l && ce >= l) {
@@ -343,7 +343,7 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param s JD
      * @return selection by tree selection */
-    private static Selection by(final ITreeSelection s) {
+    private static Selection by(final IStructuredSelection s) {
       final List<?> ss = s.toList();
       if (ss.size() == 1) {
         final Object o = first(ss);
@@ -356,12 +356,12 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       final Selection $ = Selection.empty();
-      final List<MarkerItem> is = new LinkedList<>();
-      final List<IJavaProject> ps = new LinkedList<>();
-      final List<IPackageFragmentRoot> rs = new LinkedList<>();
-      final List<IPackageFragment> hs = new LinkedList<>();
-      final List<ICompilationUnit> cs = new LinkedList<>();
-      final List<IMember> ms = new LinkedList<>();
+      final Collection<MarkerItem> is = new LinkedList<>();
+      final Collection<IJavaProject> ps = new LinkedList<>();
+      final Collection<IPackageFragmentRoot> rs = new LinkedList<>();
+      final Collection<IPackageFragment> hs = new LinkedList<>();
+      final Collection<ICompilationUnit> cs = new LinkedList<>();
+      final Collection<IMember> ms = new LinkedList<>();
       for (final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
@@ -435,7 +435,7 @@ public class Selection extends AbstractSelection<Selection> {
       return $ == null ? empty() : Selection.of(¢.getCompilationUnit(), new TextSelection($.getOffset(), $.getLength())).setName(¢.getElementName());
     }
 
-    public static ISourceRange makertToRange(final IMember $) {
+    public static ISourceRange makertToRange(final ISourceReference $) {
       try {
         return $.getSourceRange();
       } catch (final JavaModelException ¢) {
@@ -476,8 +476,8 @@ public class Selection extends AbstractSelection<Selection> {
      * @param us list of files in selection
      * @param ms list of members in selection
      * @return name for the selection */
-    private static String getMultiSelectionName(final List<MarkerItem> is, final List<IJavaProject> ps, final List<IPackageFragmentRoot> rs,
-        final List<IPackageFragment> hs, final List<ICompilationUnit> us, final List<IMember> ms) {
+    private static String getMultiSelectionName(final Collection<MarkerItem> is, final Iterable<IJavaProject> ps, final Collection<IPackageFragmentRoot> rs,
+                                                final Collection<IPackageFragment> hs, final Collection<ICompilationUnit> us, final Collection<IMember> ms) {
       final List<String> $ = new LinkedList<>();
       ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())

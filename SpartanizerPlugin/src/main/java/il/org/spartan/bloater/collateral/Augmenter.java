@@ -1,9 +1,5 @@
 package il.org.spartan.bloater.collateral;
-
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -15,6 +11,10 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class Augmenter implements Application {
-  private final NullProgressMonitor npm = new NullProgressMonitor();
+  private final IProgressMonitor npm = new NullProgressMonitor();
   private static final int MIN_STATEMENTS_COUNT = 2;
 
   @Override public Integer commitChanges(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
@@ -61,7 +61,7 @@ public class Augmenter implements Application {
           $.add(statements(b));
         else {
           final List<Statement> l = new ArrayList<>();
-          l.addAll(statements(b).stream().filter(λ -> inRange(λ, s)).collect(Collectors.toList()));
+          l.addAll(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
@@ -160,7 +160,7 @@ public class Augmenter implements Application {
    * when it has less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
    * @return true iff list of statements should be discarded */
-  static boolean discardOptimization(final List<Statement> ¢) {
+  static boolean discardOptimization(final Collection<Statement> ¢) {
     return ¢ == null || ¢.size() < MIN_STATEMENTS_COUNT;
   }
 

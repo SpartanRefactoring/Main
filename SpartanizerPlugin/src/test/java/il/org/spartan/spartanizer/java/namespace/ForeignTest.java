@@ -15,17 +15,22 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class ForeignTest extends MetaFixture {
-  final String repository;
   static final String FOREIGN = foreign.class.getSimpleName() + "";
+
+  @Parameters(name = "{index}. {0} does not know {1} ({2})") //
+  public static Collection<Object[]> data() {
+    return collect(FOREIGN, fixtures);
+  }
+
+  final String repository;
+  @knows({ "type KnowsTest", "KnowsTest/2", "foreign", "foreign" }) private final String foreign;
+  @knows({ "type KnowsTest", "recognizes/0", "name" }) private final SimpleName name;
 
   public ForeignTest(final SimpleName name, final String foreign, final String repository) {
     this.name = name;
     this.foreign = foreign;
     this.repository = repository;
   }
-
-  @knows({ "type KnowsTest", "KnowsTest/2", "foreign", "foreign" }) private final String foreign;
-  @knows({ "type KnowsTest", "recognizes/0", "name" }) private final SimpleName name;
 
   @Test public void foreign() {
     assert !Environment.of(name).has(foreign) : //
@@ -36,10 +41,5 @@ public class ForeignTest extends MetaFixture {
         "\n enviroment children = " + Environment.of(name).description() + //
         "\n ancestry(name) = " + ancestry(name) //
     ;
-  }
-
-  @Parameters(name = "{index}. {0} does not know {1} ({2})") //
-  public static Collection<Object[]> data() {
-    return collect(FOREIGN, fixtures);
   }
 }

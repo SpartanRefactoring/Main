@@ -38,7 +38,7 @@ public enum LogToTest {
       return;
     }
     System.out.println("Creating test cases...");
-    final Set<String> xs = new HashSet<>();
+    final Collection<String> xs = new HashSet<>();
     final List<String> ts = new LinkedList<>();
     final Map<String, Integer> nu = new HashMap<>();
     for (final File element : fs)
@@ -67,14 +67,13 @@ public enum LogToTest {
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
     } catch (final IOException ¢) {
-      ¢.printStackTrace();
-      System.out.println("IO problem!");
+      monitor.infoIOException(¢);
       return;
     }
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
   }
 
-  private static void analyze(final Set<String> xs, final List<String> ts, final Map<String, Integer> nu, final List<String> ss) {
+  private static void analyze(final Collection<String> xs, final Collection<String> ts, final Map<String, Integer> nu, final List<String> ss) {
     final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
         errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))
@@ -92,8 +91,8 @@ public enum LogToTest {
         ss.get(2).trim().equals(Linguistic.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
 
-  private static void buildTest(final List<String> ss, final String errorLocationFileClean, final String errorLocationLine, final String errorName,
-      final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
+  private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine, final String errorName,
+                                final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, normalize.unwarpedTestcase(rawCode),
         errorLocationFileUnclean));
   }
@@ -105,7 +104,7 @@ public enum LogToTest {
         + ").doesNotCrash();\n}";
   }
 
-  private static String wrap(final List<String> ss, final String fileName) {
+  private static String wrap(final Iterable<String> ss, final String fileName) {
     final StringBuilder $ = new StringBuilder(
         "package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
             + "import org.junit.*;\n\n" + "/** @author Ori Roth\n" + "* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //

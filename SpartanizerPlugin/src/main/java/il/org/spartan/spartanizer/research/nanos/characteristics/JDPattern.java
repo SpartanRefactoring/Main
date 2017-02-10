@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Catches methods which their control flow is not affected by parameters
  * @author Ori Marcovitch */
 public class JDPattern extends JavadocMarkerNanoPattern {
-  static final Set<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X == null", "", ""));
@@ -29,7 +29,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;
-    final Set<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
+    final Collection<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
     final Bool $ = new Bool();
     $.inner = true;
@@ -64,7 +64,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
         return false;
       }
 
-      boolean checkContainsParameter(final List<Expression> xs) {
+      boolean checkContainsParameter(final Iterable<Expression> xs) {
         for (final Expression ¢ : xs)
           if (checkContainsParameter(¢))
             return true;
@@ -77,7 +77,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   /** @param root node to search in
    * @param ss variable names which are influenced by parameters
    * @return */
-  static boolean containsParameter(final ASTNode root, final Set<String> ss) {
+  static boolean containsParameter(final ASTNode root, final Collection<String> ss) {
     final Bool $ = new Bool();
     $.inner = false;
     root.accept(new ASTVisitor() {
@@ -89,8 +89,8 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $.inner;
   }
 
-  static Set<String> getInfluenced(final MethodDeclaration root, final Set<String> ps) {
-    final Set<String> $ = new HashSet<>();
+  static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
+    final Collection<String> $ = new HashSet<>();
     $.addAll(ps);
     body(root).accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {

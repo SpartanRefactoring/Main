@@ -14,6 +14,31 @@ public class Issue1007 {
         .gives("double t; t = (double) 2;");
   }
 
+  @Test public void t10() {
+    bloatingOf("double  t; t =1L * a;")//
+        .gives("double  t; t =(long) a;");
+  }
+
+  @Test public void t11() {
+    bloatingOf("double  t; t =a * 1L;")//
+        .gives("double  t; t =(long) a;");
+  }
+
+  @Test public void t12() {
+    bloatingOf("double  t; t =1L * 9 * a;")//
+        .gives("double  t; t =(long) 9 * a;");
+  }
+
+  @Test public void t13() {
+    bloatingOf("double  t; t =1L * 9 * a * b;")//
+        .gives("double  t; t =(long) 9 * a * b;");
+  }
+
+  @Test public void t14() {
+    bloatingOf("double  t; t =9 * a * 1L * b;")//
+        .gives("double  t; t =(long) 9 * a * b;");
+  }
+
   @Test public void t2() {
     bloatingOf("double  t; t = 1.0 * a;")//
         .gives("double  t; t =(double) a;");
@@ -52,30 +77,5 @@ public class Issue1007 {
   @Test public void t9() {
     bloatingOf("double  t; t = 1L * a;")//
         .gives("double  t; t =(long) a;");
-  }
-
-  @Test public void t10() {
-    bloatingOf("double  t; t =1L * a;")//
-        .gives("double  t; t =(long) a;");
-  }
-
-  @Test public void t11() {
-    bloatingOf("double  t; t =a * 1L;")//
-        .gives("double  t; t =(long) a;");
-  }
-
-  @Test public void t12() {
-    bloatingOf("double  t; t =1L * 9 * a;")//
-        .gives("double  t; t =(long) 9 * a;");
-  }
-
-  @Test public void t13() {
-    bloatingOf("double  t; t =1L * 9 * a * b;")//
-        .gives("double  t; t =(long) 9 * a * b;");
-  }
-
-  @Test public void t14() {
-    bloatingOf("double  t; t =9 * a * 1L * b;")//
-        .gives("double  t; t =(long) 9 * a * b;");
   }
 }

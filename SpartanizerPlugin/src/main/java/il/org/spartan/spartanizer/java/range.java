@@ -15,7 +15,7 @@ public class range {
     return makeFrom(¢).new BeforeTo();
   }
 
-  public static RangeIterator<?> infinite(final int ¢) {
+  public static Iterable<Integer> infinite(final int ¢) {
     return from(¢).to(¢).step(0).inclusive();
   }
 
@@ -82,7 +82,7 @@ public class range {
       return this;
     }
 
-    public Infinite infinite() {
+    public Iterable<Integer> infinite() {
       return range.infiniteFrom(from, step);
     }
 
@@ -112,7 +112,7 @@ public class range {
   }
 
   public class Infinite extends RangeIterator<Infinite> {
-    public Infinite step(final int ¢) {
+    public Iterable<Integer> step(final int ¢) {
       step = ¢;
       return this;
     }
