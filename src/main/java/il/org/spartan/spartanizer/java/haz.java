@@ -31,7 +31,7 @@ public enum haz {
   /** @param ¢ JD
    * @return */
   public static boolean anyStatements(final MethodDeclaration ¢) {
-    return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
+    return ¢ != null && statements(¢) != null && !statements(¢).isEmpty();
   }
 
   public static boolean binding(final ASTNode ¢) {
@@ -42,7 +42,7 @@ public enum haz {
    * @param ¢ method
    * @return */
   public static boolean booleanReturnType(final MethodDeclaration ¢) {
-    return ¢ != null && step.returnType(¢) != null && iz.booleanType(step.returnType(¢));
+    return ¢ != null && returnType(¢) != null && iz.booleanType(returnType(¢));
   }
 
   public static boolean cent(final ASTNode ¢) {
@@ -94,7 +94,7 @@ public enum haz {
       }
 
       boolean ¢(final ForStatement ¢) {
-        return ¢(step.initializers(¢));
+        return ¢(initializers(¢));
       }
 
       boolean ¢(final Collection<Expression> xs) {
@@ -123,11 +123,11 @@ public enum haz {
       }
 
       boolean ¢(final TryStatement ¢) {
-        return ¢¢¢(step.resources(¢)) || ¢¢(step.catchClauses(¢));
+        return ¢¢¢(resources(¢)) || ¢¢(catchClauses(¢));
       }
 
       boolean ¢(final VariableDeclarationExpression ¢) {
-        return ¢¢¢¢(step.fragments(¢));
+        return ¢¢¢¢(fragments(¢));
       }
 
       boolean ¢(final VariableDeclarationFragment ¢) {

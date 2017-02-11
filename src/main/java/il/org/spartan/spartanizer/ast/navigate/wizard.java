@@ -527,11 +527,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(λ -> (Modifier) λ).collect(Collectors.toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    return ms.stream().filter(λ -> test(λ, ps)).map(λ -> (Modifier) λ).collect(Collectors.toSet());
+    return ms.stream().filter(λ -> test(λ, ps)).map(Modifier.class::cast).collect(toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {

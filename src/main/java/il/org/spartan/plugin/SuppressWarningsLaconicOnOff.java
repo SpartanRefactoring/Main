@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
@@ -99,7 +99,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   static Collection<String> getKeywords(final String c, final String[] kws) {
-    return Stream.of(kws).filter(c::contains).collect(Collectors.toSet());
+    return Stream.of(kws).filter(c::contains).collect(toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {

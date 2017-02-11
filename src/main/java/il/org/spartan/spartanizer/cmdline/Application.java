@@ -112,7 +112,7 @@ final class Application implements IApplication {
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
-    final List<FileStats> fileStats = new ArrayList<>();
+    final Collection<FileStats> fileStats = new ArrayList<>();
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
       ICompilationUnit u = null;
       try {

@@ -412,7 +412,7 @@ public class Toolbox {
     return firstTipper(¢, get(¢));
   }
 
-  public List<Tipper<? extends ASTNode>> get(final int ¢) {
+  public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 

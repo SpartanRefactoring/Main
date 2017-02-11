@@ -305,7 +305,7 @@ public enum az {
   }
 
   public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
-    final List<IExtendedModifier> $ = new ArrayList<>();
+    final Collection<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;
   }

@@ -62,7 +62,7 @@ public enum analyze {
       return null;
     for (final FieldDeclaration $ : fieldDeclarations(az.typeDeclaration(d)))
       for (final VariableDeclarationFragment ¢ : fragments($))
-        if (step.identifier(¢).equals(n + ""))
+        if (identifier(¢).equals(n + ""))
           return step.type($) + "";
     return null;
   }
@@ -71,7 +71,7 @@ public enum analyze {
     final Str $ = new Str();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
-        if ($.notEmpty() || !step.identifier(¢).equals(n + ""))
+        if ($.notEmpty() || !identifier(¢).equals(n + ""))
           return true;
         $.set(step.type(¢));
         return false;

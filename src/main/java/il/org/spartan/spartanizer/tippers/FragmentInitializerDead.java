@@ -31,7 +31,7 @@ public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDe
     if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;
     final Expression e = f.getInitializer();
-    if (e == null || !iz.literal(e) || wizard.isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e)
+    if (e == null || !iz.literal(e) || isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e)
         || iz.interface¢(containing.typeDeclaration(parent)))
       return null;
     final VariableDeclarationFragment $ = copy.of(f);

@@ -68,7 +68,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     final Statement $ = az.statement(s.getParent());
     return Environment
         .of($ == null ? s
-            : iz.block($) ? lisp.last(step.statements(az.block($))) : iz.switchStatement($) ? lisp.last(step.statements(az.switchStatement($))) : s)
-        .has(step.identifier(n));
+            : iz.block($) ? lisp.last(statements(az.block($))) : iz.switchStatement($) ? lisp.last(statements(az.switchStatement($))) : s)
+        .has(identifier(n));
   }
 }
