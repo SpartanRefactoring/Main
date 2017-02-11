@@ -98,7 +98,7 @@ public enum SpartanizationComparator {
 
   public static NamedFunction<?>[] functions() {
     return as.array(//
-        m("length - ", λ -> (λ + "").length()), //
+        m("length - ", metrics::length), //
         m("essence - ", λ -> Essence.of(λ + "").length()), //
         m("tokens - ", λ -> metrics.tokens(λ + "")), //
         m("nodes - ", count::nodes), //

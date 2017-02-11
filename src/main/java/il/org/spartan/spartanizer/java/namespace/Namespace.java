@@ -157,6 +157,7 @@ public final class Namespace implements Environment {
             n = n.spawn(local);
             for (final VariableDeclarationFragment ¢ : fragments(vds))
               n.put(step.name(¢), type(vds));
+            
           }
           n.fillScope(s);
         }

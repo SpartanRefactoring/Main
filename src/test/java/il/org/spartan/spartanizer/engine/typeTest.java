@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
- * expression using {@link type.Axiom} .
+ * expression using {@link Axiom} .
  * @Since 2016-09
  * @author Niv Shalmon
  * @since Sep 7, 2016 */
@@ -536,11 +536,11 @@ public final class typeTest {
     }
 
     @Test public void cast20() {
-      azzert.that(type.of(into.e("(Integer)null")), is(NULL));
+      azzert.that(of(into.e("(Integer)null")), is(NULL));
     }
 
     @Test public void cast21() {
-      azzert.that(type.of(into.e("(Integer)((null))")), is(NULL));
+      azzert.that(of(into.e("(Integer)((null))")), is(NULL));
     }
 
     @Test public void conditional01() {
