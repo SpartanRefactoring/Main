@@ -1,7 +1,8 @@
 package il.org.spartan.plugin.preferences.revision;
-
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -22,7 +23,7 @@ import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -34,11 +35,13 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final Object[] os = d.getResult();
     if (os == null || d.getReturnCode() != Window.OK)
       return null;
-    final Set<String> es = new HashSet<>();
-    for (final Object ¢ : os)
-      if (¢ instanceof SpartanTipper)
-        es.add(((SpartanTipper) ¢).name());
-    XMLSpartan.updateEnabledTippers(p, es);
+    XMLSpartan.updateEnabledTippers(p,
+        Stream.of(os)//
+        .filter(SpartanTipper.class::isInstance)//
+        .map(SpartanTipper.class::cast)//
+        .map(SpartanTipper::name)//
+        .collect(toSet())//
+      );
     return null;
   }
 
@@ -46,9 +49,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * 2017-02-09)." );
    * <p>
    * @param p
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+   * @return */
   private static SpartanPreferencesDialog getDialog(final IProject p) {
     final Shell s = Display.getCurrent().getActiveShell();
     final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p, false);
@@ -56,11 +57,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       return null;
     final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
-      @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener listener) {
+      @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
 
-      @SuppressWarnings("unused") @Override public boolean isLabelProperty(final Object element, final String property) {
+      @Override @SuppressWarnings("unused") public boolean isLabelProperty(final Object __, final String property) {
         return false;
       }
 
@@ -68,24 +69,24 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         //
       }
 
-      @Override public void addListener(@SuppressWarnings("unused") final ILabelProviderListener listener) {
+      @Override public void addListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
 
-      @Override public String getText(final Object element) {
-        return element == null ? "" : element instanceof SpartanElement ? ((SpartanElement) element).name() : element.toString();
+      @Override public String getText(final Object ¢) {
+        return ¢ == null ? "" : !(¢ instanceof SpartanElement) ? ¢ + "" : ((SpartanElement) ¢).name();
       }
 
       @Override public Image getImage(@SuppressWarnings("unused") final Object __) {
         return null;
       }
     }, new ITreeContentProvider() {
-      @Override public boolean hasChildren(final Object element) {
-        return element instanceof SpartanCategory && ((SpartanCategory) element).hasChildren();
+      @Override public boolean hasChildren(final Object ¢) {
+        return ¢ instanceof SpartanCategory && ((SpartanCategory) ¢).hasChildren();
       }
 
-      @Override public Object getParent(final Object element) {
-        return element instanceof SpartanTipper ? ((SpartanTipper) element).parent() : null;
+      @Override public Object getParent(final Object ¢) {
+        return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent();
       }
 
       @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
@@ -93,7 +94,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       }
 
       @Override public Object[] getChildren(final Object parentElement) {
-        return parentElement instanceof SpartanCategory ? m.get(parentElement) : null;
+        return !(parentElement instanceof SpartanCategory) ? null : m.get(parentElement);
       }
     });
     $.setTitle("Spartanization Preferences");
@@ -104,9 +105,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final List<SpartanElement> et = new ArrayList<>();
     for (final SpartanCategory c : m.keySet()) {
       boolean enabled = true;
-      for (final SpartanTipper t : m.get(c))
-        if (t.enabled())
-          et.add(t);
+      for (final SpartanTipper ¢ : m.get(c))
+        if (¢.enabled())
+          et.add(¢);
         else
           enabled = false;
       if (enabled)
@@ -127,107 +128,59 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
 
     /* (non-Javadoc)
-     * 
+     *
      * @see
      * org.eclipse.ui.dialogs.CheckedTreeSelectionDialog#createTreeViewer(org.
      * eclipse.swt.widgets.Composite) */
     @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
       final CheckboxTreeViewer $ = super.createTreeViewer(parent);
       // addSelectionListener($); // deprecated method- by click
-      Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
-      Map<ToolTip, Rectangle> bounds = new HashMap<>();
+      final Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
+      final Map<ToolTip, Rectangle> bounds = new HashMap<>();
       $.getTree().addListener(SWT.MouseHover, new Listener() {
-        @Override public void handleEvent(Event e) {
+        @Override public void handleEvent(final Event e) {
           if (e == null)
             return;
-          Widget w = e.widget;
-          Rectangle r = e.getBounds();
+          final Widget w = e.widget;
+          final Rectangle r = e.getBounds();
           if (!(w instanceof Tree) || r == null)
             return;
-          TreeItem i = ((Tree) w).getItem(new Point(r.x, r.y));
+          final TreeItem i = ((Tree) w).getItem(new Point(r.x, r.y));
           if (i == null)
             return;
-          Object o = i.getData();
+          final Object o = i.getData();
           if (o instanceof SpartanTipper)
             createTooltip((SpartanTipper) o, i.getBounds());
         }
 
-        void createTooltip(SpartanTipper t, Rectangle r) {
-          for (ToolTip ¢ : tooltips.values())
-            ¢.setVisible(false);
+        void createTooltip(final SpartanTipper t, final Rectangle r) {
+          tooltips.values().forEach(λ -> λ.setVisible(false));
           if (!tooltips.containsKey(t)) {
-            ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
+            final ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
             tt.setMessage(t.description());
             tt.setAutoHide(true);
             tooltips.put(t, tt);
           }
-          Rectangle tp = $.getTree().getBounds();
-          Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
-          Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
-          ToolTip tt = tooltips.get(t);
+          final Rectangle tp = $.getTree().getBounds();
+          final Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
+          final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
+          final ToolTip tt = tooltips.get(t);
           bounds.put(tt, tr);
           tt.setLocation(tr.x + tr.width, tr.y);
           tt.setVisible(true);
         }
       });
-      $.getTree().addListener(SWT.MouseMove, new Listener() {
-        @Override public void handleEvent(Event e) {
-          for (ToolTip ¢ : tooltips.values())
-            if (¢.isVisible()) {
-              Rectangle tp = $.getTree().getBounds();
-              if (!bounds.get(¢).contains(Display.getCurrent().getActiveShell().toDisplay(tp.x + e.x, tp.y + e.y)))
-                ¢.setVisible(false);
-              break;
-            }
-        }
+      $.getTree().addListener(SWT.MouseMove, e -> {
+        for (final ToolTip ¢ : tooltips.values())
+          if (¢.isVisible()) {
+            final Rectangle tp = $.getTree().getBounds();
+            if (!bounds.get(¢).contains(Display.getCurrent().getActiveShell().toDisplay(tp.x + e.x, tp.y + e.y)))
+              ¢.setVisible(false);
+            break;
+          }
       });
-      $.getTree().addListener(SWT.MouseWheel, new Listener() {
-        @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
-          for (ToolTip ¢ : tooltips.values())
-            ¢.setVisible(false);
-        }
-      });
+      $.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
       return $;
-    }
-
-    @Deprecated @SuppressWarnings("unused") private void addSelectionListener(final CheckboxTreeViewer $) {
-      $.addSelectionChangedListener(e -> {
-        final ISelection s = e.getSelection();
-        final Object oo = e.getSource();
-        if (s == null || s.isEmpty() || !(s instanceof TreeSelection) || !(oo instanceof ContainerCheckedTreeViewer))
-          return;
-        final Control v = ((ContainerCheckedTreeViewer) oo).getControl();
-        if (v == null)
-          return;
-        final Object o = ((TreeSelection) s).getFirstElement();
-        if (o instanceof SpartanTipper)
-          tipperClicked((SpartanTipper) o, v);
-      });
-    }
-
-    @Deprecated private void tipperClicked(final SpartanTipper t, final Control v) {
-      final Display d = Display.getCurrent();
-      if (d == null)
-        return;
-      final Point p = d.getCursorLocation();
-      if (p == null)
-        return;
-      final ToolTip tt = new ToolTip(getShell(), SWT.BALLOON);
-      tt.setMessage(t.description());
-      tt.setLocation(p);
-      tt.setAutoHide(false);
-      // it is possible to set a delay, see
-      // http://stackoverflow.com/questions/1351245/setting-swt-tooltip-delays
-      v.addListener(SWT.MouseMove, new Listener() {
-        @Override public void handleEvent(@SuppressWarnings("unused") final Event __) {
-          v.removeListener(SWT.MouseMove, this);
-          if (tt.isDisposed())
-            return;
-          tt.setVisible(false);
-          tt.dispose();
-        }
-      });
-      tt.setVisible(true);
     }
   }
 }
