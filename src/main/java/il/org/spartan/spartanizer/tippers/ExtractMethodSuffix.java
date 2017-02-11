@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
-
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
 
@@ -58,7 +58,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return false;
     final List<String> ts = ds.stream().map(
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
-        .collect(Collectors.toList());
+        .collect(toList());
     // NANO: to rest of function
     return parameters(d).stream().allMatch(¢ -> ts.contains(¢.getType() + ""));
   }
@@ -131,7 +131,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     if (j == null)
       return;
     final List<TagElement> ts = tags(j);
-    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(Collectors.toList());
+    final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
     final Collection<TagElement> xs = new ArrayList<>();
