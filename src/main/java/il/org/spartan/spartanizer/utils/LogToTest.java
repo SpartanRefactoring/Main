@@ -39,11 +39,11 @@ public enum LogToTest {
     }
     System.out.println("Creating test cases...");
     final Collection<String> xs = new HashSet<>();
-    final List<String> ts = new LinkedList<>();
+    final List<String> ts = new ArrayList<>();
     final Map<String, Integer> nu = new HashMap<>();
     for (final File element : fs)
       try (BufferedReader r = new BufferedReader(new FileReader(element))) {
-        final List<String> es = new LinkedList<>();
+        final List<String> es = new ArrayList<>();
         es.add("");
         for (String l = r.readLine(); l != null;) {
           if (l.equals(monitor.FILE_SEPARATOR.trim())) {

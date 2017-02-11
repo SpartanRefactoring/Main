@@ -363,12 +363,12 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       final Selection $ = Selection.empty();
-      final Collection<MarkerItem> is = new LinkedList<>();
-      final Collection<IJavaProject> ps = new LinkedList<>();
-      final Collection<IPackageFragmentRoot> rs = new LinkedList<>();
-      final Collection<IPackageFragment> hs = new LinkedList<>();
-      final Collection<ICompilationUnit> cs = new LinkedList<>();
-      final Collection<IMember> ms = new LinkedList<>();
+      final Collection<MarkerItem> is = new ArrayList<>();
+      final Collection<IJavaProject> ps = new ArrayList<>();
+      final Collection<IPackageFragmentRoot> rs = new ArrayList<>();
+      final Collection<IPackageFragment> hs = new ArrayList<>();
+      final Collection<ICompilationUnit> cs = new ArrayList<>();
+      final Collection<IMember> ms = new ArrayList<>();
       for (final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
@@ -486,7 +486,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static String getMultiSelectionName(final Collection<MarkerItem> is, final Iterable<IJavaProject> ps,
         final Collection<IPackageFragmentRoot> rs, final Collection<IPackageFragment> hs, final Collection<ICompilationUnit> us,
         final Collection<IMember> ms) {
-      final List<String> $ = new LinkedList<>();
+      final List<String> $ = new ArrayList<>();
       ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())
         $.add(Linguistic.plurals("root package", rs.size()));
