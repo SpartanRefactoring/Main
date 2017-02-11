@@ -113,7 +113,7 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
-  private static Set<File> getJavaFiles(final File directory) {
+  private static Collection<File> getJavaFiles(final File directory) {
     final Set<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
       return $;

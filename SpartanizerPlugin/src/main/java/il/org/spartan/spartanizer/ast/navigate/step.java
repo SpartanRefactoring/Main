@@ -121,7 +121,7 @@ public enum step {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
-    final List<ConditionalExpression> $ = new ArrayList<>();
+    final Collection<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
     while (iz.conditionalExpression(elze(s)))
       $.add(s = az.conditionalExpression(elze(s)));
@@ -145,7 +145,7 @@ public enum step {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
-    final List<IfStatement> $ = new ArrayList<>();
+    final Collection<IfStatement> $ = new ArrayList<>();
     $.add(s);
     while (iz.ifStatement(elze(s)))
       $.add(s = az.ifStatement(elze(s)));

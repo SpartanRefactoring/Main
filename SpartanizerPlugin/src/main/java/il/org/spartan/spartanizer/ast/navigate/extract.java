@@ -42,7 +42,7 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   private static List<Annotation> annotations(final Iterable<IExtendedModifier> ms) {
@@ -60,7 +60,7 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -313,7 +313,7 @@ public enum extract {
   }
 
   public static Collection<Modifier> modifiers(final BodyDeclaration d) {
-    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(Collectors.toList());
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {

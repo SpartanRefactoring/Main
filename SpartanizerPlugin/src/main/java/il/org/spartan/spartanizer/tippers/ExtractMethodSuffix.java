@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -11,8 +9,9 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -73,7 +72,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(copy.of(d.getName()));
     fixName(i, equalParams);
-    ds.forEach(λ -> step.arguments(i).add(copy.of(name(λ))));
+    ds.forEach(λ -> arguments(i).add(copy.of(name(λ))));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
@@ -131,7 +130,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    final List<TagElement> ts = step.tags(j);
+    final List<TagElement> ts = tags(j);
     final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(Collectors.toList());
     boolean hasParamTags = false;
     int tagPosition = -1;

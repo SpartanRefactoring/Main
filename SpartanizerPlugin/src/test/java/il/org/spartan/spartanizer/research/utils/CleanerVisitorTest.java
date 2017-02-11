@@ -22,11 +22,11 @@ public class CleanerVisitorTest {
   }
 
   private static Predicate<ASTNode> createImportPredicate() {
-    return λ -> λ instanceof ImportDeclaration;
+    return ImportDeclaration.class::isInstance;
   }
 
   private static Predicate<ASTNode> createJavadocPredicate() {
-    return λ -> λ instanceof Javadoc;
+    return Javadoc.class::isInstance;
   }
 
   @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {

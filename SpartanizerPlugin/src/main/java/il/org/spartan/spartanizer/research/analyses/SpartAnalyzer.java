@@ -139,7 +139,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   public Collection<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
-    toolbox.getAllTippers().stream().filter(λ -> λ instanceof NanoPatternTipper).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
+    toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }
 }
