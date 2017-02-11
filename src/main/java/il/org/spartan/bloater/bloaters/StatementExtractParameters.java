@@ -80,8 +80,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          void goNonBlockParent(final ASTNode p, @SuppressWarnings("hiding") final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
-              final TextEditGroup g) {
+          void goNonBlockParent(final ASTNode p, @SuppressWarnings("hiding") final VariableDeclarationStatement s, final Statement ns,
+              final ASTRewrite r, final TextEditGroup g) {
             // TODO Ori Roth: Use subject to block.
             final Block b = p.getAST().newBlock();
             statements(b).add(s);

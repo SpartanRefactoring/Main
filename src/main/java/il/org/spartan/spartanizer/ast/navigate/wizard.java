@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
@@ -119,8 +120,7 @@ public interface wizard {
       }
     }
   };
-  @SuppressWarnings("unchecked")
-  Map<Class<? extends ASTNode>, Integer> //
+  @SuppressWarnings("unchecked") Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     static final long serialVersionUID = 1L;
     {
@@ -424,8 +424,9 @@ public interface wizard {
   static boolean hasSafeVarags(final MethodDeclaration d) {
     return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
   }
+
   static boolean compatible(final Assignment a1, final Assignment a2) {
-    return !incompatible(a1, a2); 
+    return !incompatible(a1, a2);
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
@@ -702,7 +703,7 @@ public interface wizard {
    * @param ¢ JD
    * @param xs JD */
   static void removeAll(final boolean ¢, final List<Expression> xs) {
-    //noinspection ForLoopReplaceableByWhile
+    // noinspection ForLoopReplaceableByWhile
     for (;;) {
       final Expression x = find(¢, xs);
       if (x == null)

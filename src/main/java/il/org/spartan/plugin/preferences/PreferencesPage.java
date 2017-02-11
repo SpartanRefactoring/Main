@@ -24,11 +24,10 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** ??
  * @author Daniel Mittelman
- * 
  * @author Ori Roth
  * @since 2.6 */
 public final class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-    public static final String[][] TIPPER_COMBO_OPTIONS = {{"Enabled", "on"}, {"Disabled", "off"}};
+  public static final String[][] TIPPER_COMBO_OPTIONS = { { "Enabled", "on" }, { "Disabled", "off" } };
   private final SpartanPropertyListener listener;
   private final AtomicBoolean refreshNeeded;
 
@@ -61,8 +60,7 @@ public final class PreferencesPage extends FieldEditorPreferencePage implements 
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     final GroupFieldEditor g = new GroupFieldEditor("Enabled spartanizations", getFieldEditorParent());
     // NANO - can't, g is not collection, this is a different add
-      as.list(TipperGroup.values())
-        .forEach(λ -> g.add(new BooleanFieldEditor(λ.id, λ.label, g.getFieldEditor())));
+    as.list(TipperGroup.values()).forEach(λ -> g.add(new BooleanFieldEditor(λ.id, λ.label, g.getFieldEditor())));
     addField(g);
     g.init();
     // XXX: this is an experiment I made in order to improve preferences page.

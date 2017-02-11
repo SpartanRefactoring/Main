@@ -87,18 +87,18 @@ public enum monitor {
     }
   };
   public static final String FILE_SEPARATOR = "######################################################################################################";
-
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-
   public static final monitor now = monitor.PRODUCTION;
 
   public static String className(final Class<?> ¢) {
     final String $ = ¢.getCanonicalName();
     return ¢.getSimpleName() + "[" + ($ == null ? ¢ : $) + "]";
   }
+
   public static String className(final Object ¢) {
     return className(¢.getClass());
   }
+
   public static void debug(final Object o, final Throwable t) {
     debug(//
         "An instance of " + className(o) + //
@@ -116,15 +116,15 @@ public enum monitor {
     return now.info(//
         "   Got an exception of type : " + className(¢) + //
             "\n      (probably I/O exception)" //
-        + "\n   The exception says: '" + ¢ + "'" //
-            );
+            + "\n   The exception says: '" + ¢ + "'" //
+    );
   }
 
   public static <T> T infoIOException(final Exception x, final String message) {
     return now.info(//
         "   Got an exception of type : " + className(x) + //
             "\n      (probably I/O exception)" + //
-        "\n   The exception says: '" + x + "'" + //
+            "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
             "\n       >>>'" + message + "'<<<" //
     );
@@ -173,8 +173,7 @@ public enum monitor {
   }
 
   public static <T> T logProbableBug(final Object o, final Throwable t) {
-    return 
-    now.error(//
+    return now.error(//
         "An instance of " + className(o) + //
             "\n was hit by a " + className(t) + //
             " exception, which may indicate a bug somwhwere." + //

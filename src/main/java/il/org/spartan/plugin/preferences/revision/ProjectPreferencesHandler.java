@@ -1,4 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.List;
@@ -37,11 +38,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       return null;
     XMLSpartan.updateEnabledTippers(p,
         Stream.of(os)//
-        .filter(SpartanTipper.class::isInstance)//
-        .map(SpartanTipper.class::cast)//
-        .map(SpartanTipper::name)//
-        .collect(toSet())//
-      );
+            .filter(SpartanTipper.class::isInstance)//
+            .map(SpartanTipper.class::cast)//
+            .map(SpartanTipper::name)//
+            .collect(toSet())//
+    );
     return null;
   }
 

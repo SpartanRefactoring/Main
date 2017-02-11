@@ -17,7 +17,6 @@ import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
- * 
  * @author Yossi Gil
  * @author Matteo Orru'
  * @since Oct 2, 2016 */
@@ -271,11 +270,10 @@ final class BatchSpartanizer extends FolderASTVisitor {
   }
 
   private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
-    if (f.getName().endsWith(".java"))
-      return true;
-    if (f.isDirectory())
-      return Arrays.stream(f.listFiles()).anyMatch(ff -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"));
-    return false;
+    return f.getName().endsWith(".java") ? true
+        : f.isDirectory()
+            ? Arrays.stream(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java"))
+            : false;
   }
 
   /** This method is called from outside, like in the case of

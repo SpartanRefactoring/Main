@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
@@ -36,10 +37,9 @@ public enum make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link makeAST} value to its corresponding  enum
-   * value
+  /** Converts the {@link makeAST} value to its corresponding enum value
    * @param tipper The {@link makeAST} type
-   * @return corresponding  value to the argument */
+   * @return corresponding value to the argument */
   public static make from(final makeAST ¢) {
     switch (¢) {
       case CLASS_BODY_DECLARATIONS:
@@ -64,8 +64,7 @@ public enum make {
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-  @SuppressWarnings("MethodCanBeVariableArityMethod")
-  public ASTParser parser(final char[] text) {
+  @SuppressWarnings("MethodCanBeVariableArityMethod") public ASTParser parser(final char[] text) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(text);
     return $;

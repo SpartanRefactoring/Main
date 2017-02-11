@@ -20,9 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-01 */
 public final class Cascade extends NotImplementedNanoPattern<Block> {
   @Override public boolean canTip(final Block x) {
-    if (iz.emptyBlock(x))
-      return false;
-    return IntStream.range(0, statements(x).size() - 1).anyMatch(¢ -> initializeThenUse(x, ¢));
+    return iz.emptyBlock(x) ? false : IntStream.range(0, statements(x).size() - 1).anyMatch(λ -> initializeThenUse(x, λ));
   }
 
   @Override public Tip pattern(@SuppressWarnings("unused") final Block __) {

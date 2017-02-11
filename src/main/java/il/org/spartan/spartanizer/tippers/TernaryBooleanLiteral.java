@@ -38,8 +38,8 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   }
 
   /** Consider an expression {@code
-      * a ? b : c
-      * } in a sense it is the same as {@code
+       * a ? b : c
+       * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>

@@ -698,7 +698,7 @@ public interface iz {
   }
 
   static boolean isOneOf(final int i, final int... is) {
-    return Arrays.stream(is).filter(λ ->i==λ).findAny().isPresent();
+    return Arrays.stream(is).filter(λ -> i == λ).findAny().isPresent();
   }
 
   /** @param a the assignment whose operator we want to check
@@ -1060,15 +1060,12 @@ public interface iz {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
+      case ASTNode.BLOCK: // Not the final implementation: should be changed
+        // when adding support for loops, switches etc.
+        return statements((Block) ¢).stream().anyMatch(iz::sequencerComplex);
       case ASTNode.IF_STATEMENT:
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
-      case ASTNode.BLOCK: // Not the final implementation: should be changed
-                          // when adding support for loops, switches etc.
-        for (final Statement s : statements((Block) ¢))
-          if (sequencerComplex(s))
-            return true;
-        return false;
       default:
         return sequencer(¢);
     }
@@ -1088,10 +1085,7 @@ public interface iz {
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
       case ASTNode.BLOCK:
-        for (final Statement s : statements(az.block(¢)))
-          if (sequencerComplex(s, type))
-            return true;
-        return false;
+        return statements(az.block(¢)).stream().anyMatch(s -> sequencerComplex(s, type));
       default:
         return sequencer(¢, type);
     }
