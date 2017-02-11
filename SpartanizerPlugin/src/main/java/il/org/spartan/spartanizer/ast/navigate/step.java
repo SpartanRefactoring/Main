@@ -173,7 +173,7 @@ public enum step {
   /** @param ¢ JD
    * @return */
   public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration ¢) {
-    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(λ -> λ != null && λ.isConstructor()).collect(Collectors.toList());
+    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(λ -> λ != null && λ.isConstructor()).collect(toList());
   }
 
   public static Collection<MethodDeclaration> constructors(final ASTNode ¢) {
@@ -553,7 +553,7 @@ public enum step {
   /** @param ¢ JD
    * @return */
   public static List<MethodDeclaration> methods(final AnonymousClassDeclaration ¢) {
-    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(Objects::nonNull).collect(Collectors.toList());
+    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(Objects::nonNull).collect(toList());
   }
 
   /** get all methods
