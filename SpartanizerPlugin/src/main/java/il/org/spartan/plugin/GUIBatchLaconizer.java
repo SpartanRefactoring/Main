@@ -77,7 +77,7 @@ public class GUIBatchLaconizer extends Applicator {
     listener().pop(message.run_finish.get(operationName(), selection().name, totalTipsInvoked.inner));
   }
 
-  /** Default listener configuration of {@link GUIBatchLaconizer}. Simple
+  /** Default listener configuration of . Simple
    * printing to console.
    * @return <code><b>this</b></code> applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
@@ -88,7 +88,7 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
-  /** Default listener configuration of {@link GUIBatchLaconizer}. Silent
+  /** Default listener configuration of . Silent
    * listener.
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultListenerSilent() {
@@ -96,7 +96,7 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
-  /** Default selection configuration of {@link GUIBatchLaconizer}. Normal
+  /** Default selection configuration of . Normal
    * eclipse user selection.
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultSelection() {
@@ -104,7 +104,7 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
-  /** Default passes configuration of {@link GUIBatchLaconizer}, with few
+  /** Default passes configuration of , with few
    * passes.
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultPassesFew() {
@@ -112,7 +112,7 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
-  /** Default passes configuration of {@link GUIBatchLaconizer}, with many
+  /** Default passes configuration of , with many
    * passes.
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultPassesMany() {
@@ -120,7 +120,7 @@ public class GUIBatchLaconizer extends Applicator {
     return this;
   }
 
-  /** Default run context configuration of {@link GUIBatchLaconizer}. Simply
+  /** Default run context configuration of . Simply
    * runs the {@link Runnable} in the current thread.
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultRunContext() {
@@ -129,7 +129,7 @@ public class GUIBatchLaconizer extends Applicator {
   }
 
   // TODO Ori Roth: use Policy / replacement for Trimmer.
-  /** Default run action configuration of {@link GUIBatchLaconizer}. Spartanize
+  /** Default run action configuration of . Spartanize
    * the {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */

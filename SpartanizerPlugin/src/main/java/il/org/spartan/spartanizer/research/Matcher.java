@@ -126,7 +126,7 @@ public final class Matcher {
 
   //
   /** Tries to match a pattern <b>p</b> to a given ASTNode <b>n</b>, using<br>
-   * the matching rules. For more info about these rules, see {@link Matcher}.
+   * the matching rules. For more info about these rules, see .
    * @param p pattern to match against.
    * @param ¢ ASTNode
    * @return True iff <b>n</b> matches the pattern <b>p</b>. */
@@ -319,7 +319,7 @@ public final class Matcher {
   /** Pairs variables from a pattern <b>p</b> with their corresponding
    * ASTNodes<br>
    * from <b>n</b> (as strings), using the matching rules. For more info about
-   * these rules, see {@link Matcher}.<br>
+   * these rules, see .<br>
    * This method doesn't verify that <b>n</b> indeed matches <b>p</b>.<br>
    * Examples:<br>
    * <table border='1'>

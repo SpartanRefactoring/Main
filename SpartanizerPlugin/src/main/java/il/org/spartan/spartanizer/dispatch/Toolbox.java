@@ -315,7 +315,7 @@ public class Toolbox {
     ;
   }
 
-  /** Make a {@link Toolbox} for a specific kind of tippers
+  /** Make a  for a specific kind of tippers
    * @param clazz JD
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
