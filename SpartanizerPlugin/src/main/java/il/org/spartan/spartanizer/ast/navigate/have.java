@@ -19,7 +19,7 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Expression... ¢) {
-    return Stream.of(¢).anyMatch(iz::booleanLiteral);
+    return booleanLiteral(Stream.of(¢));
   }
 
   /** Determine whether a boolean literal is present
@@ -27,7 +27,11 @@ public enum have {
    * @return <code><b>true</b></code> <i>iff</i> one or more of the elements
    *         that is a boolean literal. */
   public static boolean booleanLiteral(final Iterable<Expression> ¢) {
-    return az.stream(¢).anyMatch(iz::booleanLiteral);
+    return booleanLiteral(az.stream(¢));
+  }
+
+  public static boolean booleanLiteral(Stream<Expression> ¢) {
+    return ¢.anyMatch(iz::booleanLiteral);
   }
 
   /** Determine whether the boolean literal <code><b>false</b></code> is present

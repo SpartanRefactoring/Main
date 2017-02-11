@@ -54,7 +54,7 @@ public interface iz {
   }
 
   static boolean annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
-    return iz.nodeTypeEquals(¢, ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION);
+    return iz.nodeTypeEquals(¢, ANNOTATION_TYPE_MEMBER_DECLARATION);
   }
 
   static boolean anonymousClassDeclaration(final ASTNode ¢) {
@@ -111,16 +111,16 @@ public interface iz {
   static boolean blockEssential(final IfStatement s) {
     if (s == null)
       return false;
-    final Block b = az.block(step.parent(s));
+    final Block b = az.block(parent(s));
     if (b == null)
       return false;
-    final IfStatement $ = az.ifStatement(step.parent(b));
+    final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
-        || !wizard.same(s, az.astNode(first(statements(az.block(elze($))))))//
-        || wizard.recursiveElze(s) != null//
+        || !same(s, az.astNode(first(statements(az.block(elze($))))))//
+        || recursiveElze(s) != null//
         || elze($) == null)//
-        && $ != null && (elze($) == null || wizard.recursiveElze(s) == null)
-        && (elze($) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement($, s));
+        && $ != null && (elze($) == null || recursiveElze(s) == null)
+        && (elze($) != null || recursiveElze(s) != null || blockRequiredInReplacement($, s));
   }
 
   /** @param subject JD
@@ -143,7 +143,7 @@ public interface iz {
   static boolean blockRequiredInReplacement(final IfStatement old, final IfStatement newIf) {
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
-    final IfStatement $ = az.ifStatement(step.parent(old));
+    final IfStatement $ = az.ifStatement(parent(old));
     return $ != null && then($) == old && (elze($) == null || elze(newIf) == null)
         && (elze($) != null || elze(newIf) != null || blockRequiredInReplacement($, newIf));
   }
@@ -282,7 +282,7 @@ public interface iz {
    * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
     return ¢ != null
-        && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
+        && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
 
   /** @param n ASTNode that contains the identifier
@@ -293,7 +293,7 @@ public interface iz {
   }
 
   static boolean containsOperator(final ASTNode ¢) {
-    return iz.nodeTypeIn(¢, ASTNode.INFIX_EXPRESSION, ASTNode.PREFIX_EXPRESSION, ASTNode.POSTFIX_EXPRESSION, ASTNode.ASSIGNMENT);
+    return iz.nodeTypeIn(¢, INFIX_EXPRESSION, PREFIX_EXPRESSION, POSTFIX_EXPRESSION, ASSIGNMENT);
   }
 
   /** @param ¢ JD
@@ -394,7 +394,7 @@ public interface iz {
       case ASSIGNMENT:
         return deterministic(az.assignment(¢));
       case ARRAY_INITIALIZER:
-        return deterministic(az.arrayAccess(¢).getArray()) && iz.deterministic(step.expressions(az.arrayInitializer(¢)));
+        return deterministic(az.arrayAccess(¢).getArray()) && iz.deterministic(expressions(az.arrayInitializer(¢)));
       case ARRAY_CREATION:
       case CLASS_INSTANCE_CREATION:
       case POSTFIX_EXPRESSION:
@@ -414,7 +414,7 @@ public interface iz {
 
   static boolean deterministic(final MethodInvocation ¢) {
     return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
-        iz.deterministic(step.arguments(¢));
+        iz.deterministic(arguments(¢));
   }
 
   static boolean deterministic(final PrefixExpression ¢) {
@@ -640,11 +640,11 @@ public interface iz {
   }
 
   static boolean infixMinus(final ASTNode ¢) {
-    return operator(az.infixExpression(¢)) == wizard.MINUS2;
+    return operator(az.infixExpression(¢)) == MINUS2;
   }
 
   static boolean infixPlus(final ASTNode ¢) {
-    return operator(az.infixExpression(¢)) == wizard.PLUS2;
+    return operator(az.infixExpression(¢)) == PLUS2;
   }
 
   static boolean infixTimes(final Expression ¢) {
@@ -785,7 +785,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String $ = numberLiteral.getToken();
-    return NumericLiteralClassifier.of($) == type.Primitive.Certain.DOUBLE && izParser("Searching for double").parsesTo($, d);
+    return NumericLiteralClassifier.of($) == DOUBLE && izParser("Searching for double").parsesTo($, d);
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
@@ -793,7 +793,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String $ = numberLiteral.getToken();
-    return NumericLiteralClassifier.of($) == type.Primitive.Certain.INT && izParser("Searching for int").parsesTo($, i);
+    return NumericLiteralClassifier.of($) == INT && izParser("Searching for int").parsesTo($, i);
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
@@ -801,7 +801,7 @@ public interface iz {
     if (numberLiteral == null)
       return false;
     final String $ = numberLiteral.getToken();
-    return NumericLiteralClassifier.of($) == type.Primitive.Certain.LONG && izParser("Seaching for LONG").parsesTo($, l);
+    return NumericLiteralClassifier.of($) == LONG && izParser("Seaching for LONG").parsesTo($, l);
   }
 
   static boolean literal(final BooleanLiteral ¢, final boolean b) {
@@ -982,7 +982,7 @@ public interface iz {
   }
 
   static boolean prefixMinus(final Expression ¢) {
-    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == wizard.MINUS1;
+    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == MINUS1;
   }
 
   /** @param ¢ JD
@@ -1060,10 +1060,10 @@ public interface iz {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
-      case ASTNode.BLOCK: // Not the final implementation: should be changed
+      case BLOCK: // Not the final implementation: should be changed
         // when adding support for loops, switches etc.
         return statements((Block) ¢).stream().anyMatch(iz::sequencerComplex);
-      case ASTNode.IF_STATEMENT:
+      case IF_STATEMENT:
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
       default:
@@ -1081,10 +1081,10 @@ public interface iz {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
-      case ASTNode.IF_STATEMENT:
+      case IF_STATEMENT:
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
-      case ASTNode.BLOCK:
+      case BLOCK:
         return statements(az.block(¢)).stream().anyMatch(s -> sequencerComplex(s, type));
       default:
         return sequencer(¢, type);
@@ -1101,10 +1101,10 @@ public interface iz {
 
   static boolean simpleLoop(final ASTNode ¢) {
     return loop(¢) && !iz.block(//
-        nodeType(¢) == ASTNode.ENHANCED_FOR_STATEMENT ? body(az.enhancedFor(¢)) //
+        nodeType(¢) == ENHANCED_FOR_STATEMENT ? body(az.enhancedFor(¢)) //
             : nodeType(¢) == FOR_STATEMENT ? body(az.forStatement(¢))//
-                : nodeType(¢) == ASTNode.WHILE_STATEMENT ? body(az.whileStatement(¢))//
-                    : nodeType(¢) == ASTNode.DO_STATEMENT ? body(az.doStatement(¢))//
+                : nodeType(¢) == WHILE_STATEMENT ? body(az.whileStatement(¢))//
+                    : nodeType(¢) == DO_STATEMENT ? body(az.doStatement(¢))//
                         : null);
   }
 
@@ -1231,7 +1231,7 @@ public interface iz {
   }
 
   static boolean typeDeclarationStatement(final Statement ¢) {
-    return iz.nodeTypeEquals(¢, ASTNode.TYPE_DECLARATION_STATEMENT);
+    return iz.nodeTypeEquals(¢, TYPE_DECLARATION_STATEMENT);
   }
 
   /** @param ¢ JDs

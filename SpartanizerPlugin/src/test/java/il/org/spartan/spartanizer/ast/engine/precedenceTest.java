@@ -110,14 +110,14 @@ public final class precedenceTest {
   }
 
   @Test public void nonAssociative() {
-    azzert.that(wizard.nonAssociative(e("1")), is(false));
-    azzert.that(wizard.nonAssociative(e("-1")), is(false));
-    azzert.that(wizard.nonAssociative(e("-1+2")), is(false));
-    azzert.that(wizard.nonAssociative(e("1+2")), is(false));
-    azzert.that(wizard.nonAssociative(e("2-1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2/1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2%1")), is(true));
-    azzert.that(wizard.nonAssociative(e("2*1")), is(false));
+    assert wizard.nonAssociative(e("1")) == false;
+    assert wizard.nonAssociative(e("-1")) == false;
+    assert wizard.nonAssociative(e("-1+2")) == false;
+    assert wizard.nonAssociative(e("1+2")) == false;
+    assert wizard.nonAssociative(e("2-1")) == true;
+    assert wizard.nonAssociative(e("2/1")) == true;
+    assert wizard.nonAssociative(e("2%1")) == true;
+    assert wizard.nonAssociative(e("2*1")) == false;
   }
 
   @Test public void objectCreation() {
@@ -134,7 +134,7 @@ public final class precedenceTest {
   }
 
   @Test public void precedenceOfNulGreatherl() {
-    azzert.that(precedence.greater(null, c("a?b:c")), is(true));
+    assert precedence.greater(null, c("a?b:c")) == true;
   }
 
   @Test public void precedenceOfNull() {

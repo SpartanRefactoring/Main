@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExpressionComparatorTest {
   @Test public void additionSortTest() {
-    azzert.that(ExpressionComparator.ADDITION.sort(new ArrayList<Expression>() {
+    assert ExpressionComparator.ADDITION.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
         add(e("-a"));
@@ -29,7 +29,7 @@ public final class ExpressionComparatorTest {
         add(e("a+b+c"));
         add(e("f"));
       }
-    }), is(true));
+    }) == true;
   }
 
   @Test public void alphabeticalCompare() {
@@ -126,19 +126,19 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void longerFirstEqualLengthTest() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+3")), is(false));
+    assert ExpressionComparator.longerFirst((InfixExpression) e("1+3")) == false;
   }
 
   @Test public void longerFirstTestFalse() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")), is(false));
+    assert ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")) == false;
   }
 
   @Test public void longerFirstTestTrue() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")), is(true));
+    assert ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")) == true;
   }
 
   @Test public void longerFirstTestTrue2() {
-    azzert.that(ExpressionComparator.longerFirst((InfixExpression) e("h(1)+(f(1,2,3)+g(2,3,2,3,2,32))")), is(false));
+    assert ExpressionComparator.longerFirst((InfixExpression) e("h(1)+(f(1,2,3)+g(2,3,2,3,2,32))")) == false;
   }
 
   @Test public void longLiteralShortLiteralAddition() {
@@ -150,11 +150,11 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void moreArgumentsFalseTest() {
-    azzert.that(ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c,d,e)")), is(false));
+    assert ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c,d,e)")) == false;
   }
 
   @Test public void moreArgumentsTrueTest() {
-    azzert.that(ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c)")), is(true));
+    assert ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c)")) == true;
   }
 
   @Test public void nodesCompare() {
@@ -162,7 +162,7 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void prudentSortTest() {
-    azzert.that(ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
+    assert ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
         add(e("a"));
@@ -170,11 +170,11 @@ public final class ExpressionComparatorTest {
         add(e("a"));
         add(e("f"));
       }
-    }), is(false));
+    }) == false;
   }
 
   @Test public void prudentSortTest2() {
-    azzert.that(ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
+    assert ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
         add(e("a"));
@@ -183,7 +183,7 @@ public final class ExpressionComparatorTest {
         add(e("a"));
         add(e("-f"));
       }
-    }), is(true));
+    }) == true;
   }
 
   @Test public void twoClassConstants() {
