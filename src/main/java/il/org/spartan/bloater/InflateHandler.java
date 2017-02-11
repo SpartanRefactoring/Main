@@ -189,7 +189,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static Iterable<ITextEditor> getOpenedEditors() {
-    final Collection<ITextEditor> $ = new LinkedList<>();
+    final Collection<ITextEditor> $ = new ArrayList<>();
     final IWorkbenchPage p = getPage();
     if (p != null)
       for (final IEditorReference r : p.getEditorReferences()) {
