@@ -169,9 +169,7 @@ public enum haz {
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block body = body(d);
     if (body != null)
-      for (final Statement ¢ : statements(body))
-        if (Coupling.unknownNumberOfEvaluations(d, ¢))
-          return true;
+      return statements(body).stream().anyMatch(¢ -> Coupling.unknownNumberOfEvaluations(d, ¢));
     return false;
   }
 

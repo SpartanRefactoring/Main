@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.nanos;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -36,10 +37,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
     final List<Expression> os = extendedOperands($);
     if (os.isEmpty())
       return between(left($), right($));
-    for (int ¢ = 0; ¢ < os.size() - 1; ++¢)
-      if (between(os.get(¢), os.get(¢ + 1)))
-        return true;
-    return false;
+    return IntStream.range(0, os.size() - 1).anyMatch(¢ -> between(os.get(¢), os.get(¢ + 1)));
   }
 
   private static boolean between(final Expression x1, final Expression x2) {
