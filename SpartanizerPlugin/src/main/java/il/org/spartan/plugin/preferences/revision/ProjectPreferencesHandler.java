@@ -55,7 +55,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     if (s == null || m == null)
       return null;
     final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
-    final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(s, new ILabelProvider() {
+    final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
       @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener listener) {
         //
       }
@@ -133,6 +133,64 @@ public class ProjectPreferencesHandler extends AbstractHandler {
      * eclipse.swt.widgets.Composite) */
     @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
       final CheckboxTreeViewer $ = super.createTreeViewer(parent);
+      // addSelectionListener($); // deprecated method- by click
+      Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
+      Map<ToolTip, Rectangle> bounds = new HashMap<>();
+      $.getTree().addListener(SWT.MouseHover, new Listener() {
+        @Override public void handleEvent(Event e) {
+          if (e == null)
+            return;
+          Widget w = e.widget;
+          Rectangle r = e.getBounds();
+          if (!(w instanceof Tree) || r == null)
+            return;
+          TreeItem i = ((Tree) w).getItem(new Point(r.x, r.y));
+          if (i == null)
+            return;
+          Object o = i.getData();
+          if (o instanceof SpartanTipper)
+            createTooltip((SpartanTipper) o, i.getBounds());
+        }
+
+        void createTooltip(SpartanTipper t, Rectangle r) {
+          for (ToolTip ¢ : tooltips.values())
+            ¢.setVisible(false);
+          if (!tooltips.containsKey(t)) {
+            ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
+            tt.setMessage(t.description());
+            tt.setAutoHide(true);
+            tooltips.put(t, tt);
+          }
+          Rectangle tp = $.getTree().getBounds();
+          Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
+          Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
+          ToolTip tt = tooltips.get(t);
+          bounds.put(tt, tr);
+          tt.setLocation(tr.x + tr.width, tr.y);
+          tt.setVisible(true);
+        }
+      });
+      $.getTree().addListener(SWT.MouseMove, new Listener() {
+        @Override public void handleEvent(Event e) {
+          for (ToolTip ¢ : tooltips.values())
+            if (¢.isVisible()) {
+              Rectangle tp = $.getTree().getBounds();
+              if (!bounds.get(¢).contains(Display.getCurrent().getActiveShell().toDisplay(tp.x + e.x, tp.y + e.y)))
+                ¢.setVisible(false);
+              break;
+            }
+        }
+      });
+      $.getTree().addListener(SWT.MouseWheel, new Listener() {
+        @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+          for (ToolTip ¢ : tooltips.values())
+            ¢.setVisible(false);
+        }
+      });
+      return $;
+    }
+
+    @Deprecated @SuppressWarnings("unused") private void addSelectionListener(final CheckboxTreeViewer $) {
       $.addSelectionChangedListener(e -> {
         final ISelection s = e.getSelection();
         final Object oo = e.getSource();
@@ -145,10 +203,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         if (o instanceof SpartanTipper)
           tipperClicked((SpartanTipper) o, v);
       });
-      return $;
     }
 
-    void tipperClicked(final SpartanTipper t, final Control v) {
+    @Deprecated private void tipperClicked(final SpartanTipper t, final Control v) {
       final Display d = Display.getCurrent();
       if (d == null)
         return;
