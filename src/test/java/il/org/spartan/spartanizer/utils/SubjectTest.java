@@ -146,7 +146,7 @@ public final class SubjectTest {
     assert type.isNotString(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
-    azzert.that(ExpressionComparator.ADDITION.sort(operands), is(true));
+    assert ExpressionComparator.ADDITION.sort(operands) == true;
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 
@@ -154,7 +154,7 @@ public final class SubjectTest {
     final List<Expression> operands = hop.operands(copy.of(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression refit = subject.operands(operands).to(i("1+2").getOperator());
-    azzert.that(refit.hasExtendedOperands(), is(false));
+    assert refit.hasExtendedOperands() == false;
     azzert.that(refit + "", is("a + b"));
   }
 
@@ -173,7 +173,7 @@ public final class SubjectTest {
     assert type.isNotString(plus);
     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
-    azzert.that(ExpressionComparator.ADDITION.sort(operands), is(true));
+    assert ExpressionComparator.ADDITION.sort(operands) == true;
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 

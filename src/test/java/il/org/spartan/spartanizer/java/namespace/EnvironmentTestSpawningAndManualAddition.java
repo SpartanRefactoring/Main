@@ -17,11 +17,11 @@ public final class EnvironmentTestSpawningAndManualAddition {
   private final Environment ee1 = ee0.spawn();
 
   @Test public void defaultDoesntHave() {
-    azzert.that(e0.nest().doesntHave("Alex"), is(true));
+    assert e0.nest().doesntHave("Alex") == true;
   }
 
   @Test public void defaultempty() {
-    azzert.that(e0.nest().empty(), is(true));
+    assert e0.nest().empty() == true;
   }
 
   @Test public void defaultEMPTYFullName() {
@@ -45,7 +45,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void defaultHas() {
-    azzert.that(e0.nest().has("Alex"), is(false));
+    assert e0.nest().has("Alex") == false;
   }
 
   @Test public void defaultName() {
@@ -59,36 +59,36 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void DoesntHaveFalseResult() {
-    azzert.that(e1.nest().doesntHave("Yossi"), is(false));
+    assert e1.nest().doesntHave("Yossi") == false;
   }
 
   @Test public void empty() {
     e0.put("Alex", new Binding());
-    azzert.that(e0.empty(), is(false));
+    assert e0.empty() == false;
   }
 
   @Test public void emptyOne() {
-    azzert.that(e1.empty(), is(false));
+    assert e1.empty() == false;
   }
 
   @Test public void emptyTestBothEmpty() {
-    azzert.that(ee1.empty(), is(true));
+    assert ee1.empty() == true;
   }
 
   @Test public void emptyTestFlatEmptyNestNot() {
     ee0.put("Alex", new Binding());
-    azzert.that(ee1.empty(), is(false));
+    assert ee1.empty() == false;
   }
 
   @Test public void emptyTestNeitherEmpty() {
     ee0.put("Yossi", new Binding());
     ee1.put("Gill", new Binding());
-    azzert.that(ee1.empty(), is(false));
+    assert ee1.empty() == false;
   }
 
   @Test public void emptyTestNestEmptyFlatNot() {
     ee1.put("Dan", new Binding());
-    azzert.that(ee1.empty(), is(false));
+    assert ee1.empty() == false;
   }
 
   // TODO: Yossi Gil
@@ -111,27 +111,27 @@ public final class EnvironmentTestSpawningAndManualAddition {
 
   @Test public void has() {
     e0.put("Alex", new Binding());
-    azzert.that(e0.has("Alex"), is(true));
+    assert e0.has("Alex") == true;
   }
 
   @Test public void hasInBoth() {
     e1.put("Yossi", new Binding());
-    azzert.that(e1.has("Yossi"), is(true));
+    assert e1.has("Yossi") == true;
   }
 
   @Test public void hasInParent() {
-    azzert.that(e1.has("Dan"), is(true));
+    assert e1.has("Dan") == true;
   }
 
   @Test public void hasNowhere() {
-    azzert.that(e1.has("Onoes"), is(false));
+    assert e1.has("Onoes") == false;
   }
 
   @Test public void hasOne() {
-    azzert.that(e1.has("Kopzon"), is(true));
-    azzert.that(e1.has("Dan"), is(true));
-    azzert.that(e1.has("Yossi"), is(true));
-    azzert.that(e1.has("Alex"), is(true));
+    assert e1.has("Kopzon") == true;
+    assert e1.has("Dan") == true;
+    assert e1.has("Yossi") == true;
+    assert e1.has("Alex") == true;
   }
 
   @Test public void hidingOne() {
@@ -149,12 +149,12 @@ public final class EnvironmentTestSpawningAndManualAddition {
 
   @Test public void names() {
     e0.put("Alex", new Binding());
-    azzert.that(e0.keys().contains("Alex"), is(true));
+    assert e0.keys().contains("Alex") == true;
   }
 
   @Test public void namesOne() {
-    azzert.that(e1.keys().contains("Kopzon"), is(true));
-    azzert.that(e1.keys().contains("Alex"), is(false));
+    assert e1.keys().contains("Kopzon") == true;
+    assert e1.keys().contains("Alex") == false;
   }
 
   @Test public void Nest() {

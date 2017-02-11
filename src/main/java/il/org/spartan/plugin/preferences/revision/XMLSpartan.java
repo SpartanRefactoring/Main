@@ -16,6 +16,7 @@ import org.xml.sax.*;
 
 import static java.util.stream.Collectors.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -187,8 +188,7 @@ public class XMLSpartan {
     final Element e = d.createElement("spartan");
     e.setAttribute("version", CURRENT_VERSION);
     final Map<TipperGroup, Element> groups = new HashMap<>();
-    for (final TipperGroup g : TipperGroup.values())
-      createEnabledNodeChild(d, e, g, groups);
+    as.list(TipperGroup.values()).forEach(g ->createEnabledNodeChild(d, e, g, groups));
     final Set<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(t -> createEnabledNodeChild(d, t, seen, groups));
     d.appendChild(e);

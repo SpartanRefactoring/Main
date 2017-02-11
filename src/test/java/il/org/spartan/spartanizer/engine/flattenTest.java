@@ -62,7 +62,7 @@ public final class flattenTest {
   }
 
   @Test public void hasExtendedOperands() {
-    azzert.that(i("1+2").hasExtendedOperands(), is(false));
+    assert i("1+2").hasExtendedOperands() == false;
   }
 
   @Test public void isNotStringInfixFalse() {
