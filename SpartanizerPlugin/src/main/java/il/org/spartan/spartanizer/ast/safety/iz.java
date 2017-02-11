@@ -698,10 +698,7 @@ public interface iz {
   }
 
   static boolean isOneOf(final int i, final int... is) {
-    for (final int j : is)
-      if (i == j)
-        return true;
-    return false;
+    return Arrays.stream(is).filter(λ ->i==λ).findAny().isPresent();
   }
 
   /** @param a the assignment whose operator we want to check
