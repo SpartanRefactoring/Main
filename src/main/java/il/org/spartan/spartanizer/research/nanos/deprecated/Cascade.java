@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.nanos.deprecated;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -21,10 +22,7 @@ public final class Cascade extends NotImplementedNanoPattern<Block> {
   @Override public boolean canTip(final Block x) {
     if (iz.emptyBlock(x))
       return false;
-    for (int ¢ = 0; ¢ < statements(x).size() - 1; ++¢)
-      if (initializeThenUse(x, ¢))
-        return true;
-    return false;
+    return IntStream.range(0, statements(x).size() - 1).anyMatch(¢ -> initializeThenUse(x, ¢));
   }
 
   @Override public Tip pattern(@SuppressWarnings("unused") final Block __) {

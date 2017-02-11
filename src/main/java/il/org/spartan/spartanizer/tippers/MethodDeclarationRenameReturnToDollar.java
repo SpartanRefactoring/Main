@@ -88,9 +88,7 @@ class Aggressive extends AbstractRenamePolicy {
   private static SimpleName bestCandidate(final Collection<SimpleName> ns, final List<ReturnStatement> ss) {
     final int bestScore = bestScore(ns, ss);
     if (bestScore > 0)
-      for (final SimpleName $ : ns)
-        if (bestScore == score($, ss))
-          return noRivals($, ns, ss) ? $ : null;
+      return ns.stream().filter($ -> bestScore == score($, ss)).findFirst().filter($ -> noRivals($, ns, ss)).orElse(null);
     return null;
   }
 
