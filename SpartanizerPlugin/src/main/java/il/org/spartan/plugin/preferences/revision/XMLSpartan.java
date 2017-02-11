@@ -193,10 +193,9 @@ public class XMLSpartan {
     for (final TipperGroup g : TipperGroup.values())
       createEnabledNodeChild(d, e, g, groups);
     final Set<String> seen = new HashSet<>();
-    for (final Tipper<?> t : Toolbox.freshCopyOfAllTippers().getAllTippers())
-      createEnabledNodeChild(d, t, seen, groups);
+    Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(t -> createEnabledNodeChild(d, t, seen, groups));
     d.appendChild(e);
-    d.setXmlStandalone(true); // TODO Roth: does not seam to work
+    d.setXmlStandalone(true); // TODO Roth: does not seem to work
     return d;
   }
 
@@ -344,7 +343,7 @@ public class XMLSpartan {
     }
 
     /* (non-Javadoc)
-     * 
+     *
      * @see
      * il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler.
      * SpartanElement#hasChildren() */
@@ -353,7 +352,7 @@ public class XMLSpartan {
     }
 
     /* (non-Javadoc)
-     * 
+     *
      * @see
      * il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler.
      * SpartanElement#getChildren() */
