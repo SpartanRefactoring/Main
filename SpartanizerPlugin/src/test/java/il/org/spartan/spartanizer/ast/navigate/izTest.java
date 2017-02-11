@@ -55,23 +55,23 @@ public final class izTest {
   }
 
   @Test public void booleanLiteralFalseOnNull() {
-    assert iz.booleanLiteral(e("null")) == false;
+    assert !iz.booleanLiteral(e("null"));
   }
 
   @Test public void booleanLiteralFalseOnNumeric() {
-    assert iz.booleanLiteral(e("12")) == false;
+    assert !iz.booleanLiteral(e("12"));
   }
 
   @Test public void booleanLiteralFalseOnThis() {
-    assert iz.booleanLiteral(e("this")) == false;
+    assert !iz.booleanLiteral(e("this"));
   }
 
   @Test public void booleanLiteralTrueOnFalse() {
-    assert iz.booleanLiteral(e("false")) == true;
+    assert iz.booleanLiteral(e("false"));
   }
 
   @Test public void booleanLiteralTrueOnTrue() {
-    assert iz.booleanLiteral(e("true")) == true;
+    assert iz.booleanLiteral(e("true"));
   }
 
   @Test public void booleanOrNullLiteralTest() {
@@ -83,7 +83,7 @@ public final class izTest {
   }
 
   @Test public void callIsSpecificTrue() {
-    assert iz.constant(e("this")) == true;
+    assert iz.constant(e("this"));
   }
 
   @Test public void canMakeExpression() {
@@ -169,7 +169,7 @@ public final class izTest {
   }
 
   @Test public void isConstantFalse() {
-    assert iz.constant(e("a")) == false;
+    assert !iz.constant(e("a"));
   }
 
   @Test public void isDeMorganAND() {
@@ -189,67 +189,67 @@ public final class izTest {
   }
 
   @Test public void isNullFalse1() {
-    assert iz.nullLiteral(e("this")) == false;
+    assert !iz.nullLiteral(e("this"));
   }
 
   @Test public void isNullFalse2() {
-    assert iz.thisLiteral(e("this.a")) == false;
+    assert !iz.thisLiteral(e("this.a"));
   }
 
   @Test public void isNullTrue() {
-    assert iz.nullLiteral(e("null")) == true;
+    assert iz.nullLiteral(e("null"));
   }
 
   @Test public void isOneOf() {
-    assert iz.nodeTypeIn(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION) == true;
+    assert iz.nodeTypeIn(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   @Test public void isThisFalse1() {
-    assert iz.thisLiteral(e("null")) == false;
+    assert !iz.thisLiteral(e("null"));
   }
 
   @Test public void isThisFalse2() {
-    assert iz.thisLiteral(e("this.a")) == false;
+    assert !iz.thisLiteral(e("this.a"));
   }
 
   @Test public void isThisTrue() {
-    assert iz.thisLiteral(e("this")) == true;
+    assert iz.thisLiteral(e("this"));
   }
 
   @Test public void negative0() {
-    assert iz.negative(e("0")) == false;
+    assert !iz.negative(e("0"));
   }
 
   @Test public void negative1() {
-    assert iz.negative(e("0")) == false;
+    assert !iz.negative(e("0"));
   }
 
   @Test public void negativeMinus1() {
-    assert iz.negative(e("- 1")) == true;
+    assert iz.negative(e("- 1"));
   }
 
   @Test public void negativeMinus2() {
-    assert iz.negative(e("- 2")) == true;
+    assert iz.negative(e("- 2"));
   }
 
   @Test public void negativeMinusA() {
-    assert iz.negative(e("- a")) == true;
+    assert iz.negative(e("- a"));
   }
 
   @Test public void negativeNull() {
-    assert iz.negative(e("null")) == false;
+    assert !iz.negative(e("null"));
   }
 
   @Test public void numericLiteralFalse1() {
-    assert iz.numericLiteral(e("2*3")) == false;
+    assert !iz.numericLiteral(e("2*3"));
   }
 
   @Test public void numericLiteralFalse2() {
-    assert iz.numericLiteral(e("2*3")) == false;
+    assert !iz.numericLiteral(e("2*3"));
   }
 
   @Test public void numericLiteralTrue() {
-    assert iz.numericLiteral(e("1")) == true;
+    assert iz.numericLiteral(e("1"));
   }
 
   @Test public void parseIntB1() {

@@ -116,8 +116,7 @@ public final class Matcher {
     if (!iz.block(p))
       return false;
     final List<Statement> $ = statements(az.block(p)), sn = statements(n);
-    return $.size() > sn.size() ? false
-        : IntStream.rangeClosed(0, sn.size() - $.size()).anyMatch(λ -> statementsMatch($, sn.subList(λ, λ + $.size())));
+    return $.size() <= sn.size() && IntStream.rangeClosed(0, sn.size() - $.size()).anyMatch(λ -> statementsMatch($, sn.subList(λ, λ + $.size())));
   }
 
   //
@@ -178,14 +177,12 @@ public final class Matcher {
     if (iz.infixExpression($) && !iz.parenthesizedExpression($))
       return sameOperator($, n) && sameOperands($, n, ids);
     final List<ASTNode> pChildren = allChildren($, $), nChildren = allChildren(n, $);
-    return nChildren.size() != pChildren.size() ? false
-        : IntStream.range(0, pChildren.size()).allMatch(λ -> matchesAux(pChildren.get(λ), nChildren.get(λ), ids));
+    return nChildren.size() == pChildren.size() && IntStream.range(0, pChildren.size()).allMatch(λ -> matchesAux(pChildren.get(λ), nChildren.get(λ), ids));
   }
 
   private static boolean sameOperands(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
     final List<Expression> $Operands = extract.allOperands(az.infixExpression($)), nOperands = extract.allOperands(az.infixExpression(n));
-    return $Operands.size() != nOperands.size() ? false
-        : IntStream.range(0, $Operands.size()).allMatch(λ -> matchesAux($Operands.get(λ), nOperands.get(λ), ids));
+    return $Operands.size() == nOperands.size() && IntStream.range(0, $Operands.size()).allMatch(λ -> matchesAux($Operands.get(λ), nOperands.get(λ), ids));
   }
 
   private static boolean sameOperator(final ASTNode $, final ASTNode n) {

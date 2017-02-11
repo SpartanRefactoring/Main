@@ -168,7 +168,7 @@ public enum haz {
 
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block $ = body(d);
-    return $ != null ? statements($).stream().anyMatch(λ -> Coupling.unknownNumberOfEvaluations(d, λ)) : false;
+    return $ != null && statements($).stream().anyMatch(λ -> Coupling.unknownNumberOfEvaluations(d, λ));
   }
 
   public static boolean variableDefinition(final ASTNode n) {

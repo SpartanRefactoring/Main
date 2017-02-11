@@ -55,6 +55,6 @@ public enum BindingUtils {
     if (Modifier.isPublic(ms))
       return true;
     final ITypeBinding $ = b.getDeclaringClass();
-    return Modifier.isProtected(ms) && $.getPackage().equals(getPackage(u)) ? true : Objects.equals(container(n), $);
+    return Modifier.isProtected(ms) && $.getPackage().equals(getPackage(u)) || Objects.equals(container(n), $);
   }
 }
