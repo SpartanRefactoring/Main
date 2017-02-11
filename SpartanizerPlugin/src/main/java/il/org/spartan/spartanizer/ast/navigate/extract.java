@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -311,32 +312,17 @@ public enum extract {
   }
 
   public static Collection<Modifier> modifiers(final BodyDeclaration d) {
-    final List<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d)) {
-      final Modifier a = az.modifier((ASTNode) ¢);
-      if (a != null)
-        $.add(a);
-    }
+    final List<Modifier> $ = extendedModifiers(d).stream().map(¢ -> az.modifier((ASTNode) ¢)).filter(Objects::nonNull).collect(Collectors.toList());
     return $;
   }
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
-    final List<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d)) {
-      final Modifier a = az.modifier((ASTNode) ¢);
-      if (a != null)
-        $.add(a);
-    }
+    final List<Modifier> $ = extendedModifiers(d).stream().map(¢ -> az.modifier((ASTNode) ¢)).filter(Objects::nonNull).collect(Collectors.toList());
     return $;
   }
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
-    final List<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(s)) {
-      final Modifier a = az.modifier((ASTNode) ¢);
-      if (a != null)
-        $.add(a);
-    }
+    final List<Modifier> $ = extendedModifiers(s).stream().map(¢ -> az.modifier((ASTNode) ¢)).filter(Objects::nonNull).collect(Collectors.toList());
     return $;
   }
 

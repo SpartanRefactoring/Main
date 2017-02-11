@@ -159,9 +159,7 @@ public interface definition {
 
     public static boolean has(final String name) {
       if (name != null)
-        for (final Kind ¢ : values())
-          if (name.equals(¢ + ""))
-            return true;
+        return Arrays.stream(values()).anyMatch(¢ -> name.equals(¢ + ""));
       return false;
     }
   }

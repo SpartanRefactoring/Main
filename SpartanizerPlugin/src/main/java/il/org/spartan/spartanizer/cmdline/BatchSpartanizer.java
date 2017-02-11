@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
+import java.util.Arrays;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -273,9 +274,7 @@ final class BatchSpartanizer extends FolderASTVisitor {
     if (f.getName().endsWith(".java"))
       return true;
     if (f.isDirectory())
-      for (final File ff : f.listFiles())
-        if (f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"))
-          return true;
+      return Arrays.stream(f.listFiles()).anyMatch(ff -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(ff) || f.getName().endsWith(".java"));
     return false;
   }
 

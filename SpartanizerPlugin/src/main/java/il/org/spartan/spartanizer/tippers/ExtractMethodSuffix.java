@@ -61,10 +61,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
         .collect(Collectors.toList());
     // NANO: to rest of function
-    for (final SingleVariableDeclaration ¢ : parameters(d))
-      if (!ts.contains(¢.getType() + ""))
-        return false;
-    return true;
+    return parameters(d).stream().allMatch(¢ -> ts.contains(¢.getType() + ""));
   }
 
   private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d, final List<VariableDeclaration> ds,
