@@ -75,7 +75,7 @@ public class CommandLineApplicator extends Applicator {
   // name(a.getName());
   // return this;
   // }
-  /** Default run action configuration of {@link CommandLineApplicator}.
+  /** Default run action configuration of .
    * Spartanize the {@link CompilationUnit} using received TODO maybe this
    * method are going to die (as well as Spartanize$Applicator)
    * {@link Spartanizer$Applicator}.
@@ -87,7 +87,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default run action configuration of {@link CommandLineApplicator}.
+  /** Default run action configuration of .
    * Spartanize the {@link CompilationUnit} using received
    * {@link CommandLine$Applicator}.
    * @param a JD

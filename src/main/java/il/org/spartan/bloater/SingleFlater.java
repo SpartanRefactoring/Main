@@ -33,9 +33,9 @@ public final class SingleFlater {
 
   private SingleFlater() {}
 
-  /** Creates a new {@link SingleFlater} for a {@link CompilationUnit}.
+  /** Creates a new  for a {@link CompilationUnit}.
    * @param ¢ JD
-   * @return new {@link SingleFlater} */
+   * @return new  */
   public static SingleFlater in(final ASTNode ¢) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
