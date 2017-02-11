@@ -20,10 +20,10 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * } to {@code
  * arr[i] = y; ++i; ++i; arr[i] = z;
  *
- * } does not expand if right hand side includes access index operand,
- * such as in arr[i]=i. works only on ExpressionStatement, varible declaration
- * with assignment will be treated after outlining by other expanders . Test
- * case is {@link Issue1004}
+ * } does not expand if right hand side includes access index operand, such as
+ * in arr[i]=i. works only on ExpressionStatement, varible declaration with
+ * assignment will be treated after outlining by other expanders . Test case is
+ * {@link Issue1004}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//

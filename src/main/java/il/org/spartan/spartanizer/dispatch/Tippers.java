@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.java.*;
 public enum Tippers {
   ;
   public static void addAllReplacing(final List<Statement> to, final Iterable<Statement> from, final Statement substitute, final Statement by1,
-                                     final Iterable<Statement> by2) {
+      final Iterable<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
         copy.into(¢, to);

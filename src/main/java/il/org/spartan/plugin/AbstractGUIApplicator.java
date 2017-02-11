@@ -327,8 +327,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   /** Determines if the node is outside of the selected text.
    * @return <code><b>true</b></code> <em>iff</em>the node is not inside
-   *         selection. If there is no selection at all will return false.
-   *  */
+   *         selection. If there is no selection at all will return false. */
   private boolean isNotSelected(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());
   }

@@ -2,8 +2,11 @@
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -148,9 +151,7 @@ public class switchBranch {
   }
 
   private List<Statement> functionalCommands() {
-    final List<Statement> $ = new ArrayList<>();
-    for (int ¢ = 0; ¢ < statements.size() - 1; ++¢)
-      $.add(statements.get(¢));
+    final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(Collectors.toList());
     if (!iz.breakStatement(lisp.last(statements)))
       $.add(lisp.last(statements));
     return $;

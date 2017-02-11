@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.lisp.*;
@@ -37,8 +38,7 @@ public final class analyzeTest {
   }
 
   @Test public void c() {
-    final List<String> s = analyze.dependencies(wizard.ast("public void m(){a.b.c(x,y,\"g\");}")).stream().map(λ -> λ + "")
-        .collect(toList());
+    final List<String> s = analyze.dependencies(wizard.ast("public void m(){a.b.c(x,y,\"g\");}")).stream().map(λ -> λ + "").collect(toList());
     assert s.contains("x");
     assert s.contains("y");
     assert s.contains("a");

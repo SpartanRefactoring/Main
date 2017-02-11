@@ -69,7 +69,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
         }
       };
     } catch (final Exception ¢) {
-      return monitor.logProbableBug(this, ¢); 
+      return monitor.logProbableBug(this, ¢);
     }
   }
 }

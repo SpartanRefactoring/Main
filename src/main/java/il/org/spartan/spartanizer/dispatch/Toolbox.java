@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
@@ -315,7 +316,7 @@ public class Toolbox {
     ;
   }
 
-  /** Make a  for a specific kind of tippers
+  /** Make a for a specific kind of tippers
    * @param clazz JD
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
@@ -334,7 +335,7 @@ public class Toolbox {
 
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
     removing:
-    //noinspection ForLoopReplaceableByWhile
+    // noinspection ForLoopReplaceableByWhile
     for (;;) {
       for (int ¢ = 0; ¢ < ts.size(); ++¢)
         if (c.isAssignableFrom(ts.get(¢).getClass())) {
@@ -416,25 +417,19 @@ public class Toolbox {
   }
 
   public static long hooksCount() {
-    return defaultTipperLists().count(); 
+    return defaultTipperLists().count();
   }
-public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
+
+  public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
     return Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
   }
+
   public int tippersCount() {
-    int $ = 0;
-    for (final List<?> ¢ : implementation)
-      if (¢ != null)
-        $ += ¢.size();
-    return $;
+    return Arrays.stream(implementation).filter(Objects::nonNull).mapToInt(List::size).sum();
   }
 
   public int nodesTypeCount() {
-    int $ = 0;
-    for (final List<?> ¢ : implementation)
-      if (¢ != null)
-        $ += 1;
-    return $;
+    return (int) Arrays.stream(implementation).filter(Objects::nonNull).count();
   }
 
   <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(final N ¢) {

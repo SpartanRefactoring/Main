@@ -26,7 +26,7 @@ public interface namer {
   String return¢ = "$"; //
   String current = "¢"; //
   String lambda = "λ"; //
-  String[] specials = {forbidden, return¢, anonymous, current, lambda};
+  String[] specials = { forbidden, return¢, anonymous, current, lambda };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //

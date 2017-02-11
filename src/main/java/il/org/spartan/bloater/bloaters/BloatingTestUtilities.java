@@ -62,7 +62,7 @@ public enum BloatingTestUtilities {
         assertSimilar($1, peeled1);
         return new Operand($1);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-       monitor.logProbableBug(this, ¢); 
+        monitor.logProbableBug(this, ¢);
       }
       return null;
     }
@@ -115,7 +115,7 @@ public enum BloatingTestUtilities {
         p.setResolveBindings(true);
         return new Operand(az.compilationUnit(p.createAST(null)), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.logProbableBug(this, ¢); 
+        monitor.logProbableBug(this, ¢);
       }
       return null;
     }
@@ -174,7 +174,7 @@ public enum BloatingTestUtilities {
         if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
           assertSimilar(get(), peeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.logProbableBug(this, ¢); 
+        monitor.logProbableBug(this, ¢);
       }
     }
 

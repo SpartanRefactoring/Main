@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} which represents a NanoPattern.
- * 
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//

@@ -2,6 +2,7 @@ package il.org.spartan.plugin.preferences.revision;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -69,19 +70,15 @@ public class XMLSpartan {
   }
 
   @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
-    final Set<Class<Tipper<? extends ASTNode>>> $ = new HashSet<>();
-    for (final Tipper<? extends ASTNode> ¢ : Toolbox.freshCopyOfAllTippers().getAllTippers())
-      $.add((Class<Tipper<? extends ASTNode>>) ¢.getClass());
+    final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
+        .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(Collectors.toSet());
     if (p == null)
       return $;
     final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p, false);
     if (m == null)
       return $;
-    final Set<String> ets = new HashSet<>();
-    for (final SpartanTipper[] ts : m.values())
-      for (final SpartanTipper ¢ : ts)
-        if (¢.enabled())
-          ets.add(¢.name());
+    final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name)
+        .collect(Collectors.toSet());
     final List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
     l.addAll($);
     for (final Class<Tipper<? extends ASTNode>> ¢ : l)

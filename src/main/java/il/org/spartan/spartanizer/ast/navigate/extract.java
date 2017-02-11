@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.idiomatic.*;
 import static il.org.spartan.lisp.*;
@@ -312,18 +313,15 @@ public enum extract {
   }
 
   public static Collection<Modifier> modifiers(final BodyDeclaration d) {
-    final List<Modifier> $ = extendedModifiers(d).stream().map(¢ -> az.modifier((ASTNode) ¢)).filter(Objects::nonNull).collect(Collectors.toList());
-    return $;
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(Collectors.toList());
   }
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
-    final List<Modifier> $ = extendedModifiers(d).stream().map(¢ -> az.modifier((ASTNode) ¢)).filter(Objects::nonNull).collect(Collectors.toList());
-    return $;
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(Collectors.toList());
   }
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
-    final List<Modifier> $ = extendedModifiers(s).stream().map(¢ -> az.modifier((ASTNode) ¢)).filter(Objects::nonNull).collect(Collectors.toList());
-    return $;
+    return extendedModifiers(s).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(Collectors.toList());
   }
 
   public static String name(final ASTNode ¢) {
