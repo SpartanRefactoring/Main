@@ -5,19 +5,25 @@ import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.window.*;
+import org.eclipse.ltk.core.refactoring.*;
+import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
+import org.eclipse.text.edits.*;
 import org.eclipse.ui.dialogs.*;
 
 import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** TODO Ori Roth: document class {@link }
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
@@ -78,8 +84,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return ¢ == null ? "" : !(¢ instanceof SpartanElement) ? ¢ + "" : ((SpartanElement) ¢).name();
       }
 
-      @Override public Image getImage(@SuppressWarnings("unused") final Object __) {
-        return null;
+      @Override public Image getImage(final Object ¢) {
+        return ¢ instanceof SpartanTipper ? Dialogs.image(Dialogs.ICON) : ¢ instanceof SpartanCategory ? Dialogs.image(Dialogs.CATEGORY) : null;
       }
     }, new ITreeContentProvider() {
       @Override public boolean hasChildren(final Object ¢) {
@@ -181,6 +187,45 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           }
       });
       $.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
+      $.addDoubleClickListener(new IDoubleClickListener() {
+        @Override public void doubleClick(DoubleClickEvent e) {
+          final ISelection s = e.getSelection();
+          if (s == null || s.isEmpty() || !(s instanceof TreeSelection))
+            return;
+          final Object o = ((TreeSelection) s).getFirstElement();
+          if (!(o instanceof SpartanTipper))
+            return;
+          final SpartanTipper st = (SpartanTipper) o;
+          final String before = "before", after = "after";
+          final IDocument d = new Document(before);
+          try {
+            if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
+              @Override public String getName() {
+                return st.name();
+              }
+
+              @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
+                @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
+                $.setEdit(new ReplaceEdit(0, before.length(), after));
+                return $;
+              }
+
+              @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
+                  throws OperationCanceledException {
+                return new RefactoringStatus();
+              }
+
+              @Override public RefactoringStatus checkFinalConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
+                  throws OperationCanceledException {
+                return new RefactoringStatus();
+              }
+            })).run(Display.getCurrent().getActiveShell(), "Tipper Preview") == Window.OK)
+              $.setChecked(st, true);
+          } catch (final InterruptedException ¢¢) {
+            monitor.logCancellationRequest(this, ¢¢);
+          }
+        }
+      });
       return $;
     }
   }
