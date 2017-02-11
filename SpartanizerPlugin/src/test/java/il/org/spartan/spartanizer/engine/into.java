@@ -83,7 +83,7 @@ public enum into {
    *        expression
    * @return a {@link List} of {@link Expression} data structures, each
    *         representing an element of the input. */
-  public static List<Expression> es(final String... expressions) {
+  public static Collection<Expression> es(final String... expressions) {
     return Stream.of(expressions).map(into::e).collect(toList());
   }
 

@@ -2,7 +2,6 @@ package il.org.spartan.plugin.preferences.revision;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -15,11 +14,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
+import static java.util.stream.Collectors.*;
+
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-
 /** TODO Ori Roth: document class {@link }
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-01 */
@@ -71,14 +71,14 @@ public class XMLSpartan {
 
   @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
-        .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(Collectors.toSet());
+        .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
       return $;
     final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p, false);
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name)
-        .collect(Collectors.toSet());
+        .collect(toSet());
     final List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
     l.addAll($);
     for (final Class<Tipper<? extends ASTNode>> ¢ : l)

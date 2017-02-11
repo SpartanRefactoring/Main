@@ -4,7 +4,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -17,10 +16,11 @@ import org.junit.runners.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -41,7 +41,7 @@ public final class TippersTest {
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    azzert.that(sideEffects.free(into.e("f()")), is(false));
+    azzert.that(sideEffects.free(e("f()")), is(false));
     final VariableDeclarationFragment f = findFirst
         .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
@@ -92,7 +92,7 @@ public final class TippersTest {
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Tippers.rename(n, n.getAST().newSimpleName("$"), m, r, null);
+    rename(n, n.getAST().newSimpleName("$"), m, r, null);
     r.rewriteAST(d, null).apply(d);
     final String output = Wrap.Method.off(d.get());
     assert output != null;
@@ -109,7 +109,7 @@ public final class TippersTest {
     final SimpleName b = f.getName();
     azzert.that(collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Tippers.rename(b, b.getAST().newSimpleName("c"), m, r, null);
+    rename(b, b.getAST().newSimpleName("c"), m, r, null);
     r.rewriteAST(d, null).apply(d);
     azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }

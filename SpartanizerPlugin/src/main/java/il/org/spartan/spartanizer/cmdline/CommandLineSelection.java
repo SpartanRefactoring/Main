@@ -90,7 +90,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
           .collect(toList()), "selection");
     }
 
-    public static List<CompilationUnit> getAllCompilationUnits(final String path) {
+    public static Collection<CompilationUnit> getAllCompilationUnits(final String path) {
       final List<CompilationUnit> $ = new ArrayList<>();
       for (final File ¢ : new FilesGenerator(".java").from(path)) {
         System.out.println(¢.getName());

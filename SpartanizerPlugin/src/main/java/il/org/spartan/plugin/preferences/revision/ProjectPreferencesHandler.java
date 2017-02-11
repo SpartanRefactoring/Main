@@ -1,8 +1,6 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.List;
 import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
@@ -15,6 +13,8 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.dialogs.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
@@ -103,7 +103,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setEmptyListMessage("No tippers available...");
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
-    final List<SpartanElement> et = new ArrayList<>();
+    final Collection<SpartanElement> et = new ArrayList<>();
     for (final SpartanCategory c : m.keySet()) {
       boolean enabled = true;
       for (final SpartanTipper ¢ : m.get(c))

@@ -44,7 +44,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final int threshold, final MethodInvocation $) {
-    if (o == Operator.GREATER_EQUALS)
+    if (o == GREATER_EQUALS)
       return replacement(GREATER, threshold - 1, $);
     if (o == LESS_EQUALS)
       return replacement(LESS, threshold + 1, $);
@@ -69,7 +69,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
-    if (!"size".equals(step.name(i).getIdentifier()))
+    if (!"size".equals(name(i).getIdentifier()))
       return null;
     int $ = -1;
     NumberLiteral l = az.throwing.negativeLiteral(x);

@@ -68,7 +68,7 @@ public enum normalize {
 
   public static String shortenIdentifiers(final String s) {
     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    final Document $ = new Document(ASTutils.wrapCode(s));
+    final IDocument $ = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);

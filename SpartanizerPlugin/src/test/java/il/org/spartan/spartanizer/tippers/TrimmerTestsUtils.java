@@ -23,13 +23,13 @@ public enum TrimmerTestsUtils {
   static String apply(final Tipper<? extends ASTNode> t, final String from) {
     final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
-    return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
+    return rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   public static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document $ = TESTUtils.rewrite(t, u, new Document(from));
+    final Document $ = rewrite(t, u, new Document(from));
     assert $ != null;
     return $.get();
   }
@@ -82,8 +82,8 @@ public enum TrimmerTestsUtils {
 
     public void doesNotCrash() {
       final Wrap w = Wrap.find(get());
-      assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()),
-          Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
+      assertNotEquals("Trimming of " + get() + " crashed", essence(get()),
+          essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
     public Operand gives(final String $) {
@@ -128,7 +128,7 @@ public enum TrimmerTestsUtils {
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       for (final String $ : options)
-        if (Wrap.essence($).equals(Wrap.essence(peeled)))
+        if (essence($).equals(essence(peeled)))
           return new Operand($);
       azzert.fail("Expects: " + peeled + " But None of the given options match");
       return null;

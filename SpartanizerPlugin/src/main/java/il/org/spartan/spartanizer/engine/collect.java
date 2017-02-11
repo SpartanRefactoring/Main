@@ -307,17 +307,17 @@ public enum collect {
       }
 
       @Override public boolean visit(final CastExpression ¢) {
-        return collect(step.expression(¢));
+        return collect(expression(¢));
       }
 
       @Override public boolean visit(final ClassInstanceCreation ¢) {
-        collect(step.expression(¢));
+        collect(expression(¢));
         return collect(arguments(¢));
       }
 
       @Override public boolean visit(final DoStatement ¢) {
         ++loopDepth;
-        return collect(step.expression(¢));
+        return collect(expression(¢));
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -344,7 +344,7 @@ public enum collect {
       }
 
       @Override public boolean visit(final MethodInvocation ¢) {
-        collect(step.receiver(¢));
+        collect(receiver(¢));
         collect(arguments(¢));
         return false;
       }
