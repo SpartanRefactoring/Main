@@ -56,8 +56,8 @@ public interface Listener {
     /** for fluent API use, i.e., <code>
          *
          * <code>
-                 <b>public final</b> {@link Listener}  listeners = {@link Listener.S}.{@link #empty()}
-         * </code> 
+                 <b>public final</b> {@link Listener}  listeners = .
+     * </code>
      * @return an empty new instance */
     public static Listener.S empty() {
       return new Listener.S();

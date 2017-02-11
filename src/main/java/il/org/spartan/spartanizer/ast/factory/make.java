@@ -36,10 +36,10 @@ public enum make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link makeAST} value to its corresponding {@link make} enum
+  /** Converts the {@link makeAST} value to its corresponding  enum
    * value
    * @param tipper The {@link makeAST} type
-   * @return corresponding {@link make} value to the argument */
+   * @return corresponding  value to the argument */
   public static make from(final makeAST ¢) {
     switch (¢) {
       case CLASS_BODY_DECLARATIONS:
