@@ -41,7 +41,7 @@ public final class TippersTest {
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    assert sideEffects.free(e("f()")) == false;
+    assert !sideEffects.free(e("f()"));
     final VariableDeclarationFragment f = findFirst
         .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
@@ -49,7 +49,7 @@ public final class TippersTest {
     azzert.that(n, iz("a"));
     final Expression initializer = f.getInitializer();
     azzert.that(initializer, iz("f()"));
-    assert sideEffects.free(initializer) == false;
+    assert !sideEffects.free(initializer);
     final ASTNode parent = f.getParent();
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
@@ -61,25 +61,25 @@ public final class TippersTest {
     azzert.that(o, iz("+="));
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
-    assert sideEffects.free(initializer) == false;
+    assert !sideEffects.free(initializer);
     azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
-    assert new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer) == false;
+    assert !new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer);
   }
 
   @Test public void mixedLiteralKindEmptyList() {
-    assert mixedLiteralKind(es()) == false;
+    assert !mixedLiteralKind(es());
   }
 
   @Test public void mixedLiteralKindnPairList() {
-    assert mixedLiteralKind(es("1", "1.0")) == false;
+    assert !mixedLiteralKind(es("1", "1.0"));
   }
 
   @Test public void mixedLiteralKindnTripleList() {
-    assert mixedLiteralKind(es("1", "1.0", "a")) == true;
+    assert mixedLiteralKind(es("1", "1.0", "a"));
   }
 
   @Test public void mixedLiteralKindSingletonList() {
-    assert mixedLiteralKind(es("1")) == false;
+    assert !mixedLiteralKind(es("1"));
   }
 
   @Test public void renameInEnhancedFor() throws Exception {

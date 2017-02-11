@@ -17,11 +17,11 @@ public final class EnvironmentTestSpawningAndManualAddition {
   private final Environment ee1 = ee0.spawn();
 
   @Test public void defaultDoesntHave() {
-    assert e0.nest().doesntHave("Alex") == true;
+    assert e0.nest().doesntHave("Alex");
   }
 
   @Test public void defaultempty() {
-    assert e0.nest().empty() == true;
+    assert e0.nest().empty();
   }
 
   @Test public void defaultEMPTYFullName() {
@@ -45,7 +45,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void defaultHas() {
-    assert e0.nest().has("Alex") == false;
+    assert !e0.nest().has("Alex");
   }
 
   @Test public void defaultName() {
@@ -59,36 +59,36 @@ public final class EnvironmentTestSpawningAndManualAddition {
   }
 
   @Test public void DoesntHaveFalseResult() {
-    assert e1.nest().doesntHave("Yossi") == false;
+    assert !e1.nest().doesntHave("Yossi");
   }
 
   @Test public void empty() {
     e0.put("Alex", new Binding());
-    assert e0.empty() == false;
+    assert !e0.empty();
   }
 
   @Test public void emptyOne() {
-    assert e1.empty() == false;
+    assert !e1.empty();
   }
 
   @Test public void emptyTestBothEmpty() {
-    assert ee1.empty() == true;
+    assert ee1.empty();
   }
 
   @Test public void emptyTestFlatEmptyNestNot() {
     ee0.put("Alex", new Binding());
-    assert ee1.empty() == false;
+    assert !ee1.empty();
   }
 
   @Test public void emptyTestNeitherEmpty() {
     ee0.put("Yossi", new Binding());
     ee1.put("Gill", new Binding());
-    assert ee1.empty() == false;
+    assert !ee1.empty();
   }
 
   @Test public void emptyTestNestEmptyFlatNot() {
     ee1.put("Dan", new Binding());
-    assert ee1.empty() == false;
+    assert !ee1.empty();
   }
 
   // TODO: Yossi Gil
@@ -111,27 +111,27 @@ public final class EnvironmentTestSpawningAndManualAddition {
 
   @Test public void has() {
     e0.put("Alex", new Binding());
-    assert e0.has("Alex") == true;
+    assert e0.has("Alex");
   }
 
   @Test public void hasInBoth() {
     e1.put("Yossi", new Binding());
-    assert e1.has("Yossi") == true;
+    assert e1.has("Yossi");
   }
 
   @Test public void hasInParent() {
-    assert e1.has("Dan") == true;
+    assert e1.has("Dan");
   }
 
   @Test public void hasNowhere() {
-    assert e1.has("Onoes") == false;
+    assert !e1.has("Onoes");
   }
 
   @Test public void hasOne() {
-    assert e1.has("Kopzon") == true;
-    assert e1.has("Dan") == true;
-    assert e1.has("Yossi") == true;
-    assert e1.has("Alex") == true;
+    assert e1.has("Kopzon");
+    assert e1.has("Dan");
+    assert e1.has("Yossi");
+    assert e1.has("Alex");
   }
 
   @Test public void hidingOne() {
@@ -149,12 +149,12 @@ public final class EnvironmentTestSpawningAndManualAddition {
 
   @Test public void names() {
     e0.put("Alex", new Binding());
-    assert e0.keys().contains("Alex") == true;
+    assert e0.keys().contains("Alex");
   }
 
   @Test public void namesOne() {
-    assert e1.keys().contains("Kopzon") == true;
-    assert e1.keys().contains("Alex") == false;
+    assert e1.keys().contains("Kopzon");
+    assert !e1.keys().contains("Alex");
   }
 
   @Test public void Nest() {

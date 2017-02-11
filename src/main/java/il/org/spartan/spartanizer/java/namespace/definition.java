@@ -158,7 +158,7 @@ public interface definition {
     }
 
     public static boolean has(final String name) {
-      return name != null ? Arrays.stream(values()).anyMatch(λ -> name.equals(λ + "")) : false;
+      return name != null && Arrays.stream(values()).anyMatch(λ -> name.equals(λ + ""));
     }
   }
 

@@ -54,7 +54,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void occurencesAinAsame() {
-    assert wizard.same(a, a) == true;
+    assert wizard.same(a, a);
   }
 
   @Test public void occurencesAinE() {
@@ -66,7 +66,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void occurencesAinLeftOfEsame() {
-    assert wizard.same(left(e), a) == true;
+    assert wizard.same(left(e), a);
   }
 
   @Test public void occurencesAinRightOfE() {
@@ -82,7 +82,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void sameAandLeftOfE() {
-    assert wizard.same(a, left(e)) == true;
+    assert wizard.same(a, left(e));
   }
 
   @Test public void sameTypeAandLeftOfE() {
