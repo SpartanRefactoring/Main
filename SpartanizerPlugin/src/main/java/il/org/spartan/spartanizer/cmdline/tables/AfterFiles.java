@@ -196,7 +196,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   private static double min(final double a, final double d) {
-    return Math.min(a,d);
+    return Math.min(a, d);
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {

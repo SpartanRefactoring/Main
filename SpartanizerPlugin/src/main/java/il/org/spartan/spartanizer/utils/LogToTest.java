@@ -91,8 +91,8 @@ public enum LogToTest {
         ss.get(2).trim().equals(Linguistic.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
 
-  private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine, final String errorName,
-                                final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
+  private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
+      final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, normalize.unwarpedTestcase(rawCode),
         errorLocationFileUnclean));
   }

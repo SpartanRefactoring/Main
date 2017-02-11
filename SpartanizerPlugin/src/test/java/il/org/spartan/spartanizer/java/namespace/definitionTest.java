@@ -444,8 +444,7 @@ class ZZZ___Fixture_ModelClass {
           /** First resource */
           @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
           /** Second resource */
-          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding())
-      )
+          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
       /* Try body */
       {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
@@ -513,9 +512,9 @@ class ZZZ___Fixture_ModelClass {
           q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
-      } catch (@catch¢ final IOException|CloneNotSupportedException ¢) {
+      } catch (@catch¢ final IOException | CloneNotSupportedException ¢) {
         monitor.infoIOException(¢);
-      } 
+      }
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
       q(a * a);
     }

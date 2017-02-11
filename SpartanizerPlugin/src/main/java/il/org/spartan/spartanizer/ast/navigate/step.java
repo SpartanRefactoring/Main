@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
@@ -171,14 +172,8 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration d) {
-    final List<MethodDeclaration> $ = new ArrayList<>();
-    for (final BodyDeclaration bd : step.bodyDeclarations(d)) {
-      final MethodDeclaration c = az.methodDeclaration(bd);
-      if (c != null && c.isConstructor())
-        $.add(c);
-    }
-    return $;
+  public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration ¢) {
+    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(λ -> λ != null && λ.isConstructor()).collect(Collectors.toList());
   }
 
   public static Collection<MethodDeclaration> constructors(final ASTNode ¢) {
@@ -557,14 +552,8 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static List<MethodDeclaration> methods(final AnonymousClassDeclaration d) {
-    final List<MethodDeclaration> $ = new ArrayList<>();
-    for (final BodyDeclaration x : step.bodyDeclarations(d)) {
-      final MethodDeclaration y = az.methodDeclaration(x);
-      if (y != null)
-        $.add(y);
-    }
-    return $;
+  public static List<MethodDeclaration> methods(final AnonymousClassDeclaration ¢) {
+    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(Objects::nonNull).collect(Collectors.toList());
   }
 
   /** get all methods

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;

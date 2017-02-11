@@ -1,20 +1,21 @@
 package il.org.spartan.spartanizer.meta;
-import static java.util.stream.Collectors.*;
+
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import static java.util.stream.Collectors.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -29,15 +30,9 @@ public enum SentenceTestTemplate {
     return collectSentences(new Issue1008());
   }
 
-  static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... fs) {
-    final List<List<MethodDeclaration>> $ = new ArrayList<>();
-    for (final MetaFixture f : fs)
-      for (final AnonymousClassDeclaration d : yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(f.reflectedCompilationUnit())) {
-        final Vocabulary reify = AlphabeticallySortedSentence.reify(d);
-        if (reify != null)
-          $.add(new ArrayList<>(reify.values()));
-      }
-    return $;
+  static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... ¢) {
+    return Arrays.stream(¢).flatMap(λ -> yieldDescendants.untilClass(AnonymousClassDeclaration.class).from(λ.reflectedCompilationUnit()).stream())
+        .map(AlphabeticallySortedSentence::reify).filter(Objects::nonNull).map(λ -> new ArrayList<>(λ.values())).collect(Collectors.toList());
   }
 
   /** A phrase is made of two consecutive words. If a sentence has n words, then
@@ -124,8 +119,8 @@ public enum SentenceTestTemplate {
   public static class Stays {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
-      allSentences().forEach(
-          sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
+      allSentences()
+          .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
     }
 

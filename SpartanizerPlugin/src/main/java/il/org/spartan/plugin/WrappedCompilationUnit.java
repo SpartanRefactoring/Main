@@ -1,4 +1,5 @@
 package il.org.spartan.plugin;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 

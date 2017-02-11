@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** if(X) throw Exception;
- * 
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class NotHoldsOrThrow extends NanoPatternTipper<IfStatement> {

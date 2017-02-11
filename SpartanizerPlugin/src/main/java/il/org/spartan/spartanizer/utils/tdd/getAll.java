@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.utils.tdd;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 
@@ -94,8 +95,8 @@ public enum getAll {
     return $;
   }
 
-  /** Takes a single parameter d, which is a MethodDeclaration. Returns a
-   * a {@Link List} of {@link CastExpression} which is all casts in d.
+  /** Takes a single parameter d, which is a MethodDeclaration. Returns a a
+   * {@Link List} of {@link CastExpression} which is all casts in d.
    * @param d a MethodDeclaration
    * @author Inbal Matityahu
    * @author Or Troyaner

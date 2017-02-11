@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
+
 import static java.util.stream.Collectors.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 

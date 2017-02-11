@@ -77,7 +77,7 @@ public enum eclipse {
     final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
-    for (final IPackageFragmentRoot ¢ : rs)  // NANO - can't, throws
+    for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
       compilationUnits(m, $, ¢);
     return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
@@ -175,7 +175,7 @@ public enum eclipse {
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
       } catch (final MalformedURLException ¢) {
-        monitor.logProbableBug(¢); 
+        monitor.logProbableBug(¢);
       }
     }
     return icon;

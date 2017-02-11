@@ -20,7 +20,7 @@ public final class Version250 {
     trimmingOf("void f(){}").stays();
     trimmingOf("@a void f(){}").stays();
     trimmingOf("@a({\"a\"})void f(){}")//
-    .gives("@a(\"a\")void f(){}");
+        .gives("@a(\"a\")void f(){}");
   }
 
   @Test public void additionZeroTest_a() {

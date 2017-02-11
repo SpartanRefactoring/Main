@@ -44,5 +44,4 @@ public class Table_Tipper_Groups {
   private static <T> Stream<T> flow(final Collection<T> ¢) {
     return ¢.stream().filter(Objects::nonNull);
   }
-
 }

@@ -102,8 +102,7 @@ final class Application implements IApplication {
   private int optRounds = 20;
   private String optPath;
 
-  @Override
-  @SuppressWarnings("OverlyComplexMethod") public Object start(final IApplicationContext arg0) {
+  @Override @SuppressWarnings("OverlyComplexMethod") public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     try {
@@ -137,7 +136,6 @@ final class Application implements IApplication {
         ++failed;
       } catch (final Exception ¢) {
         System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
-
         ¢.printStackTrace();
         ++failed;
       } finally {
