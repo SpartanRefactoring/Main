@@ -49,8 +49,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
 
   boolean set(final MethodInvocation ¢) {
-    methodInvocation = ¢;
-    return true;
+    return (methodInvocation = ¢) != null;
   }
 
   boolean set(final SimpleName ¢) {
@@ -62,7 +61,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
 
   boolean setSecond(final Expression ¢) {
-    MethodInvocation $ = az.methodInvocation(¢);
+    final MethodInvocation $ = az.methodInvocation(¢);
     return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(first(arguments($)))) != null;
   }
 }

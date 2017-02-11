@@ -28,8 +28,8 @@ public final class SpecificityTest {
   }
 
   @Test public void defined() {
-    assert specificity.defined(e("12")) == true;
-    assert specificity.defined(e("a+b")) == false;
+    assert specificity.defined(e("12"));
+    assert !specificity.defined(e("a+b"));
   }
 
   @Test public void generalGreaterThanClassConstant() {
@@ -73,8 +73,8 @@ public final class SpecificityTest {
   }
 
   @Test public void hexadecimalConstant() {
-    assert specificity.defined(e("0xff")) == true;
-    assert specificity.defined(e("0x7f")) == true;
+    assert specificity.defined(e("0xff"));
+    assert specificity.defined(e("0x7f"));
   }
 
   @Test public void hexadecimalConstantIsInteger() {
