@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -17,6 +16,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -172,6 +173,13 @@ public interface iz {
     return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.BOOLEAN);
   }
 
+  /** @param ¢ JD
+   * @return is boxed type */
+  static boolean boxedType(final Type ¢) {
+    return ¢ instanceof SimpleType && Arrays.asList("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
+        .contains(step.identifier(step.name((SimpleType) ¢)));
+  }
+
   static boolean breakStatement(final Statement ¢) {
     return iz.nodeTypeEquals(¢, BREAK_STATEMENT);
   }
@@ -255,6 +263,12 @@ public interface iz {
   static boolean constant(final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
         || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
+  }
+
+  /** @param ¢ JD
+   * @return is public static final */
+  static boolean constant(final FieldDeclaration ¢) {
+    return public¢(¢) && static¢(¢) && final¢(¢);
   }
 
   static boolean constructor(final ASTNode ¢) {
@@ -341,11 +355,6 @@ public interface iz {
     return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
-  static boolean deterministic(final MethodInvocation ¢) {
-    return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
-        iz.deterministic(step.arguments(¢));
-  }
-
   static boolean deterministic(final ArrayAccess $) {
     return iz.deterministic($.getArray(), $.getIndex());
   }
@@ -399,20 +408,25 @@ public interface iz {
     }
   }
 
-  static boolean deterministic(final PrefixExpression ¢) {
-    return !in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE) && deterministic(¢.getOperand());
-  }
-
-  static boolean deterministic(final SuperMethodInvocation ¢) {
-    return deterministic(arguments(¢));
-  }
-
   static boolean deterministic(final List<Expression> ¢) {
     return deterministic(¢.stream());
   }
 
+  static boolean deterministic(final MethodInvocation ¢) {
+    return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
+        iz.deterministic(step.arguments(¢));
+  }
+
+  static boolean deterministic(final PrefixExpression ¢) {
+    return !in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE) && deterministic(¢.getOperand());
+  }
+
   static boolean deterministic(final Stream<Expression> ¢) {
     return ¢.allMatch(iz::deterministic);
+  }
+
+  static boolean deterministic(final SuperMethodInvocation ¢) {
+    return deterministic(arguments(¢));
   }
 
   static boolean doStatement(final ASTNode ¢) {
@@ -421,6 +435,18 @@ public interface iz {
 
   static boolean doubleType(final Expression ¢) {
     return type.of(¢) == DOUBLE;
+  }
+
+  static boolean empty(final Javadoc ¢) {
+    return tags(¢).stream().allMatch(iz::empty);
+  }
+
+  static boolean empty(final TagElement e) {
+    return fragments(e).stream().allMatch(λ -> λ == null || λ instanceof SimpleName || !(λ instanceof TextElement) || iz.empty((TextElement) λ));
+  }
+
+  static boolean empty(final TextElement ¢) {
+    return ¢.getText().replaceAll("[\\s*]", "").isEmpty();
   }
 
   /** @param x JD
@@ -524,6 +550,14 @@ public interface iz {
    *         statement */
   static boolean forStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, FOR_STATEMENT);
+  }
+
+  /** @param with /** @return [[SuppressWarningsSpartan]] */
+  @SuppressWarnings("all") static boolean fragile(final Expression with) {
+    // TODO Yossi Gil Auto-generated method stub for fragile
+    if (new Object().hashCode() != 0)
+      throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30).");
+    return false;
   }
 
   static boolean identifier(final String identifier, final Name typeName) {
@@ -640,14 +674,6 @@ public interface iz {
 
   static boolean intType(final Type ¢) {
     return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.INT);
-  }
-
-  static boolean longType(final Type ¢) {
-    return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.LONG);
-  }
-
-  static boolean stringType(final Type ¢) {
-    return ¢ instanceof SimpleType && "String".equals(step.identifier(step.name((SimpleType) ¢)));
   }
 
   /** @param ¢ JD
@@ -820,6 +846,10 @@ public interface iz {
 
   static boolean longType(final Expression ¢) {
     return type.of(¢) == LONG;
+  }
+
+  static boolean longType(final Type ¢) {
+    return ¢ instanceof PrimitiveType && ((PrimitiveType) ¢).getPrimitiveTypeCode().equals(PrimitiveType.LONG);
   }
 
   static boolean loop(final ASTNode ¢) {
@@ -1140,6 +1170,10 @@ public interface iz {
     return ¢ != null && ¢.getNodeType() == STRING_LITERAL;
   }
 
+  static boolean stringType(final Type ¢) {
+    return ¢ instanceof SimpleType && "String".equals(step.identifier(step.name((SimpleType) ¢)));
+  }
+
   /** @param ¢ JD
    * @return */
   static boolean superMethodInvocation(final Expression ¢) {
@@ -1345,26 +1379,5 @@ public interface iz {
     static boolean xliteral(final String s, final ASTNode ¢) {
       return literal(az.stringLiteral(¢), s);
     }
-  }
-
-  /** @param with /** @return [[SuppressWarningsSpartan]] */
-  @SuppressWarnings("all") static boolean fragile(final Expression with) {
-    // TODO Yossi Gil Auto-generated method stub for fragile
-    if (new Object().hashCode() != 0)
-      throw new AssertionError("Stub 'iz::fragile' not implemented yet (created on  2017-01-30).");
-    return false;
-  }
-
-  /** @param ¢ JD
-   * @return is public static final */
-  static boolean constant(final FieldDeclaration ¢) {
-    return public¢(¢) && static¢(¢) && final¢(¢);
-  }
-
-  /** @param ¢ JD
-   * @return is boxed type */
-  static boolean boxedType(final Type ¢) {
-    return ¢ instanceof SimpleType && Arrays.asList("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
-        .contains(step.identifier(step.name((SimpleType) ¢)));
   }
 }
