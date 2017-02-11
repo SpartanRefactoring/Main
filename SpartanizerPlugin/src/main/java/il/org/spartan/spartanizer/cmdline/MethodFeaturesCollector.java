@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Collects boolean features of methods
- * 
  * @author Yossi Gil
  * @since Dec 20, 2016 */
 public final class MethodFeaturesCollector extends FolderASTVisitor {

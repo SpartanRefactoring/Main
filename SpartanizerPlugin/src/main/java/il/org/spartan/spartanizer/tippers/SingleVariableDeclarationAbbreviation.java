@@ -63,10 +63,8 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     for (final SimpleName ¢ : new MethodExplorer(d).localVariables())
       if (¢.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
         return false;
-    for (final SingleVariableDeclaration ¢ : parameters(d))
-      if (¢.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-        return false;
-    return !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
+    return parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+        && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {

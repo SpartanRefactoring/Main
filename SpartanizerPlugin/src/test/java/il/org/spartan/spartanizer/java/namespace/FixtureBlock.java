@@ -8,8 +8,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 public class FixtureBlock extends MetaFixture {
-  @SuppressWarnings("InfiniteRecursion")
-  private int f(@knows("ps") final int... ps) throws IOException {
+  @SuppressWarnings("InfiniteRecursion") private int f(@knows("ps") final int... ps) throws IOException {
     @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
     @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();
     @knows({ "a", "b", "ps", "f/1" }) final int c = ps[2] + b * hashCode();
@@ -18,8 +17,8 @@ public class FixtureBlock extends MetaFixture {
   }
 
   int g(@knows("ps") final int... ps) throws IOException {
-      //noinspection ForLoopReplaceableByWhile
-      for (;;) {
+    // noinspection ForLoopReplaceableByWhile
+    for (;;) {
       @knows({ "ps", "f/1" }) final int a = ps[0] + hashCode();
       @knows({ "a", "ps", "f/1" }) final int b = ps[1] + a * hashCode();
       @knows({ "a", "b", "ps", "f/1" }) final int c = ps[2] + b * hashCode();

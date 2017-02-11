@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import static java.util.stream.Collectors.*;
+
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @author Dor Maayan

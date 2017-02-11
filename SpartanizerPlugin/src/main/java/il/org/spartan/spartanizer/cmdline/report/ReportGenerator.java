@@ -136,8 +136,8 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
-    final int ess = Util.find("essence").function().run(n1), tide = Util.find("tide").function().run(n1),
-        body = Util.find("body").function().run(n1), nodes = Util.find("nodes").function().run(n1);
+    final int ess = Util.find("essence").function().run(n1), tide = Util.find("tide").function().run(n1), body = Util.find("body").function().run(n1),
+        nodes = Util.find("nodes").function().run(n1);
     Util.report("metrics").put("R(E/L)", i.apply(Util.find("length").function().run(n1), ess));
     Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
     Util.report("metrics").put("R(E/L)", i.apply(nodes, body));

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.analyses;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 

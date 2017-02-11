@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
