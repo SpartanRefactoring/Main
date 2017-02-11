@@ -1,16 +1,17 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static java.util.stream.Collectors.*;
 import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -317,11 +318,11 @@ public enum extract {
   }
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
-    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(Collectors.toList());
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
-    return extendedModifiers(s).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(Collectors.toList());
+    return extendedModifiers(s).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
 
   public static String name(final ASTNode ¢) {

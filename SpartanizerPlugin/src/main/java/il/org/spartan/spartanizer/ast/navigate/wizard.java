@@ -527,7 +527,7 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(Collectors.toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
