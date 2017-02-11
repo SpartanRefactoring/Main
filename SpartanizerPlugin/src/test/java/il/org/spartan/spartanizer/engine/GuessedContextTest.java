@@ -41,12 +41,12 @@ public final class GuessedContextTest {
         + "termCharacterMatchFound = true; "//
         + "}"//
         + "  return $;"//
-        + " }"), is(GuessedContext.METHOD_LOOK_ALIKE));
+        + " }"), is(METHOD_LOOK_ALIKE));
   }
 
   @Test public void complicated2() {
     azzert.that(GuessedContext.find(" for (int $N0 = 0; $N0 < $N1; ++$N0) $N2 ^= $N3.$N4($N5, $N6)[0];" //
-    ), is(GuessedContext.STATEMENTS_LOOK_ALIKE));
+    ), is(STATEMENTS_LOOK_ALIKE));
   }
 
   @Test public void dealWithComment() {
@@ -190,7 +190,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void methodInvocation() {
-    azzert.that(GuessedContext.find("fuo()"), is(GuessedContext.EXPRESSION_LOOK_ALIKE));
+    azzert.that(GuessedContext.find("fuo()"), is(EXPRESSION_LOOK_ALIKE));
   }
 
   @Test public void offDivision() {
