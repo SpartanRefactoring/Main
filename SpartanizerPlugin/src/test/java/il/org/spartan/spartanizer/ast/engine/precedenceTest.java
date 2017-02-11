@@ -110,14 +110,14 @@ public final class precedenceTest {
   }
 
   @Test public void nonAssociative() {
-    assert wizard.nonAssociative(e("1")) == false;
-    assert wizard.nonAssociative(e("-1")) == false;
-    assert wizard.nonAssociative(e("-1+2")) == false;
-    assert wizard.nonAssociative(e("1+2")) == false;
-    assert wizard.nonAssociative(e("2-1")) == true;
-    assert wizard.nonAssociative(e("2/1")) == true;
-    assert wizard.nonAssociative(e("2%1")) == true;
-    assert wizard.nonAssociative(e("2*1")) == false;
+    assert !wizard.nonAssociative(e("1"));
+    assert !wizard.nonAssociative(e("-1"));
+    assert !wizard.nonAssociative(e("-1+2"));
+    assert !wizard.nonAssociative(e("1+2"));
+    assert wizard.nonAssociative(e("2-1"));
+    assert wizard.nonAssociative(e("2/1"));
+    assert wizard.nonAssociative(e("2%1"));
+    assert !wizard.nonAssociative(e("2*1"));
   }
 
   @Test public void objectCreation() {
@@ -134,7 +134,7 @@ public final class precedenceTest {
   }
 
   @Test public void precedenceOfNulGreatherl() {
-    assert precedence.greater(null, c("a?b:c")) == true;
+    assert precedence.greater(null, c("a?b:c"));
   }
 
   @Test public void precedenceOfNull() {

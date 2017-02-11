@@ -30,7 +30,7 @@ public enum have {
     return booleanLiteral(az.stream(¢));
   }
 
-  public static boolean booleanLiteral(Stream<Expression> ¢) {
+  public static boolean booleanLiteral(final Stream<Expression> ¢) {
     return ¢.anyMatch(iz::booleanLiteral);
   }
 

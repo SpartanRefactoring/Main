@@ -29,7 +29,7 @@ public final class ExpressionComparatorTest {
         add(e("a+b+c"));
         add(e("f"));
       }
-    }) == true;
+    });
   }
 
   @Test public void alphabeticalCompare() {
@@ -126,19 +126,19 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void longerFirstEqualLengthTest() {
-    assert ExpressionComparator.longerFirst((InfixExpression) e("1+3")) == false;
+    assert !ExpressionComparator.longerFirst((InfixExpression) e("1+3"));
   }
 
   @Test public void longerFirstTestFalse() {
-    assert ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)")) == false;
+    assert !ExpressionComparator.longerFirst((InfixExpression) e("1+(2+3)"));
   }
 
   @Test public void longerFirstTestTrue() {
-    assert ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2")) == true;
+    assert ExpressionComparator.longerFirst((InfixExpression) e("(1+3)+2"));
   }
 
   @Test public void longerFirstTestTrue2() {
-    assert ExpressionComparator.longerFirst((InfixExpression) e("h(1)+(f(1,2,3)+g(2,3,2,3,2,32))")) == false;
+    assert !ExpressionComparator.longerFirst((InfixExpression) e("h(1)+(f(1,2,3)+g(2,3,2,3,2,32))"));
   }
 
   @Test public void longLiteralShortLiteralAddition() {
@@ -150,11 +150,11 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void moreArgumentsFalseTest() {
-    assert ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c,d,e)")) == false;
+    assert !ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c,d,e)"));
   }
 
   @Test public void moreArgumentsTrueTest() {
-    assert ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c)")) == true;
+    assert ExpressionComparator.moreArguments(e("foo(a,b,c, i2)"), e("bar(a,b,c)"));
   }
 
   @Test public void nodesCompare() {
@@ -162,7 +162,7 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void prudentSortTest() {
-    assert ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
+    assert !ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
       static final long serialVersionUID = 1L;
       {
         add(e("a"));
@@ -170,7 +170,7 @@ public final class ExpressionComparatorTest {
         add(e("a"));
         add(e("f"));
       }
-    }) == false;
+    });
   }
 
   @Test public void prudentSortTest2() {
@@ -183,7 +183,7 @@ public final class ExpressionComparatorTest {
         add(e("a"));
         add(e("-f"));
       }
-    }) == true;
+    });
   }
 
   @Test public void twoClassConstants() {

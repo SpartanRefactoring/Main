@@ -37,10 +37,9 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
   @Override protected boolean prerequisite(final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
-    return cases.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION ? false
-        : cases.stream().noneMatch(SwitchCase::isDefault)
-            && $ != null && !$.isDefault() && !n.isDefault() && (iz.intType(expression(n)) || (expression(n) + "").compareTo(expression($) + "") > 0)
-                && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
+    return cases.size() <= switchBranch.MAX_CASES_FOR_SPARTANIZATION && cases.stream().noneMatch(SwitchCase::isDefault) && $ != null && !$.isDefault()
+        && !n.isDefault() && (iz.intType(expression(n)) || (expression(n) + "").compareTo(expression($) + "") > 0)
+        && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
   }
 
   @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
