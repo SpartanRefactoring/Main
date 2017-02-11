@@ -458,7 +458,7 @@ public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
   }
 
   public static List<String> get(final TipperGroup ¢) {
-    final List<String> $ = new LinkedList<>();
+    final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
     final Toolbox t = freshCopyOfAllTippers();

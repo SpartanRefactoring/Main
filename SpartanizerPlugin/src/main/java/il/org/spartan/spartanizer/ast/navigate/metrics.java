@@ -325,4 +325,8 @@ public interface metrics {
     });
     return $.inner;
   }
+
+  static int length(ASTNode ¢) {
+   return (¢ + "").length(); 
+  }
 }
