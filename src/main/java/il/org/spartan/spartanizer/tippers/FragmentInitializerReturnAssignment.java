@@ -29,7 +29,7 @@ public final class FragmentInitializerReturnAssignment extends $FragementAndStat
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
-    final Assignment a = az.assignment(step.expression(az.returnStatement(nextStatement)));
+    final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));

@@ -35,7 +35,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
-      Tippers.removeLast(step.statements(block));
+      Tippers.removeLast(statements(block));
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(copy.of(nextStatement));

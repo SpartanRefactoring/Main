@@ -1,16 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -30,7 +29,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   }
 
   @Override public String description(final MethodInvocation ¢) {
-    return "Write " + first(arguments(¢)) + "." + step.name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
+    return "Write " + first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {

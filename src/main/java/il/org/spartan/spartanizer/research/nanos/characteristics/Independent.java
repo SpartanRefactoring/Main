@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
-
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,7 +22,7 @@ public class Independent extends JavadocMarkerNanoPattern {
     for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
         $.addAll(parametersNames(az.methodDeclaration(¢)));
-    return $.stream().noneMatch(λ -> analyze.dependencies(body(d)).stream().map(String::toString).collect(Collectors.toSet()).contains(λ));
+    return $.stream().noneMatch(λ -> analyze.dependencies(body(d)).stream().map(String::toString).collect(toSet()).contains(λ));
   }
 
   private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {

@@ -23,7 +23,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;
     final ASTNode $ = containing.typeDeclaration(¢);
-    return step.constructors($).size() == 1 && step.initializersInstance($).isEmpty();
+    return constructors($).size() == 1 && initializersInstance($).isEmpty();
   }
 
   @Override public String description(final MethodDeclaration ¢) {

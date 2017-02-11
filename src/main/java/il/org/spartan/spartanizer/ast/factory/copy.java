@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2015-07-21 */
 public enum copy {
   ;
-  static Iterable<Expression> adjust(final Operator o, final List<Expression> xs) {
+  static Iterable<Expression> adjust(final Operator o, final Collection<Expression> xs) {
     return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(toList());
   }
 

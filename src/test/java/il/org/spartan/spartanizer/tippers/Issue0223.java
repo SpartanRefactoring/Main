@@ -174,7 +174,7 @@ public final class Issue0223 {
     final Operand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final String wrap = Wrap.find(a.get()).on(a.get());
-    if (wrap.equals(TrimmerTestsUtils.applyTrimmer(new Trimmer(), wrap)))
+    if (wrap.equals(applyTrimmer(new Trimmer(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
