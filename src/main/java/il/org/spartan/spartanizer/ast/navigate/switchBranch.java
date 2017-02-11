@@ -3,12 +3,12 @@
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static java.util.stream.Collectors.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -151,7 +151,7 @@ public class switchBranch {
   }
 
   private List<Statement> functionalCommands() {
-    final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(Collectors.toList());
+    final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
     if (!iz.breakStatement(lisp.last(statements)))
       $.add(lisp.last(statements));
     return $;
