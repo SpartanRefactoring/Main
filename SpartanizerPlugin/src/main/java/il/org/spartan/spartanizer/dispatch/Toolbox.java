@@ -101,14 +101,16 @@ public class Toolbox {
             new HoldsForAll(), //
             new HoldsForAny(), //
             null) //
-        .add(InfixExpression.class, //
-            new Empty(), //
-            new LastIndex(), //
+        .add(ConditionalExpression.class, //
+            new AsBit(), //
+            new DefaultsTo(), //
+            new GeneralizedSwitch<>(), //
+            new Unless(), //
+            new SafeReference(), //
+            new TakeDefaultTo(), //
             new Max(), //
             new Min(), //
-            new Infix.SafeReference(), //
-            new Singleton(), //
-            null)//
+            null) //
         .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
