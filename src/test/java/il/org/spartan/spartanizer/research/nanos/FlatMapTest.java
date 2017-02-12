@@ -12,42 +12,32 @@ import org.junit.*;
 public class FlatMapTest {
   @Test public void a() {
     trimmingOf(
-        "  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.addAll(onBroadcast(e));")//
+        "  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  other.addAll(onBroadcast(e));")//
             .using(EnhancedForStatement.class, new FlatMap())//
-            .gives("¢.addAll((willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).stream().flatMap(¢->onBroadcast(e)));")//
-    ;
-  }
-
-  @Test public void c() {
-    trimmingOf("for (Class i : is) try { " //
-        + " l.add((A)f.newClassInstance(H.class,i));} " //
-        + "catch (Throwable ¢) {" //
-        + "logger.warn(\"\",¢);" //
-        + "}")//
-            .using(EnhancedForStatement.class, new FlatMap())//
-            .gives("is.FlatMap(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){{logger.warn(\"\",¢);}}});")//
-            .gives("is.FlatMap(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
             .stays();
   }
 
+  @Test public void b() {
+    trimmingOf("  for (AtmosphereResourceEventListener ¢ : rImpl)  other.addAll(onBroadcast(e));")//
+        .using(EnhancedForStatement.class, new FlatMap())//
+        .gives("other.addAll((rImpl).stream().flatMap(¢->onBroadcast(e)));")//
+        .gives("other.addAll(rImpl.stream().flatMap(λ->onBroadcast(e)));")//
+        .stays();
+  }
+
+  @Test public void c() {
+    trimmingOf("  for (AtmosphereResourceEventListener ¢ : rImpl)  other.addAll(¢);")//
+        .using(EnhancedForStatement.class, new FlatMap())//
+        .gives("other.addAll((rImpl).stream().flatMap(¢->¢));")//
+        .gives("other.addAll(rImpl.stream().flatMap(λ->λ));")//
+        .stays();
+  }
+  
   @Test public void d() {
-    trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
+    trimmingOf("  for (AtmosphereResourceEventListener ¢ : very.complicated(expression))  other.addAll(¢);")//
         .using(EnhancedForStatement.class, new FlatMap())//
-        .gives("bf.FlatMap(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
-    ;
-  }
-
-  @Test public void e() {
-    trimmingOf("  for (final Statement k : ss)    $.append(k);")//
-        .using(EnhancedForStatement.class, new FlatMap())//
-        .gives("ss.FlatMap(k -> $.append(k));")//
-    ;
-  }
-
-  @Test public void f() {
-    trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
-        .using(EnhancedForStatement.class, new FlatMap())//
-        .gives("us.FlatMap(¢->scanCompilationUnit(¢,eclipse.newSubMonitor(progressMonitor)));")//
-    ;
+        .gives("other.addAll((very.complicated(expression)).stream().flatMap(¢->¢));")//
+        .gives("other.addAll(very.complicated(expression).stream().flatMap(λ->λ));")//
+        .stays();
   }
 }
