@@ -210,12 +210,12 @@ public enum TrimmerTestsUtils {
     }
 
     public OperandToTipper<N> in(final Tipper<N> ¢) {
-      azzert.that(¢.canTip(findNode(¢)), is(true));
+      assert ¢.canTip(findNode(¢));
       return this;
     }
 
     public OperandToTipper<N> notIn(final Tipper<N> ¢) {
-      azzert.that(¢.canTip(findNode(¢)), is(false));
+      assert !¢.canTip(findNode(¢));
       return this;
     }
   }

@@ -2741,22 +2741,22 @@ public final class Version230 {
   }
 
   @Test public void pushdownTernaryParFX() {
-    trimmingOf("a ?( false):true")//
+    trimmingOf("a ? false:true")//
         .gives("!a && true");
   }
 
   @Test public void pushdownTernaryParTX() {
-    trimmingOf("a ?(((true ))): c")//
+    trimmingOf("a ?true: c")//
         .gives("a || c");
   }
 
   @Test public void pushdownTernaryParXF() {
-    trimmingOf("a ? b :(false)")//
+    trimmingOf("a ? b :false")//
         .gives("a && b");
   }
 
   @Test public void pushdownTernaryParXT() {
-    trimmingOf("a ? b :((true))")//
+    trimmingOf("a ? b :true")//
         .gives("!a || b");
   }
 
