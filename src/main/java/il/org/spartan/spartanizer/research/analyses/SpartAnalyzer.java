@@ -35,6 +35,8 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new Unless(), //
                 new SafeReference(), //
                 new TakeDefaultTo(), //
+                new Max(), //
+                new Min(), //
                 null) //
             .add(EnhancedForStatement.class, //
                 new Aggregate(), //
@@ -68,8 +70,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             .add(InfixExpression.class, //
                 new Empty(), //
                 new LastIndex(), //
-                new Max(), //
-                new Min(), //
                 new Infix.SafeReference(), //
                 new Singleton(), //
                 null)//
