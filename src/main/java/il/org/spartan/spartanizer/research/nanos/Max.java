@@ -13,32 +13,30 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Max between two expressions
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-12 */
-public final class Max {
-  public static class SafeReference extends NanoPatternTipper<InfixExpression> {
-    private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
-      static final long serialVersionUID = 1L;
-      {
-        add(patternTipper("$X1 > $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
-        add(patternTipper("$X2 < $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
-        add(patternTipper("$X1 >= $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
-        add(patternTipper("$X2 <= $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
-      }
-    };
-
-    @Override public boolean canTip(final InfixExpression ¢) {
-      return anyTips(tippers, ¢);
+public final class Max extends NanoPatternTipper<InfixExpression> {
+  private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
+    static final long serialVersionUID = 1L;
+    {
+      add(patternTipper("$X1 > $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
+      add(patternTipper("$X2 < $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
+      add(patternTipper("$X1 >= $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
+      add(patternTipper("$X2 <= $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
     }
+  };
 
-    @Override public Tip pattern(final InfixExpression ¢) {
-      return firstTip(tippers, ¢);
-    }
+  @Override public boolean canTip(final InfixExpression ¢) {
+    return anyTips(tippers, ¢);
+  }
 
-    @Override public Category category() {
-      return Category.Safety;
-    }
+  @Override public Tip pattern(final InfixExpression ¢) {
+    return firstTip(tippers, ¢);
+  }
 
-    @Override public String description() {
-      return "Max between two expressions";
-    }
+  @Override public Category category() {
+    return Category.Safety;
+  }
+
+  @Override public String description() {
+    return "Max between two expressions";
   }
 }
