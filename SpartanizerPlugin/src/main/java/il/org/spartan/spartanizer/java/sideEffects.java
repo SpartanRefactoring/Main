@@ -81,17 +81,16 @@ public enum sideEffects {
   }
 
   private static boolean free(final ArrayCreation ¢) {
-    return free(step.dimensions(¢)) && free(step.expressions(¢.getInitializer()));
+    return free(dimensions(¢)) && free(expressions(¢.getInitializer()));
   }
 
   public static boolean free(final ASTNode ¢) {
     return ¢ == null || (iz.expression(¢) ? free(az.expression(¢))
-            : iz.expressionStatement(¢) ? free(az.expressionStatement(¢))
+        : iz.expressionStatement(¢) ? free(az.expressionStatement(¢))
             : iz.ifStatement(¢) ? free(az.ifStatement(¢))
-            : iz.whileStatement(¢) ? free(az.whileStatement(¢))
-            : iz.forStatement(¢) ? free(az.forStatement(¢))
-            : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢))
-            : iz.block(¢) && free(az.block(¢)));
+                : iz.whileStatement(¢) ? free(az.whileStatement(¢))
+                    : iz.forStatement(¢) ? free(az.forStatement(¢))
+                        : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢)) : iz.block(¢) && free(az.block(¢)));
   }
 
   public static boolean free(final ForStatement ¢) {
@@ -121,13 +120,13 @@ public enum sideEffects {
       case ARRAY_CREATION:
         return free((ArrayCreation) ¢);
       case ARRAY_INITIALIZER:
-        return free(step.expressions(az.arrayInitializer(¢)));
+        return free(expressions(az.arrayInitializer(¢)));
       case ARRAY_ACCESS:
         return free(((ArrayAccess) ¢).getArray(), ((ArrayAccess) ¢).getIndex());
       case CAST_EXPRESSION:
-        return sideEffects.free(step.expression(¢));
+        return sideEffects.free(expression(¢));
       case INFIX_EXPRESSION:
-        return free(extract.allOperands(az.infixExpression(¢)));
+        return free(allOperands(az.infixExpression(¢)));
       case PARENTHESIZED_EXPRESSION:
         return sideEffects.free(core(¢));
       case INSTANCEOF_EXPRESSION:
@@ -151,7 +150,7 @@ public enum sideEffects {
   }
 
   private static boolean free(final PrefixExpression ¢) {
-    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && sideEffects.free(step.operand(¢));
+    return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && sideEffects.free(operand(¢));
   }
 
   private static boolean free(final VariableDeclarationExpression x) {

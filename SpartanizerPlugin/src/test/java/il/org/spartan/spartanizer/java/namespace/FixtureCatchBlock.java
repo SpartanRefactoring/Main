@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.meta.*;
  * statement
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
+@SuppressWarnings("InfiniteRecursion")
 public class FixtureCatchBlock extends MetaFixture {
   @knows("f/0") private int f() {
     try (@knows("fileReader") FileReader fileReader = new FileReader(toString())) {

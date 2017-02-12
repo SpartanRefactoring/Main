@@ -120,7 +120,7 @@ public enum step {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
-    final List<ConditionalExpression> $ = new ArrayList<>();
+    final Collection<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
     while (iz.conditionalExpression(elze(s)))
       $.add(s = az.conditionalExpression(elze(s)));
@@ -144,7 +144,7 @@ public enum step {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
-    final List<IfStatement> $ = new ArrayList<>();
+    final Collection<IfStatement> $ = new ArrayList<>();
     $.add(s);
     while (iz.ifStatement(elze(s)))
       $.add(s = az.ifStatement(elze(s)));
@@ -171,18 +171,22 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration d) {
-    final List<MethodDeclaration> $ = new ArrayList<>();
-    for (final BodyDeclaration bd : step.bodyDeclarations(d)) {
-      final MethodDeclaration c = az.methodDeclaration(bd);
-      if (c != null && c.isConstructor())
-        $.add(c);
-    }
-    return $;
+  public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration ¢) {
+    return bodyDeclarations(¢).stream() //
+        .map(az::methodDeclaration) //
+        .filter(Objects::nonNull) //
+        .filter(MethodDeclaration::isConstructor) //
+        .collect(toList())//
+        ;
   }
 
   public static Collection<MethodDeclaration> constructors(final ASTNode ¢) {
-    return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
+    return members.of(¢).stream() //
+        .map(az::methodDeclaration) //
+        .filter(iz::constructor) //
+        .filter(Objects::nonNull) //
+        .collect(toList()) //
+        ;
   }
 
   @SuppressWarnings("unchecked") public static Iterable<Expression> dimensions(final ArrayCreation ¢) {
@@ -449,7 +453,7 @@ public enum step {
   }
 
   public static Collection<Initializer> initializers(final ASTNode ¢) {
-    return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
+    return members.of(¢).stream().map(az::initializer).filter(Objects::nonNull).collect(toList());
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}
@@ -460,11 +464,11 @@ public enum step {
   }
 
   public static List<Initializer> initializersClass(final ASTNode ¢) {
-    return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
+    return initializers(¢).stream().filter(iz::static¢).collect(toList());
   }
 
   public static Collection<Initializer> initializersInstance(final ASTNode n) {
-    return Arrays.asList(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
+    return initializers(n).stream().filter(λ -> !iz.static¢(λ)).collect(toList());
   }
 
   /** @param ¢ JD
@@ -551,20 +555,14 @@ public enum step {
   @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
-            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
+            : iz.enumDeclaration(¢) ? (Collection<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
+            .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
   }
 
   /** @param ¢ JD
    * @return */
-  public static List<MethodDeclaration> methods(final AnonymousClassDeclaration d) {
-    final List<MethodDeclaration> $ = new ArrayList<>();
-    for (final BodyDeclaration x : step.bodyDeclarations(d)) {
-      final MethodDeclaration y = az.methodDeclaration(x);
-      if (y != null)
-        $.add(y);
-    }
-    return $;
+  public static List<MethodDeclaration> methods(final AnonymousClassDeclaration ¢) {
+    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(Objects::nonNull).collect(toList());
   }
 
   /** get all methods
@@ -932,5 +930,13 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  /** @param ¢ current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  public static Statement previousStatementInBody(final Statement ¢) {
+    return wizard.previous(¢, statements(az.block(parent(¢))));
   }
 }

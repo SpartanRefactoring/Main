@@ -308,8 +308,6 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
       };
     }
 
-    /** @return a functor ready to extend the {@link SimpleMapper} and to be
-     *         configured */
     public static <P, O> EventMapperFunctor<none, P, O> recorder() {
       return new EventMapperFunctor<>(none.X);
     }

@@ -4,7 +4,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -17,10 +16,11 @@ import org.junit.runners.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -41,7 +41,7 @@ public final class TippersTest {
   }
 
   @Test public void inlineExpressionWithSideEffect() {
-    azzert.that(sideEffects.free(into.e("f()")), is(false));
+    assert !sideEffects.free(e("f()"));
     final VariableDeclarationFragment f = findFirst
         .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
@@ -49,7 +49,7 @@ public final class TippersTest {
     azzert.that(n, iz("a"));
     final Expression initializer = f.getInitializer();
     azzert.that(initializer, iz("f()"));
-    azzert.that(sideEffects.free(initializer), is(false));
+    assert !sideEffects.free(initializer);
     final ASTNode parent = f.getParent();
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
@@ -61,25 +61,25 @@ public final class TippersTest {
     azzert.that(o, iz("+="));
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
-    azzert.that(sideEffects.free(initializer), is(false));
+    assert !sideEffects.free(initializer);
     azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
-    azzert.that(new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer), is(false));
+    assert !new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer);
   }
 
   @Test public void mixedLiteralKindEmptyList() {
-    azzert.that(mixedLiteralKind(es()), is(false));
+    assert !mixedLiteralKind(es());
   }
 
   @Test public void mixedLiteralKindnPairList() {
-    azzert.that(mixedLiteralKind(es("1", "1.0")), is(false));
+    assert !mixedLiteralKind(es("1", "1.0"));
   }
 
   @Test public void mixedLiteralKindnTripleList() {
-    azzert.that(mixedLiteralKind(es("1", "1.0", "a")), is(true));
+    assert mixedLiteralKind(es("1", "1.0", "a"));
   }
 
   @Test public void mixedLiteralKindSingletonList() {
-    azzert.that(mixedLiteralKind(es("1")), is(false));
+    assert !mixedLiteralKind(es("1"));
   }
 
   @Test public void renameInEnhancedFor() throws Exception {
@@ -92,7 +92,7 @@ public final class TippersTest {
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Tippers.rename(n, n.getAST().newSimpleName("$"), m, r, null);
+    rename(n, n.getAST().newSimpleName("$"), m, r, null);
     r.rewriteAST(d, null).apply(d);
     final String output = Wrap.Method.off(d.get());
     assert output != null;
@@ -109,7 +109,7 @@ public final class TippersTest {
     final SimpleName b = f.getName();
     azzert.that(collect.usesOf(b).in(m).size(), is(2));
     final ASTRewrite r = ASTRewrite.create(b.getAST());
-    Tippers.rename(b, b.getAST().newSimpleName("c"), m, r, null);
+    rename(b, b.getAST().newSimpleName("c"), m, r, null);
     r.rewriteAST(d, null).apply(d);
     azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** Test class for class {@link iz}
  * @author Yossi Gil, Aviad Cohen, Noam Yefet
  * @since 2015-07-17 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({"javadoc", "static-method", "ConstantConditions"}) //
 public final class izTest {
   private static final String EMPTY_STRING = "\"\"";
 
@@ -55,23 +55,23 @@ public final class izTest {
   }
 
   @Test public void booleanLiteralFalseOnNull() {
-    azzert.that(iz.booleanLiteral(e("null")), is(false));
+    assert !iz.booleanLiteral(e("null"));
   }
 
   @Test public void booleanLiteralFalseOnNumeric() {
-    azzert.that(iz.booleanLiteral(e("12")), is(false));
+    assert !iz.booleanLiteral(e("12"));
   }
 
   @Test public void booleanLiteralFalseOnThis() {
-    azzert.that(iz.booleanLiteral(e("this")), is(false));
+    assert !iz.booleanLiteral(e("this"));
   }
 
   @Test public void booleanLiteralTrueOnFalse() {
-    azzert.that(iz.booleanLiteral(e("false")), is(true));
+    assert iz.booleanLiteral(e("false"));
   }
 
   @Test public void booleanLiteralTrueOnTrue() {
-    azzert.that(iz.booleanLiteral(e("true")), is(true));
+    assert iz.booleanLiteral(e("true"));
   }
 
   @Test public void booleanOrNullLiteralTest() {
@@ -83,7 +83,7 @@ public final class izTest {
   }
 
   @Test public void callIsSpecificTrue() {
-    azzert.that(iz.constant(e("this")), is(true));
+    assert iz.constant(e("this"));
   }
 
   @Test public void canMakeExpression() {
@@ -169,7 +169,7 @@ public final class izTest {
   }
 
   @Test public void isConstantFalse() {
-    azzert.that(iz.constant(e("a")), is(false));
+    assert !iz.constant(e("a"));
   }
 
   @Test public void isDeMorganAND() {
@@ -189,67 +189,67 @@ public final class izTest {
   }
 
   @Test public void isNullFalse1() {
-    azzert.that(iz.nullLiteral(e("this")), is(false));
+    assert !iz.nullLiteral(e("this"));
   }
 
   @Test public void isNullFalse2() {
-    azzert.that(iz.thisLiteral(e("this.a")), is(false));
+    assert !iz.thisLiteral(e("this.a"));
   }
 
   @Test public void isNullTrue() {
-    azzert.that(iz.nullLiteral(e("null")), is(true));
+    assert iz.nullLiteral(e("null"));
   }
 
   @Test public void isOneOf() {
-    azzert.that(iz.nodeTypeIn(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION), is(true));
+    assert iz.nodeTypeIn(e("this"), CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION);
   }
 
   @Test public void isThisFalse1() {
-    azzert.that(iz.thisLiteral(e("null")), is(false));
+    assert !iz.thisLiteral(e("null"));
   }
 
   @Test public void isThisFalse2() {
-    azzert.that(iz.thisLiteral(e("this.a")), is(false));
+    assert !iz.thisLiteral(e("this.a"));
   }
 
   @Test public void isThisTrue() {
-    azzert.that(iz.thisLiteral(e("this")), is(true));
+    assert iz.thisLiteral(e("this"));
   }
 
   @Test public void negative0() {
-    azzert.that(iz.negative(e("0")), is(false));
+    assert !iz.negative(e("0"));
   }
 
   @Test public void negative1() {
-    azzert.that(iz.negative(e("0")), is(false));
+    assert !iz.negative(e("0"));
   }
 
   @Test public void negativeMinus1() {
-    azzert.that(iz.negative(e("- 1")), is(true));
+    assert iz.negative(e("- 1"));
   }
 
   @Test public void negativeMinus2() {
-    azzert.that(iz.negative(e("- 2")), is(true));
+    assert iz.negative(e("- 2"));
   }
 
   @Test public void negativeMinusA() {
-    azzert.that(iz.negative(e("- a")), is(true));
+    assert iz.negative(e("- a"));
   }
 
   @Test public void negativeNull() {
-    azzert.that(iz.negative(e("null")), is(false));
+    assert !iz.negative(e("null"));
   }
 
   @Test public void numericLiteralFalse1() {
-    azzert.that(iz.numericLiteral(e("2*3")), is(false));
+    assert !iz.numericLiteral(e("2*3"));
   }
 
   @Test public void numericLiteralFalse2() {
-    azzert.that(iz.numericLiteral(e("2*3")), is(false));
+    assert !iz.numericLiteral(e("2*3"));
   }
 
   @Test public void numericLiteralTrue() {
-    azzert.that(iz.numericLiteral(e("1")), is(true));
+    assert iz.numericLiteral(e("1"));
   }
 
   @Test public void parseIntB1() {

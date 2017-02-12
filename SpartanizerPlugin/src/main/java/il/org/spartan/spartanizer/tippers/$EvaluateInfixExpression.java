@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Common strategy of all evaluators$EvaluateExpression
- * 
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//

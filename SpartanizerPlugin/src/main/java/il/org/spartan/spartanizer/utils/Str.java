@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
 /** A poor man's approximation of a mutable String.
- * 
  * @author Ori Marcovitch
  * @since Oct 18, 2016 */
 public final class Str {

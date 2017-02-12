@@ -86,17 +86,6 @@ public enum monitor {
       throw new RuntimeException(message);
     }
   };
-  @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
-    return null¢(message);
-  }
-
-  public abstract <T> T error(String message);
-
-  @SuppressWarnings("static-method") public <T> T info(final String message) {
-    System.out.println(message);
-    return null¢();
-  }
-
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
   public static final monitor now = monitor.PRODUCTION;
@@ -123,16 +112,25 @@ public enum monitor {
     return now.debugMessage(message);
   }
 
+  public static <T> T infoIOException(final Exception ¢) {
+    return now.info(//
+        "   Got an exception of type : " + className(¢) + //
+            "\n      (probably I/O exception)" //
+            + "\n   The exception says: '" + ¢ + "'" //
+    );
+  }
+
   public static <T> T infoIOException(final Exception x, final String message) {
     return now.info(//
-        "   Got an exception of type : " + x.getClass().getSimpleName() + //
-            "\n      (probably I/O exception)" + "\n   The exception says: '" + x + "'" + //
+        "   Got an exception of type : " + className(x) + //
+            "\n      (probably I/O exception)" + //
+            "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
             "\n       >>>'" + message + "'<<<" //
     );
   }
 
-  public static <T> T infoIOException(IOException ¢) {
+  public static <T> T infoIOException(final IOException ¢) {
     return now.info(//
         "   Got an exception of type : " + className(¢) + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + ¢ + "'" //
@@ -151,7 +149,7 @@ public enum monitor {
   public static <T> T logCancellationRequest(final Object o, final Exception x) {
     return now.info(//
         "An instance of " + className(o) + //
-            "\n was hit by a " + x.getClass().getSimpleName() + //
+            "\n was hit by a " + className(x) + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
             "\n o = " + o + "'");
@@ -174,25 +172,21 @@ public enum monitor {
     return logEvaluationError(now, ¢);
   }
 
-  public static <T> T logProbableBug(final Throwable x) {
+  public static <T> T logProbableBug(final Object o, final Throwable t) {
     return now.error(//
-        "A static method was hit by a " + x.getClass().getSimpleName() + //
-            " exception, which may indicate a bug somwhwere." + //
-            "\n x = '" + x + "'" //
-    );
-  }
-
-  public static void logProbableBug(final Object o, final Throwable t) {
-    now.error(//
         "An instance of " + className(o) + //
-            "\n was hit by a " + t.getClass().getSimpleName() + //
+            "\n was hit by a " + className(t) + //
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
   }
 
-  public static <T> T null¢(@SuppressWarnings("unused") Object... __) {
-    return null;
+  public static <T> T logProbableBug(final Throwable x) {
+    return now.error(//
+        "A static method was hit by a " + className(x) + //
+            " exception, which may indicate a bug somwhwere." + //
+            "\n x = '" + x + "'" //
+    );
   }
 
   /** logs an error in the plugin into an external file
@@ -206,5 +200,20 @@ public enum monitor {
     nos[1] = (w + "").trim();
     LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
     LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
+  }
+
+  public static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
+    return null;
+  }
+
+  @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
+    return null¢(message);
+  }
+
+  public abstract <T> T error(String message);
+
+  @SuppressWarnings("static-method") public <T> T info(final String message) {
+    System.out.println(message);
+    return null¢();
   }
 }

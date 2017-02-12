@@ -1,4 +1,5 @@
 package il.org.spartan.bloater;
+
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
@@ -66,8 +67,8 @@ public class InflateHandler extends AbstractHandler {
     final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
     if (ls == null)
       return $;
-    $.addAll(ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener)
-        .collect(toList()));
+    $.addAll(
+        ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).collect(toList()));
     return $;
   }
 
@@ -108,11 +109,11 @@ public class InflateHandler extends AbstractHandler {
 
   public static GUIBatchLaconizer applicator() {
     return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
-        ¢ -> Integer.valueOf(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
+        ¢ -> Integer.valueOf(as.bit(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;
           }
-        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null) ? 1 : 0)).name(OPERATION_ACTIVITY.getIng())
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null)))).name(OPERATION_ACTIVITY.getIng())
         .operationName(OPERATION_ACTIVITY);
   }
 
@@ -178,18 +179,15 @@ public class InflateHandler extends AbstractHandler {
     if (text == null)
       return;
     final List<Listener> ls = getListeners(text);
-    for (final Listener ¢ : ls) // NANO????
-      if (¢ instanceof TypedListener && ((TypedListener) ¢).getEventListener() instanceof InflaterListener) {
-        ((InflaterListener) ((TypedListener) ¢).getEventListener()).finilize();
-        break;
-      }
+    ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).findFirst()
+        .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
     // TODO: Ori Roth seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 
   private static Iterable<ITextEditor> getOpenedEditors() {
-    final Collection<ITextEditor> $ = new LinkedList<>();
+    final Collection<ITextEditor> $ = new ArrayList<>();
     final IWorkbenchPage p = getPage();
     if (p != null)
       for (final IEditorReference r : p.getEditorReferences()) {

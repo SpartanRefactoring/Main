@@ -4,8 +4,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,13 +31,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
-  private static boolean isTernaryOfBooleanLitreral(final ConditionalExpression ¢) {
-    return ¢ != null && have.booleanLiteral(core(¢.getThenExpression()), core(¢.getElseExpression()));
-  }
-
   /** Consider an expression {@code
-      * a ? b : c
-      * } in a sense it is the same as {@code
+       * a ? b : c
+       * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>
@@ -58,7 +52,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * </ol>
   */
   private static Expression simplifyTernary(final ConditionalExpression ¢) {
-    return simplifyTernary(core(¢.getThenExpression()), core(¢.getElseExpression()), copy.of(¢.getExpression()));
+    return simplifyTernary(¢.getThenExpression(), ¢.getElseExpression(), copy.of(¢.getExpression()));
   }
 
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
@@ -73,7 +67,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   }
 
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
-    return isTernaryOfBooleanLitreral(¢);
+    return have.booleanLiteral(¢.getThenExpression(), ¢.getElseExpression());
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {

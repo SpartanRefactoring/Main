@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 
@@ -17,7 +18,7 @@ public interface annotees {
     return ¢.stream().map(VariableDeclaration::getName).collect(toList());
   }
 
-  static List<SimpleName> of(final Annotation ¢) {
+  @SuppressWarnings("OverlyComplexMethod") static List<SimpleName> of(final Annotation ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
       case ASTNode.ANNOTATION_TYPE_DECLARATION:

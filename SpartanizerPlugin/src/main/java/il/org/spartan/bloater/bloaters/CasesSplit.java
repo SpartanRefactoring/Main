@@ -58,7 +58,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
-    final List<Statement> $ = new LinkedList<>();
+    final List<Statement> $ = new ArrayList<>();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c) + 1, ss.size())) {
       if (¢ instanceof SwitchCase)
