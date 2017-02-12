@@ -10,10 +10,31 @@ import org.junit.*;
  * @since 2017-02-12 */
 @SuppressWarnings("static-method")
 public class MaxTest {
-  @Test public void field() {
+  @Test public void a() {
     trimmingOf("return x > y ? x : y;")//
         .using(ConditionalExpression.class, new Max())//
-        .gives("return safe(x).get(()->x.y);")//
+        .gives("return max(x,y);")//
+        .stays();
+  }
+
+  @Test public void b() {
+    trimmingOf("return x >= y ? x : y;")//
+        .using(ConditionalExpression.class, new Max())//
+        .gives("return max(x,y);")//
+        .stays();
+  }
+
+  @Test public void c() {
+    trimmingOf("return y < x ? x : y;")//
+        .using(ConditionalExpression.class, new Max())//
+        .gives("return max(x,y);")//
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("return y <= x ? x : y;")//
+        .using(ConditionalExpression.class, new Max())//
+        .gives("return max(x,y);")//
         .stays();
   }
 }
