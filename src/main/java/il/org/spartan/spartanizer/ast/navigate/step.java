@@ -546,8 +546,8 @@ public enum step {
   @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
-            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
+            : iz.enumDeclaration(¢) ? (Collection<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
+            .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
   }
 
   /** @param ¢ JD
