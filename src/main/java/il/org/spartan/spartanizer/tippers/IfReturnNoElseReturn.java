@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * return bar();
  * } into {@code
  * return a ? foo() : bar();
- * } return a;  g(); }
+ * } return a; g(); }
  * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement>//

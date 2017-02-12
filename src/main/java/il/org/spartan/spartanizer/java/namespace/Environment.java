@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import static java.util.stream.Collectors.*;
+
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree.
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Dec 25, 2016 */
 public interface Environment {
-  /** @return true iff this instance doesn't have an entry with a given
-   *         name. */
+  /** @return true iff this instance doesn't have an entry with a given name. */
   default boolean doesntHave(final String name) {
     return !has(name);
   }
@@ -37,8 +37,8 @@ public interface Environment {
     return $;
   }
 
-  /** Get full path of the current this instance (all scope hierarchy).
-   * Used for full names of the variables. */
+  /** Get full path of the current this instance (all scope hierarchy). Used for
+   * full names of the variables. */
   default String fullName() {
     final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
@@ -59,8 +59,8 @@ public interface Environment {
   /** @return null iff the name is not in use in the this instance */
   Binding get(String name);
 
-  /** Answer the question whether the name is in use in the current
-   * this instance */
+  /** Answer the question whether the name is in use in the current this
+   * instance */
   boolean has(String name);
 
   /** @return null iff the name is not hiding anything from outer scopes,
@@ -176,8 +176,8 @@ public interface Environment {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
-  /** Spawns the first nested this instance. Should be used when the first
-   * block is opened. */
+  /** Spawns the first nested this instance. Should be used when the first block
+   * is opened. */
   static Environment genesis() {
     return NULL.spawn();
   }

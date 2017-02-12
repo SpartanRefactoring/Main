@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @author Yossi Gil
  * @since 2014/05/24
  * @author Yossi GIl */
-@SuppressWarnings({ "unused" })
+@SuppressWarnings("unused")
 public class FileTestUtils {
   /** A String determines whereas we are at the IN or OUT side of the test See
    * TestCases test files for reference. */

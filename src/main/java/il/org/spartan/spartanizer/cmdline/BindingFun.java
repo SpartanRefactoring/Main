@@ -17,9 +17,6 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 final class BindingFun implements IApplication {
-  /**
-   * 
-   */
   private static final String C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS = "C:\\Users\\sorimar\\workspace\\testAddComments";
 
   private static void iterateMethodInvocations(final CompilationUnit u) {
@@ -71,9 +68,9 @@ final class BindingFun implements IApplication {
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
         ___.______unused();
         iterateMethodInvocations(cu);
-      } catch (IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢, f + "");
-      } catch (JavaModelException ¢) {
+      } catch (final JavaModelException ¢) {
         ¢.printStackTrace();
       }
     return IApplication.EXIT_OK;

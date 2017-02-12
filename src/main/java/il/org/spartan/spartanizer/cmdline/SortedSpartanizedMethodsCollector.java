@@ -20,7 +20,9 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Collects methods, applies spartanization and nanos, then generates a file
+ * with tagged (fully covered by single nano) methods and a file with non-tagged
+ * methods
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
@@ -79,7 +81,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
     writeFile(new File(makeFile("after.java")),
         methods.values().stream().map(li -> li.stream().map(λ -> format.code(λ.after + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(
-        li -> li.stream().map(λ -> λ.after).filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ .toString())).reduce("", (x, y) -> x + y))
+        li -> li.stream().map(λ -> λ.after).filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y))
         .reduce("", (x, y) -> x + y));
     summarizeSortedMethodStatistics();
     summarizeNPStatistics();

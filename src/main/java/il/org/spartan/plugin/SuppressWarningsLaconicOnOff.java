@@ -1,5 +1,5 @@
 package il.org.spartan.plugin;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -99,7 +98,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   static Collection<String> getKeywords(final String c, final String[] kws) {
-    return Stream.of(kws).filter(c::contains).collect(Collectors.toSet());
+    return Stream.of(kws).filter(c::contains).collect(toSet());
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
@@ -133,7 +132,7 @@ public enum SuppressWarningsLaconicOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || eclipse.facade.isNodeOutsideMarker(n, m))
+        if (b || facade.isNodeOutsideMarker(n, m))
           return;
         BodyDeclaration d;
         switch (t) {

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -14,21 +14,21 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    final VariableDeclarationFragment $ = hop.precidingFragmentToLastExpression(¢);
+    final VariableDeclarationFragment $ = hop.penultimateFragment(¢);
     return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    final VariableDeclarationFragment $ = hop.prevFragmentToLastExpression(¢);
+    final VariableDeclarationFragment $ = hop.penultimate(¢);
     return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
-    return extract.fragments(step.body(s)).stream().allMatch(λ -> !new FragmentInitializerDead().canTip(λ));
+    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().canTip(λ));
   }
 
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
-    return extract.fragments(step.body(s)).stream().allMatch(λ -> !new FragmentInitializerDead().canTip(λ));
+    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().canTip(λ));
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {
@@ -37,10 +37,10 @@ public enum cantTip {
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemove().canTip(λ));
+    return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().canTip(λ));
   }
 
   public static boolean remvoeRedundantIf(final WhileStatement s) {
-    return extract.ifStatements(step.body(s)).stream().allMatch(λ -> !new IfDeadRemove().canTip(λ));
+    return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().canTip(λ));
   }
 }

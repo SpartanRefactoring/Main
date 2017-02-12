@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -1401,8 +1400,8 @@ public final class Version230 {
     final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
-    assert ExpressionComparator.moreArguments(e1, e2);
-    assert ExpressionComparator.longerFirst(e);
+    assert moreArguments(e1, e2);
+    assert longerFirst(e);
     assert s.canTip(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
@@ -1422,8 +1421,8 @@ public final class Version230 {
     assert !hasNull(e1, e2);
     final boolean tokenWiseGreater = count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert !tokenWiseGreater;
-    assert ExpressionComparator.moreArguments(e1, e2);
-    assert ExpressionComparator.longerFirst(e);
+    assert moreArguments(e1, e2);
+    assert longerFirst(e);
     assert s.canTip(e) : "e=" + e + " s=" + s;
     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
@@ -2742,22 +2741,22 @@ public final class Version230 {
   }
 
   @Test public void pushdownTernaryParFX() {
-    trimmingOf("a ?( false):true")//
+    trimmingOf("a ? false:true")//
         .gives("!a && true");
   }
 
   @Test public void pushdownTernaryParTX() {
-    trimmingOf("a ?(((true ))): c")//
+    trimmingOf("a ?true: c")//
         .gives("a || c");
   }
 
   @Test public void pushdownTernaryParXF() {
-    trimmingOf("a ? b :(false)")//
+    trimmingOf("a ? b :false")//
         .gives("a && b");
   }
 
   @Test public void pushdownTernaryParXT() {
-    trimmingOf("a ? b :((true))")//
+    trimmingOf("a ? b :true")//
         .gives("!a || b");
   }
 
@@ -3633,9 +3632,9 @@ public final class Version230 {
   }
 
   @Test public void twoOpportunityExample() {
-    azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
+    azzert.that(countOpportunities(new Trimmer(),
         (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
-    azzert.that(TrimmerTestsUtils.countOpportunities(new Trimmer(),
+    azzert.that(countOpportunities(new Trimmer(),
         (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
   }
 

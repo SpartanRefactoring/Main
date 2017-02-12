@@ -23,7 +23,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
    * @param x JD
    * @return simplified parameter */
   public static Expression simplifyNot(final PrefixExpression ¢) {
-    return pushdownNot(az.not(extract.core(¢)));
+    return pushdownNot(az.not(core(¢)));
   }
 
   static Expression notOfLiteral(final BooleanLiteral ¢) {
@@ -54,7 +54,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static boolean hasOpportunity(final PrefixExpression ¢) {
-    return ¢ != null && hasOpportunity(core(step.operand(¢)));
+    return ¢ != null && hasOpportunity(core(operand(¢)));
   }
 
   private static Expression perhapsComparison(final Expression inner) {
@@ -78,11 +78,11 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static Expression perhapsDoubleNegation(final PrefixExpression ¢) {
-    return ¢ == null ? null : tryToSimplify(step.operand(¢));
+    return ¢ == null ? null : tryToSimplify(operand(¢));
   }
 
   private static Expression pushdownNot(final PrefixExpression ¢) {
-    return ¢ == null ? null : pushdownNot(step.operand(¢));
+    return ¢ == null ? null : pushdownNot(operand(¢));
   }
 
   private static Expression tryToSimplify(final Expression ¢) {

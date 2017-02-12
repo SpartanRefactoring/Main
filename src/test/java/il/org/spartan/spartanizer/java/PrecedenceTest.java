@@ -139,7 +139,7 @@ public final class PrecedenceTest {
   }
 
   @Test public void precedenceOfNulGreatherl() {
-    azzert.that(precedence.greater(null, c("a?b:c")), is(true));
+    assert precedence.greater(null, c("a?b:c"));
   }
 
   @Test public void precedenceOfNull() {

@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-22 */
 public interface members {
-  static List<? extends ASTNode> of(final EnumDeclaration ¢) {
-    final List<ASTNode> $ = new ArrayList<>(enumConstants(¢));
+  static List<BodyDeclaration> of(final EnumDeclaration ¢) {
+    final List<BodyDeclaration> $ = new ArrayList<>(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
   }
@@ -33,7 +33,7 @@ public interface members {
     return $;
   }
 
-  static List<? extends ASTNode> of(final ASTNode ¢) {
+  static List<? extends BodyDeclaration> of(final ASTNode ¢) {
     return iz.anonymousClassDeclaration(¢) ? of(az.anonymousClassDeclaration(¢))
         : iz.enumDeclaration(¢) ? of(az.enumDeclaration(¢)) //
             : iz.typeDeclaration(¢) ? of(az.typeDeclaration(¢))//

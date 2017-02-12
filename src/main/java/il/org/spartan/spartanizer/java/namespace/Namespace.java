@@ -157,6 +157,7 @@ public final class Namespace implements Environment {
             n = n.spawn(local);
             for (final VariableDeclarationFragment ¢ : fragments(vds))
               n.put(step.name(¢), type(vds));
+            
           }
           n.fillScope(s);
         }
@@ -394,10 +395,8 @@ public final class Namespace implements Environment {
   }
 
   public boolean allowsCurrentRecursive() {
-    for (final String key : flat.keySet())
-      if (isVariable(key) && !in(key, namer.specials))
-        return false;
-    return children.stream().allMatch(Namespace::allowsCurrentRecursive);
+    return flat.keySet().stream().noneMatch(λ -> isVariable(λ) && !in(λ, namer.specials))
+        && children.stream().allMatch(Namespace::allowsCurrentRecursive);
   }
 
   private static boolean isVariable(final String key) {
