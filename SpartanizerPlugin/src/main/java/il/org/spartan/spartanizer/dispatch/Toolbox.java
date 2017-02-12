@@ -90,25 +90,25 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-//        .add(EnhancedForStatement.class, //
-//            new Aggregate(), //
-//            new Collect(), //
-//            new CountIf(), //
-//            new FindFirst(), //
-//            new FlatMap(), //
-//            new ForEach(), //
-//            new ForEachSuchThat(), //
-//            new HoldsForAll(), //
-//            new HoldsForAny(), //
-//            null) //
-//        .add(InfixExpression.class, //
-//            new Empty(), //
-//            new LastIndex(), //
-//            new Max(), //
-//            new Min(), //
-//            new Infix.SafeReference(), //
-//            new Singleton(), //
-//            null)//
+        .add(EnhancedForStatement.class, //
+            new Aggregate(), //
+            new Collect(), //
+            new CountIf(), //
+            new FindFirst(), //
+            new FlatMap(), //
+            new ForEach(), //
+            new ForEachSuchThat(), //
+            new HoldsForAll(), //
+            new HoldsForAny(), //
+            null) //
+        .add(InfixExpression.class, //
+            new Empty(), //
+            new LastIndex(), //
+            new Max(), //
+            new Min(), //
+            new Infix.SafeReference(), //
+            new Singleton(), //
+            null)//
         .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //

@@ -13,13 +13,13 @@ public class FlatMapTest {
   @Test public void a() {
     trimmingOf(
         "  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  other.addAll(onBroadcast(e));")//
-            .using(EnhancedForStatement.class, new FlatMap())//
+            .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
             .stays();
   }
 
   @Test public void b() {
     trimmingOf("  for (AtmosphereResourceEventListener ¢ : rImpl)  other.addAll(onBroadcast(e));")//
-        .using(EnhancedForStatement.class, new FlatMap())//
+        .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
         .gives("other.addAll((rImpl).stream().flatMap(¢->onBroadcast(e)));")//
         .gives("other.addAll(rImpl.stream().flatMap(λ->onBroadcast(e)));")//
         .stays();
@@ -27,17 +27,33 @@ public class FlatMapTest {
 
   @Test public void c() {
     trimmingOf("  for (AtmosphereResourceEventListener ¢ : rImpl)  other.addAll(¢);")//
-        .using(EnhancedForStatement.class, new FlatMap())//
+        .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
         .gives("other.addAll((rImpl).stream().flatMap(¢->¢));")//
         .gives("other.addAll(rImpl.stream().flatMap(λ->λ));")//
         .stays();
   }
-  
+
   @Test public void d() {
     trimmingOf("  for (AtmosphereResourceEventListener ¢ : very.complicated(expression))  other.addAll(¢);")//
-        .using(EnhancedForStatement.class, new FlatMap())//
+        .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
         .gives("other.addAll((very.complicated(expression)).stream().flatMap(¢->¢));")//
         .gives("other.addAll(very.complicated(expression).stream().flatMap(λ->λ));")//
+        .stays();
+  }
+
+  @Test public void e() {
+    trimmingOf("  for (A a : B) for(C c : a) other.add(c);")//
+        .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
+        .gives("other.addAll((B).stream().flatMap(a->a));")//
+        .gives("other.addAll(B.stream().flatMap(λ->λ));")//
+        .stays();
+  }
+
+  @Test public void f() {
+    trimmingOf("  for (A a : B.f.f()) for(C c : a) other.add(c);")//
+        .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
+        .gives("other.addAll((B.f.f()).stream().flatMap(a->a));")//
+        .gives("other.addAll(B.f.f().stream().flatMap(λ->λ));")//
         .stays();
   }
 }
