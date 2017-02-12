@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.ast.factory;
 
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
+
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -166,7 +169,7 @@ public enum make {
 
   private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
-        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
+        : "-" + token.substring(as.bit(token.startsWith("+")));
   }
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
