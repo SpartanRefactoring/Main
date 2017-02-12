@@ -3,6 +3,7 @@
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -89,7 +90,7 @@ public class switchBranch {
 
   public boolean compareTo(final switchBranch ¢) {
     final boolean $ = compare(¢);
-    return $ != ¢.compare(this) ? $ : (lisp.first(cases) + "").compareTo(lisp.first(¢.cases) + "") < 0;
+    return $ != ¢.compare(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0;
   }
 
   private void addAll(final Collection<Statement> ¢) {
@@ -110,7 +111,7 @@ public class switchBranch {
 
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
-    assert iz.switchCase(lisp.first(l));
+    assert iz.switchCase(first(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
     final List<switchBranch> $ = new ArrayList<>();
@@ -135,11 +136,8 @@ public class switchBranch {
       if (!iz.sequencerComplex(lisp.last(l)))
         s.add(n.getAST().newBreakStatement());
     } else {
-      if (!s.isEmpty()) {
-        c = new ArrayList<>();
-        s = new ArrayList<>();
-        $.add(new switchBranch(c, s));
-      }
+      if (!s.isEmpty())
+        $.add(new switchBranch(new ArrayList<>(), new ArrayList<>()));
       c.add(az.switchCase(lisp.last(l)));
       s.add(n.getAST().newBreakStatement());
     }
@@ -194,6 +192,6 @@ public class switchBranch {
   }
 
   public boolean hasStatements() {
-    return !statements.isEmpty() && !iz.breakStatement(lisp.first(statements));
+    return !statements.isEmpty() && !iz.breakStatement(first(statements));
   }
 }

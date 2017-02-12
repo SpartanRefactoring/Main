@@ -27,7 +27,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   @Override public ASTNode replacement(final InfixExpression x) {
     final Expression l = extract.core(left(x)), r = extract.core(right(x));
-    if (conditionalExpression(r)) {
+    if (iz.conditionalExpression(r)) {
       final ConditionalExpression $ = az.conditionalExpression(r);
       return subject.pair(subject.pair(l, then($)).to(operator(x)), subject.pair(l, elze($)).to(operator(x))).toCondition(expression($));
     }
@@ -39,8 +39,8 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     if (x == null)
       return false;
     final Expression $ = extract.core(left(x)), r = extract.core(right(x));
-    return conditionalExpression(r) && !haz.sideEffects(expression(az.conditionalExpression(r)))
-        || conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
+    return iz.conditionalExpression(r) && !haz.sideEffects(expression(az.conditionalExpression(r)))
+        || iz.conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
   }
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {

@@ -159,7 +159,7 @@ public enum extract {
    * @return the parameter if not parenthesized, or the unparenthesized this
    *         version of it */
   public static Expression core(final Expression $) {
-    return $ == null ? $ //
+    return $ == null ? null //
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
             : iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;

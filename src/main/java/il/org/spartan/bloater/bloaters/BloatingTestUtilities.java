@@ -157,7 +157,7 @@ public enum BloatingTestUtilities {
     }
 
     private void checkSame() {
-      if (get().length() == 0)
+      if (get().isEmpty())
         return;
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get());
