@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
@@ -8,11 +7,12 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import static java.util.stream.Collectors.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -90,27 +90,6 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
-        .add(EnhancedForStatement.class, //
-            new Aggregate(), //
-            new Collect(), //
-            new CountIf(), //
-            new FindFirst(), //
-            new FlatMap(), //
-            new ForEach(), //
-            new ForEachSuchThat(), //
-            new HoldsForAll(), //
-            new HoldsForAny(), //
-            null) //
-        .add(ConditionalExpression.class, //
-            new AsBit(), //
-            new DefaultsTo(), //
-            new GeneralizedSwitch<>(), //
-            new Unless(), //
-            new SafeReference(), //
-            new TakeDefaultTo(), //
-            new Max(), //
-            new Min(), //
-            null) //
         .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
