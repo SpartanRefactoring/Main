@@ -1,34 +1,29 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** collection.size() == 0
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-01 */
 public final class Empty extends NanoPatternTipper<InfixExpression> {
-  private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
+  private static final NanoPatternContainer<InfixExpression> tippers = new NanoPatternContainer<InfixExpression>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$X.size() == 0", "empty($X)", "is empty"));
-      add(patternTipper("0 == $X.size()", "empty($X)", "is empty"));
-      add(patternTipper("$X.isEmpty()", "empty($X)", "is empty"));
+      patternTipper("$X.size() == 0", "empty($X)", "is empty");
+      patternTipper("0 == $X.size()", "empty($X)", "is empty");
+      patternTipper("$X.isEmpty()", "empty($X)", "is empty");
     }
   };
 
   @Override public boolean canTip(final InfixExpression ¢) {
-    return anyTips(tippers, ¢);
+    return tippers.anyTips(¢);
   }
 
   @Override public Tip pattern(final InfixExpression ¢) {
-    return firstTip(tippers, ¢);
+    return tippers.firstTip(¢);
   }
 
   @Override public String description() {
