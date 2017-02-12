@@ -68,7 +68,7 @@ public enum eclipse {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
-      return done(m, $, "Cannot find current compilation unit " + u);
+      return done(m, $, "Cannot find current compilation unit " + null);
     final IJavaProject javaProject = u.getJavaProject();
     if (javaProject == null)
       return done(m, $, "Cannot find project of " + u);

@@ -88,7 +88,6 @@ public final class SingleTipperApplicator {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
       return;
-    assert cu != null;
     final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
