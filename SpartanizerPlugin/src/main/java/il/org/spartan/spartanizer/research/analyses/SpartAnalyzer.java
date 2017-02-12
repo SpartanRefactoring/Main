@@ -66,9 +66,11 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                new LastIndex(), //
-                new Infix.SafeReference(), //
                 new Empty(), //
+                new LastIndex(), //
+                new Max(), //
+                new Min(), //
+                new Infix.SafeReference(), //
                 new Singleton(), //
                 null)//
             .add(MethodInvocation.class, //
