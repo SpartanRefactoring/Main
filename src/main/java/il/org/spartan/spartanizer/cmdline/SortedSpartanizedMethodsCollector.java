@@ -20,7 +20,9 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Collects methods, applies spartanization and nanos, then generates a file
+ * with tagged (fully covered by single nano) methods and a file with non-tagged
+ * methods
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {

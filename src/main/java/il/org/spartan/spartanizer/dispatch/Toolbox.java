@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
@@ -102,11 +103,7 @@ public class Toolbox {
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(ExpressionStatement.class, 
-            new ExpressionStatementAssertTrueFalse(),
-            new ExpressionStatementThatIsBooleanLiteral(),
-            null
-            ) //
+        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
             new SequencerNotLastInBlock<>()) //
         .add(EnhancedForStatement.class, //
