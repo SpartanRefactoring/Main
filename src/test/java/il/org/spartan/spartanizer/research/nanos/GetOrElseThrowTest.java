@@ -19,9 +19,16 @@ public class GetOrElseThrowTest {
         .stays();
   }
 
-  @Test public void a2() {
+  @Test public void b() {
     trimmingOf("s1(); if(x == null) throw new Error(); return x; s2();")//
         .using(IfStatement.class, new GetOrElseThrow())//
+        .gives("s1(); notNull(x).get(x); s2();")//
+        .stays();
+  }
+
+  @Test public void c() {
+    trimmingOf("s1(); if(x == null) throw new Error(); return x; s2();")//
+        .using(IfStatement.class, new NotNullOrThrow(), new GetOrElseThrow())//
         .gives("s1(); notNull(x).get(x); s2();")//
         .stays();
   }
