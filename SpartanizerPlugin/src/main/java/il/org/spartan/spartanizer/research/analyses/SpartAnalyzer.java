@@ -41,6 +41,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new Collect(), //
                 new CountIf(), //
                 new FindFirst(), //
+                new FlatMap(), //
                 new ForEach(), //
                 new ForEachSuchThat(), //
                 new HoldsForAll(), //
