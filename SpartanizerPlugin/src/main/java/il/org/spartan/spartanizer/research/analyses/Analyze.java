@@ -143,7 +143,7 @@ public enum Analyze {
         Logger.finishedType();
       });
     }
-    methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : count.statements(x) > count.statements(y) ? 1 : 0);
+    methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : as.bit(count.statements(x) > count.statements(y)));
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
     writeFile(new File(outputDir() + "/notTagged.java"),
         methods.stream().filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
