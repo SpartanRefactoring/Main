@@ -780,4 +780,11 @@ public interface wizard {
       }
       return $;
     }
+
+    static <T> T previous(T t, List<T> ts) {
+      if (ts == null)
+        return null;
+      int $ = ts.indexOf(t);
+      return $ < 1 ? null : ts.get($ - 1);
+    }
 }
