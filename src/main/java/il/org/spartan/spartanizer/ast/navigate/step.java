@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
@@ -173,11 +172,21 @@ public enum step {
   /** @param ¢ JD
    * @return */
   public static List<MethodDeclaration> constructors(final AbstractTypeDeclaration ¢) {
-    return step.bodyDeclarations(¢).stream().map(az::methodDeclaration).filter(λ -> λ != null && λ.isConstructor()).collect(toList());
+    return bodyDeclarations(¢).stream() //
+        .map(az::methodDeclaration) //
+        .filter(Objects::nonNull) //
+        .filter(MethodDeclaration::isConstructor) //
+        .collect(toList())//
+        ;
   }
 
   public static Collection<MethodDeclaration> constructors(final ASTNode ¢) {
-    return Arrays.asList(members.of(¢).stream().filter(iz::constructor).toArray(MethodDeclaration[]::new));
+    return members.of(¢).stream() //
+        .map(az::methodDeclaration) //
+        .filter(iz::constructor) //
+        .filter(Objects::nonNull) //
+        .collect(toList()) //
+        ;
   }
 
   @SuppressWarnings("unchecked") public static Iterable<Expression> dimensions(final ArrayCreation ¢) {
@@ -444,7 +453,7 @@ public enum step {
   }
 
   public static Collection<Initializer> initializers(final ASTNode ¢) {
-    return Arrays.asList(members.of(¢).stream().filter(iz::initializer).toArray(Initializer[]::new));
+    return members.of(¢).stream().map(az::initializer).filter(Objects::nonNull).collect(toList());
   }
 
   /** Expose the list of initializers contained in a {@link ForStatement}
@@ -455,11 +464,11 @@ public enum step {
   }
 
   public static List<Initializer> initializersClass(final ASTNode ¢) {
-    return Arrays.asList(initializers(¢).stream().filter(iz::static¢).toArray(Initializer[]::new));
+    return initializers(¢).stream().filter(iz::static¢).collect(toList());
   }
 
   public static Collection<Initializer> initializersInstance(final ASTNode n) {
-    return Arrays.asList(initializers(n).stream().filter(λ -> !iz.static¢(λ)).toArray(Initializer[]::new));
+    return initializers(n).stream().filter(λ -> !iz.static¢(λ)).collect(toList());
   }
 
   /** @param ¢ JD
@@ -921,5 +930,13 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  /** @param ¢ current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  public static Statement previousStatementInBody(final Statement ¢) {
+    return wizard.previous(¢, statements(az.block(parent(¢))));
   }
 }

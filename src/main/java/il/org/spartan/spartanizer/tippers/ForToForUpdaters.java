@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+import static il.org.spartan.lisp.first;
+
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
@@ -64,7 +66,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-    return step.fragments(az.variableDeclarationExpression(findFirst.elementOf(step.initializers(s)))).stream()
+      return step.fragments(az.variableDeclarationExpression(first(step.initializers(s)))).stream()
         .anyMatch(λ -> (λ.getName() + "").equals(n + ""));
   }
 
