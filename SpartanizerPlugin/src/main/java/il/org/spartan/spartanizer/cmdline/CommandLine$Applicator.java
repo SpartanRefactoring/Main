@@ -65,8 +65,8 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String... excludedTipperGroups) {
-    return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[] {}))
-        .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(toList()).toArray(new String[] {});
+    return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[0]))
+        .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(toList()).toArray(new String[0]);
   }
 
   private void go(final CompilationUnit u) {

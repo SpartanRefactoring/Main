@@ -1,8 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static java.util.stream.Collectors.*;
-import static il.org.spartan.lisp.*;
-import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -15,6 +12,10 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jface.text.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -50,8 +51,8 @@ public enum make {
         return make.EXPRESSION;
       case STATEMENTS:
         return make.STATEMENTS;
-      default:
-        return null;
+        default:
+          return null; 
     }
   }
 
@@ -304,7 +305,7 @@ public enum make {
      * @return <code><b>true</b></code> <em>iff</em>e is an infix expression and
      *         if it's first operand is of type String and false otherwise */
     public static boolean isStringConactingSafe(final Expression ¢) {
-      return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
+      return iz.infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }
 
     private static boolean isStringConcatingSafe(final InfixExpression ¢) {
@@ -325,11 +326,11 @@ public enum make {
      *         parenthesis, depending on the relative precedences of the
      *         expression and its host. */
     public Expression into(final ASTNode host) {
-      return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
+      return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || iz.simple(inner) ? inner : parenthesize(inner);
     }
 
     public Expression intoLeft(final InfixExpression host) {
-      return precedence.greater(host, inner) || precedence.equal(host, inner) || simple(inner) ? inner : parenthesize(inner);
+      return precedence.greater(host, inner) || precedence.equal(host, inner) || iz.simple(inner) ? inner : parenthesize(inner);
     }
 
     private boolean noParenthesisRequiredIn(final ASTNode host) {
@@ -348,7 +349,7 @@ public enum make {
      * @param host
      * @return */
     private boolean stringConcatingSafeIn(final ASTNode host) {
-      if (!infixExpression(host))
+      if (!iz.infixExpression(host))
         return false;
       final InfixExpression $ = az.infixExpression(host);
       return ($.getOperator() != wizard.PLUS2 || !type.isNotString($)) && isStringConactingSafe(inner);

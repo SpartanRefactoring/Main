@@ -96,8 +96,8 @@ public abstract class MetaFixture {
   }
 
   private static String[] values(final Expression $) {
-    return $ == null ? new String[] {} : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
-        iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[] {};
+    return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
+        iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
 
   protected static String[] values(final SingleMemberAnnotation ¢) {

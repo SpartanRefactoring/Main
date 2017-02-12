@@ -766,4 +766,18 @@ public interface wizard {
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(λ -> λ.test(m));
   }
+
+    /** swaps two elements in an indexed list in given indexes, if they are legal
+     * @param ts the indexed list
+     * @param i1 the index of the first element
+     * @param i2 the index of the second element
+     * @return the list after swapping the elements */
+    static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+      if (i1 < $.size() && i2 < $.size()) {
+        final T t = $.get(i1);
+        lisp.replace($, $.get(i2), i1);
+        lisp.replace($, t, i2);
+      }
+      return $;
+    }
 }
