@@ -126,15 +126,15 @@ public abstract class StatementReduce<T> {
   }
 
   protected T map(final MethodInvocation ¢) {
-    return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
+    return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
   protected T map(final PostfixExpression ¢) {
-    return map(step.expression(¢));
+    return map(expression(¢));
   }
 
   protected T map(final PrefixExpression ¢) {
-    return map(step.expression(¢));
+    return map(expression(¢));
   }
 
   protected T map(final ReturnStatement ¢) {
@@ -176,11 +176,11 @@ public abstract class StatementReduce<T> {
   }
 
   protected T map(final SuperConstructorInvocation ¢) {
-    return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
+    return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
   protected T map(final SuperMethodInvocation ¢) {
-    return reduce(map(step.expression(¢)), reduce(step.arguments(¢)));
+    return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
   protected T mapAtomic(final Statement i) {

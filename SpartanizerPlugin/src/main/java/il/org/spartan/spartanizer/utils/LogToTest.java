@@ -41,8 +41,8 @@ public enum LogToTest {
     final Collection<String> xs = new HashSet<>();
     final List<String> ts = new ArrayList<>();
     final Map<String, Integer> nu = new HashMap<>();
-    for (final File element : fs)
-      try (BufferedReader r = new BufferedReader(new FileReader(element))) {
+    for (final File f : fs)
+      try (BufferedReader r = new BufferedReader(new FileReader(f))) {
         final List<String> es = new ArrayList<>();
         es.add("");
         for (String l = r.readLine(); l != null;) {
@@ -100,14 +100,14 @@ public enum LogToTest {
   private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
       @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
-        + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {" + "\ntrimmingOf(" + code
+        + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {\ntrimmingOf(" + code
         + ").doesNotCrash();\n}";
   }
 
   private static String wrap(final Iterable<String> ss, final String fileName) {
     final StringBuilder $ = new StringBuilder(
-        "package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
-            + "import org.junit.*;\n\n" + "/** @author Ori Roth\n" + "* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
+        "package il.org.spartan.automatic;\n\nimport static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
+            + "import org.junit.*;\n\n/** @author Ori Roth\n* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
             + "@SuppressWarnings(\"static-method\")\n" //
             + "@Ignore\n" //
             + "public class " + fileName + " {\n");

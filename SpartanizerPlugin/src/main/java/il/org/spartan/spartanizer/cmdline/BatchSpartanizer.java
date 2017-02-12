@@ -270,10 +270,8 @@ final class BatchSpartanizer extends FolderASTVisitor {
   }
 
   private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
-    return f.getName().endsWith(".java") ? true
-        : f.isDirectory()
-            ? Arrays.stream(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java"))
-            : false;
+    return f.getName().endsWith(".java") || (f.isDirectory()
+        && Arrays.stream(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java")));
   }
 
   /** This method is called from outside, like in the case of

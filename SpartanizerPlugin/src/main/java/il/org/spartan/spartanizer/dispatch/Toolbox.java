@@ -102,7 +102,11 @@ public class Toolbox {
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
+        .add(ExpressionStatement.class, 
+            new ExpressionStatementAssertTrueFalse(),
+            new ExpressionStatementThatIsBooleanLiteral(),
+            null
+            ) //
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
             new SequencerNotLastInBlock<>()) //
         .add(EnhancedForStatement.class, //
