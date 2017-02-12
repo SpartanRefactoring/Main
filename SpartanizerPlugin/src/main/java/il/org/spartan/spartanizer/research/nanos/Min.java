@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Min between two expressions
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-12 */
-public final class Min extends NanoPatternTipper<InfixExpression> {
-  private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
+public final class Min extends NanoPatternTipper<ConditionalExpression> {
+  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X1 > $X2 ? $X2 : $X1", "max($X1,$X2)", "max"));
@@ -24,11 +24,11 @@ public final class Min extends NanoPatternTipper<InfixExpression> {
     }
   };
 
-  @Override public boolean canTip(final InfixExpression ¢) {
+  @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
