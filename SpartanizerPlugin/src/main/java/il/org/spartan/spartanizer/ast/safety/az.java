@@ -14,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
@@ -100,7 +101,7 @@ public enum az {
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
    *         <code><b>false</b></code> */
   @SuppressWarnings("BooleanParameter") public static int bit(final boolean $) {
-    return $ ? 1 : 0;
+    return as.bit($);
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link Block}
