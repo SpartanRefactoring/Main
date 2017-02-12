@@ -37,7 +37,7 @@ public final class FragmentInitializerReturn extends $FragementAndStatement//
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Assignment a = az.assignment(step.expression(s));
+    final Assignment a = az.assignment(expression(s));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);

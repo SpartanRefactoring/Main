@@ -94,7 +94,7 @@ final class Application implements IApplication {
   private IJavaProject javaProject;
   private IPackageFragmentRoot srcRoot;
   private IPackageFragment pack;
-  private boolean optDoNotOverwrite;
+  private boolean optOverwrite = true;
   private boolean optIndividualStatistics;
   private boolean optVerbose;
   private boolean optStatsLines;
@@ -102,7 +102,7 @@ final class Application implements IApplication {
   private int optRounds = 20;
   private String optPath;
 
-  @Override public Object start(final IApplicationContext arg0) {
+  @Override @SuppressWarnings("OverlyComplexMethod") public Object start(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     try {
@@ -112,7 +112,7 @@ final class Application implements IApplication {
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
-    final List<FileStats> fileStats = new ArrayList<>();
+    final Collection<FileStats> fileStats = new ArrayList<>();
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
       ICompilationUnit u = null;
       try {
@@ -136,7 +136,6 @@ final class Application implements IApplication {
         ++failed;
       } catch (final Exception ¢) {
         System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
-
         ¢.printStackTrace();
         ++failed;
       } finally {
@@ -156,7 +155,7 @@ final class Application implements IApplication {
   }
 
   String determineOutputFilename(final String path) {
-    return !optDoNotOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
+    return optOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   /** Discard compilation unit u
@@ -192,7 +191,7 @@ final class Application implements IApplication {
     }
     for (final String a : args) {
       if ("-N".equals(a))
-        optDoNotOverwrite = true;
+        optOverwrite = false;
       if ("-E".equals(a))
         optIndividualStatistics = true;
       try {

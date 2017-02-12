@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * {@link #preBindingVisit()}
  * @author Yossi Gil
  * @since 2016-08-08 18:11:23 +0300 */
-@SuppressWarnings({ "unused" })
+@SuppressWarnings("unused")
 public abstract class VariableBindingVisitor extends ASTVisitor {
   /** stores binding information of all nodes */
   final Map<ASTNode, Binding> environmentOf = new HashMap<>();
@@ -19,8 +19,7 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
    * necessary. At the first call to it during an invocation of
    * {@link ASTNode#accept(ASTVisitor)} on this object, it conducts a
    * preliminary full visit of the tree, starting from its root, collecting the
-   * binding information.
-   * @see ASTVisitor#preVisit(ASTNode) */
+   * binding information. */
   @Override public final void preVisit(final ASTNode ¢) {
     if (!seen(¢))
       collect(¢);

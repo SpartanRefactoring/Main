@@ -80,7 +80,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          void goNonBlockParent(final ASTNode p, @SuppressWarnings("hiding") final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
+          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
               final TextEditGroup g) {
             // TODO Ori Roth: Use subject to block.
             final Block b = p.getAST().newBlock();
@@ -244,7 +244,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   // TODO Ori Roth: move class to utility file
-  protected static class ASTMatcherSpecific extends ASTMatcher {
+  protected class ASTMatcherSpecific extends ASTMatcher {
     ASTNode toMatch;
     Consumer<ASTNode> onMatch;
 

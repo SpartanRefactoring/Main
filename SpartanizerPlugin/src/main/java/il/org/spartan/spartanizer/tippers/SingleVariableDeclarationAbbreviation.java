@@ -36,7 +36,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     if (ts != null)
       for (final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
-          for (final Object ¢ : step.fragments(t))
+          for (final Object ¢ : fragments(t))
             if (¢ instanceof SimpleName && wizard.same((ASTNode) ¢, oldName)) {
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
               return;
@@ -58,15 +58,10 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
-    if (namer.shorten($.getType()) == null)
-      return false;
-    for (final SimpleName ¢ : new MethodExplorer(d).localVariables())
-      if (¢.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-        return false;
-    for (final SingleVariableDeclaration ¢ : parameters(d))
-      if (¢.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-        return false;
-    return !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
+    return namer.shorten($.getType()) == null ? false
+        : new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+            && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+                && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {

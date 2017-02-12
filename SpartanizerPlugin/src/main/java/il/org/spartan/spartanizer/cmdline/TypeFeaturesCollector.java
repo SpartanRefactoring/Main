@@ -90,14 +90,14 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
 
   @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
     return as.array(//
-        m("length", λ -> (λ .toString()).length()), //
-        m("essence", λ -> Essence.of(λ .toString()).length()), //
-        m("tokens", λ -> metrics.tokens(λ .toString())), //
+        m("length", λ -> (λ + "").length()), //
+        m("essence", λ -> Essence.of(λ + "").length()), //
+        m("tokens", λ -> metrics.tokens(λ + "")), //
         m("nodes", λ -> count.nodes((ASTNode) λ)), //
         m("body", λ -> metrics.bodySize((ASTNode) λ)),
         m("methodDeclaration",
             λ -> az.methodDeclaration((ASTNode) λ) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) λ).getBody()).size()),
-        m("tide", λ -> clean(λ .toString()).length()), //
+        m("tide", λ -> clean(λ + "").length()), //
         m("abstract", λ -> iz.abstract¢((BodyDeclaration) λ)), //
         m("default", λ -> iz.default¢((BodyDeclaration) λ)), //
         m("final", λ -> iz.final¢((BodyDeclaration) λ)), //

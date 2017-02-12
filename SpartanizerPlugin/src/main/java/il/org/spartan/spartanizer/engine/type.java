@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import static java.util.stream.Collectors.*;
+
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
  * @author Dor Maayan
@@ -58,15 +59,15 @@ public interface type {
   }
 
   static boolean isDouble(final Expression ¢) {
-    return type.of(¢) == Certain.DOUBLE;
+    return type.of(¢) == DOUBLE;
   }
 
   static boolean isInt(final Expression ¢) {
-    return type.of(¢) == Certain.INT;
+    return type.of(¢) == INT;
   }
 
   static boolean isLong(final Expression ¢) {
-    return type.of(¢) == Certain.LONG;
+    return type.of(¢) == LONG;
   }
 
   /** @param x JD
@@ -79,7 +80,7 @@ public interface type {
   }
 
   static boolean isString(final Expression ¢) {
-    return of(¢) == Certain.STRING;
+    return of(¢) == STRING;
   }
 
   // TODO: Matteo: Nano-pattern of values: not implemented
@@ -201,17 +202,17 @@ public interface type {
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
       if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
         return false;
-      final int $ = Integer.parseInt(step.token(az.numberLiteral(x)));
+      final int $ = Integer.parseInt(token(az.numberLiteral(x)));
       return $ < Short.MAX_VALUE && $ > Short.MIN_VALUE;
     }
 
     private static implementation lookDown(final Assignment x) {
-      final implementation $ = get(step.to(x));
-      return !$.isNoInfo() ? $ : get(step.from(x)).isNumeric() ? NUMERIC : get(step.from(x));
+      final implementation $ = get(to(x));
+      return !$.isNoInfo() ? $ : get(from(x)).isNumeric() ? NUMERIC : get(from(x));
     }
 
     private static implementation lookDown(final CastExpression ¢) {
-      return get(step.expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
+      return get(expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
     }
 
     private static implementation lookDown(final ClassInstanceCreation ¢) {
@@ -219,7 +220,7 @@ public interface type {
     }
 
     private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = get(step.then(x)), ¢ = get(step.elze(x));
+      final implementation $ = get(then(x)), ¢ = get(elze(x));
       return $ == ¢ ? $
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
@@ -280,7 +281,7 @@ public interface type {
     }
 
     private static implementation lookDown(final NumberLiteral ¢) {
-      return new NumericLiteralClassifier(step.token(¢)).type();
+      return new NumericLiteralClassifier(token(¢)).type();
     }
 
     private static implementation lookDown(final ParenthesizedExpression ¢) {
@@ -288,12 +289,12 @@ public interface type {
     }
 
     private static implementation lookDown(final PostfixExpression ¢) {
-      return get(step.operand(¢)).asNumeric(); // see
+      return get(operand(¢)).asNumeric(); // see
                                                // testInDecreamentSemantics
     }
 
     private static implementation lookDown(final PrefixExpression ¢) {
-      return get(step.operand(¢)).under(step.operator(¢));
+      return get(operand(¢)).under(operator(¢));
     }
 
     private static implementation lookDown(final VariableDeclarationExpression ¢) {

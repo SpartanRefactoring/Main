@@ -31,7 +31,7 @@ public abstract class StatementBottomUp<R> extends Reducer<R> {
   }
 
   protected R map(final ConstructorInvocation ¢) {
-    return reduceExpressions(step.arguments(¢));
+    return reduceExpressions(arguments(¢));
   }
 
   protected R map(final ContinueStatement ¢) {

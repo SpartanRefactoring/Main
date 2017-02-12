@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
+
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
@@ -43,7 +44,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     ;
   }
 
-  private static boolean arePseudoAtomic(final Collection<Expression> arguments, final List<String> parametersNames) {
+  private static boolean arePseudoAtomic(final Collection<Expression> arguments, final Collection<String> parametersNames) {
     return arguments.stream()
         .allMatch(λ -> iz.name(λ)//
             || iz.methodInvocation(λ)//

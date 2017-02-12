@@ -49,11 +49,11 @@ public final class Issue0214 {
   }
 
   @Test public void A05_simplifyBlockReturnBlock() {
-    azzert.notNull(blockSimplify.myActualOperandsClass());
+    assert blockSimplify.myActualOperandsClass() != null;
   }
 
   @Test public void A06_TipperAbstractNotNull() {
-    azzert.notNull(new BlockSimplify().myAbstractOperandsClass());
+    assert new BlockSimplify().myAbstractOperandsClass() != null;
   }
 
   @Test public void A07_BlockSimplifyReturnsSomeClass() {

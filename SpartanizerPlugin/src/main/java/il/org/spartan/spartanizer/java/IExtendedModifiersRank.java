@@ -4,6 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
+import java.util.Arrays;
+
 /** Maintain a canonical order of modifiers.
  * @author Yossi Gil
  * @since 2016 */
@@ -55,10 +57,8 @@ public enum IExtendedModifiersRank {
   }
 
   static IExtendedModifiersRank find(final String modifier) {
-    for (final IExtendedModifiersRank $ : IExtendedModifiersRank.values())
-      if (modifier.equals(($ + "").toLowerCase()) || modifier.equals("@" + $))
-        return $;
-    return $USER_DEFINED_ANNOTATION$;
+    return Arrays.stream(IExtendedModifiersRank.values()).filter(λ -> modifier.equals((λ + "").toLowerCase()) || modifier.equals("@" + λ)).findFirst()
+        .orElse($USER_DEFINED_ANNOTATION$);
   }
 
   static int ordinal(final String modifier) {

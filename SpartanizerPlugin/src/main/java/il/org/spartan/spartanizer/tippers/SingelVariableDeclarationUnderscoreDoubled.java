@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -55,7 +54,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     $.setInitializer($.getInitializer());
     $.setType(copy.of(¢.getType()));
     $.setVarargs(¢.isVarargs());
-    copy.modifiers(step.extendedModifiers(¢), extendedModifiers($));
+    copy.modifiers(extendedModifiers(¢), extendedModifiers($));
     return $;
   }
 

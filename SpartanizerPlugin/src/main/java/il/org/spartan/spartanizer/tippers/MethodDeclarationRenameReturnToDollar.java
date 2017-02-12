@@ -85,13 +85,9 @@ abstract class AbstractRenamePolicy {
 }
 
 class Aggressive extends AbstractRenamePolicy {
-  private static SimpleName bestCandidate(final Collection<SimpleName> ns, final List<ReturnStatement> ss) {
-    final int bestScore = bestScore(ns, ss);
-    if (bestScore > 0)
-      for (final SimpleName $ : ns)
-        if (bestScore == score($, ss))
-          return noRivals($, ns, ss) ? $ : null;
-    return null;
+  private static SimpleName bestCandidate(final Collection<SimpleName> ns, final Collection<ReturnStatement> ss) {
+    final int $ = bestScore(ns, ss);
+    return $ <= 0 ? null : ns.stream().filter(λ -> $ == score(λ, ss)).findFirst().filter(λ -> noRivals(λ, ns, ss)).orElse(null);
   }
 
   private static int bestScore(final Iterable<SimpleName> ns, final Collection<ReturnStatement> ss) {
@@ -132,6 +128,6 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   private boolean unused(final SimpleName n) {
-    return returnStatements.stream().allMatch(λ -> !analyze.dependencies(λ).contains(n + ""));
+    return returnStatements.stream().noneMatch(λ -> analyze.dependencies(λ).contains(n + ""));
   }
 }

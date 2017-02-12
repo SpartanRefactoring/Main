@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
-import static java.util.stream.Collectors.*;
+
 import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -9,6 +8,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -40,7 +43,7 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   private static List<Annotation> annotations(final Iterable<IExtendedModifier> ms) {
@@ -58,7 +61,7 @@ public enum extract {
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   /** Determines whether a give {@link ASTNode} includes precisely one
@@ -156,7 +159,7 @@ public enum extract {
    * @return the parameter if not parenthesized, or the unparenthesized this
    *         version of it */
   public static Expression core(final Expression $) {
-    return $ == null ? $ //
+    return $ == null ? null //
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
             : iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;
@@ -311,33 +314,15 @@ public enum extract {
   }
 
   public static Collection<Modifier> modifiers(final BodyDeclaration d) {
-    final List<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d)) {
-      final Modifier a = az.modifier((ASTNode) ¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
 
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
-    final List<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(d)) {
-      final Modifier a = az.modifier((ASTNode) ¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
 
   public static List<Modifier> modifiers(final VariableDeclarationStatement s) {
-    final List<Modifier> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : extendedModifiers(s)) {
-      final Modifier a = az.modifier((ASTNode) ¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+    return extendedModifiers(s).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
 
   public static String name(final ASTNode ¢) {

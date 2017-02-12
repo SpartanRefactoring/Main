@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.lisp.first;
 import static il.org.spartan.utils.Unbox.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -14,8 +15,8 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -53,6 +54,10 @@ public enum az {
 
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
+  }
+  
+  public static Initializer initializer(ASTNode $) {
+    return eval(() -> ((Initializer) $)).when($ instanceof Initializer);
   }
 
   public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
@@ -100,7 +105,7 @@ public enum az {
    * @return 1 if the parameter is <code><b>true</b></code>, 0 if it is
    *         <code><b>false</b></code> */
   @SuppressWarnings("BooleanParameter") public static int bit(final boolean $) {
-    return $ ? 1 : 0;
+    return as.bit($);
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link Block}
@@ -305,7 +310,7 @@ public enum az {
   }
 
   public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
-    final List<IExtendedModifier> $ = new ArrayList<>();
+    final Collection<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;
   }
@@ -498,7 +503,7 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-    return az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
+      return az.variableDeclarationExpression(first(initializers($)));
   }
 
   /** @param ¢ JD
@@ -533,8 +538,7 @@ public enum az {
 
   /** A fluent API to parse numeric literals, including provisions for unary
    * minus.
-   * @author Yossi Gil
-   *  */
+   * @author Yossi Gil */
   public interface throwing {
     static String chop¢necessaryQuestionMark(final String ¢) {
       return ¢.substring(0, ¢.length() - 1);

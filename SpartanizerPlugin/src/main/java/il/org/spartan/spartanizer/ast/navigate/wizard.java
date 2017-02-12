@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
@@ -119,8 +120,7 @@ public interface wizard {
       }
     }
   };
-  @SuppressWarnings({ "unchecked" }) //
-  Map<Class<? extends ASTNode>, Integer> //
+  @SuppressWarnings("unchecked") Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     static final long serialVersionUID = 1L;
     {
@@ -259,7 +259,7 @@ public interface wizard {
    * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
    *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    return !hasNull(base, as) && Stream.of(as).allMatch(λ -> !incompatible(base, λ));
+    return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> incompatible(base, λ));
   }
 
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
@@ -424,8 +424,9 @@ public interface wizard {
   static boolean hasSafeVarags(final MethodDeclaration d) {
     return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
   }
+
   static boolean compatible(final Assignment a1, final Assignment a2) {
-    return !incompatible(a1, a2); 
+    return !incompatible(a1, a2);
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
@@ -526,11 +527,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(λ -> (Modifier) λ).collect(Collectors.toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    return ms.stream().filter(λ -> test(λ, ps)).map(λ -> (Modifier) λ).collect(Collectors.toSet());
+    return ms.stream().filter(λ -> test(λ, ps)).map(Modifier.class::cast).collect(toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
@@ -702,6 +703,7 @@ public interface wizard {
    * @param ¢ JD
    * @param xs JD */
   static void removeAll(final boolean ¢, final List<Expression> xs) {
+    // noinspection ForLoopReplaceableByWhile
     for (;;) {
       final Expression x = find(¢, xs);
       if (x == null)
@@ -764,4 +766,25 @@ public interface wizard {
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(λ -> λ.test(m));
   }
+
+    /** swaps two elements in an indexed list in given indexes, if they are legal
+     * @param ts the indexed list
+     * @param i1 the index of the first element
+     * @param i2 the index of the second element
+     * @return the list after swapping the elements */
+    static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+      if (i1 < $.size() && i2 < $.size()) {
+        final T t = $.get(i1);
+        lisp.replace($, $.get(i2), i1);
+        lisp.replace($, t, i2);
+      }
+      return $;
+    }
+
+    static <T> T previous(T t, List<T> ts) {
+      if (ts == null)
+        return null;
+      int $ = ts.indexOf(t);
+      return $ < 1 ? null : ts.get($ - 1);
+    }
 }

@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.lisp.*;
+import static il.org.spartan.spartanizer.ast.navigate.switchBranch.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -27,24 +28,24 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
   }
 
   @Override public ASTNode replacement(final SwitchStatement s) {
-    final List<switchBranch> l = switchBranch.intoBranches(s);
-    if (l.size() != 2)
+    final List<switchBranch> bs = switchBranch.intoBranches(s);
+    if (bs.size() != 2)
       return null;
-    switchBranch t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
-    if (iz.stringLiteral(expression(lisp.first(t.cases()))))
+    final switchBranch first = first(bs), t = !first.hasDefault() ? first : lisp.last(bs);
+    if (iz.stringLiteral(expression(first(t.cases))))
       return null;
-    final switchBranch s1 = lisp.first(l), s2 = lisp.last(l);
+    final switchBranch s1 = first, s2 = lisp.last(bs);
     if (!s1.hasDefault() && !s2.hasDefault() || s1.hasFallThrough() || s2.hasFallThrough() || !s1.hasStatements() || !s2.hasStatements()
-        || haz.sideEffects(step.expression(s)) && (s1.hasDefault() ? s2 : s1).cases().size() > 1)
+        || haz.sideEffects(expression(s)) && (s1.hasDefault() ? s2 : s1).cases.size() > 1)
       return null;
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
-    t = lisp.first(l).hasDefault() ? lisp.first(l) : lisp.last(l);
-    step.statements(b2).addAll(switchBranch.removeBreakSequencer(t.statements()));
-    t = lisp.first(l).hasDefault() ? lisp.last(l) : lisp.first(l);
-    step.statements(b1).addAll(switchBranch.removeBreakSequencer(t.statements()));
+    switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
+    statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
+    switchBranch = !first.hasDefault() ? first : lisp.last(bs);
+    statements(b1).addAll(removeBreakSequencer(switchBranch.statements));
     final Block $ = a.newBlock();
-    step.statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, t.cases())));
+    statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, switchBranch.cases)));
     return $;
   }
 

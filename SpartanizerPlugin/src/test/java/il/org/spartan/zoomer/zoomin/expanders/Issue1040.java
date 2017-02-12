@@ -51,7 +51,7 @@ public class Issue1040 {
         "toTest2");
   }
 
-  @SuppressWarnings({ "unused" })
+  @SuppressWarnings("unused")
   public static class Issue1040Aux3 extends MetaFixture {
     int total;
     int total2;

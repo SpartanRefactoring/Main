@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -33,6 +32,6 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
   }
 
   @Override public ASTNode replacement(final CastExpression ¢) {
-    return eval(() -> replacement(step.expression(¢))).when(step.type(¢).isPrimitiveType() && "double".equals(step.type(¢) + ""));
+    return eval(() -> replacement(expression(¢))).when(type(¢).isPrimitiveType() && "double".equals(type(¢) + ""));
   }
 }

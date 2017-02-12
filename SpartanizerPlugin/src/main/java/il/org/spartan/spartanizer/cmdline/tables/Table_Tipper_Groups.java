@@ -7,9 +7,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.tipping.Tipper;
 import il.org.spartan.tables.*;
-import org.eclipse.jdt.core.dom.ASTNode;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.
@@ -35,14 +33,13 @@ public class Table_Tipper_Groups {
     system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
 
-  private static void inc(final Map<TipperGroup, Integer> categories, final Tipper<? extends ASTNode> λ) {
+  private static void inc(final Map<TipperGroup, Integer> categories, final TipperCategory λ) {
     final TipperGroup key = λ.tipperGroup();
     categories.putIfAbsent(key, box.it(0));
     categories.put(key, box.it(categories.get(key).intValue() + 1));
   }
 
-  private static <T> Stream<T> flow(final Collection<T> ts) {
-    return ts.stream().filter(λ -> λ != null);
+  private static <T> Stream<T> flow(final Collection<T> ¢) {
+    return ¢.stream().filter(Objects::nonNull);
   }
-
 }

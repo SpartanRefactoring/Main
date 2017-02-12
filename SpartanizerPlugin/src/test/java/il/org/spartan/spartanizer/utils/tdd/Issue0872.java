@@ -5,7 +5,7 @@ import org.junit.*;
 /** tests of ParameterBool according to issue 872
  * @author kobybs
  * @since 27-11-2016 */
-@SuppressWarnings({ "static-method" })
+@SuppressWarnings("static-method")
 public class Issue0872 {
   @Test public void test0() {
     final boolean generateName = new ParameterBool(false).boolValue();

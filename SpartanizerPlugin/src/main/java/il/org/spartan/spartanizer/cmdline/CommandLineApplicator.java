@@ -60,7 +60,7 @@ public class CommandLineApplicator extends Applicator {
    * @return <code><b>this</b></code> */
   private CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
-    setRunAction(λ -> Integer.valueOf(new Spartanizer$Applicator().apply(λ, selection()) ? 1 : 0));
+    setRunAction(λ -> Integer.valueOf(as.bit(new Spartanizer$Applicator().apply(λ, selection()))));
     return this;
   }
 
@@ -75,26 +75,24 @@ public class CommandLineApplicator extends Applicator {
   // name(a.getName());
   // return this;
   // }
-  /** Default run action configuration of {@link CommandLineApplicator}.
-   * Spartanize the {@link CompilationUnit} using received TODO maybe this
-   * method are going to die (as well as Spartanize$Applicator)
-   * {@link Spartanizer$Applicator}.
+  /** Default run action configuration of . Spartanize the
+   * {@link CompilationUnit} using received TODO maybe this method are going to
+   * die (as well as Spartanize$Applicator) {@link Spartanizer$Applicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
-    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
+    setRunAction(λ -> Integer.valueOf(as.bit(a.apply(λ, selection()))));
     name(a.getClass().getSimpleName());
     return this;
   }
 
-  /** Default run action configuration of {@link CommandLineApplicator}.
-   * Spartanize the {@link CompilationUnit} using received
-   * {@link CommandLine$Applicator}.
+  /** Default run action configuration of . Spartanize the
+   * {@link CompilationUnit} using received {@link CommandLine$Applicator}.
    * @param a JD
    * @return <code><b>this</b></code> applicator */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
     CommandLine$Applicator.startingTime = new Date().getTime();
-    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection()) ? 1 : 0));
+    setRunAction(λ -> Integer.valueOf(as.bit(a.apply(λ, selection()))));
     name(a.getClass().getSimpleName());
     return this;
   }

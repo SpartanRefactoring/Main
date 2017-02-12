@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
@@ -214,6 +215,18 @@ public enum subject {
      * @return a throw statement of the expression inner */
     public ThrowStatement toThrow() {
       final ThrowStatement $ = ast.newThrowStatement();
+      $.setExpression(inner);
+      return $;
+    }
+
+    /** 
+      * TODO Yossi Gil: Stub 'Operand::toAssert' (created on  2017-02-11)." );
+      * <p>
+      * @return
+      * <p> [[SuppressWarningsSpartan]]
+      */
+    public AssertStatement toAssert() {
+      final AssertStatement  $ = ast.newAssertStatement();
       $.setExpression(inner);
       return $;
     }

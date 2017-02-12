@@ -1,4 +1,5 @@
 package il.org.spartan.bloater;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -32,7 +33,6 @@ public enum InflaterUtilities {
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
   static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup __) {
-
     boolean $ = false;
     for (final ASTNode statement : ns) {
       final ReturnTernaryExpander cc = new ReturnTernaryExpander();

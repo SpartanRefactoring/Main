@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static java.util.stream.Collectors.*;
+
 /** Replace {@code 0+X}, {@code X+0}
  * @author Alex Kopzon
  * @author Dan Greenstein

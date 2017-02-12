@@ -38,7 +38,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
-    return step.fragments(vds).stream()
+    return fragments(vds).stream()
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 

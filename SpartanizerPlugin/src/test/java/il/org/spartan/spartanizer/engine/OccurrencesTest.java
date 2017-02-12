@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2014-08-25 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public final class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
   private final String wrap = Wrap.Statement.on(from);
@@ -44,7 +44,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void lexicalUsesCollector() {
-    final List<SimpleName> into = new ArrayList<>();
+    final Collection<SimpleName> into = new ArrayList<>();
     a.accept(collect.lexicalUsesCollector(into, a));
     azzert.that(into.size(), is(1));
   }
@@ -54,7 +54,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void occurencesAinAsame() {
-    azzert.that(wizard.same(a, a), is(true));
+    assert wizard.same(a, a);
   }
 
   @Test public void occurencesAinE() {
@@ -66,7 +66,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void occurencesAinLeftOfEsame() {
-    azzert.that(wizard.same(left(e), a), is(true));
+    assert wizard.same(left(e), a);
   }
 
   @Test public void occurencesAinRightOfE() {
@@ -82,7 +82,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void sameAandLeftOfE() {
-    azzert.that(wizard.same(a, left(e)), is(true));
+    assert wizard.same(a, left(e));
   }
 
   @Test public void sameTypeAandLeftOfE() {

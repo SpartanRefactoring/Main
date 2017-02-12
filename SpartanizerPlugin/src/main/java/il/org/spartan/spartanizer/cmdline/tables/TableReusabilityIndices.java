@@ -36,7 +36,7 @@ public class TableReusabilityIndices extends FolderASTVisitor {
 
   static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
-      final int[] $ = new int[m.size()];
+    final int[] $ = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }

@@ -16,6 +16,13 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version250 {
+  @Test public void annotationVanilla() {
+    trimmingOf("void f(){}").stays();
+    trimmingOf("@a void f(){}").stays();
+    trimmingOf("@a({\"a\"})void f(){}")//
+        .gives("@a(\"a\")void f(){}");
+  }
+
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;")//
         .stays();

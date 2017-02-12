@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 import java.util.*;
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -43,8 +42,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
-          definedLocals
-              .addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
+          definedLocals.addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         continue;
       }
       final Expression e = expression(az.expressionStatement(s));
