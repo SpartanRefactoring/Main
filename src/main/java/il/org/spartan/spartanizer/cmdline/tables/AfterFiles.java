@@ -83,7 +83,7 @@ public class AfterFiles extends FolderASTVisitor {
     writeFile(new File(makeFile("after.java")),
         methods.values().stream().map(li -> li.stream().map(λ -> format.code(λ.after + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
     writeFile(new File(makeFile("notTagged.java")), methods.values().stream().map(list -> list.stream().map(λ -> λ.after)
-        .filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ .toString())).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
+        .filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y)).reduce("", (x, y) -> x + y));
     summarizeSortedMethodStatistics(path);
     summarizeNPStatistics();
     dotter.end();
@@ -196,7 +196,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   private static double min(final double a, final double d) {
-    return a < d ? a : d;
+    return Math.min(a, d);
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {

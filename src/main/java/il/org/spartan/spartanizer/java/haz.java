@@ -31,7 +31,7 @@ public enum haz {
   /** @param ¢ JD
    * @return */
   public static boolean anyStatements(final MethodDeclaration ¢) {
-    return ¢ != null && step.statements(¢) != null && !step.statements(¢).isEmpty();
+    return ¢ != null && statements(¢) != null && !statements(¢).isEmpty();
   }
 
   public static boolean binding(final ASTNode ¢) {
@@ -42,7 +42,7 @@ public enum haz {
    * @param ¢ method
    * @return */
   public static boolean booleanReturnType(final MethodDeclaration ¢) {
-    return ¢ != null && step.returnType(¢) != null && iz.booleanType(step.returnType(¢));
+    return ¢ != null && returnType(¢) != null && iz.booleanType(returnType(¢));
   }
 
   public static boolean cent(final ASTNode ¢) {
@@ -94,7 +94,7 @@ public enum haz {
       }
 
       boolean ¢(final ForStatement ¢) {
-        return ¢(step.initializers(¢));
+        return ¢(initializers(¢));
       }
 
       boolean ¢(final Collection<Expression> xs) {
@@ -123,11 +123,11 @@ public enum haz {
       }
 
       boolean ¢(final TryStatement ¢) {
-        return ¢¢¢(step.resources(¢)) || ¢¢(step.catchClauses(¢));
+        return ¢¢¢(resources(¢)) || ¢¢(catchClauses(¢));
       }
 
       boolean ¢(final VariableDeclarationExpression ¢) {
-        return ¢¢¢¢(step.fragments(¢));
+        return ¢¢¢¢(fragments(¢));
       }
 
       boolean ¢(final VariableDeclarationFragment ¢) {
@@ -167,12 +167,8 @@ public enum haz {
   }
 
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
-    final Block body = body(d);
-    if (body != null)
-      for (final Statement ¢ : statements(body))
-        if (Coupling.unknownNumberOfEvaluations(d, ¢))
-          return true;
-    return false;
+    final Block $ = body(d);
+    return $ != null && statements($).stream().anyMatch(λ -> Coupling.unknownNumberOfEvaluations(d, λ));
   }
 
   public static boolean variableDefinition(final ASTNode n) {

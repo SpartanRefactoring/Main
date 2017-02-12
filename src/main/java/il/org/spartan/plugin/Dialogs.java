@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.net.*;
+import java.util.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.dialogs.*;
@@ -16,59 +17,36 @@ import il.org.spartan.spartanizer.utils.*;
 /** Utility class for dialogs management.
  * @author Ori Roth
  * @since 2.6 */
-enum Dialogs {
+public enum Dialogs {
   ;
   /** Title used for dialogs. */
   private static final String NAME = "Laconic";
-  /** Path of the {@link Dialogs#icon} used for dialogs. */
-  private static final String ICON_PATH = "platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif";
-  /** Whether or not the {@link Dialogs#icon} has been initialized. */
-  private static boolean iconInitialized;
-  /** Icon used for button/dialogs. May not appear on some OSs. */
-  private static Image icon;
-  /** Path of the {@link Dialogs#logo} used for dialogs. */
-  private static final String LOGO_PATH = "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
-  // private static final String LOGO_PATH =
-  // "/src/main/java/il/org/spartan/plugin/resources/spartan-scholar.jpg";
-  /** Whether or not the {@link Dialogs#logo} has been initialized. */
-  private static boolean logoInitialized;
-  /** Logo used for dialogs. */
-  private static Image logo;
   /** Id for run in background button. */
   private static final int RIB_ID = 2;
-
-  /** Lazy, dynamic loading of the dialogs' icon.
-   * @return icon used by dialogs */
-  private static Image icon() {
-    if (!iconInitialized) {
-      iconInitialized = true;
-      try {
-        final ImageData d = ImageDescriptor.createFromURL(new URL(ICON_PATH)).getImageData();
-        if (d != null)
-          icon = new Image(null, d);
-      } catch (final MalformedURLException ¢) {
-        monitor.log(¢);
-      }
-    }
-    return icon;
+  public static final String ICON = "icon-delta";
+  public static final String LOGO = "logo";
+  public static final String CATEGORY = "category-symbol";
+  /** {@link SWT} images, lazy loading. */
+  public static final Map<String, Image> images;
+  static {
+    images = new HashMap<>();
+    images.put(ICON, image("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif"));
+    images.put(LOGO, image("platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png"));
+    images.put(CATEGORY, image("platform:/plugin/org.eclipse.wst.common.snippets/icons/full/elcl16/new_category.gif"));
   }
 
-  /** Lazy, dynamic loading of the dialogs' logo.
-   * @return icon used by dialogs */
-  static Image logo() {
-    if (!logoInitialized) {
-      logoInitialized = true;
+  /** Lazy, dynamic loading of an image.
+   * @return {@link SWT} image */
+  public static Image image(String $) {
+    if (!images.containsKey($))
       try {
-        final ImageData d = ImageDescriptor.createFromURL(new URL(LOGO_PATH)).getImageData();
-        if (d != null)
-          logo = new Image(null, d);
+        final ImageData d = ImageDescriptor.createFromURL(new URL($)).getImageData();
+        images.put($, d == null ? null : new Image(null, d));
       } catch (final MalformedURLException ¢) {
         monitor.log(¢);
+        images.put($, null);
       }
-      // logo = new Image(null,
-      // ImageDescriptor.createFromURL(Dialogs.class.getResource(LOGO_PATH)).getImageData());
-    }
-    return logo;
+    return images.get($);
   }
 
   /** Simple dialog, waits for user operation. Does not trim the received
@@ -76,7 +54,7 @@ enum Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog messageUnsafe(final String message) {
-    return new MessageDialog(null, NAME, icon(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
+    return new MessageDialog(null, NAME, image(ICON), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
       }
@@ -87,7 +65,7 @@ enum Dialogs {
       }
 
       @Override public Image getInfoImage() {
-        return logo();
+        return image(LOGO);
       }
     };
   }
@@ -135,7 +113,7 @@ enum Dialogs {
       }
 
       @Override public Image getInfoImage() {
-        return logo();
+        return image(LOGO);
       }
     };
     $.setBlockOnOpen(false);

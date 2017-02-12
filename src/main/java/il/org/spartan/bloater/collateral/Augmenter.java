@@ -1,4 +1,5 @@
 package il.org.spartan.bloater.collateral;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;

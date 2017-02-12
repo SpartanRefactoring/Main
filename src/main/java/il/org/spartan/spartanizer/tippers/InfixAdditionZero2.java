@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
-import static java.util.stream.Collectors.*;
+
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
@@ -14,8 +13,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
@@ -37,9 +39,9 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final InfixExpression x) {
     gather(x, new ArrayList<>());
     x.getOperator();
-    extract.allOperands(x);
-    extract.allOperators(x);
-    final List<Expression> ops = extract.allOperands(x),
+    allOperands(x);
+    allOperators(x);
+    final List<Expression> ops = allOperands(x),
         ops2 = range.to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
@@ -48,15 +50,15 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   }
 
   private static boolean containsZeroOperand(final InfixExpression ¢) {
-    return extract.allOperands(¢).stream().anyMatch(iz::literal0);
+    return allOperands(¢).stream().anyMatch(iz::literal0);
   }
 
   private static boolean containsPlusOperator(final InfixExpression x) {
-    return extract.allOperators(x).stream().anyMatch(λ -> λ == Operator.PLUS);
+    return allOperators(x).stream().anyMatch(λ -> λ == Operator.PLUS);
   }
 
   @SuppressWarnings("boxing") public static ASTNode replacement2(final InfixExpression x) {
-    final List<Expression> ops = extract.allOperands(x),
+    final List<Expression> ops = allOperands(x),
         ops2 = range.from(0).to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))

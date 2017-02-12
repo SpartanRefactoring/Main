@@ -18,8 +18,8 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to
- * <code><b>false</b></code>, and
- * {@code x.size()>=0} to <code><b>true</b></code>.
+ * <code><b>false</b></code>, and {@code x.size()>=0} to
+ * <code><b>true</b></code>.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @author Yossi Gil
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
@@ -44,7 +44,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final int threshold, final MethodInvocation $) {
-    if (o == Operator.GREATER_EQUALS)
+    if (o == GREATER_EQUALS)
       return replacement(GREATER, threshold - 1, $);
     if (o == LESS_EQUALS)
       return replacement(LESS, threshold + 1, $);
@@ -69,7 +69,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
-    if (!"size".equals(step.name(i).getIdentifier()))
+    if (!"size".equals(name(i).getIdentifier()))
       return null;
     int $ = -1;
     NumberLiteral l = az.throwing.negativeLiteral(x);

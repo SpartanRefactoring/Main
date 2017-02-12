@@ -33,9 +33,9 @@ public final class SingleFlater {
 
   private SingleFlater() {}
 
-  /** Creates a new {@link SingleFlater} for a {@link CompilationUnit}.
+  /** Creates a new for a {@link CompilationUnit}.
    * @param ¢ JD
-   * @return new {@link SingleFlater} */
+   * @return new */
   public static SingleFlater in(final ASTNode ¢) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
@@ -83,7 +83,7 @@ public final class SingleFlater {
     if (root == null || operationsProvider == null)
       return false;
     disabling.scan(root);
-    final List<Operation<?>> operations = new LinkedList<>();
+    final List<Operation<?>> operations = new ArrayList<>();
     root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inWindow(n) || usesDisabling && disabling.on(n))

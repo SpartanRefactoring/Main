@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Yossi GIl
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public final class TipperApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
   private final TipperApplicator it = new TipperApplicator(new BlockSimplify());
@@ -23,11 +23,11 @@ public final class TipperApplicatorTest {
   }
 
   @Test public void clazzIsNotNull() {
-    azzert.notNull(it.clazz);
+    assert it.clazz != null;
   }
 
   @Test public void exists() {
-    azzert.notNull(it);
+    assert it != null;
   }
 
   @Test public void nameIsCorrect() {
@@ -35,7 +35,7 @@ public final class TipperApplicatorTest {
   }
 
   @Test public void tipper() {
-    azzert.notNull(it.tipper);
+    assert it.tipper != null;
   }
 
   @Test public void tipperIsCorrect() {

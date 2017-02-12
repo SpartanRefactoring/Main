@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.dispatch;
-import static java.util.stream.Collectors.*;
+
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
@@ -88,10 +90,11 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
         .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()).add(CatchClause.class, new CatchClauseRenameParameterToCent())
-        .add(Javadoc.class, new JavadocEmpty()).add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne())
+        .add(Javadoc.class, new JavadocEmptyRemove()).add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne())
         .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
@@ -100,7 +103,7 @@ public class Toolbox {
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse()) //
+        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
             new SequencerNotLastInBlock<>()) //
         .add(EnhancedForStatement.class, //
@@ -286,7 +289,8 @@ public class Toolbox {
             new AnnotationDiscardValueName(), //
             new AnnotationRemoveEmptyParentheses(), //
             null) //
-        .add(AnnotationTypeDeclaration.class, new BodyDeclarationModifiersSort<>(), //
+        .add(AnnotationTypeDeclaration.class, //
+            new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
             null)
         .add(AnnotationTypeMemberDeclaration.class, new BodyDeclarationModifiersSort<>(), //
@@ -313,7 +317,7 @@ public class Toolbox {
     ;
   }
 
-  /** Make a {@link Toolbox} for a specific kind of tippers
+  /** Make a for a specific kind of tippers
    * @param clazz JD
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
@@ -331,7 +335,9 @@ public class Toolbox {
   }
 
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
-    removing: for (;;) {
+    removing:
+    // noinspection ForLoopReplaceableByWhile
+    for (;;) {
       for (int ¢ = 0; ¢ < ts.size(); ++¢)
         if (c.isAssignableFrom(ts.get(¢).getClass())) {
           ts.remove(¢);
@@ -407,30 +413,24 @@ public class Toolbox {
     return firstTipper(¢, get(¢));
   }
 
-  public List<Tipper<? extends ASTNode>> get(final int ¢) {
+  public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
   public static long hooksCount() {
-    return defaultTipperLists().count(); 
+    return defaultTipperLists().count();
   }
-public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
+
+  public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
     return Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
   }
+
   public int tippersCount() {
-    int $ = 0;
-    for (final List<?> ¢ : implementation)
-      if (¢ != null)
-        $ += ¢.size();
-    return $;
+    return Arrays.stream(implementation).filter(Objects::nonNull).mapToInt(List::size).sum();
   }
 
   public int nodesTypeCount() {
-    int $ = 0;
-    for (final List<?> ¢ : implementation)
-      if (¢ != null)
-        $ += 1;
-    return $;
+    return (int) Arrays.stream(implementation).filter(Objects::nonNull).count();
   }
 
   <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(final N ¢) {
@@ -454,7 +454,7 @@ public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
   }
 
   public static List<String> get(final TipperGroup ¢) {
-    final List<String> $ = new LinkedList<>();
+    final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
     final Toolbox t = freshCopyOfAllTippers();

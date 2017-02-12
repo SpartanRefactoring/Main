@@ -24,10 +24,10 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
   }
 
   private static String stringify(final MethodDeclaration ¢) {
-    return separate.these(parametersNames(¢)).by(", ");
+    return "," + separate.these(parametersNames(¢)).by(",") + ",";
   }
 
   private static String stringify(final MethodInvocation ¢) {
-    return separate.these(arguments(¢)).by(", ");
+    return "," + separate.these(arguments(¢)).by(",") + ",";
   }
 }
