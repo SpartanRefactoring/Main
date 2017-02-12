@@ -218,6 +218,18 @@ public enum subject {
       $.setExpression(inner);
       return $;
     }
+
+    /** 
+      * TODO Yossi Gil: Stub 'Operand::toAssert' (created on  2017-02-11)." );
+      * <p>
+      * @return
+      * <p> [[SuppressWarningsSpartan]]
+      */
+    public AssertStatement toAssert() {
+      final AssertStatement  $ = ast.newAssertStatement();
+      $.setExpression(inner);
+      return $;
+    }
   }
 
   /** All the expressions that use two operands */
