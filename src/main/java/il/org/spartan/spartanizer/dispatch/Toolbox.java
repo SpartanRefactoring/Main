@@ -12,6 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -89,6 +90,25 @@ public class Toolbox {
 
   public static Toolbox freshCopyOfAllTippers() {
     return new Toolbox()//
+        .add(EnhancedForStatement.class, //
+            new Aggregate(), //
+            new Collect(), //
+            new CountIf(), //
+            new FindFirst(), //
+            new FlatMap(), //
+            new ForEach(), //
+            new ForEachSuchThat(), //
+            new HoldsForAll(), //
+            new HoldsForAny(), //
+            null) //
+        .add(InfixExpression.class, //
+            new Empty(), //
+            new LastIndex(), //
+            new Max(), //
+            new Min(), //
+            new Infix.SafeReference(), //
+            new Singleton(), //
+            null)//
         .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
@@ -102,11 +122,7 @@ public class Toolbox {
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
-        .add(ExpressionStatement.class, 
-            new ExpressionStatementAssertTrueFalse(),
-            new ExpressionStatementThatIsBooleanLiteral(),
-            null
-            ) //
+        .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
             new SequencerNotLastInBlock<>()) //
         .add(EnhancedForStatement.class, //
