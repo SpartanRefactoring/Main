@@ -17,10 +17,10 @@ public final class Min extends NanoPatternTipper<ConditionalExpression> {
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$X1 > $X2 ? $X2 : $X1", "max($X1,$X2)", "max"));
-      add(patternTipper("$X2 < $X1 ? $X2 : $X1", "max($X1,$X2)", "max"));
-      add(patternTipper("$X1 >= $X2 ? $X2 : $X1", "max($X1,$X2)", "max"));
-      add(patternTipper("$X2 <= $X1 ? $X2 : $X1", "max($X1,$X2)", "max"));
+      add(patternTipper("$X1 > $X2 ? $X2 : $X1", "min($X1,$X2)", "min"));
+      add(patternTipper("$X2 < $X1 ? $X2 : $X1", "min($X1,$X2)", "min"));
+      add(patternTipper("$X1 >= $X2 ? $X2 : $X1", "min($X1,$X2)", "min"));
+      add(patternTipper("$X2 <= $X1 ? $X2 : $X1", "min($X1,$X2)", "min"));
     }
   };
 
