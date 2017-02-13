@@ -29,11 +29,11 @@ import il.org.spartan.utils.*;
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
   public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
-  public static AbstractTypeDeclaration reflection = step.types(instance.reflectedCompilationUnit()).stream()
+  public static AbstractTypeDeclaration reflection = types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {
-      step.methods(reflection).stream().filter(λ -> !λ.isConstructor() && !iz.static¢(λ) && !iz.final¢(λ) && !iz.private¢(λ))
+      methods(reflection).stream().filter(λ -> !λ.isConstructor() && !iz.static¢(λ) && !iz.final¢(λ) && !iz.private¢(λ))
           .forEach(λ -> put(mangle(λ), λ));
     }
   };

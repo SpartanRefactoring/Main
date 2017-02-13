@@ -29,13 +29,13 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
   @Override public Tip tip(final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Block b = az.block(step.body(¢));
+        final Block b = az.block(body(¢));
         if (b == null)
           r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
         else {
           // TODO: Doron Meshulam: use list rewrite (search for code that does
           // that) --yg
-          step.statements(b).remove(extract.lastStatement(¢));
+          statements(b).remove(extract.lastStatement(¢));
           r.replace(b, copy.of(b), g);
         }
       }

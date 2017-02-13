@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.nanos.*;
 
 /** Tests of {@link CachingPattern}
  * @author Ori Marcovitch */
-@SuppressWarnings({ "static-method" }) //
+@SuppressWarnings("static-method")
 public class Issue0321 {
   @Test public void testCachingPattern() {
     trimmingOf( //

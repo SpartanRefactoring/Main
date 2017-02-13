@@ -78,7 +78,7 @@ public final class EnvironmentTests {
 
   public static class EX2 { // initializator
     @NestedENV({}) @OutOfOrderFlatENV({}) static int x;
-    @NestedENV({ "EX2.x#int" }) @OutOfOrderFlatENV({ "x" }) int y;
+    @NestedENV("EX2.x#int") @OutOfOrderFlatENV("x") int y;
     {
       @Begin
       class A {}
@@ -97,7 +97,7 @@ public final class EnvironmentTests {
 
     @OutOfOrderFlatENV({ "x", "y" })
     static class C1 {
-      @NestedENV({ "EX2.C1.x#int" }) @OutOfOrderFlatENV({ "x" }) public static int y;
+      @NestedENV("EX2.C1.x#int") @OutOfOrderFlatENV("x") public static int y;
       @InOrderFlatENV({ "x", "y", "c1" }) @NestedENV({ "EX2.C1.x#int", "EX2.C1.y#int", "EX2.C1.c1#C1" }) @OutOfOrderFlatENV({ "c1", "y",
           "x" }) public static int x;
 
@@ -161,7 +161,7 @@ public final class EnvironmentTests {
     @OutOfOrderFlatENV({ "x", "y" })
     static class x_hiding {
       @OutOfOrderFlatENV({}) public static int x;
-      @NestedENV({ "EX3.x_hiding.x#int" }) @OutOfOrderFlatENV({ "x" }) y_hiding xsy;
+      @NestedENV("EX3.x_hiding.x#int") @OutOfOrderFlatENV("x") y_hiding xsy;
 
       x_hiding() {
         x = 2;
@@ -177,14 +177,14 @@ public final class EnvironmentTests {
           @Begin
           class E {}
           y = 2;
-          @End({ "y" })
+          @End("y")
           class F {}
         }
 
         @Begin
         class C {}
 
-        @End({ "y" })
+        @End("y")
         class D {}
       }
     }
@@ -196,14 +196,14 @@ public final class EnvironmentTests {
     void func() {
       @Begin
       class Q {}
-      @OutOfOrderFlatENV({ "x" }) final Parent p = new Parent();
+      @OutOfOrderFlatENV("x") final Parent p = new Parent();
       @OutOfOrderFlatENV({ "x", "p" }) final Child1 c1 = new Child1();
       @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @InOrderFlatENV({ "x", "p", "c1" }) @OutOfOrderFlatENV({ "p", "c1",
           "x" }) final Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
       c2.set_x();
-      @End({ "x" })
+      @End("x")
       class QQ {}
     }
 
@@ -212,7 +212,7 @@ public final class EnvironmentTests {
         @Begin
         class Q {}
         x = 2;
-        @End({ "x" })
+        @End("x")
         class QQ {}
       }
 
@@ -220,7 +220,7 @@ public final class EnvironmentTests {
         @Begin
         class Q {}
         x = 3;
-        @End({ "x" })
+        @End("x")
         class QQ {}
       }
     }
@@ -236,7 +236,7 @@ public final class EnvironmentTests {
         @Begin
         class Q {}
         x = 5;
-        @End({ "x" })
+        @End("x")
         class QQ {}
       }
     }
@@ -250,23 +250,23 @@ public final class EnvironmentTests {
         @Begin
         class Q {}
         x = 1;
-        @End({ "x" })
+        @End("x")
         class QQ {}
       }
 
       @Begin
       class Q {}
 
-      @End({ "x" })
+      @End("x")
       class QQ {}
     }
   }
 
-  @OutOfOrderFlatENV({ "x" })
+  @OutOfOrderFlatENV("x")
   public static class EX5 {
     static int x;
 
-    @OutOfOrderFlatENV({ "x" })
+    @OutOfOrderFlatENV("x")
     class a {
       int a_x;
 
@@ -275,7 +275,7 @@ public final class EnvironmentTests {
         class opening {
           /**/}
         ++a_x;
-        @End({ "a_x" })
+        @End("a_x")
         class closing {
           /**/}
       }
@@ -336,8 +336,8 @@ public final class EnvironmentTests {
     class Outer {
       int x;
 
-      @NestedENV({ "EX6.Outer.x#int" })
-      @OutOfOrderFlatENV({ "x" })
+      @NestedENV("EX6.Outer.x#int")
+      @OutOfOrderFlatENV("x")
       class Inner {
         final Outer outer = Outer.this;
 
@@ -347,7 +347,7 @@ public final class EnvironmentTests {
           x = 0;
           x = 1;
           p.outer.x = 2;
-          @End({ "x" })
+          @End("x")
           class n {}
         }
       }
@@ -356,8 +356,8 @@ public final class EnvironmentTests {
     class Outer2 {
       int x;
 
-      @NestedENV({ "EX6.Outer2.x#int" })
-      @OutOfOrderFlatENV({ "x" })
+      @NestedENV("EX6.Outer2.x#int")
+      @OutOfOrderFlatENV("x")
       class Inner2 {
         int x;
         final Outer2 outer2 = Outer2.this;
@@ -369,7 +369,7 @@ public final class EnvironmentTests {
           x = 0;
           Outer2.this.x = 1;
           p.outer2.x = 2;
-          @End({ "x" })
+          @End("x")
           class B {}
         }
       }
@@ -394,11 +394,11 @@ public final class EnvironmentTests {
     class Arr {
       String[] arr = new String[13];
 
-      @NestedENV({ "EX8.Arr.arr#String[]" }) @OutOfOrderFlatENV({ "arr" }) void foo() {
+      @NestedENV("EX8.Arr.arr#String[]") @OutOfOrderFlatENV("arr") void foo() {
         @Begin
         class m {}
         arr[2] = "$$$";
-        @End({ "arr" })
+        @End("arr")
         class n {}
       }
     }
@@ -407,7 +407,7 @@ public final class EnvironmentTests {
   public static class EX9 { // template
     public final class SOList<Type> implements Iterable<Type> {
       private final Type[] arrayList;
-      @OutOfOrderFlatENV({ "arrayList" }) int currentSize;
+      @OutOfOrderFlatENV("arrayList") int currentSize;
 
       @InOrderFlatENV({ "arrayList", "currentSize" }) public SOList(final Type[] newArray) {
         @Begin

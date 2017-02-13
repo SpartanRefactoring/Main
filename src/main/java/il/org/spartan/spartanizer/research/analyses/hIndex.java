@@ -1,6 +1,9 @@
 package il.org.spartan.spartanizer.research.analyses;
 
 import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
+
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
 import java.io.*;
@@ -40,7 +43,7 @@ public interface hIndex {
     }
     final List<Pair<String, Int>> rs = new ArrayList<>();
     rs.addAll(ranking.values());
-    rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : x.second.inner < y.second.inner ? 1 : 0);
+    rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : as.bit(x.second.inner < y.second.inner));
     System.out.println("Max: " + first(rs).first + " [" + first(rs).second.inner + "]");
     System.out.println("min: " + last(rs).first + " [" + last(rs).second.inner + "]");
     System.out.println("h-index: " + hindex(rs));

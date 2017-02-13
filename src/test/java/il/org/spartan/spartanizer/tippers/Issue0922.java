@@ -98,4 +98,10 @@ public class Issue0922 {
     trimmingOf("Assert.assertNull(message, T);")//
         .stays();
   }
+
+  @Test public void b() {
+    trimmingOf("azzert.notNull(message, T);")//
+        .gives("assert T != null: message;")//
+        .stays();
+  }
 }

@@ -9,6 +9,6 @@ import il.org.spartan.spartanizer.annotations.*;
 public final class EnvironmentCodeExamples {
   static class EX02 {
     int x = 1;
-    @FlatEnvUse({ @Id(name = "x", clazz = "int") }) int y;
+    @FlatEnvUse(@Id(name = "x", clazz = "int")) int y;
   }
 }

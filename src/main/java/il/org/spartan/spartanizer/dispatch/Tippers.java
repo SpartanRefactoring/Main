@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-07-17 */
 public enum Tippers {
   ;
-  public static void addAllReplacing(final List<Statement> to, final Iterable<Statement> from, final Statement substitute, final Statement by1,
+  public static void addAllReplacing(final Collection<Statement> to, final Iterable<Statement> from, final Statement substitute, final Statement by1,
                                      final Iterable<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
@@ -102,7 +102,7 @@ public enum Tippers {
 
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName)//
-        .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[] {}));
+        .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[0]));
   }
 
   public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {

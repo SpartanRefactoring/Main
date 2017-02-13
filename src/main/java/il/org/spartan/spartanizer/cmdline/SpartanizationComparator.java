@@ -98,13 +98,13 @@ public enum SpartanizationComparator {
 
   public static NamedFunction<?>[] functions() {
     return as.array(//
-        m("length - ", λ -> (λ .toString()).length()), //
-        m("essence - ", λ -> Essence.of(λ .toString()).length()), //
-        m("tokens - ", λ -> metrics.tokens(λ .toString())), //
+        m("length - ", metrics::length), //
+        m("essence - ", λ -> Essence.of(λ + "").length()), //
+        m("tokens - ", λ -> metrics.tokens(λ + "")), //
         m("nodes - ", count::nodes), //
         m("body - ", metrics::bodySize), //
         m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-        m("tide - ", λ -> clean(λ .toString()).length()));//
+        m("tide - ", λ -> clean(λ + "").length()));//
   }
 
   static void consider(final MethodDeclaration ¢) {

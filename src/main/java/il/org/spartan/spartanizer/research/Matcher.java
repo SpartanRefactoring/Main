@@ -43,6 +43,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @since 2016 */
+@SuppressWarnings("InfiniteRecursion")
 public final class Matcher {
   private static final String $X_pattern = "\\$X\\d*\\(\\)"; // Expression
   private static final String $T_pattern = "\\$T\\d*"; // Type
@@ -114,18 +115,13 @@ public final class Matcher {
   private static boolean blockMatches(final ASTNode p, final Block n) {
     if (!iz.block(p))
       return false;
-    final List<Statement> sp = statements(az.block(p)), sn = statements(n);
-    if (sp.size() > sn.size())
-      return false;
-    for (int ¢ = 0; ¢ <= sn.size() - sp.size(); ++¢)
-      if (statementsMatch(sp, sn.subList(¢, ¢ + sp.size())))
-        return true;
-    return false;
+    final List<Statement> $ = statements(az.block(p)), sn = statements(n);
+    return $.size() <= sn.size() && IntStream.rangeClosed(0, sn.size() - $.size()).anyMatch(λ -> statementsMatch($, sn.subList(λ, λ + $.size())));
   }
 
   //
   /** Tries to match a pattern <b>p</b> to a given ASTNode <b>n</b>, using<br>
-   * the matching rules. For more info about these rules, see {@link Matcher}.
+   * the matching rules. For more info about these rules, see .
    * @param p pattern to match against.
    * @param ¢ ASTNode
    * @return True iff <b>n</b> matches the pattern <b>p</b>. */
@@ -142,10 +138,7 @@ public final class Matcher {
   }
 
   private static boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
-    for (int ¢ = 0; ¢ < sp.size(); ++¢)
-      if (!matchesAux(sp.get(¢), subList.get(¢), new HashMap<>()))
-        return false;
-    return true;
+    return IntStream.range(0, sp.size()).allMatch(λ -> matchesAux(sp.get(λ), subList.get(λ), new HashMap<>()));
   }
 
   /** Validates that matched variables are the same in all matching places. */
@@ -184,22 +177,12 @@ public final class Matcher {
     if (iz.infixExpression($) && !iz.parenthesizedExpression($))
       return sameOperator($, n) && sameOperands($, n, ids);
     final List<ASTNode> pChildren = allChildren($, $), nChildren = allChildren(n, $);
-    if (nChildren.size() != pChildren.size())
-      return false;
-    for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-      if (!matchesAux(pChildren.get(¢), nChildren.get(¢), ids))
-        return false;
-    return true;
+    return nChildren.size() == pChildren.size() && IntStream.range(0, pChildren.size()).allMatch(λ -> matchesAux(pChildren.get(λ), nChildren.get(λ), ids));
   }
 
   private static boolean sameOperands(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
     final List<Expression> $Operands = extract.allOperands(az.infixExpression($)), nOperands = extract.allOperands(az.infixExpression(n));
-    if ($Operands.size() != nOperands.size())
-      return false;
-    for (int ¢ = 0; ¢ < $Operands.size(); ++¢)
-      if (!matchesAux($Operands.get(¢), nOperands.get(¢), ids))
-        return false;
-    return true;
+    return $Operands.size() == nOperands.size() && IntStream.range(0, $Operands.size()).allMatch(λ -> matchesAux($Operands.get(λ), nOperands.get(λ), ids));
   }
 
   private static boolean sameOperator(final ASTNode $, final ASTNode n) {
@@ -318,7 +301,7 @@ public final class Matcher {
   /** Pairs variables from a pattern <b>p</b> with their corresponding
    * ASTNodes<br>
    * from <b>n</b> (as strings), using the matching rules. For more info about
-   * these rules, see {@link Matcher}.<br>
+   * these rules, see .<br>
    * This method doesn't verify that <b>n</b> indeed matches <b>p</b>.<br>
    * Examples:<br>
    * <table border='1'>

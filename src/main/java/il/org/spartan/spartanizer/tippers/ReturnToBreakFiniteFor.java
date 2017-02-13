@@ -27,7 +27,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
 
   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
-    for (final Statement ¢ : step.statements(body)) {
+    for (final Statement ¢ : statements(body)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
       if (compareReturnStatements(nextReturn, az.returnStatement(¢))) {

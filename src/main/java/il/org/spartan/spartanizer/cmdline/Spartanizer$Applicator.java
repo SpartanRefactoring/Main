@@ -86,7 +86,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     return false;
   }
 
-  @SuppressWarnings({ "boxing" }) protected void computeMetrics(final ASTNode input, final ASTNode output) {
+  @SuppressWarnings("boxing") protected void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("metrics");
     ReportGenerator.name(input);

@@ -90,7 +90,7 @@ public class Issue0295 {
   }
 
   @Test public void B14() {
-    azzert.that(step.expression(forr), iz("var"));
+    azzert.that(expression(forr), iz("var"));
   }
 
   @Test public void B15() {

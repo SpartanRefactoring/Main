@@ -25,21 +25,21 @@ public class Issue0778 {
     azzert.that(ArrayList.class, is(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).getClass()));
   }
 
-  @Test @SuppressWarnings({ "static-method" }) public void test2() {
+  @Test @SuppressWarnings("static-method") public void test2() {
     azzert.that(1, is(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo() {} }"))).size()));
   }
 
-  @Test @SuppressWarnings({ "static-method" }) public void test3() {
+  @Test @SuppressWarnings("static-method") public void test3() {
     azzert.that("foo",
         is(first(getAll2.methods(az.compilationUnit(wizard.ast("public class Dog {public void foo() {} }")))).getName().getIdentifier()));
   }
 
-  @Test @SuppressWarnings({ "static-method" }) public void test4() {
+  @Test @SuppressWarnings("static-method") public void test4() {
     azzert.that(3, is(getAll2
         .methods(az.compilationUnit(wizard.ast("public class Dog {public  void foo0() {} public  void foo1() {}public  void foo2() {}}"))).size()));
   }
 
-  @Test @SuppressWarnings({ "static-method" }) public void test5() {
+  @Test @SuppressWarnings("static-method") public void test5() {
     azzert
         .that(3,
             is(getAll2.methods(
@@ -47,7 +47,7 @@ public class Issue0778 {
                 .size()));
   }
 
-  @Test @SuppressWarnings({ "static-method" }) public void test6() {
+  @Test @SuppressWarnings("static-method") public void test6() {
     final List<MethodDeclaration> res = getAll.methods(az.compilationUnit(
         wizard.ast("public class Dog2 {" + " public int foo0(){return 1;}" + " private void foo1(){}" + " protected void foo2(){}")));
     azzert.that("foo0", is(first(res).getName().getIdentifier()));
