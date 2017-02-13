@@ -62,7 +62,7 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
   }
 
   private void addLineToGlobalStatistcs() {
-    writer.col("Project", presentSourceName);
+    writer.col("Project", getProjectName(presentSourceName)); 
     if (usage.get("METHOD") == null)
       return;
     final int rExternal = rExternal(), rIntrernal = rInternal();
@@ -71,6 +71,17 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
         .col("Internal", rIntrernal)//
         .col("Intrnal-External", rIntrernal - rExternal)//
     ;
+  }
+
+  /** 
+    * TODO Matteo Orru': Stub 'Table_ReusabilityIndices::getProjectName' (created on  2017-02-13)." );
+    * <p>
+    * @param s
+    * @return
+    * <p> [[SuppressWarningsSpartan]]
+    */
+  private static String getProjectName(final String s) {
+    return s.substring(s.lastIndexOf('-')+1);
   }
 
   void addMissingKeys() {
@@ -88,6 +99,8 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
     addMissingKeys();
     if (writer == null)
       writer = new Table(this);
+//    writer.col("Project", getProjectName(presentSourceName)); 
+    writer.col("Project", presentSourceName); 
     try (Table t = new Table("rindices")) {
       for (final String category : usage.keySet()) {
         final Map<String, Integer> map = usage.get(category);
