@@ -11,12 +11,16 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Utility class for method patterns
  * @author Ori Marcovitch
  * @since Dec 8, 2016 */
 public interface MethodPatternUtilitiesTrait {
   default boolean notEmpty(final MethodDeclaration ¢) {
     return statements(¢) != null && !empty(¢);
+  }
+
+  default boolean noBody(final MethodDeclaration ¢) {
+    return body(¢) == null;
   }
 
   default boolean empty(final MethodDeclaration ¢) {

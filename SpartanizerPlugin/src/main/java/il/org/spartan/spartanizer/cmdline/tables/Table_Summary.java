@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -50,7 +48,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
 
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
-      return false;
+      return true;
     try {
       final Integer key = Integer.valueOf(measure.statements(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
@@ -92,7 +90,9 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
+    return iz.constructor(¢)//
+        // || body(¢) == null//
+        || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {

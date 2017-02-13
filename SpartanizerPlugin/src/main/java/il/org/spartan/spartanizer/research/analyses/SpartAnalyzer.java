@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.nanos.*;
+import il.org.spartan.spartanizer.research.nanos.IsEmpty;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
@@ -68,7 +69,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                new Empty(), //
+                new IsEmpty(), //
                 new LastIndex(), //
                 new Infix.SafeReference(), //
                 new Singleton(), //
@@ -114,6 +115,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
         // new Down.Caster(), // R.I.P
+        new Empty(), //
         new Examiner(), //
         new Getter(), //
         new Let(), //
@@ -121,6 +123,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
         new Setter(), //
+        new Signature(), //
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
