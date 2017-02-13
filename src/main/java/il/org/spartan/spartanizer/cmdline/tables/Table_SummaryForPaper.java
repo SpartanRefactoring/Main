@@ -23,13 +23,12 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   
   private static Table writer;
   
-  private static HashSet<String> classes = new HashSet<>();
-  private static Integer methods;
   @SuppressWarnings("rawtypes") private static HashMap<String, HashSet> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   
   private final Stack<CURecord> CURecords = new Stack<>();
-  private static final Stack<ClassRecord> classRecords = new Stack<>();
+  private final Stack<ClassRecord> classRecords = new Stack<>();
+
   protected static final SortedMap<Integer, List<CURecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
   protected static final SortedMap<Integer, List<ClassRecord>> classStatistics = new TreeMap<>(Integer::compareTo);
   
@@ -86,52 +85,6 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     return true; //super.visit($);
   }
   
-//  @Override public boolean visit(final CompilationUnit $) {
-////  if (!excludeMethod($))
-//    try {
-//      final Integer key = Integer.valueOf(measure.statements($));
-//      //
-//      CUStatistics.putIfAbsent(key, new ArrayList<>());
-//      classStatistics.putIfAbsent(key, new ArrayList<>());
-//      //
-//      final ClassRecord c = new ClassRecord($);
-//      ClassRecords.push(c);
-//      classStatistics.get(key).add(c);
-//      final TypeDeclaration d = findFirst.instanceOf(TypeDeclaration.class)
-//          .in(ast(Wrap.OUTER.off(spartanalyzer.fixedPoint(Wrap.OUTER.on($ + "")))));
-//      //
-////      if (d != null)
-////        npDistributionStatistics.logNode(d);
-//    } catch (@SuppressWarnings("unused") final AssertionError __) {
-//      System.err.print("X");
-//    } catch (@SuppressWarnings("unused") final NullPointerException __) {
-//      System.err.print("N");
-//    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-//      System.err.print("I");
-//    }
-//    return true; //super.visit($);
-//  }
-  
-//  @Override public boolean visit(final MethodDeclaration ¢) {
-//    if (excludeMethod(¢))
-//      return false;
-//    try {
-//      final Integer key = Integer.valueOf(measure.statements(¢));
-//      statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
-//      final MethodRecord m = new MethodRecord(¢);
-//      scope.push(m);
-//      statementsCoverageStatistics.get(key).add(m);
-//      final MethodDeclaration d = findFirst.instanceOf(MethodDeclaration.class)
-//          .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
-//      if (d != null)
-//        npDistributionStatistics.logNode(d);
-//    } catch (final AssertionError __) {
-//      ___.unused(__);
-//    }
-//    return true;
-//  }
-
-  
   @Override protected void done(final String path) {
     if (writer == null)
       initializeWriter();
@@ -139,10 +92,17 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     .col("Project", path)//
     .col("#Packages", countPackages())//
     .col("#LOC", countLOC())//
-    .col("#Classes", classRecords.size())//
+    .col("#Classes", countClasses())//
     .col("#Methods", countMethods())//
     .nl();
     System.err.println("Your output is in: " + outputFolder);
+  }
+
+  private Integer countClasses() {
+    Integer $ = 0;
+    for(final CURecord ¢: CURecords)
+      $ += ¢.getNumClasses();
+    return $;
   }
 
   @SuppressWarnings("boxing")
@@ -172,16 +132,6 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   @SuppressWarnings({ "boxing", "unused", "static-method" })
   private Integer packages(final String key) {
     return packageMap.get(key).size();
-  }
-
-  @SuppressWarnings({ "unused", "static-method" })
-  private Integer methods() {
-    return methods;
-  }
-
-  @SuppressWarnings({ "unused", "boxing", "static-method" })
-  private Integer classes() {
-    return classes.size();
   }
 
   private static void initializeWriter() {
