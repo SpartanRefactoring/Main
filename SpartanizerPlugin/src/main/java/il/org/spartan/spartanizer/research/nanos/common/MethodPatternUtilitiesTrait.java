@@ -115,6 +115,10 @@ public interface MethodPatternUtilitiesTrait {
     return first(statements(¢));
   }
 
+  default Statement secondStatement(final MethodDeclaration ¢) {
+    return second(statements(¢));
+  }
+
   default boolean safeEquals(final Object o1, final Object o2) {
     return o1 != null && o2 != null && o1.equals(o2);
   }
