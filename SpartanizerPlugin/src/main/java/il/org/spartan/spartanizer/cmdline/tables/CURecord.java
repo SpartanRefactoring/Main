@@ -75,4 +75,8 @@ public class CURecord {
     return packg;
   }
 
+  public Integer getNumClasses() {
+    return numClasses;
+  }
+
 }
