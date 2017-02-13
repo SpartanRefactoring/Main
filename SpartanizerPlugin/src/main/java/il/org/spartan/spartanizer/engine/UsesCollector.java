@@ -153,8 +153,8 @@ class UsesCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final MethodInvocation ¢) {
-    ingore(step.name(¢));
-    recurse(step.receiver(¢));
+    ingore(name(¢));
+    recurse(receiver(¢));
     return recurse(arguments(¢));
   }
 
@@ -168,7 +168,7 @@ class UsesCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final SuperMethodInvocation ¢) {
-    ingore(step.name(¢));
+    ingore(name(¢));
     return recurse(arguments(¢));
   }
 
@@ -317,8 +317,8 @@ class StringCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final MethodInvocation ¢) {
-    ingore(step.name(¢));
-    recurse(step.receiver(¢));
+    ingore(name(¢));
+    recurse(receiver(¢));
     return recurse(arguments(¢));
   }
 
@@ -332,7 +332,7 @@ class StringCollector extends HidingDepth {
   }
 
   @Override public boolean visit(final SuperMethodInvocation ¢) {
-    ingore(step.name(¢));
+    ingore(name(¢));
     return recurse(arguments(¢));
   }
 

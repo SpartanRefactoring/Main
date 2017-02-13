@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.java.namespace;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.Map.*;
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -49,8 +48,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @SuppressWarnings("hiding")
-  Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
+  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(d.getType()));
     $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
@@ -61,16 +59,14 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @SuppressWarnings("hiding")
-  Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
+  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(x.getType()));
     $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
-  @SuppressWarnings("hiding")
-  Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
+  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(s.getType()));
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));

@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
- * expression using {@link type.Axiom} .
+ * expression using {@link Axiom} .
  * @Since 2016-09
  * @author Niv Shalmon
  * @since Sep 7, 2016 */
@@ -23,8 +23,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
-   * @author Yossi Gil
-   *  */
+   * @author Yossi Gil */
   @Ignore
   public static class NotWorkingYet {
     // All test work now
@@ -537,11 +536,11 @@ public final class typeTest {
     }
 
     @Test public void cast20() {
-      azzert.that(type.of(into.e("(Integer)null")), is(NULL));
+      azzert.that(of(into.e("(Integer)null")), is(NULL));
     }
 
     @Test public void cast21() {
-      azzert.that(type.of(into.e("(Integer)((null))")), is(NULL));
+      azzert.that(of(into.e("(Integer)((null))")), is(NULL));
     }
 
     @Test public void conditional01() {
@@ -752,8 +751,8 @@ public final class typeTest {
     @Test @SuppressWarnings("unchecked") public void context20() {
       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
-      azzert.that(of((Expression) lisp.first(fs.initializers())), is(INT));
-      azzert.that(of((Expression) lisp.first(fs.updaters())), is(NUMERIC));
+      azzert.that(of((Expression) first(fs.initializers())), is(INT));
+      azzert.that(of((Expression) first(fs.updaters())), is(NUMERIC));
     }
 
     @Test public void context22() {

@@ -11,7 +11,7 @@ final class EnvironmentTestMoreCodeExamples {
   }
 
   static class A {
-    @FlatEnvUse({ @Id(name = "str", clazz = "String") }) void foo() {
+    @FlatEnvUse(@Id(name = "str", clazz = "String")) void foo() {
       /**/}
   }
 }

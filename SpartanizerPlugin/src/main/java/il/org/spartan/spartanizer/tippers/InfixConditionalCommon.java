@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.CommnonFactoring {
   private static Expression chopHead(final InfixExpression ¢) {
-    final List<Expression> $ = extract.allOperands(¢);
+    final List<Expression> $ = allOperands(¢);
     $.remove(0);
     return $.size() < 2 ? copy.of(first($)) : subject.operands($).to(¢.getOperator());
   }

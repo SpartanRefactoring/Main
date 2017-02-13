@@ -34,7 +34,7 @@ public class RecordWriter implements Closeable {
   public final String fileName;
   public final OutputStreamWriter writer;
   public final TableRenderer renderer;
-  private boolean headerPrinted;
+  private boolean shouldPrintHeader = true;
   private boolean footerPrinted;
 
   @Override public void close() {
@@ -49,8 +49,8 @@ public class RecordWriter implements Closeable {
   }
 
   public void write(final Row<?> ¢) {
-    if (!headerPrinted) {
-      headerPrinted = true;
+    if (shouldPrintHeader) {
+      shouldPrintHeader = false;
       writeHeader(¢);
     }
     writeData(¢);

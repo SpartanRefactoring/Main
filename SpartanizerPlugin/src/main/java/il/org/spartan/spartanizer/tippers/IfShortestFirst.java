@@ -21,6 +21,6 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    return Tippers.thenIsShorter(¢) ? null : invert(¢);
+    return thenIsShorter(¢) ? null : invert(¢);
   }
 }

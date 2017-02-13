@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
- * f(); } provided that this <code><b>if</b></code> statement is the
- * last statement in a method.
+ * f(); } provided that this <code><b>if</b></code> statement is the last
+ * statement in a method.
  * @author Yossi Gil
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
@@ -35,7 +35,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
-      Tippers.removeLast(step.statements(block));
+      Tippers.removeLast(statements(block));
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(copy.of(nextStatement));

@@ -18,8 +18,7 @@ import il.org.spartan.spartanizer.java.*;
 
 /** Converts {@code int a=3;return a;} into {@code return 3;}
  * @author Yossi Gil
- * @since 2015-08-07
- *  */
+ * @since 2015-08-07 */
 public final class FragmentInitializerReturnAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -30,7 +29,7 @@ public final class FragmentInitializerReturnAssignment extends $FragementAndStat
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
-    final Assignment a = az.assignment(step.expression(az.returnStatement(nextStatement)));
+    final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));

@@ -17,7 +17,7 @@ public class ForEachTest {
     ;
   }
 
-  @Test public void c() {
+  @Test public void b() {
     trimmingOf("for (Class i : is) try { " //
         + " l.add((A)f.newClassInstance(H.class,i));} " //
         + "catch (Throwable ¢) {" //
@@ -29,21 +29,21 @@ public class ForEachTest {
             .stays();
   }
 
-  @Test public void d() {
+  @Test public void c() {
     trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
     ;
   }
 
-  @Test public void e() {
+  @Test public void d() {
     trimmingOf("  for (final Statement k : ss)    $.append(k);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("ss.forEach(k -> $.append(k));")//
     ;
   }
 
-  @Test public void f() {
+  @Test public void e() {
     trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("us.forEach(¢->scanCompilationUnit(¢,eclipse.newSubMonitor(progressMonitor)));")//

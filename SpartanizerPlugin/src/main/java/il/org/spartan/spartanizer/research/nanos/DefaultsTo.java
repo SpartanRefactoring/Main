@@ -1,35 +1,30 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** This is the ?? operator
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
-  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
+  private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
-      add(patternTipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
-      add(patternTipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
-      add(patternTipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent"));
+      patternTipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
+      patternTipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
+      patternTipper("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
+      patternTipper("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
     }
   };
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
-    return anyTips(tippers, ¢);
+    return tippers.anyTips(¢);
   }
 
   @Override public Tip pattern(final ConditionalExpression ¢) {
-    return firstTip(tippers, ¢);
+    return tippers.firstTip(¢);
   }
 
   @Override public String description() {
@@ -41,11 +36,11 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   }
 
   @Override public String example() {
-    return firstPattern(tippers);
+    return tippers.firstPattern();
   }
 
   @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
+    return tippers.firstReplacement();
   }
 
   @Override public NanoPatternTipper.Category category() {

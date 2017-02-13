@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * should read like a sentence phrase.
  * @author Yossi Gil
  * @since 2016 */
+@SuppressWarnings("InfiniteRecursion")
 public interface namer {
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
   String forbidden = "_"; //
@@ -25,7 +26,7 @@ public interface namer {
   String return¢ = "$"; //
   String current = "¢"; //
   String lambda = "λ"; //
-  String[] specials = {forbidden, return¢, anonymous, current, lambda};
+  String[] specials = { forbidden, return¢, anonymous, current, lambda };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
@@ -133,7 +134,7 @@ public interface namer {
 
   static String variableName(final SimpleType t) {
     final List<String> ss = as.list(components(t));
-    String $ = lisp.first(ss).toLowerCase();
+    String $ = first(ss).toLowerCase();
     for (final String ¢ : lisp.rest(ss))
       $ += ¢;
     return $;

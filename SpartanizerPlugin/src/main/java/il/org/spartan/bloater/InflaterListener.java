@@ -22,6 +22,7 @@ import static il.org.spartan.lisp.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
+
 // TODO: Ori Roth why so many fields? --yg
 public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
@@ -118,16 +119,19 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private void updateListeners() {
     externalListeners.clear();
     for (final Integer i : wheelEvents) {
-      final List<Listener> l = new LinkedList<>();
+      final List<Listener> l = new ArrayList<>();
       Collections.addAll(l, text.getListeners(i.intValue()));
-      TypedListener tl = null;
-      for (final Listener ¢ : l)
-        if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
-          tl = (TypedListener) ¢;
-      if (tl != null)
-        l.remove(tl);
+      l.remove(find(l));
       externalListeners.put(i, l);
     }
+  }
+
+  public TypedListener find(final List<Listener> ls) {
+    TypedListener $ = null;
+    for (final Listener ¢ : ls)
+      if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
+        $ = (TypedListener) ¢;
+    return $;
   }
 
   private void removeListeners() {

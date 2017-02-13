@@ -11,7 +11,7 @@ import il.org.spartan.*;
  * @author Shahar Yair
  * @author Zahi Mizrahi
  * @since 16-11-9 * */
-@SuppressWarnings({ "static-method", })
+@SuppressWarnings("static-method")
 // TODO: David/Shahar/Zahi: your tests could have been more extensive --yg
 public class Issue0801 {
   @Test public void test01() {

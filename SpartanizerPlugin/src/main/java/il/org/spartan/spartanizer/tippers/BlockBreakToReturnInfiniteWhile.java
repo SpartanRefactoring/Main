@@ -21,7 +21,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     implements TipperCategory.Shortcircuit {
   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
-    for (final Statement ¢ : step.statements(body)) {
+    for (final Statement ¢ : statements(body)) {
       if (iz.ifStatement(¢))
         $ = handleIf(az.ifStatement(¢), nextReturn);
       if (iz.breakStatement(¢)) {

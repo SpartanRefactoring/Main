@@ -1,16 +1,16 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -55,11 +55,11 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
-  private void addCommon(final Expression op, final List<Expression> common) {
+  private void addCommon(final Expression op, final Collection<Expression> common) {
     addNewInList(op, common);
   }
 
-  private void addDifferent(final Expression op, final List<Expression> different) {
+  private void addDifferent(final Expression op, final Collection<Expression> different) {
     addNewInList(op, different);
   }
 
@@ -135,15 +135,15 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     if ($.isEmpty())
       return addition;
     if ($.size() == 1)
-      return subject.pair(first($), addition).to(Operator.TIMES);
+      return subject.pair(first($), addition).to(TIMES);
     if ($.size() <= 1)
       return null;
     Expression multiplication = null;
     for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
       multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1)))
-          .to(Operator.TIMES);
+          .to(TIMES);
     }
-    return subject.pair(multiplication, addition).to(Operator.TIMES);
+    return subject.pair(multiplication, addition).to(TIMES);
   }
 }

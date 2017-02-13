@@ -10,8 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 // This code is not working: we never managed to get this to work. Stav was the
 // last one working on it
 /** Remove unnecessary ',' from array initialization list {@code "int[] a = new
- * int[] {..,..,..,};"} to:
- * {@code "int[] a = new int[] {..,..,..};"}
+ * int[] {..,..,..,};"} to: {@code "int[] a = new int[] {..,..,..};"}
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon<code><shalmon.niv [at] gmail.com></code>
  * @since 2016-8-27 */

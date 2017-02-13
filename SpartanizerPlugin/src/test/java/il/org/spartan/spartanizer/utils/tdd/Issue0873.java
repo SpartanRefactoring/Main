@@ -9,7 +9,7 @@ import il.org.spartan.*;
 /** tests of ParameterObject according to issue 873
  * @author kobybs
  * @since 27-11-2016 */
-@SuppressWarnings({ "static-method" })
+@SuppressWarnings("static-method")
 public class Issue0873 {
   @Test public void test0() {
     azzert.that(new ParameterObject<>(new MyType(4)).objectValue().getVal(), is(4));
