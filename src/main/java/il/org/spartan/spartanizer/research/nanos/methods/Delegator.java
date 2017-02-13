@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,21 +8,20 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Method delegating to another
  * @author Ori Marcovitch */
 public class Delegator extends JavadocMarkerNanoPattern {
-  private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
+  private static final NanoPatternContainer<Expression> tippers = new NanoPatternContainer<Expression>() {
     static final long serialVersionUID = 1L;
     {
-      add(patternTipper("$N($A)", "", ""));
-      add(patternTipper("$N1.$N($A)", "", ""));
-      add(patternTipper("$N1().$N($A)", "", ""));
-      add(patternTipper("$N1().$N2().$N($A)", "", ""));
-      add(patternTipper("$N1.$N2().$N($A)", "", ""));
-      add(patternTipper("(($T)$N1).$N($A)", "", ""));
+      patternTipper("$N($A)", "", "");
+      patternTipper("$N1.$N($A)", "", "");
+      patternTipper("$N1().$N($A)", "", "");
+      patternTipper("$N1().$N2().$N($A)", "", "");
+      patternTipper("$N1.$N2().$N($A)", "", "");
+      patternTipper("(($T)$N1).$N($A)", "", "");
     }
   };
 
@@ -40,7 +37,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
-        && anyTips(tippers, expression(¢))//
+        && tippers.anyTips(expression(¢))//
         && iz.methodInvocation($)//
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
         && parametersNames(d).containsAll(analyze.dependencies(arguments(az.methodInvocation($))));
