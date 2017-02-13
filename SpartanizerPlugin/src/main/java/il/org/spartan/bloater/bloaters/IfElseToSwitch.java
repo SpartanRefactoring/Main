@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -70,7 +69,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
 
   private static List<Expression> getAllExpressions(final IfStatement s) {
     final List<Expression> $ = new ArrayList<>();
-    for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
+    for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p). getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }

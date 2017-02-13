@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static il.org.spartan.azzert.is;
-import static il.org.spartan.lisp.first;
+import static il.org.spartan.lisp.*;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })
 public class idiomaticTest {
   @Test public void use0() {
-    azzert.notNull(new idiomatic.Storer<>(this));
+    assert new idiomatic.Storer<>(this) != null;
   }
 
   @Test public void use08() {
@@ -21,16 +21,16 @@ public class idiomaticTest {
   }
 
   @Test public void use09() {
-    azzert.notNull(idiomatic.unless(false).eval(Object::new));
+    assert idiomatic.unless(false).eval(Object::new) != null;
   }
 
   @Test public void use1() {
-    azzert.notNull(new idiomatic.Storer<>(this));
+    assert new idiomatic.Storer<>(this) != null;
     new idiomatic.Storer<>(this).when(true);
   }
 
   @Test public void use10() {
-    azzert.notNull(idiomatic.vhen(true).eval(Object::new));
+    assert idiomatic.vhen(true).eval(Object::new) != null;
   }
 
   @Test public void use11() {
@@ -38,7 +38,7 @@ public class idiomaticTest {
   }
 
   @Test public void use2() {
-    azzert.notNull(idiomatic.take(this));
+    assert idiomatic.take(this) != null;
     azzert.isNull(idiomatic.take(this).when(false));
   }
 

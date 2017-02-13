@@ -44,8 +44,8 @@ public enum eclipse {
   static final boolean showDialogMenu = true;
   static final boolean takeFocusOnOpen = false;
   private static final String iconAddress = "platform:/plugin/org.eclipse.compare/icons/full/wizban/applypatch_wizban.png";
-  private static boolean iconInitialized;
-  private static boolean iconNonBusyInitialized;
+  private static boolean iconInvalid = true;
+  private static boolean iconNotBusyInvalid = true;
 
   /** Add nature to one project */
   public static void addNature(final IProject p) throws CoreException {
@@ -61,14 +61,14 @@ public enum eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param m A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link wizard@nullProgressMonitor}
+   *        operation times use {@link wizard#nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
-      return done(m, $, "Cannot find current compilation unit " + u);
+      return done(m, $, "Cannot find current compilation unit " + null);
     final IJavaProject javaProject = u.getJavaProject();
     if (javaProject == null)
       return done(m, $, "Cannot find project of " + u);
@@ -77,7 +77,7 @@ public enum eclipse {
     final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
-    for (final IPackageFragmentRoot ¢ : rs)  // NANO - can't, throws
+    for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
       compilationUnits(m, $, ¢);
     return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
@@ -167,23 +167,23 @@ public enum eclipse {
   }
 
   static ImageIcon icon() {
-    if (!iconInitialized) {
-      iconInitialized = true;
+    if (iconInvalid) {
+      iconInvalid = false;
       try {
         final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
         if (i != null)
           icon = new ImageIcon(
               i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
       } catch (final MalformedURLException ¢) {
-        monitor.logProbableBug(¢); 
+        monitor.logProbableBug(¢);
       }
     }
     return icon;
   }
 
   static org.eclipse.swt.graphics.Image iconNonBusy() {
-    if (!iconNonBusyInitialized) {
-      iconNonBusyInitialized = true;
+    if (iconNotBusyInvalid) {
+      iconNotBusyInvalid = false;
       try {
         iconNonBusy = new org.eclipse.swt.graphics.Image(null,
             ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());

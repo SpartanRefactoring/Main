@@ -365,6 +365,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <!--<command id="il.org.spartan.AthensCollateral" name="Athens Collateral handler" />-->
      <command id="il.org.spartan.AthensInflate" name="Athens Inflater handler" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences Initiator" />
+     <command id="il.org.spartan.CharacterShortcut" name="Character Shortcut" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -382,6 +383,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <!--<handler commandId="il.org.spartan.AthensCollateral" class="il.org.spartan.zoomer.collateral.CollateralHandler"/>-->
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.bloater.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
+   <handler commandId="il.org.spartan.CharacterShortcut" class="il.org.spartan.plugin.CharacterShortcut" />
 </extension>
 
 <!-- Menus -->
@@ -434,7 +436,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-  <menu id="org.eclipse.jdt.ui.refactoring.menj" label="Refactor">
+  <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor" mnemonic="t">
     <menu label="Spartanizer" mnemonic="S">
       <menu label="Spartanize..." mnemonic="S">
         <command commandId="il.org.spartan.LaconizeSelection" style="push" mnemonic="S"/>
@@ -524,6 +526,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
 	<key sequence="Ctrl+Alt+D"
 		commandId="il.org.spartan.AthensInflate"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+C"
+		commandId="il.org.spartan.CharacterShortcut"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+L"
+		commandId="il.org.spartan.CharacterShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 

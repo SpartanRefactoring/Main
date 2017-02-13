@@ -31,7 +31,7 @@ public class ReportGenerator implements ConfigurableReport {
   protected String spectrumFileName;
   protected static final HashMap<String, CSVStatistics> reports = new HashMap<>();
   protected static final Map<String, PrintWriter> files = new HashMap<>();
-  @SuppressWarnings("rawtypes") protected static HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
+  @SuppressWarnings("rawtypes") protected static final HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
 
   @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
     return metricsMap;
@@ -40,10 +40,10 @@ public class ReportGenerator implements ConfigurableReport {
   public enum Util {
     ;
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
-      return as.array(m("length" + id, λ -> (λ .toString()).length()), m("essence" + id, λ -> Essence.of(λ .toString()).length()),
-          m("tokens" + id, λ -> metrics.tokens(λ .toString())), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+      return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
+          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
           m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
-          m("tide" + id, λ -> clean(λ .toString()).length()));//
+          m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
@@ -71,7 +71,7 @@ public class ReportGenerator implements ConfigurableReport {
       return reports.get(¢);
     }
 
-    @SuppressWarnings({ "unchecked" }) public static NamedFunction<ASTNode> find(final String ¢) {
+    @SuppressWarnings("unchecked") public static NamedFunction<ASTNode> find(final String ¢) {
       return Stream.of(ReportGenerator.Util.functions("")).filter(λ -> Objects.equals(λ.name(), ¢)).findFirst().orElse(null);
     }
   }
@@ -119,28 +119,28 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
+    for (final NamedFunction ¢ : Util.functions(""))
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
+    for (final NamedFunction ¢ : Util.functions(""))
+      Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions(""))
-      ReportGenerator.Util.report("metrics").put(id + ¢.name() + " %", system.p(¢.function().run(n1), ¢.function().run(n2)));
+    for (final NamedFunction ¢ : Util.functions(""))
+      Util.report("metrics").put(id + ¢.name() + " %", system.p(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
       final BiFunction<Integer, Integer> i) {
-    final int ess = ReportGenerator.Util.find("essence").function().run(n1), tide = ReportGenerator.Util.find("tide").function().run(n1),
-        body = ReportGenerator.Util.find("body").function().run(n1), nodes = ReportGenerator.Util.find("nodes").function().run(n1);
-    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(ReportGenerator.Util.find("length").function().run(n1), ess));
-    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
-    ReportGenerator.Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
+    final int ess = Util.find("essence").function().run(n1), tide = Util.find("tide").function().run(n1), body = Util.find("body").function().run(n1),
+        nodes = Util.find("nodes").function().run(n1);
+    Util.report("metrics").put("R(E/L)", i.apply(Util.find("length").function().run(n1), ess));
+    Util.report("metrics").put("R(E/L)", i.apply(tide, ess));
+    Util.report("metrics").put("R(E/L)", i.apply(nodes, body));
   }
 
   @FunctionalInterface
@@ -258,35 +258,35 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   public static void name(final ASTNode input) {
-    ReportGenerator.report("metrics").put("name", extract.name(input));
-    ReportGenerator.report("metrics").put("category", extract.category(input));
+    report("metrics").put("name", extract.name(input));
+    report("metrics").put("category", extract.category(input));
   }
 
   public static void name(final ASTNode input, final String reportName) {
-    ReportGenerator.report(reportName).put("node", extract.name(input));
-    ReportGenerator.report(reportName).put("category", extract.category(input));
+    report(reportName).put("node", extract.name(input));
+    report(reportName).put("category", extract.category(input));
   }
 
   public static void tip(final Tip ¢) {
-    ReportGenerator.report("tips").put("FileName", CommandLine$Applicator.presentFileName);
-    ReportGenerator.report("tips").put("Path", CommandLine$Applicator.presentFilePath);
-    ReportGenerator.report("tips").put("tipName", ¢.getClass());
-    // ReportGenerator.report("tips").put("description", ¢.description);
-    ReportGenerator.report("tips").put("LineNumber", ¢.lineNumber);
-    ReportGenerator.report("tips").put("from", ¢.from);
-    ReportGenerator.report("tips").put("to", ¢.to);
-    // ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+    report("tips").put("FileName", CommandLine$Applicator.presentFileName);
+    report("tips").put("Path", CommandLine$Applicator.presentFilePath);
+    report("tips").put("tipName", ¢.getClass());
+    // report("tips").put("description", ¢.description);
+    report("tips").put("LineNumber", ¢.lineNumber);
+    report("tips").put("from", ¢.from);
+    report("tips").put("to", ¢.to);
+    // report("tips").put("tipperClass", ¢.tipperClass);
     final long time = new Date().getTime();
-    ReportGenerator.report("tips").put("time", time);
-    ReportGenerator.report("tips").put("startTimeDiff", time - CommandLine$Applicator.startingTime);
-    ReportGenerator.report("tips").put("startTimeDiffPerFile", time - CommandLine$Applicator.startingTimePerFile);
-    ReportGenerator.report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
+    report("tips").put("time", time);
+    report("tips").put("startTimeDiff", time - CommandLine$Applicator.startingTime);
+    report("tips").put("startTimeDiffPerFile", time - CommandLine$Applicator.startingTimePerFile);
+    report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
 
   public static void writeTipsLine(@SuppressWarnings("unused") final ASTNode __, final Tip t, final String reportName) {
     // name(n, reportName);
     tip(t);
-    ReportGenerator.report(reportName).nl();
+    report(reportName).nl();
   }
 
   public static class LineWriter implements Consumer<Object> {
@@ -304,23 +304,23 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   public static void emptyTipsLine() {
-    ReportGenerator.report("tips").put("tipName", "");
-    // ReportGenerator.report("tips").put("description", ¢.description);
-    ReportGenerator.report("tips").put("LineNumber", "");
-    ReportGenerator.report("tips").put("from", "");
-    ReportGenerator.report("tips").put("to", "");
-    // ReportGenerator.report("tips").put("tipperClass", ¢.tipperClass);
+    report("tips").put("tipName", "");
+    // report("tips").put("description", ¢.description);
+    report("tips").put("LineNumber", "");
+    report("tips").put("from", "");
+    report("tips").put("to", "");
+    // report("tips").put("tipperClass", ¢.tipperClass);
     // long time = new Date().getTime();
-    ReportGenerator.report("tips").put("time", "");
-    ReportGenerator.report("tips").put("startTimeDiff", "");
-    ReportGenerator.report("tips").put("startTimeDiffPerFile", "");
-    ReportGenerator.report("tips").put("lastTimeDiff", "");
+    report("tips").put("time", "");
+    report("tips").put("startTimeDiff", "");
+    report("tips").put("startTimeDiffPerFile", "");
+    report("tips").put("lastTimeDiff", "");
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
-    for (final NamedFunction ¢ : ReportGenerator.metricsMap().get(id)) {
-      ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(input));
-      ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(output));
+    for (final NamedFunction ¢ : metricsMap().get(id)) {
+      Util.report(id).put(¢.name() + "1", ¢.function().run(input));
+      Util.report(id).put(¢.name() + "2", ¢.function().run(output));
     }
   }
 }

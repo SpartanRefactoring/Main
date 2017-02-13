@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.nanos.characteristics;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -64,11 +65,8 @@ public class JDPattern extends JavadocMarkerNanoPattern {
         return false;
       }
 
-      boolean checkContainsParameter(final Iterable<Expression> xs) {
-        for (final Expression ¢ : xs)
-          if (checkContainsParameter(¢))
-            return true;
-        return false;
+      boolean checkContainsParameter(final Iterable<Expression> ¢) {
+        return Stream.of(¢).anyMatch(this::checkContainsParameter);
       }
     });
     return $.inner;

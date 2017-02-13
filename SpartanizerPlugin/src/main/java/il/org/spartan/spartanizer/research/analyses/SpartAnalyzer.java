@@ -35,12 +35,15 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new Unless(), //
                 new SafeReference(), //
                 new TakeDefaultTo(), //
+                new Max(), //
+                new Min(), //
                 null) //
             .add(EnhancedForStatement.class, //
                 new Aggregate(), //
                 new Collect(), //
                 new CountIf(), //
                 new FindFirst(), //
+                new FlatMap(), //
                 new ForEach(), //
                 new ForEachSuchThat(), //
                 new HoldsForAll(), //
@@ -65,9 +68,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
+                new Empty(), //
                 new LastIndex(), //
                 new Infix.SafeReference(), //
-                new Empty(), //
                 new Singleton(), //
                 null)//
             .add(MethodInvocation.class, //
@@ -113,6 +116,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // new Down.Caster(), // R.I.P
         new Examiner(), //
         new Getter(), //
+        new Let(), //
         // new ForEachApplier(), // R.I.P, we have ForEach
         // new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
@@ -139,7 +143,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
 
   public Collection<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
-    toolbox.getAllTippers().stream().filter(λ -> λ instanceof NanoPatternTipper).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
+    toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }
 }

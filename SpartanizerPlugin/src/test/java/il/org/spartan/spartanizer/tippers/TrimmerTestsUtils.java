@@ -13,6 +13,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -22,13 +23,13 @@ public enum TrimmerTestsUtils {
   static String apply(final Tipper<? extends ASTNode> t, final String from) {
     final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
-    return TESTUtils.rewrite(new TipperApplicator(t), $, new Document(from)).get();
+    return rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   public static String applyTrimmer(final Trimmer t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document $ = TESTUtils.rewrite(t, u, new Document(from));
+    final Document $ = rewrite(t, u, new Document(from));
     assert $ != null;
     return $.get();
   }
@@ -81,8 +82,8 @@ public enum TrimmerTestsUtils {
 
     public void doesNotCrash() {
       final Wrap w = Wrap.find(get());
-      assertNotEquals("Trimming of " + get() + " crashed", Wrap.essence(get()),
-          Wrap.essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
+      assertNotEquals("Trimming of " + get() + " crashed", essence(get()),
+          essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
     public Operand gives(final String $) {
@@ -98,7 +99,13 @@ public enum TrimmerTestsUtils {
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
-        System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(peeled));
+        System.err.printf(//
+            "Quick fix by mark, copy and paste is:\n" + //
+                "\n        .gives(\"%s\") //\n\n\n" + //
+                "Compare with current " + //
+                "\n        .gives(\"%s\") //\n",
+            trivia.escapeQuotes(essence(peeled)), //
+            trivia.escapeQuotes(essence($)));
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);
@@ -121,7 +128,7 @@ public enum TrimmerTestsUtils {
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       for (final String $ : options)
-        if (Wrap.essence($).equals(Wrap.essence(peeled)))
+        if (essence($).equals(essence(peeled)))
           return new Operand($);
       azzert.fail("Expects: " + peeled + " But None of the given options match");
       return null;
@@ -138,7 +145,13 @@ public enum TrimmerTestsUtils {
       final String expected = get();
       if (expected.equals(peeled) || !essence(peeled).equals(essence(expected)))
         return;
-      System.err.printf("Quick fix by mark, copy and paste is:\n        .gives(\"%s\") //\n", essence(expected));
+      System.err.printf(
+          "Quick fix by mark, copy and paste is:\n" + //
+              "        .gives(\"%s\") //\n\n\n\n" + //
+              "Compare with \n" + //
+              "        .gives(\"%s\") //\n", //
+          essence(peeled), //
+          essence(expected));
       azzert.that(essence(peeled), is(essence(expected)));
     }
 
@@ -197,12 +210,12 @@ public enum TrimmerTestsUtils {
     }
 
     public OperandToTipper<N> in(final Tipper<N> ¢) {
-      azzert.that(¢.canTip(findNode(¢)), is(true));
+      assert ¢.canTip(findNode(¢));
       return this;
     }
 
     public OperandToTipper<N> notIn(final Tipper<N> ¢) {
-      azzert.that(¢.canTip(findNode(¢)), is(false));
+      assert !¢.canTip(findNode(¢));
       return this;
     }
   }

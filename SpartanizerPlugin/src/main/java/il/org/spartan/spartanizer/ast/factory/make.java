@@ -1,6 +1,10 @@
 package il.org.spartan.spartanizer.ast.factory;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
+
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -36,10 +40,9 @@ public enum make {
   STATEMENTS(ASTParser.K_STATEMENTS), //
   /** Strategy for conversion into a class body */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS); //
-  /** Converts the {@link makeAST} value to its corresponding {@link make} enum
-   * value
+  /** Converts the {@link makeAST} value to its corresponding enum value
    * @param tipper The {@link makeAST} type
-   * @return corresponding {@link make} value to the argument */
+   * @return corresponding value to the argument */
   public static make from(final makeAST ¢) {
     switch (¢) {
       case CLASS_BODY_DECLARATIONS:
@@ -64,7 +67,7 @@ public enum make {
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
-  public ASTParser parser(final char[] text) {
+  @SuppressWarnings("MethodCanBeVariableArityMethod") public ASTParser parser(final char[] text) {
     final ASTParser $ = wizard.parser(kind);
     $.setSource(text);
     return $;
@@ -122,7 +125,7 @@ public enum make {
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
-    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(findFirst.elementOf(fragments(copy.of(¢)))));
+      final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
     fragments($).addAll(extract.nextFragmentsOf(¢));
     $.setType(copy.of(step.type(¢)));
     extendedModifiers($).addAll(az.modifiersOf(¢));
@@ -147,10 +150,10 @@ public enum make {
     ;
   }
 
-  static List<Expression> minus(final List<Expression> xs) {
+  static List<Expression> minus(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>();
-    $.add(first(xs));
-    $.addAll(az.stream(rest(xs)).map(make::minusOf).collect(toList()));
+    $.add(first(¢));
+    $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
     return $;
   }
 
@@ -166,7 +169,7 @@ public enum make {
 
   private static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
-        : "-" + token.substring(token.startsWith("+") ? 1 : 0);
+        : "-" + token.substring(as.bit(token.startsWith("+")));
   }
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
@@ -253,7 +256,7 @@ public enum make {
   /** A fluent API method that wraps an {@link Expression} with parenthesis, if
    * the location in which this expression occurs requires such wrapping.
    * <p>
-   * Typical usage is in the form {@code new Plan(expression).in(host)} where
+   * Typical usage is in the form {@code new Plant(expression).in(host)} where
    * {@code location} is the parent under which the expression is to be placed.
    * <p>
    * This function is a factory method recording the expression that might be

@@ -1,4 +1,5 @@
 package il.org.spartan.plugin;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.lisp.*;
 
@@ -201,7 +202,7 @@ public class Selection extends AbstractSelection<Selection> {
     public static Selection current() {
       final ISelection $ = getSelection();
       return $ == null ? empty()
-          : $ instanceof ITextSelection ? by((ITextSelection) $) : $ instanceof ITreeSelection ? by((ITreeSelection) $) : empty();
+          : $ instanceof ITextSelection ? by((ITextSelection) $) : $ instanceof ITreeSelection ? by((IStructuredSelection) $) : empty();
     }
 
     /** @return current project */
@@ -249,15 +250,18 @@ public class Selection extends AbstractSelection<Selection> {
       return p == null ? empty() : TrackerSelection.empty().track(p).add($).setTextSelection(new TextSelection(p.getStartPosition(), p.getLength()));
     }
 
-    /** @return current {@link ISelection} */
-    private static ISelection getSelection() {
+    /** @return current {@link ISelectionService} */
+    static ISelectionService getSelectionService() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
-      final IWorkbenchWindow w = wb.getActiveWorkbenchWindow();
-      if (w == null)
-        return null;
-      final ISelectionService $ = w.getSelectionService();
+      final IWorkbenchWindow $ = wb.getActiveWorkbenchWindow();
+      return $ == null ? null : $.getSelectionService();
+    }
+
+    /** @return current {@link ISelection} */
+    static ISelection getSelection() {
+      final ISelectionService $ = getSelectionService();
       return $ == null ? null : $.getSelection();
     }
 
@@ -294,19 +298,22 @@ public class Selection extends AbstractSelection<Selection> {
       return ¢ == null || !¢.exists() ? null : JavaCore.create(¢);
     }
 
-    /** Depends on local editor.
-     * @return selection by current compilation unit */
-    private static Selection getCompilationUnit() {
+    /** @return current {@link IEditorPart} */
+    static IEditorPart getEditorPart() {
       final IWorkbench wb = PlatformUI.getWorkbench();
       if (wb == null)
         return null;
       final IWorkbenchWindow w = wb.getActiveWorkbenchWindow();
       if (w == null)
         return null;
-      final IWorkbenchPage p = w.getActivePage();
-      if (p == null)
-        return null;
-      final IEditorPart e = p.getActiveEditor();
+      final IWorkbenchPage $ = w.getActivePage();
+      return $ == null ? null : $.getActiveEditor();
+    }
+
+    /** Depends on local editor.
+     * @return selection by current compilation unit */
+    private static Selection getCompilationUnit() {
+      final IEditorPart e = getEditorPart();
       if (e == null)
         return null;
       final IEditorInput $ = e.getEditorInput();
@@ -356,12 +363,12 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       final Selection $ = Selection.empty();
-      final Collection<MarkerItem> is = new LinkedList<>();
-      final Collection<IJavaProject> ps = new LinkedList<>();
-      final Collection<IPackageFragmentRoot> rs = new LinkedList<>();
-      final Collection<IPackageFragment> hs = new LinkedList<>();
-      final Collection<ICompilationUnit> cs = new LinkedList<>();
-      final Collection<IMember> ms = new LinkedList<>();
+      final Collection<MarkerItem> is = new ArrayList<>();
+      final Collection<IJavaProject> ps = new ArrayList<>();
+      final Collection<IPackageFragmentRoot> rs = new ArrayList<>();
+      final Collection<IPackageFragment> hs = new ArrayList<>();
+      final Collection<ICompilationUnit> cs = new ArrayList<>();
+      final Collection<IMember> ms = new ArrayList<>();
       for (final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
@@ -476,9 +483,10 @@ public class Selection extends AbstractSelection<Selection> {
      * @param us list of files in selection
      * @param ms list of members in selection
      * @return name for the selection */
-    private static String getMultiSelectionName(final Collection<MarkerItem> is, final Iterable<IJavaProject> ps, final Collection<IPackageFragmentRoot> rs,
-                                                final Collection<IPackageFragment> hs, final Collection<ICompilationUnit> us, final Collection<IMember> ms) {
-      final List<String> $ = new LinkedList<>();
+    private static String getMultiSelectionName(final Collection<MarkerItem> is, final Iterable<IJavaProject> ps,
+        final Collection<IPackageFragmentRoot> rs, final Collection<IPackageFragment> hs, final Collection<ICompilationUnit> us,
+        final Collection<IMember> ms) {
+      final List<String> $ = new ArrayList<>();
       ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())
         $.add(Linguistic.plurals("root package", rs.size()));

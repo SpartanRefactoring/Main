@@ -299,7 +299,7 @@ public enum collect {
       }
 
       @Override public boolean visit(final AnonymousClassDeclaration d) {
-        return getFieldsOfClass(d).stream().allMatch(λ -> !step.name(λ).subtreeMatch(matcher, what));
+        return getFieldsOfClass(d).stream().noneMatch(λ -> step.name(λ).subtreeMatch(matcher, what));
       }
 
       @Override public boolean visit(final Assignment ¢) {
@@ -307,17 +307,17 @@ public enum collect {
       }
 
       @Override public boolean visit(final CastExpression ¢) {
-        return collect(step.expression(¢));
+        return collect(expression(¢));
       }
 
       @Override public boolean visit(final ClassInstanceCreation ¢) {
-        collect(step.expression(¢));
+        collect(expression(¢));
         return collect(arguments(¢));
       }
 
       @Override public boolean visit(final DoStatement ¢) {
         ++loopDepth;
-        return collect(step.expression(¢));
+        return collect(expression(¢));
       }
 
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
@@ -340,11 +340,11 @@ public enum collect {
       }
 
       @Override public boolean visit(final MethodDeclaration d) {
-        return parameters(d).stream().allMatch(λ -> !step.name(λ).subtreeMatch(matcher, what));
+        return parameters(d).stream().noneMatch(λ -> step.name(λ).subtreeMatch(matcher, what));
       }
 
       @Override public boolean visit(final MethodInvocation ¢) {
-        collect(step.receiver(¢));
+        collect(receiver(¢));
         collect(arguments(¢));
         return false;
       }
