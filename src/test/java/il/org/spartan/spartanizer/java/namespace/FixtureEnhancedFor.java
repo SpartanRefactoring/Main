@@ -5,6 +5,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Fixture for testing enhanced for loops
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
+@SuppressWarnings("InfiniteRecursion")
 public class FixtureEnhancedFor extends MetaFixture {
   {
     final int i = hashCode();

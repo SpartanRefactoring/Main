@@ -8,6 +8,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -17,22 +18,15 @@ import il.org.spartan.spartanizer.research.*;
 public enum normalize {
   ;
   public static String testcase(final String name, final String raw) {
-    return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
+    return wrapTest(name, linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
   public static String unwarpedTestcase(final String raw) {
-    return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
+    return linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
   public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
-  }
-
-  /** escapes all "s
-   * @param ¢
-   * @return */
-  private static String escapeQuotes(final String ¢) {
-    return ¢.replace("\"", "\\\"");
   }
 
   private static String wrapTest(final String name, final String code) {
@@ -73,16 +67,16 @@ public enum normalize {
   }
 
   public static String shortenIdentifiers(final String s) {
-      final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    final Document $ = new Document(ASTutils.wrapCode(s));
+    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
+    final IDocument $ = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
-      final Map<String, String> renaming = new HashMap<>();
-      n.accept(new ASTVisitor() {
+    final Map<String, String> renaming = new HashMap<>();
+    n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;

@@ -4,7 +4,6 @@
  * we do not because some of the tests rely on the functions here returning
  * false/true, or for no reason. No one really know...
  * @author Yossi Gil
- * 
  * @see ExclusionManager */
 package il.org.spartan.spartanizer.tippers;
 

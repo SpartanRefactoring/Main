@@ -4,7 +4,6 @@ import il.org.spartan.utils.*;
 
 /** A poor man's approximation of a mutable int, which is so much more
  * convenient than {@link Integer}
- * 
  * @author Yossi Gil
  * @since Sep 12, 2016 */
 public final class Int {

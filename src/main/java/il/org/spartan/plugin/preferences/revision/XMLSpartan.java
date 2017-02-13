@@ -14,22 +14,25 @@ import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
+import static java.util.stream.Collectors.*;
+
+import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
-
 /** TODO Ori Roth: document class {@link }
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-01 */
 public class XMLSpartan {
-  private static final String CURRENT_VERSION = "1";
-  private static final String FILE_NAME = ".spartan";
+  private static final String CURRENT_VERSION = "1.0";
+  private static final String FILE_NAME = "spartan.xml";
   private static final String TIPPER = "tipper";
   private static final String CATEGORY = "category";
   private static final String ENABLED = "enabled";
-  private static final String TIPPER_ID = "tipper_id";
-  private static final String CATEGORY_ID = "category_id";
+  private static final String TIPPER_ID = "id";
+  private static final String CATEGORY_ID = "id";
+  private static final String TIPPER_DESCRIPTION = "description";
 
   /** TODO Ori Roth: Stub 'XMLSpartan::getTippersByCategories' (created on
    * 2017-02-10)." );
@@ -48,15 +51,16 @@ public class XMLSpartan {
     if (l == null)
       return $;
     for (int i = 0; i < l.getLength(); ++i) {
-      Element e = (Element) l.item(i);
+      final Element e = (Element) l.item(i);
       // categories are disabled because we use container mode in dialog
-      SpartanCategory se = new SpartanCategory(e.getAttribute(CATEGORY_ID), false);
-      List<SpartanTipper> ts = new ArrayList<>();
-      NodeList ll = e.getElementsByTagName(TIPPER);
+      final SpartanCategory se = new SpartanCategory(e.getAttribute(CATEGORY_ID), false);
+      final List<SpartanTipper> ts = new ArrayList<>();
+      final NodeList ll = e.getElementsByTagName(TIPPER);
       if (ll != null)
         for (int j = 0; j < ll.getLength(); ++j) {
-          Element ee = (Element) ll.item(j);
-          SpartanTipper st = new SpartanTipper(ee.getAttribute(TIPPER_ID), Boolean.parseBoolean(ee.getAttribute(ENABLED)), se);
+          final Element ee = (Element) ll.item(j);
+          final SpartanTipper st = new SpartanTipper(ee.getAttribute(TIPPER_ID), Boolean.parseBoolean(ee.getAttribute(ENABLED)), se,
+              ee.getAttribute(TIPPER_DESCRIPTION));
           ts.add(st);
           se.addChild(st);
         }
@@ -67,22 +71,18 @@ public class XMLSpartan {
   }
 
   @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
-    final Set<Class<Tipper<? extends ASTNode>>> $ = new HashSet<>();
-    for (final Tipper<? extends ASTNode> ¢ : Toolbox.freshCopyOfAllTippers().getAllTippers())
-      $.add((Class<Tipper<? extends ASTNode>>) ¢.getClass());
+    final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
+        .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
       return $;
-    Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p, false);
+    final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p, false);
     if (m == null)
       return $;
-    Set<String> ets = new HashSet<>();
-    for (SpartanTipper[] ts : m.values())
-      for (SpartanTipper ¢ : ts)
-        if (¢.enabled())
-          ets.add(¢.name());
-    List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
+    final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name)
+        .collect(toSet());
+    final List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
     l.addAll($);
-    for (Class<Tipper<? extends ASTNode>> ¢ : l)
+    for (final Class<Tipper<? extends ASTNode>> ¢ : l)
       if (!ets.contains(¢.getSimpleName()))
         $.remove(¢);
     return $;
@@ -95,7 +95,7 @@ public class XMLSpartan {
    * @param es
    *        <p>
    *        [[SuppressWarningsSpartan]] */
-  public static void updateEnabledTippers(final IProject p, Set<String> es) {
+  public static void updateEnabledTippers(final IProject p, final Set<String> es) {
     final Document d = getFile(p);
     if (d == null)
       return;
@@ -103,10 +103,10 @@ public class XMLSpartan {
     if (l == null)
       return;
     for (int i = 0; i < l.getLength(); ++i) {
-      NodeList ll = ((Element) l.item(i)).getElementsByTagName(TIPPER);
+      final NodeList ll = ((Element) l.item(i)).getElementsByTagName(TIPPER);
       if (ll != null)
         for (int j = 0; j < ll.getLength(); ++j) {
-          Element ee = (Element) ll.item(j);
+          final Element ee = (Element) ll.item(j);
           if (es.contains(ee.getAttribute(TIPPER_ID)))
             ee.setAttribute(ENABLED, "true");
           else
@@ -159,9 +159,10 @@ public class XMLSpartan {
       if (i == null)
         return null;
       fl.create(new ByteArrayInputStream("".getBytes()), false, new NullProgressMonitor());
-      commit(fl, i);
+      if (!commit(fl, i) || !fl.exists())
+        return null;
     }
-    Document $ = b.parse(fl.getContents());
+    final Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
@@ -173,8 +174,8 @@ public class XMLSpartan {
 
   /** TODO Ori Roth: Stub 'XMLSpartan::initialize' (created on 2017-02-01)." );
    * <p>
-   * @param di 
-   * @param di 
+   * @param di
+   * @param di
    * @param newDocument
    * @return
    *         <p>
@@ -186,14 +187,12 @@ public class XMLSpartan {
       return d;
     final Element e = d.createElement("spartan");
     e.setAttribute("version", CURRENT_VERSION);
-    Map<TipperGroup, Element> groups = new HashMap<>();
-    for (final TipperGroup g : TipperGroup.values())
-      createEnabledNodeChild(d, e, g, groups);
-    Set<String> seen = new HashSet<>();
-    for (final Tipper<?> t : Toolbox.freshCopyOfAllTippers().getAllTippers())
-      createEnabledNodeChild(d, t, seen, groups);
+    final Map<TipperGroup, Element> groups = new HashMap<>();
+    as.list(TipperGroup.values()).forEach(g ->createEnabledNodeChild(d, e, g, groups));
+    final Set<String> seen = new HashSet<>();
+    Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(t -> createEnabledNodeChild(d, t, seen, groups));
     d.appendChild(e);
-    d.setXmlStandalone(true); // TODO Roth: does not seam to work
+    d.setXmlStandalone(true); // TODO Roth: does not seem to work
     return d;
   }
 
@@ -206,7 +205,7 @@ public class XMLSpartan {
    *        [[SuppressWarningsSpartan]]
    * @param seen
    * @param groups */
-  private static void createEnabledNodeChild(final Document d, Tipper<?> t, Set<String> seen, Map<TipperGroup, Element> groups) {
+  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, final Map<TipperGroup, Element> groups) {
     if (d == null || t == null || seen == null || groups == null)
       return;
     final String n = t.getClass().getSimpleName();
@@ -217,6 +216,7 @@ public class XMLSpartan {
       return;
     $.setAttribute(ENABLED, (t instanceof Core) + "");
     $.setAttribute(TIPPER_ID, n);
+    $.setAttribute(TIPPER_DESCRIPTION, t.description());
     seen.add(n);
     groups.get(Toolbox.groupFor(t.getClass())).appendChild($);
   }
@@ -229,7 +229,7 @@ public class XMLSpartan {
    * @param g
    *        <p>
    *        [[SuppressWarningsSpartan]] */
-  private static void createEnabledNodeChild(Document d, Element e, TipperGroup g, Map<TipperGroup, Element> groups) {
+  private static void createEnabledNodeChild(final Document d, final Element e, final TipperGroup g, final Map<TipperGroup, Element> groups) {
     if (d == null || e == null || g == null || groups == null)
       return;
     final Element $ = d.createElement(CATEGORY);
@@ -253,7 +253,7 @@ public class XMLSpartan {
     final StreamResult result = new StreamResult(writer);
     final TransformerFactory tf = TransformerFactory.newInstance();
     try {
-      Transformer t = tf.newTransformer();
+      final Transformer t = tf.newTransformer();
       t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
       t.setOutputProperty(OutputKeys.METHOD, "xml");
       t.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -268,7 +268,7 @@ public class XMLSpartan {
       return false;
     }
   }
-  
+
   /** TODO Ori Roth: Stub 'XMLSpartan::commit' (created on 2017-02-01)." );
    * <p>
    * @param p
@@ -283,10 +283,10 @@ public class XMLSpartan {
 
   public abstract static class SpartanElement {
     public static SpartanElement[] EMPTY = new SpartanElement[0];
-    private String name;
-    private boolean enabled;
+    private final String name;
+    private final boolean enabled;
 
-    public SpartanElement(String name, boolean enabled) {
+    public SpartanElement(final String name, final boolean enabled) {
       this.name = name;
       this.enabled = enabled;
     }
@@ -309,32 +309,38 @@ public class XMLSpartan {
   }
 
   public static class SpartanTipper extends SpartanElement {
-    private SpartanCategory parent;
+    private final SpartanCategory parent;
+    private final String description;
 
-    public SpartanTipper(String name, boolean enabled, SpartanCategory parent) {
+    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description) {
       super(name, enabled);
       this.parent = parent;
+      this.description = description;
     }
 
     public SpartanCategory parent() {
       return parent;
     }
+
+    public String description() {
+      return description;
+    }
   }
 
   public static class SpartanCategory extends SpartanElement {
-    private List<SpartanElement> children;
+    private final List<SpartanElement> children;
 
-    public SpartanCategory(String name, boolean enabled) {
+    public SpartanCategory(final String name, final boolean enabled) {
       super(name, enabled);
       children = new ArrayList<>();
     }
 
-    public void addChild(SpartanTipper ¢) {
+    public void addChild(final SpartanTipper ¢) {
       children.add(¢);
     }
 
     /* (non-Javadoc)
-     * 
+     *
      * @see
      * il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler.
      * SpartanElement#hasChildren() */
@@ -343,7 +349,7 @@ public class XMLSpartan {
     }
 
     /* (non-Javadoc)
-     * 
+     *
      * @see
      * il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler.
      * SpartanElement#getChildren() */

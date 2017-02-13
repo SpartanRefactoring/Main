@@ -17,8 +17,8 @@ import il.org.spartan.spartanizer.research.util.*;
 public enum LogToTest {
   ;
   // TODO Ori Roth: replace "\\\\" with File.separator (bug in Java???)
-  private static String TESTS_FOLDER = "src.test.java.il.org.spartan.automatic".replaceAll("\\.", "\\\\");
-  private static Supplier<String> TEST_NAMER = () -> "Automatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+  private static final String TESTS_FOLDER = "src.test.java.il.org.spartan.automatic".replaceAll("\\.", "\\\\");
+  private static final Supplier<String> TEST_NAMER = () -> "Automatic_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
 
   public static void main(final String[] args) {
     if (!new File(TESTS_FOLDER).exists()) {
@@ -39,11 +39,11 @@ public enum LogToTest {
     }
     System.out.println("Creating test cases...");
     final Collection<String> xs = new HashSet<>();
-    final List<String> ts = new LinkedList<>();
+    final List<String> ts = new ArrayList<>();
     final Map<String, Integer> nu = new HashMap<>();
-    for (final File element : fs)
-      try (BufferedReader r = new BufferedReader(new FileReader(element))) {
-        final List<String> es = new LinkedList<>();
+    for (final File f : fs)
+      try (BufferedReader r = new BufferedReader(new FileReader(f))) {
+        final List<String> es = new ArrayList<>();
         es.add("");
         for (String l = r.readLine(); l != null;) {
           if (l.equals(monitor.FILE_SEPARATOR.trim())) {
@@ -91,8 +91,8 @@ public enum LogToTest {
         ss.get(2).trim().equals(Linguistic.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
 
-  private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine, final String errorName,
-                                final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
+  private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
+      final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, normalize.unwarpedTestcase(rawCode),
         errorLocationFileUnclean));
   }
@@ -100,14 +100,14 @@ public enum LogToTest {
   private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
       @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
-        + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {" + "\ntrimmingOf(" + code
+        + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {\ntrimmingOf(" + code
         + ").doesNotCrash();\n}";
   }
 
   private static String wrap(final Iterable<String> ss, final String fileName) {
     final StringBuilder $ = new StringBuilder(
-        "package il.org.spartan.automatic;\n\n" + "import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
-            + "import org.junit.*;\n\n" + "/** @author Ori Roth\n" + "* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
+        "package il.org.spartan.automatic;\n\nimport static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
+            + "import org.junit.*;\n\n/** @author Ori Roth\n* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
             + "@SuppressWarnings(\"static-method\")\n" //
             + "@Ignore\n" //
             + "public class " + fileName + " {\n");

@@ -1,7 +1,4 @@
 package il.org.spartan.spartanizer.tippers;
-import static java.util.stream.Collectors.*;
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,8 +7,11 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -60,10 +60,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         ¢ -> (iz.singleVariableDeclaration(¢) ? az.singleVariableDeclaration(¢).getType() : az.variableDeclrationStatement(parent(¢)).getType()) + "")
         .collect(toList());
     // NANO: to rest of function
-    for (final SingleVariableDeclaration ¢ : parameters(d))
-      if (!ts.contains(¢.getType() + ""))
-        return false;
-    return true;
+    return parameters(d).stream().allMatch(¢ -> ts.contains(¢.getType() + ""));
   }
 
   private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d, final List<VariableDeclaration> ds,
@@ -75,7 +72,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final MethodInvocation i = d.getAST().newMethodInvocation();
     i.setName(copy.of(d.getName()));
     fixName(i, equalParams);
-    ds.forEach(λ -> step.arguments(i).add(copy.of(name(λ))));
+    ds.forEach(λ -> arguments(i).add(copy.of(name(λ))));
     if (d.getReturnType2().isPrimitiveType() && "void".equals(d.getReturnType2() + ""))
       statements(d1).add(d.getAST().newExpressionStatement(i));
     else {
@@ -133,7 +130,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    final List<TagElement> ts = step.tags(j);
+    final List<TagElement> ts = tags(j);
     final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
     boolean hasParamTags = false;
     int tagPosition = -1;
@@ -245,7 +242,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = parameters(method);
-      ss = body(method) != null ? statements(method) : new LinkedList<>();
+      ss = body(method) == null ? new ArrayList<>() : statements(method);
     }
 
     @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {

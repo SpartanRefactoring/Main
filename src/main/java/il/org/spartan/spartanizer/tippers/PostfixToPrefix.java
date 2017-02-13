@@ -36,6 +36,6 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
   }
 
   @Override public PrefixExpression replacement(final PostfixExpression ¢) {
-    return subject.operand(step.operand(¢)).to(pre2post(¢.getOperator()));
+    return subject.operand(operand(¢)).to(pre2post(¢.getOperator()));
   }
 }

@@ -36,6 +36,13 @@ public interface trivia {
     return (¢ + "").replaceAll("\\s+", "");
   }
 
+  /** escapes all "s
+   * @param ¢
+   * @return */
+  static String escapeQuotes(final String ¢) {
+    return ¢.replace("\"", "\\\"");
+  }
+
   static String essence(final String codeFragment) {
     return trivia.fixTideClean(tide.clean(trivia.removeComments2(codeFragment)));
   }

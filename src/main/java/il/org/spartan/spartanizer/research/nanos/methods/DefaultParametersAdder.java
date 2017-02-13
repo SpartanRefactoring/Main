@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
+
 import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 

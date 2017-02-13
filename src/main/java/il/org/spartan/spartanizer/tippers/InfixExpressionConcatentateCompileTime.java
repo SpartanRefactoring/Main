@@ -34,19 +34,19 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
       return null;
     final List<Expression> $ = extract.allOperands(x);
     assert $.size() >= 2;
-    boolean isChanged = false;
+    boolean clean = true;
     for (int i = 0; i < $.size() - 1;)
       if ($.get(i).getNodeType() != ASTNode.STRING_LITERAL || $.get(i + 1).getNodeType() != ASTNode.STRING_LITERAL)
         ++i;
       else {
-        isChanged = true;
+        clean = false;
         final StringLiteral l = x.getAST().newStringLiteral();
         l.setLiteralValue(((StringLiteral) $.get(i)).getLiteralValue() + ((StringLiteral) $.get(i + 1)).getLiteralValue());
         $.remove(i);
         $.remove(i);
         $.add(i, l);
       }
-    if (!isChanged)
+    if (clean)
       return null;
     assert !$.isEmpty();
     return $.size() <= 1 ? first($) : subject.operands($).to(wizard.PLUS2);

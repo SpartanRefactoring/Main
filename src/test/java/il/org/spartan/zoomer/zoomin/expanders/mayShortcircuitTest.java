@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @since 2017-01-28 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public class mayShortcircuitTest extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);

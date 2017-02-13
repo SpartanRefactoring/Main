@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Fixture for testing plain for testing resources in try statement
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
+@SuppressWarnings("InfiniteRecursion")
 public class FixtureTryResources extends MetaFixture {
   @knows("f/0") int f() throws IOException {
     try (@knows("$") FileReader $ = new FileReader(toString())) {

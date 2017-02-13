@@ -28,8 +28,8 @@ public final class SpecificityTest {
   }
 
   @Test public void defined() {
-    azzert.that(specificity.defined(e("12")), is(true));
-    azzert.that(specificity.defined(e("a+b")), is(false));
+    assert specificity.defined(e("12"));
+    assert !specificity.defined(e("a+b"));
   }
 
   @Test public void generalGreaterThanClassConstant() {
@@ -73,8 +73,8 @@ public final class SpecificityTest {
   }
 
   @Test public void hexadecimalConstant() {
-    azzert.that(specificity.defined(e("0xff")), is(true));
-    azzert.that(specificity.defined(e("0x7f")), is(true));
+    assert specificity.defined(e("0xff"));
+    assert specificity.defined(e("0x7f"));
   }
 
   @Test public void hexadecimalConstantIsInteger() {
