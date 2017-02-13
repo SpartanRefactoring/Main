@@ -24,7 +24,7 @@ import il.org.spartan.tables.*;
  * 'I' - more than Internal. <br>
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
-public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
+public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
@@ -50,7 +50,7 @@ public class Table_NanosReusabilityIndices extends TableReusabilityIndices {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    TableReusabilityIndices.main(args);
+    Table_ReusabilityIndices.main(args);
     pWriter.close();
     System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
   }
