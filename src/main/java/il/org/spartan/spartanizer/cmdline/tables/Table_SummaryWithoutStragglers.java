@@ -35,7 +35,7 @@ public class Table_SummaryWithoutStragglers extends Table_Summary {
             new GetOrElseThrow(), null) //
         .remove(InfixExpression.class, //
             new LastIndex(), //
-            new Empty(), //
+            new IsEmpty(), //
             new Singleton(), //
             null)//
         .remove(MethodInvocation.class, //

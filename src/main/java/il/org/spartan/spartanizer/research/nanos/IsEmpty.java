@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** collection.size() == 0
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-01 */
-public final class Empty extends NanoPatternTipper<InfixExpression> {
+public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
   private static final NanoPatternContainer<InfixExpression> tippers = new NanoPatternContainer<InfixExpression>() {
     static final long serialVersionUID = 1L;
     {
