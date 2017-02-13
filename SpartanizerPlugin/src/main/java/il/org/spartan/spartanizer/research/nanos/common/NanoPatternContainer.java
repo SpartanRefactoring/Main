@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -28,5 +30,13 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
 
   public UserDefinedTipper<N> firstTipper(final N ¢) {
     return stream().filter(λ -> λ.canTip(¢)).findFirst().get();
+  }
+
+  public String firstPattern() {
+    return first(this).pattern().replaceAll("\\$", "");
+  }
+
+  public String firstReplacement() {
+    return first(this).replacement().replaceAll("\\$", "");
   }
 }
