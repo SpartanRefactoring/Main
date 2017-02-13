@@ -65,8 +65,8 @@ public class JDPattern extends JavadocMarkerNanoPattern {
         return false;
       }
 
-      boolean checkContainsParameter(final Iterable<Expression> xs) {
-        return Stream.of(xs).anyMatch(λ -> checkContainsParameter(λ));
+      boolean checkContainsParameter(final Iterable<Expression> ¢) {
+        return Stream.of(¢).anyMatch(this::checkContainsParameter);
       }
     });
     return $.inner;

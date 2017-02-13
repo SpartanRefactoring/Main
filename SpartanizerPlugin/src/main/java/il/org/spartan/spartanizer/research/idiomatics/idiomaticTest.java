@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static il.org.spartan.azzert.is;
-import static il.org.spartan.lisp.first;
+import static il.org.spartan.lisp.*;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })

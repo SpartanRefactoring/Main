@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** Test class for class {@link iz}
  * @author Yossi Gil, Aviad Cohen, Noam Yefet
  * @since 2015-07-17 */
-@SuppressWarnings({ "javadoc", "static-method" }) //
+@SuppressWarnings({"javadoc", "static-method", "ConstantConditions"}) //
 public final class izTest {
   private static final String EMPTY_STRING = "\"\"";
 

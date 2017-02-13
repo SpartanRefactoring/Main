@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
@@ -751,8 +751,8 @@ public final class typeTest {
     @Test @SuppressWarnings("unchecked") public void context20() {
       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
-      azzert.that(of((Expression) lisp.first(fs.initializers())), is(INT));
-      azzert.that(of((Expression) lisp.first(fs.updaters())), is(NUMERIC));
+      azzert.that(of((Expression) first(fs.initializers())), is(INT));
+      azzert.that(of((Expression) first(fs.updaters())), is(NUMERIC));
     }
 
     @Test public void context22() {
