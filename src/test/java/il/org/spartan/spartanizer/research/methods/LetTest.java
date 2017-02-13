@@ -14,10 +14,18 @@ public class LetTest extends JavadocerTest {
   }
 
   @Test public void a() {
-    assert is("boolean foo(){A x = 123; return bar(x,x);}");
+    assert not("boolean foo(){A x = 123; return bar(x,x);}");
   }
 
   @Test public void b() {
-    assert is("boolean foo(){A x = 123; bar(x,x);}");
+    assert not("boolean foo(){A x = 123; bar(x,x);}");
+  }
+
+  @Test public void c() {
+    assert is("boolean foo(){A x = foo(); return bar(x,x);}");
+  }
+
+  @Test public void d() {
+    assert is("boolean foo(){A x = foo(); bar(x,x);}");
   }
 }
