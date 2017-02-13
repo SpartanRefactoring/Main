@@ -647,10 +647,6 @@ public enum step {
   public static int nodeType(final ASTNode ¢) {
     return ¢ == null ? 0 : ¢.getNodeType();
   }
-  
-  public static String nodeName(final ASTNode ¢) {
-    return ¢ == null ? "NA" : ¢.getClass().getName();
-  }
 
   public static Expression operand(final PostfixExpression ¢) {
     return ¢ == null ? null : extract.core(¢.getOperand());
