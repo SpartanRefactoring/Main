@@ -16,9 +16,9 @@ import il.org.spartan.tables.*;
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil
  * @since 2016 */
-public class TableReusabilityIndices extends FolderASTVisitor {
+public class Table_ReusabilityIndices extends FolderASTVisitor {
   static {
-    clazz = TableReusabilityIndices.class;
+    clazz = Table_ReusabilityIndices.class;
   }
   private static Table writer;
 
