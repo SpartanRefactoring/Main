@@ -1,9 +1,14 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.lisp.first;
+
+import il.org.spartan.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -90,58 +95,34 @@ public interface hop {
   static List<Expression> operands(final InfixExpression ¢) {
     if (¢ == null)
       return null;
-    final List<Expression> $ = new ArrayList<>();
-    $.add(left(¢));
-    $.add(right(¢));
+    final List<Expression> $ = as.list(left(¢), right(¢));
     if (¢.hasExtendedOperands())
-      $.addAll(step.extendedOperands(¢));
+      $.addAll(extendedOperands(¢));
     return $;
   }
 
   /** @param ¢ JD
-   * @return converssion of {@link Statement} , which is previous to the
+   * @return conversion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
-  static VariableDeclarationFragment precidingFragmentToLastExpression(final ForStatement ¢) {
-    final ASTNode n = hop.lastStatement(copy.of(step.body(¢)));
-    if (n == null)
-      return null;
-    final Statement current = az.statement(n);
-    if (current == null)
-      return null;
-    final Statement previous = previousStatementInBody(current);
-    if (previous == null)
-      return null;
-    final VariableDeclarationStatement $ = az.variableDeclrationStatement(previous);
-    return $ == null ? null : findFirst.elementOf(step.fragments($));
+  static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
+    return penultimate(body(¢));
+  }
+
+  static VariableDeclarationFragment penultimate(Statement body) {
+    final ASTNode n = hop.lastStatement(copy.of(body));
+    final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
+    return n == null || $ == null ? null : previous($);
   }
 
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
-  static VariableDeclarationFragment prevFragmentToLastExpression(final WhileStatement ¢) {
-    final ASTNode n = hop.lastStatement(copy.of(step.body(¢)));
-    if (n == null)
-      return null;
-    final Statement current = az.statement(n);
-    if (current == null)
-      return null;
-    final Statement previous = previousStatementInBody(current);
-    if (previous == null)
-      return null;
-    final VariableDeclarationStatement $ = az.variableDeclrationStatement(previous);
-    return $ == null ? null : findFirst.elementOf(step.fragments($));
+  static VariableDeclarationFragment penultimate(final WhileStatement $) {
+    return penultimate(body($));
   }
 
-  /** @param s current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
-  static Statement previousStatementInBody(final Statement s) {
-    final Block b = az.block(s.getParent());
-    if (b == null)
-      return null;
-    final List<Statement> $ = statements(b);
-    return $.indexOf(s) < 1 ? null : $.get($.indexOf(s) - 1);
+  static VariableDeclarationFragment previous(final Statement ¢) {
+    return first(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
 
   static SimpleName simpleName(final Type ¢) {

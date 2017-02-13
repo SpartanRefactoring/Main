@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
+import java.util.List;
+
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>
  * Allows easy match checking of patterns against strings and creation of
@@ -64,8 +66,9 @@ public enum leonidasSays {
     }
   }
 
-  static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : (ASTNode) first(statements(az.block(¢)));
+  static ASTNode extractStatementIfOne(final ASTNode $) {
+    List<Statement> statements = statements(az.block($));
+    return statements == null || statements.size() != 1 ? $ :  first(statements);
   }
 
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {

@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -133,7 +132,7 @@ public enum SuppressWarningsLaconicOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || eclipse.facade.isNodeOutsideMarker(n, m))
+        if (b || facade.isNodeOutsideMarker(n, m))
           return;
         BodyDeclaration d;
         switch (t) {
