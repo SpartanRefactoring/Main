@@ -69,17 +69,10 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
     writer//
         .col("External", rExternal) //
         .col("Internal", rIntrernal)//
-        .col("Intrnal-External", rIntrernal - rExternal)//
+        .col("Internal-External", rIntrernal - rExternal)//
     ;
   }
 
-  /** 
-    * TODO Matteo Orru': Stub 'Table_ReusabilityIndices::getProjectName' (created on  2017-02-13)." );
-    * <p>
-    * @param s
-    * @return
-    * <p> [[SuppressWarningsSpartan]]
-    */
   private static String getProjectName(final String s) {
     return s.substring(s.lastIndexOf('-')+1);
   }
@@ -99,7 +92,6 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
     addMissingKeys();
     if (writer == null)
       writer = new Table(this);
-//    writer.col("Project", getProjectName(presentSourceName)); 
     writer.col("Project", presentSourceName); 
     try (Table t = new Table("rindices")) {
       for (final String category : usage.keySet()) {
