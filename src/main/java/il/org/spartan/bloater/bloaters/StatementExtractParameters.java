@@ -80,8 +80,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          void goNonBlockParent(final ASTNode p, @SuppressWarnings("hiding") final VariableDeclarationStatement s, final Statement ns,
-              final ASTRewrite r, final TextEditGroup g) {
+          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r,
+              final TextEditGroup g) {
             // TODO Ori Roth: Use subject to block.
             final Block b = p.getAST().newBlock();
             statements(b).add(s);
@@ -102,11 +102,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
-    final Collection<ASTNode> excludedParents = new ArrayList<>();
+    final Collection<ASTNode> excludedParents = new LinkedList<>();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = new LinkedList<>();
     s.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)
@@ -160,7 +160,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param g
    * @param ilr */
   static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
-    final Collection<String> idns = new ArrayList<>();
+    final Collection<String> idns = new LinkedList<>();
     if (r.getAddedImports() != null)
       idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)
@@ -244,7 +244,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   // TODO Ori Roth: move class to utility file
-  protected static class ASTMatcherSpecific extends ASTMatcher {
+  protected class ASTMatcherSpecific extends ASTMatcher {
     ASTNode toMatch;
     Consumer<ASTNode> onMatch;
 

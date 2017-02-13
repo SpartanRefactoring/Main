@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import static il.org.spartan.idiomatic.*;
+import static il.org.spartan.lisp.first;
 import static il.org.spartan.utils.Unbox.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -16,7 +17,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
@@ -54,6 +54,10 @@ public enum az {
 
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
+  }
+  
+  public static Initializer initializer(ASTNode $) {
+    return eval(() -> ((Initializer) $)).when($ instanceof Initializer);
   }
 
   public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
@@ -499,7 +503,7 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-    return az.variableDeclarationExpression(findFirst.elementOf(initializers($)));
+      return az.variableDeclarationExpression(first(initializers($)));
   }
 
   /** @param ¢ JD
