@@ -12,7 +12,7 @@ import il.org.spartan.tables.*;
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-14 */
-public class Table_Experminetal_rIndex extends TableReusabilityIndices {
+public class Table_Experminetal_rIndex extends Table_ReusabilityIndices {
   private static Table lWriter; // coverage
   protected static int totalMethodInvocations;
   protected static int totalMethodDeclarations;
