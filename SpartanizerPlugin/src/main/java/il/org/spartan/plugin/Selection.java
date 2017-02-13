@@ -202,7 +202,7 @@ public class Selection extends AbstractSelection<Selection> {
     public static Selection current() {
       final ISelection $ = getSelection();
       return $ == null ? empty()
-          : $ instanceof ITextSelection ? by((ITextSelection) $) : $ instanceof ITreeSelection ? by((ITreeSelection) $) : empty();
+          : $ instanceof ITextSelection ? by((ITextSelection) $) : $ instanceof ITreeSelection ? by((IStructuredSelection) $) : empty();
     }
 
     /** @return current project */

@@ -89,7 +89,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       }
     }, new ITreeContentProvider() {
       @Override public boolean hasChildren(final Object ¢) {
-        return ¢ instanceof SpartanCategory && ((SpartanCategory) ¢).hasChildren();
+        return ¢ instanceof SpartanCategory && ((SpartanElement) ¢).hasChildren();
       }
 
       @Override public Object getParent(final Object ¢) {
@@ -192,13 +192,14 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           final ISelection s = e.getSelection();
           if (s == null || s.isEmpty() || !(s instanceof TreeSelection))
             return;
-          final Object o = ((TreeSelection) s).getFirstElement();
+          final Object o = ((IStructuredSelection) s).getFirstElement();
           if (!(o instanceof SpartanTipper))
             return;
           final SpartanTipper st = (SpartanTipper) o;
-          final String before = "before", after = "after";
+          final String before = "before";
           final IDocument d = new Document(before);
           try {
+            final String after = "after";
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();

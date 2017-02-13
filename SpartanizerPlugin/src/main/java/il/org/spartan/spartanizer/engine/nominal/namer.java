@@ -134,7 +134,7 @@ public interface namer {
 
   static String variableName(final SimpleType t) {
     final List<String> ss = as.list(components(t));
-    String $ = lisp.first(ss).toLowerCase();
+    String $ = first(ss).toLowerCase();
     for (final String ¢ : lisp.rest(ss))
       $ += ¢;
     return $;
