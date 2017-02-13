@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Let extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazTwoStatements(¢)//
-        && iz.assignment(firstStatement(¢))//
+        && iz.variableDeclarationStatement(firstStatement(¢))//
         && preDelegation(secondStatement(¢));
   }
 
