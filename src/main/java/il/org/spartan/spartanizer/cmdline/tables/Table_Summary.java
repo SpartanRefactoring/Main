@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
-public class Table_Summary extends TableReusabilityIndices {
+public class Table_Summary extends Table_ReusabilityIndices {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   private static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
@@ -92,7 +92,7 @@ public class Table_Summary extends TableReusabilityIndices {
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ .toString()));
+    return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
