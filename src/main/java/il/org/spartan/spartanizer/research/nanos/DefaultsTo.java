@@ -36,11 +36,11 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   }
 
   @Override public String example() {
-    return firstPattern(tippers);
+    return tippers.firstPattern();
   }
 
   @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
+    return tippers.firstReplacement();
   }
 
   @Override public NanoPatternTipper.Category category() {
