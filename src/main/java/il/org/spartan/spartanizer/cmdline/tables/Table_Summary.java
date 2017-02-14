@@ -65,6 +65,11 @@ public class Table_Summary extends Table_ReusabilityIndices {
     return true;
   }
 
+  @Override public boolean visit(final FieldDeclaration ¢) {
+    spartanalyzer.fixedPoint(ast(¢ + ""));
+    return true;
+  }
+
   @Override public void endVisit(final MethodDeclaration ¢) {
     if (!excludeMethod(¢))
       scope.pop();
