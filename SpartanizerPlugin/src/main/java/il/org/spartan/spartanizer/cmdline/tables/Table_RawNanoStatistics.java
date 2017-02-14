@@ -7,6 +7,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
@@ -53,6 +55,11 @@ public class Table_RawNanoStatistics extends FolderASTVisitor {
         System.err.print("I");
       }
     return super.visit($);
+  }
+
+  @Override public boolean visit(final FieldDeclaration ¢) {
+    spartanalyzer.fixedPoint(ast(¢ + ""));
+    return true;
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
