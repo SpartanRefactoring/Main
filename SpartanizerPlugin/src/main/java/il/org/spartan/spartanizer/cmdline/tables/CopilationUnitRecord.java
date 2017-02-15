@@ -23,10 +23,15 @@ public class CopilationUnitRecord {
     this.inner = inner;
     numStatements = measure.statements(inner);
     numExpressions = measure.expressions(inner);
-    linesOfCode = count.lines(inner);
+    linesOfCode = countLines(inner + ""); 
     numMethods = yieldDescendants.ofClass(MethodDeclaration.class).from(inner).size();
     numClasses = yieldDescendants.ofClass(AbstractTypeDeclaration.class).from(inner).size();
     PackageDeclaration p = first(yieldDescendants.ofClass(PackageDeclaration.class).from(inner));
     pakcage = p == null ? "" : p.getName() + "";
   }
+  
+  private static int countLines(String str){
+    String[] lines = str.split("\r\n|\r|\n");
+    return  lines.length;
+ }
 }
