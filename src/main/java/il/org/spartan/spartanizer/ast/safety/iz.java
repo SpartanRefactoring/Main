@@ -1177,7 +1177,7 @@ public interface iz {
    * @param x Expression to search the identifier in it
    * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final ASTNode x) {
-    return !yieldDescendants.untilClass(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
+    return !yieldDescendants.ofClass(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
   }
 
   static boolean containsOperator(final ASTNode ¢) {
