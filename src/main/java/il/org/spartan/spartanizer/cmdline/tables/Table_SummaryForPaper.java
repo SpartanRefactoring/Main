@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -23,13 +24,13 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   
   private static Table writer;
   
-  @SuppressWarnings("rawtypes") private static HashMap<String, HashSet> packageMap = new HashMap<>();
+  private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   
-  private final Stack<CURecord> CURecords = new Stack<>();
+  private final Stack<CopilationUnitRecord> CopilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
 
-  protected static final SortedMap<Integer, List<CURecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
+  protected static final SortedMap<Integer, List<CopilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
   protected static final SortedMap<Integer, List<ClassRecord>> classStatistics = new TreeMap<>(Integer::compareTo);
   
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
@@ -47,7 +48,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   }
   
   @Override public boolean visit(final CompilationUnit ¢) {
-    CURecords.add(new CURecord(¢));
+    CopilationUnitRecords.add(new CopilationUnitRecord(¢));
     count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
@@ -62,7 +63,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   @Override public boolean visit(final TypeDeclaration $) {
 //  if (!excludeMethod($))
     try {
-      final Integer key = Integer.valueOf(measure.statements($));
+      final Integer key = box.it(measure.statements($));
       //
       CUStatistics.putIfAbsent(key, new ArrayList<>());
       classStatistics.putIfAbsent(key, new ArrayList<>());
@@ -98,39 +99,36 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     System.err.println("Your output is in: " + outputFolder);
   }
 
-  private Integer countClasses() {
-    Integer $ = 0;
-    for(final CURecord ¢: CURecords)
-      $ += ¢.getNumClasses();
+  private int countClasses() {
+    int $ = 0;
+    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+      $ += ¢.numClasses;
+    return ($);
+  }
+
+  private int countLOC() {
+    int $ = 0;
+    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+      $ += ¢.linesOfCode;
     return $;
   }
 
-  @SuppressWarnings("boxing")
-  private Integer countLOC() {
-    Integer $ = 0;
-    for(final CURecord ¢: CURecords)
-      $ += ¢.getLOC();
+  private int countMethods() {
+    int $ = 0;
+    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+      $ += ¢.numMethods;
     return $;
   }
 
-  @SuppressWarnings({ "boxing" })
-  private Integer countMethods() {
-    Integer $ = 0;
-    for(final CURecord ¢: CURecords)
-      $ += ¢.getNumMethods();
-    return $;
-  }
-
-  @SuppressWarnings("boxing")
-  private Integer countPackages() {
+  private int countPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CURecord ¢: CURecords)
-      packgSet.add(¢.getPackage());
+    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+      packgSet.add(¢.pakcage);
     return packgSet.size();
   }
 
-  @SuppressWarnings({ "boxing", "unused", "static-method" })
-  private Integer packages(final String key) {
+  @SuppressWarnings({ "unused", "static-method" })
+  private int packages(final String key) {
     return packageMap.get(key).size();
   }
 
