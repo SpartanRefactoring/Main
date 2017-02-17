@@ -9,7 +9,7 @@ import org.junit.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-20 */
 @SuppressWarnings("static-method")
-public class LispLastElementTest {
+public class LastTest {
   @Test public void a() {
     trimmingOf("li.get(li.size()-1)")//
         .using(MethodInvocation.class, new Last())//
@@ -29,6 +29,13 @@ public class LispLastElementTest {
         .using(MethodInvocation.class, new First())//
         .using(MethodInvocation.class, new Last())//
         .gives("omg(first(li),last(li));")//
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("li.m().get(li.m().size()-1);")//
+        .using(MethodInvocation.class, new Last())//
+        .gives("last(li.m());")//
         .stays();
   }
 }
