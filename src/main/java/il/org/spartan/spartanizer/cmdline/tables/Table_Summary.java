@@ -28,9 +28,10 @@ public class Table_Summary extends Table_ReusabilityIndices {
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Table writer;
   private static int totalStatements;
+  private static int totalExpressions;
   protected static int totalMethods;
-  protected static int totalMethodsAfterSpartanization;
   private static int totalStatementsCovered;
+  private static int totalExpressionsCovered;
   private static int totalMethodsTouched;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
@@ -115,16 +116,17 @@ public class Table_Summary extends Table_ReusabilityIndices {
     gatherGeneralStatistics();
     writer//
         .col("Project", path)//
-        .col("Statements", statements())//
-        .col("Coverage", coverage())//
-        .col("Methods", methods())//
-        .col("Touched", touched())//
         .col("R-Index", rMethod())//
         .col("Nanos adopted", adopted())//
+        .col("Statements", statements())//
+        .col("Coverage", statementsCoverage())//
+        .col("Methods", methods())//
         .col("Fmethods", fMethods())//
-        .col("Fiteratives", fIteratives())//
-        .col("FconditionalExps", fConditionalExpressions())//
-        .col("FconditionalStmts", fConditionalStatements())//
+        .col("Touched", touched())//
+        .col("Iteratives Coverage", iterativesCoverage())//
+        .col("ConditionalExps", conditionalExpressionsCoverage())//
+        .col("ConditionalStmts", conditionalStatementsCoverage())//
+        .col("Expressions", expressionsCoverage())//
         .nl();
   }
 
@@ -144,15 +146,15 @@ public class Table_Summary extends Table_ReusabilityIndices {
     return npDistributionStatistics.coverage(type);
   }
 
-  private static double fIteratives() {
+  private static double iterativesCoverage() {
     return getNodeCoverage(ASTNode.ENHANCED_FOR_STATEMENT);
   }
 
-  private static double fConditionalExpressions() {
+  private static double conditionalExpressionsCoverage() {
     return getNodeCoverage(ASTNode.CONDITIONAL_EXPRESSION);
   }
 
-  private static double fConditionalStatements() {
+  private static double conditionalStatementsCoverage() {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
@@ -171,23 +173,37 @@ public class Table_Summary extends Table_ReusabilityIndices {
     return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
   }
 
-  private static double coverage() {
+  private static double statementsCoverage() {
     return format.perc(totalStatementsCovered, totalStatements);
   }
 
+  private static double expressionsCoverage() {
+    return format.perc(totalExpressionsCovered, totalExpressions);
+  }
+
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
-    totalStatementsCovered = totalMethods = totalStatements = totalMethodsAfterSpartanization = 0;
+    totalExpressionsCovered = totalStatementsCovered = totalMethods = totalStatements = totalExpressions = 0;
     for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
-      final List<MethodRecord> rs = statementsCoverageStatistics.get(¢);
-      totalStatements += ¢ * rs.size();
-      totalMethods += rs.size();
-      totalStatementsCovered += totalStatementsCovered(rs);
-      totalMethodsTouched += totalMethodsTouched(rs);
+      final List<MethodRecord> methods = statementsCoverageStatistics.get(¢);
+      totalStatements += ¢ * methods.size();
+      totalExpressions += totalExpressions(methods);
+      totalMethods += methods.size();
+      totalStatementsCovered += totalStatementsCovered(methods);
+      totalExpressionsCovered += totalExpressionsCovered(methods);
+      totalMethodsTouched += totalMethodsTouched(methods);
     }
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
-    return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
+  private static int totalExpressions(final List<MethodRecord> rs) {
+    return rs.stream().mapToInt(λ -> λ.numExpressions).sum();
+  }
+
+  private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
+    return rs.stream().mapToInt(λ -> λ.numNPStatements).sum();
+  }
+
+  private static double totalExpressionsCovered(final Collection<MethodRecord> rs) {
+    return rs.stream().mapToInt(λ -> λ.numNPExpressions).sum();
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
