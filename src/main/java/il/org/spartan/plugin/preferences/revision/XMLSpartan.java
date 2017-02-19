@@ -219,7 +219,7 @@ public class XMLSpartan {
     final Element $ = d.createElement(TIPPER);
     if ($ == null)
       return;
-    $.setAttribute(ENABLED, NON_CORE.contains(t.getClass()) + "");
+    $.setAttribute(ENABLED, !NON_CORE.contains(t.getClass()) + "");
     $.setAttribute(TIPPER_ID, n);
     $.setAttribute(TIPPER_DESCRIPTION, t.description());
     seen.add(n);
