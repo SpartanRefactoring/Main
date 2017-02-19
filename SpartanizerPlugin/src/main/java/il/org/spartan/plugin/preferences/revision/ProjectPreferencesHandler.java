@@ -1,11 +1,14 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.window.*;
@@ -22,7 +25,6 @@ import org.eclipse.ui.dialogs.*;
 import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -51,9 +53,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             .collect(toSet())//
     );
     try {
-      RefreshAll.go(p);
-    } catch (final Exception ¢) {
-      monitor.logEvaluationError(this, ¢);
+      refreshProject(p);
+    } catch (InvocationTargetException | CoreException | InterruptedException x) {
+      monitor.log(x);
     }
     return null;
   }
@@ -235,5 +237,36 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       });
       return $;
     }
+  }
+
+  /** TODO Ori Roth: Stub 'ProjectPreferencesHandler::refreshProject' (created
+   * on 2017-02-19)." );
+   * <p>
+   * @param p
+   *        <p>
+   *        [[SuppressWarningsSpartan]]
+   * @throws CoreException
+   * @throws InterruptedException
+   * @throws InvocationTargetException */
+  private static void refreshProject(IProject p) throws CoreException, InvocationTargetException, InterruptedException {
+    if (p == null || !p.isOpen() || p.getNature(Nature.NATURE_ID) == null)
+      return;
+    ProgressMonitorDialog d = Dialogs.progress(true);
+    d.run(true, true, new IRunnableWithProgress() {
+      @Override public void run(IProgressMonitor m) {
+        SpartanizationHandler.runAsynchronouslyInUIThread(new Runnable() {
+          @Override public void run() {
+            Shell s = d.getShell();
+            if (s != null)
+              s.setText("Refreshing project");
+          }
+        });
+        try {
+          p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+        } catch (CoreException x) {
+          monitor.log(x);
+        }
+      }
+    });
   }
 }
