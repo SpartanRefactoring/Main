@@ -21,6 +21,7 @@ import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+
 /** TODO Ori Roth: document class {@link }
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-01 */
@@ -33,6 +34,11 @@ public class XMLSpartan {
   private static final String TIPPER_ID = "id";
   private static final String CATEGORY_ID = "id";
   private static final String TIPPER_DESCRIPTION = "description";
+  private static final Set<Class<Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
+  static {
+    // TODO Roth: decide what tippers are non-core
+    // Collections.addAll(NON_CORE, stuff);
+  }
 
   /** TODO Ori Roth: Stub 'XMLSpartan::getTippersByCategories' (created on
    * 2017-02-10)." );
@@ -78,8 +84,7 @@ public class XMLSpartan {
     final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p, false);
     if (m == null)
       return $;
-    final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name)
-        .collect(toSet());
+    final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
     final List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
     l.addAll($);
     for (final Class<Tipper<? extends ASTNode>> ¢ : l)
@@ -188,7 +193,7 @@ public class XMLSpartan {
     final Element e = d.createElement("spartan");
     e.setAttribute("version", CURRENT_VERSION);
     final Map<TipperGroup, Element> groups = new HashMap<>();
-    as.list(TipperGroup.values()).forEach(g ->createEnabledNodeChild(d, e, g, groups));
+    as.list(TipperGroup.values()).forEach(g -> createEnabledNodeChild(d, e, g, groups));
     final Set<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(t -> createEnabledNodeChild(d, t, seen, groups));
     d.appendChild(e);
@@ -214,7 +219,7 @@ public class XMLSpartan {
     final Element $ = d.createElement(TIPPER);
     if ($ == null)
       return;
-    $.setAttribute(ENABLED, (t instanceof Core) + "");
+    $.setAttribute(ENABLED, NON_CORE.contains(t.getClass()) + "");
     $.setAttribute(TIPPER_ID, n);
     $.setAttribute(TIPPER_DESCRIPTION, t.description());
     seen.add(n);

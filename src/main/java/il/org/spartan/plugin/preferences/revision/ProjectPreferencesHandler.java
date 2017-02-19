@@ -22,6 +22,7 @@ import org.eclipse.ui.dialogs.*;
 import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -49,6 +50,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             .map(SpartanTipper::name)//
             .collect(toSet())//
     );
+    try {
+      RefreshAll.go(p);
+    } catch (final Exception ¢) {
+      monitor.logEvaluationError(this, ¢);
+    }
     return null;
   }
 
