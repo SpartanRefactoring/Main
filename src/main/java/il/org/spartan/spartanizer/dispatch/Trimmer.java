@@ -33,13 +33,13 @@ public class Trimmer extends AbstractGUIApplicator {
     return true;
   }
 
-  public boolean useProjectPreferences;
-  public Map<IProject, Toolbox> toolboxes;
+  boolean useProjectPreferences;
+  private Map<IProject, Toolbox> toolboxes = new HashMap<>();
   public Toolbox toolbox;
 
   public Trimmer useProjectPreferences() {
     useProjectPreferences = true;
-    toolboxes = new HashMap<>();
+    toolboxes.clear();
     return this;
   }
 
@@ -182,7 +182,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   /** @param u JD
    * @return {@link Toolbox} by project's preferences */
-  static Toolbox getToolboxByPreferences(CompilationUnit u) {
+  Toolbox getToolboxByPreferences(CompilationUnit u) {
     if (u == null)
       return null;
     ITypeRoot r = u.getTypeRoot();
@@ -194,6 +194,8 @@ public class Trimmer extends AbstractGUIApplicator {
     IProject p = jp.getProject();
     if (p == null)
       return null;
+    if (toolboxes.containsKey(p))
+      return toolboxes.get(p);
     Toolbox $ = Toolbox.freshCopyOfAllTippers();
     Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     List<Tipper<?>> xs = new ArrayList<>();
@@ -202,6 +204,7 @@ public class Trimmer extends AbstractGUIApplicator {
         xs.add(t);
     for (List<Tipper<? extends ASTNode>> l : $.implementation)
       l.removeAll(xs);
+    toolboxes.put(p, $);
     return $;
   }
 }
