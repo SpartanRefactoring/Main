@@ -80,12 +80,15 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
-    for (final AbstractGUIApplicator s : Tips.all())
+    for (final AbstractGUIApplicator s : Tips.all()) {
+      if (s instanceof Trimmer)
+        ((Trimmer) s).useProjectPreferences();
       for (final Tip ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {
           final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
         }
+    }
   }
 
   private static String prefix() {

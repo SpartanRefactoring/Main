@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2013/07/01 */
 public final class Tips {
   private static final AbstractGUIApplicator[] all = { //
-      new Trimmer().useProjectPreferences(), //
+      new Trimmer(), //
   };
   @SuppressWarnings("synthetic-access") //
   private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
