@@ -10,6 +10,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -32,7 +33,15 @@ public class Trimmer extends AbstractGUIApplicator {
     return true;
   }
 
+  public boolean useProjectPreferences;
+  public Map<IProject, Toolbox> toolboxes;
   public Toolbox toolbox;
+
+  public Trimmer useProjectPreferences() {
+    useProjectPreferences = true;
+    toolboxes = new HashMap<>();
+    return this;
+  }
 
   /** Instantiates this class */
   public Trimmer() {
@@ -45,6 +54,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final Int i) {
+    Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     final String fileName = Linguistic.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -54,7 +64,7 @@ public class Trimmer extends AbstractGUIApplicator {
           return true;
         Tipper<N> w = null;
         try {
-          w = getTipper(n);
+          w = getTipper(t, n);
         } catch (final Exception ¢) {
           if (!silent)
             ¢.printStackTrace();
@@ -103,6 +113,8 @@ public class Trimmer extends AbstractGUIApplicator {
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
+      Toolbox t;
+
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final String fileName = Linguistic.unknownIfNull(az.compilationUnit(n.getRoot()),
             λ -> λ.getJavaElement() == null ? Linguistic.UNKNOWN : λ.getJavaElement().getElementName());
@@ -111,7 +123,7 @@ public class Trimmer extends AbstractGUIApplicator {
           return true;
         Tipper<N> w = null;
         try {
-          w = getTipper(n);
+          w = getTipper(t, n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
@@ -128,6 +140,7 @@ public class Trimmer extends AbstractGUIApplicator {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
+        t = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? toolbox : getToolboxByPreferences((CompilationUnit) ¢);
         disabling.scan(¢);
       }
     };
@@ -143,8 +156,8 @@ public class Trimmer extends AbstractGUIApplicator {
     return true;
   }
 
-  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(final Toolbox t, final N ¢) {
+    return t.firstTipper(¢);
   }
 
   boolean firstAddition = true;
@@ -165,5 +178,30 @@ public class Trimmer extends AbstractGUIApplicator {
     }
     toolbox.add(c, ts);
     return this;
+  }
+
+  /** @param u JD
+   * @return {@link Toolbox} by project's preferences */
+  static Toolbox getToolboxByPreferences(CompilationUnit u) {
+    if (u == null)
+      return null;
+    ITypeRoot r = u.getTypeRoot();
+    if (r == null)
+      return null;
+    IJavaProject jp = r.getJavaProject();
+    if (jp == null)
+      return null;
+    IProject p = jp.getProject();
+    if (p == null)
+      return null;
+    Toolbox $ = Toolbox.freshCopyOfAllTippers();
+    Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
+    List<Tipper<?>> xs = new ArrayList<>();
+    for (Tipper<?> t : $.getAllTippers())
+      if (!es.contains(t.getClass()))
+        xs.add(t);
+    for (List<Tipper<? extends ASTNode>> l : $.implementation)
+      l.removeAll(xs);
+    return $;
   }
 }

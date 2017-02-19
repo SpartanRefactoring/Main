@@ -129,6 +129,8 @@ public class GUIBatchLaconizer extends Applicator {
    * @param a JD
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
+    if (a instanceof Trimmer)
+      ((Trimmer) a).useProjectPreferences();
     setRunAction(λ -> Integer.valueOf(a.apply(λ, selection())));
     name(a.getName());
     return this;
