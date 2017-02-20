@@ -54,32 +54,33 @@ public enum measure {
 
   static boolean excluded(final Expression ¢) {
     return as.list(//
-        Annotation.class, //
-        ArrayAccess.class, //
-        ArrayCreation.class, //
-        ArrayInitializer.class, //
-        BooleanLiteral.class, //
-        CharacterLiteral.class, //
-        ClassInstanceCreation.class, //
-        CreationReference.class, //
-        ExpressionMethodReference.class, //
-        FieldAccess.class, //
-        InfixExpression.class, //
-        MethodInvocation.class, //
-        MethodReference.class, //
-        Name.class, //
-        NullLiteral.class, //
-        NumberLiteral.class, //
-        ParenthesizedExpression.class, //
-        PostfixExpression.class, PrefixExpression.class, //
-        StringLiteral.class, //
-        SuperFieldAccess.class, //
-        SuperMethodInvocation.class, //
-        SuperMethodReference.class, //
-        ThisExpression.class, //
-        TypeLiteral.class, //
-        TypeMethodReference.class, //
-        VariableDeclarationExpression.class//
+        Annotation.class //
+    // ArrayAccess.class, //
+    // ArrayCreation.class, //
+    // ArrayInitializer.class, //
+    // BooleanLiteral.class, //
+    // CharacterLiteral.class, //
+    // ClassInstanceCreation.class, //
+    // CreationReference.class, //
+    // ExpressionMethodReference.class, //
+    // FieldAccess.class, //
+    // InfixExpression.class, //
+    // MethodInvocation.class, //
+    // MethodReference.class, //
+    // Name.class, //
+    // NullLiteral.class, //
+    // NumberLiteral.class, //
+    // ParenthesizedExpression.class, //
+    // PostfixExpression.class, //
+    // PrefixExpression.class, //
+    // StringLiteral.class, //
+    // SuperFieldAccess.class, //
+    // SuperMethodInvocation.class, //
+    // SuperMethodReference.class, //
+    // ThisExpression.class, //
+    // TypeLiteral.class, //
+    // TypeMethodReference.class, //
+    // VariableDeclarationExpression.class//
     )//
         .contains(¢.getClass());
   }
