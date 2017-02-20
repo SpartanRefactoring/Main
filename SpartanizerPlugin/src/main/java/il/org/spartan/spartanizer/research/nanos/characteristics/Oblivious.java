@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Method which is independent on he parameters
  * @author Ori Marcovitch */
-public class Independent extends JavadocMarkerNanoPattern {
+public class Oblivious extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     final List<String> $ = parametersNames(d);
     for (AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))

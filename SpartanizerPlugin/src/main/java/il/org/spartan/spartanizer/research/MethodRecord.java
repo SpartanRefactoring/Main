@@ -38,6 +38,10 @@ public class MethodRecord {
     after = ¢;
   }
 
+  public boolean fullyMatched() {
+    return (javadoc(after) + "").contains("[[");
+  }
+
   /** @param n matched node
    * @param np matching nano */
   public void markNP(final ASTNode n, final String np) {

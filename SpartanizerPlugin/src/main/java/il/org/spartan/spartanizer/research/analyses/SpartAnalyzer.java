@@ -123,7 +123,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
         new Setter(), //
-        new Signature(), //
+//        new Signature(), //
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
@@ -136,7 +136,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted, actually skipped
-        new Independent(), // Uberlola
+        new Oblivious(), // Uberlola
         new JDPattern(), // Uberlola
         new UseParameterAndReturnIt(), //
         new ToStringMethod(), // Not Counted, actually skipped
