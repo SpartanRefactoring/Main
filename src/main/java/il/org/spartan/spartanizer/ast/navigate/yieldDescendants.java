@@ -5,8 +5,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
-
 /** A class to search in the descendants of a given node. Based on
  * {@link yieldAncestors}
  * @author Ori Marcovitch
@@ -44,7 +42,7 @@ public abstract class yieldDescendants<N extends ASTNode> {
       return this;
     }
 
- @Override public List<N> from(final ASTNode n) {
+    @Override public List<N> from(final ASTNode n) {
       final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor() {
         @Override public void preVisit(final ASTNode ¢) {
@@ -54,6 +52,7 @@ public abstract class yieldDescendants<N extends ASTNode> {
       });
       return $;
     }
+
     @Override public List<N> inclusiveFrom(final ASTNode n) {
       final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor() {
@@ -65,5 +64,4 @@ public abstract class yieldDescendants<N extends ASTNode> {
       return $;
     }
   }
-
 }
