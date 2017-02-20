@@ -32,6 +32,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
+  private static final boolean REFRESH_OPENS_DIALOG = false;
+
   /* (non-Javadoc)
    *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
@@ -251,22 +253,33 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static void refreshProject(IProject p) throws CoreException, InvocationTargetException, InterruptedException {
     if (p == null || !p.isOpen() || p.getNature(Nature.NATURE_ID) == null)
       return;
-    ProgressMonitorDialog d = Dialogs.progress(true);
-    d.run(true, true, new IRunnableWithProgress() {
-      @Override public void run(IProgressMonitor m) {
-        SpartanizationHandler.runAsynchronouslyInUIThread(new Runnable() {
-          @Override public void run() {
-            Shell s = d.getShell();
-            if (s != null)
-              s.setText("Refreshing project");
+    if (REFRESH_OPENS_DIALOG) {
+      ProgressMonitorDialog d = Dialogs.progress(true);
+      d.run(true, true, new IRunnableWithProgress() {
+        @Override public void run(IProgressMonitor m) {
+          SpartanizationHandler.runAsynchronouslyInUIThread(new Runnable() {
+            @Override public void run() {
+              Shell s = d.getShell();
+              if (s != null)
+                s.setText("Refreshing project");
+            }
+          });
+          try {
+            p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+          } catch (CoreException x) {
+            monitor.log(x);
           }
-        });
-        try {
-          p.build(IncrementalProjectBuilder.FULL_BUILD, m);
-        } catch (CoreException x) {
-          monitor.log(x);
         }
-      }
-    });
+      });
+    } else
+      ModalContext.run(new IRunnableWithProgress() {
+        @Override public void run(IProgressMonitor m) {
+          try {
+            p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+          } catch (CoreException x) {
+            monitor.log(x);
+          }
+        }
+      }, true, new NullProgressMonitor(), Display.getCurrent());
   }
 }
