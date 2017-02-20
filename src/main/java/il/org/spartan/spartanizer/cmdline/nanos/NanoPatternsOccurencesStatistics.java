@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.safety.*;
+
 /** Collects statistics about nano occurrences
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 2, 2017 */
@@ -28,8 +30,10 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
 
   public void logNPInfo(final ASTNode n, final String np) {
     final Integer type = Integer.valueOf(nodeType(n));
-    putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
-    ++typeHistogram(type).inner;
+    if (!iz.methodDeclaration(n)) {
+      putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
+      ++typeHistogram(type).inner;
+    }
     nanoHistogram(type).putIfAbsent(np, new Int());
     ++nanoHistogram(type).get(np).inner;
   }
