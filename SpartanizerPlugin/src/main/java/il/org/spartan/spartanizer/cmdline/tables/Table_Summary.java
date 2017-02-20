@@ -27,12 +27,6 @@ public class Table_Summary extends Table_ReusabilityIndices {
   private static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Table writer;
-  private static int totalStatements;
-  private static int totalExpressions;
-  protected static int totalMethods;
-  private static int totalStatementsCovered;
-  private static int totalExpressionsCovered;
-  private static int totalMethodsTouched;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
     clazz = Table_Summary.class;
@@ -92,12 +86,11 @@ public class Table_Summary extends Table_ReusabilityIndices {
     npDistributionStatistics.clear();
     npStatistics.clear();
     scope.clear();
-    totalMethodsTouched = totalStatementsCovered = totalMethods = totalStatements = 0;
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
-     || step.body(¢) == null//
+        || step.body(¢) == null//
     // || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""))
     ;
   }
@@ -114,7 +107,6 @@ public class Table_Summary extends Table_ReusabilityIndices {
   public void summarizeSortedMethodStatistics(final String path) {
     if (writer == null)
       initializeWriter();
-    gatherGeneralStatistics();
     writer//
         .col("Project", path)//
         .col("R-Index", rMethod())//
@@ -132,11 +124,23 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static int statements() {
-    return totalStatements;
+    return statementsCoverageStatistics.keySet().stream().mapToInt(λ -> statementsCoverageStatistics.get(λ).size() * Unbox.it(λ)).sum();
+  }
+
+  private static int statementsCovered() {
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPStatements).sum();
+  }
+
+  private static int expressionsCovered() {
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPExpressions).sum();
+  }
+
+  private static int expressions() {
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numExpressions).sum();
   }
 
   private static int methods() {
-    return totalMethods;
+    return (int) statementsCoverageStatistics.values().stream().flatMap(λ -> λ.stream()).count();
   }
 
   private static double fMethods() {
@@ -167,44 +171,24 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static double touched() {
-    return format.perc(totalMethodsTouched, totalMethods);
-  }
-
-  private static double totalMethodsTouched(final Collection<MethodRecord> rs) {
-    return rs.stream().filter(λ -> (λ.numNPStatements > 0 || λ.numNPExpressions > 0) && !λ.fullyMatched()).count();
+    return format.perc(methodsTouched(), methods() - methodsCovered());
   }
 
   private static double statementsCoverage() {
-    return format.perc(totalStatementsCovered, totalStatements);
+    return format.perc(statementsCovered(), statements());
   }
 
   private static double expressionsCoverage() {
-    return format.perc(totalExpressionsCovered, totalExpressions);
+    return format.perc(expressionsCovered(), expressions());
   }
 
-  @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
-    totalExpressionsCovered = totalStatementsCovered = totalMethods = totalStatements = totalExpressions = 0;
-    for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
-      final List<MethodRecord> methods = statementsCoverageStatistics.get(¢);
-      totalStatements += ¢ * methods.size();
-      totalExpressions += totalExpressions(methods);
-      totalMethods += methods.size();
-      totalStatementsCovered += totalStatementsCovered(methods);
-      totalExpressionsCovered += totalExpressionsCovered(methods);
-      totalMethodsTouched += totalMethodsTouched(methods);
-    }
+  private static int methodsTouched() {
+    return (int) statementsCoverageStatistics.values().stream().flatMap(λ -> λ.stream())
+        .filter(λ -> (λ.numNPStatements > 0 || λ.numNPExpressions > 0) && !λ.fullyMatched()).count();
   }
 
-  private static int totalExpressions(final List<MethodRecord> rs) {
-    return rs.stream().mapToInt(λ -> λ.numExpressions).sum();
-  }
-
-  private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
-    return rs.stream().mapToInt(λ -> λ.numNPStatements).sum();
-  }
-
-  private static double totalExpressionsCovered(final Collection<MethodRecord> rs) {
-    return rs.stream().mapToInt(λ -> λ.numNPExpressions).sum();
+  private static int methodsCovered() {
+    return (int) statementsCoverageStatistics.values().stream().flatMap(Collection::stream).filter(MethodRecord::fullyMatched).count();
   }
 
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
