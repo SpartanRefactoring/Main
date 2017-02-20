@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Collects statistics for a method in which a nano was found.
- * @author Ori Marcovitch
- * @since 2016 */
+ * @author Ori Marcovitch */
 public class MethodRecord {
   public final String methodName;
   public final String methodClassName;
@@ -24,6 +23,7 @@ public class MethodRecord {
   public final int numExpressions;
   public final MethodDeclaration before;
   public MethodDeclaration after;
+  private boolean fullyMatched = false;
 
   public MethodRecord(final MethodDeclaration d) {
     before = d;
@@ -39,11 +39,9 @@ public class MethodRecord {
   }
 
   public boolean fullyMatched() {
-    return (javadoc(after) + "").contains("[[");
+    return fullyMatched;
   }
 
-  /** @param n matched node
-   * @param np matching nano */
   public void markNP(final ASTNode n, final String np) {
     if (excluded(np))
       return;
@@ -52,10 +50,13 @@ public class MethodRecord {
     if (epxressionWholeStatement(n))
       ++numNPStatements;
     nps.add(np);
+    if (iz.methodDeclaration(n))
+      fullyMatched = true;
   }
 
   private static boolean epxressionWholeStatement(final ASTNode ¢) {
-    return iz.expression(¢) && iz.expressionStatement(parent(¢));
+    return iz.expression(¢)//
+        && iz.expressionStatement(parent(¢));
   }
 
   private static final List<String> excluded = Collections.singletonList(ArgumentsTuple.class.getSimpleName());
@@ -69,11 +70,11 @@ public class MethodRecord {
     String $ = "";
     while (n != null) {
       while (!iz.abstractTypeDeclaration(n) && n != null)
-        n = n.getParent();
+        n = parent(n);
       if (n == null)
         break;
       $ += "." + az.abstractTypeDeclaration(n).getName();
-      n = n.getParent();
+      n = parent(n);
     }
     return $.substring(1);
   }
