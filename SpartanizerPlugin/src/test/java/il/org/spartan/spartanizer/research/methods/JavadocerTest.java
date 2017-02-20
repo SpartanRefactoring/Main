@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Base class for all tests for method patterns
  * @author Ori Marcovitch
  * @since Dec 18, 2016 */
 public abstract class JavadocerTest {
