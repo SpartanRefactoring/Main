@@ -97,8 +97,9 @@ public class Table_Summary extends Table_ReusabilityIndices {
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
-        // || body(¢) == null//
-        || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
+     || step.body(¢) == null//
+    // || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""))
+    ;
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
@@ -170,7 +171,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static double totalMethodsTouched(final Collection<MethodRecord> rs) {
-    return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
+    return rs.stream().filter(λ -> (λ.numNPStatements > 0 || λ.numNPExpressions > 0) && !λ.fullyMatched()).count();
   }
 
   private static double statementsCoverage() {
