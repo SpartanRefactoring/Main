@@ -93,10 +93,19 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     .col("Project", path)//
     .col("#Packages", countPackages())//
     .col("#LOC", countLOC())//
-    .col("#Classes", countClasses())//
+    .col("#Classes", countClasses() - countTestClasses())//
+    //.col("#TestClasses", countTestClasses())//
     .col("#Methods", countMethods())//
     .nl();
     System.err.println("Your output is in: " + outputFolder);
+  }
+
+  private Integer countTestClasses() {
+    Int $ = new Int().valueOf(0);
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+      if(¢.testCount() > 0) 
+        $.inner++;    
+    return $.inner();
   }
 
   private int countClasses() {
