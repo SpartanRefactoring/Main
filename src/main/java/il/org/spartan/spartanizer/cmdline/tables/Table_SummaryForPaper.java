@@ -91,11 +91,11 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
       initializeWriter();
     writer//
     .col("Project", path)//
-    .col("#Packages", countPackages())//
-    .col("#LOC", countLOC())//
-    .col("#Classes", countClasses() - countTestClasses())//
+    .col("#Packages", countNoTestPackages())//
+    .col("#LOC", countNoTestLOC())//
+    .col("#Classes", countNoTestClasses() - countTestClasses())//
     //.col("#TestClasses", countTestClasses())//
-    .col("#Methods", countMethods())//
+    .col("#Methods", countNoTestMethods())//
     .nl();
     System.err.println("Your output is in: " + outputFolder);
   }
@@ -114,11 +114,27 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
       $ += ¢.numClasses;
     return ($);
   }
+  
+  private int countNoTestClasses() {
+    int $ = 0;
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+      if(¢.testCount() == 0)
+        $ += ¢.numClasses;
+    return ($);
+  }
 
   private int countLOC() {
     int $ = 0;
     for(final CompilationUnitRecord ¢: CopilationUnitRecords)
       $ += ¢.linesOfCode;
+    return $;
+  }
+  
+  private int countNoTestLOC() {
+    int $ = 0;
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+      if(¢.testCount() == 0)
+        $ += ¢.linesOfCode;
     return $;
   }
 
@@ -128,11 +144,27 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
       $ += ¢.numMethods;
     return $;
   }
+  
+  private int countNoTestMethods() {
+    int $ = 0;
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+      if(¢.testCount() == 0)
+        $ += ¢.numMethods;
+    return $;
+  }
 
   private int countPackages() {
     HashSet<String> packgSet = new HashSet<>();
     for(final CompilationUnitRecord ¢: CopilationUnitRecords)
       packgSet.add(¢.pakcage);
+    return packgSet.size();
+  }  
+  
+  private int countNoTestPackages() {
+    HashSet<String> packgSet = new HashSet<>();
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+      if(¢.testCount() == 0)
+        packgSet.add(¢.pakcage);
     return packgSet.size();
   }
 
