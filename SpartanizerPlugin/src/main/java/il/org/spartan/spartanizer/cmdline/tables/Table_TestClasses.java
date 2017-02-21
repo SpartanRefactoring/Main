@@ -35,10 +35,6 @@ public class Table_TestClasses extends Table_SummaryForPaper {
         .col("Project", path)//
         .col("AbsolutePath", ¢.getPath())//
         .col("RelativePath", ¢.getRelativePath())//
-//        .col("#LOC", countNoTestLOC())//
-//        .col("#Classes", countNoTestClasses() - countTestClasses())//
-//        //.col("#TestClasses", countTestClasses())//
-//        .col("#Methods", countNoTestMethods())//
         .nl();   
    }
   
