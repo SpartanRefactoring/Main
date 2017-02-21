@@ -27,10 +27,10 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   
-  private final Stack<CopilationUnitRecord> CopilationUnitRecords = new Stack<>();
+  private final Stack<CompilationUnitRecord> CopilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
 
-  protected static final SortedMap<Integer, List<CopilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
+  protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
   protected static final SortedMap<Integer, List<ClassRecord>> classStatistics = new TreeMap<>(Integer::compareTo);
   
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
@@ -48,7 +48,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   }
   
   @Override public boolean visit(final CompilationUnit ¢) {
-    CopilationUnitRecords.add(new CopilationUnitRecord(¢));
+    CopilationUnitRecords.add(new CompilationUnitRecord(¢));
     count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
@@ -101,28 +101,28 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countClasses() {
     int $ = 0;
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
       $ += ¢.numClasses;
     return ($);
   }
 
   private int countLOC() {
     int $ = 0;
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
       $ += ¢.linesOfCode;
     return $;
   }
 
   private int countMethods() {
     int $ = 0;
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
       $ += ¢.numMethods;
     return $;
   }
 
   private int countPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
       packgSet.add(¢.pakcage);
     return packgSet.size();
   }
