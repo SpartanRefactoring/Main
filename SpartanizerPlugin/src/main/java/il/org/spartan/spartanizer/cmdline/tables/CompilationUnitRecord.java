@@ -61,13 +61,8 @@ public class CompilationUnitRecord {
     inner.accept(new ASTVisitor() {
         @SuppressWarnings("synthetic-access")
         @Override public boolean visit(MethodDeclaration node) {
-          List<Annotation> t = extract.annotations(node);
-//        if(extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
-//          testCount++;
-            for (Annotation a: t){
-              if(a.toString().equals("@Test"))
-                testCount++;
-            }
+        if(extract.annotations(node).stream().anyMatch(c -> "@Test".equals(c + "")))
+          testCount++;
           return false;
         }
       });
