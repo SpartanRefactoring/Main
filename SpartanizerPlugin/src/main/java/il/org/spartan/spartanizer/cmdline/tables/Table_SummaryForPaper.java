@@ -27,7 +27,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   
-  private final Stack<CompilationUnitRecord> CopilationUnitRecords = new Stack<>();
+  protected final Stack<CompilationUnitRecord> CompilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
 
   protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
@@ -48,7 +48,10 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   }
   
   @Override public boolean visit(final CompilationUnit ¢) {
-    CopilationUnitRecords.add(new CompilationUnitRecord(¢));
+    CompilationUnitRecord cur = new CompilationUnitRecord(¢);
+    cur.setPath(absolutePath);
+    cur.setRelativePath(relativePath);
+    CompilationUnitRecords.add(cur);
     count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
@@ -89,6 +92,11 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   @Override protected void done(final String path) {
     if (writer == null)
       initializeWriter();
+    writeSummary(path);
+    System.err.println("Your output is in: " + outputFolder);
+  }
+
+  private void writeSummary(final String path) {
     writer//
     .col("Project", path)//
     .col("#Packages", countNoTestPackages())//
@@ -97,12 +105,11 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     //.col("#TestClasses", countTestClasses())//
     .col("#Methods", countNoTestMethods())//
     .nl();
-    System.err.println("Your output is in: " + outputFolder);
   }
 
   private Integer countTestClasses() {
     Int $ = new Int().valueOf(0);
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       if(¢.testCount() > 0) 
         $.inner++;    
     return $.inner();
@@ -110,14 +117,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countClasses() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       $ += ¢.numClasses;
     return ($);
   }
   
   private int countNoTestClasses() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       if(¢.testCount() == 0)
         $ += ¢.numClasses;
     return ($);
@@ -125,14 +132,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countLOC() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       $ += ¢.linesOfCode;
     return $;
   }
   
   private int countNoTestLOC() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       if(¢.testCount() == 0)
         $ += ¢.linesOfCode;
     return $;
@@ -140,14 +147,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countMethods() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       $ += ¢.numMethods;
     return $;
   }
   
   private int countNoTestMethods() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       if(¢.testCount() == 0)
         $ += ¢.numMethods;
     return $;
@@ -155,14 +162,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       packgSet.add(¢.pakcage);
     return packgSet.size();
   }  
   
   private int countNoTestPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CompilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
       if(¢.testCount() == 0)
         packgSet.add(¢.pakcage);
     return packgSet.size();
