@@ -25,6 +25,12 @@ public class CompilationUnitRecord {
   public int numStatements;
   public String pakcage;
   private int testCount = 0;
+  String path;
+  String relativePath;
+  
+  public void setPath(final String path){
+    this.path = path;
+  }
 
   public CompilationUnitRecord(final CompilationUnit inner) {
     this.inner = inner;
@@ -97,4 +103,17 @@ public class CompilationUnitRecord {
      });
      return hasTestAnnotation;
   }
+
+  public String getPath() {
+    return this.path;
+  }
+
+  public void setRelativePath(String relativePath) {
+    this.relativePath = relativePath;    
+  }
+
+  public String getRelativePath() {
+    return relativePath;
+  }
+    
 }
