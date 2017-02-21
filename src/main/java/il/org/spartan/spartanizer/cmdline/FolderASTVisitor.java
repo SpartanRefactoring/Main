@@ -10,6 +10,7 @@ import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -27,6 +28,9 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   protected static String presentSourceName;
   protected String presentSourcePath;
   protected Dotter dotter;
+  private String presentPath;
+  protected String absolutePath;
+  protected String relativePath;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
@@ -93,6 +97,8 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     dotter.click();
     if (!system.isTestFile(f))
       try {
+        absolutePath = f.getAbsolutePath();
+        relativePath = f.getPath();
         collect(FileUtils.read(f));
         dotter.click();
       } catch (final IOException ¢) {
