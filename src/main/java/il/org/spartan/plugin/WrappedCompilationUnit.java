@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Couples together {@link CompilationUnit} and its {@link ICompilationUnit}.
  * @author Ori Roth
@@ -42,8 +43,12 @@ public class WrappedCompilationUnit {
 
   public WrappedCompilationUnit build() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
-          : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
+      try {
+        compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
+            : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
+      } catch (Throwable x) {
+        monitor.log(x);
+      }
     return this;
   }
 
