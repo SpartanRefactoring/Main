@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Spartan Refactoring
 Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
-Bundle-Version: 2.9.0
+Bundle-Version: 2.9.1
 Bundle-Activator: il.org.spartan.plugin.Plugin
 Bundle-Vendor: Technion--Israel Institute of Technology
 Require-Bundle: org.eclipse.ui;bundle-version="[3.108.0,4.0.0]",
@@ -23,11 +23,11 @@ Bundle-ClassPath: .,
  lib/cli-1.02.jar,
  lib/mockito-all-2.0.2-beta.jar,
  lib/hamcrest-all-1.3.jar
-Export-Package: il.org.spartan.bloater;version="2.9.0";,
- il.org.spartan.bloater.collateral;version="2.9.0";,
- il.org.spartan.bloater.inflate;version="2.9.0";,
- il.org.spartan.bloater.inflate.expanders;version="2.9.0";,
- il.org.spartan.plugin;version="2.9.0";
+Export-Package: il.org.spartan.bloater;version="2.9.1";,
+ il.org.spartan.bloater.collateral;version="2.9.1";,
+ il.org.spartan.bloater.inflate;version="2.9.1";,
+ il.org.spartan.bloater.inflate.expanders;version="2.9.1";,
+ il.org.spartan.plugin;version="2.9.1";
   uses:="org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
    org.eclipse.ltk.core.refactoring,
