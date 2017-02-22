@@ -27,7 +27,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   
-  protected final Stack<CompilationUnitRecord> CompilationUnitRecords = new Stack<>();
+  protected final Stack<CompilationUnitRecord> compilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
 
   protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
@@ -51,7 +51,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     CompilationUnitRecord cur = new CompilationUnitRecord(¢);
     cur.setPath(absolutePath);
     cur.setRelativePath(relativePath);
-    CompilationUnitRecords.add(cur);
+    compilationUnitRecords.add(cur);
     count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
@@ -107,24 +107,24 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     .nl();
   }
 
-  private Integer countTestClasses() {
-    Int $ = new Int().valueOf(0);
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+  private int countTestClasses() {
+    Int $ = new Int();
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       if(¢.testCount() > 0) 
         $.inner++;    
-    return $.inner();
+    return $.inner;
   }
 
   private int countClasses() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       $ += ¢.numClasses;
-    return ($);
+    return $;
   }
   
   private int countNoTestClasses() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       if(¢.testCount() == 0)
         $ += ¢.numClasses;
     return ($);
@@ -132,14 +132,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countLOC() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       $ += ¢.linesOfCode;
     return $;
   }
   
   private int countNoTestLOC() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       if(¢.testCount() == 0)
         $ += ¢.linesOfCode;
     return $;
@@ -147,14 +147,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countMethods() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       $ += ¢.numMethods;
     return $;
   }
   
   private int countNoTestMethods() {
     int $ = 0;
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       if(¢.testCount() == 0)
         $ += ¢.numMethods;
     return $;
@@ -162,14 +162,14 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   private int countPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       packgSet.add(¢.pakcage);
     return packgSet.size();
   }  
   
   private int countNoTestPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       if(¢.testCount() == 0)
         packgSet.add(¢.pakcage);
     return packgSet.size();
