@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.io.*;
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -21,10 +20,10 @@ public class CompilationUnitRecord {
   final int linesOfCode;
   public final int numClasses;
   public final int numExpressions;
-  int numMethods = 0;
+  int numMethods;
   public int numStatements;
   public String pakcage;
-  private int testCount = 0;
+  int testCount;
   String path;
   String relativePath;
   
@@ -45,24 +44,23 @@ public class CompilationUnitRecord {
     // testCount = Int.valueOf(countTestAnnotation(inner));
   }
  
-  private static int countLines(String str){
-    String[] lines = str.split("\r\n|\r|\n");
-    return  lines.length;
+  private static int countLines(String ¢){
+    return ¢.split("\r\n|\r|\n").length;
  }
 
   public int testCount() {
     return testCount;
   }
   
-  static boolean hasTestAnnotation = false;
+  static boolean hasTestAnnotation;
   
   @SuppressWarnings("hiding")
   public void countTestAnnotation(final CompilationUnit inner){
     inner.accept(new ASTVisitor() {
-        @SuppressWarnings("synthetic-access")
-        @Override public boolean visit(MethodDeclaration node) {
-        if(extract.annotations(node).stream().anyMatch(c -> "@Test".equals(c + "")))
-          testCount++;
+        @Override
+        public boolean visit(MethodDeclaration node) {
+        if(extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+          ++testCount;
           return false;
         }
       });
