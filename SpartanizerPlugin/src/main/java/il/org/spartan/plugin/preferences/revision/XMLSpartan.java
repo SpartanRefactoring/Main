@@ -35,10 +35,8 @@ public class XMLSpartan {
   private static final String CATEGORY_ID = "id";
   private static final String TIPPER_DESCRIPTION = "description";
   private static final Set<Class<Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
-  static {
     // TODO Roth: decide what tippers are non-core
     // Collections.addAll(NON_CORE, stuff);
-  }
 
   /** TODO Ori Roth: Stub 'XMLSpartan::getTippersByCategories' (created on
    * 2017-02-10)." );
