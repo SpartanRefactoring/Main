@@ -181,6 +181,13 @@ https://goo.gl/OI2pBd -->
   <super type="il.org.spartan.tip"/>
 </extension>
 <extension 
+  id="il.org.spartan.tip.NOOP"
+  name="Nanopatterns"
+  point="org.eclipse.core.resources.markers" 
+>
+  <super type="il.org.spartan.tip"/>
+</extension>
+<extension 
   id="il.org.spartan.tip.ScopeReduction"
   name="ScopeReduction"
   point="org.eclipse.core.resources.markers" 
@@ -291,6 +298,12 @@ Java class which generates several quick fix for tips. -->
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
+   markerType="il.org.spartan.tip.NOOP"
+   class="il.org.spartan.plugin.QuickFixer"
+  />
+</extension>
+<extension point="org.eclipse.ui.ide.markerResolution">
+  <markerResolutionGenerator 
    markerType="il.org.spartan.tip.ScopeReduction"
    class="il.org.spartan.plugin.QuickFixer"
   />
@@ -364,7 +377,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <!--<command id="il.org.spartan.AthensCollateral" name="Athens Collateral handler" />-->
      <command id="il.org.spartan.AthensInflate" name="Athens Inflater handler" />
-     <command id="il.org.spartan.PreferencesChooser" name="Preferences Initiator" />
+     <command id="il.org.spartan.PreferencesChooser" name="Preferences" />
      <command id="il.org.spartan.CharacterShortcut" name="Character Shortcut" />
 </extension>
 
@@ -448,7 +461,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
         <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
         <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
       </menu>
-      <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/> 
+      <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
+      <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
     </menu>
   </menu>
 </menuContribution>
@@ -532,6 +546,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+L"
 		commandId="il.org.spartan.CharacterShortcut"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+Q"
+		commandId="il.org.spartan.PreferencesChooser"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
