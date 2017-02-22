@@ -29,7 +29,7 @@ public class Table_TestClasses extends Table_SummaryForPaper {
   }
   
   private void writeTestClasses(String path) {
-    for(final CompilationUnitRecord ¢: CompilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       if(¢.testCount() > 0)
         testClassesWriter//
         .col("Project", path)//
