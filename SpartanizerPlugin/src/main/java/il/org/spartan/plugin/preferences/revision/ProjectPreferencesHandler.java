@@ -71,7 +71,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static SpartanPreferencesDialog getDialog(final IProject p) {
     final Shell s = Display.getCurrent().getActiveShell();
     final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p, false);
-    if (s == null || m == null)
+    if (p == null || s == null || m == null)
       return null;
     final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
