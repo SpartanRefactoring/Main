@@ -76,7 +76,11 @@ public final class Builder extends IncrementalProjectBuilder {
   private static void addMarkers(final IFile ¢) throws CoreException {
     Tips.reset();
     deleteMarkers(¢);
-    addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+    try {
+      addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
+    } catch (Throwable x) {
+      monitor.log(x);
+    }
   }
 
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
