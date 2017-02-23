@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.nanos.*;
-import il.org.spartan.spartanizer.research.nanos.IsEmpty;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
@@ -25,19 +24,19 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new ReturnOnException(), //
+        // new ReturnOnException(), // R.I.P
         new SuppressException(), //
-        new PercolateException(), // R.I.P
+        // new PercolateException(), // R.I.P
         null)//
             .add(ConditionalExpression.class, //
-                new AsBit(), //
+                // new AsBit(), // functional
                 new DefaultsTo(), //
                 new GeneralizedSwitch<>(), //
                 new Unless(), //
                 new SafeReference(), //
                 new TakeDefaultTo(), //
-                new Max(), //
-                new Min(), //
+                // new Max(), // functional
+                // new Min(), // functional
                 null) //
             .add(EnhancedForStatement.class, //
                 new Aggregate(), //
@@ -63,20 +62,20 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new CachingPattern(), //
                 new ExecuteUnless(), //
                 new GeneralizedSwitch<>(), //
-                new GetOrElseThrow(),
+                // new GetOrElseThrow(), //R.I.P
                 // new PutIfAbsent(), // R.I.P
                 new PreconditionNotNull(), //
                 new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                new IsEmpty(), //
-                new LastIndex(), //
+                // new IsEmpty(), // functional
+                // new LastIndex(), // functional
                 new Infix.SafeReference(), //
                 new Singleton(), //
                 null)//
             .add(MethodInvocation.class, //
-                new First(), //
-                new Last(), //
+                // new First(), // functional
+                // new Last(), // functional
                 new Reduction(), //
                 null) //
             .add(ReturnStatement.class, //
@@ -123,7 +122,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         // new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
         new Setter(), //
-//        new Signature(), //
+        // new Signature(), //
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
