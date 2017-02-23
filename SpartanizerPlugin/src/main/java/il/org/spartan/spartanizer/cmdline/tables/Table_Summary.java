@@ -91,8 +91,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
         || step.body(¢) == null//
-    // || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""))
-    ;
+        || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
