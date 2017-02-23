@@ -60,8 +60,12 @@ public class GUIBatchLaconizer extends Applicator {
           ¢.dispose();
           thisPassTipsInvoked.add(tipsInvoked);
           totalTipsInvoked.add(tipsInvoked);
-          listener().tick(message.visit_cu.get(operationName(), Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()),
-              ¢.descriptor.getElementName(), totalTipsInvoked.get(), thisPassTipsInvoked.get()));
+          try { // probably not needed --or
+            listener().tick(message.visit_cu.get(operationName(), Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()),
+                ¢.descriptor.getElementName(), totalTipsInvoked.get(), thisPassTipsInvoked.get()));
+          } catch (Throwable x) {
+            monitor.log(x);
+          }
           if (!shouldRun())
             break;
         }
@@ -131,7 +135,7 @@ public class GUIBatchLaconizer extends Applicator {
   public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
     if (a instanceof Trimmer)
       ((Trimmer) a).useProjectPreferences();
-    setRunAction(λ -> Integer.valueOf(a.apply(λ, selection())));
+    setRunAction(λ -> λ == null ? Integer.valueOf(0) : Integer.valueOf(a.apply(λ, selection())));
     name(a.getName());
     return this;
   }

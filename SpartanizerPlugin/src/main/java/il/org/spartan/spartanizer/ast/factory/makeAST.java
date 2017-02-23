@@ -25,7 +25,7 @@ public enum makeAST {
     }
 
     @Override public CompilationUnit from(final IFile ¢) {
-      return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(null);
+      return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(npm);
     }
 
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
@@ -33,7 +33,7 @@ public enum makeAST {
     }
 
     @Override public CompilationUnit from(final String ¢) {
-      return (CompilationUnit) makeParser(¢).createAST(null);
+      return (CompilationUnit) makeParser(¢).createAST(npm);
     }
   },
   /** Converts file, string or marker to expression. */
@@ -43,7 +43,7 @@ public enum makeAST {
     }
 
     @Override public Expression from(final IFile ¢) {
-      return (Expression) make.EXPRESSION.parser(¢).createAST(null);
+      return (Expression) make.EXPRESSION.parser(¢).createAST(npm);
     }
 
     @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
@@ -51,7 +51,7 @@ public enum makeAST {
     }
 
     @Override public Expression from(final String ¢) {
-      return (Expression) makeParser(¢).createAST(null);
+      return (Expression) makeParser(¢).createAST(npm);
     }
   },
   /** Constant used in order to get the source as a sequence of sideEffects. */
@@ -60,6 +60,7 @@ public enum makeAST {
    * declarations. */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS)//
   ;
+  static final NullProgressMonitor npm = new NullProgressMonitor();
   /** IFile -> ICompilationUnit converter
    * @param function File
    * @return ICompilationUnit */
@@ -124,7 +125,7 @@ public enum makeAST {
   /** @param function IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
-    return make.from(this).parser(¢).createAST(null);
+    return make.from(this).parser(¢).createAST(npm);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -139,7 +140,7 @@ public enum makeAST {
    * @param s String
    * @return ASTNode */
   public ASTNode from(final String ¢) {
-    return makeParser(¢).createAST(null);
+    return makeParser(¢).createAST(npm);
   }
 
   /** Creates a no-binding parser for a given text
