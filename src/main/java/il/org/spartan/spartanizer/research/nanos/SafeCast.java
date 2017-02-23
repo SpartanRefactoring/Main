@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-02-23 */
 public class SafeCast extends NanoPatternTipper<CastExpression> {
   @Override public boolean canTip(final CastExpression ¢) {
-    String string = expression(yieldAncestors.untilClass(IfStatement.class).from(¢)) + "";
-    return string.contains(expression(¢) + " instanceof " + type(¢));
+    return (expression(yieldAncestors.untilClass(IfStatement.class).from(¢)) + "").contains(expression(¢) + " instanceof " + type(¢));
   }
 
   @Override public Tip pattern(final CastExpression ¢) {
