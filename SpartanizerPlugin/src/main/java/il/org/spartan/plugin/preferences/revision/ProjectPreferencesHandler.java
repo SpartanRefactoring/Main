@@ -7,6 +7,7 @@ import java.util.stream.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
@@ -70,7 +71,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static SpartanPreferencesDialog getDialog(final IProject p) {
     final Shell s = Display.getCurrent().getActiveShell();
     final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p, false);
-    if (s == null || m == null)
+    if (p == null || s == null || m == null)
       return null;
     final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
@@ -272,14 +273,16 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         }
       });
     } else
-      ModalContext.run(new IRunnableWithProgress() {
-        @Override public void run(IProgressMonitor m) {
+      new Job("Refreshing " + p.getName()) {
+        @Override protected IStatus run(IProgressMonitor m) {
           try {
             p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+            return Status.OK_STATUS;
           } catch (CoreException x) {
             monitor.log(x);
+            return Status.CANCEL_STATUS;
           }
         }
-      }, true, new NullProgressMonitor(), Display.getCurrent());
+      }.schedule();
   }
 }

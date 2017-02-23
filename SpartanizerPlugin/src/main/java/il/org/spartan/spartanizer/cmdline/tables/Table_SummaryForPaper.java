@@ -27,10 +27,10 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   
-  private final Stack<CopilationUnitRecord> CopilationUnitRecords = new Stack<>();
+  protected final Stack<CompilationUnitRecord> compilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
 
-  protected static final SortedMap<Integer, List<CopilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
+  protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
   protected static final SortedMap<Integer, List<ClassRecord>> classStatistics = new TreeMap<>(Integer::compareTo);
   
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
@@ -48,7 +48,10 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   }
   
   @Override public boolean visit(final CompilationUnit ¢) {
-    CopilationUnitRecords.add(new CopilationUnitRecord(¢));
+    CompilationUnitRecord cur = new CompilationUnitRecord(¢);
+    cur.setPath(absolutePath);
+    cur.setRelativePath(relativePath);
+    compilationUnitRecords.add(cur);
     count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
@@ -89,41 +92,86 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   @Override protected void done(final String path) {
     if (writer == null)
       initializeWriter();
+    writeSummary(path);
+    System.err.println("Your output is in: " + outputFolder);
+  }
+
+  private void writeSummary(final String path) {
     writer//
     .col("Project", path)//
-    .col("#Packages", countPackages())//
-    .col("#LOC", countLOC())//
-    .col("#Classes", countClasses())//
-    .col("#Methods", countMethods())//
+    .col("#Packages", countNoTestPackages())//
+    .col("#LOC", countNoTestLOC())//
+    .col("#Classes", countNoTestClasses() - countTestClasses())//
+    //.col("#TestClasses", countTestClasses())//
+    .col("#Methods", countNoTestMethods())//
     .nl();
-    System.err.println("Your output is in: " + outputFolder);
+  }
+
+  private int countTestClasses() {
+    Int $ = new Int();
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
+      if(¢.testCount() > 0) 
+        $.inner++;    
+    return $.inner;
   }
 
   private int countClasses() {
     int $ = 0;
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       $ += ¢.numClasses;
+    return $;
+  }
+  
+  private int countNoTestClasses() {
+    int $ = 0;
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
+      if(¢.testCount() == 0)
+        $ += ¢.numClasses;
     return ($);
   }
 
   private int countLOC() {
     int $ = 0;
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       $ += ¢.linesOfCode;
+    return $;
+  }
+  
+  private int countNoTestLOC() {
+    int $ = 0;
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
+      if(¢.testCount() == 0)
+        $ += ¢.linesOfCode;
     return $;
   }
 
   private int countMethods() {
     int $ = 0;
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       $ += ¢.numMethods;
+    return $;
+  }
+  
+  private int countNoTestMethods() {
+    int $ = 0;
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
+      if(¢.testCount() == 0)
+        $ += ¢.numMethods;
     return $;
   }
 
   private int countPackages() {
     HashSet<String> packgSet = new HashSet<>();
-    for(final CopilationUnitRecord ¢: CopilationUnitRecords)
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
       packgSet.add(¢.pakcage);
+    return packgSet.size();
+  }  
+  
+  private int countNoTestPackages() {
+    HashSet<String> packgSet = new HashSet<>();
+    for(final CompilationUnitRecord ¢: compilationUnitRecords)
+      if(¢.testCount() == 0)
+        packgSet.add(¢.pakcage);
     return packgSet.size();
   }
 
