@@ -123,7 +123,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static int statements() {
-    return statementsCoverageStatistics.keySet().stream().mapToInt(λ -> statementsCoverageStatistics.get(λ).size() * Unbox.it(λ)).sum();
+    return statementsCoverageStatistics.keySet().stream().mapToInt(λ -> Unbox.it(λ) * statementsCoverageStatistics.get(λ).size()).sum();
   }
 
   private static int statementsCovered() {

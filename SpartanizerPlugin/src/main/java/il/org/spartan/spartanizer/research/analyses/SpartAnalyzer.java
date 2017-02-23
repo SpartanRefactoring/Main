@@ -28,6 +28,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new SuppressException(), //
         // new PercolateException(), // R.I.P
         null)//
+            .add(CastExpression.class, //
+                new SafeCast(), //
+                null)//
             .add(ConditionalExpression.class, //
                 // new AsBit(), // functional
                 new DefaultsTo(), //
