@@ -2,6 +2,7 @@ package il.org.spartan.plugin.preferences.revision;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
@@ -40,21 +41,35 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final IProject p = Selection.Util.project();
+    return execute(Selection.Util.project());
+  }
+
+  public static Object execute(final IProject p) {
     final SpartanPreferencesDialog d = getDialog(p);
     if (d == null)
       return null;
-    d.open();
-    final Object[] os = d.getResult();
-    if (os == null || d.getReturnCode() != Window.OK)
+    Set<String> pc = getPreferencesChanges(d);
+    return pc == null ? null : commit(p, pc);
+  }
+
+  public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
+      final BiFunction<IProject, Set<String>, Void> commit) {
+    final SpartanPreferencesDialog d = getDialog(m);
+    if (d == null)
       return null;
-    XMLSpartan.updateEnabledTippers(p,
-        Stream.of(os)//
-            .filter(SpartanTipper.class::isInstance)//
-            .map(SpartanTipper.class::cast)//
-            .map(SpartanTipper::name)//
-            .collect(toSet())//
-    );
+    Set<String> pc = getPreferencesChanges(d);
+    return pc == null ? null : commit.apply(p, pc);
+  }
+
+  /** TODO Ori Roth: Stub 'ProjectPreferencesHandler::commit' (created on
+   * 2017-02-24)." );
+   * <p>
+   * @param p
+   * @param pc
+   *        <p>
+   *        [[SuppressWarningsSpartan]] */
+  public static Object commit(IProject p, Set<String> pc) {
+    XMLSpartan.updateEnabledTippers(p, pc);
     try {
       refreshProject(p);
     } catch (InvocationTargetException | CoreException | InterruptedException x) {
@@ -63,15 +78,29 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return null;
   }
 
+  public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog d) {
+    d.open();
+    final Object[] os = d.getResult();
+    return os == null || d.getReturnCode() != Window.OK ? null
+        : Stream.of(os)//
+            .filter(SpartanTipper.class::isInstance)//
+            .map(SpartanTipper.class::cast)//
+            .map(SpartanTipper::name)//
+            .collect(toSet());
+  }
+
   /** TODO Ori Roth: Stub 'ProjectPreferencesHandler::getDialog' (created on
    * 2017-02-09)." );
    * <p>
    * @param p
    * @return */
   private static SpartanPreferencesDialog getDialog(final IProject p) {
+    return getDialog(XMLSpartan.getTippersByCategories(p, false));
+  }
+
+  private static SpartanPreferencesDialog getDialog(Map<SpartanCategory, SpartanTipper[]> m) {
     final Shell s = Display.getCurrent().getActiveShell();
-    final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p, false);
-    if (p == null || s == null || m == null)
+    if (s == null || m == null)
       return null;
     final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
