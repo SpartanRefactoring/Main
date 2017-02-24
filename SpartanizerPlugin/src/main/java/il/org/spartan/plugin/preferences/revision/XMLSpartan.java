@@ -287,7 +287,7 @@ public class XMLSpartan {
   public abstract static class SpartanElement {
     public static SpartanElement[] EMPTY = new SpartanElement[0];
     private final String name;
-    private final boolean enabled;
+    private boolean enabled;
 
     public SpartanElement(final String name, final boolean enabled) {
       this.name = name;
@@ -300,6 +300,10 @@ public class XMLSpartan {
 
     public boolean enabled() {
       return enabled;
+    }
+    
+    public void enable(boolean enable) {
+      enabled = enable;
     }
 
     @SuppressWarnings("static-method") public boolean hasChildren() {

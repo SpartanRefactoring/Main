@@ -65,7 +65,7 @@ public enum PreferencesResources {
       return find(¢.getClass());
     }
 
-    static IPreferenceStore store() {
+    public static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
 
@@ -75,7 +75,7 @@ public enum PreferencesResources {
 
     private final Class<? extends TipperCategory> clazz;
     public final String id;
-    final String label;
+    public final String label;
 
     TipperGroup(final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
