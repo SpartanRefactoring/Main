@@ -223,10 +223,16 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
   }
 
-  static class Changes {
+  static class Changes implements Cloneable {
     private Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
     private Map<IProject, Set<String>> preferences2;
     private Map<IProject, Boolean> ables;
+
+    private Changes() {
+      preferences1 = new HashMap<>();
+      preferences2 = new HashMap<>();
+      ables = new HashMap<>();
+    }
 
     public Changes(List<Object> projects) {
       preferences1 = new HashMap<>();
@@ -237,6 +243,14 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         preferences2.put((IProject) p, null);
         ables.put((IProject) p, null);
       }
+    }
+
+    @Override protected Object clone() {
+      Changes $ = new Changes();
+      $.preferences1.putAll(preferences1);
+      $.preferences2.putAll(preferences2);
+      $.ables.putAll(ables);
+      return $;
     }
 
     public Map<SpartanCategory, SpartanTipper[]> getPreference(IProject p) {
@@ -275,6 +289,10 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public void commit() {
+      ((Changes) clone()).commitSelf();
+    }
+
+    private void commitSelf() {
       new Job("Applying preferences changes") {
         @SuppressWarnings("synthetic-access") @Override protected IStatus run(IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
@@ -290,7 +308,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
             m.worked(1);
           }
           m.done();
-          return Job.ASYNC_FINISH;
+          return Status.OK_STATUS;
         }
       }.schedule();
     }
