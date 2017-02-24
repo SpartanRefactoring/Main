@@ -26,7 +26,7 @@ the program changes: https://goo.gl/sIqIBC
 <extension point="org.eclipse.ui.preferencePages">
   <page 
   name="Spartanization Tips"
-  class="il.org.spartan.plugin.preferences.PreferencesPage"
+  class="il.org.spartan.plugin.preferences.revision.PreferencesPage"
   id="il.org.spartan.plugin.PluginPreferencesPage"
   category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
   </page>
@@ -36,9 +36,9 @@ the program changes: https://goo.gl/sIqIBC
 <extension point="org.eclipse.core.runtime.preferences">
   <scope 
     name="PluginPreferencesPage" 
-    class="il.org.spartan.plugin.preferences.PreferencesPage"
+    class="il.org.spartan.plugin.preferences.revision.PreferencesPage"
   />
-  <initializer class="il.org.spartan.plugin.preferences.PreferencesDefaultValuesInitializer"/>
+  <initializer class="il.org.spartan.plugin.preferences.revision.PreferencesDefaultValuesInitializer"/>
 </extension>
 
 <!-- Daniel Mittleman' application, used to produce the PLATEAU submission-->
