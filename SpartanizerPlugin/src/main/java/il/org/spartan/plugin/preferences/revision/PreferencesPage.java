@@ -122,9 +122,37 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         configureButton = null;
         ableButton = null;
       });
-      GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+      buttonBox.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
+      ableButton = new Button(buttonBox, SWT.PUSH);
+      ableButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      ableButton.setText("Enable/Disable tips");
+      ableButton.setEnabled(false);
+      ableButton.setVisible(true);
+      ableButton.addSelectionListener(new SelectionListener() {
+        @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
+          onSelection();
+        }
+
+        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {
+          onSelection();
+        }
+
+        @SuppressWarnings("synthetic-access") private void onSelection() {
+          int i = getList().getSelectionIndex();
+          if (i >= 0) {
+            onAble.accept(elements.get(i).getValue());
+            if (ableButton.getText().equals("Disable tips")) {
+              ableButton.setText("Enable tips");
+              configureButton.setEnabled(false);
+            } else if (ableButton.getText().equals("Enable tips")) {
+              ableButton.setText("Disable tips");
+              configureButton.setEnabled(true);
+            }
+          }
+        }
+      });
       configureButton = new Button(buttonBox, SWT.PUSH);
-      configureButton.setLayoutData(gd);
+      configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
       configureButton.setText("Configure tips");
       configureButton.setEnabled(false);
       configureButton.setVisible(true);
@@ -143,31 +171,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
             onConfigure.accept(elements.get(i).getValue());
         }
       });
-      ableButton = new Button(buttonBox, SWT.PUSH);
-      ableButton.setLayoutData(gd);
-      ableButton.setText("Enable/Disable tips");
-      ableButton.setEnabled(false);
-      ableButton.setVisible(true);
-      ableButton.addSelectionListener(new SelectionListener() {
-        @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
-          onSelection();
-        }
-
-        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {
-          onSelection();
-        }
-
-        @SuppressWarnings("synthetic-access") private void onSelection() {
-          int i = getList().getSelectionIndex();
-          if (i >= 0) {
-            onAble.accept(elements.get(i).getValue());
-            if (ableButton.getText().equals("Disable tips"))
-              ableButton.setText("Enable tips");
-            else if (ableButton.getText().equals("Enable tips"))
-              ableButton.setText("Disable tips");
-          }
-        }
-      });
       parent.addDisposeListener(e -> {
         configureButton = null;
         ableButton = null;
@@ -176,19 +179,19 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @SuppressWarnings("synthetic-access") @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
           int i = getList().getSelectionIndex();
           if (i >= 0)
-            if (isAble.apply(elements.get(i).getValue()).booleanValue())
+            if (isAble.apply(elements.get(i).getValue()).booleanValue()) {
               ableButton.setText("Disable tips");
-            else
+              configureButton.setEnabled(true);
+            } else {
               ableButton.setText("Enable tips");
+              configureButton.setEnabled(false);
+            }
         }
 
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {
           //
         }
       });
-      gd = new GridData();
-      gd.verticalAlignment = GridData.BEGINNING;
-      buttonBox.setLayoutData(gd);
     }
 
     @Override protected void doFillIntoGrid(Composite parent, int numColumns) {
@@ -216,8 +219,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     @Override protected void selectionChanged() {
       if (getList() == null || getList().getSelectionIndex() < 0)
         return;
-      if (configureButton != null)
-        configureButton.setEnabled(true);
       if (ableButton != null)
         ableButton.setEnabled(true);
     }
@@ -271,7 +272,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
           monitor.log(x);
           $ = Boolean.FALSE;
         }
-        ables.put(p, $);
       }
       return $;
     }
@@ -288,8 +288,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return null;
     }
 
-    public void commit() {
+    public synchronized void commit() {
       ((Changes) clone()).commitSelf();
+      for (IProject p : preferences1.keySet()) {
+        preferences1.put(p, null);
+        preferences2.put(p, null);
+        ables.put(p, null);
+      }
     }
 
     private void commitSelf() {
