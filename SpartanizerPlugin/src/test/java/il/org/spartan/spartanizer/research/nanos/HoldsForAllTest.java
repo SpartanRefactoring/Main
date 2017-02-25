@@ -6,13 +6,21 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** Tests in {@link HoldsForAll}
- * @author Ori Marcovitch
- * @since 2016 */
+ * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
 public class HoldsForAllTest {
   @Test public void a() {
-    trimmingOf("for (  Entry<?> ¢ : that.entrySet())   if (m.count(¢.getElement()) != ¢.getCount())   return false;  return true;")
+    trimmingOf("for (  Entry<?> λ : that.entrySet())   if (m.count(λ.getElement()) != λ.getCount())   return false;  return true;")
         .using(EnhancedForStatement.class, new HoldsForAll())
-        .gives("return that.entrySet().stream().allMatch(¢ -> !(m.count(¢.getElement()) != ¢.getCount()));");
+        .gives("return that.entrySet().stream().allMatch(λ -> !(m.count(λ.getElement()) != λ.getCount()));");
+  }
+
+  @Test public void b() {
+    trimmingOf("for (  Entry<?> λ : that.entrySet())   if (λ != null)   return false;  return true;")//
+        .using(IfStatement.class, new ExecuteUnless())//
+        .using(EnhancedForStatement.class, new HoldsForAll())//
+        .gives("return that.entrySet().stream().allMatch(λ -> !(λ != null));")//
+        .gives("return that.entrySet().stream().allMatch(λ -> λ == null);")//
+        .stays();
   }
 }
