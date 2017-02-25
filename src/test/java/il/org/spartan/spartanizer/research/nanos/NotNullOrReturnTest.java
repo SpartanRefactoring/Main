@@ -43,4 +43,22 @@ public class NotNullOrReturnTest {
         .using(IfStatement.class, new NotNullOrReturn())//
         .stays();
   }
+
+  @Test public void respect2() {
+    trimmingOf("void m(){use(); if(x == null) return false; use(); use();}")//
+        .using(IfStatement.class, new NotNullOrReturn())//
+        .stays();
+  }
+
+  @Test public void respect3() {
+    trimmingOf("void m(){use(); if(x == null) return; use(); use();}")//
+        .using(IfStatement.class, new NotNullOrReturn())//
+        .stays();
+  }
+
+  @Test public void respect4() {
+    trimmingOf("statement(); if(x == null) return false; use(); use();")//
+        .using(IfStatement.class, new NotNullOrReturn())//
+        .stays();
+  }
 }
