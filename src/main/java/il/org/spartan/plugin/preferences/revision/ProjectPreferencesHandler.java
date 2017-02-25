@@ -30,7 +30,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO Ori Roth: document class {@link }
+/** An handler for project configuration. User configuration is saved in a
+ * designated XML file, see {@link XMLSpartan}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
@@ -44,6 +45,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return execute(Selection.Util.project());
   }
 
+  /** Initiates configuration change for the project. This includes one dialog
+   * opening.
+   * @param p JD
+   * @return null */
   public static Object execute(final IProject p) {
     final SpartanPreferencesDialog d = getDialog(p);
     if (d == null)
@@ -52,6 +57,15 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return pc == null ? null : commit(p, pc);
   }
 
+  /** Initiates configuration change for the project. This includes one dialog
+   * opening. This method does not open the XML file, but uses given enabled
+   * tippers collection. It also uses given commit method. This execution method
+   * is used in order to allow more flexible uses of the
+   * {@link ProjectPreferencesHandler} dialog.
+   * @param p JD
+   * @param m enabled tippers to be used in dialog
+   * @param commit what to do with the dialog's result
+   * @return null */
   public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
       final BiFunction<IProject, Set<String>, Void> commit) {
     final SpartanPreferencesDialog d = getDialog(m);
@@ -61,13 +75,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return pc == null ? null : commit.apply(p, pc);
   }
 
-  /** TODO Ori Roth: Stub 'ProjectPreferencesHandler::commit' (created on
-   * 2017-02-24)." );
-   * <p>
-   * @param p
-   * @param pc
-   *        <p>
-   *        [[SuppressWarningsSpartan]] */
+  /** Commits enabled tippers for the project, see
+   * {@link XMLSpartan#updateEnabledTippers}.
+   * @param p JD
+   * @param pc enabled tippers
+   * @return null */
   public static Object commit(IProject p, Set<String> pc) {
     XMLSpartan.updateEnabledTippers(p, pc);
     try {
@@ -78,6 +90,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return null;
   }
 
+  /** @param d dialog
+   * @return dialog's result: either enabled tippers, or null if the operation
+   *         has been cancled by the user */
   public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog d) {
     d.open();
     final Object[] os = d.getResult();
@@ -89,15 +104,15 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             .collect(toSet());
   }
 
-  /** TODO Ori Roth: Stub 'ProjectPreferencesHandler::getDialog' (created on
-   * 2017-02-09)." );
-   * <p>
-   * @param p
-   * @return */
+  /** @param p JD
+   * @return preferences configuration dialog for project */
   private static SpartanPreferencesDialog getDialog(final IProject p) {
     return getDialog(XMLSpartan.getTippersByCategories(p, false));
   }
 
+  /** @param m enabled tippers collection
+   * @return preferences configuration dialog for project, using given enabled
+   *         tippers */
   private static SpartanPreferencesDialog getDialog(Map<SpartanCategory, SpartanTipper[]> m) {
     final Shell s = Display.getCurrent().getActiveShell();
     if (s == null || m == null)
@@ -166,7 +181,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return $;
   }
 
-  /** TODO Ori Roth: document class {@link ProjectPreferencesHandler}
+  /** Dialog used for the plugin's preferences change by the user.
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-10 */
   static class SpartanPreferencesDialog extends CheckedTreeSelectionDialog {
@@ -271,15 +286,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
   }
 
-  /** TODO Ori Roth: Stub 'ProjectPreferencesHandler::refreshProject' (created
-   * on 2017-02-19)." );
-   * <p>
-   * @param p
-   *        <p>
-   *        [[SuppressWarningsSpartan]]
+  /** Refreshes project, while applying new configuration.
+   * @param p JD
    * @throws CoreException
-   * @throws InterruptedException
-   * @throws InvocationTargetException */
+   * @throws InvocationTargetException
+   * @throws InterruptedException */
   private static void refreshProject(IProject p) throws CoreException, InvocationTargetException, InterruptedException {
     if (p == null || !p.isOpen() || p.getNature(Nature.NATURE_ID) == null)
       return;

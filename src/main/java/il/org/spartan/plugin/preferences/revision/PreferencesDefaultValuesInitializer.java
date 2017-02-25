@@ -9,6 +9,8 @@ import il.org.spartan.plugin.preferences.*;
 
 /** This class is called by Eclipse when the plugin is first loaded and has no
  * default preference values. These are set by the values specified here.
+ * Tippers configurations for projects are managed externally, thus not included
+ * here.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @author Ori Roth
  * @since 2016/03/28 */

@@ -22,7 +22,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO Ori Roth: document class {@link }
+/** Support for plugin's XML configurations file for projects. Currently
+ * describes what tippers are enabled for the project.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-01 */
 public class XMLSpartan {
@@ -35,17 +36,14 @@ public class XMLSpartan {
   private static final String CATEGORY_ID = "id";
   private static final String TIPPER_DESCRIPTION = "description";
   private static final Set<Class<Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
-    // TODO Roth: decide what tippers are non-core
-    // Collections.addAll(NON_CORE, stuff);
+  // TODO Roth: decide what tippers are non-core
+  // Collections.addAll(NON_CORE, stuff);
 
-  /** TODO Ori Roth: Stub 'XMLSpartan::getTippersByCategories' (created on
-   * 2017-02-10)." );
-   * <p>
-   * @param p
-   * @param includeEmptyCategories
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  /** Computes enabled tippers by categories for the project. If some error
+   * occur (such as a corrupted XML file), an empty map is returned.
+   * @param p JD
+   * @param includeEmptyCategories if set, includes categories with no tippers.
+   * @return enabled tippers for the project */
   public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p, final boolean includeEmptyCategories) {
     final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
     final Document d = getFile(p);
@@ -74,6 +72,10 @@ public class XMLSpartan {
     return $;
   }
 
+  /** Computes enabled tippers for project. If some error occur (such as a
+   * corrupted XML file), full tippers collection is returned.
+   * @param p JD
+   * @return enabled tippers for project */
   @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
         .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
@@ -91,13 +93,9 @@ public class XMLSpartan {
     return $;
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartan::updateEnabledTippers' (created on
-   * 2017-02-10)." );
-   * <p>
-   * @param p
-   * @param es
-   *        <p>
-   *        [[SuppressWarningsSpartan]] */
+  /** Updates the project's XML file to enable given tippers.
+   * @param p JD
+   * @param es enabled tippers by name */
   public static void updateEnabledTippers(final IProject p, final Set<String> es) {
     final Document d = getFile(p);
     if (d == null)
@@ -119,12 +117,9 @@ public class XMLSpartan {
     commit(p, d);
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartanParser::getFile' (created on 2017-02-01)."
-   * );
-   * <p>
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  /** Return XML file for given project. Creates one if absent.
+   * @param p JD
+   * @return XML file for project */
   private static Document getFile(final IProject p) {
     try {
       return getFileInner(p);
@@ -135,16 +130,14 @@ public class XMLSpartan {
     }
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartanParser::getFileInner' (created on
-   * 2017-02-01)." );
-   * <p>
-   * @return
+  /** Return XML file for given project. Creates one if absent.
+   * @param p JD
+   * @return XML file for project
    * @throws ParserConfigurationException
    * @throws SAXException
    * @throws IOException
-   *         <p>
-   *         [[SuppressWarningsSpartan]]
-   * @throws CoreException */
+   * @throws CoreException
+   * @return XML file for project */
   private static Document getFileInner(final IProject p) throws CoreException, ParserConfigurationException, SAXException, IOException {
     if (p == null || !p.exists() || !p.isOpen())
       return null;
@@ -175,14 +168,10 @@ public class XMLSpartan {
     return $;
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartan::initialize' (created on 2017-02-01)." );
-   * <p>
-   * @param di
-   * @param di
-   * @param newDocument
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  /** Initialize XML document. Enables all tippers, except declared non core
+   * tippers.
+   * @param d JD
+   * @return given document */
   private static Document initialize(final Document d) {
     if (d == null)
       return null;
@@ -199,15 +188,29 @@ public class XMLSpartan {
     return d;
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartan::createEnabledNodeChild' (created on
-   * 2017-02-01)." );
-   * <p>
-   * @param e
-   * @param t
-   *        <p>
-   *        [[SuppressWarningsSpartan]]
-   * @param seen
-   * @param groups */
+  /** Adds a new category to the XML document.
+   * @param d JD
+   * @param e base XML element (spartan)
+   * @param g category to be added
+   * @param groups documents created element for the category */
+  private static void createEnabledNodeChild(final Document d, final Element e, final TipperGroup g, final Map<TipperGroup, Element> groups) {
+    if (d == null || e == null || g == null || groups == null)
+      return;
+    final Element $ = d.createElement(CATEGORY);
+    if ($ == null)
+      return;
+    $.setAttribute(CATEGORY_ID, g.name());
+    e.appendChild($);
+    groups.put(g, $);
+  }
+
+  /** Adds a new tipper to the XML document.
+   * @param d JD
+   * @param t JD
+   * @param seen seen tippers by name. Tippers can appear multiple times in the
+   *        {@link Toolbox}, so we should avoid duplications
+   * @param groups maps tipper category to already created category element, to
+   *        which we should add the new tipper element as a child */
   private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, final Map<TipperGroup, Element> groups) {
     if (d == null || t == null || seen == null || groups == null)
       return;
@@ -224,32 +227,10 @@ public class XMLSpartan {
     groups.get(Toolbox.groupFor(t.getClass())).appendChild($);
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartan::createEnabledNodeChild' (created on
-   * 2017-02-09)." );
-   * <p>
-   * @param d
-   * @param e
-   * @param g
-   *        <p>
-   *        [[SuppressWarningsSpartan]] */
-  private static void createEnabledNodeChild(final Document d, final Element e, final TipperGroup g, final Map<TipperGroup, Element> groups) {
-    if (d == null || e == null || g == null || groups == null)
-      return;
-    final Element $ = d.createElement(CATEGORY);
-    if ($ == null)
-      return;
-    $.setAttribute(CATEGORY_ID, g.name());
-    e.appendChild($);
-    groups.put(g, $);
-  }
-
-  /** TODO Ori Roth: Stub 'XMLSpartan::commit' (created on 2017-02-01)." );
-   * <p>
-   * @param f
-   * @param d
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  /** Writes XML dom object to file.
+   * @param f JD
+   * @param d JD
+   * @return true iff the operation has been completed successfully */
   private static boolean commit(final IFile f, final Document d) {
     final DOMSource domSource = new DOMSource(d);
     final StringWriter writer = new StringWriter();
@@ -272,18 +253,18 @@ public class XMLSpartan {
     }
   }
 
-  /** TODO Ori Roth: Stub 'XMLSpartan::commit' (created on 2017-02-01)." );
-   * <p>
-   * @param p
-   * @param d
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  /** Writes XML dom object to project.
+   * @param p JD
+   * @param d JD
+   * @return true iff the operation has been completed successfully */
   private static boolean commit(final IProject p, final Document d) {
     final IFile f = p.getFile(FILE_NAME);
     return !(f == null || !f.exists()) && commit(f, d);
   }
 
+  /** Describes an XML element for plugin's XML file.
+   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @since 2017-02-25 */
   public abstract static class SpartanElement {
     public static SpartanElement[] EMPTY = new SpartanElement[0];
     private final String name;
@@ -301,7 +282,7 @@ public class XMLSpartan {
     public boolean enabled() {
       return enabled;
     }
-    
+
     public void enable(boolean enable) {
       enabled = enable;
     }
@@ -315,6 +296,10 @@ public class XMLSpartan {
     }
   }
 
+  /** Describes an XML tipper element for plugin's XML file. The tipper is
+   * connected to {@link SpartanCategory}, and has a description.
+   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @since 2017-02-25 */
   public static class SpartanTipper extends SpartanElement {
     private final SpartanCategory parent;
     private final String description;
@@ -334,6 +319,10 @@ public class XMLSpartan {
     }
   }
 
+  /** Describes an XML category element for plugin's XML file. The category has
+   * a list of its {@link SpartanElement} children.
+   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @since 2017-02-25 */
   public static class SpartanCategory extends SpartanElement {
     private final List<SpartanElement> children;
 
