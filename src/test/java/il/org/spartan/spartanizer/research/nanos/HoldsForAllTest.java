@@ -17,7 +17,7 @@ public class HoldsForAllTest {
 
   @Test public void b() {
     trimmingOf("for (  Entry<?> λ : that.entrySet())   if (λ != null)   return false;  return true;")//
-        .using(IfStatement.class, new ExecuteUnless())//
+        .using(IfStatement.class, new ExecuteUnless(), new NotNullOrReturn())//
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("return that.entrySet().stream().allMatch(λ -> !(λ != null));")//
         .gives("return that.entrySet().stream().allMatch(λ -> λ == null);")//
