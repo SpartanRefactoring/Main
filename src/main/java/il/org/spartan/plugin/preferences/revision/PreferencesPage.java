@@ -27,7 +27,7 @@ import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO Ori Roth: document class {@link }
+/** Revisioned global preferences page for the plugin.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-24 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -41,6 +41,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     listener = new SpartanPropertyListener(refreshNeeded);
   }
 
+  /* (non-Javadoc)
+   * 
+   * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public boolean performOk() {
     final boolean $ = super.performOk();
     changes.commit();
@@ -59,12 +62,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     ));
   }
 
-  /** TODO Ori Roth: Stub 'PreferencesPage::getProjects' (created on
-   * 2017-02-24)." );
-   * <p>
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
     List<Entry<String, Object>> $ = new LinkedList<>();
     IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
@@ -79,6 +77,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     return $;
   }
 
+  /* (non-Javadoc)
+   * 
+   * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(TipperGroup.store());
     setDescription(PAGE_DESCRIPTION);
@@ -94,6 +95,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       this.refreshNeeded = refreshNeeded;
     }
 
+    /* (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.preference.PreferencePage#performApply() */
     @Override public void propertyChange(final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
         refreshNeeded.set(true);
@@ -103,6 +107,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
   }
 
+  /** A widget containing a list of projects and some buttons. Used to configure
+   * specific project. "configure" button is used to open a dialog, allowing the
+   * user to define enabled tippers for the project (see
+   * {@link ProjectPreferencesHandler}). "en/disable" button allows the user to
+   * toggle spartanization nature for the project.
+   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @since 2017-02-25 */
   static class ListSelectionEditor extends ListEditor {
     static final String DELIMETER = ",";
     final List<Map.Entry<String, Object>> elements;
@@ -224,6 +235,10 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
   }
 
+  /** Used to document preferences changes for projects, allowing lazy
+   * configuration changes.
+   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @since 2017-02-25 */
   static class Changes implements Cloneable {
     private Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
     private Map<IProject, Set<String>> preferences2;
