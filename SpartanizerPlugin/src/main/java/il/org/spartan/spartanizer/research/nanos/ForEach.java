@@ -32,6 +32,8 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   protected static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     static final long serialVersionUID = 1L;
     {
+      add(new HoldsForAll());
+      add(new HoldsForAny());
       add(new Aggregate());
       add(new Collect.defender());
       add(new Select());
