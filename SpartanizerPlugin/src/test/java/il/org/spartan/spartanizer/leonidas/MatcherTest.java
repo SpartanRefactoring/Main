@@ -309,4 +309,9 @@ public class MatcherTest {
   @Test public void z() {
     assert patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(ast("try{}catch(What | Ever never ){}")));
   }
+
+  @Test public void z2() {
+    assert patternMatcher("for($T $N1 : $X1) if($X2) return false;", "")
+        .matches(findFirst.enhancedForStatement(ast("for(X x : Y) if(whatever) return false;")));
+  }
 }

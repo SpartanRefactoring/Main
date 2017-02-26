@@ -37,7 +37,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
-        && tippers.anyTips(expression(¢))//
+        && tippers.canTip(expression(¢))//
         && iz.methodInvocation($)//
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
         && parametersNames(d).containsAll(analyze.dependencies(arguments(az.methodInvocation($))));

@@ -20,7 +20,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   };
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
-    return tippers.anyTips(¢);
+    return tippers.canTip(¢);
   }
 
   @Override public Tip pattern(final ConditionalExpression ¢) {

@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Tests {@link HoldsForAny}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
 @SuppressWarnings("static-method")
@@ -93,5 +93,21 @@ public class HoldsForAnyTest {
         .using(EnhancedForStatement.class, new HoldsForAny())//
         .gives("$=f.modifiers().stream().anyMatch(¢->((Modifier)¢).isFinal());")//
     ;
+  }
+
+  @Test public void k() {
+    trimmingOf("for (X x : Y) if (whatever) return true;")//
+        .using(EnhancedForStatement.class, new HoldsForAny())//
+        .gives("returnIf(Y.stream().anyMatch(x -> whatever));")//
+        .gives("returnIf(Y.stream().anyMatch(λ -> whatever));")//
+        .stays();
+  }
+
+  @Test public void l() {
+    trimmingOf("for (X x : Y) if (whatever) $ = true;")//
+        .using(EnhancedForStatement.class, new HoldsForAny())//
+        .gives("$ = Y.stream().anyMatch(x -> whatever);")//
+        .gives("$ = Y.stream().anyMatch(λ -> whatever);")//
+        .stays();
   }
 }

@@ -94,6 +94,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new ReturnOnException(), // R.I.P
         new PercolateException(), // R.I.P
         null)//
+            .add(ClassInstanceCreation.class, //
+                new CopyCollection(), // R.I.P
+                null) //
             .add(ConditionalExpression.class, //
                 new AsBit(), // functional
                 new Max(), // functional
@@ -110,7 +113,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new Singleton(), // functional
                 null)//
             .add(MethodInvocation.class, //
-                new CopyCollection(), // R.I.P
                 new First(), // functional
                 new Last(), // functional
                 null) //
