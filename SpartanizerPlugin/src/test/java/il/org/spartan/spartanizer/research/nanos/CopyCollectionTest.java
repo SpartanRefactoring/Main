@@ -14,13 +14,13 @@ import org.junit.runners.*;
 public class CopyCollectionTest {
   @Test public void a() {
     trimmingOf("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
-        .using(MethodInvocation.class, new CopyCollection())//
+        .using(ClassInstanceCreation.class, new CopyCollection())//
         .gives("StatsAccumulator $=Create.from(values);");
   }
 
   @Test public void b() {
     trimmingOf("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
-        .using(MethodInvocation.class, new CopyCollection())//
+        .using(ClassInstanceCreation.class, new CopyCollection())//
         .gives("StatsAccumulator<N> $=Create.from(values);");
   }
 }

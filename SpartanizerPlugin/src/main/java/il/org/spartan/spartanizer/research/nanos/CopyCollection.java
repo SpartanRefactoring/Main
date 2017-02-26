@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Create a collection out of a copy of another
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public final class CopyCollection extends NanoPatternTipper<MethodInvocation> {
+public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreation> {
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
     static final long serialVersionUID = 1L;
     {
@@ -19,16 +19,16 @@ public final class CopyCollection extends NanoPatternTipper<MethodInvocation> {
     }
   };
 
-  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
+  @Override public String description(@SuppressWarnings("unused") final ClassInstanceCreation __) {
     return "";
   }
 
-  @Override public boolean canTip(final MethodInvocation x) {
-    return tippers.anyTips(az.block(parent(x)));
+  @Override public boolean canTip(final ClassInstanceCreation x) {
+    return tippers.canTip(az.block(parent(parent(parent(x)))));
   }
 
-  @Override public Tip pattern(final MethodInvocation x) {
-    return tippers.firstTip(az.block(parent(x)));
+  @Override public Tip pattern(final ClassInstanceCreation x) {
+    return tippers.firstTip(az.block(parent(parent(parent(x)))));
   }
 
   @Override public Category category() {

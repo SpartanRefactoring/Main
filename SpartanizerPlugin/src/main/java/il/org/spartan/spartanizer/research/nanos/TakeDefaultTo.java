@@ -21,7 +21,7 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
   static final DefaultsTo rival = new DefaultsTo();
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
-    return tippers.anyTips(¢)//
+    return tippers.canTip(¢)//
         && rival.cantTip(¢);
   }
 

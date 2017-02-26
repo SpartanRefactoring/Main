@@ -19,14 +19,15 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
-  
+
   public NanoPatternContainer<N> statementPattern(final String pattern, final String replacement, final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
 
-  public boolean anyTips(final N ¢) {
-    return ¢ != null && stream().anyMatch(λ -> λ.canTip(¢));
+  public boolean canTip(final N ¢) {
+    return ¢ != null//
+        && stream().anyMatch(λ -> λ.canTip(¢));
   }
 
   public Tip firstTip(final N ¢) {
