@@ -10,8 +10,8 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class HoldsForAllTest {
   @Test public void a() {
-    trimmingOf("for (  Entry<?> λ : that.entrySet())   if (m.count(λ.getElement()) != λ.getCount())   return false;  return true;")
-        .using(EnhancedForStatement.class, new HoldsForAll())
+    trimmingOf("for (  Entry<?> λ : that.entrySet())   if (m.count(λ.getElement()) != λ.getCount())   return false;  return true;")//
+        .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("return that.entrySet().stream().allMatch(λ -> !(m.count(λ.getElement()) != λ.getCount()));");
   }
 
@@ -21,6 +21,22 @@ public class HoldsForAllTest {
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("return that.entrySet().stream().allMatch(λ -> !(λ != null));")//
         .gives("return that.entrySet().stream().allMatch(λ -> λ == null);")//
+        .stays();
+  }
+
+  @Test public void c() {
+    trimmingOf("for (X x : Y) if (whatever) return false;")//
+        .using(EnhancedForStatement.class, new HoldsForAll())//
+        .gives("returnIf(Y.stream().allMatch(x -> !(whatever)));")//
+        .gives("returnIf(Y.stream().allMatch(λ -> !(whatever)));")//
+        .stays();
+  }
+
+  @Test public void d() {
+    trimmingOf("for (X x : Y) if (whatever) $ = false;")//
+        .using(EnhancedForStatement.class, new HoldsForAll())//
+        .gives("$ = Y.stream().allMatch(x -> !(whatever));")//
+        .gives("$ = Y.stream().allMatch(λ -> !(whatever));")//
         .stays();
   }
 }
