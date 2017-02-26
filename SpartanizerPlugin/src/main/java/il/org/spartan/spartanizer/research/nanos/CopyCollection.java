@@ -1,34 +1,34 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Create a collection out of a copy of another
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public final class CopyCollection extends NanoPatternTipper<Block> {
-  private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
+public final class CopyCollection extends NanoPatternTipper<MethodInvocation> {
+  private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
     static final long serialVersionUID = 1L;
     {
-      add(TipperFactory.statementsPattern("$T1 $N = new $T2();  $N.addAll($X);", "$T1 $N = Create.from($X);", "CreateFrom pattern"));
+      statementsPattern("$T1 $N = new $T2();  $N.addAll($X);", "$T1 $N = Create.from($X);", "CreateFrom pattern");
     }
   };
 
-  @Override public String description(@SuppressWarnings("unused") final Block __) {
+  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "";
   }
 
-  @Override public boolean canTip(final Block x) {
-    return anyTips(tippers, x);
+  @Override public boolean canTip(final MethodInvocation x) {
+    return tippers.anyTips(az.block(parent(x)));
   }
 
-  @Override public Tip pattern(final Block x) {
-    return firstTip(tippers, x);
+  @Override public Tip pattern(final MethodInvocation x) {
+    return tippers.firstTip(az.block(parent(x)));
   }
 
   @Override public Category category() {

@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.tippers.*;
 
@@ -23,23 +24,19 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
    * the gUIBatchLaconizer. */
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
+    addRejected();
     add(CatchClause.class, //
-        // new ReturnOnException(), // R.I.P
         new SuppressException(), //
-        // new PercolateException(), // R.I.P
         null)//
             .add(CastExpression.class, //
                 new SafeCast(), //
                 null)//
             .add(ConditionalExpression.class, //
-                // new AsBit(), // functional
                 new DefaultsTo(), //
                 new GeneralizedSwitch<>(), //
                 new Unless(), //
                 new SafeReference(), //
                 new TakeDefaultTo(), //
-                // new Max(), // functional
-                // new Min(), // functional
                 null) //
             .add(EnhancedForStatement.class, //
                 new Aggregate(), //
@@ -62,32 +59,19 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             .add(IfStatement.class, //
                 new NotNullOrThrow(), //
                 new NotNullOrReturn(), //
-                new CachingPattern(), //
                 new ExecuteUnless(), //
                 new GeneralizedSwitch<>(), //
-                // new GetOrElseThrow(), //R.I.P
-                // new PutIfAbsent(), // R.I.P
                 new PreconditionNotNull(), //
                 new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
-                // new IsEmpty(), // functional
-                // new LastIndex(), // functional
                 new Infix.SafeReference(), //
-                new Singleton(), //
                 null)//
             .add(MethodInvocation.class, //
-                // new First(), // functional
-                // new Last(), // functional
                 new Reduction(), //
                 null) //
-            .add(ReturnStatement.class, //
-                new ReturnPrevious(), //
-                null) //
-            // new CopyCollection(), // R.I.P
             .add(WhileStatement.class, //
                 new While.CountIf(), //
-                // new Exhaust(), // R.I.P
                 null)//
     ;
     remove(SwitchStatement.class, //
@@ -105,6 +89,41 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
+  private SpartAnalyzer addRejected() {
+    add(CatchClause.class, //
+        new ReturnOnException(), // R.I.P
+        new PercolateException(), // R.I.P
+        null)//
+            .add(ConditionalExpression.class, //
+                new AsBit(), // functional
+                new Max(), // functional
+                new Min(), // functional
+                null) //
+            .add(IfStatement.class, //
+                // new GetOrElseThrow(), //R.I.P
+                new CachingPattern(), // rare
+                new PutIfAbsent(), // R.I.P
+                null) //
+            .add(InfixExpression.class, //
+                // new IsEmpty(), // functional
+                new LastIndex(), // functional
+                new Singleton(), // functional
+                null)//
+            .add(MethodInvocation.class, //
+                new CopyCollection(), // R.I.P
+                new First(), // functional
+                new Last(), // functional
+                null) //
+            .add(ReturnStatement.class, //
+                new ReturnPrevious(), // rare
+                null) //
+            .add(WhileStatement.class, //
+                new Exhaust(), // R.I.P
+                null)//
+    ;
+    return this;
+  }
+
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
@@ -114,22 +133,22 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
-        // new DoNothingReturnParam(), // R.I.P
+        new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
-        // new Down.Caster(), // R.I.P
+        new Down.Caster(), // R.I.P
         new Empty(), //
         new Examiner(), //
         new Getter(), //
         new Let(), //
-        // new ForEachApplier(), // R.I.P, we have ForEach
-        // new SelfCaster(), // R.I.P --> merger into Caster?
+        new ForEachApplier(), // R.I.P, we have ForEach
+        new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
         new Setter(), //
         // new Signature(), //
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
-        // new Up.Caster(), // R.I.P
+        new Up.Caster(), // R.I.P
         null);
     return this;
   }
