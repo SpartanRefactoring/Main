@@ -24,7 +24,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
    * the gUIBatchLaconizer. */
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
-    addRejected();
+    // addRejected();
     add(CatchClause.class, //
         new SuppressException(), //
         null)//
@@ -89,7 +89,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  private SpartAnalyzer addRejected() {
+  @SuppressWarnings("unused") private SpartAnalyzer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
         new PercolateException(), // R.I.P
