@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.tippers.*;
 
