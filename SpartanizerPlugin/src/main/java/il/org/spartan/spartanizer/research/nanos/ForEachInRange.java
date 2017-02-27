@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class ForEachInRange extends NanoPatternTipper<ForStatement> {
   private static final long serialVersionUID = 8025191112596638412L;
   private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<UserDefinedTipper<ForStatement>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("for(int $N1 = $X1; $N1 < $X2; ++$N1) $X3;", "range.from($X1).to($X2).forEach($N1 -> $X3);", "Go fluent: ForEachInRange"));
     }

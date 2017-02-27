@@ -20,8 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Adjuster extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -6381093865952528751L;
   private static final Collection<UserDefinedTipper<Expression>> tippers = new ArrayList<UserDefinedTipper<Expression>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("$N($A)", "", ""));
       add(patternTipper("$N1.$N($A)", "", ""));

@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Last extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = -3498399643413388965L;
   private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X.get($X.size()-1) ", "last($X)", "lisp: last"));
     }

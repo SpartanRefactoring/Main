@@ -14,8 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class InitArray extends NanoPatternTipper<ForStatement> {
   private static final long serialVersionUID = -6565220361424484292L;
   final Collection<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("for (int $N0 = 0; $N0 < $N1; ++$N0)  $N2[$N0] = null;", "init();", "Init array: conevrt to fluent API"));
     }

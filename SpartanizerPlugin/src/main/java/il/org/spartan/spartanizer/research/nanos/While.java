@@ -18,8 +18,7 @@ public class While {
     private static final long serialVersionUID = 1576383489015990127L;
     private static final String description = "CountIf pattern: conevrt to fluent API";
     private static final List<UserDefinedTipper<WhileStatement>> tippers = new ArrayList<UserDefinedTipper<WhileStatement>>() {
-      @SuppressWarnings("hiding")
-      static final long serialVersionUID = 1L;
+      @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
       {
         add(patternTipper("while($X1) if($X2) ++$N3;", "$N3 += countWhile(()->$X1).If(()->$X2);", description));
         add(patternTipper("while($X1) ++$N3;", "$N3 += countWhile(()->$X1);", description));

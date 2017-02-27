@@ -18,8 +18,7 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -6790316652368539802L;
   private static final NanoPatternTipper<EnhancedForStatement> rival = new Select();
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $N2) $N3 = $X;", //
           "$N3 = $N2.stream().reduce(($N1,$N3) -> $X).get();", "Go Fluent. Aggregate"));

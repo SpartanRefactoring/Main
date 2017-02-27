@@ -19,8 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 749438291743116142L;
   private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("$N($A)", "", ""));
       add(patternTipper("$N1.$N2($A)", "", ""));

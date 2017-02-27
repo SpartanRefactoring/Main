@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Max extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -5168213016271470822L;
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X1 > $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
       add(patternTipper("$X2 < $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
