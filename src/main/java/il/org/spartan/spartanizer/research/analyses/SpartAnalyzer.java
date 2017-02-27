@@ -89,43 +89,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
     return this;
   }
 
-  @SuppressWarnings("unused") private SpartAnalyzer addRejected() {
-    add(CatchClause.class, //
-        new ReturnOnException(), // R.I.P
-        new PercolateException(), // R.I.P
-        null)//
-            .add(ClassInstanceCreation.class, //
-                new CopyCollection(), // R.I.P
-                null) //
-            .add(ConditionalExpression.class, //
-                new AsBit(), // functional
-                new Max(), // functional
-                new Min(), // functional
-                null) //
-            .add(IfStatement.class, //
-                // new GetOrElseThrow(), //R.I.P
-                new CachingPattern(), // rare
-                new PutIfAbsent(), // R.I.P
-                null) //
-            .add(InfixExpression.class, //
-                // new IsEmpty(), // functional
-                new LastIndex(), // functional
-                new Singleton(), // functional
-                null)//
-            .add(MethodInvocation.class, //
-                new First(), // functional
-                new Last(), // functional
-                null) //
-            .add(ReturnStatement.class, //
-                new ReturnPrevious(), // rare
-                null) //
-            .add(WhileStatement.class, //
-                new Exhaust(), // R.I.P
-                null)//
-    ;
-    return this;
-  }
-
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //

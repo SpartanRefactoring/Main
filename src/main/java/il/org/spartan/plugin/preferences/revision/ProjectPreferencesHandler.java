@@ -53,7 +53,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(p);
     if (d == null)
       return null;
-    Set<String> pc = getPreferencesChanges(d);
+    final Set<String> pc = getPreferencesChanges(d);
     return pc == null ? null : commit(p, pc);
   }
 
@@ -71,7 +71,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    Set<String> pc = getPreferencesChanges(d);
+    final Set<String> pc = getPreferencesChanges(d);
     return pc == null ? null : commit.apply(p, pc);
   }
 
@@ -80,7 +80,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param p JD
    * @param pc enabled tippers
    * @return null */
-  public static Object commit(IProject p, Set<String> pc) {
+  public static Object commit(final IProject p, final Set<String> pc) {
     XMLSpartan.updateEnabledTippers(p, pc);
     try {
       refreshProject(p);
@@ -113,7 +113,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
    *         tippers */
-  private static SpartanPreferencesDialog getDialog(Map<SpartanCategory, SpartanTipper[]> m) {
+  private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanTipper[]> m) {
     final Shell s = Display.getCurrent().getActiveShell();
     if (s == null || m == null)
       return null;
@@ -243,7 +243,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       });
       $.getTree().addListener(SWT.MouseWheel, e -> tooltips.values().forEach(λ -> λ.setVisible(false)));
       $.addDoubleClickListener(new IDoubleClickListener() {
-        @Override public void doubleClick(DoubleClickEvent e) {
+        @Override public void doubleClick(final DoubleClickEvent e) {
           final ISelection s = e.getSelection();
           if (s == null || s.isEmpty() || !(s instanceof TreeSelection))
             return;
@@ -291,34 +291,30 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @throws CoreException
    * @throws InvocationTargetException
    * @throws InterruptedException */
-  private static void refreshProject(IProject p) throws CoreException, InvocationTargetException, InterruptedException {
+  private static void refreshProject(final IProject p) throws CoreException, InvocationTargetException, InterruptedException {
     if (p == null || !p.isOpen() || p.getNature(Nature.NATURE_ID) == null)
       return;
     if (REFRESH_OPENS_DIALOG) {
-      ProgressMonitorDialog d = Dialogs.progress(true);
-      d.run(true, true, new IRunnableWithProgress() {
-        @Override public void run(IProgressMonitor m) {
-          SpartanizationHandler.runAsynchronouslyInUIThread(new Runnable() {
-            @Override public void run() {
-              Shell s = d.getShell();
-              if (s != null)
-                s.setText("Refreshing project");
-            }
-          });
-          try {
-            p.build(IncrementalProjectBuilder.FULL_BUILD, m);
-          } catch (CoreException x) {
-            monitor.log(x);
-          }
+      final ProgressMonitorDialog d = Dialogs.progress(true);
+      d.run(true, true, m -> {
+        SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
+          final Shell s = d.getShell();
+          if (s != null)
+            s.setText("Refreshing project");
+        });
+        try {
+          p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+        } catch (final CoreException x) {
+          monitor.log(x);
         }
       });
     } else
       new Job("Refreshing " + p.getName()) {
-        @Override protected IStatus run(IProgressMonitor m) {
+        @Override protected IStatus run(final IProgressMonitor m) {
           try {
             p.build(IncrementalProjectBuilder.FULL_BUILD, m);
             return Status.OK_STATUS;
-          } catch (CoreException x) {
+          } catch (final CoreException x) {
             monitor.log(x);
             return Status.CANCEL_STATUS;
           }

@@ -23,7 +23,7 @@ public class Let extends JavadocMarkerNanoPattern {
         && rival.cantTip(first(fragments(az.variableDeclarationStatement(firstStatement(¢)))));
   }
 
-  private static boolean preDelegation(Statement secondStatement) {
+  private static boolean preDelegation(final Statement secondStatement) {
     return iz.expressionStatement(secondStatement)//
         || iz.returnStatement(secondStatement);
   }

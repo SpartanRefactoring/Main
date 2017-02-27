@@ -141,8 +141,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     Expression multiplication = null;
     for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
-      multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1)))
-          .to(TIMES);
+      multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1))).to(TIMES);
     }
     return subject.pair(multiplication, addition).to(TIMES);
   }

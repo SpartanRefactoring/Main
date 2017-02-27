@@ -42,7 +42,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   }
 
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public boolean performOk() {
     final boolean $ = super.performOk();
@@ -52,7 +52,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
-    List<Entry<String, Object>> ps = getProjects();
+    final List<Entry<String, Object>> ps = getProjects();
     changes = new Changes(ps.stream().map(Entry::getValue).collect(Collectors.toList()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     addField(new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), ps,
@@ -64,21 +64,20 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
-    List<Entry<String, Object>> $ = new LinkedList<>();
-    IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-    for (IProject p : workspaceRoot.getProjects()) {
+    final List<Entry<String, Object>> $ = new LinkedList<>();
+    final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+    for (final IProject p : workspaceRoot.getProjects())
       try {
         if (p.isOpen() && p.hasNature(JavaCore.NATURE_ID))
           $.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
-      } catch (CoreException x) {
+      } catch (final CoreException x) {
         monitor.log(x);
       }
-    }
     return $;
   }
 
   /* (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(TipperGroup.store());
@@ -96,7 +95,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     /* (non-Javadoc)
-     * 
+     *
      * @see org.eclipse.jface.preference.PreferencePage#performApply() */
     @Override public void propertyChange(final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
@@ -125,8 +124,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       super(name, labelText, parent);
       this.elements = new ArrayList<>();
       this.elements.addAll(elements);
-      Composite buttonBox = new Composite(parent, SWT.NULL);
-      GridLayout layout = new GridLayout();
+      final Composite buttonBox = new Composite(parent, SWT.NULL);
+      final GridLayout layout = new GridLayout();
       layout.marginWidth = 0;
       buttonBox.setLayout(layout);
       buttonBox.addDisposeListener(event -> {
@@ -140,16 +139,16 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       ableButton.setEnabled(false);
       ableButton.setVisible(true);
       ableButton.addSelectionListener(new SelectionListener() {
-        @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
+        @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
 
-        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {
+        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
 
         @SuppressWarnings("synthetic-access") private void onSelection() {
-          int i = getList().getSelectionIndex();
+          final int i = getList().getSelectionIndex();
           if (i >= 0) {
             onAble.accept(elements.get(i).getValue());
             if (ableButton.getText().equals("Disable tips")) {
@@ -168,16 +167,16 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       configureButton.setEnabled(false);
       configureButton.setVisible(true);
       configureButton.addSelectionListener(new SelectionListener() {
-        @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
+        @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
 
-        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {
+        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
 
         @SuppressWarnings("synthetic-access") private void onSelection() {
-          int i = getList().getSelectionIndex();
+          final int i = getList().getSelectionIndex();
           if (i >= 0)
             onConfigure.accept(elements.get(i).getValue());
         }
@@ -187,8 +186,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         ableButton = null;
       });
       getList().addSelectionListener(new SelectionListener() {
-        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
-          int i = getList().getSelectionIndex();
+        @SuppressWarnings("synthetic-access") @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+          final int i = getList().getSelectionIndex();
           if (i >= 0)
             if (isAble.apply(elements.get(i).getValue()).booleanValue()) {
               ableButton.setText("Disable tips");
@@ -199,13 +198,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
             }
         }
 
-        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {
+        @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           //
         }
       });
     }
 
-    @Override protected void doFillIntoGrid(Composite parent, int numColumns) {
+    @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
       super.doFillIntoGrid(parent, numColumns);
       getButtonBoxControl(parent).dispose();
     }
@@ -213,8 +212,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     @Override protected String[] parseString(final String stringList) {
       if (stringList != null && !stringList.isEmpty())
         return stringList.split(DELIMETER);
-      List<String> $ = new LinkedList<>();
-      for (Entry<String, Object> e : elements)
+      final List<String> $ = new LinkedList<>();
+      for (final Entry<String, Object> e : elements)
         $.add(e.getKey());
       return $.toArray(new String[elements.size()]);
     }
@@ -240,9 +239,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-25 */
   static class Changes implements Cloneable {
-    private Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
-    private Map<IProject, Set<String>> preferences2;
-    private Map<IProject, Boolean> ables;
+    private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
+    private final Map<IProject, Set<String>> preferences2;
+    private final Map<IProject, Boolean> ables;
 
     private Changes() {
       preferences1 = new HashMap<>();
@@ -250,11 +249,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       ables = new HashMap<>();
     }
 
-    public Changes(List<Object> projects) {
+    public Changes(final List<Object> projects) {
       preferences1 = new HashMap<>();
       preferences2 = new HashMap<>();
       ables = new HashMap<>();
-      for (Object p : projects) {
+      for (final Object p : projects) {
         preferences1.put((IProject) p, null);
         preferences2.put((IProject) p, null);
         ables.put((IProject) p, null);
@@ -262,14 +261,14 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     @Override protected Object clone() {
-      Changes $ = new Changes();
+      final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
       $.preferences2.putAll(preferences2);
       $.ables.putAll(ables);
       return $;
     }
 
-    public Map<SpartanCategory, SpartanTipper[]> getPreference(IProject p) {
+    public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject p) {
       Map<SpartanCategory, SpartanTipper[]> $ = preferences1.get(p);
       if ($ == null) {
         $ = XMLSpartan.getTippersByCategories(p, false);
@@ -278,34 +277,33 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return $;
     }
 
-    public Boolean getAble(IProject p) {
+    public Boolean getAble(final IProject p) {
       Boolean $ = ables.get(p);
-      if ($ == null) {
+      if ($ == null)
         try {
           $ = Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
-        } catch (CoreException x) {
+        } catch (final CoreException x) {
           monitor.log(x);
           $ = Boolean.FALSE;
         }
-      }
       return $;
     }
 
-    public void update(IProject p, Boolean able) {
+    public void update(final IProject p, final Boolean able) {
       ables.put(p, able);
     }
 
-    public Void update(IProject p, Set<String> preference) {
+    public Void update(final IProject p, final Set<String> preference) {
       preferences2.put(p, preference);
-      for (SpartanTipper[] ts : preferences1.get(p).values())
-        for (SpartanTipper t : ts)
+      for (final SpartanTipper[] ts : preferences1.get(p).values())
+        for (final SpartanTipper t : ts)
           t.enable(preference.contains(t.name()));
       return null;
     }
 
     public synchronized void commit() {
       ((Changes) clone()).commitSelf();
-      for (IProject p : preferences1.keySet()) {
+      for (final IProject p : preferences1.keySet()) {
         preferences1.put(p, null);
         preferences2.put(p, null);
         ables.put(p, null);
@@ -314,15 +312,15 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
     private void commitSelf() {
       new Job("Applying preferences changes") {
-        @SuppressWarnings("synthetic-access") @Override protected IStatus run(IProgressMonitor m) {
+        @SuppressWarnings("synthetic-access") @Override protected IStatus run(final IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
-          for (IProject p : preferences2.keySet()) {
+          for (final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)
               ProjectPreferencesHandler.commit(p, preferences2.get(p));
             if (ables.get(p) != null)
               try {
                 TipsOnOffToggle.toggleNature(p, ables.get(p).booleanValue());
-              } catch (CoreException x) {
+              } catch (final CoreException x) {
                 monitor.log(x);
               }
             m.worked(1);
