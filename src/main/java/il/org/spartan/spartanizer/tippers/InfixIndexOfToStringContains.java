@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -5385990280729240578L;
   /** Adds to the "tippers" list the basic transformation regarding to
    * "contains" method of String. This list is static, and therefore should be
    * initialized only once. */

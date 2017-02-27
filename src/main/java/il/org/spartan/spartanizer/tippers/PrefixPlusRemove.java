@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.NOP.onNumbers {
+  private static final long serialVersionUID = -7675038373029859299L;
+
   @Override public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }

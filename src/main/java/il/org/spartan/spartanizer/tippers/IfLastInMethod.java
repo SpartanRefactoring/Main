@@ -26,6 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class IfLastInMethod extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {
+  private static final long serialVersionUID = 7913539614277563670L;
+
   @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + expression(¢) + " for early return";
   }

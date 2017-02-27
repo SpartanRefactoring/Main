@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDeclarationFragment>
     //
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 6215455250967484555L;
+
   @Override public String description() {
     return "Remove default values initiliazing field";
   }

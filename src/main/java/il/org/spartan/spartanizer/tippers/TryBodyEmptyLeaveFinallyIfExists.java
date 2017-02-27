@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-21 */
 public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TryStatement>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 339602734857194942L;
+
   @Override public boolean prerequisite(final TryStatement ¢) {
     final Block $ = ¢.getBody();
     return $ != null && statements($).isEmpty();

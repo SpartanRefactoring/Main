@@ -36,6 +36,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
+  private static final long serialVersionUID = -8635256643058136983L;
+
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final InfixExpression x) {
     gather(x, new ArrayList<>());
     x.getOperator();

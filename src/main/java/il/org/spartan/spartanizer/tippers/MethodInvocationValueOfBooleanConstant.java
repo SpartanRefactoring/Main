@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-04-04 */
 public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -875185107180196417L;
+
   private static String asString(final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }

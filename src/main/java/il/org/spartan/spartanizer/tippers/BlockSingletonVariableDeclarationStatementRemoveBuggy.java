@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-11 */
 public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends CarefulTipper<Block>//
     implements TipperCategory.Deadcode {
+  private static final long serialVersionUID = -7023628505782133428L;
+
   @Override public String description() {
     return "Remove the block";
   }

@@ -23,6 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<Assignment>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -6131575687350461523L;
+
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)
