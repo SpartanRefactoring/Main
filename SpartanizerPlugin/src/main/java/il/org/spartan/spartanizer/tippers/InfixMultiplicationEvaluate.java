@@ -24,6 +24,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
+  private static final long serialVersionUID = 8014753129449325929L;
+
   @Override @SuppressWarnings("boxing") double evaluateDouble(final List<Expression> $) {
     try {
       return $.stream().map(az.throwing::double¢).reduce(1.0, (x, y) -> x * y);

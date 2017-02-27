@@ -29,6 +29,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>
     //
     implements TipperCategory.Arithmetic, TipperCategory.CommnonFactoring {
+  private static final long serialVersionUID = -4040103682801205377L;
+
   private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }

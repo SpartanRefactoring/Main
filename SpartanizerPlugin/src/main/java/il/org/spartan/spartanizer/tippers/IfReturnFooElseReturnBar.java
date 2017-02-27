@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Ternarization {
+  private static final long serialVersionUID = -7923427929124988553L;
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace if with a return of a conditional statement";
   }

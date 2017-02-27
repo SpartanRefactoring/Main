@@ -22,6 +22,7 @@ import java.util.Comparator;
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -2979399116380160977L;
   private static final Comparator<Expression> specifity = new specificity();
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {

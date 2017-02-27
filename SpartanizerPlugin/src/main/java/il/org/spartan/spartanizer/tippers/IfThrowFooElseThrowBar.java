@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Ternarization {
+  private static final long serialVersionUID = -7106502252108749001L;
+
   @Override public String description(final IfStatement ¢) {
     return "Consolidate 'if' " + trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
   }

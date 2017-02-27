@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tipping;
 import static il.org.spartan.lisp.*;
 import static java.lang.reflect.Modifier.*;
 
+import java.io.*;
 import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -31,7 +32,9 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
-    implements TipperCategory {
+    implements TipperCategory, Serializable {
+  private static final long serialVersionUID = -2252675511987504571L;
+
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
    * fragments which are not live in the containing
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this

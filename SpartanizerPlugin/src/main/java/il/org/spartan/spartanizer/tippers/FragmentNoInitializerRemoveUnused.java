@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-23 */
 public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<VariableDeclarationFragment>//
     implements TipperCategory.Deadcode {
+  private static final long serialVersionUID = -855471283048149285L;
+
   @Override public String description() {
     return "Remove unused, uninitialized variable";
   }

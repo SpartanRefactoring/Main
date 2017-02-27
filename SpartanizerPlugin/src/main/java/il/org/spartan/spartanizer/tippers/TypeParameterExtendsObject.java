@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -8887752937006192444L;
+
   @Override public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }

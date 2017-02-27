@@ -23,6 +23,8 @@ import static java.util.stream.Collectors.*;
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
+  private static final long serialVersionUID = 5746921500852829859L;
+
   private static ASTNode replacement(final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
     return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);

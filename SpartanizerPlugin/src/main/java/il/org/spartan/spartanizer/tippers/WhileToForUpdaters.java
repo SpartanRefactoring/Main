@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -382828224028857273L;
+
   private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(copy.of(¢.getExpression()));

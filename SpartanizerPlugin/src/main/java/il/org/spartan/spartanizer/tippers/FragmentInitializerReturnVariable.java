@@ -22,6 +22,8 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnVariable extends $FragementAndStatement//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -7344214948464934471L;
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }

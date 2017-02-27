@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends AbstractVariableDeclarationChangeName<N>//
     implements TipperCategory.Annonimization {
+  private static final long serialVersionUID = 2942670719772764228L;
+
   @Override public String description(final N ¢) {
     return "Use double underscore instead of " + trivia.gist(¢);
   }

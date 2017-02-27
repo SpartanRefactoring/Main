@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onBooleans {
+  private static final long serialVersionUID = -8461776767592437316L;
+
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'true' argument to '&&'";
   }
