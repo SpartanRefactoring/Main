@@ -34,7 +34,7 @@ public class XMLSpartan {
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
   private static final String CATEGORY_ID = "id";
-  private static final String TIPPER_DESCRIPTION = "description";
+  @SuppressWarnings("unused") @Deprecated private static final String TIPPER_DESCRIPTION = "description";
   private static final Set<Class<Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   // TODO Roth: decide what tippers are non-core
   // Collections.addAll(NON_CORE, stuff);
@@ -61,8 +61,12 @@ public class XMLSpartan {
       if (ll != null)
         for (int j = 0; j < ll.getLength(); ++j) {
           final Element ee = (Element) ll.item(j);
-          final SpartanTipper st = new SpartanTipper(ee.getAttribute(TIPPER_ID), Boolean.parseBoolean(ee.getAttribute(ENABLED)), se,
-              ee.getAttribute(TIPPER_DESCRIPTION));
+          final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(ee.getAttribute(TIPPER_ID));
+          if (tc == null)
+            continue;
+          final String description = Toolbox.Tables.TipperdescriptionCache.get(tc);
+          final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(ee.getAttribute(ENABLED)), se,
+              description == null ? "No available description" : description);
           ts.add(st);
           se.addChild(st);
         }
@@ -108,7 +112,8 @@ public class XMLSpartan {
       if (ll != null)
         for (int j = 0; j < ll.getLength(); ++j) {
           final Element ee = (Element) ll.item(j);
-          if (es.contains(ee.getAttribute(TIPPER_ID)))
+          final String nameByID = Toolbox.Tables.TipperIDNameTranslationTable.get(ee.getAttribute(TIPPER_ID));
+          if (nameByID != null && es.contains(nameByID))
             ee.setAttribute(ENABLED, "true");
           else
             ee.setAttribute(ENABLED, "false");
@@ -221,8 +226,7 @@ public class XMLSpartan {
     if ($ == null)
       return;
     $.setAttribute(ENABLED, !NON_CORE.contains(t.getClass()) + "");
-    $.setAttribute(TIPPER_ID, n);
-    $.setAttribute(TIPPER_DESCRIPTION, t.description());
+    $.setAttribute(TIPPER_ID, ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "");
     seen.add(n);
     groups.get(Toolbox.groupFor(t.getClass())).appendChild($);
   }
