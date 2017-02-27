@@ -15,8 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Delegator extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -4053526639017810391L;
   private static final NanoPatternContainer<Expression> tippers = new NanoPatternContainer<Expression>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       patternTipper("$N($A)", "", "");
       patternTipper("$N1.$N($A)", "", "");

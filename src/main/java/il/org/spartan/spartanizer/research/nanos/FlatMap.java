@@ -17,8 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class FlatMap extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = 3697154817276899051L;
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $X1) $N2.addAll($N1);", "$N2.addAll(($X1).stream().flatMap($N1 -> $N1));",
           "FlatMap pattern: conevrt to fluent API"));
