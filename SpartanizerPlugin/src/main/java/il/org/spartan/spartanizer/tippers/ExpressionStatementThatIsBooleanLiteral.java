@@ -50,7 +50,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
     return (methodInvocation = ¢) != null;
   }
 
-  boolean set(final SimpleName ¢) {
+  static boolean set(final SimpleName ¢) {
     return "that".equals((¢) + "");
   }
 
