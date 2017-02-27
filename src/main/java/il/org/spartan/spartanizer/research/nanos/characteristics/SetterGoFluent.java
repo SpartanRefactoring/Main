@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
+  private static final long serialVersionUID = -7203054410598850023L;
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
   @Override public boolean canTip(final MethodDeclaration ¢) {

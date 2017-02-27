@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 7117505785157896738L;
+
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))

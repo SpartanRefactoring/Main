@@ -18,7 +18,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Nov 7, 2016 */
 public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
+  private static final long serialVersionUID = 4280618302338637454L;
   private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("if($X) $N($A);", "execute(() -> $N($A)).when($X);", "turn into when(X).execute(Y)"));

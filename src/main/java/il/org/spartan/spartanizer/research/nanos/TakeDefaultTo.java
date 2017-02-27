@@ -9,7 +9,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
 public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression> {
+  private static final long serialVersionUID = -2244844927280034691L;
   private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       patternTipper("$X1 != null ? $X2 : $X3", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent");

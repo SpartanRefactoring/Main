@@ -35,6 +35,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 1875447962989759838L;
+
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
   }

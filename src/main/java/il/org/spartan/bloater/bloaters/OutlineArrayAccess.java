@@ -28,6 +28,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 3783281424560338347L;
+
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }

@@ -35,6 +35,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 // TODO: take care of single var declaration, tests
 public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -3829131163900046060L;
+
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }

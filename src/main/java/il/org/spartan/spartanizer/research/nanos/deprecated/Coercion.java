@@ -24,6 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Coercion extends NanoPatternTipper<CastExpression> {
+  private static final long serialVersionUID = 4421426553044419392L;
   private static final String API_LEVEL_FILE = "file";
   private static final String API_LEVEL_PACKAGE = "package";
   private static final String API_LEVEL_TYPE = "type";

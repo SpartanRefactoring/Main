@@ -15,8 +15,10 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = -6790316652368539802L;
   private static final NanoPatternTipper<EnhancedForStatement> rival = new Select();
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $N2) $N3 = $X;", //
