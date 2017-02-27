@@ -15,8 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Getter extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -6493535033790617317L;
   private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("return $N;", "", ""));
       add(patternTipper("return this.$N;", "", ""));
