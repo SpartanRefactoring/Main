@@ -26,7 +26,6 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
 
   // TODO: Yossi Gil: this should probably be in lisp, but I can't access its
   // source anymore
-
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }

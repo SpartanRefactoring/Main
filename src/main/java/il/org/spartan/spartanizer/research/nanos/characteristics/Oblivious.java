@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
