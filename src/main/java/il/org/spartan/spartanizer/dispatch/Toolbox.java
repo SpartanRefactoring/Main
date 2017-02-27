@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
@@ -23,6 +24,21 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Toolbox {
+  @SuppressWarnings("unchecked")
+  public static class Tables {
+    public static Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
+    public static Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
+    public static Map<Class<? extends Tipper<?>>, String> TipperdescriptionCache = new HashMap<>();
+    static {
+      for (Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
+        final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
+        TipperIDClassTranslationTable.put(id, (Class<? extends Tipper<?>>) t.getClass());
+        TipperIDNameTranslationTable.put(id, t.getClass().getSimpleName());
+        TipperdescriptionCache.put((Class<? extends Tipper<?>>) t.getClass(), t.description());
+      }
+    }
+  }
+
   public static void main(final String[] args) {
     final Toolbox t = freshCopyOfAllTippers();
     System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
