@@ -12,7 +12,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
 public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreation> {
+  private static final long serialVersionUID = 5603169704272959211L;
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       statementsPattern("$T1 $N = new $T2();  $N.addAll($X);", "$T1 $N = Create.from($X);", "CreateFrom pattern");

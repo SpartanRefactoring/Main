@@ -13,6 +13,8 @@ import il.org.spartan.utils.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
 public class ArgumentsTuple extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = -6753982059151484641L;
+
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (!hazAtLeastTwoParameters(d))
       return false;

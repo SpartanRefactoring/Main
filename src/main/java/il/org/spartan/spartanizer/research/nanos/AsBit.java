@@ -15,7 +15,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Dec 7, 2016 */
 public class AsBit extends NanoPatternTipper<ConditionalExpression> {
+  private static final long serialVersionUID = -5988111426167317498L;
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X ? 1 : 0", "as.bit($X)", ""));

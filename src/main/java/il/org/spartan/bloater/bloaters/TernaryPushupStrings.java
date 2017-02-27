@@ -21,6 +21,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-08 */
 public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -5602484588967209664L;
+
   @Override public ASTNode replacement(final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
