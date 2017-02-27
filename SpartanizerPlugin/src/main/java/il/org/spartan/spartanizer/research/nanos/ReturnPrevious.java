@@ -19,8 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
   private static final long serialVersionUID = 5711454852792640619L;
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(statementsPattern("$T $N2 = $N3; $N3 = $X; return $N2;", "return update($N3).with($X).getOld();", "Return Old"));
     }

@@ -21,8 +21,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -2812051728758407982L;
   private static final Collection<UserDefinedTipper<Block>> blockTippers = new ArrayList<UserDefinedTipper<Block>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).collect(toList());", //
@@ -39,8 +38,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   static final Collection<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    @SuppressWarnings("hiding")
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$N1.addAll(($X1).stream().filter($N2 -> $X2).collect(toList()));", //

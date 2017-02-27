@@ -52,7 +52,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
 
   static boolean set(final SimpleName ¢) {
-    return "that".equals((¢) + "");
+    return "that".equals(¢ + "");
   }
 
   boolean setFirst(final Expression ¢) {
