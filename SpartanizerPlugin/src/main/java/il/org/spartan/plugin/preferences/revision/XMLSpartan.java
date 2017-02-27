@@ -27,7 +27,9 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-01 */
 public class XMLSpartan {
-  private static final String CURRENT_VERSION = "1.0";
+  private static final String CURRENT_VERSION = "2.0";
+  private static final String BASE = "spartan";
+  private static final String VERSION = "version";
   private static final String FILE_NAME = "spartan.xml";
   private static final String TIPPER = "tipper";
   @SuppressWarnings("unused") @Deprecated private static final String CATEGORY = "category";
@@ -157,13 +159,18 @@ public class XMLSpartan {
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-    final Document $ = b.parse(fl.getContents());
+    Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
     if (e == null)
       return null;
     e.normalize();
+    NodeList bs = $.getElementsByTagName(BASE);
+    if (bs == null || bs.getLength() != 1 || !validate($, ((Element) bs.item(0)).getAttribute(VERSION))) {
+      $ = initialize(b.newDocument());
+      commit(fl, $);
+    }
     return $;
   }
 
@@ -174,10 +181,10 @@ public class XMLSpartan {
   private static Document initialize(final Document d) {
     if (d == null)
       return null;
-    if (d.getElementById("spartan") != null)
+    if (d.getElementById(BASE) != null)
       return d;
     final Element e = d.createElement("spartan");
-    e.setAttribute("version", CURRENT_VERSION);
+    e.setAttribute(VERSION, CURRENT_VERSION);
     final Set<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(t -> createEnabledNodeChild(d, t, seen, e));
     d.appendChild(e);
@@ -239,6 +246,22 @@ public class XMLSpartan {
   private static boolean commit(final IProject p, final Document d) {
     final IFile f = p.getFile(FILE_NAME);
     return !(f == null || !f.exists()) && commit(f, d);
+  }
+
+  /** Manipulates documents with different version / corrupted files.
+   * @param $ plugin's XML document
+   * @param version document's version
+   * @return true iff the document is valid, and does not require
+   *         initialization */
+  private static boolean validate(@SuppressWarnings("unused") Document $, String version) {
+    if (CURRENT_VERSION.equals(version))
+      return true;
+    switch (version) {
+      case "1.0":
+        return false;
+      default:
+        return false;
+    }
   }
 
   /** Describes an XML element for plugin's XML file.
