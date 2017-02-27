@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 25, 2016 */
 public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+  private static final long serialVersionUID = 7723281513517888L;
+
   @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }

@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
+  private static final long serialVersionUID = 5806282917111501608L;
+
   public abstract ASTNode replacement(N n);
 
   @Override public final Tip tip(final N n) {

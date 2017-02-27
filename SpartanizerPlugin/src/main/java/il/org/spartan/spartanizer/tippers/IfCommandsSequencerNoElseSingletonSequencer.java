@@ -22,6 +22,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
+  private static final long serialVersionUID = -5423686618924537619L;
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert conditional and use next statement)";
   }

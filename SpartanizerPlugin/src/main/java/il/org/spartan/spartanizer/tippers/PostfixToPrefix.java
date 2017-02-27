@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = 7490692444066432956L;
+
   private static String description(final Operator ¢) {
     return (¢ == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }

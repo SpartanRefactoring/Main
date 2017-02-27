@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016/12/11 */
 public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -5353123467714120198L;
   private List<Expression> arguments;
   private MethodInvocation methodInvocation;
   private Expression first;

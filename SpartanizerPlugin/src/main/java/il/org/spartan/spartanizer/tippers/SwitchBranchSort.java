@@ -17,6 +17,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = -3538528399312058847L;
+
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)

@@ -18,6 +18,8 @@ import static il.org.spartan.lisp.first;
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -5815591308727978558L;
+
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));

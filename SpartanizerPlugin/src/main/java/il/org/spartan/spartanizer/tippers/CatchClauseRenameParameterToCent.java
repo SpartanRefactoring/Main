@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
     implements TipperCategory.Centification {
+  private static final long serialVersionUID = -6638105215049141624L;
+
   @Override public String description(final CatchClause ¢) {
     return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
   }

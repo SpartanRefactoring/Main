@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 05-12-2016 */
 public class InfixPlusToMinus extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 2753862216811010879L;
+
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !iz.prefixMinus(¢.getRightOperand()) || !iz.infixPlus(¢) ? null
         : subject.pair(¢.getLeftOperand(), az.prefixExpression(¢.getRightOperand()).getOperand()).to(Operator.MINUS);

@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -9097148639014944004L;
+
   @Override public String description() {
     return "Remove redundant final modifier of try resource";
   }

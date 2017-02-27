@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-21 */
 public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 8587376936334392420L;
+
   @Override protected boolean prerequisite(final Initializer ¢) {
     final Block $ = ¢.getBody();
     return ¢.getJavadoc() == null && ($ == null || statements($).isEmpty());

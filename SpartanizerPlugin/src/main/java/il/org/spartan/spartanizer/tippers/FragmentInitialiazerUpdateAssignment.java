@@ -25,6 +25,8 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @since 2015-08-07 */
 public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -6925930851197136485L;
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }

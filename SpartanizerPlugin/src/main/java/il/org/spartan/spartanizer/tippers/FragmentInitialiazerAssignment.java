@@ -24,6 +24,8 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @since 2015-08-07 */
 public final class FragmentInitialiazerAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = 1477509470490701826L;
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
