@@ -34,7 +34,7 @@ public class SwitchBranch {
 
   public boolean hasDefault() {
     if (hasDefault < 0)
-      hasDefault = (int) Math.max(1,cases.stream().filter(SwitchCase::isDefault).count());
+      hasDefault = (int) Math.max(1, cases.stream().filter(SwitchCase::isDefault).count());
     return hasDefault == 1;
   }
 

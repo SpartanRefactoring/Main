@@ -29,7 +29,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         final Assignment newTail = copy.of($);
-        Assignment p = rightMost(newTail);
+        final Assignment p = rightMost(newTail);
         final Assignment newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);

@@ -283,7 +283,7 @@ public class XMLSpartan {
       return enabled;
     }
 
-    public void enable(boolean enable) {
+    public void enable(final boolean enable) {
       enabled = enable;
     }
 
