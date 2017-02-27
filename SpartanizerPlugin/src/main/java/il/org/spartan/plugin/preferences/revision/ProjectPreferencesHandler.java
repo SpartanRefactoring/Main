@@ -106,7 +106,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   /** @param p JD
    * @return preferences configuration dialog for project */
   private static SpartanPreferencesDialog getDialog(final IProject p) {
-    return getDialog(XMLSpartan.getTippersByCategories(p, false));
+    return getDialog(XMLSpartan.getTippersByCategories(p));
   }
 
   /** @param m enabled tippers collection
