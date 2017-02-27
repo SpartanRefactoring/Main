@@ -40,7 +40,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
       }
 
       public Assignment rightMost(final Assignment newTail) {
-        for (Assignment $ = newTail;; $ = az.assignment(right($)))
+        for (@SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
             return $;
       }

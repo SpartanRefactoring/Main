@@ -10,7 +10,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.operation.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.window.*;

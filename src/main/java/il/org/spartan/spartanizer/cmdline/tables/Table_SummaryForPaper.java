@@ -20,7 +20,7 @@ import il.org.spartan.tables.*;
  * @since 2017-02-10 */
 public class Table_SummaryForPaper extends FolderASTVisitor {
   private static Table writer;
-  private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
+  @SuppressWarnings("unused") private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static HashSet<String> packages = new HashSet<>();
   protected final Stack<CompilationUnitRecord> compilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
