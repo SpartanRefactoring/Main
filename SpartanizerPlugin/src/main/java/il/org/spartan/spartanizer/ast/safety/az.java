@@ -55,8 +55,8 @@ public enum az {
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
   }
-  
-  public static Initializer initializer(ASTNode $) {
+
+  public static Initializer initializer(final ASTNode $) {
     return eval(() -> ((Initializer) $)).when($ instanceof Initializer);
   }
 
@@ -503,7 +503,7 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-      return az.variableDeclarationExpression(first(initializers($)));
+    return az.variableDeclarationExpression(first(initializers($)));
   }
 
   /** @param ¢ JD

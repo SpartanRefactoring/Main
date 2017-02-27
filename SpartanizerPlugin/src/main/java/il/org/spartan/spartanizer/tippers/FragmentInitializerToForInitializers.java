@@ -89,10 +89,10 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
-      final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(first(initializers($)));
+    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(first(initializers($)));
     initializers($).clear();
     initializers($).add(make.variableDeclarationExpression(s));
-      fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
+    fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

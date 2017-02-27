@@ -19,10 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016/12/11 */
 public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Idiomatic {
-
   private List<Expression> arguments;
   private MethodInvocation methodInvocation;
-  @SuppressWarnings("unused") private SimpleName methodName;
   private Expression first;
   private BooleanLiteral booleanLiteral;
   private ExpressionStatement expressionStatement;
@@ -32,7 +30,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
 
   @Override protected boolean prerequisite(final ExpressionStatement ¢) {
-    return set(az.methodInvocation((expressionStatement=¢).getExpression())) //
+    return set(az.methodInvocation((expressionStatement = ¢).getExpression())) //
         && set(methodInvocation.getName()) //
         && set(arguments(methodInvocation)) //
         && setFirst(first(arguments)) //
@@ -53,7 +51,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
 
   boolean set(final SimpleName ¢) {
-    return "that".equals((methodName = ¢) + "");
+    return "that".equals((¢) + "");
   }
 
   boolean setFirst(final Expression ¢) {

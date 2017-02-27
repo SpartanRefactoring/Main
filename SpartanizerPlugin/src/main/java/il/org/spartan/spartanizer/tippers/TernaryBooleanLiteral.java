@@ -32,8 +32,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
   /** Consider an expression {@code
-       * a ? b : c
-       * } in a sense it is the same as {@code
+        * a ? b : c
+        * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>
