@@ -18,6 +18,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-24 */
 public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 121321364655045957L;
+
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }

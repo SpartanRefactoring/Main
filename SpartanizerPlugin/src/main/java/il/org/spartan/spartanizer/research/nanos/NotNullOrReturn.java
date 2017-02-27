@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
+  private static final long serialVersionUID = 3915101342508232691L;
   private static final String description = "replace with azzert.notNull(X)";
   private static final PreconditionNotNull rival = new PreconditionNotNull();
 

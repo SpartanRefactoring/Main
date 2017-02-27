@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** One statement method checking a parameter is of certain type
  * @author Ori Marcovitch */
 public class TypeChecker extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 3047515329200202341L;
+
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     final ReturnStatement $ = az.returnStatement(onlyStatement(¢));
     return hazOneParameter(¢) //

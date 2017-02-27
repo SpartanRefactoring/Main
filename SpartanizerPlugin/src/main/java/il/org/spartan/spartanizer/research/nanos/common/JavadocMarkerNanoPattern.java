@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.engine.*;
  * Once a method is marked by a nano, it won't be marked again by the same nano.
  * @author Ori Marcovitch */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodDeclaration> implements MethodPatternUtilitiesTrait {
+  private static final long serialVersionUID = -3476158475903575781L;
+
   @Override public final boolean canTip(final MethodDeclaration ¢) {
     final Javadoc $ = javadoc(¢);
     return ($ == null || !($ + "").contains(tag())) && prerequisites(¢)

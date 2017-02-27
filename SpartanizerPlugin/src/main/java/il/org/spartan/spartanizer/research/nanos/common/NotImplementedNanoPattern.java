@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTipper<N> {
+  private static final long serialVersionUID = -7953784585309364300L;
+
   @Override public String technicalName() {
     return null;
   }

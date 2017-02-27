@@ -19,8 +19,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = -7223559225122388899L;
   private static final String description = "Go Fluent : FindFirst";
   private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(statementsPattern("for($T $N : $X1) if($X2) return $N; return $L;", //
@@ -42,6 +44,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   private static final Collection<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(new HoldsForAll());

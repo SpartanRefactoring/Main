@@ -12,8 +12,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
 public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = 3787670358656343399L;
   private static final String description = "Any matches pattern. Consolidate into one statement";
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       statementsPattern("for($T $N1 : $X1) if($X2) return true; return false;", //
@@ -23,6 +25,7 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       patternTipper("for($T $N1 : $X1) if($X2) return true;", //
