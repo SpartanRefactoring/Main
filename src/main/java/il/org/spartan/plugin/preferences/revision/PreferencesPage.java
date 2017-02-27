@@ -271,7 +271,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject p) {
       Map<SpartanCategory, SpartanTipper[]> $ = preferences1.get(p);
       if ($ == null) {
-        $ = XMLSpartan.getTippersByCategories(p, false);
+        $ = XMLSpartan.getTippersByCategories(p);
         preferences1.put(p, $);
       }
       return $;
