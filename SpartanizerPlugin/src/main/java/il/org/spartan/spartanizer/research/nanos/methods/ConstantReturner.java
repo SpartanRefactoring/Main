@@ -13,8 +13,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public class ConstantReturner extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 6491594906301190270L;
   private static final JavadocMarkerNanoPattern rival = new Default();
   private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("return $L;", "", ""));

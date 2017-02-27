@@ -22,6 +22,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-28 */
 public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 4972402353938739657L;
+
   // TODO: Ori Roth - fix this description --yg
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use regualr assignment wth operator";

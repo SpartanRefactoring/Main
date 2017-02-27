@@ -11,7 +11,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Class to catch some reduce occurrences - deprecated
  * @author Ori Marcovitch */
 public class Reduce extends NanoPatternTipper<ForStatement> {
+  private static final long serialVersionUID = 7398728180352211209L;
   final Collection<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(TipperFactory.patternTipper("for (int $N0 = $N1; $N0 < $N2; ++$N0)  $N3 = 31 * $N3 + $N4.$N5($N6[$N0]);", "reduce();", "reduce"));

@@ -14,7 +14,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Dec 17, 2016 */
 public class Select extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = 3386684152020169902L;
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($N3);", //

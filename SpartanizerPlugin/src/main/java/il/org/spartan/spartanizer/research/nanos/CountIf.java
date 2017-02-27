@@ -14,8 +14,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = 7795065631998358969L;
   private static final String description = "CountIf pattern: conevrt to fluent API";
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T $N1 : $X1) if($X2) ++$N3;", "$N3 += ($X1).stream().filter($N1 -> $X2).count();", description));

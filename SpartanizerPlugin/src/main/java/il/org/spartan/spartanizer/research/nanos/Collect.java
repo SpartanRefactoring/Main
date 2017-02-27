@@ -19,7 +19,9 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-18 */
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = -2812051728758407982L;
   private static final Collection<UserDefinedTipper<Block>> blockTippers = new ArrayList<UserDefinedTipper<Block>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
@@ -37,6 +39,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   static final Collection<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+    @SuppressWarnings("hiding")
     static final long serialVersionUID = 1L;
     {
       add(patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
@@ -55,6 +58,8 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   };
 
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
+    private static final long serialVersionUID = -1531336007723130062L;
+
     @Override protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
