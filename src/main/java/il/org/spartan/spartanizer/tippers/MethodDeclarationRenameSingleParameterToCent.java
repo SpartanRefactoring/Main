@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {
+  private static final long serialVersionUID = 6162035659739185152L;
+
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }

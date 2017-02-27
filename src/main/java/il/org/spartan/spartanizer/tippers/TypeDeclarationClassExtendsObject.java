@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-15 */
 public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -6688424526648227862L;
+
   @Override public ASTNode replacement(final TypeDeclaration ¢) {
     if (¢.isInterface() || !wizard.isObject(¢.getSuperclassType()))
       return null;

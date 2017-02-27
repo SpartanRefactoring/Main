@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-17 */
 public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = -5050462199229113194L;
+
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }

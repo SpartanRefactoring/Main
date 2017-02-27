@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since Sep 26, 2016 */
 public abstract class EagerTipper<N extends ASTNode> extends Tipper<N> {
+  private static final long serialVersionUID = -767334519852933504L;
+
   @Override public final boolean canTip(final N ¢) {
     return tip(¢) != null;
   }

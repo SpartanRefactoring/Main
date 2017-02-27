@@ -25,6 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = -1245089074484114122L;
+
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
