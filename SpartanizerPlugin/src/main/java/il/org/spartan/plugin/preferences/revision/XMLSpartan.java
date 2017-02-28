@@ -75,14 +75,15 @@ public class XMLSpartan {
       final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
-      final String description = Toolbox.Tables.TipperdescriptionCache.get(tc);
+      final String description = Toolbox.Tables.TipperDescriptionCache.get(tc);
+      final TipperPreview preview = Toolbox.Tables.TipperPreviewCache.get(tc);
       final TipperGroup g = Toolbox.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
         tgs.put(g, new LinkedList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
       final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
-          description == null ? "No available description" : description);
+          description == null ? "No description available" : description, preview == null ? TipperPreview.empty() : preview);
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }
@@ -320,11 +321,14 @@ public class XMLSpartan {
   public static class SpartanTipper extends SpartanElement {
     private final SpartanCategory parent;
     private final String description;
+    private final TipperPreview preview;
 
-    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description) {
+    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description,
+        final TipperPreview preview) {
       super(name, enabled);
       this.parent = parent;
       this.description = description;
+      this.preview = preview;
     }
 
     public SpartanCategory parent() {
@@ -333,6 +337,10 @@ public class XMLSpartan {
 
     public String description() {
       return description;
+    }
+
+    public TipperPreview preview() {
+      return preview;
     }
   }
 
