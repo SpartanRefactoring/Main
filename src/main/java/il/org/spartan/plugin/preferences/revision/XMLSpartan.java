@@ -19,6 +19,7 @@ import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -37,9 +38,23 @@ public class XMLSpartan {
   private static final String TIPPER_ID = "id";
   @SuppressWarnings("unused") @Deprecated private static final String CATEGORY_ID = "id";
   @SuppressWarnings("unused") @Deprecated private static final String TIPPER_DESCRIPTION = "description";
-  private static final Set<Class<Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
-  // TODO Roth: decide what tippers are non-core
-  // Collections.addAll(NON_CORE, stuff);
+  private static final Set<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
+  static {
+    Collections.addAll(NON_CORE, //
+        CatchClauseRenameParameterToCent.class, //
+        EnhancedForParameterRenameToCent.class, //
+        ForRenameInitializerToCent.class, //
+        ForToForUpdaters.class, //
+        InfixExpressionConcatentateCompileTime.class, //
+        LambdaRenameSingleParameterToLambda.class, //
+        MethodDeclarationRenameReturnToDollar.class, //
+        MethodDeclarationRenameSingleParameterToCent.class, //
+        MethodInvocationToStringToEmptyStringAddition.class, //
+        ModifierRedundant.class, //
+        SingelVariableDeclarationUnderscoreDoubled.class, //
+        SingleVariableDeclarationEnhancedForRenameParameterToCent.class //
+    );
+  }
 
   /** Computes enabled tippers by categories for the project. If some error
    * occur (such as a corrupted XML file), an empty map is returned.
