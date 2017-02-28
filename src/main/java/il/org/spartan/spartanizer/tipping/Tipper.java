@@ -86,6 +86,13 @@ public abstract class Tipper<N extends ASTNode> //
 
   public abstract String description(N n);
 
+  // TODO Roth: make abstract
+  /** Return a {@link TipperPreview} containing a before-after use case example.
+   * @return preview of the tipper */
+  @SuppressWarnings("static-method") public TipperPreview preview() {
+    return TipperPreview.empty();
+  }
+
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
   public final Class<N> myAbstractOperandsClass() {
