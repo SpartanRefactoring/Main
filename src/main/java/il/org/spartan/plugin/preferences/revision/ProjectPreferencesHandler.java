@@ -250,10 +250,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           final SpartanTipper st = (SpartanTipper) o;
-          final String before = "before";
+          final String before = st.preview().before;
           final IDocument d = new Document(before);
           try {
-            final String after = "after";
+            final String after = st.preview().after;
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();
