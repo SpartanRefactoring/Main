@@ -1,11 +1,6 @@
 package il.org.spartan.spartanizer.research.methods;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
