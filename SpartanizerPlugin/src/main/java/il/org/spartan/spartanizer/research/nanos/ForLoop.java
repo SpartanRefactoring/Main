@@ -18,9 +18,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-25 */
 public final class ForLoop {
   public static class FindFirst extends NanoPatternTipper<ForStatement> {
+    private static final long serialVersionUID = 480026321244898966L;
     private static final String description = "Go Fluent : FindFirst";
     private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
-      static final long serialVersionUID = 1L;
+      @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
       {
         add(statementsPattern("for ($T $N = $X1; $X2; $X3) if ($X4) return $N; return $L;", //
             "return from($X1).step(($N)->$X2).to(($N)->$X3).findFirst($N -> $X4).orElse($L);", description));

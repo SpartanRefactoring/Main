@@ -34,12 +34,12 @@ public class Table_NanosByCategories {
           }
     try (Table t = new Table(this)) {
       t.noStatistics().add(Statistic.Σ);
-        categories.keySet().forEach(λ ->
-        t//
-            .col("Category", λ)//
-            .col("Size", categories.get(λ).size()) //
-            .col("Nanos", categories.get(λ).toArray())//
-            .nl());
+      categories.keySet()
+          .forEach(λ -> t//
+              .col("Category", λ)//
+              .col("Size", categories.get(λ).size()) //
+              .col("Nanos", categories.get(λ).toArray())//
+              .nl());
       System.err.println(t.description());
       system.dumpOutput(system.bash("column -s \\& -t " + "/tmp/" + t.name + ".tex"));
     }

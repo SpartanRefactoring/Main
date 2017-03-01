@@ -16,6 +16,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 23-12-2016 */
 public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -373710981362225466L;
+
   @Override public ASTNode replacement(final ExpressionStatement s) {
     final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)

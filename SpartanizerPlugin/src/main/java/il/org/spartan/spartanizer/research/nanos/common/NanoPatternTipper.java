@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since Jan 8, 2017 */
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
+  private static final long serialVersionUID = 8068722088108674947L;
   public final N nodeTypeHolder = null;
 
   protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {

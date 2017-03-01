@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-26 */
 public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
+  private static final long serialVersionUID = 2135500968807051621L;
+
   @Override public String description(final ForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }

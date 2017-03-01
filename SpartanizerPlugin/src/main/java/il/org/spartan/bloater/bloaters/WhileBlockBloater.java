@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 26-12-16 */
 public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -2161530114677301355L;
+
   @Override public ASTNode replacement(final WhileStatement s) {
     if (s == null)
       return null;

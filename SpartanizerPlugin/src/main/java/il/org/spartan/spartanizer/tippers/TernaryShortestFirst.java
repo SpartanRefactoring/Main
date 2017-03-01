@@ -20,6 +20,8 @@ import il.org.spartan.utils.*;
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = -7760228220337214462L;
+
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1 + "", e2 + "").similarity();
   }

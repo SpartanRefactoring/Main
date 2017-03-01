@@ -25,6 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-08-29 */
 public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onStrings {
+  private static final long serialVersionUID = -1714944750492389867L;
+
   @Override public String description() {
     return "[\"\"+foo]->foo";
   }

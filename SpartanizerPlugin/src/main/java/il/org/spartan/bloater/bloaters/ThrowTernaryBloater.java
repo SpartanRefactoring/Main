@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-26 */
 public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 8014414856762598558L;
+
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
     ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))

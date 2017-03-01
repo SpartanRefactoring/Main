@@ -87,8 +87,8 @@ public final class analyzeTest {
   }
 
   @Test public void testFindDeclarationInType2() {
-    azzert.that("int", is(analyze
-        .type(first(yieldDescendants.ofClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }"))).getName())));
+    azzert.that("int", is(
+        analyze.type(first(yieldDescendants.ofClass(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }"))).getName())));
   }
 
   @Test public void testType0() {
