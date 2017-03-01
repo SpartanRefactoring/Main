@@ -108,7 +108,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
       initializeWriter();
     writer//
         .col("Project", path)//
-        .col("Commands", statementsCoverage())//
+        .col("Statements", statementsCoverage())//
         .col("Expressions", expressionsCoverage())//
         .col("methodsCovered", fMethods())//
         .col("methodsTouched", touched())//
