@@ -89,8 +89,8 @@ public final class Builder extends IncrementalProjectBuilder {
         ((Trimmer) s).useProjectPreferences();
       for (final Tip ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {
-          final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
-          addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
+          final TipperGroup g = Toolbox.groupOf(¢.tipperClass);
+          addMarker(s, ¢, f.createMarker(g == null || g.id == null ? MARKER_TYPE : MARKER_TYPE + "." + g.name()));
         }
     }
   }

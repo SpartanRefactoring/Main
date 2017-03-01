@@ -221,7 +221,7 @@ public class XMLSpartan {
     $.setAttribute(TIPPER_ID, n);
     $.setAttribute(TIPPER_DESCRIPTION, t.description());
     seen.add(n);
-    groups.get(Toolbox.groupFor(t.getClass())).appendChild($);
+    groups.get(Toolbox.groupOf(t.getClass())).appendChild($);
   }
 
   /** TODO Ori Roth: Stub 'XMLSpartan::createEnabledNodeChild' (created on
