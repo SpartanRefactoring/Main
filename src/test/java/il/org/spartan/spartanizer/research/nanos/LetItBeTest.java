@@ -41,4 +41,10 @@ public class LetItBeTest {
         .gives("{{A y = bar();  bar(foo(),foo()); print(y);} another();}")//
         .stays();
   }
+
+  @Test public void f() {
+    trimmingOf("{{A x = foo(); bar(x,x); print(x);} another();}")//
+        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .stays();
+  }
 }
