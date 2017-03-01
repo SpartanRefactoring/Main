@@ -47,4 +47,29 @@ public class LetItBeTest {
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .stays();
   }
+
+  @Test public void g() {
+    trimmingOf("{"//
+        + "    final Object value=m.invoke(a);"//
+        + "    if (value == null) {"//
+        + "      throw new IllegalStateException(String.format(\"Annotation method %s returned null\",m));"//
+        + "    }"//
+        + "    $+=hashMember(m.getName(),value); }")//
+            .using(VariableDeclarationFragment.class, new LetItBeIn())//
+            .stays();
+  }
+
+  @Test public void h() {
+    trimmingOf("{"//
+        + "final AtmosphereInterceptor a=(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass);"//
+        + "f.getAtmosphereConfig().startupHook("//
+        + "  new AtmosphereConfig.StartupHook(){"//
+        + "    @Override public void started(    AtmosphereFramework framework){"//
+        + "     framework.interceptor(a);"//
+        + "    }"//
+        + "  });"//
+        + "}")//
+            .using(VariableDeclarationFragment.class, new LetItBeIn())//
+            .stays();
+  }
 }
