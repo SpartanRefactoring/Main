@@ -26,9 +26,10 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   private static Constructor<? extends FolderASTVisitor> declaredConstructor;
   protected File presentFile;
   protected static String presentSourceName;
-  static int $;
+  private static int $;
   protected String presentSourcePath;
   protected Dotter dotter;
+  private String presentPath;
   protected String absolutePath;
   protected String relativePath;
   static {
@@ -105,36 +106,39 @@ public abstract class FolderASTVisitor extends ASTVisitor {
         monitor.infoIOException(¢, "File = " + f);
       }
   }
-
-  /** Check if a file contains Test annotations
+  
+  /** 
+   * Check if a file contains Test annotations
    * <p>
    * @param f
    * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
-  public static boolean containsTestAnnotation(final File f) {
-    String javaCode = null;
-    try {
-      javaCode = FileUtils.read(f);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "File = " + f);
-    }
-    return containsTestAnnotation(javaCode);
-  }
+   * <p> [[SuppressWarningsSpartan]]
+   */
+ public static boolean containsTestAnnotation(File f) {
+   String javaCode = null;
+   try {
+     javaCode = FileUtils.read(f);
+   } catch (IOException x) {
+     monitor.infoIOException(x, "File = " + f);
+   }
+  return containsTestAnnotation(javaCode);
+ }
 
-  /** Check if a String contains Test annotations
-   * <p>
-   * @param f
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+ /** 
+  * Check if a String contains Test annotations
+  * <p>
+  * @param f
+  * @return
+  * <p> [[SuppressWarningsSpartan]]
+  */ 
+  public static boolean containsTestAnnotation(String javaCode) {
+    CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     $ = 0;
     cu.accept(new ASTVisitor() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
-          ++$;
+      @Override
+      public boolean visit(MethodDeclaration node) {
+      if(extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+        ++$;
         return false;
       }
     });

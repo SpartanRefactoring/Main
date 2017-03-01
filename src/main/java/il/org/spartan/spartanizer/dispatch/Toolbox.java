@@ -464,7 +464,7 @@ public class Toolbox {
     return $;
   }
 
-  public static TipperGroup groupOf(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
+  public static TipperGroup groupFor(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
 }
