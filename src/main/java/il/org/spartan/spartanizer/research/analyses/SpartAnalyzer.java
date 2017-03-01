@@ -141,7 +141,7 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
         new Empty(), //
         new Examiner(), //
         new Getter(), //
-        new LetItBeIn(), //
+        new LetItBeInMethod(), //
         new ForEachApplier(), // R.I.P, we have ForEach
         new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
