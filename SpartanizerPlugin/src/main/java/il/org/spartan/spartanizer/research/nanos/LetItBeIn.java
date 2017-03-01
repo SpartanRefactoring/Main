@@ -8,8 +8,6 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -40,15 +38,13 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       final Statement parent = az.variableDeclarationStatement(parent(f));
       if (parent == null)
         return null;
-      final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
-      if (n == null//
-          || anyFurtherUsage(parent(nextStatement), n))//
+      if (anyFurtherUsage(parent(nextStatement), name(f)))//
         return null;
       final Expression initializer = initializer(f);
       if (initializer == null)
         return null;
-      Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+      Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
       if (pp == null//
@@ -69,13 +65,13 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
         }
         $.replace(parent, pn, g);
       }
-      $.replace(n, e, g);
+      for (SimpleName n : peelIdentifiers(nextStatement, name(f)))
+        $.replace(n, e, g);
       return $;
     }
 
-    private static SimpleName peelIdentifier(final Statement s, final String id) {
-      final List<SimpleName> $ = collect.usesOf(id).in(s);
-      return $.size() != 1 ? null : first($);
+    private static List<SimpleName> peelIdentifiers(final Statement s, final SimpleName n) {
+      return collect.usesOf(n).in(s);
     }
 
     private static boolean anyFurtherUsage(final ASTNode node, final SimpleName n) {
