@@ -38,7 +38,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       final Statement parent = az.variableDeclarationStatement(parent(f));
       if (parent == null)
         return null;
-      if (anyFurtherUsage(parent(nextStatement), name(f)))//
+      if (anyFurtherUsage(nextStatement, name(f)))//
         return null;
       final Expression initializer = initializer(f);
       if (initializer == null)
@@ -74,8 +74,12 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return collect.usesOf(n).in(s);
     }
 
-    private static boolean anyFurtherUsage(final ASTNode node, final SimpleName n) {
-      return collect.forAllOccurencesExcludingDefinitions(n).in(node).isEmpty();
+    /** @return any usage which is not the definition itself or usages inside
+     *         the inlined to statement
+     *         <p>
+     *         [[SuppressWarningsSpartan]] */
+    private static boolean anyFurtherUsage(final Statement nextStatement, final SimpleName n) {
+      return collect.usesOf(n).in(parent(nextStatement)).size() > collect.usesOf(n).in(nextStatement).size() + 1;
     }
 
     private static boolean preDelegation(final VariableDeclarationFragment n, final Statement nextStatement) {
