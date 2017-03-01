@@ -13,7 +13,7 @@ import static il.org.spartan.lisp.first;
  * {@link ReturnStatement}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-13 */
-public class Let extends JavadocMarkerNanoPattern {
+public class LetItBeIn extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 8849848153637800009L;
   private static final FragmentInitializerStatementTerminatingScope rival = new FragmentInitializerStatementTerminatingScope();
 
