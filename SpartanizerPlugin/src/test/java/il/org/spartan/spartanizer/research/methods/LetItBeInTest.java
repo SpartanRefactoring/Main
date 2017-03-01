@@ -1,6 +1,11 @@
 package il.org.spartan.spartanizer.research.methods;
 
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
@@ -27,5 +32,13 @@ public class LetItBeInTest extends JavadocerTest {
 
   @Test public void d() {
     assert is("boolean foo(){A x = foo(); bar(x,x);}");
+  }
+
+  @Test public void e() {
+    assert is(//
+        "private static SimpleName peelIdentifier(final Statement s, final String id) {"//
+            + "    final List<SimpleName> $ = occurencesOf(s, id);"//
+            + "    return $.size() != 1 ? null : first($);"//
+            + " }");
   }
 }
