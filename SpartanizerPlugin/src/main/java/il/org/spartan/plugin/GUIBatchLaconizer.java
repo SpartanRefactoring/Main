@@ -63,7 +63,7 @@ public class GUIBatchLaconizer extends Applicator {
           try { // probably not needed --or
             listener().tick(message.visit_cu.get(operationName(), Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()),
                 ¢.descriptor.getElementName(), totalTipsInvoked.get(), thisPassTipsInvoked.get()));
-          } catch (Throwable x) {
+          } catch (final Throwable x) {
             monitor.log(x);
           }
           if (!shouldRun())

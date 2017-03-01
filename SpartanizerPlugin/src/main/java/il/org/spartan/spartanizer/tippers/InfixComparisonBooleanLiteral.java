@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onBooleans {
+  private static final long serialVersionUID = 829099308877429388L;
+
   private static BooleanLiteral literal(final InfixExpression ¢) {
     return az.booleanLiteral(core(literalOnLeft(¢) ? left(¢) : right(¢)));
   }

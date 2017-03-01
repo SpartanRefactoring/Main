@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-26 */
 public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.EmptyCycles {
+  private static final long serialVersionUID = -1440560931678543445L;
+
   @Override protected boolean prerequisite(final WhileStatement ¢) {
     return sideEffects.free(¢);
   }

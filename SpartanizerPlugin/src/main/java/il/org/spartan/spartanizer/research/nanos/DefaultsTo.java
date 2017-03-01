@@ -9,8 +9,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
+  private static final long serialVersionUID = -7580396559433880409L;
   private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       patternTipper("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
       patternTipper("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
@@ -19,7 +20,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     }
   };
   private static final BlockNanoPatternContainer tippers2 = new BlockNanoPatternContainer() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       statementPattern("$T $N = $X1; return $N != null ? $N : $X2;", "return default¢($X1).to($X2);", "dfault pattern: Go fluent");
       statementPattern("$T $N = $X1; return $N == null ? $X2 : $N;", "return default¢($X1).to($X2);", "dfault pattern: Go fluent");

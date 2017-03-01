@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 4265122877786904832L;
+
   @Override public Tip tip(final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

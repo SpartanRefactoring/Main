@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.switchBranch.*;
 import java.util.*;
@@ -23,6 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = 5853683693900339864L;
+
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }

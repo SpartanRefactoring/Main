@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
@@ -177,7 +178,7 @@ public enum step {
         .filter(Objects::nonNull) //
         .filter(MethodDeclaration::isConstructor) //
         .collect(toList())//
-        ;
+    ;
   }
 
   public static Collection<MethodDeclaration> constructors(final ASTNode ¢) {
@@ -186,7 +187,7 @@ public enum step {
         .filter(iz::constructor) //
         .filter(Objects::nonNull) //
         .collect(toList()) //
-        ;
+    ;
   }
 
   @SuppressWarnings("unchecked") public static Iterable<Expression> dimensions(final ArrayCreation ¢) {
@@ -556,7 +557,7 @@ public enum step {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (Collection<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
-            .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
+                .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
   }
 
   /** @param ¢ JD

@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch */
 public class Cascading {
   public static class Setter extends JavadocMarkerNanoPattern {
+    private static final long serialVersionUID = -2893413461939243057L;
     private static final Setter setter = new Setter();
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {

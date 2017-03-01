@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assignment>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -1964351676264169946L;
+
   private static boolean isIncrement(final Assignment ¢) {
     return ¢.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }

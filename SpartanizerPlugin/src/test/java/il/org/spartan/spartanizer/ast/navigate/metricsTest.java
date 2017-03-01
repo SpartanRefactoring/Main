@@ -57,9 +57,9 @@ public final class metricsTest {
     // Test a null list and a null Statement
     final Statement s = null;
     azzert.that(metrics.horizontalComplexity(0, s), is(0));
-    azzert.that(metrics.horizontalComplexity(0, (List<Statement>)null), is(0));
+    azzert.that(metrics.horizontalComplexity(0, (List<Statement>) null), is(0));
     // Test a list with one null statement
-    List<Statement> statements = new ArrayList<>();
+    final List<Statement> statements = new ArrayList<>();
     statements.add(s);
     azzert.that(metrics.horizontalComplexity(0, statements), is(0));
     statements.add(az.statement(wizard.ast("if(true) return 1;")));

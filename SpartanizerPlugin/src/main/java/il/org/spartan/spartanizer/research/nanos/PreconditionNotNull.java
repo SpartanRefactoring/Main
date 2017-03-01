@@ -13,6 +13,8 @@ import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-08 */
 public final class PreconditionNotNull extends NotNullOrReturn {
+  private static final long serialVersionUID = -1274198165790503754L;
+
   @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
         && first(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;

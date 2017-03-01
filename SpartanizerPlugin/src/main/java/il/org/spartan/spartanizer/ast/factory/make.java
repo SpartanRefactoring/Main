@@ -125,7 +125,7 @@ public enum make {
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
-      final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
+    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
     fragments($).addAll(extract.nextFragmentsOf(¢));
     $.setType(copy.of(step.type(¢)));
     extendedModifiers($).addAll(az.modifiersOf(¢));

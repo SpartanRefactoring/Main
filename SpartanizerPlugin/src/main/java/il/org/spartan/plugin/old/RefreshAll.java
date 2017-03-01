@@ -18,14 +18,12 @@ public final class RefreshAll extends BaseHandler {
 
   public static void go(final IProject p) {
     final IProgressMonitor npm = new NullProgressMonitor();
-    new Thread(new Runnable() {
-      @Override public void run() {
-        try {
-          if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
-            p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
-        } catch (final CoreException ¢) {
-          monitor.logEvaluationError(new RefreshAll(), ¢);
-        }
+    new Thread(() -> {
+      try {
+        if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
+          p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
+      } catch (final CoreException ¢) {
+        monitor.logEvaluationError(new RefreshAll(), ¢);
       }
     }).run();
   }

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -14,6 +15,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method which is independent on he parameters
  * @author Ori Marcovitch */
 public class Oblivious extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 2377142689255053588L;
+
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     final List<String> $ = parametersNames(d);
     for (AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))
