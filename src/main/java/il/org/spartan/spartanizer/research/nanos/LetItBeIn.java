@@ -31,8 +31,8 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   }
 
   @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
-    System.out.println("--" + ¢ + "--");
-    System.out.println(parent(parent(¢)));
+    // System.out.println("--" + ¢ + "--");
+    // System.out.println(parent(parent(¢)));
     return letInliner.tip(¢);
   }
 
@@ -96,11 +96,11 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     private static boolean preDelegation(final VariableDeclarationFragment n, final Statement nextStatement) {
       return (iz.expressionStatement(nextStatement)//
           || iz.returnStatement(nextStatement))//
-          && usesAssignment(n, nextStatement);
+          && usesAssignmentAtLeastTwice(n, nextStatement);
     }
 
-    private static boolean usesAssignment(final VariableDeclarationFragment n, final Statement nextStatement) {
-      return !collect.usesOf(name(n)).in(nextStatement).isEmpty();
+    private static boolean usesAssignmentAtLeastTwice(final VariableDeclarationFragment n, final Statement nextStatement) {
+      return collect.usesOf(name(n)).in(nextStatement).size() > 1;
     }
 
     @Override public String description(@SuppressWarnings("unused") VariableDeclarationFragment __) {
