@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
+  private static final long serialVersionUID = 8188241616526954088L;
+
   @Override public final Tip tip(final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
     final ASTNode $ = replacement(n, m);

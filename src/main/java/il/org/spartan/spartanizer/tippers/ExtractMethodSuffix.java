@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -25,6 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration>//
     implements TipperCategory.Modular {
+  private static final long serialVersionUID = 1078908162909095501L;
   // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 

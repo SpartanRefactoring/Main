@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-14 */
 public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 5103878942470840938L;
+
   @Override public String description(final Javadoc ¢) {
     return String.format("Remove empty Javadoc comment of %d characters", box.it(metrics.length(¢)));
   }

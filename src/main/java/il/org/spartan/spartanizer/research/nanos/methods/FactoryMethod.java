@@ -12,8 +12,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method Creating new object and returning it
  * @author Ori Marcovitch */
 public class FactoryMethod extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = -2789090530674070291L;
   private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("return new $T();", "", ""));
       add(patternTipper("return new $T[$X];", "", ""));

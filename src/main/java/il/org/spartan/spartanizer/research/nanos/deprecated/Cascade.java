@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-01 */
 public final class Cascade extends NotImplementedNanoPattern<Block> {
+  private static final long serialVersionUID = 2575845170128901413L;
+
   @Override public boolean canTip(final Block x) {
     return !iz.emptyBlock(x) && IntStream.range(0, statements(x).size() - 1).anyMatch(λ -> initializeThenUse(x, λ));
   }

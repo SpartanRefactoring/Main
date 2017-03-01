@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class FragmentInitializerWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = 8867383151468342949L;
+
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));

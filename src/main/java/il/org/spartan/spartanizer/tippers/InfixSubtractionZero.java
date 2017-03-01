@@ -24,6 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
+  private static final long serialVersionUID = -2150446855942062458L;
+
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(make.minus(first(prune)), chop(prune));
   }

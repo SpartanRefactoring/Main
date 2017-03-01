@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -774288757243201042L;
+
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     wizard.swap($, 0, 1);
@@ -26,7 +28,6 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
 
   // TODO: Yossi Gil: this should probably be in lisp, but I can't access its
   // source anymore
-
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }

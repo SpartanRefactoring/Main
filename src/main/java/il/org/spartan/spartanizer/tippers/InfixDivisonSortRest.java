@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-05 */
 public final class InfixDivisonSortRest extends InfixExpressionSortingRest//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = -727640004713085455L;
+
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);
   }

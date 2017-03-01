@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 18-11-2016 */
 public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = 7585159565469454722L;
+
   @Override public ASTNode replacement(final InfixExpression x) {
     if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))

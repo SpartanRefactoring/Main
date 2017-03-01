@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Deadcode {
+  private static final long serialVersionUID = 2547606833786954080L;
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "if the condition is 'true'  convert to 'then' statement," + " if the condition is 'false' convert to 'else' statement";
   }

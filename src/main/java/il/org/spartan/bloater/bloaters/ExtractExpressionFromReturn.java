@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-07 */
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -7033611208498626020L;
+
   @Override public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }

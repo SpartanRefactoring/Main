@@ -24,6 +24,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 2016-09-11 */
 public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -4145668192513583707L;
+
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis

@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-04-02 */
 public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<NormalAnnotation>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -3150743394756288696L;
+
   @Override public String description(final NormalAnnotation ¢) {
     return "Remove redundant parentheses from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
