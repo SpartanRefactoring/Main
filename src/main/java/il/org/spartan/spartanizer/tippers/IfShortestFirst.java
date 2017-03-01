@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-15 */
 public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = 200228162286468375L;
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }

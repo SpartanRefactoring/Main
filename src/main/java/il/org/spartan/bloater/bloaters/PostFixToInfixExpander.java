@@ -20,6 +20,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-09 */
 public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 2322066430397426252L;
+
   @Override public ASTNode replacement(final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;

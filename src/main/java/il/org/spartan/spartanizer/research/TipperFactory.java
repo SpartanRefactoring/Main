@@ -29,6 +29,8 @@ public enum TipperFactory {
       final Option... os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
+      private static final long serialVersionUID = 4793662826325577880L;
+
       @Override public Tip tip(final Block n) {
         return new Tip(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -79,6 +81,8 @@ public enum TipperFactory {
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement, final String description) {
     final Matcher $ = Matcher.patternMatcher(pattern, replacement);
     return new UserDefinedTipper<N>() {
+      private static final long serialVersionUID = 2503735679621778024L;
+
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }

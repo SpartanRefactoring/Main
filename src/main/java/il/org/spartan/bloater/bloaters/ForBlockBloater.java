@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 22-12-16 */
 public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -2414682418747217785L;
+
   @Override public ASTNode replacement(final ForStatement s) {
     if (s == null)
       return null;

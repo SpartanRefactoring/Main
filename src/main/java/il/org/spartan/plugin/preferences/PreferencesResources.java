@@ -84,7 +84,8 @@ public enum PreferencesResources {
     }
 
     @SuppressWarnings("static-method") public boolean isEnabled() {
-      // This preferences implementation is deprecated. Will be removed soon. --or
+      // This preferences implementation is deprecated. Will be removed soon.
+      // --or
       // TODO Roth: deprecate old preferences implementation
       // return Plugin.plugin() == null || store().getBoolean(id);
       return true;

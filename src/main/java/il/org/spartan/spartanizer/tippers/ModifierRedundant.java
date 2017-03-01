@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class ModifierRedundant extends CarefulTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 1374481738232963085L;
+
   @Override public String description(final Modifier ¢) {
     return "Remove redundant [" + ¢ + "] modifier";
   }

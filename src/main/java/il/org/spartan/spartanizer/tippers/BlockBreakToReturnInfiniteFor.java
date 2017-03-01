@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-09 */
 public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
+  private static final long serialVersionUID = -8103296515828492553L;
+
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return handleIf(then(s), elze(s), nextReturn);
   }

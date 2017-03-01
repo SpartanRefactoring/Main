@@ -37,7 +37,7 @@ public enum Dialogs {
 
   /** Lazy, dynamic loading of an image.
    * @return {@link SWT} image */
-  public static Image image(String $) {
+  public static Image image(final String $) {
     if (!images.containsKey($))
       try {
         final ImageData d = ImageDescriptor.createFromURL(new URL($)).getImageData();

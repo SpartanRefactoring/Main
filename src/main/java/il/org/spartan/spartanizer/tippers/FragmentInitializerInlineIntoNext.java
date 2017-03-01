@@ -28,6 +28,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-11-27 */
 public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -228096256168103399L;
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }

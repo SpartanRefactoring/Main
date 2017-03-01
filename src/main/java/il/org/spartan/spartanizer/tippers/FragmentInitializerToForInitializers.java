@@ -23,6 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class FragmentInitializerToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -8610595251612382642L;
+
   private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
@@ -89,10 +91,10 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   }
 
   private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
-      final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(first(initializers($)));
+    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(first(initializers($)));
     initializers($).clear();
     initializers($).add(make.variableDeclarationExpression(s));
-      fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
+    fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 6676373435819710470L;
+
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneParameter(¢)//
         && notEmpty(¢)//

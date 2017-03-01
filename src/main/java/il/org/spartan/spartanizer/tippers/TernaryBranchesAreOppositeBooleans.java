@@ -20,6 +20,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 27-11-2016 */
 public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -9212172232007324810L;
+
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     final Expression $ = ¢.getElseExpression(), then = ¢.getThenExpression();
     return wizard.same($, truee) && wizard.same(then, falsee) ? make.notOf(copy.of(¢.getExpression()))

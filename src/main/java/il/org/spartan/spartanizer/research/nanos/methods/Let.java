@@ -14,6 +14,7 @@ import static il.org.spartan.lisp.first;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-13 */
 public class Let extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 8849848153637800009L;
   private static final FragmentInitializerStatementTerminatingScope rival = new FragmentInitializerStatementTerminatingScope();
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
@@ -23,7 +24,7 @@ public class Let extends JavadocMarkerNanoPattern {
         && rival.cantTip(first(fragments(az.variableDeclarationStatement(firstStatement(¢)))));
   }
 
-  private static boolean preDelegation(Statement secondStatement) {
+  private static boolean preDelegation(final Statement secondStatement) {
     return iz.expressionStatement(secondStatement)//
         || iz.returnStatement(secondStatement);
   }
