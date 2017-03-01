@@ -70,6 +70,9 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
             .add(MethodInvocation.class, //
                 new Reduction(), //
                 null) //
+            .add(VariableDeclarationFragment.class, //
+                new LetItBeIn(), //
+                null)
             .add(WhileStatement.class, //
                 new While.CountIf(), //
                 null)//
