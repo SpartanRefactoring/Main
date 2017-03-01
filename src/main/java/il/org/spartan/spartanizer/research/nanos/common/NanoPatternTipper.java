@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -46,6 +47,10 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
 
   public static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final List<UserDefinedTipper<N>> ¢) {
     return first(¢);
+  }
+
+  protected static Block containingBlock(final ASTNode ¢) {
+    return yieldAncestors.untilContainingBlock().from(¢);
   }
 
   @Override public final Tip tip(final N ¢) {

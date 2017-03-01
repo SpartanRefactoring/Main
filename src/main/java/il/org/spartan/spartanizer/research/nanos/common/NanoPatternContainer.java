@@ -30,6 +30,10 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
         && stream().anyMatch(λ -> λ.canTip(¢));
   }
 
+  public boolean cantTip(final N ¢) {
+    return !canTip(¢);
+  }
+
   public Tip firstTip(final N ¢) {
     return firstTipper(¢).tip(¢);
   }
