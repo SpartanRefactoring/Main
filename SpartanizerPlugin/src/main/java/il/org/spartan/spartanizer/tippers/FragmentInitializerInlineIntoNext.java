@@ -38,9 +38,6 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     if (containsClassInstanceCreation(nextStatement)//
         || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
-    final Expression initializer = initializer(f);
-    if (initializer == null)
-      return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:
       case ASTNode.ENHANCED_FOR_STATEMENT:
@@ -56,6 +53,9 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
         if (containsLambda(nextStatement))
           return null;
     }
+    final Expression initializer = initializer(f);
+    if (initializer == null)
+      return null;
     final Statement parent = az.statement(parent(f));
     if (parent == null//
         || iz.forStatement(parent))
