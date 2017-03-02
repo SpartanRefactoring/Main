@@ -8,12 +8,12 @@ public class TipperPreview {
   public String after;
   private static TipperPreview EMPTY = new TipperPreview("[no preview available]", "[no preview available]");
 
-  private TipperPreview(String before, String after) {
+  private TipperPreview(final String before, final String after) {
     this.before = before;
     this.after = after;
   }
 
-  public static TipperPreview create(String before, String after) {
+  public static TipperPreview create(final String before, final String after) {
     return new TipperPreview(before, after);
   }
 

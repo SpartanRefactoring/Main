@@ -32,7 +32,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   static class LetInliner extends ReplaceToNextStatement<VariableDeclarationFragment> {
     private static final long serialVersionUID = 2390117956692878327L;
 
-    @Override protected ASTRewrite go(ASTRewrite $, VariableDeclarationFragment f, Statement nextStatement, TextEditGroup g) {
+    @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!preDelegation(f, nextStatement))
         return null;
       final Statement parent = az.variableDeclarationStatement(parent(f));
@@ -62,7 +62,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
         }
         $.replace(parent, pn, g);
       }
-      for (SimpleName ¢ : peelIdentifiers(nextStatement, name(f)))
+      for (final SimpleName ¢ : peelIdentifiers(nextStatement, name(f)))
         $.replace(¢, e, g);
       return $;
     }
@@ -84,12 +84,12 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
-    @Override public String description(@SuppressWarnings("unused") VariableDeclarationFragment __) {
+    @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
   }
 
-  @Override protected Tip pattern(VariableDeclarationFragment ¢) {
+  @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }
 }

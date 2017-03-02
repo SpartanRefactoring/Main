@@ -87,7 +87,7 @@ public class XMLSpartan {
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }
-    for (Entry<TipperGroup, List<SpartanTipper>> ¢ : tgs.entrySet())
+    for (final Entry<TipperGroup, List<SpartanTipper>> ¢ : tgs.entrySet())
       $.put(tcs.get(¢.getKey()), ¢.getValue().toArray(new SpartanTipper[¢.getValue().size()]));
     return $;
   }
@@ -179,7 +179,7 @@ public class XMLSpartan {
     if (e == null)
       return null;
     e.normalize();
-    NodeList bs = $.getElementsByTagName(BASE);
+    final NodeList bs = $.getElementsByTagName(BASE);
     if (bs == null || bs.getLength() != 1 || !validate($, ((Element) bs.item(0)).getAttribute(VERSION))) {
       $ = initialize(b.newDocument());
       commit(fl, $);
@@ -211,7 +211,7 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
-  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, Element e) {
+  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, final Element e) {
     if (d == null || t == null || seen == null || e == null)
       return;
     final String n = t.getClass().getSimpleName();
@@ -266,7 +266,7 @@ public class XMLSpartan {
    * @param version document's version
    * @return true iff the document is valid, and does not require
    *         initialization */
-  private static boolean validate(@SuppressWarnings("unused") Document $, String version) {
+  private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
     return CURRENT_VERSION.equals(version) ? true : false;
   }
 

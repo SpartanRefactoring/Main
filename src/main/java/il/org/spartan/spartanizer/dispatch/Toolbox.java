@@ -32,7 +32,7 @@ public class Toolbox {
     public static Map<Class<? extends Tipper<?>>, TipperPreview> TipperPreviewCache = new HashMap<>();
     public static Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
-      for (Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
+      for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
         final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
         TipperIDClassTranslationTable.put(id, (Class<? extends Tipper<?>>) t.getClass());
         TipperIDNameTranslationTable.put(id, t.getClass().getSimpleName());
