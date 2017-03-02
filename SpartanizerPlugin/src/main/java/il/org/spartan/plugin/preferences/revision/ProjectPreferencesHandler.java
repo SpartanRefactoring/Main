@@ -52,8 +52,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(p);
     if (d == null)
       return null;
-    final Set<String> pc = getPreferencesChanges(d);
-    return pc == null ? null : commit(p, pc);
+    final Set<String> $ = getPreferencesChanges(d);
+    return $ == null ? null : commit(p, $);
   }
 
   /** Initiates configuration change for the project. This includes one dialog
@@ -70,8 +70,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    final Set<String> pc = getPreferencesChanges(d);
-    return pc == null ? null : commit.apply(p, pc);
+    final Set<String> $ = getPreferencesChanges(d);
+    return $ == null ? null : commit.apply(p, $);
   }
 
   /** Commits enabled tippers for the project, see
@@ -83,38 +83,37 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     XMLSpartan.updateEnabledTippers(p, pc);
     try {
       refreshProject(p);
-    } catch (InvocationTargetException | CoreException | InterruptedException x) {
-      monitor.log(x);
+    } catch (InvocationTargetException | CoreException | InterruptedException ¢) {
+      monitor.log(¢);
     }
     return null;
   }
 
-  /** @param d dialog
+  /** @param ¢ dialog
    * @return dialog's result: either enabled tippers, or null if the operation
    *         has been cancled by the user */
-  public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog d) {
-    d.open();
-    final Object[] os = d.getResult();
-    return os == null || d.getReturnCode() != Window.OK ? null
-        : Stream.of(os)//
+  public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog ¢) {
+    ¢.open();
+    final Object[] $ = ¢.getResult();
+    return $ == null || ¢.getReturnCode() != Window.OK ? null
+        : Stream.of($)//
             .filter(SpartanTipper.class::isInstance)//
             .map(SpartanTipper.class::cast)//
             .map(SpartanTipper::name)//
             .collect(toSet());
   }
 
-  /** @param p JD
+  /** @param ¢ JD
    * @return preferences configuration dialog for project */
-  private static SpartanPreferencesDialog getDialog(final IProject p) {
-    return getDialog(XMLSpartan.getTippersByCategories(p));
+  private static SpartanPreferencesDialog getDialog(final IProject ¢) {
+    return getDialog(XMLSpartan.getTippersByCategories(¢));
   }
 
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
    *         tippers */
   private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanTipper[]> m) {
-    final Shell s = Display.getCurrent().getActiveShell();
-    if (s == null || m == null)
+    if (Display.getCurrent().getActiveShell() == null || m == null)
       return null;
     final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
@@ -291,33 +290,33 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @throws InvocationTargetException
    * @throws InterruptedException */
   private static void refreshProject(final IProject p) throws CoreException, InvocationTargetException, InterruptedException {
-    if (p == null || !p.isOpen() || p.getNature(Nature.NATURE_ID) == null)
-      return;
-    if (REFRESH_OPENS_DIALOG) {
-      final ProgressMonitorDialog d = Dialogs.progress(true);
-      d.run(true, true, m -> {
-        SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
-          final Shell s = d.getShell();
-          if (s != null)
-            s.setText("Refreshing project");
-        });
-        try {
-          p.build(IncrementalProjectBuilder.FULL_BUILD, m);
-        } catch (final CoreException x) {
-          monitor.log(x);
-        }
-      });
-    } else
-      new Job("Refreshing " + p.getName()) {
-        @Override protected IStatus run(final IProgressMonitor m) {
+    if (p != null && p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
+      if (!REFRESH_OPENS_DIALOG)
+        new Job("Refreshing " + p.getName()) {
+          @Override protected IStatus run(final IProgressMonitor m) {
+            try {
+              p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+              return Status.OK_STATUS;
+            } catch (final CoreException ¢) {
+              monitor.log(¢);
+              return Status.CANCEL_STATUS;
+            }
+          }
+        }.schedule();
+      else {
+        final ProgressMonitorDialog d = Dialogs.progress(true);
+        d.run(true, true, m -> {
+          SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
+            final Shell s = d.getShell();
+            if (s != null)
+              s.setText("Refreshing project");
+          });
           try {
             p.build(IncrementalProjectBuilder.FULL_BUILD, m);
-            return Status.OK_STATUS;
-          } catch (final CoreException x) {
-            monitor.log(x);
-            return Status.CANCEL_STATUS;
+          } catch (final CoreException ¢) {
+            monitor.log(¢);
           }
-        }
-      }.schedule();
+        });
+      }
   }
 }

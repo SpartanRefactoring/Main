@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {
-    for (final IProject p : ResourcesPlugin.getWorkspace().getRoot().getProjects())
-      go(p);
+    for (final IProject ¢ : ResourcesPlugin.getWorkspace().getRoot().getProjects())
+      go(¢);
   }
 
   public static void go(final IProject p) {

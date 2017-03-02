@@ -1,6 +1,3 @@
-/**
- * 
- */
 package il.org.spartan.spartanizer.tipping;
 
 /** A preview for a tipper, containing a "before" and "after" example case.
