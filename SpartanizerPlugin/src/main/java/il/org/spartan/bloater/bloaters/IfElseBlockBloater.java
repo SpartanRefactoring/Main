@@ -23,6 +23,7 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     if (s == null || iz.block(then(s)) && elze(s) == null || iz.block(then(s)) && elze(s) != null && iz.block(elze(s)))
       return null;
     final IfStatement $ = copy.of(s);
+    // TODO: Dor please use class subject
     if (!iz.block(then(s))) {
       final Block b = s.getAST().newBlock();
       statements(b).add(copy.of(then(s)));
