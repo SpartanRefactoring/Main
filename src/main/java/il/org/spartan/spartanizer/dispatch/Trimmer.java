@@ -199,11 +199,11 @@ public class Trimmer extends AbstractGUIApplicator {
     final Toolbox $ = Toolbox.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final List<Tipper<?>> xs = new ArrayList<>();
-    for (final Tipper<?> t : $.getAllTippers())
-      if (!es.contains(t.getClass()))
-        xs.add(t);
-    for (final List<Tipper<? extends ASTNode>> l : $.implementation)
-      l.removeAll(xs);
+    for (final Tipper<?> ¢ : $.getAllTippers())
+      if (!es.contains(¢.getClass()))
+        xs.add(¢);
+    for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
+      ¢.removeAll(xs);
     toolboxes.put(p, $);
     return $;
   }

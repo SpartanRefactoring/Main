@@ -58,7 +58,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     addField(new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), ps,
         p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
         λ -> changes.getAble((IProject) λ), //
-        λ -> changes.update((IProject) λ, changes.getAble((IProject) λ).booleanValue() ? Boolean.FALSE : Boolean.TRUE) //
+        λ -> changes.update((IProject) λ, !changes.getAble((IProject) λ).booleanValue()) //
     ));
   }
 
@@ -122,13 +122,12 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     ListSelectionEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
         final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
       super(name, labelText, parent);
-      this.elements = new ArrayList<>();
-      this.elements.addAll(elements);
+      this.elements = new ArrayList<>(elements);
       final Composite buttonBox = new Composite(parent, SWT.NULL);
       final GridLayout layout = new GridLayout();
       layout.marginWidth = 0;
       buttonBox.setLayout(layout);
-      buttonBox.addDisposeListener(event -> {
+      buttonBox.addDisposeListener(λ -> {
         configureButton = null;
         ableButton = null;
       });
@@ -147,17 +146,17 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
           onSelection();
         }
 
-        @SuppressWarnings("synthetic-access") private void onSelection() {
+        @SuppressWarnings("synthetic-access") void onSelection() {
           final int i = getList().getSelectionIndex();
-          if (i >= 0) {
-            onAble.accept(elements.get(i).getValue());
-            if (ableButton.getText().equals("Disable tips")) {
-              ableButton.setText("Enable tips");
-              configureButton.setEnabled(false);
-            } else if (ableButton.getText().equals("Enable tips")) {
-              ableButton.setText("Disable tips");
-              configureButton.setEnabled(true);
-            }
+          if (i < 0)
+            return;
+          onAble.accept(elements.get(i).getValue());
+          if ("Disable tips".equals(ableButton.getText())) {
+            ableButton.setText("Enable tips");
+            configureButton.setEnabled(false);
+          } else if ("Enable tips".equals(ableButton.getText())) {
+            ableButton.setText("Disable tips");
+            configureButton.setEnabled(true);
           }
         }
       });
@@ -175,7 +174,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
           onSelection();
         }
 
-        @SuppressWarnings("synthetic-access") private void onSelection() {
+        @SuppressWarnings("synthetic-access") void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i >= 0)
             onConfigure.accept(elements.get(i).getValue());
@@ -266,11 +265,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return $;
     }
 
-    public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject p) {
-      Map<SpartanCategory, SpartanTipper[]> $ = preferences1.get(p);
+    public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject ¢) {
+      Map<SpartanCategory, SpartanTipper[]> $ = preferences1.get(¢);
       if ($ == null) {
-        $ = XMLSpartan.getTippersByCategories(p);
-        preferences1.put(p, $);
+        $ = XMLSpartan.getTippersByCategories(¢);
+        preferences1.put(¢, $);
       }
       return $;
     }
@@ -279,10 +278,10 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       Boolean $ = ables.get(p);
       if ($ == null)
         try {
-          $ = Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
-        } catch (final CoreException x) {
-          monitor.log(x);
-          $ = Boolean.FALSE;
+          return  Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
+        } catch (final CoreException ¢) {
+          monitor.log(¢);
+          return Boolean.FALSE;
         }
       return $;
     }
@@ -294,23 +293,23 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     public Void update(final IProject p, final Set<String> preference) {
       preferences2.put(p, preference);
       for (final SpartanTipper[] ts : preferences1.get(p).values())
-        for (final SpartanTipper t : ts)
-          t.enable(preference.contains(t.name()));
+        for (final SpartanTipper ¢ : ts)
+          ¢.enable(preference.contains(¢.name()));
       return null;
     }
 
     public synchronized void commit() {
       ((Changes) clone()).commitSelf();
-      for (final IProject p : preferences1.keySet()) {
-        preferences1.put(p, null);
-        preferences2.put(p, null);
-        ables.put(p, null);
+      for (final IProject ¢ : preferences1.keySet()) {
+        preferences1.put(¢, null);
+        preferences2.put(¢, null);
+        ables.put(¢, null);
       }
     }
 
     private void commitSelf() {
       new Job("Applying preferences changes") {
-        @SuppressWarnings("synthetic-access") @Override protected IStatus run(final IProgressMonitor m) {
+        @Override @SuppressWarnings("synthetic-access") protected IStatus run(final IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
           for (final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)
@@ -318,8 +317,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
             if (ables.get(p) != null)
               try {
                 TipsOnOffToggle.toggleNature(p, ables.get(p).booleanValue());
-              } catch (final CoreException x) {
-                monitor.log(x);
+              } catch (final CoreException ¢) {
+                monitor.log(¢);
               }
             m.worked(1);
           }
