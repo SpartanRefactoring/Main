@@ -13,7 +13,7 @@ public class LetItBeTest {
   @Test public void a() {
     trimmingOf("{{A x = foo(); return bar(x,x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{A let_x=foo();return bar(x,x);}another();}") //
+        .gives("{{ return bar(foo(),foo());} another();}")//
         .stays();
   }
 
@@ -31,14 +31,14 @@ public class LetItBeTest {
   @Test public void d() {
     trimmingOf("{{A x = foo(); bar(x,x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{A let_x=foo();bar(x,x);}another();}") //
+        .gives("{{  bar(foo(),foo());} another();}")//
         .stays();
   }
 
   @Test public void e() {
     trimmingOf("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{A y=bar(),let_x=foo();bar(x,x);print(y);}another();}") //
+        .gives("{{A y = bar();  bar(foo(),foo()); print(y);} another();}")//
         .stays();
   }
 

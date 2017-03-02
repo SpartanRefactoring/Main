@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -7,7 +9,6 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -24,24 +25,20 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   private static final FragmentInitializerInlineIntoNext fragmentInliner = new FragmentInitializerInlineIntoNext();
 
   @Override public boolean canTip(final VariableDeclarationFragment ¢) {
-    return letInliner.canTip(¢)//
+    return letInliner.tip(¢) != null//
         && fragmentInliner.cantTip(¢);
-  }
-
-  @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
-    return letInliner.tip(¢);
   }
 
   static class LetInliner extends ReplaceToNextStatement<VariableDeclarationFragment> {
     private static final long serialVersionUID = 2390117956692878327L;
 
     @Override protected ASTRewrite go(ASTRewrite $, VariableDeclarationFragment f, Statement nextStatement, TextEditGroup g) {
-      if (!preDelegation(f, nextStatement) || containsClassInstanceCreation(nextStatement))
+      if (!preDelegation(f, nextStatement))
         return null;
       final Statement parent = az.variableDeclarationStatement(parent(f));
       if (parent == null)
         return null;
-      if (anyFurtherUsage(nextStatement, name(f)))//
+      if (anyFurtherUsage(parent(nextStatement), name(f)))//
         return null;
       final Expression initializer = initializer(f);
       if (initializer == null)
@@ -50,36 +47,52 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
-      if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
-        return null;
-      $.replace(name(f), f.getAST().newSimpleName("let_" + name(f)), g);
+      if (pp == null//
+          || fragments(pp).size() <= 1)
+        $.remove(parent, g);
+      else {
+        if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
+          return null;
+        final VariableDeclarationStatement pn = copy.of(pp);
+        final List<VariableDeclarationFragment> l = fragments(pp);
+        for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
+          if (l.get(¢).equals(f)) {
+            fragments(pn).remove(¢);
+            break;
+          }
+          if (iz.containsName(name(f), initializer(l.get(¢))))
+            return null;
+        }
+        $.replace(parent, pn, g);
+      }
+      for (SimpleName n : peelIdentifiers(nextStatement, name(f)))
+        $.replace(n, e, g);
       return $;
     }
 
-    private static boolean containsClassInstanceCreation(final Statement nextStatement) {
-      return !yieldDescendants.ofClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
+    private static List<SimpleName> peelIdentifiers(final Statement s, final SimpleName n) {
+      return collect.usesOf(n).in(s);
     }
 
-    /** @return any usage which is not the definition itself or usages inside
-     *         the inlined to statement
-     *         <p>
-     *         [[SuppressWarningsSpartan]] */
-    private static boolean anyFurtherUsage(final Statement nextStatement, final SimpleName n) {
-      return collect.usesOf(n).in(parent(nextStatement)).size() > collect.usesOf(n).in(nextStatement).size() + 1;
+    private static boolean anyFurtherUsage(final ASTNode node, final SimpleName n) {
+      return collect.forAllOccurencesExcludingDefinitions(n).in(node).isEmpty();
     }
 
     private static boolean preDelegation(final VariableDeclarationFragment n, final Statement nextStatement) {
       return (iz.expressionStatement(nextStatement)//
-          || iz.returnStatement(nextStatement))//
-          && usesAssignmentAtLeastTwice(n, nextStatement);
+          || iz.returnStatement(nextStatement)) && usesAssignment(n, nextStatement);
     }
 
-    private static boolean usesAssignmentAtLeastTwice(final VariableDeclarationFragment n, final Statement nextStatement) {
-      return collect.usesOf(name(n)).in(nextStatement).size() > 1;
+    private static boolean usesAssignment(final VariableDeclarationFragment n, final Statement nextStatement) {
+      return !collect.usesOf(name(n)).in(nextStatement).isEmpty();
     }
 
     @Override public String description(@SuppressWarnings("unused") VariableDeclarationFragment __) {
       return "inline me!";
     }
+  }
+
+  @Override protected Tip pattern(VariableDeclarationFragment ¢) {
+    return letInliner.tip(¢);
   }
 }
