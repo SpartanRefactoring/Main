@@ -3,7 +3,6 @@ package il.org.spartan.plugin.preferences.revision;
 import static il.org.spartan.plugin.preferences.PreferencesResources.TipperGroup.*;
 
 import org.eclipse.core.runtime.preferences.*;
-import org.eclipse.jface.preference.*;
 
 import il.org.spartan.plugin.preferences.*;
 
@@ -16,7 +15,6 @@ import il.org.spartan.plugin.preferences.*;
  * @since 2016/03/28 */
 public final class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
-    final IPreferenceStore s = store();
-    s.setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
+    store().setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
   }
 }

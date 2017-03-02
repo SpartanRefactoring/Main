@@ -54,7 +54,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     return true;
   }
 
-  @SuppressWarnings("unused") @Override public boolean visit(final TypeDeclaration $) {
+  @Override @SuppressWarnings("unused") public boolean visit(final TypeDeclaration $) {
     // if (!excludeMethod($))
     try {
       final Integer key = box.it(measure.statements($));
@@ -98,7 +98,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
     final Int $ = new Int();
     for (final CompilationUnitRecord ¢ : compilationUnitRecords)
       if (¢.testCount() > 0)
-        $.inner++;
+        ++$.inner;
     return $.inner;
   }
 
@@ -127,11 +127,11 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   }
 
   private int countNoTestPackages() {
-    final HashSet<String> packgSet = new HashSet<>();
+    final HashSet<String> $ = new HashSet<>();
     for (final CompilationUnitRecord ¢ : compilationUnitRecords)
       if (¢.testCount() == 0)
-        packgSet.add(¢.pakcage);
-    return packgSet.size();
+        $.add(¢.pakcage);
+    return $.size();
   }
 
   private static void initializeWriter() {

@@ -36,9 +36,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       if (!preDelegation(f, nextStatement))
         return null;
       final Statement parent = az.variableDeclarationStatement(parent(f));
-      if (parent == null)
-        return null;
-      if (anyFurtherUsage(parent(nextStatement), name(f)))//
+      if (parent == null || anyFurtherUsage(parent(nextStatement), name(f)))
         return null;
       final Expression initializer = initializer(f);
       if (initializer == null)
@@ -47,8 +45,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
-      if (pp == null//
-          || fragments(pp).size() <= 1)
+      if (pp == null || fragments(pp).size() <= 1)
         $.remove(parent, g);
       else {
         if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
@@ -65,8 +62,8 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
         }
         $.replace(parent, pn, g);
       }
-      for (SimpleName n : peelIdentifiers(nextStatement, name(f)))
-        $.replace(n, e, g);
+      for (SimpleName ¢ : peelIdentifiers(nextStatement, name(f)))
+        $.replace(¢, e, g);
       return $;
     }
 
@@ -78,13 +75,13 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return collect.forAllOccurencesExcludingDefinitions(n).in(node).isEmpty();
     }
 
-    private static boolean preDelegation(final VariableDeclarationFragment n, final Statement nextStatement) {
+    private static boolean preDelegation(final VariableDeclarationFragment f, final Statement nextStatement) {
       return (iz.expressionStatement(nextStatement)//
-          || iz.returnStatement(nextStatement)) && usesAssignment(n, nextStatement);
+          || iz.returnStatement(nextStatement)) && usesAssignment(f, nextStatement);
     }
 
-    private static boolean usesAssignment(final VariableDeclarationFragment n, final Statement nextStatement) {
-      return !collect.usesOf(name(n)).in(nextStatement).isEmpty();
+    private static boolean usesAssignment(final VariableDeclarationFragment f, final Statement nextStatement) {
+      return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
     @Override public String description(@SuppressWarnings("unused") VariableDeclarationFragment __) {
