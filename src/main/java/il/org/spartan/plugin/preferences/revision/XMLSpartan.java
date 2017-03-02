@@ -267,7 +267,7 @@ public class XMLSpartan {
    * @return true iff the document is valid, and does not require
    *         initialization */
   private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
-    return CURRENT_VERSION.equals(version) ? true : false;
+    return CURRENT_VERSION.equals(version);
   }
 
   /** Describes an XML element for plugin's XML file.
