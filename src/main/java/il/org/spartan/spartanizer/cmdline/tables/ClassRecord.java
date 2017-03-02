@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.spartanizer.cmdline.tables;
 
 import org.eclipse.jdt.core.dom.*;
