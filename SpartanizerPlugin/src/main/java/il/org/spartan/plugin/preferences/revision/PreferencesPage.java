@@ -275,7 +275,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public Boolean getAble(final IProject p) {
-      Boolean $ = ables.get(p);
+      final Boolean $ = ables.get(p);
       if ($ == null)
         try {
           return  Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
