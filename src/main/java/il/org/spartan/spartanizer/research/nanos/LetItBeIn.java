@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -31,8 +29,6 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   }
 
   @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
-    // System.out.println("--" + ¢ + "--");
-    // System.out.println(parent(parent(¢)));
     return letInliner.tip(¢);
   }
 
@@ -54,35 +50,14 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
-      if (pp == null//
-          || fragments(pp).size() <= 1)
-        $.remove(parent, g);
-      else {
-        if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
-          return null;
-        final VariableDeclarationStatement pn = copy.of(pp);
-        final List<VariableDeclarationFragment> l = fragments(pp);
-        for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
-          if (l.get(¢).equals(f)) {
-            fragments(pn).remove(¢);
-            break;
-          }
-          if (iz.containsName(name(f), initializer(l.get(¢))))
-            return null;
-        }
-        $.replace(parent, pn, g);
-      }
-      for (SimpleName n : peelIdentifiers(nextStatement, name(f)))
-        $.replace(n, e, g);
+      if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
+        return null;
+      $.replace(name(f), f.getAST().newSimpleName("let_" + name(f)), g);
       return $;
     }
 
     private static boolean containsClassInstanceCreation(final Statement nextStatement) {
       return !yieldDescendants.ofClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
-    }
-
-    private static List<SimpleName> peelIdentifiers(final Statement s, final SimpleName n) {
-      return collect.usesOf(n).in(s);
     }
 
     /** @return any usage which is not the definition itself or usages inside
