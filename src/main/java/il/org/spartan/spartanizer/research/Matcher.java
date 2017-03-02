@@ -417,7 +417,7 @@ public final class Matcher {
           return true;
         }
       });
-    } catch (@SuppressWarnings("unused") NullPointerException __) {
+    } catch (@SuppressWarnings("unused") final NullPointerException __) {
       throw new RuntimeException("Cannot parse [" + replacement + "]");
     }
     return extractStatementIfOne(ast($.get()));
