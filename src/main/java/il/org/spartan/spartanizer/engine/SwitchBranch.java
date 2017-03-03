@@ -175,6 +175,7 @@ public class SwitchBranch {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
         $ = a.newEmptyStatement();
     } else {
+      // TODO: Yuval - please use class subject
       final Block b = a.newBlock();
       step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
       $ = b;

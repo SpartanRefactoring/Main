@@ -33,11 +33,11 @@ public class XMLSpartan {
   private static final String VERSION = "version";
   private static final String FILE_NAME = "spartan.xml";
   private static final String TIPPER = "tipper";
-  @SuppressWarnings("unused") @Deprecated private static final String CATEGORY = "category";
+  @Deprecated @SuppressWarnings("unused") private static final String CATEGORY = "category";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
-  @SuppressWarnings("unused") @Deprecated private static final String CATEGORY_ID = "id";
-  @SuppressWarnings("unused") @Deprecated private static final String TIPPER_DESCRIPTION = "description";
+  @Deprecated @SuppressWarnings("unused") private static final String CATEGORY_ID = "id";
+  @Deprecated @SuppressWarnings("unused") private static final String TIPPER_DESCRIPTION = "description";
   private static final Set<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
@@ -83,12 +83,12 @@ public class XMLSpartan {
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
       final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
-          description == null ? "No description available" : description, preview == null ? TipperPreview.empty() : preview);
+          description != null ? description : "No description available", preview != null ? preview : TipperPreview.empty());
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }
-    for (Entry<TipperGroup, List<SpartanTipper>> e : tgs.entrySet())
-      $.put(tcs.get(e.getKey()), e.getValue().toArray(new SpartanTipper[e.getValue().size()]));
+    for (final Entry<TipperGroup, List<SpartanTipper>> ¢ : tgs.entrySet())
+      $.put(tcs.get(¢.getKey()), ¢.getValue().toArray(new SpartanTipper[¢.getValue().size()]));
     return $;
   }
 
@@ -115,8 +115,8 @@ public class XMLSpartan {
 
   /** Updates the project's XML file to enable given tippers.
    * @param p JD
-   * @param es enabled tippers by name */
-  public static void updateEnabledTippers(final IProject p, final Set<String> es) {
+   * @param ss enabled tippers by name */
+  public static void updateEnabledTippers(final IProject p, final Set<String> ss) {
     final Document d = getFile(p);
     if (d == null)
       return;
@@ -126,10 +126,7 @@ public class XMLSpartan {
     for (int i = 0; i < l.getLength(); ++i) {
       final Element e = (Element) l.item(i);
       final String nameByID = Toolbox.Tables.TipperIDNameTranslationTable.get(e.getAttribute(TIPPER_ID));
-      if (nameByID != null && es.contains(nameByID))
-        e.setAttribute(ENABLED, "true");
-      else
-        e.setAttribute(ENABLED, "false");
+      e.setAttribute(ENABLED, nameByID != null && ss.contains(nameByID) ? "true" : "false");
     }
     commit(p, d);
   }
@@ -137,9 +134,9 @@ public class XMLSpartan {
   /** Return XML file for given project. Creates one if absent.
    * @param p JD
    * @return XML file for project */
-  private static Document getFile(final IProject p) {
+  private static Document getFile(final IProject $) {
     try {
-      return getFileInner(p);
+      return getFileInner($);
     } catch (final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
       monitor.log(¢);
       ¢.printStackTrace();
@@ -182,7 +179,7 @@ public class XMLSpartan {
     if (e == null)
       return null;
     e.normalize();
-    NodeList bs = $.getElementsByTagName(BASE);
+    final NodeList bs = $.getElementsByTagName(BASE);
     if (bs == null || bs.getLength() != 1 || !validate($, ((Element) bs.item(0)).getAttribute(VERSION))) {
       $ = initialize(b.newDocument());
       commit(fl, $);
@@ -194,18 +191,18 @@ public class XMLSpartan {
    * tippers.
    * @param d JD
    * @return given document */
-  private static Document initialize(final Document d) {
-    if (d == null)
+  private static Document initialize(final Document $) {
+    if ($ == null)
       return null;
-    if (d.getElementById(BASE) != null)
-      return d;
-    final Element e = d.createElement("spartan");
+    if ($.getElementById(BASE) != null)
+      return $;
+    final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Set<String> seen = new HashSet<>();
-    Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(t -> createEnabledNodeChild(d, t, seen, e));
-    d.appendChild(e);
-    d.setXmlStandalone(true); // TODO Roth: does not seem to work
-    return d;
+    Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
+    $.appendChild(e);
+    $.setXmlStandalone(true); // TODO Roth: does not seem to work
+    return $;
   }
 
   /** Adds a new tipper to the XML document.
@@ -214,7 +211,7 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
-  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, Element e) {
+  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, final Element e) {
     if (d == null || t == null || seen == null || e == null)
       return;
     final String n = t.getClass().getSimpleName();
@@ -247,7 +244,7 @@ public class XMLSpartan {
       t.setOutputProperty(OutputKeys.STANDALONE, "yes");
       t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
       t.transform(domSource, result);
-      f.setContents(new ByteArrayInputStream(writer.toString().getBytes()), false, false, new NullProgressMonitor());
+      f.setContents(new ByteArrayInputStream((writer + "").getBytes()), false, false, new NullProgressMonitor());
       return true;
     } catch (CoreException | TransformerException ¢) {
       monitor.log(¢);
@@ -260,8 +257,8 @@ public class XMLSpartan {
    * @param d JD
    * @return true iff the operation has been completed successfully */
   private static boolean commit(final IProject p, final Document d) {
-    final IFile f = p.getFile(FILE_NAME);
-    return !(f == null || !f.exists()) && commit(f, d);
+    final IFile $ = p.getFile(FILE_NAME);
+    return $ != null && $.exists() && commit($, d);
   }
 
   /** Manipulates documents with different version / corrupted files.
@@ -269,15 +266,8 @@ public class XMLSpartan {
    * @param version document's version
    * @return true iff the document is valid, and does not require
    *         initialization */
-  private static boolean validate(@SuppressWarnings("unused") Document $, String version) {
-    if (CURRENT_VERSION.equals(version))
-      return true;
-    switch (version) {
-      case "1.0":
-        return false;
-      default:
-        return false;
-    }
+  private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
+    return CURRENT_VERSION.equals(version);
   }
 
   /** Describes an XML element for plugin's XML file.

@@ -60,10 +60,10 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
-    return namer.shorten($.getType()) == null ? false
-        : new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-            && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-            && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
+    return namer.shorten($.getType()) != null
+        && new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+        && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+        && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {

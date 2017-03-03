@@ -135,7 +135,7 @@ public class GUIBatchLaconizer extends Applicator {
   public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
     if (a instanceof Trimmer)
       ((Trimmer) a).useProjectPreferences();
-    setRunAction(λ -> λ == null ? Integer.valueOf(0) : Integer.valueOf(a.apply(λ, selection())));
+    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : a.apply(λ, selection())));
     name(a.getName());
     return this;
   }
