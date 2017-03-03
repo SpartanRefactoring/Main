@@ -85,6 +85,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       $.add(az.block(p));
       return $;
     }
+    // TODO: Doron, please use class subject
     final Block b = s.getAST().newBlock();
     statements(b).add(copy.of(p));
     $.add(b);

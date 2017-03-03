@@ -30,9 +30,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
-        final Assignment newTail = copy.of($);
-        final Assignment p = rightMost(newTail);
-        final Assignment newHead = copy.of(az.assignment(right(p)));
+        final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
