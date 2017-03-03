@@ -23,7 +23,7 @@ public class MethodRecord {
   public final int numExpressions;
   public final MethodDeclaration before;
   public MethodDeclaration after;
-  private boolean fullyMatched = false;
+  private boolean fullyMatched;
 
   public MethodRecord(final MethodDeclaration d) {
     before = d;

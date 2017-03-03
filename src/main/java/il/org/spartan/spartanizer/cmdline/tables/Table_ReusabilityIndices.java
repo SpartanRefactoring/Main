@@ -73,8 +73,8 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
     ;
   }
 
-  private static String getProjectName(final String s) {
-    return s.substring(s.lastIndexOf('-') + 1);
+  private static String getProjectName(final String ¢) {
+    return ¢.substring(¢.lastIndexOf('-') + 1);
   }
 
   void addMissingKeys() {
