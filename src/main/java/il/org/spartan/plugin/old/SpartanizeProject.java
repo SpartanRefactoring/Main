@@ -9,11 +9,7 @@ import java.util.concurrent.atomic.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.ui.*;
-import org.eclipse.ui.progress.*;
-
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -79,8 +75,6 @@ public final class SpartanizeProject extends BaseHandler {
             + initialCount + "\n" + "Tips after: " + $ + "\n");
   }
 
-  final IWorkbench workench = PlatformUI.getWorkbench();
-
   void manyPasses() {
     for (passNumber = 1;; ++passNumber)
       if (passNumber > MAX_PASSES || singlePass())
@@ -89,34 +83,15 @@ public final class SpartanizeProject extends BaseHandler {
 
   boolean singlePass() {
     final Trimmer t = new Trimmer();
-    final IProgressService ps = workench.getProgressService();
-    final Int passNum = new Int(passNumber + 1);
     final AtomicBoolean $ = new AtomicBoolean(false);
-    try {
-      ps.run(true, true, pm -> {
-        pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
-            todo.size());
-        int n = 0;
-        for (final ICompilationUnit ¢ : todo) {
-          if (pm.isCanceled()) {
-            $.set(true);
-            break;
-          }
-          pm.worked(1);
-          pm.subTask("Compilation unit " + wizard.nth(++n, todo) + " (" + ¢.getElementName() + ")");
-          if (!t.apply(¢))
-            done.add(¢);
-        }
-        if (!done.isEmpty())
-          status.append(done.size()).append(" CUs did not change; will not be processed further\n");
-        todo.removeAll(done);
-        done.clear();
-        pm.done();
-      });
-    } catch (final InterruptedException | InvocationTargetException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return true;
+    for (final ICompilationUnit ¢ : todo) {
+      if (!t.apply(¢))
+        done.add(¢);
     }
+    if (!done.isEmpty())
+      status.append(done.size()).append(" CUs did not change; will not be processed further\n");
+    todo.removeAll(done);
+    done.clear();
     return $.get() || todo.isEmpty();
   }
 
