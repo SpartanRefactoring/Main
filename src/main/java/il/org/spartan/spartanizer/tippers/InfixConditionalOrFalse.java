@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onBooleans {
+  private static final long serialVersionUID = -6801065909271330189L;
+
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'false' argument to '||'";
   }

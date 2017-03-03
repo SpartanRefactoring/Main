@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.methods.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
+  private static final long serialVersionUID = 8818334037409089691L;
   static final TypeChecker c = new TypeChecker();
 
   @Override public boolean canTip(final InstanceofExpression ¢) {

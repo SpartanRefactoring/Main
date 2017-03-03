@@ -12,22 +12,33 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 22, 2017 */
 public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
+  private static final long serialVersionUID = -419909996243222517L;
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
-      statementsPattern("for($T $N1 : $X1) if($X2) return false; return true;", //
-          "return $X1.stream().allMatch($N1 -> !($X2));", "All matches pattern. Consolidate into one statement");
-      statementsPattern("for($T $N1 : $X1) if($X2) $N2 = false;", //
+      statementsPattern("for($T $N1 : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N1 -> !($X2));",
+          "All matches pattern. Consolidate into one statement");
+      statementsPattern("for($T $N1 : $X1) if($X2) $N2 = false;", "$N2 = $X1.stream().allMatch($N1 -> !($X2));",
+          "All matches pattern.  Consolidate into one statement");
+    }
+  };
+  private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>() {
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    {
+      patternTipper("for($T $N1 : $X1) if($X2) return false;", //
+          "returnIf($X1.stream().allMatch($N1 -> !($X2)));", "All matches pattern. Consolidate into one statement");
+      patternTipper("for($T $N1 : $X1) if($X2) $N2 = false;", //
           "$N2 = $X1.stream().allMatch($N1 -> !($X2));", "All matches pattern. Consolidate into one statement");
     }
   };
 
   @Override public boolean canTip(final EnhancedForStatement x) {
-    return tippers.anyTips(az.block(parent(x)));
+    return tippers.canTip(az.block(parent(x)))//
+        || tippers2.canTip(x);
   }
 
-  @Override public Tip pattern(final EnhancedForStatement $) {
-    return tippers.firstTip(az.block(parent($)));
+  @Override public Tip pattern(final EnhancedForStatement x) {
+    return !tippers.canTip(az.block(parent(x))) ? tippers2.firstTip(x) : tippers.firstTip(az.block(parent(x)));
   }
 
   @Override public Category category() {

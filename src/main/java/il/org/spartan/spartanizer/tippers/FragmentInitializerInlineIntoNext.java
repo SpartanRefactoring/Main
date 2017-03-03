@@ -28,17 +28,17 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-11-27 */
 public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -228096256168103399L;
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline assignment to " + name(¢) + " into next statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-    if (containsClassInstanceCreation(nextStatement) || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+    if (containsClassInstanceCreation(nextStatement)//
+        || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
-    final Expression initializer = f.getInitializer();
-    if (initializer == null)
-      return null;
-    switch (nextStatement.getNodeType()) {
+    switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:
       case ASTNode.ENHANCED_FOR_STATEMENT:
       case ASTNode.FOR_STATEMENT:
@@ -53,20 +53,28 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
         if (containsLambda(nextStatement))
           return null;
     }
-    final Statement parent = az.statement(f.getParent());
-    if (parent == null || iz.forStatement(parent))
+    final Expression initializer = initializer(f);
+    if (initializer == null)
+      return null;
+    final Statement parent = az.statement(parent(f));
+    if (parent == null//
+        || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
-    if (n == null || anyFurtherUsage(parent, nextStatement, identifier(n)) || leftSide(nextStatement, identifier(n)) || preOrPostfix(n))
+    if (n == null//
+        || anyFurtherUsage(parent, nextStatement, identifier(n))//
+        || leftSide(nextStatement, identifier(n))//
+        || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
       e = Inliner.protect(e, pp);
-    if (pp == null || fragments(pp).size() <= 1)
+    if (pp == null//
+        || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {
-      if (step.type(pp).getNodeType() == ASTNode.ARRAY_TYPE)
+      if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
         return null;
       final VariableDeclarationStatement pn = copy.of(pp);
       final List<VariableDeclarationFragment> l = fragments(pp);
@@ -75,7 +83,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
           fragments(pn).remove(¢);
           break;
         }
-        if (iz.containsName(f.getName(), l.get(¢).getInitializer()))
+        if (iz.containsName(name(f), initializer(l.get(¢))))
           return null;
       }
       $.replace(parent, pn, g);
@@ -90,7 +98,8 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
 
   private static boolean preOrPostfix(final SimpleName id) {
     final ASTNode $ = parent(id);
-    return iz.prefixExpression($) || iz.postfixExpression($);
+    return iz.prefixExpression($)//
+        || iz.postfixExpression($);
   }
 
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
@@ -99,12 +108,15 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    final ASTNode parent = nextStatement.getParent();
+    final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (parent.equals(¢))
           return true;
-        if (!¢.equals(nextStatement) && !¢.equals(originalStatement) && iz.statement(¢) && !occurencesOf(az.statement(¢), id).isEmpty())
+        if (!¢.equals(nextStatement)//
+            && !¢.equals(originalStatement)//
+            && iz.statement(¢)//
+            && !occurencesOf(az.statement(¢), id).isEmpty())
           $.inner = true;
         return false;
       }
@@ -116,7 +128,8 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     final Bool $ = new Bool();
     nextStatement.accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
+        if (iz.simpleName(left(¢))//
+            && identifier(az.simpleName(left(¢))).equals(id))
           $.inner = true;
         return true;
       }

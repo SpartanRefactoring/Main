@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-8-31 */
 public final class MethodInvocationToStringToEmptyStringAddition extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = 6764541766975586375L;
+
   @Override public String description(final MethodInvocation ¢) {
     final Expression $ = receiver(¢);
     return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");

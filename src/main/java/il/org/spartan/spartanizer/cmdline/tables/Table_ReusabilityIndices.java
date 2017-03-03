@@ -62,7 +62,7 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
   }
 
   private void addLineToGlobalStatistcs() {
-    writer.col("Project", getProjectName(presentSourceName)); 
+    writer.col("Project", getProjectName(presentSourceName));
     if (usage.get("METHOD") == null)
       return;
     final int rExternal = rExternal(), rIntrernal = rInternal();
@@ -73,8 +73,8 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
     ;
   }
 
-  private static String getProjectName(final String s) {
-    return s.substring(s.lastIndexOf('-')+1);
+  private static String getProjectName(final String ¢) {
+    return ¢.substring(¢.lastIndexOf('-') + 1);
   }
 
   void addMissingKeys() {
@@ -92,7 +92,7 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
     addMissingKeys();
     if (writer == null)
       writer = new Table(this);
-    writer.col("Project", presentSourceName); 
+    writer.col("Project", presentSourceName);
     try (Table t = new Table("rindices")) {
       for (final String category : usage.keySet()) {
         final Map<String, Integer> map = usage.get(category);

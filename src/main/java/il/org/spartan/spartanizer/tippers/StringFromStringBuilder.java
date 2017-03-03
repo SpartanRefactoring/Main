@@ -24,6 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-04-11 */
 public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -2855334552468199138L;
+
   // building a replacement
   private static ASTNode replacement(final MethodInvocation i, final List<Expression> xs) {
     if (xs.isEmpty())

@@ -26,6 +26,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
+  private static final long serialVersionUID = 7624011796441469217L;
+
   private static Expression extractRight(final Assignment ¢) {
     final Expression $ = from(¢);
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));

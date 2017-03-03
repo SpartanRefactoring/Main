@@ -18,6 +18,8 @@ import static il.org.spartan.lisp.first;
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -5815591308727978558L;
+
   private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
@@ -66,8 +68,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-      return step.fragments(az.variableDeclarationExpression(first(step.initializers(s)))).stream()
-        .anyMatch(λ -> (λ.getName() + "").equals(n + ""));
+    return step.fragments(az.variableDeclarationExpression(first(step.initializers(s)))).stream().anyMatch(λ -> (λ.getName() + "").equals(n + ""));
   }
 
   private static Expression updaterFromBody(final ForStatement ¢) {

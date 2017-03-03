@@ -103,22 +103,22 @@ public class Table_Summary extends Table_ReusabilityIndices {
     writer = new Table(clazz);
   }
 
-  public void summarizeSortedMethodStatistics(final String path) {
+  public static void summarizeSortedMethodStatistics(final String path) {
     if (writer == null)
       initializeWriter();
     writer//
         .col("Project", path)//
-        .col("R-Index", rMethod())//
-        .col("Nanos adopted", adopted())//
-        .col("Statements", statements())//
-        .col("Coverage", statementsCoverage())//
-        .col("Methods", methods())//
-        .col("Fmethods", fMethods())//
-        .col("Touched", touched())//
-        .col("Iteratives Coverage", iterativesCoverage())//
-        .col("ConditionalExps", conditionalExpressionsCoverage())//
-        .col("ConditionalStmts", conditionalStatementsCoverage())//
+        .col("Statements", statementsCoverage())//
         .col("Expressions", expressionsCoverage())//
+        .col("methodsCovered", fMethods())//
+        .col("methodsTouched", touched())//
+        .col("Iteratives", iterativesCoverage())//
+        .col("ConditionalExpressions", conditionalExpressionsCoverage())//
+        .col("ConditionalCommands", conditionalStatementsCoverage())//
+        // .col("R-Index", rMethod())//
+        // .col("Nanos adopted", adopted())//
+        .col("total Commands", statements())//
+        .col("total Methods", methods())//
         .nl();
   }
 
@@ -160,13 +160,6 @@ public class Table_Summary extends Table_ReusabilityIndices {
 
   private static double conditionalStatementsCoverage() {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
-  }
-
-  private long adopted() {
-    final int $ = rMethod();
-    return npStatistics.keySet().stream()//
-        .map(npStatistics::get)//
-        .filter(λ -> λ.occurences > $).count();
   }
 
   private static double touched() {

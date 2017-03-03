@@ -67,8 +67,8 @@ public enum leonidasSays {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode $) {
-    List<Statement> statements = statements(az.block($));
-    return statements == null || statements.size() != 1 ? $ :  first(statements);
+    final List<Statement> statements = statements(az.block($));
+    return statements == null || statements.size() != 1 ? $ : first(statements);
   }
 
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {

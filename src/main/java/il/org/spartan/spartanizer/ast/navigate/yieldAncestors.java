@@ -121,6 +121,10 @@ public abstract class yieldAncestors<N extends ASTNode> {
     return new ByNodeClass<>(AbstractTypeDeclaration.class);
   }
 
+  public static yieldAncestors<Block> untilContainingBlock() {
+    return new ByNodeClass<>(Block.class);
+  }
+
   /** Factory method, returning an instance which can search by a node
    * instances.
    * @param pattern JD

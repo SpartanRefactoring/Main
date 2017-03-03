@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 public class EnhancedForEliminateConditionalContinue extends EagerTipper<EnhancedForStatement>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = -212967427070060695L;
+
   @Override public String description(final EnhancedForStatement ¢) {
     return "Eliminate conditional continue before last statement in for about " + ¢.getExpression();
   }

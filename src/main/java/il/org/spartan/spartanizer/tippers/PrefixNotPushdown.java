@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -9089304451195425885L;
+
   /** A utility function, which tries to simplify a boolean expression, whose
    * top most parameter is logical negation.
    * @param x JD

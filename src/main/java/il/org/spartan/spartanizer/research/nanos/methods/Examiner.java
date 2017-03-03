@@ -13,8 +13,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** One statement method returning boolean expressio
  * @author Ori Marcovitch */
 public class Examiner extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 7361477859663262247L;
   private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("return $X;", "", ""));
       add(patternTipper("synchronized ($X1) { return $X2;}", "", ""));

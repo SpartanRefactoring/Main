@@ -1206,17 +1206,17 @@ public interface iz {
       void mark(@SuppressWarnings("unused") final ASTNode __) {
         $.inner = false;
       }
-  
+
       @Override public boolean visit(final BreakStatement ¢) {
         mark(¢);
         return false;
       }
-  
+
       @Override public boolean visit(final ContinueStatement ¢) {
         mark(¢);
         return false;
       }
-  
+
       @Override public boolean visit(final ReturnStatement ¢) {
         mark(¢);
         return false;
