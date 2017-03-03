@@ -191,8 +191,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("unchecked") public void update() {
-      final Collection<VariableDeclaration> vs = new ArrayList<>();
-      vs.addAll(uses.keySet());
+      final Collection<VariableDeclaration> vs = new ArrayList<VariableDeclaration>(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
         if ((!(currentStatement instanceof ExpressionStatement) || !(((ExpressionStatement) currentStatement).getExpression() instanceof Assignment))
             && inactive.contains(¢) && uses.get(¢).contains(currentStatement)) {
@@ -220,9 +219,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     public List<VariableDeclaration> usedVariables() {
-      final List<VariableDeclaration> $ = new ArrayList<>();
-      $.addAll(uses.keySet());
-      return $;
+      return new ArrayList<>(uses.keySet());
     }
 
     @SuppressWarnings("boxing") private void setUsesMapping(final VariableDeclaration d, final int starting) {
