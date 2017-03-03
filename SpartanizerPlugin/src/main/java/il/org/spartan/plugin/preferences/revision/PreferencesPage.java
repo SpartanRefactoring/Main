@@ -58,7 +58,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     addField(new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), ps,
         p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
         λ -> changes.getAble((IProject) λ), //
-        λ -> changes.update((IProject) λ, !changes.getAble((IProject) λ).booleanValue()) //
+        λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.getAble((IProject) λ).booleanValue())) //
     ));
   }
 
