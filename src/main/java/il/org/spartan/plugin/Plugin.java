@@ -37,8 +37,13 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
-    monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
-    startSpartan();
+    try {
+      monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
+      startSpartan();
+    } catch (IllegalStateException e) {
+      monitor.log(e);
+      return;
+    }
     try {
       LibrariesManagement.initializeUserLibraries();
     } catch (final CoreException ¢) {
@@ -49,8 +54,13 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   @Override public void start(final BundleContext ¢) throws Exception {
     super.start(¢);
     monitor.debug("START: gUIBatchLaconizer");
-    startSpartan();
-    addPartListener();
+    try {
+      startSpartan();
+      addPartListener();
+    } catch (IllegalStateException e) {
+      monitor.log(e);
+      return;
+    }
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
