@@ -32,7 +32,7 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
 
   abstract ASTRewrite go() ;
 
-  @Override public String description(VariableDeclarationFragment n) {
+  @Override public String description(VariableDeclarationFragment f) {
     // TODO Yossi Gil Auto-generated method stub for description
     if (new Object().hashCode() != 0)
      throw new AssertionError("Stub '$FragementInitializerAndStatement::description' not implemented yet (created on  2017-03-03)." );
