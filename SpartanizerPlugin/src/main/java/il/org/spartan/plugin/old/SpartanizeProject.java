@@ -9,7 +9,11 @@ import java.util.concurrent.atomic.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.ui.*;
+import org.eclipse.ui.progress.*;
+
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -29,12 +33,13 @@ public final class SpartanizeProject extends BaseHandler {
   private final Collection<ICompilationUnit> done = new ArrayList<>();
   private int passNumber;
 
-  /** Returns the number of spartanization tips for a compilation unit
+  /** Returns the number of spartanization tips for a compilation unit.
    * @param u JD
    * @return number of tips available for the compilation unit */
   public int countTips() {
-    if (todo.isEmpty())
-      return 0;
+    if (todo.isEmpty()) {
+		return 0;
+	}
     final Int $ = new Int();
     final AbstractGUIApplicator a = new Trimmer();
     try {
@@ -63,35 +68,58 @@ public final class SpartanizeProject extends BaseHandler {
 
   public Void go() {
     start();
-    if (initialCount == 0)
-      return eclipse.announce(status + "No tips found.");
+    if (initialCount == 0) {
+		return eclipse.announce(status + "No tips found.");
+	}
     manyPasses();
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int $ = countTips();
-    return eclipse.announce(//
-        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
+    return eclipse.announce(        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
             + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\n" + "Tips before: "
             + initialCount + "\n" + "Tips after: " + $ + "\n");
   }
 
+  final IWorkbench workench = PlatformUI.getWorkbench();
+
   void manyPasses() {
-    for (passNumber = 1;; ++passNumber)
-      if (passNumber > MAX_PASSES || singlePass())
-        return;
+    for (passNumber = 1;; ++passNumber) {
+		if (passNumber > MAX_PASSES || singlePass()) {
+			return;
+		}
+	}
   }
 
   boolean singlePass() {
     final Trimmer t = new Trimmer();
+    final IProgressService ps = workench.getProgressService();
+    final Int passNum = new Int(passNumber + 1);
     final AtomicBoolean $ = new AtomicBoolean(false);
-    for (final ICompilationUnit ¢ : todo) {
-      if (!t.apply(¢))
-        done.add(¢);
+    try {
+      ps.run(true, true, pm -> {
+        pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
+            todo.size());
+        int n = 0;
+        for (final ICompilationUnit ¢ : todo) {
+          if (pm.isCanceled()) {
+            $.set(true);
+            break;
+          }
+          pm.worked(1);
+          pm.subTask("Compilation unit " + wizard.nth(++n, todo) + " (" + ¢.getElementName() + ")");
+          if (!t.apply(¢))
+            done.add(¢);
+        }
+        if (!done.isEmpty())
+          status.append(done.size()).append(" CUs did not change; will not be processed further\n");
+        todo.removeAll(done);
+        done.clear();
+        pm.done();
+      });
+    } catch (final InterruptedException | InvocationTargetException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return true;
     }
-    if (!done.isEmpty())
-      status.append(done.size()).append(" CUs did not change; will not be processed further\n");
-    todo.removeAll(done);
-    done.clear();
     return $.get() || todo.isEmpty();
   }
 
