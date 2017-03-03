@@ -290,7 +290,7 @@ public interface type {
 
     private static implementation lookDown(final PostfixExpression ¢) {
       return get(operand(¢)).asNumeric(); // see
-                                               // testInDecreamentSemantics
+                                          // testInDecreamentSemantics
     }
 
     private static implementation lookDown(final PrefixExpression ¢) {

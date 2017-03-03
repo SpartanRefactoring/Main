@@ -14,9 +14,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class NotHoldsOrThrow extends NanoPatternTipper<IfStatement> {
+  private static final long serialVersionUID = 9147240551145375646L;
   private static final NotNullOrThrow rival = new NotNullOrThrow();
   private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("if($X1) throw $X2;", "holds(!($X1)).orThrow(()->$X2);", "IfThrow pattern. Go fluent!"));
     }

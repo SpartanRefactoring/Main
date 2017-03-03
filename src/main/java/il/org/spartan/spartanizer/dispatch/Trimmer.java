@@ -34,7 +34,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   boolean useProjectPreferences;
-  private Map<IProject, Toolbox> toolboxes = new HashMap<>();
+  private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
   public Toolbox toolbox;
 
   public Trimmer useProjectPreferences() {
@@ -54,7 +54,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final Int i) {
-    Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
+    final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     final String fileName = Linguistic.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -182,28 +182,28 @@ public class Trimmer extends AbstractGUIApplicator {
 
   /** @param u JD
    * @return {@link Toolbox} by project's preferences */
-  Toolbox getToolboxByPreferences(CompilationUnit u) {
+  Toolbox getToolboxByPreferences(final CompilationUnit u) {
     if (u == null)
       return null;
-    ITypeRoot r = u.getTypeRoot();
+    final ITypeRoot r = u.getTypeRoot();
     if (r == null)
       return null;
-    IJavaProject jp = r.getJavaProject();
+    final IJavaProject jp = r.getJavaProject();
     if (jp == null)
       return null;
-    IProject p = jp.getProject();
+    final IProject p = jp.getProject();
     if (p == null)
       return null;
     if (toolboxes.containsKey(p))
       return toolboxes.get(p);
-    Toolbox $ = Toolbox.freshCopyOfAllTippers();
-    Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
-    List<Tipper<?>> xs = new ArrayList<>();
-    for (Tipper<?> t : $.getAllTippers())
-      if (!es.contains(t.getClass()))
-        xs.add(t);
-    for (List<Tipper<? extends ASTNode>> l : $.implementation)
-      l.removeAll(xs);
+    final Toolbox $ = Toolbox.freshCopyOfAllTippers();
+    final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
+    final List<Tipper<?>> xs = new ArrayList<>();
+    for (final Tipper<?> ¢ : $.getAllTippers())
+      if (!es.contains(¢.getClass()))
+        xs.add(¢);
+    for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
+      ¢.removeAll(xs);
     toolboxes.put(p, $);
     return $;
   }

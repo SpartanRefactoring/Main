@@ -23,6 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends ReplaceCurrentNode<IfStatement> //
     implements TipperCategory.Ternarization {
+  private static final long serialVersionUID = 6911821003993244593L;
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two branches of 'if' into a ternary exrpession";
   }

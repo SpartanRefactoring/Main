@@ -8,6 +8,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 abstract class InfixExpressionSorting extends ReplaceCurrentNode<InfixExpression> {
+  private static final long serialVersionUID = 2767714386379462412L;
+
   @Override public final String description(final InfixExpression ¢) {
     return "Reorder operands of " + ¢.getOperator();
   }

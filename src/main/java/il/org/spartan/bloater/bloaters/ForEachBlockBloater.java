@@ -17,9 +17,12 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 10-01-17 */
 public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 4091243669569596651L;
+
   @Override public ASTNode replacement(final EnhancedForStatement s) {
     if (s == null)
       return null;
+    // TODO: Raviv please use class subject
     final EnhancedForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));

@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
+  private static final long serialVersionUID = -9215176071220857924L;
+
   @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }

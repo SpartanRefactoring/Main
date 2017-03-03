@@ -36,6 +36,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
+  private static final long serialVersionUID = 4219806359292635514L;
+
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (iz.infixExpression(x))
       return gather(az.infixExpression(x), $);

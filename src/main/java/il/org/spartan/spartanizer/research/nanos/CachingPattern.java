@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class CachingPattern extends NanoPatternTipper<IfStatement> {
+  private static final long serialVersionUID = 7004578865361739464L;
   private static final UserDefinedTipper<Block> tipper = //
       statementsPattern("if($X1 == null)$X1 = $X2;return $X1;", //
           "return $X1!=null?$X1:($X1=$X2);", //

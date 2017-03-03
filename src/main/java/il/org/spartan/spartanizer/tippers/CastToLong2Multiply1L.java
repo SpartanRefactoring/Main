@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpression>//
     implements TipperCategory.NOP {
+  private static final long serialVersionUID = -7695643321354565364L;
+
   private static NumberLiteral literal(final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1L");

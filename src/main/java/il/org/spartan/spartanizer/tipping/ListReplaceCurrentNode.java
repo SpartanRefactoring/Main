@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Ori Roth
  * @since 2016 */
 public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
+  private static final long serialVersionUID = 9100870643887091404L;
+
   public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
 
   /** @return child list property descriptor of the parent of the node we are

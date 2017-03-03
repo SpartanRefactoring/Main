@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2-12-2016 */
 public class InfixLessEqualsToLess extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = 3685470914076803755L;
+
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixMinus(right(¢))//

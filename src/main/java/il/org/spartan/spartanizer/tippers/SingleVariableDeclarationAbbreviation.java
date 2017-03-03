@@ -28,6 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015/09/24 */
 public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
+  private static final long serialVersionUID = -2709826205107840171L;
+
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
@@ -58,10 +60,10 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
-    return namer.shorten($.getType()) == null ? false
-        : new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-            && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-                && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
+    return namer.shorten($.getType()) != null
+        && new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+        && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
+        && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {

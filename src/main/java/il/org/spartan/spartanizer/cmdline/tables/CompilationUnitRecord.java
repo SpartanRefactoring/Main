@@ -26,8 +26,8 @@ public class CompilationUnitRecord {
   int testCount;
   String path;
   String relativePath;
-  
-  public void setPath(final String path){
+
+  public void setPath(final String path) {
     this.path = path;
   }
 
@@ -35,78 +35,74 @@ public class CompilationUnitRecord {
     this.inner = inner;
     numStatements = measure.statements(inner);
     numExpressions = measure.expressions(inner);
-    linesOfCode = countLines(inner + ""); 
+    linesOfCode = countLines(inner + "");
     numMethods = yieldDescendants.ofClass(MethodDeclaration.class).from(inner).size();
     numClasses = yieldDescendants.ofClass(AbstractTypeDeclaration.class).from(inner).size();
-    PackageDeclaration p = first(yieldDescendants.ofClass(PackageDeclaration.class).from(inner));
+    final PackageDeclaration p = first(yieldDescendants.ofClass(PackageDeclaration.class).from(inner));
     pakcage = p == null ? "" : p.getName() + "";
     countTestAnnotation(inner);
     // testCount = Int.valueOf(countTestAnnotation(inner));
   }
- 
-  private static int countLines(String ¢){
+
+  private static int countLines(final String ¢) {
     return ¢.split("\r\n|\r|\n").length;
- }
+  }
 
   public int testCount() {
     return testCount;
   }
-  
+
   static boolean hasTestAnnotation;
-  
-  @SuppressWarnings("hiding")
-  public void countTestAnnotation(final CompilationUnit inner){
+
+  @SuppressWarnings("hiding") public void countTestAnnotation(final CompilationUnit inner) {
     inner.accept(new ASTVisitor() {
-        @Override
-        public boolean visit(MethodDeclaration node) {
-        if(extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+      @Override public boolean visit(final MethodDeclaration node) {
+        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
           ++testCount;
-          return false;
-        }
-      });
+        return false;
+      }
+    });
   }
-  
-  /** 
-   * Check if a file contains Test annotations
+
+  /** Check if a file contains Test annotations
    * <p>
    * @param f
    * @return
-   * <p> [[SuppressWarningsSpartan]]
-   */
- static boolean containsTestAnnotation(File f) {
-   try {
-     String javaCode = FileUtils.read(f);
-     containsTestAnnotation(javaCode);
-   } catch (IOException x) {
-     monitor.infoIOException(x, "File = " + f);
-   }
-   return hasTestAnnotation;
- }
+   *         <p>
+   *         [[SuppressWarningsSpartan]] */
+  static boolean containsTestAnnotation(final File f) {
+    try {
+      final String javaCode = FileUtils.read(f);
+      containsTestAnnotation(javaCode);
+    } catch (final IOException x) {
+      monitor.infoIOException(x, "File = " + f);
+    }
+    return hasTestAnnotation;
+  }
 
-  public static boolean containsTestAnnotation(String javaCode) {
-    CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-     cu.accept(new ASTVisitor() {
-       @Override public boolean visit(AnnotationTypeDeclaration node) {
-         if (node.getName().getFullyQualifiedName() == ("Test")){
-           System.out.println(node.getName().getFullyQualifiedName());
-           hasTestAnnotation = true;
-         }
-         return true;
-       }
-     });
-     return hasTestAnnotation;
+  public static boolean containsTestAnnotation(final String javaCode) {
+    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    cu.accept(new ASTVisitor() {
+      @Override public boolean visit(final AnnotationTypeDeclaration node) {
+        if (node.getName().getFullyQualifiedName() == "Test") {
+          System.out.println(node.getName().getFullyQualifiedName());
+          hasTestAnnotation = true;
+        }
+        return true;
+      }
+    });
+    return hasTestAnnotation;
   }
 
   public String getPath() {
-    return this.path;
+    return path;
   }
 
-  public void setRelativePath(String relativePath) {
-    this.relativePath = relativePath;    
+  public void setRelativePath(final String relativePath) {
+    this.relativePath = relativePath;
   }
 
   public String getRelativePath() {
     return relativePath;
   }
-    
 }

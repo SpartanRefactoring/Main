@@ -9,8 +9,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-01 */
 public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
+  private static final long serialVersionUID = 1021331023364143022L;
   private static final NanoPatternContainer<InfixExpression> tippers = new NanoPatternContainer<InfixExpression>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       patternTipper("$X.size() == 0", "empty($X)", "is empty");
       patternTipper("0 == $X.size()", "empty($X)", "is empty");
@@ -19,7 +20,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
   };
 
   @Override public boolean canTip(final InfixExpression ¢) {
-    return tippers.anyTips(¢);
+    return tippers.canTip(¢);
   }
 
   @Override public Tip pattern(final InfixExpression ¢) {

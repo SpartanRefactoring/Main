@@ -16,8 +16,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
 public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
+  private static final long serialVersionUID = -5974484928980948225L;
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("try $B1 catch($T $N){ return $D; }", "If.throwz(() -> $B1).returnDefault();", "Go Fluent: IfThrowsReturnNull"));
       add(patternTipper("try $B1 catch($T $N){ return; }", "If.throwz(() -> $B1).returns();", "Go Fluent: IfThrowsReturns"));

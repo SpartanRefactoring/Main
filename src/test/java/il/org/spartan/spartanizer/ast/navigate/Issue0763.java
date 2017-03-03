@@ -30,8 +30,8 @@ public class Issue0763 {
 
   @Test public void c() {
     azzert.that(
-        analyze.type(first(
-            yieldDescendants.ofClass(Name.class).suchThat(λ -> "x".equals(λ + "")).from(wizard.ast("class C{  void foo(Map x){ print(x);}}")))),
+        analyze.type(
+            first(yieldDescendants.ofClass(Name.class).suchThat(λ -> "x".equals(λ + "")).from(wizard.ast("class C{  void foo(Map x){ print(x);}}")))),
         is("Map"));
   }
 

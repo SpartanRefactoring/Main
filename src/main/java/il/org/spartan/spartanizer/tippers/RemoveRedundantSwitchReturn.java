@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.lisp.*;
 import java.util.*;
 
@@ -17,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {
+  private static final long serialVersionUID = -3772704819887748785L;
+
   @Override public ASTNode replacement(final SwitchStatement s) {
     if (s == null)
       return null;
