@@ -25,6 +25,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
+  private static final long serialVersionUID = 419076275354893131L;
+
   @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
     try {

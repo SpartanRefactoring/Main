@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 7117505785157896738L;
+
   @Override public ASTNode replacement(final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
@@ -69,7 +71,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
 
   private static List<Expression> getAllExpressions(final IfStatement s) {
     final List<Expression> $ = new ArrayList<>();
-    for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p). getElseStatement()) // TOUGH
+    for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
@@ -83,6 +85,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       $.add(az.block(p));
       return $;
     }
+    // TODO: Doron, please use class subject
     final Block b = s.getAST().newBlock();
     statements(b).add(copy.of(p));
     $.add(b);

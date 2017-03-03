@@ -22,7 +22,7 @@ import il.org.spartan.tables.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
 public class Table_RawNanoStatistics extends FolderASTVisitor {
-  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer().addRejected();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static {

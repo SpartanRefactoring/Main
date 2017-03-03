@@ -27,6 +27,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 25-11-2016 */
 public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -5043727367787844893L;
+
   @Override public String description(@SuppressWarnings("unused") final ArrayAccess ¢) {
     return "Inline the prefix expression after the access to the array";
   }

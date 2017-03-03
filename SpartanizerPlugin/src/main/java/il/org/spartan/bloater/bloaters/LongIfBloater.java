@@ -17,6 +17,8 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-09 */
 public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -1472927802038098123L;
+
   @Override public ASTNode replacement(final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;

@@ -25,6 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-28 */
 public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = -7169963565517331905L;
+
   @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }

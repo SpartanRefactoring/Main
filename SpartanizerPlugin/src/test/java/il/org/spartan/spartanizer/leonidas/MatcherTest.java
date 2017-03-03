@@ -11,7 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Tests {@link Matcher}
  * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @since Dec 3, 2016 */
@@ -308,5 +308,15 @@ public class MatcherTest {
 
   @Test public void z() {
     assert patternMatcher("try $B1 catch($T $N) $B2", "").matches(findFirst.tryStatement(ast("try{}catch(What | Ever never ){}")));
+  }
+
+  @Test public void z2() {
+    assert patternMatcher("for($T $N1 : $X1) if($X2) return false;", "")//
+        .matches(findFirst.enhancedForStatement(ast("for(X x : Y) if(whatever) return false;")));
+  }
+
+  @Test public void z3() {
+    assert blockMatcher("$T $N = $X1; return default¢($N).to($X2);", "")//
+        .matches(findFirst.block(ast("boolean b = X; return default¢(b).to(Y);")));
   }
 }

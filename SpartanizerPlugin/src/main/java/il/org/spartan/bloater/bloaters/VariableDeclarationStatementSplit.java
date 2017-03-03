@@ -22,6 +22,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
  * @since 19-12-2016 */
 public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 2701028813439219141L;
+
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }

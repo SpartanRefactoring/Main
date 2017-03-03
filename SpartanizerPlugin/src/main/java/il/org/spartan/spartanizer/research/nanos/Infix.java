@@ -15,8 +15,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-04 */
 public final class Infix {
   public static class SafeReference extends NanoPatternTipper<InfixExpression> {
+    private static final long serialVersionUID = -6291051971300893152L;
     private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
-      static final long serialVersionUID = 1L;
+      @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
       {
         add(patternTipper("$N1 != null && $N1.$N2", "safe($N1).get(()->$N1.$N2)", "safe reference"));
         add(patternTipper("null != $N1 && $N1.$N2", "safe($N1).get(()->$N1.$N2)", "safe reference"));

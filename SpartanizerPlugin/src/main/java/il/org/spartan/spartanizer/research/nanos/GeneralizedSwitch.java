@@ -25,6 +25,8 @@ import static java.util.stream.Collectors.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTipper<N> {
+  private static final long serialVersionUID = 8457801982809504043L;
+
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "Go Fluent: Generalized Switch";
   }

@@ -25,6 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerStatementTerminatingScope extends $FragementAndStatement //
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -221763355000543721L;
+
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }

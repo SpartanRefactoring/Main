@@ -27,6 +27,8 @@ import java.util.Objects;
  * @since 2016 */
 public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {
+  private static final long serialVersionUID = 3626620363572251195L;
+
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Remove redundant return statement in 'then' branch of if statement that terminates this method";
   }

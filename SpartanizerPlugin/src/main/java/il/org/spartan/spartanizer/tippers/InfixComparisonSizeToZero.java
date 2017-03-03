@@ -28,6 +28,8 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -4217296742524813844L;
+
   private static String description(final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
