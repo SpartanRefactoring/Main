@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
+  private static final long serialVersionUID = 5265347217554350758L;
+
   @Override public boolean prerequisite(final N current) {
     final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;

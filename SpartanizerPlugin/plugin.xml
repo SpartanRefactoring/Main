@@ -551,5 +551,17 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		commandId="il.org.spartan.PreferencesChooser"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
+<extension
+      id="product"
+      point="org.eclipse.core.runtime.products">
+   <product
+         application="il.org.spartan.spartanizer.application"
+         name="Spartan Refactoring Desktop Application">
+      <property
+            name="appName"
+            value="Spartan Refactoring Desktop Application">
+      </property>
+   </product>
+</extension>
 
 </plugin>

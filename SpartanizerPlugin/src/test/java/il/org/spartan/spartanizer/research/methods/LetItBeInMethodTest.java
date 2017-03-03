@@ -4,13 +4,13 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** Tests {@link Let}
+/** Tests {@link LetItBeInMethod}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-13 */
 @SuppressWarnings("static-method")
-public class LetTest extends JavadocerTest {
+public class LetItBeInMethodTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new Let());
+    setNano(new LetItBeInMethod());
   }
 
   @Test public void a() {
@@ -27,5 +27,17 @@ public class LetTest extends JavadocerTest {
 
   @Test public void d() {
     assert is("boolean foo(){A x = foo(); bar(x,x);}");
+  }
+
+  @Test public void e() {
+    assert is(//
+        "private static SimpleName peelIdentifier(final Statement s, final String id) {"//
+            + "    final List<SimpleName> $ = occurencesOf(s, id);"//
+            + "    return $.size() != 1 ? null : first($);"//
+            + " }");
+  }
+
+  @Test public void f() {
+    assert not("boolean foo(){A x = foo(); return bar(y,y);}");
   }
 }

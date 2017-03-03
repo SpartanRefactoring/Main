@@ -48,7 +48,7 @@ public class TableWriter implements Closeable {
     }
   }
 
-  public void write(final Map<String,Object> ¢) {
+  public void write(final Map<String, Object> ¢) {
     if (shouldPrintHeader) {
       shouldPrintHeader = false;
       writeHeader(¢);

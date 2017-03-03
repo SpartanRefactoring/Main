@@ -82,8 +82,7 @@ public enum TrimmerTestsUtils {
 
     public void doesNotCrash() {
       final Wrap w = Wrap.find(get());
-      assertNotEquals("Trimming of " + get() + " crashed", essence(get()),
-          essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
+      assertNotEquals("Trimming of " + get() + " crashed", essence(get()), essence(w.off(TrimmerTestsUtils.applyTrimmer(trimmer, w.on(get())))));
     }
 
     public Operand gives(final String $) {

@@ -78,7 +78,7 @@ public final class Builder extends IncrementalProjectBuilder {
     deleteMarkers(¢);
     try {
       addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
-    } catch (Throwable x) {
+    } catch (final Throwable x) {
       monitor.log(x);
     }
   }

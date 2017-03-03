@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Ternarization {
+  private static final long serialVersionUID = -2214694723277558846L;
+
   @Override public String description(final IfStatement ¢) {
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }

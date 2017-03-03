@@ -17,8 +17,9 @@ import il.org.spartan.spartanizer.utils.*;
 /** Catches methods which their control flow is not affected by parameters
  * @author Ori Marcovitch */
 public class JDPattern extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = 4470044117997306565L;
   static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(patternTipper("$X == null", "", ""));
       add(patternTipper("$X != null", "", ""));

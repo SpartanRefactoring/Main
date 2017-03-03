@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Bloater {
+  private static final long serialVersionUID = -9043350929840336722L;
+
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null

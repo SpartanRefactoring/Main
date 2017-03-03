@@ -28,6 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression>//
     implements TipperCategory.Centification {
+  private static final long serialVersionUID = -3634676628162924936L;
+
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }

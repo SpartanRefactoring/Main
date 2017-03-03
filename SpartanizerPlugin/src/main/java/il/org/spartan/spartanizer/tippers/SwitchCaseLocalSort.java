@@ -22,6 +22,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = 287035013781478896L;
+
   @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)

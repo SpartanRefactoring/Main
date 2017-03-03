@@ -13,8 +13,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method delegating to another
  * @author Ori Marcovitch */
 public class Delegator extends JavadocMarkerNanoPattern {
+  private static final long serialVersionUID = -4053526639017810391L;
   private static final NanoPatternContainer<Expression> tippers = new NanoPatternContainer<Expression>() {
-    static final long serialVersionUID = 1L;
+    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       patternTipper("$N($A)", "", "");
       patternTipper("$N1.$N($A)", "", "");
@@ -37,7 +38,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
-        && tippers.anyTips(expression(¢))//
+        && tippers.canTip(expression(¢))//
         && iz.methodInvocation($)//
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
         && parametersNames(d).containsAll(analyze.dependencies(arguments(az.methodInvocation($))));

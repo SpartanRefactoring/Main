@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 20-11-2016 */
 public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     implements TipperCategory.Sorting {
+  private static final long serialVersionUID = -3384979771292763464L;
   private static final HashSet<String>[] rankTable = as.array(//
       new HashSet<>(as.list("Deprecated")), //
       new HashSet<>(as.list("Override")), //

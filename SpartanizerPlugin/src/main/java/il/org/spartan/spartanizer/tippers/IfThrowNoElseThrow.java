@@ -23,6 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
+  private static final long serialVersionUID = 8876424452340040075L;
+
   static Expression getThrowExpression(final Statement ¢) {
     final ThrowStatement $ = extract.throwStatement(¢);
     return $ == null ? null : extract.core($.getExpression());

@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public final class ReplaceForWithRange extends Tipper<ForStatement>//
     implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -8862541808401202832L;
   private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
   private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";
   private static final Collection<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();

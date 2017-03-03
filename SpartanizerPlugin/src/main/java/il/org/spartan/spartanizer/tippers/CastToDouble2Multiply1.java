@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpression>//
     implements TipperCategory.Arithmetic {
+  private static final long serialVersionUID = -1555771651723844992L;
+
   private static NumberLiteral literal(final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1.");

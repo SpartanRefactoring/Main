@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class InfixExpressionSortingRest extends InfixExpressionSorting {
+  private static final long serialVersionUID = -1229400419095554287L;
+
   @Override public final boolean prerequisite(final InfixExpression ¢) {
     if (!suitable(¢))
       return false;

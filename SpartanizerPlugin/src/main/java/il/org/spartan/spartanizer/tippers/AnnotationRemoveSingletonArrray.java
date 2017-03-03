@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-02-10 */
 public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<SingleMemberAnnotation>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 8349592040340894302L;
+
   @Override public String description(final SingleMemberAnnotation ¢) {
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }

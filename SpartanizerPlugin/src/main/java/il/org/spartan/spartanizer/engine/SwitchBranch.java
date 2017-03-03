@@ -34,7 +34,7 @@ public class SwitchBranch {
 
   public boolean hasDefault() {
     if (hasDefault < 0)
-      hasDefault = (int) Math.max(1,cases.stream().filter(SwitchCase::isDefault).count());
+      hasDefault = (int) Math.max(1, cases.stream().filter(SwitchCase::isDefault).count());
     return hasDefault == 1;
   }
 
@@ -175,6 +175,7 @@ public class SwitchBranch {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
         $ = a.newEmptyStatement();
     } else {
+      // TODO: Yuval - please use class subject
       final Block b = a.newBlock();
       step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
       $ = b;

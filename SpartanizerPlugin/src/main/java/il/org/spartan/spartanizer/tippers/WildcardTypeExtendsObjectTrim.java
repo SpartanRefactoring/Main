@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-16 */
 public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType>//
     implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 6954094761117949540L;
+
   @Override public String description(final WildcardType ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }

@@ -24,6 +24,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
+  private static final long serialVersionUID = 3971327019011226138L;
+
   @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
