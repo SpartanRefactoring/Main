@@ -20,10 +20,10 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a block to more common or intuitive names (s.e i for an integer variable
- * and ret for a return variable) : <code>
+ * and ret for a return variable) :
  * Important - the $ will always change to ret by convention
  * for more naming conventions information - {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
- * int f(int ret) {
+ *  <code> int f(int ret) {
  * int a = 5;
  * x(a);
  * ret = a;
