@@ -139,11 +139,10 @@ public final class Application implements IApplication {
       } catch (final JavaModelException ¢) {
         monitor.logProbableBug(this, ¢);
         ++failed;
-      } 
-      catch (IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢);
         ++failed;
-      }catch (final Exception ¢) {
+      } catch (final Exception ¢) {
         monitor.logProbableBug(this, ¢);
         ++failed;
       } finally {
@@ -308,7 +307,7 @@ public final class Application implements IApplication {
       try {
         return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
-        monitor.logProbableBug(¢); 
+        monitor.logProbableBug(¢);
         return 0;
       }
     }

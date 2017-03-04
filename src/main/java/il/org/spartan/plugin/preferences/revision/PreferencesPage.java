@@ -1,7 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.PreferencesResources.TipperGroup.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
 import java.util.*;
 import java.util.List;

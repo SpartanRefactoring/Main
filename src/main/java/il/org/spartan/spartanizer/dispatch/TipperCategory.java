@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 /** Classification of tippers
  * @author Yossi Gil

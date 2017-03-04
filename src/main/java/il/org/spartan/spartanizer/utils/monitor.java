@@ -142,16 +142,18 @@ public enum monitor {
   public static <T> T log(final Throwable ¢) {
     return now.error(¢ + "");
   }
+
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
   public static <T> T logCancellationRequest(final Exception x) {
     return now.info(//
-            " " + className(x) + //
+        " " + className(x) + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" //
-            );
+    );
   }
+
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
