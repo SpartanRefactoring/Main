@@ -126,7 +126,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     }
   }
 
-  public TypedListener find(final List<Listener> ls) {
+  public Listener find(final Iterable<Listener> ls) {
     TypedListener $ = null;
     for (final Listener ¢ : ls)
       if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))

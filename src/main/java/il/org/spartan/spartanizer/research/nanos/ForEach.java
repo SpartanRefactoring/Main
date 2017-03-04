@@ -30,7 +30,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
           "($X1).forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2});", "ForEach pattern: conevrt to fluent API"));
     }
   };
-  protected static final List<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
+  protected static final Collection<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
     @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
       add(new HoldsForAll());

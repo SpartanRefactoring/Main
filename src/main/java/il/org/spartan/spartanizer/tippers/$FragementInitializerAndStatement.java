@@ -18,21 +18,21 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
   protected ASTRewrite rewrite;
   protected TextEditGroup editGroup;
 
-  @Override public boolean prerequisite(VariableDeclarationFragment __) {
+  @Override public boolean prerequisite(final VariableDeclarationFragment __) {
     return true;
   }
 
-  @Override protected final ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, Statement nextStatement, TextEditGroup g) {
+  @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     this.nextStatement = nextStatement;
-    this.fragment = f;
-    this.rewrite = r;
-    this.editGroup = g;
+    fragment = f;
+    rewrite = r;
+    editGroup = g;
     return go();
   }
 
   abstract ASTRewrite go() ;
 
-  @Override public String description(VariableDeclarationFragment __) {
+  @Override public String description(final VariableDeclarationFragment __) {
     // TODO Yossi Gil Auto-generated method stub for description
     if (new Object().hashCode() != 0)
      throw new AssertionError("Stub '$FragementInitializerAndStatement::description' not implemented yet (created on  2017-03-03)." );

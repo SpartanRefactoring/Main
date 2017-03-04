@@ -35,7 +35,7 @@ public enum find {
   }
 
   public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> ns) {
-    Expression $;
+    final Expression $;
     if (ns.size() < 2 || ($ = singleExpressionDifference(lisp.first(ns), ns.get(1))) == null)
       return null;
     for (int ¢ = 2; ¢ < ns.size(); ++¢)

@@ -22,7 +22,7 @@ public class Generic$Applicator {
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
   @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
-    final List<Class<? extends ASTNode>> $ = new ArrayList<>();
+    final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
       for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));

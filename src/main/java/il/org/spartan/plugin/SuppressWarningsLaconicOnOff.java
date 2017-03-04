@@ -135,7 +135,7 @@ public enum SuppressWarningsLaconicOnOff {
       @Override public void preVisit(final ASTNode n) {
         if (b || facade.isNodeOutsideMarker(n, m))
           return;
-        BodyDeclaration d;
+        final BodyDeclaration d;
         switch (t) {
           case CLASS:
             d = (BodyDeclaration) yieldAncestors.untilClass(AbstractTypeDeclaration.class).inclusiveFrom(n);
