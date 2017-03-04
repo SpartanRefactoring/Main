@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.dispatch;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -64,7 +63,7 @@ public class Toolbox {
    * @return */
   public ASTRewrite pickFirstTip(final ASTNode root) {
     disabling.scan(root);
-    final AtomicBoolean done = new AtomicBoolean(false);
+    final Bool done = new Bool();
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
     root.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode n) {
@@ -75,7 +74,7 @@ public class Toolbox {
         final Tipper<?> t = firstTipper(n);
         if (t == null)
           return true;
-        done.set(true);
+        done.set();
         extractTip(t, n).go($, null);
         return false;
       }
