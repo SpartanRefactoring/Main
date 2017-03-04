@@ -191,7 +191,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("unchecked") public void update() {
-      final Collection<VariableDeclaration> vs = new ArrayList<VariableDeclaration>(uses.keySet());
+      final Collection<VariableDeclaration> vs = new ArrayList<>(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
         if ((!(currentStatement instanceof ExpressionStatement) || !(((ExpressionStatement) currentStatement).getExpression() instanceof Assignment))
             && inactive.contains(¢) && uses.get(¢).contains(currentStatement)) {

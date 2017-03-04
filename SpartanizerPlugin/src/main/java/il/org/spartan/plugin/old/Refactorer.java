@@ -239,7 +239,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private static List<ICompilationUnit> currentCompilationUnits(final Collection<ICompilationUnit> us, final Collection<ICompilationUnit> ds) {
-    final List<ICompilationUnit> $ = new ArrayList<ICompilationUnit>(us);
+    final List<ICompilationUnit> $ = new ArrayList<>(us);
     $.removeAll(ds);
     return $;
   }
