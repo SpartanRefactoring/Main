@@ -54,7 +54,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
       else
         assert !disabling.specificallyDisabled(md) //
         : fault.specifically("Method " + mangle + " must not " + javaDoc, md, stencil);
-      $.put(mangle + "", md);
+      $.put(mangle, md);
     }
     return $;
   }

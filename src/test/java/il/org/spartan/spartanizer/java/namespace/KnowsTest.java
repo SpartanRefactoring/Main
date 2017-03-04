@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class KnowsTest extends MetaFixture {
-  static final String KNOWN = knows.class.getSimpleName() + "";
+  static final String KNOWN = knows.class.getSimpleName();
 
   @Parameters(name = "{index}. {0} knows {1} ({2})") public static Collection<Object[]> data() {
     return collect(KNOWN, fixtures);
