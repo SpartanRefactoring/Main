@@ -71,7 +71,7 @@ final class BindingFun implements IApplication {
       } catch (final IOException ¢) {
         monitor.infoIOException(¢, f + "");
       } catch (final JavaModelException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(this,¢);
       }
     return IApplication.EXIT_OK;
   }
