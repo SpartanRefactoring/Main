@@ -30,7 +30,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
-    f.setBody(copy.of(subject.pair(copy.of(nextStatement), null).toIf(make.notOf(copy.of(expression(f))))));
+    f.setBody(copy.of(subject.pair(nextStatement, null).toIf(make.notOf(copy.of(expression(f))))));
     f.setExpression(null);
     $.replace(s, f, g);
     $.replace(nextStatement, null, g);
