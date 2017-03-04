@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -28,9 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * <p>
  * Tested by {@link Issue1132}
  * @author Yossi Gil
-
- * @since 2017-03-04
- */
+ * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 1L;
@@ -40,7 +39,7 @@ public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
-    if (in(a1.getOperator(), ASSIGN,REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
+    if (in(a1.getOperator(), ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
       return null;
     final ASTNode parent = parent(a1);
     if (!iz.statement(parent))
