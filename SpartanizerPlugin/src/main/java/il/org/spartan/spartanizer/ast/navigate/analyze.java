@@ -28,7 +28,7 @@ public enum analyze {
       }
 
       boolean izMethodName(final Name ¢) {
-        return iz.methodInvocation(parent(¢)) && (identifier(az.methodInvocation(parent(¢))) + "").equals(¢ + "")
+        return iz.methodInvocation(parent(¢)) && identifier(az.methodInvocation(parent(¢))).equals(¢ + "")
             || iz.methodDeclaration(parent(¢)) && identifier(az.methodDeclaration(parent(¢))).equals(¢ + "");
       }
 
