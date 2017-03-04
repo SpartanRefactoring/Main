@@ -65,6 +65,8 @@ public enum makeAST {
   /** Constant used in order to get the source as a sequence of class body
    * declarations. */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS);
+  static final IProgressMonitor npm = new NullProgressMonitor();
+
   /** IFile -> ICompilationUnit converter
    * @param function File
    * @return ICompilationUnit */

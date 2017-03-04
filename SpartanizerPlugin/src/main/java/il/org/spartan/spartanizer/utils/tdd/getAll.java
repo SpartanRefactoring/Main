@@ -101,7 +101,7 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  public static List<CastExpression> casts(final MethodDeclaration d) {
+  public static Collection<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
     final List<CastExpression> $ = new ArrayList<>();

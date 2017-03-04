@@ -180,6 +180,7 @@ public class Toolbox {
             new AssignmentAndReturn(), //
             new AssignmentToFromInfixIncludingTo(), //
             new AssignmentToPrefixIncrement(), //
+            new AssignmentUpdateAndSameUpdate(),
             null) //
         .add(Block.class, //
             new BlockSimplify(), //

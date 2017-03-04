@@ -48,11 +48,10 @@ public class RecordWriter implements Closeable {
     }
   }
 
-  public void write(final Row<?> ¢) {
-    if (shouldPrintHeader) {
-      shouldPrintHeader = false;
+  public void write(final Map<String, Object> ¢) {
+    if (shouldPrintHeader)
       writeHeader(¢);
-    }
+    shouldPrintHeader = false;
     writeData(¢);
   }
 
