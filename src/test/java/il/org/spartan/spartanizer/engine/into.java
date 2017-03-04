@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.utils.*;
  * read like a sentence phrase.
  * @author Yossi Gil
  * @since 2015-07-16 */
-
 public enum into {
   ;
   /** Convert a given {@link String} into an {@link Assignment}, or fail the
