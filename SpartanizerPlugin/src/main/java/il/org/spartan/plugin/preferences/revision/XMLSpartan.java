@@ -38,7 +38,7 @@ public class XMLSpartan {
   private static final String TIPPER_ID = "id";
   @Deprecated @SuppressWarnings("unused") private static final String CATEGORY_ID = "id";
   @Deprecated @SuppressWarnings("unused") private static final String TIPPER_DESCRIPTION = "description";
-  private static final Set<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
+  private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
         CatchClauseRenameParameterToCent.class, //
@@ -62,15 +62,15 @@ public class XMLSpartan {
    * @return enabled tippers for the project */
   public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
     final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
-    final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
-    final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
-    final Document d = getFile(p);
+      final Document d = getFile(p);
     if (d == null)
       return $;
     final NodeList l = d.getElementsByTagName(TIPPER);
     if (l == null)
       return $;
-    for (int i = 0; i < l.getLength(); ++i) {
+      final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
+      final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
+      for (int i = 0; i < l.getLength(); ++i) {
       final Element e = (Element) l.item(i);
       final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
@@ -105,7 +105,7 @@ public class XMLSpartan {
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
-    final List<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
+    final Collection<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
     l.addAll($);
     for (final Class<Tipper<? extends ASTNode>> ¢ : l)
       if (!ets.contains(¢.getSimpleName()))
@@ -116,7 +116,7 @@ public class XMLSpartan {
   /** Updates the project's XML file to enable given tippers.
    * @param p JD
    * @param ss enabled tippers by name */
-  public static void updateEnabledTippers(final IProject p, final Set<String> ss) {
+  public static void updateEnabledTippers(final IProject p, final Collection<String> ss) {
     final Document d = getFile(p);
     if (d == null)
       return;
@@ -211,7 +211,7 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
-  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Set<String> seen, final Element e) {
+  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
     final String n = t.getClass().getSimpleName();
@@ -231,9 +231,9 @@ public class XMLSpartan {
    * @param d JD
    * @return true iff the operation has been completed successfully */
   private static boolean commit(final IFile f, final Document d) {
-    final DOMSource domSource = new DOMSource(d);
+    final Source domSource = new DOMSource(d);
     final StringWriter writer = new StringWriter();
-    final StreamResult result = new StreamResult(writer);
+    final Result result = new StreamResult(writer);
     final TransformerFactory tf = TransformerFactory.newInstance();
     try {
       final Transformer t = tf.newTransformer();

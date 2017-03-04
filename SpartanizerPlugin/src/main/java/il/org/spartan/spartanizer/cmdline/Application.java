@@ -8,10 +8,8 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -21,7 +19,7 @@ import il.org.spartan.utils.*;
  * plug-in from the command line.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/19 */
-final class Application implements IApplication {
+public final class Application implements IApplication {
   /** Count the number of lines in a {@link File} f
    * @param ¢ File
    * @return
@@ -102,7 +100,19 @@ final class Application implements IApplication {
   private int optRounds = 20;
   private String optPath;
 
-  @Override @SuppressWarnings("OverlyComplexMethod") public Object start(final IApplicationContext arg0) {
+  @Override public Object start(final IApplicationContext arg0) {
+    final Object $ = startInner(arg0);
+    try (Scanner s = new Scanner(System.in)) {
+      try {
+        s.nextLine();
+      } catch (@SuppressWarnings("unused") final Exception __) {
+        //
+      }
+    }
+    return $;
+  }
+
+  @SuppressWarnings("OverlyComplexMethod") public Object startInner(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     try {
@@ -118,13 +128,8 @@ final class Application implements IApplication {
       try {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
-        for (int i = 0; i < optRounds; ++i) {
-          final int n = new SpartanizeProject().countTips();
-          if (n == 0)
-            break;
-          s.addRoundStat(n);
+        for (int ¢ = 0; ¢ < optRounds; ++¢)
           new Trimmer().apply(u);
-        }
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)
           System.out.println("Spartanized file " + f.getAbsolutePath());
@@ -280,7 +285,7 @@ final class Application implements IApplication {
       linesBefore = countLines(this.file = file);
     }
 
-    public void addRoundStat(final int ¢) {
+    @SuppressWarnings("unused") public void addRoundStat(final int ¢) {
       roundStats.add(Integer.valueOf(¢));
     }
 

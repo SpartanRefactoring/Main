@@ -21,8 +21,8 @@ import il.org.spartan.tables.*;
 public class Table_SummaryForPaper extends FolderASTVisitor {
   private static Table writer;
   @SuppressWarnings("unused") private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
-  private static HashSet<String> packages = new HashSet<>();
-  protected final Stack<CompilationUnitRecord> compilationUnitRecords = new Stack<>();
+  private static Set<String> packages = new HashSet<>();
+  protected final List<CompilationUnitRecord> compilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
   protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
   protected static final SortedMap<Integer, List<ClassRecord>> classStatistics = new TreeMap<>(Integer::compareTo);
@@ -127,7 +127,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
   }
 
   private int countNoTestPackages() {
-    final HashSet<String> $ = new HashSet<>();
+    final Set<String> $ = new HashSet<>();
     for (final CompilationUnitRecord ¢ : compilationUnitRecords)
       if (¢.testCount() == 0)
         $.add(¢.pakcage);

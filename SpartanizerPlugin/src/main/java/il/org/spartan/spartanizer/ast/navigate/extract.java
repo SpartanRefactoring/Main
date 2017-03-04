@@ -81,8 +81,7 @@ public enum extract {
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
   public static Assignment assignment(final ASTNode ¢) {
-    final ExpressionStatement $ = extract.expressionStatement(¢);
-    return $ == null ? null : az.assignment($.getExpression());
+    return az.assignment(extract.expressionStatement(¢).getExpression());
   }
 
   public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {

@@ -60,7 +60,7 @@ public interface NanoPatternUtil {
     return returns.getMatching(¢, "$X");
   }
 
-  static List<String> nullCheckees(final IfStatement ¢) {
+  static Iterable<String> nullCheckees(final IfStatement ¢) {
     Expression e = expression(¢);
     final List<String> $ = new ArrayList<>();
     while (nullComparisonIncremental(e)) {

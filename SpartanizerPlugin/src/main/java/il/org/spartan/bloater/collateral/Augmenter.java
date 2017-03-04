@@ -61,8 +61,7 @@ public class Augmenter implements Application {
         if (inRange(b, s))
           $.add(statements(b));
         else {
-          final List<Statement> l = new ArrayList<>();
-          l.addAll(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
+          final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
