@@ -295,7 +295,7 @@ public interface wizard {
 
   /** Makes an opposite operator from a given one, which keeps its logical
    * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
-   * change needed. "<" isn'¢ commutative, but it has its opposite: ">=".
+   * change needed. "<" isn't commutative, but it has its opposite: ">=".
    * @param ¢ The operator to flip
    * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
    *         "+". */

@@ -30,6 +30,9 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return "Convert switch statement to if-else statement";
   }
 
+  // TODO: Yuval Simon: this is one of the worst bits of code I have seen.
+  // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
+  // transformation --yg
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> bs = switchBranch.intoBranches(s);
     if (bs.size() != 2)
@@ -38,17 +41,17 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     if (iz.stringLiteral(expression(first(t.cases))))
       return null;
     final switchBranch last = lisp.last(bs);
-    if (!first.hasDefault() && !last.hasDefault() || first.hasFallThrough() || last.hasFallThrough() || !first.hasStatements() || !last.hasStatements()
-        || haz.sideEffects(expression(s)) && (first.hasDefault() ? last : first).cases.size() > 1)
+    if (!first.hasDefault() && !last.hasDefault() || first.hasFallThrough() || last.hasFallThrough() || !first.hasStatements()
+        || !last.hasStatements() || haz.sideEffects(expression(s)) && (first.hasDefault() ? last : first).cases.size() > 1)
       return null;
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
     switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
     statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
-    switchBranch = !first.hasDefault() ? first : lisp.last(bs);
-    statements(b1).addAll(removeBreakSequencer(switchBranch.statements));
+    il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : lisp.last(bs);
+    statements(b1).addAll(removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
-    statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, switchBranch.cases)));
+    statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
     return $;
   }
 
