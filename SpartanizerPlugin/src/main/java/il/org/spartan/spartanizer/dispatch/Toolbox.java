@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;

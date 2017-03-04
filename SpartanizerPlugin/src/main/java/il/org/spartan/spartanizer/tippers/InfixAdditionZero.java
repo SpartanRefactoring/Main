@@ -2,6 +2,9 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.lisp.*;
+
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
@@ -15,7 +18,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

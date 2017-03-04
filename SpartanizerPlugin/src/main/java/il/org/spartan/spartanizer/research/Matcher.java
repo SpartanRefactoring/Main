@@ -364,8 +364,7 @@ public final class Matcher {
                 || (p + "").startsWith($SN) //
                 || (p + "").startsWith($N) //
                 || (p + "").startsWith($L) //
-                || (p + "").startsWith($D))
-    ;
+                || (p + "").startsWith($D));
   }
 
   public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {

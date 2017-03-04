@@ -21,10 +21,10 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a method dec to more common or intuitive names (s.e i for an integer
- * variable and ret for a return variable) : 
- * Important - the $ will always change to ret by convention
- * for more naming conventions information - {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
- *<code> int f(int ¢) {
+ * variable and ret for a return variable) : Important - the $ will always
+ * change to ret by convention for more naming conventions information -
+ * {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
+ * <code> int f(int ¢) {
  * int $ = ¢;
  * x($);
  * return $;
