@@ -45,6 +45,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
       n1.setLiteralValue(l1.getLiteralValue() + l.getLiteralValue());
       n2.setLiteralValue(l2.getLiteralValue() + l.getLiteralValue());
     }
+    // TODO Yuval: use class subject --
     $.setThenExpression(copy.of(n1));
     $.setElseExpression(copy.of(n2));
     return $;
