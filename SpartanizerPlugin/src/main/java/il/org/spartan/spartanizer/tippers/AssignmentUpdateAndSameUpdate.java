@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.internal.ui.search.JavaSearchResultPage.*;
 import org.eclipse.text.edits.*;
-
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -20,7 +22,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * b += 6;
  * } to {@code
  * a  += 3 + 6;
- * }
+ * }AssignmentUpdateAndSameUpdate
+ * <p>
+ * Tested by {@link Issue1132}
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
@@ -32,7 +36,7 @@ public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
-    if (a1.getOperator() == ASSIGN)
+    if (in(a1.getOperator(), ASSIGN,REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
       return null;
     final ASTNode parent = parent(a1);
     if (!iz.statement(parent))
@@ -44,7 +48,12 @@ public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.remove(parent, g);
-    $.replace(from(a2), subject.operands(from(a1), from(a2)).to(wizard.assign2infix(a1)), g);
+    $.replace(from(a2), subject.operands(from(a1), from(a2)).to(unifying(a1)), g);
     return $;
+  }
+
+  private static Operator unifying(final Assignment ¢) {
+    final Operator $ = wizard.assign2infix(¢.getOperator());
+    return $ == MINUS2 ? PLUS2 : $ == DIVIDE ? TIMES : $;
   }
 }
