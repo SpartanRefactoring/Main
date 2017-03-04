@@ -5,7 +5,6 @@ package il.org.spartan.bloater;
 
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -23,6 +22,7 @@ import static il.org.spartan.lisp.*;
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.utils.*;
 
 // TODO: Ori Roth why so many fields? --yg
 public class InflaterListener implements MouseWheelListener, KeyListener {
@@ -38,7 +38,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   final Cursor inactiveCursor;
   final Selection selection;
   boolean active;
-  final AtomicBoolean working;
+  final Bool working = new Bool();
   WindowInformation windowInformation;
   private final Color originalBackground;
 
@@ -51,7 +51,6 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     final Display display = PlatformUI.getWorkbench().getDisplay();
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
-    working = new AtomicBoolean(false);
     originalBackground = text.getSelectionBackground();
   }
 
@@ -59,16 +58,16 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     if (!active || working.get())
       return;
     windowInformation = WindowInformation.of(text);
-    working.set(true);
+    working.set();
     if (¢.count > 0)
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         inflate();
-        working.set(false);
+        working.clear();
       });
     else if (¢.count < 0)
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         deflate();
-        working.set(false);
+        working.clear();
       });
   }
 

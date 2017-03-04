@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.engine.nominal.Linguistic.*;
 
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
@@ -139,7 +138,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
-    final AtomicBoolean openDialog = new AtomicBoolean(false);
+    final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
@@ -164,7 +163,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
               $.stop();
             else {
               runAsynchronouslyInUIThread(d::open);
-              openDialog.set(true);
+              openDialog.set();
             }
         })).expand(EventMapper.inspectorOf(event.run_finish).does(λ -> {
           if (openDialog.get())
