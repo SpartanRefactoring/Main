@@ -285,10 +285,6 @@ public final class Application implements IApplication {
       linesBefore = countLines(this.file = file);
     }
 
-    @SuppressWarnings("unused") public void addRoundStat(final int ¢) {
-      roundStats.add(Integer.valueOf(¢));
-    }
-
     public void countLinesAfter() throws IOException {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }

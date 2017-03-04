@@ -33,11 +33,8 @@ public class XMLSpartan {
   private static final String VERSION = "version";
   private static final String FILE_NAME = "spartan.xml";
   private static final String TIPPER = "tipper";
-  @Deprecated @SuppressWarnings("unused") private static final String CATEGORY = "category";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
-  @Deprecated @SuppressWarnings("unused") private static final String CATEGORY_ID = "id";
-  @Deprecated @SuppressWarnings("unused") private static final String TIPPER_DESCRIPTION = "description";
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
