@@ -139,7 +139,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static int methods() {
-    return (int) statementsCoverageStatistics.values().stream().flatMap(Collection::stream).count();
+    return (int) statementsCoverageStatistics.values().stream().mapToLong(Collection::size).sum();
   }
 
   private static double fMethods() {
