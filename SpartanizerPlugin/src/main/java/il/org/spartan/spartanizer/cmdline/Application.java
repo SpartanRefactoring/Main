@@ -136,12 +136,15 @@ public final class Application implements IApplication {
         s.countLinesAfter();
         fileStats.add(s);
         ++done;
-      } catch (final JavaModelException | IOException ¢) {
-        System.err.println(f + ": " + ¢.getMessage());
+      } catch (final JavaModelException ¢) {
+        monitor.logProbableBug(this, ¢);
         ++failed;
-      } catch (final Exception ¢) {
-        System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
-        ¢.printStackTrace();
+      } 
+      catch (IOException ¢) {
+        monitor.infoIOException(¢);
+        ++failed;
+      }catch (final Exception ¢) {
+        monitor.logProbableBug(this, ¢);
         ++failed;
       } finally {
         discardCompilationUnit(u);
@@ -305,7 +308,7 @@ public final class Application implements IApplication {
       try {
         return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(¢); 
         return 0;
       }
     }
