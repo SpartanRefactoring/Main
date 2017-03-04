@@ -20,6 +20,7 @@ import org.eclipse.ui.texteditor.*;
 
 import static il.org.spartan.lisp.*;
 
+import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 
@@ -119,8 +120,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private void updateListeners() {
     externalListeners.clear();
     for (final Integer i : wheelEvents) {
-      final List<Listener> l = new ArrayList<>();
-      Collections.addAll(l, text.getListeners(i.intValue()));
+      final List<Listener> l = as.list(text.getListeners(i.intValue()));
       l.remove(find(l));
       externalListeners.put(i, l);
     }
