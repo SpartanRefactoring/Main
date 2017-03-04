@@ -29,11 +29,10 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     if (x.getOperator() != Operator.TIMES)
       return null;
     // TODO: Dor Ma'ayan please rename to xs --yg
-    final List<Expression> lst = extract.allOperands(x);
     int i = 0;
     boolean found = false;
     final CastExpression $ = x.getAST().newCastExpression();
-    for (final Expression e : lst) {
+    for (final Expression e : extract.allOperands(x)) {
       if (iz.literal(e, 1.)) {
         $.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));
         found = true;
