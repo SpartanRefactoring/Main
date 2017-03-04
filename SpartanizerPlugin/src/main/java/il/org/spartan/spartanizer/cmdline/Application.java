@@ -127,15 +127,7 @@ public final class Application implements IApplication {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-        final FileStats s = new FileStats(f);
-        final Trimmer t = new Trimmer();
-        for (int ¢ = 0; ¢ < optRounds; ++¢)
-          t.apply(u);
-        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-        if (optVerbose)
-          System.out.println("Spartanized file " + f.getAbsolutePath());
-        s.countLinesAfter();
-        fileStats.add(s);
+        fileStats.add(process(f, u));
         ++done;
       } catch (final JavaModelException ¢) {
         monitor.logProbableBug(this, ¢);
@@ -156,6 +148,18 @@ public final class Application implements IApplication {
     if (optStatsLines)
       printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
+  }
+
+  private FileStats process(final File f, ICompilationUnit u) throws IOException, FileNotFoundException, JavaModelException {
+    final FileStats $ = new FileStats(f);
+    final Trimmer t = new Trimmer();
+    for (int ¢ = 0; ¢ < optRounds; ++¢)
+      t.apply(u);
+    FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
+    if (optVerbose)
+      System.out.println("Spartanized file " + f.getAbsolutePath());
+    $.countLinesAfter();
+    return $;
   }
 
   @Override public void stop() {
