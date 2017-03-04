@@ -38,18 +38,16 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   }
 
   /** Results mapping. */
-  private final Map<E, Object> eventMap;
+  private final Map<E, Object> eventMap = new HashMap<>();
   /** Recorders mapping. In the current implementation only one recorder is
    * available for each event, though the functions/consumers can be merged
    * together. */
-  private final Map<E, EventFunctor<?, ?, ?>> recorders;
+  private final Map<E, EventFunctor<?, ?, ?>> recorders = new HashMap<>();
 
   /** Initialize mapping according to specific events defined in the enum.
    * @param enumClass contains possible events for this listener */
   EventMapper(final Class<? extends E> enumClass) {
     super(enumClass);
-    eventMap = new HashMap<>();
-    recorders = new HashMap<>();
     for (final E ¢ : events()) { // NANO
       eventMap.put(¢, null);
       recorders.put(¢, null);
