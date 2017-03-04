@@ -64,7 +64,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
-    final List<Entry<String, Object>> $ = new LinkedList<>();
+    final List<Entry<String, Object>> $ = new ArrayList<>();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     for (final IProject p : workspaceRoot.getProjects())
       try {
@@ -211,7 +211,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     @Override protected String[] parseString(final String stringList) {
       if (stringList != null && !stringList.isEmpty())
         return stringList.split(DELIMETER);
-      final List<String> $ = new LinkedList<>();
+      final List<String> $ = new ArrayList<>();
       for (final Entry<String, Object> ¢ : elements)
         $.add(¢.getKey());
       return $.toArray(new String[elements.size()]);
