@@ -1,11 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -42,7 +38,7 @@ public final class AssignmentAndUpdateToSame extends ReplaceToNextStatement<Assi
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     final Assignment a2 = extract.assignment(nextStatement);
-    Assignment.Operator o = a2.getOperator();
+    final Assignment.Operator o = a2.getOperator();
     if (o == ASSIGN)
       return null;
     final Expression to = to(a1);

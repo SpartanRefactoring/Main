@@ -46,9 +46,9 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
       return null;
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
-    switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
+    final switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
     statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
-    il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : lisp.last(bs);
+    final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : lisp.last(bs);
     statements(b1).addAll(removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
     statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));

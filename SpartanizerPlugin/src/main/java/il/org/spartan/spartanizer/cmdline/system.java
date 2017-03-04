@@ -143,7 +143,7 @@ public interface system {
     }
   }
 
-  static String read(Scanner ¢) {
+  static String read(final Scanner ¢) {
     String $ = "";
     while (¢.hasNext()) // Can be Nano?
       $ += "\n" + ¢.nextLine();
