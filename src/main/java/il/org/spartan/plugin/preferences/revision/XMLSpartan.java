@@ -62,13 +62,13 @@ public class XMLSpartan {
     final Document d = getFile(p);
     if (d == null)
       return $;
-    final NodeList l = d.getElementsByTagName(TIPPER);
-    if (l == null)
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    if (ns == null)
       return $;
     final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
     final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
-    for (int i = 0; i < l.getLength(); ++i) {
-      final Element e = (Element) l.item(i);
+    for (int i = 0; i < ns.getLength(); ++i) {
+      final Element e = (Element) ns.item(i);
       final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
