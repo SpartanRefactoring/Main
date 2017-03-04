@@ -128,8 +128,9 @@ public final class Application implements IApplication {
       try {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
+        final Trimmer t = new Trimmer();
         for (int ¢ = 0; ¢ < optRounds; ++¢)
-          new Trimmer().apply(u);
+          t.apply(u);
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)
           System.out.println("Spartanized file " + f.getAbsolutePath());
