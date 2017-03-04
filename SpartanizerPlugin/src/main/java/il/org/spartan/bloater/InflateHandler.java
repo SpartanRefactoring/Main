@@ -46,9 +46,9 @@ public class InflateHandler extends AbstractHandler {
     if (s == null)
       return null;
     if (active.get()) {
-       active.clear();
-        removePageListener(s);
-    } else  {
+      active.clear();
+      removePageListener(s);
+    } else {
       active.set();
       getOpenedEditors().forEach(InflateHandler::addListener);
       s.addPartListener(pageListener);
