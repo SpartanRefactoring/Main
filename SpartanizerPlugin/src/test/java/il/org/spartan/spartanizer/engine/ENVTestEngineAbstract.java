@@ -41,7 +41,7 @@ public abstract class ENVTestEngineAbstract {
   /** Check if the testSet is contained in the generated or provided (manual
    * mode) Set. First checks in unordered fashion, and then checks inorder.
    * @param ¢ */
-  static void compare(final Set<Entry<String, Binding>> ¢) {
+  static void compare(final Collection<Entry<String, Binding>> ¢) {
     compareOutOfOrder(¢, testSet);
     compareInOrder(¢, testSet);
   }
@@ -52,7 +52,7 @@ public abstract class ENVTestEngineAbstract {
    * @param contains JD
    * @return <code><b>true</b></code> <em>iff</em> the sets specified, are
    *         equally the same. */
-  private static void compareInOrder(final Collection<Entry<String, Binding>> contains, final Iterable<Entry<String, Binding>> contained) {
+  private static void compareInOrder(final Iterable<Entry<String, Binding>> contains, final Iterable<Entry<String, Binding>> contained) {
     assert contained != null;
     assert contains != null;
     final Iterator<Entry<String, Binding>> s = contains.iterator();

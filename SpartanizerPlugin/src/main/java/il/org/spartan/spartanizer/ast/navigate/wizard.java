@@ -784,10 +784,10 @@ public interface wizard {
       return $;
     }
 
-    static <T> T previous(T t, List<T> ts) {
+    static <T> T previous(final T t, final List<T> ts) {
       if (ts == null)
         return null;
-      int $ = ts.indexOf(t);
+      final int $ = ts.indexOf(t);
       return $ < 1 ? null : ts.get($ - 1);
     }
 }

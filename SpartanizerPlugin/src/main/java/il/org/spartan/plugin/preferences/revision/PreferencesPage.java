@@ -225,8 +225,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return separate.these(items).by(DELIMETER);
     }
 
-    @Override protected void selectionChanged() {
-      if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null && ableButton != null)
+    @Override protected void selectionChanged() {if (getList() != null && getList().getSelectionIndex() >= 0 &&  ableButton != null)
         ableButton.setEnabled(true);
     }
   }
@@ -246,7 +245,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       ables = new HashMap<>();
     }
 
-    public Changes(final List<Object> projects) {
+    public Changes(final Iterable<Object> projects) {
       preferences1 = new HashMap<>();
       preferences2 = new HashMap<>();
       ables = new HashMap<>();
@@ -266,12 +265,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject ¢) {
-      Map<SpartanCategory, SpartanTipper[]> $ = preferences1.get(¢);
-      if ($ == null) {
-        $ = XMLSpartan.getTippersByCategories(¢);
-        preferences1.put(¢, $);
-      }
-      return $;
+        return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
     }
 
     public Boolean getAble(final IProject p) {

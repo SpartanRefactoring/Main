@@ -48,7 +48,7 @@ public class RecordWriter implements Closeable {
     }
   }
 
-  public void write(final Row<?> ¢) {
+  public void write(final Map ¢) {
     if (shouldPrintHeader) {
       shouldPrintHeader = false;
       writeHeader(¢);
