@@ -76,7 +76,7 @@ public class XMLSpartan {
       final TipperPreview preview = Toolbox.Tables.TipperPreviewCache.get(tc);
       final TipperGroup g = Toolbox.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
-        tgs.put(g, new LinkedList<>());
+        tgs.put(g, new ArrayList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
       final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
