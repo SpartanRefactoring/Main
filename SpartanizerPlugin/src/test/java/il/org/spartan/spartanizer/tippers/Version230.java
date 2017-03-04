@@ -1419,8 +1419,7 @@ public final class Version230 {
     assert s.canTip(e);
     final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
-    final boolean tokenWiseLesser = count.nodes(e1) <= count.nodes(e2) + NODES_THRESHOLD;
-    assert tokenWiseLesser;
+    assert count.nodes(e1) <= count.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.canTip(e) : "e=" + e + " s=" + s;

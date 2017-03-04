@@ -117,17 +117,6 @@ public enum step {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
-  public static Collection<ConditionalExpression> branches(final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
-    ConditionalExpression s = ¢;
-    final Collection<ConditionalExpression> $ = new ArrayList<>();
-    $.add(s);
-    while (iz.conditionalExpression(elze(s)))
-      $.add(s = az.conditionalExpression(elze(s)));
-    return $;
-  }
-
   /** Expose the list of catchClauses in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of catchClauses in the argument */
@@ -458,28 +447,6 @@ public enum step {
    * @return */
   public static SimpleName label(final ContinueStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
-  }
-
-  public static Expression lastElse(final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
-    ConditionalExpression $ = ¢;
-    while (iz.conditionalExpression(elze($)))
-      $ = az.conditionalExpression(elze($));
-    return elze($);
-  }
-
-  /** returns the else statement of the last if in an if else if else if else
-   * sequence
-   * @param ¢
-   * @return */
-  public static Statement lastElse(final IfStatement ¢) {
-    if (¢ == null)
-      return null;
-    IfStatement $ = ¢;
-    while (iz.ifStatement(elze($)))
-      $ = az.ifStatement(elze($));
-    return elze($);
   }
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}

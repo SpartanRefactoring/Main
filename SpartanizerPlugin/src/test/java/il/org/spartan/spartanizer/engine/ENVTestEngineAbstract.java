@@ -57,13 +57,13 @@ public abstract class ENVTestEngineAbstract {
     assert contains != null;
     final Iterator<Entry<String, Binding>> s = contains.iterator();
     for (final Entry<String, Binding> ¢ : contained) {
-      boolean entryFound = false;
+      boolean notFound = true;
       while (s.hasNext())
         if (¢.equals(s.next())) {
-          entryFound = true;
+          notFound = false;
           break;
         }
-      if (!entryFound) {
+      if (notFound) {
         // Without the inner reset, one failing test will cause other, working,
         // tests, to fail.
         testSetsReset();

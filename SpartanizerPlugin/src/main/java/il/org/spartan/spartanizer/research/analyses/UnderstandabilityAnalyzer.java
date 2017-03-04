@@ -17,9 +17,7 @@ public class UnderstandabilityAnalyzer extends IntegerMetricalAnalyzer {
 
   public static void main(final String[] args) {
     try (Scanner reader = new Scanner(System.in)) {
-      String s = "";
-      while (reader.hasNext())
-        s += "\n" + reader.nextLine();
+      String s = system.read(reader);
       System.out.println("before: " + new UnderstandabilityAnalyzer().metric(wizard.ast(s)));
       final String spartanized = new InteractiveSpartanizer().fixedPoint(s);
       System.out.println("after: " + new UnderstandabilityAnalyzer().metric(wizard.ast(spartanized)));
