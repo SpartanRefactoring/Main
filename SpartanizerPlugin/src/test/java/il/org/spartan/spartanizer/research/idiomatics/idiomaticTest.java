@@ -1,13 +1,14 @@
 package il.org.spartan.spartanizer.research.idiomatics;
 
-import il.org.spartan.azzert;
-import org.junit.Test;
+import static il.org.spartan.azzert.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static il.org.spartan.azzert.is;
+import org.junit.*;
+
 import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })
