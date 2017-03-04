@@ -116,7 +116,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     Object initializeValue() {
       assert !initialized;
       initialized = true;
-      Object $;
+      final Object $;
       if (initializationSupplier == null) {
         $ = initialization;
         initialization = null;
