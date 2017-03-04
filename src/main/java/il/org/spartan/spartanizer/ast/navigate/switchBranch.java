@@ -1,6 +1,4 @@
-/** TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
- * @author YuvalSimon <yuvaltechnion@gmail.com>
- * @since Jan 15, 2017 */
+
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.lisp.*;
@@ -14,7 +12,9 @@ import static java.util.stream.Collectors.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-
+/** TODO: YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also please add a description
+ * @author YuvalSimon <yuvaltechnion@gmail.com>
+ * @since Jan 15, 2017 */
 public class switchBranch {
   public final List<SwitchCase> cases;
   public final List<Statement> statements;
