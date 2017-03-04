@@ -225,7 +225,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return separate.these(items).by(DELIMETER);
     }
 
-    @Override protected void selectionChanged() {if (getList() != null && getList().getSelectionIndex() >= 0 &&  ableButton != null)
+    @Override protected void selectionChanged() {
+      if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null)
         ableButton.setEnabled(true);
     }
   }
@@ -265,14 +266,14 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject ¢) {
-        return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
+      return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
     }
 
     public Boolean getAble(final IProject p) {
       final Boolean $ = ables.get(p);
       if ($ == null)
         try {
-          return  Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
+          return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
         } catch (final CoreException ¢) {
           monitor.log(¢);
           return Boolean.FALSE;

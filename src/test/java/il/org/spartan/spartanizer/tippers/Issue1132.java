@@ -18,12 +18,11 @@ import il.org.spartan.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1132 {
   public static void main(final String[] args) {
-    
-      ((Triples) (a, b, c) -> {
-          if (b * c != 0)
-              azzert.that(String.format("%d %% %d %% %d", box.it(a), box.it(b), box.it(c)), a % b % c, azzert.is(a % (b * c)));
-      }).go();
-    }
+    ((Triples) (a, b, c) -> {
+      if (b * c != 0)
+        azzert.that(String.format("%d %% %d %% %d", box.it(a), box.it(b), box.it(c)), a % b % c, azzert.is(a % (b * c)));
+    }).go();
+  }
 
   @Test public void and() {
     trimmingOf("a &=2; a &= 3;")//
@@ -41,17 +40,17 @@ public class Issue1132 {
 
   @Test public void dividesAssociativity() {
     ((Triples) (a, b, c) -> {
-        if (b * c != 0)
-            azzert.that(a / b / c, azzert.is(a / (b * c)));
+      if (b * c != 0)
+        azzert.that(a / b / c, azzert.is(a / (b * c)));
     }).go();
   }
 
-@Test public void minus() {
-  trimmingOf("a -=2; a -= 3;")//
-      .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
-      .gives("a -= 2 + 3;")//
-  ;
-}
+  @Test public void minus() {
+    trimmingOf("a -=2; a -= 3;")//
+        .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
+        .gives("a -= 2 + 3;")//
+    ;
+  }
 
   @Test public void or() {
     trimmingOf("a |=2; a |= 3;")//
