@@ -106,8 +106,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       try {
         $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {
-        monitor.log(¢);
-        ¢.printStackTrace();
+        monitor.infoIOException(¢);
       }
     }
   }
