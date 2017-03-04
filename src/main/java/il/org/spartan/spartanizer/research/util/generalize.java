@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -78,15 +79,6 @@ public enum generalize {
 
   public static void main(final String[] args) {
     System.out.println("enter whatever:");
-    System.out.println(generalize.code(m()));
-  }
-
-  private static String m() {
-    try (Scanner reader = new Scanner(System.in)) {
-      String $ = "";
-      while (reader.hasNext())
-        $ += "\n" + reader.nextLine();
-      return $;
-    }
+    System.out.println(generalize.code(system.read()));
   }
 }
