@@ -27,8 +27,7 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
       return null;
-    final Expression $ = left(az.infixExpression(left(x)));
-    Expression right;
+    final Expression $ = left(az.infixExpression(left(x))), right;
     if (iz.infixPlus(left(x)))
       right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.MINUS);
     else {

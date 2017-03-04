@@ -198,7 +198,7 @@ public class Trimmer extends AbstractGUIApplicator {
       return toolboxes.get(p);
     final Toolbox $ = Toolbox.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
-    final List<Tipper<?>> xs = new ArrayList<>();
+    final Collection<Tipper<?>> xs = new ArrayList<>();
     for (final Tipper<?> ¢ : $.getAllTippers())
       if (!es.contains(¢.getClass()))
         xs.add(¢);

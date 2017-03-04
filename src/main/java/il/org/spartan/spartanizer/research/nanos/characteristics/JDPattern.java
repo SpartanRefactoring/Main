@@ -89,8 +89,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   }
 
   static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
-    final Collection<String> $ = new HashSet<>();
-    $.addAll(ps);
+    final Collection<String> $ = new HashSet<>(ps);
     body(root).accept(new ASTVisitor() {
       @Override public boolean visit(final Assignment ¢) {
         if (containsParameter(right(¢), $))
