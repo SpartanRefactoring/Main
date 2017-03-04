@@ -344,7 +344,7 @@ public final class Matcher {
       $.put(blockVariableName(p) + "();", n + "");
     else {
       if (isMethodInvocationAndHas$AArgument(p))
-        $.put(argumentsId(p), matchingArguments(n) + "");
+        $.put(argumentsId(p), matchingArguments(n));
       final List<ASTNode> pChildren = !iz.infixExpression(p) ? allChildren(p, p) : infixExpressionOperands(p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), (!iz.infixExpression(p) ? allChildren(n, p) : infixExpressionOperands(n)).get(¢), $);
@@ -364,7 +364,7 @@ public final class Matcher {
                 || (p + "").startsWith($SN) //
                 || (p + "").startsWith($N) //
                 || (p + "").startsWith($L) //
-                || (p + "").startsWith($D)) //
+                || (p + "").startsWith($D))
     ;
   }
 
@@ -413,7 +413,7 @@ public final class Matcher {
       ast(replacement).accept(new ASTVisitor() {
         @Override public boolean preVisit2(final ASTNode ¢) {
           if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-            $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
+            $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
           return true;
         }
       });
@@ -440,7 +440,7 @@ public final class Matcher {
     ast(replacement).accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-          $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
+          $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
         return true;
       }
     });
