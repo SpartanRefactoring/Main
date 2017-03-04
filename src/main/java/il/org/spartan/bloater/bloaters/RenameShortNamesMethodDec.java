@@ -24,12 +24,12 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * variable and ret for a return variable) : Important - the $ will always
  * change to ret by convention for more naming conventions information -
  * {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
- * <code> int f(int ¢) {
+ * {@code int f(int ¢) {
  * int $ = ¢;
  * x($);
  * return $;
  * }
- * </code> ==> {@code int f(int i) { int res = i; x(res); return res; } }
+ * } ==> {@code int f(int i) { int res = i; x(res); return res; } }
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: Raviv Rachmiel take care of single var declaration, tests
