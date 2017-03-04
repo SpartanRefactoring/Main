@@ -116,7 +116,7 @@ public final class izTest {
     assert !iz.negative(e("null"));
   }
 
-  @Test public void nonnAssociative() {
+  @Test public void nonAssociative() {
     final boolean b = wizard.nonAssociative(e("1"));
     assert !b;
     final boolean b1 = wizard.nonAssociative(e("-1"));

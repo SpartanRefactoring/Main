@@ -198,7 +198,7 @@ public class XMLSpartan {
       return $;
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
-    final Set<String> seen = new HashSet<>();
+    final Collection<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work

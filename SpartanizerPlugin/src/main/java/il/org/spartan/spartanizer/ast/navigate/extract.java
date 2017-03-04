@@ -533,4 +533,28 @@ public enum extract {
     copy.into(fragments(¢), $);
     return chop($);
   }
+
+  /** Given an IfStatement of the form: <br>
+   * if(a) <br>
+   * <t> B1<br>
+   * else if(b) <br>
+   * <t> <t>B2<br>
+   * else if(c)<br>
+   * <t><t> B3<br>
+   * ... <br>
+   * else <br>
+   * <t><t> Bn <br>
+   * Retreives all If branches
+   * @param ¢ JD
+   * @return */
+  public static Collection<IfStatement> branches(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement s = ¢;
+    final Collection<IfStatement> $ = new ArrayList<>();
+    $.add(s);
+    while (iz.ifStatement(step.elze(s)))
+      $.add(s = az.ifStatement(step.elze(s)));
+    return $;
+  }
 }

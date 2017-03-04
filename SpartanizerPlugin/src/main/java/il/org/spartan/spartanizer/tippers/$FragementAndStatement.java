@@ -84,10 +84,10 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   }
 
   static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
-    boolean found = false;
+    boolean searching = true;
     for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
-      if (!found)
-        found = ff == f;
+      if (searching)
+        searching = ff != f;
       else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
         return true;
     return false;

@@ -59,10 +59,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   /** Initiates configuration change for the project. This includes one dialog
    * opening. This method does not open the XML file, but uses given enabled
    * tippers collection. It also uses given commit method. This execution method
-   * is used in order to allow more flexible uses of the
-   * {@link ProjectPreferencesHandler} dialog.
-   * @param p JD
-   * @param m enabled tippers to be used in dialog
+   * is used in order to allow more flexible uses of thi x* @param p JDsi   * @param m enabled tippers to be used in dialog
    * @param commit what to do with the dialog's result
    * @return null */
   public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
@@ -79,7 +76,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param p JD
    * @param pc enabled tippers
    * @return null */
-  public static Object commit(final IProject p, final Set<String> pc) {
+  public static Object commit(final IProject p, final Collection<String> pc) {
     XMLSpartan.updateEnabledTippers(p, pc);
     try {
       refreshProject(p);
