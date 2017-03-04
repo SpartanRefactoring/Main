@@ -19,7 +19,7 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
   protected ASTRewrite rewrite;
   protected TextEditGroup editGroup;
 
-  @Override public abstract String description(final VariableDeclarationFragment f) ;
+  @Override public abstract String description(VariableDeclarationFragment f) ;
 
   abstract ASTRewrite go() ;
 

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -26,38 +27,29 @@ import il.org.spartan.spartanizer.tipping.*;
  * a  += 3 + 6;
  * }AssignmentUpdateAndSameUpdate
  * <p>
- * Tested by {@link Issue1132}
+ * Tested by {@link Issue1133}
  * @author Yossi Gil
-
- * @since 2017-03-04
- */
-public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
-    implements TipperCategory.CommnonFactoring {
+ * @since 2017-03-04 */
+public final class AssignmentAndUpdateToSame extends ReplaceToNextStatement<Assignment>//
+    implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
   @Override public String description(final Assignment ¢) {
-    return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";
+    return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
-    if (in(a1.getOperator(), ASSIGN,REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
-      return null;
-    final ASTNode parent = parent(a1);
-    if (!iz.statement(parent))
+    if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     final Assignment a2 = extract.assignment(nextStatement);
-    if (a1.getOperator() != a2.getOperator())
+    Assignment.Operator o = a2.getOperator();
+    if (o == ASSIGN)
       return null;
     final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
-    $.remove(parent, g);
-    $.replace(from(a2), subject.operands(from(a1), from(a2)).to(unifying(a1)), g);
+    $.replace(from(a1), subject.operands(from(a1), from(a2)).to(assign2infix(o)), g);
+    $.remove(nextStatement, g);
     return $;
-  }
-
-  private static Operator unifying(final Assignment ¢) {
-    final Operator $ = wizard.assign2infix(¢.getOperator());
-    return $ == MINUS2 ? PLUS2 : $ == DIVIDE ? TIMES : $;
   }
 }
