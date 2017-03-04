@@ -85,7 +85,7 @@ public enum BloatingTestUtilities {
         assertSimilar($1, unpeeled);
         return new Operand(createCUWithBinding(unpeeled), unpeeled);
       } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.logProbableBug(¢); 
+        monitor.logProbableBug(¢);
       }
       return null;
     }
