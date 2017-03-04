@@ -81,8 +81,8 @@ public enum extract {
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
   public static Assignment assignment(final ASTNode ¢) {
-    final ExpressionStatement s = extract.expressionStatement(¢);
-    return s == null ? null : az.assignment(s.getExpression());
+    final ExpressionStatement $ = extract.expressionStatement(¢);
+    return $ == null ? null : az.assignment($.getExpression());
   }
 
   public static Collection<ConditionalExpression> branches(final ConditionalExpression ¢) {
