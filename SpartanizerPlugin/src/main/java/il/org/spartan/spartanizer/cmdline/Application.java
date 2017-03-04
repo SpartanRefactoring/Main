@@ -128,7 +128,7 @@ public final class Application implements IApplication {
       try {
         u = openCompilationUnit(f);
         final FileStats s = new FileStats(f);
-        for (int i = 0; i < optRounds; ++i)
+        for (int ¢ = 0; ¢ < optRounds; ++¢)
           new Trimmer().apply(u);
         FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
         if (optVerbose)
