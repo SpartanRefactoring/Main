@@ -16,6 +16,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   public static <E extends Enum<?>> EventMapper<E> empty(final Class<? extends E> enumClass) {
     return new EventMapper<>(enumClass);
   }
+
   /** Factory method for {@link EventMapperFunctor}. Inspects the
    * {@link EventMapper#eventMap}. Used to inspect the collected data, rather
    * than update it. */
@@ -38,7 +39,6 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
   /** Results mapping. */
   private final Map<E, Object> eventMap;
-
   /** Recorders mapping. In the current implementation only one recorder is
    * available for each event, though the functions/consumers can be merged
    * together. */

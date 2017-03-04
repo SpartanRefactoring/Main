@@ -137,8 +137,6 @@ public interface system {
     return n2 / n1;
   }
 
-
-
   static String read() {
     try (Scanner $ = new Scanner(System.in)) {
       return read($);
