@@ -40,7 +40,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     try {
       monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
       startSpartan();
-    } catch (IllegalStateException ¢) {
+    } catch (final IllegalStateException ¢) {
       monitor.log(¢);
       return;
     }
@@ -57,7 +57,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     try {
       startSpartan();
       addPartListener();
-    } catch (IllegalStateException ¢) {
+    } catch (final IllegalStateException ¢) {
       monitor.log(¢);
     }
   }

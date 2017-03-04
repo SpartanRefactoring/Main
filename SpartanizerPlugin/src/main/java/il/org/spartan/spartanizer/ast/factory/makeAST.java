@@ -60,7 +60,7 @@ public enum makeAST {
    * declarations. */
   CLASS_BODY_DECLARATIONS(ASTParser.K_CLASS_BODY_DECLARATIONS)//
   ;
-  static final NullProgressMonitor npm = new NullProgressMonitor();
+  static final IProgressMonitor npm = new NullProgressMonitor();
 
   /** IFile -> ICompilationUnit converter
    * @param function File

@@ -101,11 +101,11 @@ public final class Application implements IApplication {
   private String optPath;
 
   @Override public Object start(final IApplicationContext arg0) {
-    Object $ = startInner(arg0);
+    final Object $ = startInner(arg0);
     try (Scanner s = new Scanner(System.in)) {
       try {
         s.nextLine();
-      } catch (@SuppressWarnings("unused") Exception __) {
+      } catch (@SuppressWarnings("unused") final Exception __) {
         //
       }
     }

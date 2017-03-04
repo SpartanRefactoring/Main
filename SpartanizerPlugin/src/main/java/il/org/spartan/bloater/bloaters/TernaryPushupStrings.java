@@ -26,8 +26,8 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
   @Override public ASTNode replacement(final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
-    StringLiteral l;
-    ConditionalExpression r;
+    final StringLiteral l;
+    final ConditionalExpression r;
     if (iz.stringLiteral(left(nn))) {
       l = az.stringLiteral(left(nn));
       r = az.conditionalExpression(expression(right(nn)));

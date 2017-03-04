@@ -33,9 +33,9 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
   private VariableDeclarationFragment currentFragment;
   private Type type;
 
-  @Override public boolean prerequisite(VariableDeclarationFragment f) {
+  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
     currentFragment = f;
-    ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
+    final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
     if (instanceCreation == null)
       return false;
     type = instanceCreation.getType();
