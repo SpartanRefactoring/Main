@@ -60,7 +60,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     for (final SwitchCase c : cs) {
       if (c.isDefault())
         continue;
-      final InfixExpression n = subject.pair(copy.of(expression(s)), copy.of(expression(c))).to(Operator.EQUALS);
+      final InfixExpression n = subject.pair((expression(s)), (expression(c))).to(Operator.EQUALS);
       $ = $ == null ? n : subject.pair($, n).to(Operator.CONDITIONAL_OR);
     }
     return $;
