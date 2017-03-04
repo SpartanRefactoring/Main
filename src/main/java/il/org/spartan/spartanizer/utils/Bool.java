@@ -5,6 +5,10 @@ package il.org.spartan.spartanizer.utils;
  * @author Ori Marcovitch
  * @since Oct 16, 2016 */
 public final class Bool {
+  public static Bool valueOf(final boolean ¢) {
+    return new Bool(¢);
+  }
+
   public boolean inner;
 
   public Bool() {}
@@ -13,17 +17,12 @@ public final class Bool {
     inner = b;
   }
 
+  public Bool clear() {
+    return set(false);
+  }
+
   public boolean get() {
     return inner;
-  }
-
-  Bool set() {
-    return set(true);
-  }
-
-  private Bool set(final boolean ¢) {
-    inner = ¢;
-    return this;
   }
 
   /** Function form, good substitute for auto-boxing */
@@ -31,11 +30,12 @@ public final class Bool {
     return Boolean.valueOf(inner);
   }
 
-  public static Bool valueOf(final boolean ¢) {
-    return new Bool(¢);
+  public Bool set() {
+    return set(true);
   }
 
-  public Bool clear() {
-    return set(false);
+  public Bool set(final boolean ¢) {
+    inner = ¢;
+    return this;
   }
 }
