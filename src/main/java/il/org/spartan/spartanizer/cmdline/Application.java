@@ -143,7 +143,7 @@ public final class Application implements IApplication {
         monitor.infoIOException(¢);
         ++failed;
       } catch (final Exception ¢) {
-        monitor.logProbableBug(this, ¢);
+        monitor.debug(this, ¢);
         ++failed;
       } finally {
         discardCompilationUnit(u);
