@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import static java.lang.Math.*;
 
@@ -18,14 +17,12 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1132 {
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     
-      new Triples() {
-        @Override public void go(final long a, final long b, final long c) {
+      ((Triples) (a, b, c) -> {
           if (b * c != 0)
-            azzert.that(String.format("%d %% %d %% %d", box.it(a), box.it(b), box.it(c)), a % b % c, is(a % (b * c)));
-        }
-      }.go();
+              azzert.that(String.format("%d %% %d %% %d", box.it(a), box.it(b), box.it(c)), a % b % c, azzert.is(a % (b * c)));
+      }).go();
     }
 
   @Test public void and() {
@@ -43,12 +40,10 @@ public class Issue1132 {
   }
 
   @Test public void dividesAssociativity() {
-    new Triples() {
-      @Override public void go(final long a, final long b, final long c) {
+    ((Triples) (a, b, c) -> {
         if (b * c != 0)
-          azzert.that(a / b / c, is(a / (b * c)));
-      }
-    }.go();
+            azzert.that(a / b / c, azzert.is(a / (b * c)));
+    }).go();
   }
 
 @Test public void minus() {
