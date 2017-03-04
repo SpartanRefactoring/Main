@@ -40,8 +40,8 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     try {
       monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
       startSpartan();
-    } catch (IllegalStateException e) {
-      monitor.log(e);
+    } catch (IllegalStateException ¢) {
+      monitor.log(¢);
       return;
     }
     try {
@@ -51,15 +51,14 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     }
   }
 
-  @Override public void start(final BundleContext ¢) throws Exception {
-    super.start(¢);
-    monitor.debug("START: gUIBatchLaconizer");
+  @Override public void start(final BundleContext c) throws Exception {
+    super.start(c);
+    monitor.debug("START: GUIBatchLaconizer");
     try {
       startSpartan();
       addPartListener();
-    } catch (IllegalStateException e) {
-      monitor.log(e);
-      return;
+    } catch (IllegalStateException ¢) {
+      monitor.log(¢);
     }
   }
 

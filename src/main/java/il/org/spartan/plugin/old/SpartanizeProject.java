@@ -37,9 +37,8 @@ public final class SpartanizeProject extends BaseHandler {
    * @param u JD
    * @return number of tips available for the compilation unit */
   public int countTips() {
-    if (todo.isEmpty()) {
-		return 0;
-	}
+    if (todo.isEmpty())
+      return 0;
     final Int $ = new Int();
     final AbstractGUIApplicator a = new Trimmer();
     try {
@@ -68,9 +67,8 @@ public final class SpartanizeProject extends BaseHandler {
 
   public Void go() {
     start();
-    if (initialCount == 0) {
-		return eclipse.announce(status + "No tips found.");
-	}
+    if (initialCount == 0)
+      return eclipse.announce(status + "No tips found.");
     manyPasses();
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
@@ -83,11 +81,9 @@ public final class SpartanizeProject extends BaseHandler {
   final IWorkbench workench = PlatformUI.getWorkbench();
 
   void manyPasses() {
-    for (passNumber = 1;; ++passNumber) {
-		if (passNumber > MAX_PASSES || singlePass()) {
-			return;
-		}
-	}
+    for (passNumber = 1;; ++passNumber)
+      if (passNumber > MAX_PASSES || singlePass())
+        return;
   }
 
   boolean singlePass() {
