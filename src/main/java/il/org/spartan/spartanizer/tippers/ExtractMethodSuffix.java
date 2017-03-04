@@ -134,12 +134,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       return;
     final List<TagElement> ts = tags(j);
     final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
-    boolean hasParamTags = false;
+    boolean noParameterTags = true;
     int tagPosition = -1;
     final Collection<TagElement> xs = new ArrayList<>();
     for (final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
-        hasParamTags = true;
+        noParameterTags = false;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
         if (!ns.contains(first(fragments(¢))))
@@ -147,7 +147,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         else
           ns.remove(first(fragments(¢)));
       }
-    if (!hasParamTags)
+    if (noParameterTags)
       return;
     ts.removeAll(xs);
     for (final String s : ns) {
