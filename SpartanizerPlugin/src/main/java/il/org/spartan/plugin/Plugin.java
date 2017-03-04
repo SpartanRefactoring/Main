@@ -8,7 +8,7 @@ import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
 
 import il.org.spartan.plugin.old.*;
-import il.org.spartan.plugin.preferences.*;
+import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Artium Nihamkin please add a description

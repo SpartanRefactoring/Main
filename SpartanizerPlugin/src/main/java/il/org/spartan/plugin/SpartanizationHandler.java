@@ -57,10 +57,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (InvocationTargetException  ¢) {
+      } catch (final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
-      }
-      catch (InterruptedException ¢) {
+      } catch (final InterruptedException ¢) {
         monitor.logCancellationRequest(¢);
       }
     });
@@ -179,9 +178,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (InvocationTargetException ¢) {
+      } catch (final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
-      }catch (InterruptedException ¢) {
+      } catch (final InterruptedException ¢) {
         monitor.logCancellationRequest(¢);
       }
     });

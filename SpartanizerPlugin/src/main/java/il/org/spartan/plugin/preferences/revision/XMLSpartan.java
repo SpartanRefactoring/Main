@@ -17,7 +17,7 @@ import org.xml.sax.*;
 
 import static java.util.stream.Collectors.*;
 
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;

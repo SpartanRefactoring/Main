@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.preferences;
+package il.org.spartan.plugin.preferences.revision;
 
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
