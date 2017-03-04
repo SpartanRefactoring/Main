@@ -33,12 +33,12 @@ public enum makeAST {
     }
 
     @Override public CompilationUnit from(final String ¢) {
-      char[] charArray = ¢.toCharArray();
+      final char[] charArray = ¢.toCharArray();
       final char[] text = charArray;
       final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
       $.setSource(text);
-      ASTParser makeParser = $;
-      ASTNode createAST = makeParser.createAST(wizard.nullProgressMonitor);
+      final ASTParser makeParser = $;
+      final ASTNode createAST = makeParser.createAST(wizard.nullProgressMonitor);
       return (CompilationUnit) createAST;
     }
   },

@@ -28,11 +28,9 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-03-02 */
 public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
-  private VariableDeclarationFragment currentFragment;
   private Type type;
 
   @Override public boolean prerequisite(final VariableDeclarationFragment f) {
-    currentFragment = f;
     final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
     if (instanceCreation == null)
       return false;
