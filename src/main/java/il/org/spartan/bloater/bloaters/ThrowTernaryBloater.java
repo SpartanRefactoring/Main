@@ -17,7 +17,7 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
   private static final long serialVersionUID = 8014414856762598558L;
 
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
-    ConditionalExpression ¢;
+    final ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
     else {

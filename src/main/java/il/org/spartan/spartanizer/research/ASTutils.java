@@ -23,8 +23,9 @@ public enum ASTutils {
       case STATEMENTS_LOOK_ALIKE:
         return findFirst.instanceOf(Block.class).in(u);
       default:
+        return null;
     }
-    return null;
+
   }
 
   public static String extractCode(final String s, final IDocument d) {

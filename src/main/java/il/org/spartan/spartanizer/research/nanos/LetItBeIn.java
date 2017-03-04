@@ -67,7 +67,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return $;
     }
 
-    private static List<SimpleName> peelIdentifiers(final Statement s, final SimpleName n) {
+    private static Iterable<SimpleName> peelIdentifiers(final Statement s, final SimpleName n) {
       return collect.usesOf(n).in(s);
     }
 

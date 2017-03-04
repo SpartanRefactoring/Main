@@ -33,7 +33,7 @@ public final class SpartanizeProject extends BaseHandler {
   private final Collection<ICompilationUnit> done = new ArrayList<>();
   private int passNumber;
 
-  /** Returns the number of spartanization tips for a compilation unit
+  /** Returns the number of spartanization tips for a compilation unit.
    * @param u JD
    * @return number of tips available for the compilation unit */
   public int countTips() {
@@ -73,8 +73,7 @@ public final class SpartanizeProject extends BaseHandler {
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int $ = countTips();
-    return eclipse.announce(//
-        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
+    return eclipse.announce(        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
             + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\n" + "Tips before: "
             + initialCount + "\n" + "Tips after: " + $ + "\n");
   }

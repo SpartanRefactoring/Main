@@ -114,7 +114,7 @@ public enum Files {
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
   private static Collection<File> getJavaFiles(final File directory) {
-    final Set<File> $ = new HashSet<>();
+    final Collection<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
       return $;
     for (final File entry : directory.listFiles())

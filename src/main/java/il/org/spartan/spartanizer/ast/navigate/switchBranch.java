@@ -162,23 +162,19 @@ public class switchBranch {
   public static Statement removeBreakSequencer(final Statement s) {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
-    final AST a = s.getAST();
-    Statement $ = null;
+    final AST $ = s.getAST();
     if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s), f = a.newIfStatement();
+      final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
       f.setThenStatement(removeBreakSequencer(step.then(t)));
       f.setElseStatement(removeBreakSequencer(step.elze(t)));
-      $ = f;
-    } else if (!iz.block(s)) {
-      if (iz.breakStatement(s) && iz.block(s.getParent()))
-        $ = a.newEmptyStatement();
-    } else {
-      final Block b = a.newBlock();
-      step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
-      $ = b;
+      return f;
     }
-    return $;
+    if (!iz.block(s))
+      return !iz.breakStatement(s) || !iz.block(s.getParent()) ? null : $.newEmptyStatement();
+    final Block b = $.newBlock();
+    step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
+    return b;
   }
 
   public static Collection<Statement> removeBreakSequencer(final Iterable<Statement> ss) {

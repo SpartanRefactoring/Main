@@ -109,6 +109,7 @@ public enum Dialogs {
             close();
             break;
           default:
+            return;
         }
       }
 

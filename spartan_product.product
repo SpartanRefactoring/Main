@@ -3,7 +3,6 @@
 
 <product name="Spartan Refactoring Desktop Application" uid="Spartan Product" id="il.org.spartan.plugin.product" application="il.org.spartan.spartanizer.application" version="1.0.0.0" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -14,7 +13,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -22,10 +20,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>
