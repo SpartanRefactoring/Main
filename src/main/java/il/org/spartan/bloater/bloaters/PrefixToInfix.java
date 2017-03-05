@@ -1,5 +1,5 @@
 package il.org.spartan.bloater.bloaters;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
@@ -30,7 +30,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {
-    final ASTNode $ = step.parent(¢);
+    final ASTNode $ = parent(¢);
     return (step.operator(¢) == PrefixExpression.Operator.INCREMENT || step.operator(¢) == PrefixExpression.Operator.DECREMENT)
         && (iz.expressionStatement($) || iz.forStatement($));
   }
