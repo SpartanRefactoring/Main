@@ -31,7 +31,13 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, x)//
         && !throwing(then(x))//
         && !iz.returnStatement(then(x))//
-        && doesNotReferenceNonFinal(x);
+        && doesNotReferenceNonFinal(x)//
+        && isNotContainedInSimpleLoop(x);
+  }
+
+  private static boolean isNotContainedInSimpleLoop(final IfStatement x) {
+    return !iz.enhancedFor(parent(x)) //
+        && !iz.simpleLoop(parent(parent(x)));
   }
 
   /** First order approximation - does statement reference non effective final
@@ -52,8 +58,8 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override public Tip pattern(final IfStatement x) {
-    return firstTip(tippers, x);
+  @Override public Tip pattern(final IfStatement ¢) {
+    return firstTip(tippers, ¢);
   }
 
   @Override public String description() {
