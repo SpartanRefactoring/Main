@@ -14,16 +14,22 @@ public class LetItBeTest {
     trimmingOf("{{A x = foo(); return bar(x,x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .gives("{{ return bar(foo(),foo());} another();}")//
+        .gives("return bar(foo(),foo()); another();")//
+        .gives("return bar(foo(),foo());")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("{{A x = foo(); return bar(x,x);} another();}")//
+        .gives("A x = foo(); return bar(x,x); another();")//
+        .gives("A x = foo(); return bar(x,x);")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("{{A x = foo(); return bar(y,y);} another();}")//
+        .gives("A x=foo();return bar(y,y);another();") //
+        .gives("return bar(y,y);another();") //
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .stays();
   }
@@ -32,6 +38,7 @@ public class LetItBeTest {
     trimmingOf("{{A x = foo(); bar(x,x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .gives("{{  bar(foo(),foo());} another();}")//
+        .gives("bar(foo(),foo());another();") //
         .stays();
   }
 
@@ -39,12 +46,15 @@ public class LetItBeTest {
     trimmingOf("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .gives("{{A y = bar();  bar(foo(),foo()); print(y);} another();}")//
+        .gives("A y=bar();bar(foo(),foo());print(y);another();") //
         .stays();
   }
 
   @Test public void f() {
     trimmingOf("{{A x = foo(); bar(x,x); print(x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .gives("{{bar(foo(),foo());print(x);}another();}") //
+        .gives("bar(foo(),foo());print(x);another();") //
         .stays();
   }
 
@@ -70,6 +80,14 @@ public class LetItBeTest {
         + "  });"//
         + "}")//
             .using(VariableDeclarationFragment.class, new LetItBeIn())//
+            .gives(
+                "{f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)));}});}") //
+            .gives(
+                "f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)));}});") //
+            .gives(
+                "f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework ¢){¢.interceptor(((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)));}});") //
+            .gives(
+                "f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework ¢){¢.interceptor((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass));}});") //
             .stays();
   }
 }
