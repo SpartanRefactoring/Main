@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -38,7 +38,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
     final Block bodyBlock = az.block(step.body(¢));
-    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2
+    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || statements(bodyBlock).size() < 2
         || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));

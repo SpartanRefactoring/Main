@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
@@ -11,7 +10,8 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -80,7 +80,7 @@ public enum Tippers {
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Tippers.sequencerRank(lisp.last(then)), rankElse = Tippers.sequencerRank(lisp.last(elze));
+    final int rankThen = Tippers.sequencerRank(last(then)), rankElse = Tippers.sequencerRank(last(elze));
     return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
   }
 
