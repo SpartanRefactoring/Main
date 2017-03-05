@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0192 {
-  @Ignore // TODO Tomer Dragucki
+  @Ignore // TODO Tomer Dragucki -- deal with this @Ignore --yg
   @Test public void a() {
     trimmingOf("boolean a = false; for (A b : c) if (d(b)) { a = true; break; } return a;")
         .gives("for (A b : c) if (d(b)) { return true; } return false;")//
