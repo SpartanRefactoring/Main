@@ -1,6 +1,3 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Jan 6, 2017 */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
@@ -10,6 +7,9 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
+/** Unit tests for Issue 283 
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public class Issue0283 {
   @Test public void test0() {
