@@ -59,7 +59,7 @@ public interface hop {
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
-    return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
+    return hop.correspondingVariableDeclarationFragment(fragments(s), n);
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
