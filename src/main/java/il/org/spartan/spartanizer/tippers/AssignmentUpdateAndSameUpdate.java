@@ -28,12 +28,10 @@ import il.org.spartan.spartanizer.tipping.*;
  * }AssignmentUpdateAndSameUpdate
  * <p>
  * Tested by {@link Issue1132}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
-  
-
   private static final long serialVersionUID = -1157844982389320057L;
 
   @Override public String description(final Assignment ¢) {

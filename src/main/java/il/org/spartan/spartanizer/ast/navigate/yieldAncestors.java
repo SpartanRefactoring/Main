@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 
 /** A class to search in the ancestry line of a given node.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Dor Ma'ayan
  * @since 2015-08-22 */
 public abstract class yieldAncestors<N extends ASTNode> {

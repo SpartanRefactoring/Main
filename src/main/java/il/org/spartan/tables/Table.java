@@ -11,7 +11,7 @@ import il.org.spartan.statistics.*;
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,
  * including aggregation information.
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
   private static final long serialVersionUID = 6103376738296618768L;
@@ -156,7 +156,6 @@ public class Table extends Row<Table> implements Closeable {
     return this;
   }
 
-  
   public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
   public static String classToNormalizedFileName(final Class<?> ¢) {

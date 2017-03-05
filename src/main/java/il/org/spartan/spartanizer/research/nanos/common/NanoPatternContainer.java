@@ -13,8 +13,6 @@ import il.org.spartan.spartanizer.research.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-12 */
 public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefinedTipper<N>> {
-  
-
   private static final long serialVersionUID = -6384953563641454459L;
 
   public NanoPatternContainer<N> patternTipper(final String pattern, final String replacement, final String description) {

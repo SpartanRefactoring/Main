@@ -7,10 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** Trivia includes in it spaces, tabs, newlines, comments, line comments, and
- * in general anything that is not a token of Java. Here we have a bunch of
+/** Trivia includes spaces, tabs, newlines, comments, line comments, and in
+ * general anything that is not a token of Java. Here we have a bunch of
  * function that deal with trivia in many ways.
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-19 */
 public interface trivia {
   static String accurateEssence(final String codeFragment) {

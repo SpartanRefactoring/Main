@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.engine.*;
  * make a single simplification of the tree. A tipper is so small that it is
  * idempotent: Applying a tipper to the output of itself is the empty operation.
  * @param <N> type of node which triggers the transformation.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
