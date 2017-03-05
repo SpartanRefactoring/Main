@@ -1,14 +1,15 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
-import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import static java.util.stream.Collectors.*;
 
-import il.org.spartan.*;
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -73,9 +74,9 @@ public class switchBranch {
   }
 
   /** @param ¢
-   * @return returns 1 if _this_ has better metrics than b (i.e should come
-   *         before b in the switch), -1 otherwise */
-  private boolean compare(final switchBranch ¢) {
+   * @return returns true if _this_ has better metrics than the parameter (i.e
+   *         should come before the parameter in the switch), false otherwise */
+  private boolean before_(final switchBranch ¢) {
     if (hasDefault())
       return false;
     if (¢.hasDefault())
@@ -89,9 +90,9 @@ public class switchBranch {
     return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
   }
 
-  public boolean compareTo(final switchBranch ¢) {
-    final boolean $ = compare(¢);
-    return $ != ¢.compare(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0;
+  public boolean before(final switchBranch ¢) {
+    final boolean $ = before_(¢);
+    return $ != ¢.before_(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0;
   }
 
   private void addAll(final Collection<Statement> ¢) {
@@ -106,12 +107,12 @@ public class switchBranch {
   public static SwitchStatement makeSwitchStatement(final Iterable<switchBranch> bs, final Expression x, final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
-    addAll(step.statements($), bs);
+    addAll(statements($), bs);
     return $;
   }
 
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
-    final List<Statement> l = step.statements(n);
+    final List<Statement> l = statements(n);
     assert iz.switchCase(first(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
@@ -123,8 +124,8 @@ public class switchBranch {
         s = new ArrayList<>();
         $.add(new switchBranch(c, s));
         nextBranch = false;
-        while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
-          c.add(az.switchCase(l.get(¢++)));
+        for (; iz.switchCase(l.get(¢)) && ¢ < l.size() - 1; ++¢)
+          c.add(az.switchCase(l.get(¢)));
         if (¢ >= l.size() - 1)
           break;
       }
@@ -132,14 +133,14 @@ public class switchBranch {
         nextBranch = true;
       s.add(l.get(¢));
     }
-    if (!iz.switchCase(lisp.last(l))) {
-      s.add(lisp.last(l));
-      if (!iz.sequencerComplex(lisp.last(l)))
+    if (!iz.switchCase(last(l))) {
+      s.add(last(l));
+      if (!iz.sequencerComplex(last(l)))
         s.add(n.getAST().newBreakStatement());
     } else {
       if (!s.isEmpty())
         $.add(new switchBranch(new ArrayList<>(), new ArrayList<>()));
-      c.add(az.switchCase(lisp.last(l)));
+      c.add(az.switchCase(last(l)));
       s.add(n.getAST().newBreakStatement());
     }
     return $;
@@ -151,8 +152,8 @@ public class switchBranch {
 
   private List<Statement> functionalCommands() {
     final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
-    if (!iz.breakStatement(lisp.last(statements)))
-      $.add(lisp.last(statements));
+    if (!iz.breakStatement(last(statements)))
+      $.add(last(statements));
     return $;
   }
 
@@ -174,7 +175,7 @@ public class switchBranch {
     if (!iz.block(s))
       return !iz.breakStatement(s) || !iz.block(s.getParent()) ? null : $.newEmptyStatement();
     final Block b = $.newBlock();
-    step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
+    statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
     return b;
   }
 

@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -70,7 +69,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     final Statement $ = az.statement(s.getParent());
     return Environment
         .of($ == null ? s
-            : iz.block($) ? lisp.last(statements(az.block($))) : iz.switchStatement($) ? lisp.last(statements(az.switchStatement($))) : s)
+            : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)
         .has(identifier(n));
   }
 }
