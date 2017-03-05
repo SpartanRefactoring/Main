@@ -121,7 +121,7 @@ public enum extract {
   }
 
   public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
-    final List<Statement> ll = step.statements(s);
+    final List<Statement> ll = statements(s);
     final int ind = indexOf(ll, c);
     if (ind < 0)
       return null;
@@ -260,7 +260,7 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(λ -> extract.fragmentsInto(az.variableDeclrationStatement(λ), $));
+    statements(b).stream().filter(iz::variableDeclarationStatement).forEach(λ -> extract.fragmentsInto(az.variableDeclrationStatement(λ), $));
     return $;
   }
 
@@ -270,7 +270,7 @@ public enum extract {
   }
 
   private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
-    step.statements(b).forEach(λ -> ifsInto(λ, $));
+    statements(b).forEach(λ -> ifsInto(λ, $));
     return $;
   }
 
@@ -475,7 +475,7 @@ public enum extract {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
-    return $ == null ? null : next(¢, step.statements($));
+    return $ == null ? null : next(¢, statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {
@@ -556,7 +556,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    step.statements(b).forEach(λ -> statementsInto(λ, $));
+    statements(b).forEach(λ -> statementsInto(λ, $));
     return $;
   }
 
@@ -573,7 +573,7 @@ public enum extract {
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
-    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
+    return statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
   }
 
   /** @param n a node to extract an expression from

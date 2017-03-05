@@ -128,7 +128,7 @@ public class ParseASTTest {
             + " }\n" + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}")
         .accept(new ASTVisitor() {
           @Override public boolean visit(final MethodDeclaration $) {
-            for (final Statement o : step.statements(step.body($))) {
+            for (final Statement o : statements(step.body($))) {
               print("class: " + o.getClass());
               print("statement: " + o);
               print(step.expression(o));

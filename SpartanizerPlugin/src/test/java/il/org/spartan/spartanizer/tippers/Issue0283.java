@@ -55,7 +55,7 @@ public class Issue0283 {
   @Test public void test3() {
     trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
         .gives(
-            "@Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\")@Test @SuppressWarnings({\"EnumBody\"})@NonNull public void test0(){}}") //
+            "@Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\")@Test @SuppressWarnings(\"EnumBody\"})@NonNull public void test0(){}}") //
         .stays();
   }
 
@@ -68,10 +68,11 @@ public class Issue0283 {
   }
 
   @Test public void test5() {
-    trimmingOf(
-        "@Ignore @Deprecated class Test123 {@Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
-            .gives(
-                "@Deprecated @Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\")@Test @SuppressWarnings({\"EnumBody\"})@NonNull public void test0(){}}") //
-            .stays();
+    trimmingOf("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings({\"EnumBody\"}) @Inherited @NonNull @Deprecated public void test0(){}}")
+        .gives(
+            "@Deprecated @Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\") @Test @SuppressWarnings({\"EnumBody\"}) @NonNull public void test0(){}}") //
+        .gives(
+            "@Deprecated @Ignore class Test123{@Deprecated @Test@SuppressWarnings(\"EnumBody\") @SuppressWarnings(\"EnumBody\") @NonNull public void test0(){}}") //
+        .stays();
   }
 }
