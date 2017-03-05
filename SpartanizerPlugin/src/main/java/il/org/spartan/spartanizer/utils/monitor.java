@@ -267,10 +267,10 @@ public enum monitor {
         return null;
       try {
         return writer = writer != null ? writer : new BufferedWriter(new OutputStreamWriter(outputStream(), UTF_8));
-      } catch (final UnsupportedEncodingException x) {
+      } catch (final UnsupportedEncodingException ¢) {
         assert fault.unreachable(): specifically(
             String.format("Encoding '%s' should not be invalid", UTF_8), //
-            x, file, fileName, file(), fileName());
+            ¢, file, fileName, file(), fileName());
         return null;
       }
     }

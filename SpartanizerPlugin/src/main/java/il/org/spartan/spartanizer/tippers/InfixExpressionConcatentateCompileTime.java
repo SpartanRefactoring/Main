@@ -53,4 +53,8 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     assert !$.isEmpty();
     return $.size() <= 1 ? first($) : subject.operands($).to(wizard.PLUS2);
   }
+
+
+
+
 }

@@ -151,7 +151,7 @@ public abstract class Tipper<N extends ASTNode> //
     return super.hashCode();
   }
 
-  public static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+  public static boolean forbiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
     final ExpressionStatement x = (ExpressionStatement) nextStatement;
