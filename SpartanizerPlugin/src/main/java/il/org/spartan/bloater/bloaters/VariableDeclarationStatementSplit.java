@@ -4,13 +4,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Test case is {@link Issue0968} Issue #968 convert {@code
  * int a = f(), b = g();
@@ -49,7 +49,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
   }
 
   private static VariableDeclarationFragment getFirstAssignment(final VariableDeclarationStatement ¢) {
-    return step.fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).findFirst().orElse(null);
+    return fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).findFirst().orElse(null);
   }
 
   private static boolean isFragmentApplicable(final VariableDeclarationFragment ¢) {
