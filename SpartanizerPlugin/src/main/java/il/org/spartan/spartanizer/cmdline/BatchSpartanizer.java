@@ -121,9 +121,9 @@ final class BatchSpartanizer extends FolderASTVisitor {
 
   BatchSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
-    beforeFileName = outputDir + system.fileSeparator + name + ".before.java";
-    afterFileName = outputDir + system.fileSeparator + name + ".after.java";
-    reportFileName = outputDir + system.fileSeparator + name + ".CSV";
+    beforeFileName = outputDir + File.separator + name + ".before.java";
+    afterFileName = outputDir + File.separator + name + ".after.java";
+    reportFileName = outputDir + File.separator + name + ".CSV";
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());

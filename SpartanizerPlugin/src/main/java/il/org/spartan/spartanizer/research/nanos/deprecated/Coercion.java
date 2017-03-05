@@ -134,7 +134,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static String packageAzFilePath(final CastExpression ¢) {
-    return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + containing.package¢(¢).replaceAll("\\.", system.fileSeparator)
+    return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + containing.package¢(¢).replaceAll("\\.", File.separator)
         + "/az.java";
   }
 
