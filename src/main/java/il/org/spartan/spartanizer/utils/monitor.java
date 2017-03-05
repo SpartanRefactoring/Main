@@ -249,10 +249,10 @@ public enum monitor {
     public static OutputStream outputStream() {
       try {
         return outputStream = outputStream != null ? outputStream : new FileOutputStream(file(), true);
-      } catch (final FileNotFoundException x) {
+      } catch (@SuppressWarnings("unused") final FileNotFoundException __) {
         try {
           return outputStream = new FileOutputStream(fileName(), true);
-        } catch (final FileNotFoundException x1) {
+        } catch (@SuppressWarnings("unused") final FileNotFoundException ___) {
           return outputStream = null;
         }
       }
