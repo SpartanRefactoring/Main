@@ -66,7 +66,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
     final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
-    final Statement parent = az.statement(parent(f));
+    final Statement parent = az.statement(parentStatement(f));
     if (parent == null//
         || iz.forStatement(parent))
       return null;

@@ -487,22 +487,24 @@ public interface iz {
    *         Statement of type Post or Pre Expression with ++ or -- operator
    *         false if node is not an Expression Statement or its a Post or Pre
    *         fix expression that its operator is not ++ or -- */
-  static boolean incrementOrDecrement(final ASTNode ¢) {
+  static boolean updater(final ASTNode ¢) {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
       case EXPRESSION_STATEMENT:
-        return incrementOrDecrement(step.expression(¢));
+        return iz.updater(step.expression(¢));
       case ASSIGNMENT:
-        return in(az.assignment(¢).getOperator(), PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
-            BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN);
+        return !haz.updates(from(az.assignment(¢)));
       case POSTFIX_EXPRESSION:
-        return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+        return iz.updater(az.postfixExpression(¢));
       case PREFIX_EXPRESSION:
-        return in(az.prefixExpression(¢).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+        return true;
       default:
         return false;
     }
+  }
+  static boolean updater(final InfixExpression ¢) {
+      return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
   }
 
   // TODO Yossi: Move to lisp
@@ -1161,16 +1163,6 @@ public interface iz {
 
   static boolean constructor(final ASTNode ¢) {
     return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
-  }
-
-  /** Determine whether an {@link ASTNode} contains as a children a
-   * {@link ContinueStatement}
-   * @param ¢ JD
-   * @return {@code true } iff ¢ contains any continue statement
-   * @see {@link convertWhileToFor} */
-  @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
-    return ¢ != null
-        && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
 
   /** @param n ASTNode that contains the identifier

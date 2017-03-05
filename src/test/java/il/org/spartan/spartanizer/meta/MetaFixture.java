@@ -88,7 +88,7 @@ public abstract class MetaFixture {
   }
 
   private static String[] values(final ArrayInitializer ¢) {
-    return values(step.expressions(¢));
+    return values(expressions(¢));
   }
 
   private static String[] values(final Collection<Expression> xs) {

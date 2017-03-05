@@ -30,8 +30,8 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   @Override public Tip pattern(final InstanceofExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
-        if (!izMethodExist(¢))
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + left(¢) + ")"), g);
+        if (!doesMethodExist(¢))
           addizMethod(¢, r, g);
       }
     };
@@ -41,13 +41,9 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return "iz" + type(¢);
   }
 
-  static boolean izMethodExist(final InstanceofExpression ¢) {
-    return step.methods(containingType(¢)).stream().filter(λ -> izMethodName(¢).equals(λ.getName() + "") && booleanType(step.returnType(λ)))
+  static boolean doesMethodExist(final InstanceofExpression ¢) {
+    return methods(containingType(¢)).stream().filter(λ -> izMethodName(¢).equals(λ.getName() + "") && iz.booleanType(returnType(λ)))
         .count() != 0;
-  }
-
-  private static boolean booleanType(final Type returnType) {
-    return "boolean".equals(returnType + "");
   }
 
   static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {

@@ -214,7 +214,7 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test50() {
-    azzert.that(minus.peel(e("a*b")), iz("a*b"));
+    azzert.that(eliminate.peel(e("a*b")), iz("a*b"));
   }
 
   @Test public void test51() {

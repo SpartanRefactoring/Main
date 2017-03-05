@@ -310,7 +310,7 @@ public interface wizard {
    *         operator. false if none of them are or if the given parameter is
    *         null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
-    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
+    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updater(λ));
   }
 
   static InfixExpression.Operator convertToInfix(final Operator ¢) {

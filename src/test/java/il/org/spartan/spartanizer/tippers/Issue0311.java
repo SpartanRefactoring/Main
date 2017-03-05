@@ -5,6 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
+
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
@@ -294,5 +296,18 @@ public class Issue0311 {
         .gives("for(int ¢=0;;++¢){(new int[]{1,2,3,4,5})[¢]=0;}")//
         .gives("for(int ¢=0;;++¢)(new int[]{1,2,3,4,5})[¢]=0;")//
         .stays();
+  }
+
+  @Test public void z() {
+    TrimmerLog.on();
+    trimmingOf("for(int ¢=0;;){a[¢]=0;++¢;}")//
+        .gives("for(int ¢=0;;++¢){a[¢]=0;}")//
+    ;
+  }
+
+  @Test public void z1() {
+    trimmingOf("for(int ¢=0;;){p(¢);++¢;}")//
+        .gives("for(int ¢=0;;++¢){p(¢);}")//
+    ;
   }
 }

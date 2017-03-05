@@ -36,7 +36,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
 
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return (operator(¢) != PLUS && operator(¢) != MINUS || !(¢ == initializer(az.variableDeclrationFragment(parent(¢)))
-        & iz.intType(type(az.variableDeclarationStatement(parent(az.variableDeclrationFragment(parent(¢))))))))
+        & iz.intType(type(az.variableDeclarationStatement(parentStatement(az.variableDeclrationFragment(parent(¢))))))))
         && (operator(¢) != PLUS && operator(¢) != MINUS || !type.isNotString(¢)) ? null : replacement(extract.allOperands(¢));
   }
 }

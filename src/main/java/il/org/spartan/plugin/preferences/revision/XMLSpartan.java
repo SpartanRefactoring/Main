@@ -41,7 +41,7 @@ public class XMLSpartan {
         CatchClauseRenameParameterToCent.class, //
         EnhancedForParameterRenameToCent.class, //
         ForRenameInitializerToCent.class, //
-        ForToForUpdaters.class, //
+        ForMoveLastIntoUpdaters.class, //
         InfixExpressionConcatentateCompileTime.class, //
         LambdaRenameSingleParameterToLambda.class, //
         MethodDeclarationRenameReturnToDollar.class, //
