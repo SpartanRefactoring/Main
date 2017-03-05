@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.switchBranch.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,7 +9,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -38,17 +39,17 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     if (bs.size() != 2)
       return null;
     final switchBranch first = first(bs);
-    if (iz.stringLiteral(expression(first((!first.hasDefault() ? first : lisp.last(bs)).cases))))
+    if (iz.stringLiteral(expression(first((!first.hasDefault() ? first : last(bs)).cases))))
       return null;
-    final switchBranch last = lisp.last(bs);
+    final switchBranch last = last(bs);
     if (!first.hasDefault() && !last.hasDefault() || first.hasFallThrough() || last.hasFallThrough() || !first.hasStatements()
         || !last.hasStatements() || haz.sideEffects(expression(s)) && (first.hasDefault() ? last : first).cases.size() > 1)
       return null;
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
-    final switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
+    final switchBranch switchBranch = first.hasDefault() ? first : last(bs);
     statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
-    final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : lisp.last(bs);
+    final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : last(bs);
     statements(b1).addAll(removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
     statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
