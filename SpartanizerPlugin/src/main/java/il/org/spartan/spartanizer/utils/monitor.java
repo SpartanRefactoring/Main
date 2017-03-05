@@ -242,7 +242,7 @@ public enum monitor {
     public static String fileName() {
       if (fileName != null)
         return fileName;
-      fileName =  System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
+      fileName = System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
       System.out.flush();
       System.err.flush();
       System.err.format("\n --- Your error log will be found in \n\t%s\n", fileName);
@@ -268,8 +268,7 @@ public enum monitor {
       try {
         return writer = writer != null ? writer : new BufferedWriter(new OutputStreamWriter(outputStream(), UTF_8));
       } catch (final UnsupportedEncodingException ¢) {
-        assert fault.unreachable(): specifically(
-            String.format("Encoding '%s' should not be invalid", UTF_8), //
+        assert fault.unreachable() : specifically(String.format("Encoding '%s' should not be invalid", UTF_8), //
             ¢, file, fileName, file(), fileName());
         return null;
       }

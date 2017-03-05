@@ -67,12 +67,12 @@ public class Issue0311 {
   }
 
   @Test public void e_Modifiers_in_1() {
-    trimmingOf("public S bv(){S a=\"\";M m=R.mp(\"[A-Z]\").m(q);" + //
+    trimmingOf("public S bv(){S a=b;M m=R.mp(AZ).m(q);" + //
         "while(m.f())a +=m.u();return a.e2();}")//
-            .gives("public S bv(){S $=\"\";M m=R.mp(\"[A-Z]\").m(q);" + //
+            .gives("public S bv(){S $=b;M m=R.mp(AZ).m(q);" + //
                 "while(m.f())$ +=m.u();return $.e2();}")//
-            .gives("public S bv(){S $=\"\";" + //
-                "for(M m=R.mp(\"[A-Z]\").m(q);m.f();)$ +=m.u();return $.e2();}");
+            .gives("public S bv(){S $=b;" + //
+                "for(M m=R.mp(AZ).m(q);m.f();)$ +=m.u();return $.e2();}");
   }
 
   @Test public void e_Modifiers_in_2a() {
@@ -194,10 +194,10 @@ public class Issue0311 {
   }
 
   @Test public void j() {
-    trimmingOf("public S bv(){S a=\"\";M m=R.mp(\"[A-Z]\").m(q);while(m.f())a +=m.u();return a.e2();}")
-        .gives("public S bv(){S $=\"\";M m=R.mp(\"[A-Z]\").m(q);while(m.f())$ +=m.u();return $.e2();}")
-        .gives("public S bv(){S $=\"\";for(M m=R.mp(\"[A-Z]\").m(q);m.f();)$ +=m.u();return $.e2();}")
-        .gives("public S bv(){S $=\"\";for(M ¢=R.mp(\"[A-Z]\").m(q);¢.f();)$ +=¢.u();return $.e2();}")//
+    trimmingOf("public S bv(){S a=b;M m=R.mp(AZ).m(q);while(m.f())a +=m.u();return a.e2();}")
+        .gives("public S bv(){S $=b;M m=R.mp(AZ).m(q);while(m.f())$ +=m.u();return $.e2();}")
+        .gives("public S bv(){S $=b;for(M m=R.mp(AZ).m(q);m.f();)$ +=m.u();return $.e2();}")
+        .gives("public S bv(){S $=b;for(M ¢=R.mp(AZ).m(q);¢.f();)$ +=¢.u();return $.e2();}")//
         .stays();
   }
 
@@ -212,10 +212,10 @@ public class Issue0311 {
   }
 
   @Test public void t03a() {
-    trimmingOf("S t(S g){B sb=new B(g);int l=sb.l();for(int i=0;i<l;++i)if(sb.t(i)=='.')sb.s(i,'/');return sb+\"\";")
-        .gives("S t(S g){B $=new B(g);int l=$.l();for(int i=0;i<l;++i)if($.t(i)=='.')$.s(i,'/');return $+\"\";")
-        .gives("S t(S g){B $=new B(g);int l=$.l();for(int ¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+\"\";")
-        .gives("S t(S g){B $=new B(g);for(int l=$.l(),¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+\"\";")//
+    trimmingOf("S t(S g){B sb=new B(g);int l=sb.l();for(int i=0;i<l;++i)if(sb.t(i)=='.')sb.s(i,'/');return sb+b;")
+        .gives("S t(S g){B $=new B(g);int l=$.l();for(int i=0;i<l;++i)if($.t(i)=='.')$.s(i,'/');return $+b;")
+        .gives("S t(S g){B $=new B(g);int l=$.l();for(int ¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+b;")
+        .gives("S t(S g){B $=new B(g);for(int l=$.l(),¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+b;")//
         .stays();
   }
 

@@ -590,7 +590,6 @@ public enum extract {
     return az.throwStatement(extract.singleStatement(¢));
   }
 
-
   public static List<ASTNode> updatedVariables(final Expression x) {
     return new ExpressionBottomUp<List<ASTNode>>() {
       List<ASTNode> atomic(final Expression ¢) {

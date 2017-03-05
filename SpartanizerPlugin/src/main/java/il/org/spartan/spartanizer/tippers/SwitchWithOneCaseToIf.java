@@ -56,8 +56,6 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return $;
   }
 
-
-
   private static InfixExpression makeFrom(final SwitchStatement s, final Iterable<SwitchCase> cs) {
     InfixExpression $ = null;
     for (final SwitchCase c : cs) {
