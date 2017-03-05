@@ -53,6 +53,8 @@ public abstract class ExpressionBottomUp<R> extends StatementBottomUp<R> {
   }
 
   @Override public R map(final Expression ¢) {
+    if (¢ == null)
+      return reduce();
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);

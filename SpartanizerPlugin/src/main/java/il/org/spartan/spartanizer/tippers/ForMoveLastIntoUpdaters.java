@@ -32,7 +32,7 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
   @Override public ForStatement replacement(final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     step.updaters($).add(0, copy.of(updater));
-    $.setBody(eliminate.lastStatement(body($)));
+    $.setBody(eliminate.lastStatement(copy.of(body)));
     return $;
   }
 }

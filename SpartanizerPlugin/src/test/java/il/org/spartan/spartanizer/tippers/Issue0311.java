@@ -1,11 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
@@ -25,15 +29,15 @@ public class Issue0311 {
   }
 
   @Test public void ca() {
-    trimmingOf("for(int i=0;i<20;++i){F f=q.f();a3xZ(s.l(c),not(r4(f)));" + //
+    trimmingOf("for(int i=0;i<20;++i){F f=q.f();ay(s.l(c),not(r4(f)));" + //
         "c[i]=f;new F(f,\"a.txt\").g();a(f.e());}")//
             .stays();
   }
 
   @Test public void cb() {
-    trimmingOf("for(int i=0;i<20;++i){a3xZ(s.l(c),not(r4(f)));" + //
+    trimmingOf("for(int i=0;i<20;++i){ay(s.l(c),not(r4(f)));" + //
         "c[i]=f;new F(f,\"a.txt\").g();a(f.e());}")//
-            .gives("for(int ¢=0;¢<20;++¢){a3xZ(s.l(c),not(r4(f)));" + //
+            .gives("for(int ¢=0;¢<20;++¢){ay(s.l(c),not(r4(f)));" + //
                 "c[¢]=f;new F(f,\"a.txt\").g();a(f.e());}")
             .stays();
   }
@@ -309,5 +313,58 @@ public class Issue0311 {
     trimmingOf("for(int ¢=0;;){p(¢);++¢;}")//
         .gives("for(int ¢=0;;++¢){p(¢);}")//
     ;
+  }
+
+  @Test public void z2() {
+    assert findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}")) != null;
+  }
+
+  @Test public void z3() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.canTip(s);
+  }
+
+  @Test public void z4() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.prerequisite(s);
+  }
+
+  @Test public void z5() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.validUpdater();
+  }
+
+  @Test public void z6() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.statements != null;
+  }
+
+  @Test public void z7() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    azzert.that(u.statements.size(),is(2));
+  }
+
+  @Test public void z8() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.validUpdates();
+  }
+
+  @Test public void z9() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.noContinue();
   }
 }

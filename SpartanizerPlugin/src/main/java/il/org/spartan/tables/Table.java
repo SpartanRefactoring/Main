@@ -14,6 +14,8 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
+  private static final long serialVersionUID = 6103376738296618768L;
+
   public Table(final Object o) {
     this(o.getClass());
   }
@@ -154,7 +156,7 @@ public class Table extends Row<Table> implements Closeable {
     return this;
   }
 
-  private static final long serialVersionUID = 1L;
+  
   public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
   public static String classToNormalizedFileName(final Class<?> ¢) {
