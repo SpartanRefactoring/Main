@@ -135,14 +135,14 @@ public enum TrimmerTestsUtils {
 
     public void stays() {
       final Wrap w = Wrap.find(get());
-      final String wrap = w.on(get()), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = w.off(unpeeled);
       if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
         return;
       final String expected = get();
-      if (expected.equals(peeled) || !essence(peeled).equals(essence(expected)))
+      if (expected.equals(peeled) || essence(peeled).equals(essence(expected)))
         return;
       System.err.printf(
           "Quick fix by mark, copy and paste is:\n" + //

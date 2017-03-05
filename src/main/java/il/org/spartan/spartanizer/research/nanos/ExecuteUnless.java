@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
@@ -31,7 +32,13 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, x)//
         && !throwing(then(x))//
         && !iz.returnStatement(then(x))//
-        && doesNotReferenceNonFinal(x);
+        && doesNotReferenceNonFinal(x)//
+        && isNotContainedInSimpleLoop(x);
+  }
+
+  private static boolean isNotContainedInSimpleLoop(final IfStatement x) {
+    return !iz.enhancedFor(parent(x)) //
+        && !iz.simpleLoop(parent(parent(x)));
   }
 
   /** First order approximation - does statement reference non effective final
