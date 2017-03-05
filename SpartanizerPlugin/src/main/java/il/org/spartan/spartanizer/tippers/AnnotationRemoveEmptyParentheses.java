@@ -17,7 +17,7 @@ public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<N
   private static final long serialVersionUID = -3150743394756288696L;
 
   @Override public String description(final NormalAnnotation ¢) {
-    return "Remove redundant parentheses from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
+    return "Remove redundant parenthesis from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
   @Override public ASTNode replacement(final NormalAnnotation ¢) {

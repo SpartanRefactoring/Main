@@ -12,8 +12,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface system {
-  String fileSeparator = System.getProperty("file.separator");
-
   static Process bash(final String shellCommand) {
     if (windows())
       return null;
