@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class ForeignTest extends MetaFixture {
-  static final String FOREIGN = foreign.class.getSimpleName() + "";
+  static final String FOREIGN = foreign.class.getSimpleName();
 
   @Parameters(name = "{index}. {0} does not know {1} ({2})") //
   public static Collection<Object[]> data() {

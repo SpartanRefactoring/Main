@@ -84,12 +84,12 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
 
   /** [[SuppressWarningsSpartan]] */
   Collection<? extends ASTNode> branchesWrapper(final N ¢) {
-    return !iz.conditionalExpression(¢) ? branches(az.ifStatement(¢)) : branches(az.conditionalExpression(¢));
+    return !iz.conditionalExpression(¢) ? extract.branches(az.ifStatement(¢)) : extract.branches(az.conditionalExpression(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
   private String lastElseWrapper(final N ¢) {
-    return (!iz.conditionalExpression(¢) ? lastElse(az.ifStatement(¢)) : lastElse(az.conditionalExpression(¢))) + "";
+    return (!iz.conditionalExpression(¢) ? extract.lastElse(az.ifStatement(¢)) : extract.lastElse(az.conditionalExpression(¢))) + "";
   }
 
   /** [[SuppressWarningsSpartan]] */

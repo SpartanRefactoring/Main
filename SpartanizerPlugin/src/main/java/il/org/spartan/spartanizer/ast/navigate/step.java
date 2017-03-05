@@ -117,41 +117,6 @@ public enum step {
     return ¢ == null ? null : ¢.bodyDeclarations();
   }
 
-  public static Collection<ConditionalExpression> branches(final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
-    ConditionalExpression s = ¢;
-    final Collection<ConditionalExpression> $ = new ArrayList<>();
-    $.add(s);
-    while (iz.conditionalExpression(elze(s)))
-      $.add(s = az.conditionalExpression(elze(s)));
-    return $;
-  }
-
-  /** Given an IfStatement of the form: <br>
-   * if(a) <br>
-   * <t> B1<br>
-   * else if(b) <br>
-   * <t> <t>B2<br>
-   * else if(c)<br>
-   * <t><t> B3<br>
-   * ... <br>
-   * else <br>
-   * <t><t> Bn <br>
-   * Retreives all If branches
-   * @param ¢ JD
-   * @return */
-  public static Collection<IfStatement> branches(final IfStatement ¢) {
-    if (¢ == null)
-      return null;
-    IfStatement s = ¢;
-    final Collection<IfStatement> $ = new ArrayList<>();
-    $.add(s);
-    while (iz.ifStatement(elze(s)))
-      $.add(s = az.ifStatement(elze(s)));
-    return $;
-  }
-
   /** Expose the list of catchClauses in a {@link TryStatement}
    * @param ¢ JD
    * @return reference to the list of catchClauses in the argument */
@@ -482,28 +447,6 @@ public enum step {
    * @return */
   public static SimpleName label(final ContinueStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
-  }
-
-  public static Expression lastElse(final ConditionalExpression ¢) {
-    if (¢ == null)
-      return null;
-    ConditionalExpression $ = ¢;
-    while (iz.conditionalExpression(elze($)))
-      $ = az.conditionalExpression(elze($));
-    return elze($);
-  }
-
-  /** returns the else statement of the last if in an if else if else if else
-   * sequence
-   * @param ¢
-   * @return */
-  public static Statement lastElse(final IfStatement ¢) {
-    if (¢ == null)
-      return null;
-    IfStatement $ = ¢;
-    while (iz.ifStatement(elze($)))
-      $ = az.ifStatement(elze($));
-    return elze($);
   }
 
   /** Shorthand for {@link Assignment#getLeftHandSide()}

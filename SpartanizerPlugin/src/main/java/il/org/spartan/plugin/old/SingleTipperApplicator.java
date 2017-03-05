@@ -7,7 +7,6 @@ import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -101,7 +100,7 @@ public final class SingleTipperApplicator {
     for (final Integer i : range.from(0).to(SpartanizeProject.MAX_PASSES)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
       final Int pn = new Int(i + 1);
-      final AtomicBoolean canelled = new AtomicBoolean(false);
+      final Bool canelled = new Bool();
       try {
         ps.run(true, true, px -> {
           px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
@@ -109,7 +108,7 @@ public final class SingleTipperApplicator {
           final Collection<ICompilationUnit> exhausted = new ArrayList<>();
           for (final ICompilationUnit u : todo) {
             if (px.isCanceled()) {
-              canelled.set(true);
+              canelled.set();
               break;
             }
             final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());

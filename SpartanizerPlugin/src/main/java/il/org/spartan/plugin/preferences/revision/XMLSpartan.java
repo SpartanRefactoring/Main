@@ -17,7 +17,7 @@ import org.xml.sax.*;
 
 import static java.util.stream.Collectors.*;
 
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -33,11 +33,8 @@ public class XMLSpartan {
   private static final String VERSION = "version";
   private static final String FILE_NAME = "spartan.xml";
   private static final String TIPPER = "tipper";
-  @Deprecated @SuppressWarnings("unused") private static final String CATEGORY = "category";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
-  @Deprecated @SuppressWarnings("unused") private static final String CATEGORY_ID = "id";
-  @Deprecated @SuppressWarnings("unused") private static final String TIPPER_DESCRIPTION = "description";
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
@@ -62,16 +59,16 @@ public class XMLSpartan {
    * @return enabled tippers for the project */
   public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
     final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
-      final Document d = getFile(p);
+    final Document d = getFile(p);
     if (d == null)
       return $;
-    final NodeList l = d.getElementsByTagName(TIPPER);
-    if (l == null)
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    if (ns == null)
       return $;
-      final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
-      final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
-      for (int i = 0; i < l.getLength(); ++i) {
-      final Element e = (Element) l.item(i);
+    final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
+    final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
+    for (int i = 0; i < ns.getLength(); ++i) {
+      final Element e = (Element) ns.item(i);
       final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
@@ -79,7 +76,7 @@ public class XMLSpartan {
       final TipperPreview preview = Toolbox.Tables.TipperPreviewCache.get(tc);
       final TipperGroup g = Toolbox.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
-        tgs.put(g, new LinkedList<>());
+        tgs.put(g, new ArrayList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
       final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
@@ -105,8 +102,7 @@ public class XMLSpartan {
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
-    final Collection<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>();
-    l.addAll($);
+    final Collection<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>($);
     for (final Class<Tipper<? extends ASTNode>> ¢ : l)
       if (!ets.contains(¢.getSimpleName()))
         $.remove(¢);
@@ -198,7 +194,7 @@ public class XMLSpartan {
       return $;
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
-    final Set<String> seen = new HashSet<>();
+    final Collection<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work

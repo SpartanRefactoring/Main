@@ -25,6 +25,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     final ConditionalExpression $ = findFirst.conditionalArgument(i);
     if ($ == null)
       return null;
+    // TODO: Tomer Dragucki : use class subject --yg
     final MethodInvocation mThen = copy.of(i);
     final int ci = mThen.arguments().indexOf(findFirst.conditionalArgument(mThen));
     arguments(mThen).set(ci, copy.of(then($)));

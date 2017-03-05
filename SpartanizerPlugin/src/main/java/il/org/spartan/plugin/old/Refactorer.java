@@ -173,9 +173,11 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     if (p != null)
       try {
         d.run(true, true, p);
-      } catch (InvocationTargetException | InterruptedException ¢) {
-        monitor.log(¢);
-        ¢.printStackTrace();
+      } catch (final InvocationTargetException ¢) {
+        monitor.logProbableBug(¢);
+        return false;
+      } catch (final InterruptedException ¢) {
+        monitor.logCancellationRequest(this, ¢);
         return false;
       }
     return true;

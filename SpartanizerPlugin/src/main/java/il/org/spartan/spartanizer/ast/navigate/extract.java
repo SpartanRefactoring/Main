@@ -81,7 +81,43 @@ public enum extract {
    * @return null if the block contains more than one statement or if the
    *         statement is not an assignment or the assignment if it exists */
   public static Assignment assignment(final ASTNode ¢) {
-    return az.assignment(extract.expressionStatement(¢).getExpression());
+    final ExpressionStatement $ = extract.expressionStatement(¢);
+    return $ == null ? null : az.assignment($.getExpression());
+  }
+
+  public static Collection<ConditionalExpression> branches(final ConditionalExpression ¢) {
+    if (¢ == null)
+      return null;
+    ConditionalExpression s = ¢;
+    final Collection<ConditionalExpression> $ = new ArrayList<>();
+    $.add(s);
+    while (iz.conditionalExpression(step.elze(s)))
+      $.add(s = az.conditionalExpression(step.elze(s)));
+    return $;
+  }
+
+  /** Given an IfStatement of the form: <br>
+   * if(a) <br>
+   * <t> B1<br>
+   * else if(b) <br>
+   * <t> <t>B2<br>
+   * else if(c)<br>
+   * <t><t> B3<br>
+   * ... <br>
+   * else <br>
+   * <t><t> Bn <br>
+   * Retreives all If branches
+   * @param ¢ JD
+   * @return */
+  public static Collection<IfStatement> branches(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement s = ¢;
+    final Collection<IfStatement> $ = new ArrayList<>();
+    $.add(s);
+    while (iz.ifStatement(step.elze(s)))
+      $.add(s = az.ifStatement(step.elze(s)));
+    return $;
   }
 
   public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
@@ -289,6 +325,28 @@ public enum extract {
     return ¢ == null || $ == null ? null : az.infixExpression($.getExpression());
   }
 
+  public static Expression lastElse(final ConditionalExpression ¢) {
+    if (¢ == null)
+      return null;
+    ConditionalExpression $ = ¢;
+    while (iz.conditionalExpression(step.elze($)))
+      $ = az.conditionalExpression(step.elze($));
+    return step.elze($);
+  }
+
+  /** returns the else statement of the last if in an if else if else if else
+   * sequence
+   * @param ¢
+   * @return */
+  public static Statement lastElse(final IfStatement ¢) {
+    if (¢ == null)
+      return null;
+    IfStatement $ = ¢;
+    while (iz.ifStatement(step.elze($)))
+      $ = az.ifStatement(step.elze($));
+    return step.elze($);
+  }
+
   public static Statement lastStatement(final Block ¢) {
     return last(statements(¢));
   }
@@ -357,6 +415,12 @@ public enum extract {
    *         <code><b>null</b></code> if not such value exists. */
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
+  }
+
+  public static Collection<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
+    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    copy.into(fragments(¢), $);
+    return chop($);
   }
 
   /** Extract the {@link IfStatement} that immediately follows a given node
@@ -448,6 +512,14 @@ public enum extract {
     return az.returnStatement(extract.singleStatement(¢));
   }
 
+  public static SimpleName simpleName(final PostfixExpression $) {
+    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
+  }
+
+  public static SimpleName simpleName(final PrefixExpression $) {
+    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
+  }
+
   /** Finds the single statement in the <code><b>else</b></code> branch of an
    * {@link IfStatement}
    * @param subject JD
@@ -518,19 +590,5 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
-  }
-
-  public static SimpleName simpleName(final PrefixExpression $) {
-    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
-  }
-
-  public static SimpleName simpleName(final PostfixExpression $) {
-    return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
-  }
-
-  public static Collection<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    copy.into(fragments(¢), $);
-    return chop($);
   }
 }
