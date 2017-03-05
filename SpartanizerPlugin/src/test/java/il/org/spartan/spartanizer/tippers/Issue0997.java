@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+/** Unit tests for Issue 997: remove redundant modifiers in annotations
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

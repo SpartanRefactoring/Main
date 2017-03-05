@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
+/** Abstract tipper to deal with combining a fragment with the next statement
+ * @author Yossi Gil {@code <yossi.gil@gmail.com>}
  * @since Sep 25, 2016 */
 public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   private static final long serialVersionUID = 7723281513517888L;
