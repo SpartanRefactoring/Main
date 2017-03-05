@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import java.io.*;
+
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 
@@ -14,7 +16,7 @@ abstract class AbstractCommandLineProcessor {
   public abstract void apply();
 
   protected String makeFile(final String fileName) {
-    return outputFolder + system.fileSeparator + presentSourceName + "." + fileName;
+    return outputFolder + File.separator + presentSourceName + "." + fileName;
   }
 
   public static void main(final String[] args) {
