@@ -58,8 +58,8 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override public Tip pattern(final IfStatement x) {
-    return firstTip(tippers, x);
+  @Override public Tip pattern(final IfStatement ¢) {
+    return firstTip(tippers, ¢);
   }
 
   @Override public String description() {
