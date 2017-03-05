@@ -249,7 +249,7 @@ public enum make {
 
   public static ParenthesizedExpression parethesized(final Expression ¢) {
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
-    $.setExpression(step.parent(¢) == null ? ¢ : copy.of(¢));
+    $.setExpression(parent(¢) == null ? ¢ : copy.of(¢));
     return $;
   }
 
