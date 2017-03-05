@@ -60,7 +60,11 @@ public interface trivia {
   }
 
   static String gist(final Object ¢) {
-    return (¢ == null || (¢ + "").length() < 35 ? ¢ + "" : (¢ + "").substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
+    return ¢ == null ? "null" : gist(¢ + "");
+  }
+
+  static String gist(String s) {
+    return (s.length() < 35 ? s : s.substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
   static <N extends ASTNode> N removeComments(final N n) {
