@@ -49,9 +49,6 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   }
 
   @Override public Tip pattern(final EnhancedForStatement ¢) {
-    System.out.println("---------------");
-    System.out.println(¢);
-    System.out.println("---------------");
     return firstTip(tippers, ¢);
   }
 
