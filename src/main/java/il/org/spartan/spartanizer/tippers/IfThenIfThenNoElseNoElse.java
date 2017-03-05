@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if (x && a)
  *   f();
  * }
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-09-01 */
 public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {

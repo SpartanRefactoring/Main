@@ -9,7 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Tests of {@link guessName}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

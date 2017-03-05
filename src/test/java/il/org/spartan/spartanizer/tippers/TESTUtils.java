@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-17 */
 @SuppressWarnings("javadoc")
 public enum TESTUtils {

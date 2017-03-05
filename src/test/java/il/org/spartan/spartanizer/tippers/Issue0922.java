@@ -6,7 +6,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests for {@link ExpressionStatementAssertTrueFalse}
- * @author Yossi Gil // put your name here
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} // put your name
+ *         here
  * @since 2016 // put the year/date here */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

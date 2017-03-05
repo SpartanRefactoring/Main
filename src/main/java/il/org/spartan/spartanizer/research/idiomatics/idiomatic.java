@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> with a variety of {@code public
  * static} utility functions of reasonably wide use.
- * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2013/07/01
  * @author Ori Marcovitch
  * @since 20/10/2016 */
@@ -178,7 +178,8 @@ public interface idiomatic {
 
   /** Supplier with {@link #when(boolean)} method
    * @param <T> JD
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   *         <Yossi.Gil@GMail.COM>
    * @since 2016 */
   @FunctionalInterface
   interface Holder<T> extends Supplier<T> {
@@ -206,7 +207,7 @@ public interface idiomatic {
   /** A class which is just like {@link Supplier} , except that it uses the
    * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
    * be thrown by the getters.
-   * @author Yossi Gil
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @param <T> JD
    * @since 2016` */
   @FunctionalInterface
@@ -218,7 +219,8 @@ public interface idiomatic {
 
   /** Evaluate a {@link Runnable} when a condition applies or unless a condition
    * applies.
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   *         <Yossi.Gil@GMail.COM>
    * @since 2016 */
   class Runner implements Runnable {
     private final Runnable run;
@@ -247,7 +249,8 @@ public interface idiomatic {
 
   /** Store a value to be returned with {@link #get()} function
    * @param <T> JD
-   * @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   *         <Yossi.Gil@GMail.COM>
    * @since 2016 */
   class Storer<T> implements Holder<T> {
     final T inner;
@@ -264,7 +267,8 @@ public interface idiomatic {
     }
   }
 
-  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+  /** @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   *         <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Trigger {
     /** @param <T> JD

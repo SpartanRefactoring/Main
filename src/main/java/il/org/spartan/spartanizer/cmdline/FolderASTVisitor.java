@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Parse and visit all Java files under a given path.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Dec 14, 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
   @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
