@@ -125,6 +125,7 @@ public class SwitchBranch {
         s = new ArrayList<>();
         $.add(new SwitchBranch(c, s));
         nextBranch = false;
+        // TODO: Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)
