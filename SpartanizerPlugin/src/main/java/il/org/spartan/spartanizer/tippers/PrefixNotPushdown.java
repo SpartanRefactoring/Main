@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import org.eclipse.jdt.core.dom.*;
-
+import static il.org.spartan.spartanizer.ast.factory.subject.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -12,13 +12,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** pushes down "{@code !}", the negation operator as much as possible, using
- * the de-Morgan and other simplification rules.
+/** pushes down "{@code !}", the boolean negation operator as much as possible,
+ * using the de-Morgan and other simplification rules.
  * @author Yossi Gil
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = -9089304451195425885L;
+   static final long serialVersionUID = -9089304451195425885L;
 
   /** A utility function, which tries to simplify a boolean expression, whose
    * top most parameter is logical negation.
@@ -44,50 +44,59 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
         || ($ = perhapsDoubleNegation(¢)) != null//
         || ($ = perhapsDeMorgan(¢)) != null//
         || ($ = perhapsComparison(¢)) != null //
+        || ($ = perhapsTernary(¢)) != null //
             ? $ : null;
   }
 
-  private static Expression comparison(final InfixExpression ¢) {
+   static Expression comparison(final InfixExpression ¢) {
     return subject.pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
   }
 
-  private static boolean hasOpportunity(final Expression inner) {
-    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
+   static boolean hasOpportunity(final Expression ¢) {
+    return iz.booleanLiteral(¢) || az.not(¢) != null || az.andOrOr(¢) != null || iz.comparison(¢) || iz.conditionalExpression(¢);
   }
 
-  private static boolean hasOpportunity(final PrefixExpression ¢) {
+   static boolean hasOpportunity(final PrefixExpression ¢) {
     return ¢ != null && hasOpportunity(core(operand(¢)));
   }
 
-  private static Expression perhapsComparison(final Expression inner) {
-    return perhapsComparison(az.comparison(inner));
+   static Expression perhapsComparison(final Expression ¢) {
+    return perhapsComparison(az.comparison(¢));
   }
 
-  private static Expression perhapsComparison(final InfixExpression inner) {
-    return inner == null ? null : comparison(inner);
+   static Expression perhapsTernary(final Expression ¢) {
+    return perhapsTernary(az.conditionalExpression(core(¢)));
   }
 
-  private static Expression perhapsDeMorgan(final Expression ¢) {
+   static Expression perhapsTernary(final ConditionalExpression ¢) {
+    return subject.pair(operand(then(¢)).to(NOT), operand(elze(¢)).to(NOT)).toCondition(expression(¢));
+  }
+
+   static Expression perhapsComparison(final InfixExpression ¢) {
+    return ¢ == null ? null : comparison(¢);
+  }
+
+   static Expression perhapsDeMorgan(final Expression ¢) {
     return perhapsDeMorgan(az.andOrOr(¢));
   }
 
-  private static Expression perhapsDeMorgan(final InfixExpression ¢) {
+   static Expression perhapsDeMorgan(final InfixExpression ¢) {
     return ¢ == null ? null : wizard.applyDeMorgan(¢);
   }
 
-  private static Expression perhapsDoubleNegation(final Expression ¢) {
+   static Expression perhapsDoubleNegation(final Expression ¢) {
     return perhapsDoubleNegation(az.not(¢));
   }
 
-  private static Expression perhapsDoubleNegation(final PrefixExpression ¢) {
+   static Expression perhapsDoubleNegation(final PrefixExpression ¢) {
     return ¢ == null ? null : tryToSimplify(operand(¢));
   }
 
-  private static Expression pushdownNot(final PrefixExpression ¢) {
+   static Expression pushdownNot(final PrefixExpression ¢) {
     return ¢ == null ? null : pushdownNot(operand(¢));
   }
 
-  private static Expression tryToSimplify(final Expression ¢) {
+   static Expression tryToSimplify(final Expression ¢) {
     final Expression $ = pushdownNot(az.not(¢));
     return $ != null ? $ : ¢;
   }
