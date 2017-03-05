@@ -33,5 +33,4 @@ public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<Condi
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate ternary that evaluates to either Boolean.FALSE or Boolean.TRUE (not just one of these)";
   }
-
 }

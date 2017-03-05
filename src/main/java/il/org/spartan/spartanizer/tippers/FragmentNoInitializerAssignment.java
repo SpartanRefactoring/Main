@@ -43,7 +43,4 @@ public final class FragmentNoInitializerAssignment extends $FragementAndStatemen
     $.remove(extract.containingStatement(a), g);
     return $;
   }
-
-
-
 }

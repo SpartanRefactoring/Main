@@ -62,36 +62,35 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true); // solves many issues
     ir.setFilterImplicitImports(true); // along with this of course
     final Type t = ir.addImport(binding, s.getAST());
-        // TODO Ori Roth: enable assignments extraction
-    return t == null || $ instanceof Assignment ? 
-        null : new Tip(description(s), s, getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
-            final Type tt = fixWildCardType(t);
-            final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
-            final String nn = scope.newName(s, tt);
-            f.setName(make.from(s).identifier(nn));
-            f.setInitializer(copy.of($));
-            final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
-            v.setType(tt);
-            final Statement ns = copy.of(s);
-            s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
-            if (!(s.getParent() instanceof Block))
-              goNonBlockParent(s.getParent(), v, ns, r, g);
-            else
-              goBlockParent((Block) s.getParent(), v, ns, r, g);
-          }
+    // TODO Ori Roth: enable assignments extraction
+    return t == null || $ instanceof Assignment ? null : new Tip(description(s), s, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
+        final Type tt = fixWildCardType(t);
+        final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
+        final String nn = scope.newName(s, tt);
+        f.setName(make.from(s).identifier(nn));
+        f.setInitializer(copy.of($));
+        final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
+        v.setType(tt);
+        final Statement ns = copy.of(s);
+        s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
+        if (!(s.getParent() instanceof Block))
+          goNonBlockParent(s.getParent(), v, ns, r, g);
+        else
+          goBlockParent((Block) s.getParent(), v, ns, r, g);
+      }
 
-          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x, final Statement s, final ASTRewrite r, final TextEditGroup g) {
-            // TODO Ori Roth: Use subject to block.
-            final Block b = p.getAST().newBlock();
-            statements(b).add(x);
-            statements(b).add(s);
-            // TODO Ori Roth: Why twice?
-            r.replace(s, b, g);
-            r.replace(s, b, g);
-          }
-        };
+      void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x, final Statement s, final ASTRewrite r, final TextEditGroup g) {
+        // TODO Ori Roth: Use subject to block.
+        final Block b = p.getAST().newBlock();
+        statements(b).add(x);
+        statements(b).add(s);
+        // TODO Ori Roth: Why twice?
+        r.replace(s, b, g);
+        r.replace(s, b, g);
+      }
+    };
   }
 
   static void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {

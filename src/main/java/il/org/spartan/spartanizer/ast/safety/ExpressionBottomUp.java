@@ -102,7 +102,7 @@ public abstract class ExpressionBottomUp<R> extends StatementBottomUp<R> {
   }
 
   protected R map(@SuppressWarnings("unused") final LambdaExpression __) {
-    return reduce(); 
+    return reduce();
   }
 
   protected R map(final MethodInvocation x) {

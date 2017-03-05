@@ -1,4 +1,5 @@
 package il.org.spartan.bloater.bloaters;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
@@ -25,8 +26,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   @Override public ASTNode replacement(final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
-    return subject.pair(operand(¢), $)
-        .to(operator(¢) != PrefixExpression.Operator.DECREMENT ? Operator.PLUS_ASSIGN : Operator.MINUS_ASSIGN);
+    return subject.pair(operand(¢), $).to(operator(¢) != PrefixExpression.Operator.DECREMENT ? Operator.PLUS_ASSIGN : Operator.MINUS_ASSIGN);
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {

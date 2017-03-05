@@ -42,8 +42,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   static boolean doesMethodExist(final InstanceofExpression ¢) {
-    return methods(containingType(¢)).stream().filter(λ -> izMethodName(¢).equals(λ.getName() + "") && iz.booleanType(returnType(λ)))
-        .count() != 0;
+    return methods(containingType(¢)).stream().filter(λ -> izMethodName(¢).equals(λ.getName() + "") && iz.booleanType(returnType(λ))).count() != 0;
   }
 
   static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {

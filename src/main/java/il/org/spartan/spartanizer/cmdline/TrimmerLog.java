@@ -37,6 +37,7 @@ public enum TrimmerLog {
   public static void activateLogToFile() {
     logToFile = true;
   }
+
   public static void on() {
     maxApplications = maxTips = maxVisitations = 30;
   }
