@@ -13,7 +13,9 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends LoopReplacer<WhileStatement>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = 1L;
+  
+
+  private static final long serialVersionUID = -3058381388098493922L;
 
   private static boolean notClaimedByOthers(final WhileStatement ¢) {
     return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) //

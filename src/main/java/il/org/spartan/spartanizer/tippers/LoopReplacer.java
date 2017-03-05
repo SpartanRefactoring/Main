@@ -18,7 +18,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-05 */
 public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNode<S> {
-  private static final long serialVersionUID = 1L;
+  
+  private static final long serialVersionUID = 648254692142989542L;
   protected Statement body;
   protected Block block;
   protected List<Statement> statements;
@@ -36,14 +37,14 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
   }
 
   protected final boolean validUpdater() {
-    return statements != null && statements.size() < 2 && validUpdates() && noContinue();
+    return statements != null && statements.size() > 1 && validUpdates() && noContinue();
   }
 
-  private boolean noContinue() {
+  boolean noContinue() {
     return !haz.continueStatement(body);
   }
 
-  private boolean validUpdates() {
+  boolean validUpdates() {
     for (final ASTNode u : updates)
       if (!(u instanceof SimpleName))
         return false;
