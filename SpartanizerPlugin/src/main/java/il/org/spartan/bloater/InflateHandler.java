@@ -2,7 +2,6 @@ package il.org.spartan.bloater;
 
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
@@ -25,6 +24,7 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
   private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Zoom");
-  public static final AtomicBoolean active = new AtomicBoolean(false);
+  public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -46,9 +46,10 @@ public class InflateHandler extends AbstractHandler {
     if (s == null)
       return null;
     if (active.get()) {
-      if (active.getAndSet(false))
-        removePageListener(s);
-    } else if (!active.getAndSet(true)) {
+      active.clear();
+      removePageListener(s);
+    } else {
+      active.set();
       getOpenedEditors().forEach(InflateHandler::addListener);
       s.addPartListener(pageListener);
     }

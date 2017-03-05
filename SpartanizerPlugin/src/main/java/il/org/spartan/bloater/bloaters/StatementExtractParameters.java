@@ -82,8 +82,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
               goBlockParent((Block) s.getParent(), v, ns, r, g);
           }
 
-          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x, final Statement s, final ASTRewrite r,
-              final TextEditGroup g) {
+          void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x, final Statement s, final ASTRewrite r, final TextEditGroup g) {
             // TODO Ori Roth: Use subject to block.
             final Block b = p.getAST().newBlock();
             statements(b).add(x);
@@ -104,11 +103,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
-    final Collection<ASTNode> excludedParents = new LinkedList<>();
+    final Collection<ASTNode> excludedParents = new ArrayList<>();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
-    final List<Expression> $ = new LinkedList<>();
+    final List<Expression> $ = new ArrayList<>();
     s.accept(new ASTVisitor() {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)
@@ -162,7 +161,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param g
    * @param ilr */
   static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
-    final Collection<String> idns = new LinkedList<>();
+    final Collection<String> idns = new ArrayList<>();
     if (r.getAddedImports() != null)
       idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)

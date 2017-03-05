@@ -25,7 +25,6 @@ public enum ASTutils {
       default:
         return null;
     }
-
   }
 
   public static String extractCode(final String s, final IDocument d) {

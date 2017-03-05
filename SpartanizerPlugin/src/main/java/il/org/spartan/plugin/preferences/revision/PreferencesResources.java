@@ -1,6 +1,5 @@
-package il.org.spartan.plugin.preferences;
+package il.org.spartan.plugin.preferences.revision;
 
-import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
@@ -8,6 +7,7 @@ import org.eclipse.jface.preference.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Daniel Mittelman please add a description
  * @author Daniel Mittelman
@@ -28,7 +28,7 @@ public enum PreferencesResources {
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT
                                                                         // SAFE
-  public static final AtomicBoolean NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new AtomicBoolean(true);
+  public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
 
   public static String getLabel(final Class<? extends ExpanderCategory> $) {
     return $.getSimpleName();

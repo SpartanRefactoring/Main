@@ -369,12 +369,7 @@ public final class Namespace implements Environment {
   }
 
   public String generateName(final Type ¢) {
-    final String face = namer.shorten(¢);
-    int postface = 0;
-    String $ = face + "" + ++postface;
-    while (has($))
-      $ = face + "" + ++postface;
-    return $;
+    return generateName(namer.shorten(¢));
   }
 
   public String generateName(final String ¢) {

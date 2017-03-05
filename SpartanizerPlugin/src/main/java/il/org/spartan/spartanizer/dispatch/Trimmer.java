@@ -66,8 +66,6 @@ public class Trimmer extends AbstractGUIApplicator {
         try {
           w = getTipper(t, n);
         } catch (final Exception ¢) {
-          if (!silent)
-            ¢.printStackTrace();
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }
@@ -78,7 +76,6 @@ public class Trimmer extends AbstractGUIApplicator {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
         } catch (final Exception ¢) {
-          ¢.printStackTrace();
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }

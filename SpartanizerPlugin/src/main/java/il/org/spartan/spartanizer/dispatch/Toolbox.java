@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.dispatch;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -11,7 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -64,7 +63,7 @@ public class Toolbox {
    * @return */
   public ASTRewrite pickFirstTip(final ASTNode root) {
     disabling.scan(root);
-    final AtomicBoolean done = new AtomicBoolean(false);
+    final Bool done = new Bool();
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
     root.accept(new ASTVisitor() {
       @Override public boolean preVisit2(final ASTNode n) {
@@ -75,7 +74,7 @@ public class Toolbox {
         final Tipper<?> t = firstTipper(n);
         if (t == null)
           return true;
-        done.set(true);
+        done.set();
         extractTip(t, n).go($, null);
         return false;
       }
@@ -180,8 +179,7 @@ public class Toolbox {
             new AssignmentAndReturn(), //
             new AssignmentToFromInfixIncludingTo(), //
             new AssignmentToPrefixIncrement(), //
-            new AssignmentUpdateAndSameUpdate(),
-            null) //
+            new AssignmentUpdateAndSameUpdate(), null) //
         .add(Block.class, //
             new BlockSimplify(), //
             new BlockSingleton(), //
