@@ -243,7 +243,10 @@ public enum monitor {
       if (fileName != null)
         return fileName;
       fileName =  System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
-      System.err.format("Your error log will be found in %s \n", fileName);
+      System.out.flush();
+      System.err.flush();
+      System.err.format("\n --- Your error log will be found in \n\t%s\n", fileName);
+      System.out.flush();
       return fileName;
     }
 
