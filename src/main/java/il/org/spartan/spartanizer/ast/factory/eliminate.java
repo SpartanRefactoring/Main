@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * like a sentence phrase.
  * @author Yossi Gil
  * @since 2016 */
-public enum minus {
+public enum eliminate {
   ;
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
@@ -29,12 +29,14 @@ public enum minus {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement $) {
-    if (!iz.block($))
+    Block b = az.block($);
+    if (b == null)
       return make.emptyStatement($);
-    final List<Statement> ss = statements(az.block($));
-    if (!ss.isEmpty())
-      ss.remove(ss.size() - 1);
-    return $;
+    final List<Statement> ss = step.statements(b);
+    if (ss.isEmpty())
+      return make.emptyStatement($);
+    ss.remove(ss.size() - 1);
+    return $; 
   }
 
   public static int level(final Expression ¢) {
@@ -50,7 +52,7 @@ public enum minus {
   }
 
   @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
-    return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
+    return xs.stream().map(eliminate::level).reduce((x, y) -> x + y).get();
   }
 
   private static int level(final PrefixExpression ¢) {
@@ -70,7 +72,7 @@ public enum minus {
   }
 
   private static List<Expression> peel(final Collection<Expression> ¢) {
-    return ¢.stream().map(minus::peel).collect(toList());
+    return ¢.stream().map(eliminate::peel).collect(toList());
   }
 
   public static Expression peel(final NumberLiteral $) {

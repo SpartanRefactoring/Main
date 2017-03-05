@@ -127,7 +127,7 @@ public enum make {
       return null;
     final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
     fragments($).addAll(extract.nextFragmentsOf(¢));
-    $.setType(copy.of(step.type(¢)));
+    $.setType(copy.of(type(¢)));
     extendedModifiers($).addAll(az.modifiersOf(¢));
     return $;
   }
@@ -174,7 +174,7 @@ public enum make {
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
 
   /** Swap the order of the left and right operands to an expression, changing

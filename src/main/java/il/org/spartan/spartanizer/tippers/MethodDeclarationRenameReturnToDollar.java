@@ -1,6 +1,4 @@
 package il.org.spartan.spartanizer.tippers;
-
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
 import java.util.*;
@@ -8,6 +6,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -81,7 +83,7 @@ abstract class AbstractRenamePolicy {
   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(body(inner)) ? null
         : innerSelectReturnVariable();
   }
 }

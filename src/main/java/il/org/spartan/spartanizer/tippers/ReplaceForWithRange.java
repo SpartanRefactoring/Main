@@ -77,7 +77,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
       }
 
       @Override public boolean visit(final PrefixExpression ¢) {
-        if (iz.incrementOrDecrement(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
+        if (iz.updater(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
           $.inner = true;
         return true;
       }

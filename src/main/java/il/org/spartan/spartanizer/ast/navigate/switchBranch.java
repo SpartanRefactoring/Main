@@ -167,9 +167,9 @@ public class switchBranch {
     final AST $ = s.getAST();
     if (iz.ifStatement(s)) {
       final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
-      f.setExpression(copy.of(step.expression(t)));
-      f.setThenStatement(removeBreakSequencer(step.then(t)));
-      f.setElseStatement(removeBreakSequencer(step.elze(t)));
+      f.setExpression(copy.of(expression(t)));
+      f.setThenStatement(removeBreakSequencer(then(t)));
+      f.setElseStatement(removeBreakSequencer(elze(t)));
       return f;
     }
     if (!iz.block(s))
