@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -38,7 +37,7 @@ public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
   }
 
   private static TryStatement parent(final CatchClause ¢) {
-    return az.tryStatement(step.parent(¢));
+    return az.tryStatement(parent(¢));
   }
 
   @Override public String example() {
