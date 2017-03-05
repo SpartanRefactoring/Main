@@ -91,11 +91,8 @@ public enum TrimmerTestsUtils {
       final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled)) {
         System.err.printf("Test failed!\n");
-        applyTrimmer(trimmer, w.on(get()));
+        rerun(w);
         System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;\n");
-        System.err.printf("Rerunning test with logging on\n");
-        TrimmerLog.on();
-        applyTrimmer(trimmer, w.on(get()));
         azzert.fail("Nothing done on " + get());
       }
       final String peeled = w.off(unpeeled);
@@ -112,12 +109,19 @@ public enum TrimmerTestsUtils {
                 "\n        .gives(\"%s\") //\n",
             trivia.escapeQuotes(essence(peeled)), //
             trivia.escapeQuotes(essence($)));
-        System.err.printf("Rerunning test with logging on\n");
-        TrimmerLog.on();
-        applyTrimmer(trimmer, w.on(get()));
+        rerun(w);
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);
+    }
+
+    private void rerun(final Wrap ¢) {
+      System.err.printf("Rerunning test with logging on:\n");
+      TrimmerLog.on();
+      applyTrimmer(trimmer, ¢.on(get()));
+      TrimmerLog.off();
+      System.out.flush();
+      System.err.printf("Rerunning done\n");
     }
 
     /** Check whether one of the code options is correct

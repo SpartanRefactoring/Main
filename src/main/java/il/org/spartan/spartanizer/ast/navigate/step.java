@@ -657,7 +657,6 @@ public enum step {
     return az.tryStatement(parent((ASTNode) ¢));
   }
 
-
   public static VariableDeclarationStatement parentStatement(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(parent(¢));
   }

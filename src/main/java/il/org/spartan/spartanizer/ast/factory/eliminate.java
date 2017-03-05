@@ -29,14 +29,14 @@ public enum eliminate {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement $) {
-    Block b = az.block($);
+    final Block b = az.block($);
     if (b == null)
       return make.emptyStatement($);
     final List<Statement> ss = step.statements(b);
     if (ss.isEmpty())
       return make.emptyStatement($);
     ss.remove(ss.size() - 1);
-    return $; 
+    return $;
   }
 
   public static int level(final Expression ¢) {

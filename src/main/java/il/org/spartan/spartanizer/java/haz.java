@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -178,6 +179,7 @@ public enum haz {
     final Block $ = body(d);
     return $ != null && statements($).stream().anyMatch(λ -> Coupling.unknownNumberOfEvaluations(d, λ));
   }
+
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor() {

@@ -16,11 +16,9 @@ public class WhileToForUpdaters extends LoopReplacer<WhileStatement>//
   private static final long serialVersionUID = 1L;
 
   private static boolean notClaimedByOthers(final WhileStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢)
-        && cantTip.declarationRedundantInitializer(¢) //
+    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) //
         && cantTip.remvoeRedundantIf(¢);
   }
-
 
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
@@ -28,7 +26,7 @@ public class WhileToForUpdaters extends LoopReplacer<WhileStatement>//
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
     fillUp(¢.getBody());
-   return validUpdater() && notClaimedByOthers(¢);
+    return validUpdater() && notClaimedByOthers(¢);
   }
 
   @Override public ForStatement replacement(final WhileStatement ¢) {

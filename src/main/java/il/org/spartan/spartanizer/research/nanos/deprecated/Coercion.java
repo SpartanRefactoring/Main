@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.deprecated;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.io.*;
 import java.nio.file.*;
@@ -78,8 +79,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static boolean azMethodExist(final CastExpression ¢) {
-    return methods(containingType(¢)).stream()
-        .filter(λ -> azMethodName(¢).equals(λ.getName() + "") && typesEqual(returnType(λ), type(¢))).count() != 0;
+    return methods(containingType(¢)).stream().filter(λ -> azMethodName(¢).equals(λ.getName() + "") && typesEqual(returnType(λ), type(¢)))
+        .count() != 0;
   }
 
   private static boolean typesEqual(final Type returnType, final Type t) {
@@ -96,8 +97,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    return az.methodDeclaration(ASTNode.copySubtree(¢.getAST(),
-        az.methodDeclaration(wizard.ast(azMethodModifier() + type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
+    return az.methodDeclaration(
+        ASTNode.copySubtree(¢.getAST(), az.methodDeclaration(wizard.ast(azMethodModifier() + type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
   }
 
   private static String azMethodModifier() {

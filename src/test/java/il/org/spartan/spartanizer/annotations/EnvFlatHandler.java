@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.annotations;
+
 import java.util.*;
 import java.util.Map.*;
 

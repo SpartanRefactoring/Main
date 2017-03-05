@@ -41,7 +41,4 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement>//
   @Override public String description(@SuppressWarnings("unused") final TryStatement ¢) {
     return "Consolidate identical catch blocks";
   }
-
-
-
 }

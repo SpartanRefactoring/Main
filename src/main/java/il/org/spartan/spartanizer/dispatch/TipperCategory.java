@@ -193,7 +193,6 @@ public interface TipperCategory {
   interface Unite extends Structural {
     String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
-
     @Override default String description() {
       return toString;
     }
