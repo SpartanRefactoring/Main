@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -89,7 +90,8 @@ public enum TrimmerTestsUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled)) {
-        System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;");
+        System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;\n");
+        atlternatively();
         azzert.fail("Nothing done on " + get());
       }
       final String peeled = w.off(unpeeled);
@@ -105,9 +107,15 @@ public enum TrimmerTestsUtils {
                 "\n        .gives(\"%s\") //\n",
             trivia.escapeQuotes(essence(peeled)), //
             trivia.escapeQuotes(essence($)));
+        atlternatively();
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);
+    }
+
+
+    private static void atlternatively() {
+      System.err.printf("\n To see what happened, add the statement\n\n\t %s.on();  \n\n just before this test. ", TrimmerLog.class.getSimpleName());
     }
 
     /** Check whether one of the code options is correct

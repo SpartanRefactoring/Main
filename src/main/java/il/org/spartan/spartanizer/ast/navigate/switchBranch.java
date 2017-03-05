@@ -67,7 +67,7 @@ public class switchBranch {
           br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
           co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = th + re + br + co;
       assert sum > 0;
-      sequencerLevel = sum > th && sum > re && sum > br && sum > co ? 0 : th > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
+      sequencerLevel = (((sum > th) && (sum > re)) && (sum > br)) && (sum > co) ? 0 : th > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
     }
     return sequencerLevel;
   }
@@ -75,23 +75,28 @@ public class switchBranch {
   /** @param ¢
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
-  private boolean compare(final switchBranch ¢) {
+  private boolean lessThan(final switchBranch ¢) {
     if (hasDefault())
       return false;
     if (¢.hasDefault())
       return true;
-    if (sequencerLevel() > 0 && ¢.sequencerLevel() > 0) {
+    if ((sequencerLevel() > 0) && (¢.sequencerLevel() > 0)) {
       if (sequencerLevel() > ¢.sequencerLevel())
         return false;
       if (sequencerLevel() < ¢.sequencerLevel())
         return true;
     }
-    return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
+    return ((depth() < ¢.depth() || statementsNum() < ¢.statementsNum()) || nodesNum() < ¢.nodesNum()) || casesNum() < ¢.casesNum();
   }
 
-  public boolean compareTo(final switchBranch ¢) {
-    final boolean $ = compare(¢);
-    return $ != ¢.compare(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0;
+  public boolean lt(final switchBranch ¢) {
+    final boolean $ = lessThan(¢);
+    return $ != ¢.lessThan(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0;
+  }
+  
+  public boolean gt(final switchBranch ¢) {
+    final boolean $ = lessThan(¢);
+    return !($ != ¢.lessThan(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0);
   }
 
   private void addAll(final Collection<Statement> ¢) {
