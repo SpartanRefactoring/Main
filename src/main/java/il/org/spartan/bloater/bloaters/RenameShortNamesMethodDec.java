@@ -21,18 +21,14 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a method dec to more common or intuitive names (s.e i for an integer
- * variable and ret for a return variable) : <code>
- * Important - the $ will always change to ret by convention
- * for more naming conventions information - {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
- * int f(int ¢) {
- * int $ = ¢;
- * x($);
- * return $;
- * }
- * </code> ==> {@code int f(int i) { int res = i; x(res); return res; } }
+ * variable and ret for a return variable) : Important - the $ will always
+ * change to ret by convention for more naming conventions information -
+ * {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
+ * {@code int f(int ¢) { int $ = ¢; x($); return $; } } ==> {@code int f(int i)
+ * { int res = i; x(res); return res; } }
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-// TODO: take care of single var declaration, tests
+// TODO: Raviv Rachmiel take care of single var declaration, tests
 public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;

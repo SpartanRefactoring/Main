@@ -104,7 +104,7 @@ public enum getAll {
   public static Collection<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final List<CastExpression> $ = new ArrayList<>();
+    final Collection<CastExpression> $ = new ArrayList<>();
     d.accept(new ASTVisitor() {
       @Override public boolean visit(final CastExpression node) {
         $.add(node);

@@ -106,19 +106,16 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       try {
         $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {
-        monitor.log(¢);
-        ¢.printStackTrace();
+        monitor.infoIOException(¢);
       }
     }
   }
 
   public void createSelectionFromProjectDir(final String presentSourcePath) {
     System.err.println("Loading selection ...");
-    final List<WrappedCompilationUnit> cuList = new ArrayList<>();
-    cuList.addAll(az.stream(new FilesGenerator(".java").from(presentSourcePath))
-        .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(toList()));
     // compilationUnits = cuList;
-    inner = cuList;
+    inner = new ArrayList<>(az.stream(new FilesGenerator(".java").from(presentSourcePath))
+        .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(toList()));
     System.err.println("Loading selection: done!");
   }
 

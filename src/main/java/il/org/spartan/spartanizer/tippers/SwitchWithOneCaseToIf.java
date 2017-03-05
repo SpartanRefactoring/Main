@@ -30,6 +30,9 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return "Convert switch statement to if-else statement";
   }
 
+  // TODO: Yuval Simon: this is one of the worst bits of code I have seen.
+  // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
+  // transformation --yg
   @Override public ASTNode replacement(final SwitchStatement s) {
     final List<switchBranch> bs = switchBranch.intoBranches(s);
     if (bs.size() != 2)
@@ -37,18 +40,18 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     final switchBranch first = first(bs), t = !first.hasDefault() ? first : lisp.last(bs);
     if (iz.stringLiteral(expression(first(t.cases))))
       return null;
-    final switchBranch s1 = first, s2 = lisp.last(bs);
-    if (!s1.hasDefault() && !s2.hasDefault() || s1.hasFallThrough() || s2.hasFallThrough() || !s1.hasStatements() || !s2.hasStatements()
-        || haz.sideEffects(expression(s)) && (s1.hasDefault() ? s2 : s1).cases.size() > 1)
+    final switchBranch last = lisp.last(bs);
+    if (!first.hasDefault() && !last.hasDefault() || first.hasFallThrough() || last.hasFallThrough() || !first.hasStatements()
+        || !last.hasStatements() || haz.sideEffects(expression(s)) && (first.hasDefault() ? last : first).cases.size() > 1)
       return null;
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
-    switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
+    final switchBranch switchBranch = first.hasDefault() ? first : lisp.last(bs);
     statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
-    switchBranch = !first.hasDefault() ? first : lisp.last(bs);
-    statements(b1).addAll(removeBreakSequencer(switchBranch.statements));
+    final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : lisp.last(bs);
+    statements(b1).addAll(removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
-    statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, switchBranch.cases)));
+    statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
     return $;
   }
 
@@ -57,7 +60,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     for (final SwitchCase c : cs) {
       if (c.isDefault())
         continue;
-      final InfixExpression n = subject.pair(copy.of(expression(s)), copy.of(expression(c))).to(Operator.EQUALS);
+      final InfixExpression n = subject.pair(expression(s), expression(c)).to(Operator.EQUALS);
       $ = $ == null ? n : subject.pair($, n).to(Operator.CONDITIONAL_OR);
     }
     return $;

@@ -108,7 +108,6 @@ public final class SingleFlater {
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
         monitor.debug(this, ¢);
-        monitor.log(¢);
       }
     return true;
   }

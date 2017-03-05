@@ -25,7 +25,7 @@ enum EliminateConditionalContinueAux {
     final IfStatement continueStatement = az.ifStatement($.get($.size() - 2));
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
-    final IfStatement replacementIf = subject.pair(copy.of(last($)), null).toNot(continueStatement.getExpression());
+    final IfStatement replacementIf = subject.pair(last($), null).toNot(continueStatement.getExpression());
     return new Tip("Eliminate conditional continue before last statement in the for loop", s, c) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(last($), g);

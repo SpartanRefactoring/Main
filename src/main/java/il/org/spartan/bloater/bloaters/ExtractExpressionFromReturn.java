@@ -27,6 +27,7 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
     return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Assignment a = az.assignment(expression(s));
+        // TODO: Doron Meshulam: use class subject --yg
         final ExpressionStatement exp = r.getAST().newExpressionStatement(copy.of(expression(s)));
         final ReturnStatement retNoExp = subject.operand(expression(exp)).toReturn();
         retNoExp.setExpression(copy.of(left(a)));
