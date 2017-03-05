@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-28 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
@@ -591,10 +591,10 @@ public enum extract {
   }
 
   public static List<ASTNode> updatedVariables(final Expression x) {
-   return new ExpressionBottomUp<List<ASTNode>>() {
+    return new ExpressionBottomUp<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
         return new LinkedList<>();
-    }
+      }
 
       List<ASTNode> atomic(final Expression ¢) {
         return Collections.singletonList(¢);

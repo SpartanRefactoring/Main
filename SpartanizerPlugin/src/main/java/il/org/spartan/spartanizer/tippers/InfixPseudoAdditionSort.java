@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * commutativity. Unlike {@link InfixAdditionSort}, we know that the reordering
  * is always possible.
  * @see InfixAdditionSort
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-17 */
 public final class InfixPseudoAdditionSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {

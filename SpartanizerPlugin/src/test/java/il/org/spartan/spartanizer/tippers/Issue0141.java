@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** unit tests for {@link SingleVariableDeclarationAbbreviation}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

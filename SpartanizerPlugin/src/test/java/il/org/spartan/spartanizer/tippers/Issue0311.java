@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
@@ -351,7 +352,7 @@ public class Issue0311 {
     final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
     final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
     u.fillUp(s.getBody());
-    azzert.that(u.statements.size(),is(2));
+    azzert.that(u.statements.size(), is(2));
   }
 
   @Test public void z8() {
