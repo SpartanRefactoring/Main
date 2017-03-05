@@ -46,7 +46,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
-        || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+        || Tipper.forbiddenOpOnPrimitive(f, nextStatement))
       return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:

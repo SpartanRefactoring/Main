@@ -128,4 +128,8 @@ public interface hop {
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
   }
+
+  static Statement lastStatement(final Block ¢) {
+    return lisp.last(extract.statements(¢));
+  }
 }
