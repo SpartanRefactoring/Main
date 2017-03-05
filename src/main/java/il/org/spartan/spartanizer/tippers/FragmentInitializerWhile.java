@@ -19,12 +19,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class FragmentInitializerWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = 8867383151468342949L;
+  private static final long serialVersionUID = 1L;
 
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
-    $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), step.parentStatement(f)));
     initializers($).add(Initializers(f));
     return $;
   }
@@ -46,14 +45,6 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
-  }
-
-  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    // TODO Dor: use extract.core
-    return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from)
-                ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Determines whether a specific SimpleName was used in a
