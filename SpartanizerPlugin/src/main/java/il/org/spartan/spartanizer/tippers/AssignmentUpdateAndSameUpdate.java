@@ -1,13 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jdt.internal.ui.search.JavaSearchResultPage.*;
 import org.eclipse.text.edits.*;
-import static il.org.spartan.Utils.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
