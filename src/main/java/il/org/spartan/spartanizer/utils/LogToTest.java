@@ -57,8 +57,7 @@ public enum LogToTest {
           l = r.readLine();
         }
       } catch (final IOException ¢) {
-        ¢.printStackTrace();
-        System.out.println("IO problem!");
+        monitor.infoIOException(¢, f + "");
         return;
       }
     System.out.println("Creating test file...");

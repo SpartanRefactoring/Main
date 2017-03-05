@@ -1,12 +1,11 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.PreferencesResources.TipperGroup.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
-import java.util.concurrent.atomic.*;
 import java.util.function.*;
 import java.util.stream.*;
 
@@ -21,6 +20,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
@@ -31,19 +31,14 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-24 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  private final SpartanPropertyListener listener;
-  private final AtomicBoolean refreshNeeded;
+  private final Bool refreshNeeded = new Bool();
+  private final SpartanPropertyListener listener = new SpartanPropertyListener(refreshNeeded);
   private Changes changes;
 
   public PreferencesPage() {
     super(GRID);
-    refreshNeeded = new AtomicBoolean(false);
-    listener = new SpartanPropertyListener(refreshNeeded);
   }
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public boolean performOk() {
     final boolean $ = super.performOk();
     changes.commit();
@@ -64,7 +59,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
-    final List<Entry<String, Object>> $ = new LinkedList<>();
+    final List<Entry<String, Object>> $ = new ArrayList<>();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     for (final IProject p : workspaceRoot.getProjects())
       try {
@@ -88,9 +83,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   /** An event handler used to re-initialize the {@link Trimmer} spartanization
    * once a tipper preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
-    private final AtomicBoolean refreshNeeded;
+    private final Bool refreshNeeded;
 
-    SpartanPropertyListener(final AtomicBoolean refreshNeeded) {
+    SpartanPropertyListener(final Bool refreshNeeded) {
       this.refreshNeeded = refreshNeeded;
     }
 
@@ -99,7 +94,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
      * @see org.eclipse.jface.preference.PreferencePage#performApply() */
     @Override public void propertyChange(final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
-        refreshNeeded.set(true);
+        refreshNeeded.set();
       else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null
           && ¢.getNewValue() instanceof Boolean)
         NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(((Boolean) ¢.getNewValue()).booleanValue());
@@ -211,7 +206,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     @Override protected String[] parseString(final String stringList) {
       if (stringList != null && !stringList.isEmpty())
         return stringList.split(DELIMETER);
-      final List<String> $ = new LinkedList<>();
+      final List<String> $ = new ArrayList<>();
       for (final Entry<String, Object> ¢ : elements)
         $.add(¢.getKey());
       return $.toArray(new String[elements.size()]);
@@ -225,7 +220,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return separate.these(items).by(DELIMETER);
     }
 
-    @Override protected void selectionChanged() {if (getList() != null && getList().getSelectionIndex() >= 0 &&  ableButton != null)
+    @Override protected void selectionChanged() {
+      if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null)
         ableButton.setEnabled(true);
     }
   }
@@ -265,14 +261,14 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject ¢) {
-        return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
+      return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
     }
 
     public Boolean getAble(final IProject p) {
       final Boolean $ = ables.get(p);
       if ($ == null)
         try {
-          return  Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
+          return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
         } catch (final CoreException ¢) {
           monitor.log(¢);
           return Boolean.FALSE;

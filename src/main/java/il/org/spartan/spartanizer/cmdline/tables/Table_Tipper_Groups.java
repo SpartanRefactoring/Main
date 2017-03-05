@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.preferences.PreferencesResources.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.tables.*;

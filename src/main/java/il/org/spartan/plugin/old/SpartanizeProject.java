@@ -1,16 +1,15 @@
 package il.org.spartan.plugin.old;
 
-import static il.org.spartan.lisp.*;
-
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -73,9 +72,9 @@ public final class SpartanizeProject extends BaseHandler {
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int $ = countTips();
-    return eclipse.announce(        status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
-            + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\n" + "Tips before: "
-            + initialCount + "\n" + "Tips after: " + $ + "\n");
+    return eclipse.announce(status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
+        + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\n" + "Tips before: " + initialCount
+        + "\n" + "Tips after: " + $ + "\n");
   }
 
   final IWorkbench workench = PlatformUI.getWorkbench();
@@ -90,7 +89,7 @@ public final class SpartanizeProject extends BaseHandler {
     final Trimmer t = new Trimmer();
     final IProgressService ps = workench.getProgressService();
     final Int passNum = new Int(passNumber + 1);
-    final AtomicBoolean $ = new AtomicBoolean(false);
+    final Bool $ = new Bool();
     try {
       ps.run(true, true, pm -> {
         pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
@@ -98,7 +97,7 @@ public final class SpartanizeProject extends BaseHandler {
         int n = 0;
         for (final ICompilationUnit ¢ : todo) {
           if (pm.isCanceled()) {
-            $.set(true);
+            $.set();
             break;
           }
           pm.worked(1);

@@ -127,21 +127,16 @@ public final class Application implements IApplication {
       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
-        final FileStats s = new FileStats(f);
-        for (int ¢ = 0; ¢ < optRounds; ++¢)
-          new Trimmer().apply(u);
-        FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
-        if (optVerbose)
-          System.out.println("Spartanized file " + f.getAbsolutePath());
-        s.countLinesAfter();
-        fileStats.add(s);
+        fileStats.add(process(f, u));
         ++done;
-      } catch (final JavaModelException | IOException ¢) {
-        System.err.println(f + ": " + ¢.getMessage());
+      } catch (final JavaModelException ¢) {
+        monitor.logProbableBug(this, ¢);
+        ++failed;
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢);
         ++failed;
       } catch (final Exception ¢) {
-        System.err.println("An unexpected error has occurred on file " + f + ": " + ¢.getMessage());
-        ¢.printStackTrace();
+        monitor.debug(this, ¢);
         ++failed;
       } finally {
         discardCompilationUnit(u);
@@ -153,6 +148,18 @@ public final class Application implements IApplication {
     if (optStatsLines)
       printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
+  }
+
+  private FileStats process(final File f, ICompilationUnit u) throws IOException, FileNotFoundException, JavaModelException {
+    final FileStats $ = new FileStats(f);
+    final Trimmer t = new Trimmer();
+    for (int ¢ = 0; ¢ < optRounds; ++¢)
+      t.apply(u);
+    FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
+    if (optVerbose)
+      System.out.println("Spartanized file " + f.getAbsolutePath());
+    $.countLinesAfter();
+    return $;
   }
 
   @Override public void stop() {
@@ -285,10 +292,6 @@ public final class Application implements IApplication {
       linesBefore = countLines(this.file = file);
     }
 
-    @SuppressWarnings("unused") public void addRoundStat(final int ¢) {
-      roundStats.add(Integer.valueOf(¢));
-    }
-
     public void countLinesAfter() throws IOException {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
@@ -309,7 +312,7 @@ public final class Application implements IApplication {
       try {
         return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
-        ¢.printStackTrace();
+        monitor.logProbableBug(¢);
         return 0;
       }
     }

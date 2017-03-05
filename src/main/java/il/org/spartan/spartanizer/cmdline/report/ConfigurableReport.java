@@ -183,7 +183,7 @@ public interface ConfigurableReport {
         try {
           report = new CSVStatistics(getFileName(), getHeader());
         } catch (final IOException ¢) {
-          ¢.printStackTrace();
+          monitor.infoIOException(¢);
         }
       }
     }

@@ -110,6 +110,8 @@ public class SwitchBranch {
     return $;
   }
 
+  // TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
+  // --yg
   @SuppressWarnings("null") public static List<SwitchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
