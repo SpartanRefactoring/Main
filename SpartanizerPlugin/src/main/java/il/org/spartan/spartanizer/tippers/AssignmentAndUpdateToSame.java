@@ -48,4 +48,7 @@ public final class AssignmentAndUpdateToSame extends ReplaceToNextStatement<Assi
     $.remove(nextStatement, g);
     return $;
   }
+
+
+
 }

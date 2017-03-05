@@ -43,6 +43,9 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     return "Unify two variable declarations of the same type into one";
   }
 
+
+
+
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
     final Block parent = az.block(parent($));
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
