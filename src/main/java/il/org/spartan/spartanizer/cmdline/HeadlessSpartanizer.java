@@ -41,12 +41,12 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   @Override public void apply() {
     try {
       System.out.println(Arrays.toString(ReportGenerator.metricsMap().get("methods")));
-      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".before.java", "before");
-      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".after.java", "after");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".CSV", "metrics");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".spectrum.CSV", "spectrum");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".tips.CSV", "tips");
-      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + system.fileSeparator + name + ".methods.CSV", "methods");
+      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + File.separator + name + ".before.java", "before");
+      ReportGenerator.initializeFile(ReportGenerator.getOutputFolder() + File.separator + name + ".after.java", "after");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".CSV", "metrics");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".spectrum.CSV", "spectrum");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".tips.CSV", "tips");
+      ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".methods.CSV", "methods");
       final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
           defaultSelection = defaultApplicator2.defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {

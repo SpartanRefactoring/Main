@@ -15,9 +15,6 @@ import il.org.spartan.*;
 public enum monitor {
   /** Log to external file if in debug mode, see issue #196 */
   LOG_TO_FILE {
-    final boolean FILE_EXISTING = new File("logs").exists();
-    final String FILE_NAME = "logs" + File.separator + "log_spartan_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
-
     @Override public <T> T debugMessage(final String message) {
       return logToFile(message);
     }
@@ -26,13 +23,12 @@ public enum monitor {
       return logToFile(message);
     }
 
-    <T> T logToFile(final String s) {
-      if (!FILE_EXISTING)
-        return null¢();
-      try (Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME, true), "utf-8"))) {
-        w.write(s + "\n");
-      } catch (final IOException ¢) {
-        log(¢);
+    <T> T logToFile(final String message) {
+      try {
+        if (Logger.writer() != null)
+          Logger.writer().write(message + "\n");
+      } catch (@SuppressWarnings("unused") final IOException __) {
+        // Ignore exceptions since we cannot log them
       }
       return null¢();
     }
@@ -88,7 +84,7 @@ public enum monitor {
   };
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-  public static final monitor now = monitor.PRODUCTION;
+  public static final monitor now = monitor.LOG_TO_FILE;
 
   public static String className(final Class<?> ¢) {
     final String $ = ¢.getCanonicalName();
@@ -213,6 +209,10 @@ public enum monitor {
     LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
   }
 
+  public static void main(final String[] args) {
+    System.out.println(Logger.fileName());
+  }
+
   public static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
     return null;
   }
@@ -226,5 +226,46 @@ public enum monitor {
   @SuppressWarnings("static-method") public <T> T info(final String message) {
     System.out.println(message);
     return null¢();
+  }
+
+  private static class Logger {
+    private static OutputStream outputStream;
+    private static String fileName;
+    private static File file;
+    private static Writer writer;
+
+    public static final File file() {
+      return file = file != null ? file : new File(fileName());
+    }
+
+    public static final String fileName() {
+      if (fileName != null)
+        return fileName;
+      fileName =  System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
+      System.err.format("Your error log will be found in %s \n", fileName);
+      return fileName;
+    }
+
+    public static OutputStream outputStream() {
+      try {
+        return outputStream = outputStream != null ? outputStream : new FileOutputStream(file(), true);
+      } catch (final FileNotFoundException x) {
+        try {
+          return outputStream = new FileOutputStream(fileName(), true);
+        } catch (final FileNotFoundException x1) {
+          return outputStream = null;
+        }
+      }
+    }
+
+    public static Writer writer() {
+      if (outputStream() == null)
+        return null;
+      try {
+        return writer = writer != null ? writer : new BufferedWriter(new OutputStreamWriter(outputStream(), "utf-8"));
+      } catch (final UnsupportedEncodingException x) {
+        return null;
+      }
+    }
   }
 }
