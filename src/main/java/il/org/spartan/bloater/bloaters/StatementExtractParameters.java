@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** An expander to extract complex parameters from {@link Statement}: {@code
+/** An expander to extract complex arguments from {@link Statement}: {@code
  * f(1 + a[b ? 1 : 2]);
  * } ==> {@code
  * int i = 1 + a[b ? 1 : 2];
@@ -62,8 +62,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true); // solves many issues
     ir.setFilterImplicitImports(true); // along with this of course
     final Type t = ir.addImport(binding, s.getAST());
-    return t == null || $ instanceof Assignment ? // TODO Ori Roth: enable
-                                                  // assignments extraction
+        // TODO Ori Roth: enable assignments extraction
+    return t == null || $ instanceof Assignment ? 
         null : new Tip(description(s), s, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));

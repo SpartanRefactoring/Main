@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
@@ -347,10 +349,6 @@ public enum extract {
     return step.elze($);
   }
 
-  public static Statement lastStatement(final Block ¢) {
-    return last(statements(¢));
-  }
-
   public static Statement lastStatement(final EnhancedForStatement ¢) {
     return lastStatement(body(¢));
   }
@@ -360,7 +358,7 @@ public enum extract {
   }
 
   public static Statement lastStatement(final Statement ¢) {
-    return !iz.block(¢) ? ¢ : lastStatement(az.block(¢));
+    return !iz.block(¢) ? ¢ : hop.lastStatement(az.block(¢));
   }
 
   /** @param pattern JD
@@ -590,5 +588,35 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
+  }
+
+
+  public static List<ASTNode> updatedVariables(final Expression x) {
+    return new ExpressionBottomUp<List<ASTNode>>() {
+      List<ASTNode> atomic(final Expression ¢) {
+        return Collections.singletonList(¢);
+      }
+
+      @Override protected List<ASTNode> map(final Assignment ¢) {
+        return reduce(Collections.singletonList(to(¢)), super.map(¢));
+      }
+
+      @Override protected List<ASTNode> map(final PostfixExpression ¢) {
+        return reduce(Collections.singletonList(step.expression(¢)), super.map(¢));
+      }
+
+      @Override protected List<ASTNode> map(final PrefixExpression ¢) {
+        return reduce(!updating(¢) ? reduce() : atomic(¢.getOperand()), super.map(¢));
+      }
+
+      @Override public List<ASTNode> reduce(final List<ASTNode> l1, final List<ASTNode> l2) {
+        l1.addAll(l2);
+        return l1;
+      }
+
+      boolean updating(final PrefixExpression ¢) {
+        return in(¢.getOperator(), INCREMENT, DECREMENT);
+      }
+    }.map(x);
   }
 }
