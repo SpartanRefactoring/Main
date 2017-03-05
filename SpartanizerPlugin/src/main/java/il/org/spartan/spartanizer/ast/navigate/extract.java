@@ -59,7 +59,7 @@ public enum extract {
   }
 
   public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
@@ -93,8 +93,8 @@ public enum extract {
     ConditionalExpression s = ¢;
     final Collection<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
-    while (iz.conditionalExpression(step.elze(s)))
-      $.add(s = az.conditionalExpression(step.elze(s)));
+    while (iz.conditionalExpression(elze(s)))
+      $.add(s = az.conditionalExpression(elze(s)));
     return $;
   }
 
@@ -117,13 +117,13 @@ public enum extract {
     IfStatement s = ¢;
     final Collection<IfStatement> $ = new ArrayList<>();
     $.add(s);
-    while (iz.ifStatement(step.elze(s)))
-      $.add(s = az.ifStatement(step.elze(s)));
+    while (iz.ifStatement(elze(s)))
+      $.add(s = az.ifStatement(elze(s)));
     return $;
   }
 
   public static List<SwitchCase> casesOnSameBranch(final SwitchStatement s, final SwitchCase c) {
-    final List<Statement> ll = statements(s);
+    final List<Statement> ll = step.statements(s);
     final int ind = indexOf(ll, c);
     if (ind < 0)
       return null;
@@ -262,7 +262,7 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final Block b, final List<VariableDeclarationFragment> $) {
-    statements(b).stream().filter(iz::variableDeclarationStatement).forEach(λ -> extract.fragmentsInto(az.variableDeclrationStatement(λ), $));
+    step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(λ -> extract.fragmentsInto(az.variableDeclrationStatement(λ), $));
     return $;
   }
 
@@ -272,7 +272,7 @@ public enum extract {
   }
 
   private static List<IfStatement> ifsInto(final Block b, final List<IfStatement> $) {
-    statements(b).forEach(λ -> ifsInto(λ, $));
+    step.statements(b).forEach(λ -> ifsInto(λ, $));
     return $;
   }
 
@@ -331,9 +331,9 @@ public enum extract {
     if (¢ == null)
       return null;
     ConditionalExpression $ = ¢;
-    while (iz.conditionalExpression(step.elze($)))
-      $ = az.conditionalExpression(step.elze($));
-    return step.elze($);
+    while (iz.conditionalExpression(elze($)))
+      $ = az.conditionalExpression(elze($));
+    return elze($);
   }
 
   /** returns the else statement of the last if in an if else if else if else
@@ -344,9 +344,9 @@ public enum extract {
     if (¢ == null)
       return null;
     IfStatement $ = ¢;
-    while (iz.ifStatement(step.elze($)))
-      $ = az.ifStatement(step.elze($));
-    return step.elze($);
+    while (iz.ifStatement(elze($)))
+      $ = az.ifStatement(elze($));
+    return elze($);
   }
 
   public static Statement lastStatement(final EnhancedForStatement ¢) {
@@ -473,7 +473,7 @@ public enum extract {
     if (¢ == null)
       return null;
     final SwitchStatement $ = az.switchStatement(¢.getParent());
-    return $ == null ? null : next(¢, statements($));
+    return $ == null ? null : next(¢, step.statements($));
   }
 
   public static Expression onlyArgument(final MethodInvocation ¢) {
@@ -571,7 +571,7 @@ public enum extract {
   }
 
   public static List<SwitchCase> switchCases(final SwitchStatement ¢) {
-    return statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
+    return step.statements(¢).stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
   }
 
   /** @param n a node to extract an expression from
