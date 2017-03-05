@@ -28,7 +28,7 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
     return go();
   }
 
-  @Override public boolean prerequisite(final VariableDeclarationFragment __) {
+  @Override public boolean prerequisite(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
     return true;
   }
 }
