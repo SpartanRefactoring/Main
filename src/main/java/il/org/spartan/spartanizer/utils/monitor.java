@@ -229,6 +229,7 @@ public enum monitor {
   }
 
   private static class Logger {
+    private static final String UTF_8 = "utf-8";
     private static OutputStream outputStream;
     private static String fileName;
     private static File file;
@@ -262,8 +263,11 @@ public enum monitor {
       if (outputStream() == null)
         return null;
       try {
-        return writer = writer != null ? writer : new BufferedWriter(new OutputStreamWriter(outputStream(), "utf-8"));
+        return writer = writer != null ? writer : new BufferedWriter(new OutputStreamWriter(outputStream(), UTF_8));
       } catch (final UnsupportedEncodingException x) {
+        assert fault.unreachable(): specifically(
+            String.format("Encoding '%s' should not be invalid", UTF_8), //
+            x, file, fileName, file(), fileName());
         return null;
       }
     }
