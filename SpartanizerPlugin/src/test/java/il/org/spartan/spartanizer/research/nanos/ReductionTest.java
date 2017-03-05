@@ -35,6 +35,7 @@ public class ReductionTest {
     trimmingOf("void foo(int a){ return foo(a) + foo(a,b) == 7 ? foo() : barar();}")//
         .using(MethodInvocation.class, new Reduction())//
         .gives("void foo(int a){ return foo(a) + reduce¢(a,b) == 7 ? reduce¢() : barar();}")//
+        .gives("void foo(int a){ return foo(a) + reduce¢(a,b) != 7 ? barar() : reduce¢();}")//
         .stays();
   }
 }
