@@ -99,7 +99,7 @@ public interface definition {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
         if (f.getInitializer() != null)
           $.add(f.getInitializer());
-        final VariableDeclarationStatement s = (parentStatement(f));
+        final VariableDeclarationStatement s = parentStatement(f);
         assert s != null : fault.dump() + //
         "\n\t ¢ = " + ¢ + //
         "\n\t f = " + f + //

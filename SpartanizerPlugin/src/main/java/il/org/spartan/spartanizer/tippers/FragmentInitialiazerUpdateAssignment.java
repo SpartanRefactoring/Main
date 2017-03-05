@@ -50,8 +50,4 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementAndSta
     $.remove(nextStatement, g);
     return $;
   }
-
-
-
-
 }

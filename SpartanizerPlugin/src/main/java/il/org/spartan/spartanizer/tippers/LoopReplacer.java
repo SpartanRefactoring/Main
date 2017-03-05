@@ -38,7 +38,7 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
   protected final boolean validUpdater() {
     return statements != null && statements.size() < 2 && validUpdates() && noContinue();
   }
-  
+
   private boolean noContinue() {
     return !haz.continueStatement(body);
   }

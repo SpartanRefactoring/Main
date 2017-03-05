@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
 import java.util.*;

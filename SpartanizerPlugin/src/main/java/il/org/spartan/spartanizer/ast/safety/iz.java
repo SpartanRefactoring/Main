@@ -515,7 +515,6 @@ public interface iz {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
-  
   /** Determine whether a variable declaration is final or not
    * @param ¢ JD
    * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
@@ -1206,11 +1205,11 @@ public interface iz {
     return ¢ != null && iz.nodeTypeEquals(¢, UNION_TYPE);
   }
 
-  static boolean updater(Expression ¢) {
-    return !extract.updatedVariables(¢).isEmpty(); 
+  static boolean updater(final Expression ¢) {
+    return !extract.updatedVariables(¢).isEmpty();
   }
 
-  static boolean updater(PrefixExpression ¢) {
+  static boolean updater(final PrefixExpression ¢) {
     return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
   }
 
