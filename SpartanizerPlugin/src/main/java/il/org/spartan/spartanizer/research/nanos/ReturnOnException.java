@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -25,7 +27,7 @@ public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
   };
 
   @Override public boolean canTip(final CatchClause ¢) {
-    return anyTips(tippers, step.parent(¢));
+    return anyTips(tippers, parent(¢));
   }
 
   @Override public Tip pattern(final CatchClause ¢) {
