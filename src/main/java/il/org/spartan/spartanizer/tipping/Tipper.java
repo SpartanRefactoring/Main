@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
