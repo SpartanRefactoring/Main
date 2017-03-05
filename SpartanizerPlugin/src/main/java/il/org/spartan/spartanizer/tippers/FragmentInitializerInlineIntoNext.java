@@ -56,9 +56,8 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
-    final Statement parent = az.statement(parent(f));
-    if (parent == null//
-        || iz.forStatement(parent))
+    final VariableDeclarationStatement parent = parentStatement(f);
+    if (parent == null || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java;
-
+import static il.org.spartan.Utils.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import java.util.*;
 import java.util.function.*;
 
@@ -54,6 +56,17 @@ public enum haz {
    * @param ¢ JD
    * @return {@code true } iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
+  @SuppressWarnings("boxing")
+  public static boolean containsContinueStatement(final ASTNode ¢) {
+    return ¢ != null
+        && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
+  }
+
+  /** Determine whether an {@link ASTNode} contains as a children a
+   * {@link ContinueStatement}
+   * @param ¢ JD
+   * @return {@code true } iff ¢ contains any continue statement
+   * @see {@link convertWhileToFor} */
   @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
     return ¢ != null
         && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
@@ -93,12 +106,12 @@ public enum haz {
         return ¢(¢.getException());
       }
 
-      boolean ¢(final ForStatement ¢) {
-        return ¢(initializers(¢));
-      }
-
       boolean ¢(final Collection<Expression> xs) {
         return xs.stream().anyMatch(λ -> iz.variableDeclarationExpression(λ) && ¢(az.variableDeclarationExpression(λ)));
+      }
+
+      boolean ¢(final ForStatement ¢) {
+        return ¢(initializers(¢));
       }
 
       boolean ¢(final SimpleName ¢) {
@@ -169,6 +182,35 @@ public enum haz {
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
     final Block $ = body(d);
     return $ != null && statements($).stream().anyMatch(λ -> Coupling.unknownNumberOfEvaluations(d, λ));
+  }
+
+  public static boolean updates(Expression from) {
+    return !new ExpressionBottomUp<List<ASTNode>>() {
+      List<ASTNode> atomic(Expression operand) {
+        return Collections.singletonList(operand);
+      }
+
+      @Override protected List<ASTNode> map(Assignment x) {
+        return reduce(Collections.singletonList(to(x)), super.map(x));
+      }
+
+      @Override protected List<ASTNode> map(PostfixExpression ¢) {
+        return reduce(Collections.singletonList(step.expression(¢)), super.map(¢));
+      }
+
+      @Override protected List<ASTNode> map(PrefixExpression ¢) {
+        return reduce(!updating(¢) ? reduce() : atomic(¢.getOperand()), super.map(¢));
+      }
+
+      @Override public List<ASTNode> reduce(List<ASTNode> l1, List<ASTNode> l2) {
+        l1.addAll(l2);
+        return l1;
+      }
+
+      boolean updating(PrefixExpression ¢) {
+        return in(¢.getOperator(), INCREMENT, DECREMENT);
+      }
+    }.map(from).isEmpty();
   }
 
   public static boolean variableDefinition(final ASTNode n) {

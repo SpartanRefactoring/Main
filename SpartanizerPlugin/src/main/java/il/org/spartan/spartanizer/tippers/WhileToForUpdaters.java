@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO: Alex Kopzon please add a description
@@ -20,18 +21,18 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(copy.of(¢.getExpression()));
     updaters($).add(copy.of(az.expressionStatement(lastStatement(¢)).getExpression()));
-    $.setBody(minus.lastStatement(copy.of(body(¢))));
+    $.setBody(eliminate.lastStatement(copy.of(body(¢))));
     return $;
   }
 
   private static boolean fitting(final WhileStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
+    return ¢ != null && !haz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
         && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    return az.block(body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && statements(az.block(body(¢))).size() >= 2
-        && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
+    return az.block(body(¢)) != null && iz.updater(lastStatement(¢)) && statements(az.block(body(¢))).size() >= 2
+        && !ForMoveLastIntoUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
   }
 
   private static ASTNode lastStatement(final WhileStatement ¢) {
