@@ -57,7 +57,7 @@ public enum extract {
   }
 
   public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
@@ -91,8 +91,8 @@ public enum extract {
     ConditionalExpression s = ¢;
     final Collection<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
-    while (iz.conditionalExpression(step.elze(s)))
-      $.add(s = az.conditionalExpression(step.elze(s)));
+    while (iz.conditionalExpression(elze(s)))
+      $.add(s = az.conditionalExpression(elze(s)));
     return $;
   }
 
@@ -115,8 +115,8 @@ public enum extract {
     IfStatement s = ¢;
     final Collection<IfStatement> $ = new ArrayList<>();
     $.add(s);
-    while (iz.ifStatement(step.elze(s)))
-      $.add(s = az.ifStatement(step.elze(s)));
+    while (iz.ifStatement(elze(s)))
+      $.add(s = az.ifStatement(elze(s)));
     return $;
   }
 
@@ -329,9 +329,9 @@ public enum extract {
     if (¢ == null)
       return null;
     ConditionalExpression $ = ¢;
-    while (iz.conditionalExpression(step.elze($)))
-      $ = az.conditionalExpression(step.elze($));
-    return step.elze($);
+    while (iz.conditionalExpression(elze($)))
+      $ = az.conditionalExpression(elze($));
+    return elze($);
   }
 
   /** returns the else statement of the last if in an if else if else if else
@@ -342,9 +342,9 @@ public enum extract {
     if (¢ == null)
       return null;
     IfStatement $ = ¢;
-    while (iz.ifStatement(step.elze($)))
-      $ = az.ifStatement(step.elze($));
-    return step.elze($);
+    while (iz.ifStatement(elze($)))
+      $ = az.ifStatement(elze($));
+    return elze($);
   }
 
   public static Statement lastStatement(final Block ¢) {
