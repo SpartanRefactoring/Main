@@ -49,7 +49,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
   }
 
   private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
-    return az.variableDeclrationStatement(parent(¢));
+    return az.variableDeclrationStatement(step.parent(¢));
   }
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
