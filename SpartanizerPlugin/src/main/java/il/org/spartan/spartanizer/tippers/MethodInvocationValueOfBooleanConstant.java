@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -35,6 +35,6 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
   }
 
   @Override public Expression replacement(final MethodInvocation ¢) {
-    return !"valueOf".equals(step.name(¢).getIdentifier()) ? null : replacement(step.receiver(¢), onlyArgument(¢));
+    return !"valueOf".equals(step.name(¢).getIdentifier()) ? null : replacement(receiver(¢), onlyArgument(¢));
   }
 }

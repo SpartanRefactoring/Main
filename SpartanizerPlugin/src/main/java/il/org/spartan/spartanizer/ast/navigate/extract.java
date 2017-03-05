@@ -252,7 +252,7 @@ public enum extract {
       case BLOCK:
         return fragmentsInto((Block) ¢, $);
       case VARIABLE_DECLARATION_STATEMENT:
-        $.addAll(fragments(az.variableDeclrationStatement(¢)));
+        $.addAll(step.fragments(az.variableDeclrationStatement(¢)));
         return $;
       default:
         return $;
@@ -556,7 +556,7 @@ public enum extract {
   }
 
   private static List<Statement> statementsInto(final Block b, final List<Statement> $) {
-    statements(b).forEach(λ -> statementsInto(λ, $));
+    step.statements(b).forEach(λ -> statementsInto(λ, $));
     return $;
   }
 

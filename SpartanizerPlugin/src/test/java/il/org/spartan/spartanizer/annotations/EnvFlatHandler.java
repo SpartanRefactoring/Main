@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.annotations;
-
 import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -76,7 +76,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
     a.accept(new ASTVisitor() {
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
-          addTestSet(step.values(¢));
+          addTestSet(values(¢));
         return true;
       }
     });

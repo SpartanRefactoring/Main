@@ -51,7 +51,7 @@ public class Issue0442 {
     azzert.that(guessName.of("__"), is(guessName.ANONYMOUS));
     azzert.that(precedence.of(e("a+b")), is(5));
     azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
-    azzert.that(minus.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
+    azzert.that(eliminate.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
     azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
   }
 

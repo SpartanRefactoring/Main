@@ -235,11 +235,11 @@ public enum monitor {
     private static File file;
     private static Writer writer;
 
-    public static final File file() {
+    public static File file() {
       return file = file != null ? file : new File(fileName());
     }
 
-    public static final String fileName() {
+    public static String fileName() {
       if (fileName != null)
         return fileName;
       fileName =  System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
