@@ -591,13 +591,21 @@ public enum extract {
   }
 
   public static List<ASTNode> updatedVariables(final Expression x) {
-    return new ExpressionBottomUp<List<ASTNode>>() {
+   return new ExpressionBottomUp<List<ASTNode>>() {
+      @Override public List<ASTNode> reduce() {
+        return new LinkedList<>();
+    }
+
       List<ASTNode> atomic(final Expression ¢) {
         return Collections.singletonList(¢);
       }
 
       @Override protected List<ASTNode> map(final Assignment ¢) {
-        return reduce(Collections.singletonList(to(¢)), super.map(¢));
+        return reduce(list(¢), super.map(¢));
+      }
+
+      List<ASTNode> list(final ASTNode ¢) {
+        return new ArrayList<>(Collections.singletonList(¢));
       }
 
       @Override protected List<ASTNode> map(final PostfixExpression ¢) {
