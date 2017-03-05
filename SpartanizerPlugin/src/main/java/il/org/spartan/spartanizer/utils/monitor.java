@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Nov 13, 2016 */
 public enum monitor {
   /** Log to external file if in debug mode, see issue #196 */

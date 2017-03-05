@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
  * <code><b>false</b></code>, and {@code x.size()>=0} to
  * <code><b>true</b></code>.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>

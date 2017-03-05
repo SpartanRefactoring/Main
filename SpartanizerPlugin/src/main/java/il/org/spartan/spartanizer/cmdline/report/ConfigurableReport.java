@@ -16,12 +16,11 @@ import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Configurable Report that uses {@link Listener.S}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Matteo Orru'
  * @since Nov 14, 2016 */
 public interface ConfigurableReport {
   class Settings extends Listener.S {
-
     private static final long serialVersionUID = 4656048157709496316L;
     String outputFolder = "/tmp/"; // default modifier
     String inputFolder; // default modifier
@@ -96,15 +95,13 @@ public interface ConfigurableReport {
 
     /** Action provide services
      * @see #go()
-     * @author Yossi Gil
+     * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
      * @author Matteo Orru' */
     @SuppressWarnings("TooBroadScope")
     public class Action extends Settings {
       private static final long serialVersionUID = 8965104091381073199L;
 
       /** real serialVersionUID comes much later in production code */
-  
-
       @SuppressWarnings("boxing") int go() {
         // listeners().push("Initializing the " + getFileName() + " report.");
         if (Settings.this.robustMode) {

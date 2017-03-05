@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
 /** Collects various reusability indices for a given folder(s)
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public class Table_ReusabilityIndices extends FolderASTVisitor {
   static {

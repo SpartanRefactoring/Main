@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for loops
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-01 */
 public class FixturePlainFor extends MetaFixture {
   int f(final int[] a) {

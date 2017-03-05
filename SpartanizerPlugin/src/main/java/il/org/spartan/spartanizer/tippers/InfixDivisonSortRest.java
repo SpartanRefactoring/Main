@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-09-05 */
 public final class InfixDivisonSortRest extends InfixExpressionSortingRest//
     implements TipperCategory.Sorting {
