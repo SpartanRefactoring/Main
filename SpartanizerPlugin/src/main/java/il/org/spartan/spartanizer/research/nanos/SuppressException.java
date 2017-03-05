@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Catch without body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

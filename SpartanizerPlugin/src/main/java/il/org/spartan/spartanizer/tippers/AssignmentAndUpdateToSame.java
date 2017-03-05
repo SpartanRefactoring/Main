@@ -28,7 +28,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-03-04 */
 public final class AssignmentAndUpdateToSame extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = 1L;
+  
+
+  private static final long serialVersionUID = 4484468497316065887L;
 
   @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
