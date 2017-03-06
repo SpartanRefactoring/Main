@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -28,7 +30,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     if (b == null) {
       if (!iz.loop(s.getParent()))
         return null;
-    } else if (!iz.loop(b.getParent()) || lisp.last(step.statements(b)) != s)
+    } else if (!iz.loop(b.getParent()) || last(statements(b)) != s)
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)

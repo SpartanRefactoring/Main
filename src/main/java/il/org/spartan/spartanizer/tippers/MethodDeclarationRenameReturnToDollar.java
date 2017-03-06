@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
 import java.util.*;
@@ -8,6 +7,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO: Artium Nihamkin (original) please add a description
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
- * @author Yossi Gil (v3)
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} (v3)
  * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Dollarization {
@@ -81,7 +84,7 @@ abstract class AbstractRenamePolicy {
   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(body(inner)) ? null
         : innerSelectReturnVariable();
   }
 }

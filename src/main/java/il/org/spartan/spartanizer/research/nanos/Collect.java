@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,7 +8,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
@@ -20,38 +17,38 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
  * @since 2017-01-18 */
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -2812051728758407982L;
-  private static final Collection<UserDefinedTipper<Block>> blockTippers = new ArrayList<UserDefinedTipper<Block>>() {
+  private static final BlockNanoPatternContainer blockTippers = new BlockNanoPatternContainer() {
     @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
-      add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
+      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).collect(toList());", //
-          "Go Fluent: filter pattern"));
-      add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($X3);", //
+          "Go Fluent: filter pattern");
+      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($X3);", //
           "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).map($N2 -> $X3).collect(toList());", //
-          "Go Fluent: filter pattern"));
-      add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($N2);", //
+          "Go Fluent: filter pattern");
+      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($N2);", //
           "$T1 $N1 = ($X1).stream().collect(toList());", //
-          "Go Fluent: filter pattern"));
-      add(statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($X3);", //
+          "Go Fluent: filter pattern");
+      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($X3);", //
           "$T1 $N1 = ($X1).stream().map($N2 -> $X3).collect(toList());", //
-          "Go Fluent: filter pattern"));
+          "Go Fluent: filter pattern");
     }
   };
-  static final Collection<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
+  static final NanoPatternContainer<EnhancedForStatement> tippers = new NanoPatternContainer<EnhancedForStatement>() {
     @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
-      add(patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
+      patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$N1.addAll(($X1).stream().filter($N2 -> $X2).collect(toList()));", //
-          "Go Fluent: filter pattern"));
-      add(patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($X3);", //
+          "Go Fluent: filter pattern");
+      patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($X3);", //
           "$N1.addAll(($X1).stream().filter($N2 -> $X2).map($N2->$X3).collect(toList()));", //
-          "Go Fluent: filter pattern"));
-      add(patternTipper("for($T1 $N2 : $X1) $N1.add($N2);", //
+          "Go Fluent: filter pattern");
+      patternTipper("for($T1 $N2 : $X1) $N1.add($N2);", //
           "$N1.addAll(($X1).stream().collect(toList()));", //
-          "Go Fluent: filter pattern"));
-      add(patternTipper("for($T1 $N2 : $X1) $N1.add($X3);", //
+          "Go Fluent: filter pattern");
+      patternTipper("for($T1 $N2 : $X1) $N1.add($X3);", //
           "$N1.addAll(($X1).stream().map($N2->$X3).collect(toList()));", //
-          "Go Fluent: filter pattern"));
+          "Go Fluent: filter pattern");
     }
   };
 

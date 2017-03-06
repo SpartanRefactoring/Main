@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Catch exception, then throw it again
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -29,15 +30,15 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
   }
 
   @Override public Tip pattern(final CatchClause ¢) {
-    return firstTip(tippers, parent(¢));
+    return firstTip(tippers, step.parent(¢));
   }
 
   @Override public Category category() {
     return Category.Exception;
   }
 
-  private static TryStatement parent(final CatchClause ¢) {
-    return az.tryStatement(step.parent(¢));
+  private static TryStatement parentAsTryStatement(final CatchClause ¢) {
+    return az.tryStatement(parent(¢));
   }
 
   @Override public String technicalName() {

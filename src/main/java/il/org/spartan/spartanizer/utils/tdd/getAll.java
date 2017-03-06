@@ -32,8 +32,8 @@ public enum getAll {
     final Set<String> $ = new TreeSet<>();
     ¢.accept(new ASTVisitor() {
       @Override public boolean visit(final SimpleName ¢¢) {
-        if ((!iz.methodInvocation(step.parent(¢¢)) || !(step.name(az.methodInvocation(step.parent(¢¢))) + "").equals(¢¢ + ""))
-            && (!iz.methodDeclaration(step.parent(¢¢)) || !(step.name(az.methodDeclaration(step.parent(¢¢))) + "").equals(¢¢ + "")))
+        if ((!iz.methodInvocation(parent(¢¢)) || !(step.name(az.methodInvocation(parent(¢¢))) + "").equals(¢¢ + ""))
+            && (!iz.methodDeclaration(parent(¢¢)) || !(step.name(az.methodDeclaration(parent(¢¢))) + "").equals(¢¢ + "")))
           $.add(¢¢ + "");
         return true;
       }

@@ -27,15 +27,15 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code> or <code>
  * <b>null</b>
  * </code> .
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
   private static final long serialVersionUID = 1656113602362467840L;
 
   /** Consider an expression {@code
-              * a ? b : c
-              * } in a sense it is the same as {@code
+                * a ? b : c
+                * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>

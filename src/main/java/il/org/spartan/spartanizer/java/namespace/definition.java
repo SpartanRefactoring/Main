@@ -11,15 +11,15 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-12-22 */
 public interface definition {
   enum Kind {
     annotation {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
-        return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
+        return !iz.compilationUnit($) ? members.of($) : types(az.compilationUnit($));
       }
     },
     annotationMemberDeclaration {
@@ -36,13 +36,13 @@ public interface definition {
     class¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
-        return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
+        return !iz.compilationUnit($) ? members.of($) : types(az.compilationUnit($));
       }
     },
     enum¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
-        return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
+        return !iz.compilationUnit($) ? members.of($) : types(az.compilationUnit($));
       }
     },
     enumConstant {
@@ -81,7 +81,7 @@ public interface definition {
     interface¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final ASTNode $ = parent(parent(¢));
-        return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
+        return !iz.compilationUnit($) ? members.of($) : types(az.compilationUnit($));
       }
     },
     lambda {
@@ -99,12 +99,12 @@ public interface definition {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
         if (f.getInitializer() != null)
           $.add(f.getInitializer());
-        final VariableDeclarationStatement s = az.variableDeclarationStatement(parent(f));
+        final VariableDeclarationStatement s = parentStatement(f);
         assert s != null : fault.dump() + //
         "\n\t ¢ = " + ¢ + //
         "\n\t f = " + f + //
         "\n\t i = " + f.getInitializer() + //
-        "\n\t p = " + f.getInitializer() + parent(f) + "/" + parent(f).getClass().getSimpleName()//
+        "\n\t p = " + f.getInitializer() + parent(f) + "/" + parentStatement(f).getClass().getSimpleName()//
             + fault.done();
         final List<VariableDeclarationFragment> fs = fragments(s);
         assert fs != null;

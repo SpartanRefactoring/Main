@@ -11,7 +11,6 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -50,7 +49,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
         after.add(make.from(d).identifier("result"));
         continue;
       }
-      final SimpleName ¢ = make.from(d).identifier(scope.newName(body(d), step.type(parameter)));
+      final SimpleName ¢ = make.from(d).identifier(scope.newName(body(d), type(parameter)));
       prev.add($);
       after.add(¢);
     }

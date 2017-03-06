@@ -1,9 +1,16 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
@@ -23,15 +30,15 @@ public class Issue0311 {
   }
 
   @Test public void ca() {
-    trimmingOf("for(int i=0;i<20;++i){F f=q.f();a3xZ(s.l(c),not(r4(f)));" + //
+    trimmingOf("for(int i=0;i<20;++i){F f=q.f();ay(s.l(c),not(r4(f)));" + //
         "c[i]=f;new F(f,\"a.txt\").g();a(f.e());}")//
             .stays();
   }
 
   @Test public void cb() {
-    trimmingOf("for(int i=0;i<20;++i){a3xZ(s.l(c),not(r4(f)));" + //
+    trimmingOf("for(int i=0;i<20;++i){ay(s.l(c),not(r4(f)));" + //
         "c[i]=f;new F(f,\"a.txt\").g();a(f.e());}")//
-            .gives("for(int ¢=0;¢<20;++¢){a3xZ(s.l(c),not(r4(f)));" + //
+            .gives("for(int ¢=0;¢<20;++¢){ay(s.l(c),not(r4(f)));" + //
                 "c[¢]=f;new F(f,\"a.txt\").g();a(f.e());}")
             .stays();
   }
@@ -65,12 +72,12 @@ public class Issue0311 {
   }
 
   @Test public void e_Modifiers_in_1() {
-    trimmingOf("public S bv(){S a=\"\";M m=R.mp(\"[A-Z]\").m(q);" + //
+    trimmingOf("public S bv(){S a=b;M m=R.mp(AZ).m(q);" + //
         "while(m.f())a +=m.u();return a.e2();}")//
-            .gives("public S bv(){S $=\"\";M m=R.mp(\"[A-Z]\").m(q);" + //
+            .gives("public S bv(){S $=b;M m=R.mp(AZ).m(q);" + //
                 "while(m.f())$ +=m.u();return $.e2();}")//
-            .gives("public S bv(){S $=\"\";" + //
-                "for(M m=R.mp(\"[A-Z]\").m(q);m.f();)$ +=m.u();return $.e2();}");
+            .gives("public S bv(){S $=b;" + //
+                "for(M m=R.mp(AZ).m(q);m.f();)$ +=m.u();return $.e2();}");
   }
 
   @Test public void e_Modifiers_in_2a() {
@@ -192,10 +199,10 @@ public class Issue0311 {
   }
 
   @Test public void j() {
-    trimmingOf("public S bv(){S a=\"\";M m=R.mp(\"[A-Z]\").m(q);while(m.f())a +=m.u();return a.e2();}")
-        .gives("public S bv(){S $=\"\";M m=R.mp(\"[A-Z]\").m(q);while(m.f())$ +=m.u();return $.e2();}")
-        .gives("public S bv(){S $=\"\";for(M m=R.mp(\"[A-Z]\").m(q);m.f();)$ +=m.u();return $.e2();}")
-        .gives("public S bv(){S $=\"\";for(M ¢=R.mp(\"[A-Z]\").m(q);¢.f();)$ +=¢.u();return $.e2();}")//
+    trimmingOf("public S bv(){S a=b;M m=R.mp(AZ).m(q);while(m.f())a +=m.u();return a.e2();}")
+        .gives("public S bv(){S $=b;M m=R.mp(AZ).m(q);while(m.f())$ +=m.u();return $.e2();}")
+        .gives("public S bv(){S $=b;for(M m=R.mp(AZ).m(q);m.f();)$ +=m.u();return $.e2();}")
+        .gives("public S bv(){S $=b;for(M ¢=R.mp(AZ).m(q);¢.f();)$ +=¢.u();return $.e2();}")//
         .stays();
   }
 
@@ -210,10 +217,10 @@ public class Issue0311 {
   }
 
   @Test public void t03a() {
-    trimmingOf("S t(S g){B sb=new B(g);int l=sb.l();for(int i=0;i<l;++i)if(sb.t(i)=='.')sb.s(i,'/');return sb+\"\";")
-        .gives("S t(S g){B $=new B(g);int l=$.l();for(int i=0;i<l;++i)if($.t(i)=='.')$.s(i,'/');return $+\"\";")
-        .gives("S t(S g){B $=new B(g);int l=$.l();for(int ¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+\"\";")
-        .gives("S t(S g){B $=new B(g);for(int l=$.l(),¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+\"\";")//
+    trimmingOf("S t(S g){B sb=new B(g);int l=sb.l();for(int i=0;i<l;++i)if(sb.t(i)=='.')sb.s(i,'/');return sb+b;")
+        .gives("S t(S g){B $=new B(g);int l=$.l();for(int i=0;i<l;++i)if($.t(i)=='.')$.s(i,'/');return $+b;")
+        .gives("S t(S g){B $=new B(g);int l=$.l();for(int ¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+b;")
+        .gives("S t(S g){B $=new B(g);for(int l=$.l(),¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+b;")//
         .stays();
   }
 
@@ -294,5 +301,71 @@ public class Issue0311 {
         .gives("for(int ¢=0;;++¢){(new int[]{1,2,3,4,5})[¢]=0;}")//
         .gives("for(int ¢=0;;++¢)(new int[]{1,2,3,4,5})[¢]=0;")//
         .stays();
+  }
+
+  @Test public void z() {
+    TrimmerLog.on();
+    trimmingOf("for(int ¢=0;;){a[¢]=0;++¢;}")//
+        .gives("for(int ¢=0;;++¢){a[¢]=0;}")//
+    ;
+  }
+
+  @Test public void z1() {
+    trimmingOf("for(int ¢=0;;){p(¢);++¢;}")//
+        .gives("for(int ¢=0;;++¢){p(¢);}")//
+    ;
+  }
+
+  @Test public void z2() {
+    assert findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}")) != null;
+  }
+
+  @Test public void z3() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.canTip(s);
+  }
+
+  @Test public void z4() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.prerequisite(s);
+  }
+
+  @Test public void z5() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.validUpdater();
+  }
+
+  @Test public void z6() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.statements != null;
+  }
+
+  @Test public void z7() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    azzert.that(u.statements.size(), is(2));
+  }
+
+  @Test public void z8() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.validUpdates();
+  }
+
+  @Test public void z9() {
+    final ForStatement s = findFirst.forStatement(into.s("for(int ¢=0;;){p(¢);++¢;}"));
+    final ForMoveLastIntoUpdaters u = new ForMoveLastIntoUpdaters();
+    u.fillUp(s.getBody());
+    assert u.noContinue();
   }
 }

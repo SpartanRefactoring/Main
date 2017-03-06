@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
  * false/true, or for no reason. No one really know...
  * @contributor Oren Afek
  * @see ExclusionManager
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 18, 2016 */
 public abstract class DispatchingVisitor extends ASTVisitor {
   public final ExclusionManager exclude = new ExclusionManager();

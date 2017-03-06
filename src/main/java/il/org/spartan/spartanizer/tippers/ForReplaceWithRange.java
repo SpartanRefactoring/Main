@@ -16,14 +16,14 @@ import il.org.spartan.spartanizer.utils.*;
 /** replaces for loops with ranges
  * @author Dan Abramovich
  * @since 2016 */
-public final class ReplaceForWithRange extends Tipper<ForStatement>//
+public final class ForReplaceWithRange extends Tipper<ForStatement>//
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -8862541808401202832L;
   private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
   private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";
   private static final Collection<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
 
-  public ReplaceForWithRange() {
+  public ForReplaceWithRange() {
     if (!tippers.isEmpty())
       return;
     tippers.add(
@@ -77,7 +77,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
       }
 
       @Override public boolean visit(final PrefixExpression ¢) {
-        if (iz.incrementOrDecrement(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
+        if (iz.updater(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
           $.inner = true;
         return true;
       }

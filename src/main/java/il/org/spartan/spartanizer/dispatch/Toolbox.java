@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-08-22 */
 public class Toolbox {
   @SuppressWarnings("unchecked")
@@ -150,7 +150,7 @@ public class Toolbox {
             new EliminateConditionalContinueInFor(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
-            new ForToForUpdaters(), //
+            new ForMoveLastIntoUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
             new ForRedundantContinue(), //

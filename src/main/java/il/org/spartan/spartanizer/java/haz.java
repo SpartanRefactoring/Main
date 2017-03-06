@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-09-12 */
 public enum haz {
   ;
@@ -47,6 +47,15 @@ public enum haz {
 
   public static boolean cent(final ASTNode ¢) {
     return !collect.usesOf(namer.current).inside(¢).isEmpty();
+  }
+
+  /** Determine whether an {@link ASTNode} contains as a children a
+   * {@link ContinueStatement}
+   * @param ¢ JD
+   * @return {@code true } iff ¢ contains any continue statement
+   * @see {@link convertWhileToFor} */
+  public static boolean continueStatement(final ASTNode ¢) {
+    return !yieldDescendants.ofClass(ContinueStatement.class).from(¢).isEmpty();
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a
@@ -93,12 +102,12 @@ public enum haz {
         return ¢(¢.getException());
       }
 
-      boolean ¢(final ForStatement ¢) {
-        return ¢(initializers(¢));
-      }
-
       boolean ¢(final Collection<Expression> xs) {
         return xs.stream().anyMatch(λ -> iz.variableDeclarationExpression(λ) && ¢(az.variableDeclarationExpression(λ)));
+      }
+
+      boolean ¢(final ForStatement ¢) {
+        return ¢(initializers(¢));
       }
 
       boolean ¢(final SimpleName ¢) {
