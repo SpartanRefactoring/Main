@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
@@ -43,12 +44,12 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
       return false;
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
-    final Expression e = updater.getExpression();
+    final Expression e = expression(updater);
     final PrefixExpression $ = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
     final Assignment a = az.assignment(e);
     return updaterDeclaredInFor(¢,
-        $ != null ? az.simpleName($.getOperand()) : post != null ? az.simpleName(post.getOperand()) : a != null ? az.simpleName(step.left(a)) : null);
+        $ != null ? az.simpleName(operand($)) : post != null ? az.simpleName(operand(post)) : a != null ? az.simpleName(left(a)) : null);
   }
 
   public static boolean bodyDeclaresElementsOf(final ASTNode n) {
@@ -68,11 +69,11 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-    return step.fragments(az.variableDeclarationExpression(first(step.initializers(s)))).stream().anyMatch(λ -> (λ.getName() + "").equals(n + ""));
+    return fragments(az.variableDeclarationExpression(first(initializers(s)))).stream().anyMatch(λ -> (name(λ) + "").equals(n + ""));
   }
 
   private static Expression updaterFromBody(final ForStatement ¢) {
-    return copy.of(az.expressionStatement(lastStatement(¢)).getExpression());
+    return copy.of(expression(az.expressionStatement(lastStatement(¢))));
   }
 
   @Override public String description(final ForStatement ¢) {
