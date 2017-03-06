@@ -42,9 +42,7 @@ public enum TrimmerLog {
     logToFile = true;
   }
 
-  public static void on() {
-    maxApplications = maxTips = maxVisitations = 30;
-  }
+
 
   public static void activateLogToScreen() {
     logToScreen = true;
