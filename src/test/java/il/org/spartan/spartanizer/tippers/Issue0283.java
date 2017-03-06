@@ -63,7 +63,9 @@ public class Issue0283 {
     trimmingOf(
         "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
             .gives(
-                "@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(\"EnumBody\")@WebFault @SuppressWarnings({\"EnumBody\"})@NonNull public void test0(){}}") //
+                "@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(\"EnumBody\") @WebFault @SuppressWarnings({\"EnumBody\"}) @NonNull public void test0(){}}") //
+            .gives(
+                "@Ignore class Test123{@Deprecated @Inherited @Test @WebFault @SuppressWarnings(\"EnumBody\") @SuppressWarnings(\"EnumBody\") @NonNull public void test0(){}}") //
             .stays();
   }
 
