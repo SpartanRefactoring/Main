@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-08 */
 public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 3915101342508232691L;
-  private static final String description = "replace with azzert.notNull(X)";
+  private static final String description = "replace with aszert.notNull(X)";
   private static final PreconditionNotNull rival = new PreconditionNotNull();
 
   @Override public boolean canTip(final IfStatement ¢) {
@@ -34,7 +34,7 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
+        r.replace(¢, extract.singleStatement(ast("aszert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }
