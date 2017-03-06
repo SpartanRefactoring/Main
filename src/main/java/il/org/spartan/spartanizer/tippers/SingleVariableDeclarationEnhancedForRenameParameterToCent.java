@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
  * {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
     //
@@ -69,8 +68,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
   private static boolean isNameDefined(final Statement s, final SimpleName n) {
     final Statement $ = az.statement(s.getParent());
     return Environment
-        .of($ == null ? s
-            : iz.block($) ? lisp.last(statements(az.block($))) : iz.switchStatement($) ? lisp.last(statements(az.switchStatement($))) : s)
+        .of($ == null ? s : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)
         .has(identifier(n));
   }
 }

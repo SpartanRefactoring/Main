@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read
  * like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
-public enum minus {
+public enum eliminate {
   ;
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
@@ -29,11 +29,13 @@ public enum minus {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement $) {
-    if (!iz.block($))
+    final Block b = az.block($);
+    if (b == null)
       return make.emptyStatement($);
-    final List<Statement> ss = step.statements(az.block($));
-    if (!ss.isEmpty())
-      ss.remove(ss.size() - 1);
+    final List<Statement> ss = step.statements(b);
+    if (ss.isEmpty())
+      return make.emptyStatement($);
+    ss.remove(ss.size() - 1);
     return $;
   }
 
@@ -50,7 +52,7 @@ public enum minus {
   }
 
   @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
-    return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
+    return xs.stream().map(eliminate::level).reduce((x, y) -> x + y).get();
   }
 
   private static int level(final PrefixExpression ¢) {
@@ -70,7 +72,7 @@ public enum minus {
   }
 
   private static List<Expression> peel(final Collection<Expression> ¢) {
-    return ¢.stream().map(minus::peel).collect(toList());
+    return ¢.stream().map(eliminate::peel).collect(toList());
   }
 
   public static Expression peel(final NumberLiteral $) {

@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
-   * @author Yossi Gil */
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} */
   @Ignore
   public static class NotWorkingYet {
     // All test work now

@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public enum Essence {
   ;

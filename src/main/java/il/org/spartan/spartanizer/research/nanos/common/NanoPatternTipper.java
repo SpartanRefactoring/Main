@@ -27,7 +27,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   protected static <N extends ASTNode> boolean nonTips(final Collection<NanoPatternTipper<N>> ts, final N n) {
-    return n != null && ts.stream().allMatch(λ -> λ.cantTip(n));
+    return n == null || ts.stream().allMatch(λ -> λ.cantTip(n));
   }
 
   protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final Collection<UserDefinedTipper<N>> ts, final N n) {

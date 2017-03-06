@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests for centification of a single parameter to a function
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
@@ -33,7 +33,9 @@ public final class Issue0165 {
   }
 
   @Test public void a06() {
-    trimmingOf("boolean a(V $) { return (F & $.g()) != 0;}").stays();
+    trimmingOf("boolean a(V $) { return (F & $.g()) != 0;}")//
+        .gives("boolean a(V $){return($.g()&F)!=0;}") //
+        .stays();
   }
 
   @Test public void a07() {
@@ -116,6 +118,12 @@ public final class Issue0165 {
 
   @Test public void seriesA_06_meaningfulName() {
     trimmingOf("void f(String fileName) {f(fileName);}")//
+        .stays();
+  }
+
+  @Test public void a11() {
+    trimmingOf("(blkIds[off] & 0xFF) | ((extid & 0xF0) << 4)")//
+        .gives("(extid&0xF0)<<4|blkIds[off]&0xFF") //
         .stays();
   }
 }

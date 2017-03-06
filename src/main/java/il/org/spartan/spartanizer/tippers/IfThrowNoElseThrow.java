@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } into {@code
  * throw a ? foo() : bar();
  * }
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {

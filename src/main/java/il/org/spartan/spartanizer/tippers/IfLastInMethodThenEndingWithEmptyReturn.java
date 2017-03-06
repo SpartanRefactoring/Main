@@ -23,7 +23,7 @@ import java.util.Objects;
  * } provided that this <code>
  * <b>if</b>
  * </code> statement is the last statement in a method.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {

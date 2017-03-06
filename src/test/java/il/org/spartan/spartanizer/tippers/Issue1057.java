@@ -24,7 +24,7 @@ public class Issue1057 {
   @Test public void b() {
     trimmingOf("" //
         + "private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {\n" //
-        + "  final List<Statement> l = step.statements(az.switchStatement(s));\n" //
+        + "  final List<Statement> l = statements(az.switchStatement(s));\n" //
         + "  int $;\n" //
         + "  x();\n" //
         + "  int cur = i;\n" //

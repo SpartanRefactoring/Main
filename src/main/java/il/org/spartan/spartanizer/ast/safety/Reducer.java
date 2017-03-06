@@ -4,7 +4,7 @@ import java.util.stream.*;
 
 /** TODO Yossi Gil: document class {@link }
  * @param <R>
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-29 */
 public abstract class Reducer<R> {
   public R reduce() {

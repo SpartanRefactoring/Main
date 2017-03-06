@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos.deprecated;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.io.*;
 import java.nio.file.*;
 
@@ -10,7 +11,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -33,11 +33,11 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final Down.Caster c = new Down.Caster();
 
   @Override public boolean canTip(final CastExpression ¢) {
-    if (!(step.type(¢) instanceof SimpleType))
+    if (!(type(¢) instanceof SimpleType))
       return false;
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
-    return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
+    return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
   @Override public Tip pattern(final CastExpression ¢) {
@@ -45,7 +45,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(azMethodName(¢) + "(" + step.expression(¢) + ")"), g);
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(azMethodName(¢) + "(" + expression(¢) + ")"), g);
       }
     };
   }
@@ -79,8 +79,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static boolean azMethodExist(final CastExpression ¢) {
-    return step.methods(containingType(¢)).stream()
-        .filter(λ -> azMethodName(¢).equals(λ.getName() + "") && typesEqual(step.returnType(λ), step.type(¢))).count() != 0;
+    return methods(containingType(¢)).stream().filter(λ -> azMethodName(¢).equals(λ.getName() + "") && typesEqual(returnType(λ), type(¢)))
+        .count() != 0;
   }
 
   private static boolean typesEqual(final Type returnType, final Type t) {
@@ -97,8 +97,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    return az.methodDeclaration(ASTNode.copySubtree(¢.getAST(),
-        az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
+    return az.methodDeclaration(
+        ASTNode.copySubtree(¢.getAST(), az.methodDeclaration(wizard.ast(azMethodModifier() + type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
   }
 
   private static String azMethodModifier() {
@@ -106,12 +106,12 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static String azMethodBody(final CastExpression ¢) {
-    return "(Object ¢){return (" + step.type(¢) + ")¢;}";
+    return "(Object ¢){return (" + type(¢) + ")¢;}";
   }
 
   static String azMethodName(final CastExpression ¢) {
     return (getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : !API_LEVEL_TYPE.equals(getProperty(API_LEVEL)) ? "" : "az")
-        + (step.type(¢) + "").replaceAll("//.", "•");
+        + (type(¢) + "").replaceAll("//.", "•");
   }
 
   private static AbstractTypeDeclaration containingType(final CastExpression $) {
@@ -134,13 +134,12 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static String packageAzFilePath(final CastExpression ¢) {
-    return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + containing.package¢(¢).replaceAll("\\.", system.fileSeparator)
-        + "/az.java";
+    return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + containing.package¢(¢).replaceAll("\\.", File.separator) + "/az.java";
   }
 
   private static AbstractTypeDeclaration getType(final File x) {
     return az.abstractTypeDeclaration(
-        step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
+        types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
 
   private static String getProperty(final String property) {
