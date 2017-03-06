@@ -23,22 +23,13 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
-<<<<<<< HEAD
-    for (int ¢ = 0; ¢ < $.size() - 1; ++¢) {
-      final switchBranch current = $.get(¢), next = $.get(¢ + 1);
-      if (current.gt(next)) {
-        final switchBranch tmp = next;
-        $.set(¢ + 1, current);
-=======
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
-      if (!$.get(¢).before($.get(¢ + 1))) {
+      if (!$.get(¢).compareTo($.get(¢ + 1))) {
         final switchBranch tmp = $.get(¢ + 1);
         $.set(¢ + 1, $.get(¢));
->>>>>>> branch 'master' of git@github.com:SpartanRefactoring/Spartanizer.git
         $.set(¢, tmp);
         return switchBranch.makeSwitchStatement($, expression(s), s.getAST());
       }
-    }
     return null;
   }
 

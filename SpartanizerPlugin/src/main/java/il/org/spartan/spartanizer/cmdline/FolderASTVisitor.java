@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
-
 import java.io.*;
 import java.lang.reflect.*;
 
