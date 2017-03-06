@@ -28,13 +28,17 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static Statement dupForBody(final ForStatement ¢) {
-    return copy.of(step.body(¢));
+    return copy.of(body(¢));
   }
 
   private static boolean fitting(final ForStatement ¢) {
-    return ¢ != null && !iz.containsContinueStatement(step.body(¢)) && hasFittingUpdater(¢)
-        && cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢)
-        && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
+    return ¢ != null//
+        && !iz.containsContinueStatement(step.body(¢))//
+        && hasFittingUpdater(¢)//
+        && cantTip.declarationInitializerStatementTerminatingScope(¢)//
+        && cantTip.forRenameInitializerToCent(¢)//
+        && cantTip.declarationRedundantInitializer(¢)//
+        && cantTip.remvoeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
@@ -58,14 +62,14 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static ASTNode lastStatement(final ForStatement ¢) {
-    return hop.lastStatement(step.body(¢));
+    return hop.lastStatement(body(¢));
   }
 
   private static void setUpdaters(final ForStatement $) {
     final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
-    step.updaters($).clear();
-    step.updaters($).add(updaterFromBody($));
-    step.updaters($).addAll(oldUpdaters);
+    updaters($).clear();
+    updaters($).add(updaterFromBody($));
+    updaters($).addAll(oldUpdaters);
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
@@ -77,7 +81,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   @Override public String description(final ForStatement ¢) {
-    return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
+    return "Convert loop: 'for(?;" + expression(¢) + ";?)' to something else (buggy)";
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
