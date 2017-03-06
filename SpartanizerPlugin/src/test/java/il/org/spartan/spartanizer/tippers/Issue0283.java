@@ -1,6 +1,3 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Jan 6, 2017 */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
@@ -10,6 +7,9 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
+/** Unit tests for Issue 283
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public class Issue0283 {
   @Test public void test0() {
@@ -55,7 +55,7 @@ public class Issue0283 {
   @Test public void test3() {
     trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
         .gives(
-            "@Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\")@Test @SuppressWarnings({\"EnumBody\"})@NonNull public void test0(){}}") //
+            "@Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\")@Test @SuppressWarnings(\"EnumBody\"})@NonNull public void test0(){}}") //
         .stays();
   }
 
@@ -63,15 +63,18 @@ public class Issue0283 {
     trimmingOf(
         "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
             .gives(
-                "@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(\"EnumBody\")@WebFault @SuppressWarnings({\"EnumBody\"})@NonNull public void test0(){}}") //
+                "@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(\"EnumBody\") @WebFault @SuppressWarnings({\"EnumBody\"}) @NonNull public void test0(){}}") //
+            .gives(
+                "@Ignore class Test123{@Deprecated @Inherited @Test @WebFault @SuppressWarnings(\"EnumBody\") @SuppressWarnings(\"EnumBody\") @NonNull public void test0(){}}") //
             .stays();
   }
 
   @Test public void test5() {
-    trimmingOf(
-        "@Ignore @Deprecated class Test123 {@Test @SuppressWarnings({ \"EnumBody\" }) @Inherited @NonNull @Deprecated public void test0() { }}")
-            .gives(
-                "@Deprecated @Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\")@Test @SuppressWarnings({\"EnumBody\"})@NonNull public void test0(){}}") //
-            .stays();
+    trimmingOf("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings({\"EnumBody\"}) @Inherited @NonNull @Deprecated public void test0(){}}")
+        .gives(
+            "@Deprecated @Ignore class Test123{@Deprecated @SuppressWarnings(\"EnumBody\") @Test @SuppressWarnings({\"EnumBody\"}) @NonNull public void test0(){}}") //
+        .gives(
+            "@Deprecated @Ignore class Test123{@Deprecated @Test@SuppressWarnings(\"EnumBody\") @SuppressWarnings(\"EnumBody\") @NonNull public void test0(){}}") //
+        .stays();
   }
 }

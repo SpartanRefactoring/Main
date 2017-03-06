@@ -1,6 +1,3 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Jan 1, 2017 */
 package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
@@ -18,6 +15,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.meta.*;
 
+/** Fixture for testing the environment
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @since Jan 1, 2017 */
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends MetaFixture {
   private static final Collection<String> signature = new HashSet<>();

@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {
   static Expression simplify(final InfixExpression ¢) {

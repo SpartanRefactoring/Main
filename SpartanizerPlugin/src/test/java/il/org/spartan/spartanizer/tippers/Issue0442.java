@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link SingelVariableDeclarationUnderscoreDoubled}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
@@ -51,7 +51,7 @@ public class Issue0442 {
     azzert.that(guessName.of("__"), is(guessName.ANONYMOUS));
     azzert.that(precedence.of(e("a+b")), is(5));
     azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
-    azzert.that(minus.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
+    azzert.that(eliminate.peel(e("-1/-2*-3/-4*-5*-6/-7/-8/-9")), iz("1/2*3/4*5*6/7/8/9"));
     azzert.that(metrics.literals(i("3+4+5+6")), hasItem("6"));
   }
 

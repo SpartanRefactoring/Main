@@ -37,7 +37,7 @@ public enum cantTip {
     return $ == null || new ForRenameInitializerToCent().cantTip($);
   }
 
-  public static boolean remvoeRedundantIf(final ForStatement s) {
+  public static boolean removeRedundantIf(final ForStatement s) {
     return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().canTip(λ));
   }
 

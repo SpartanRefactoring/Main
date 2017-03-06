@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
@@ -22,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-28 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
@@ -57,7 +59,7 @@ public enum extract {
   }
 
   public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
-    return annotations(step.extendedModifiers(¢));
+    return annotations(extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
@@ -91,8 +93,8 @@ public enum extract {
     ConditionalExpression s = ¢;
     final Collection<ConditionalExpression> $ = new ArrayList<>();
     $.add(s);
-    while (iz.conditionalExpression(step.elze(s)))
-      $.add(s = az.conditionalExpression(step.elze(s)));
+    while (iz.conditionalExpression(elze(s)))
+      $.add(s = az.conditionalExpression(elze(s)));
     return $;
   }
 
@@ -115,8 +117,8 @@ public enum extract {
     IfStatement s = ¢;
     final Collection<IfStatement> $ = new ArrayList<>();
     $.add(s);
-    while (iz.ifStatement(step.elze(s)))
-      $.add(s = az.ifStatement(step.elze(s)));
+    while (iz.ifStatement(elze(s)))
+      $.add(s = az.ifStatement(elze(s)));
     return $;
   }
 
@@ -265,7 +267,7 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
-    $.addAll(step.fragments(s));
+    $.addAll(fragments(s));
     return $;
   }
 
@@ -329,9 +331,9 @@ public enum extract {
     if (¢ == null)
       return null;
     ConditionalExpression $ = ¢;
-    while (iz.conditionalExpression(step.elze($)))
-      $ = az.conditionalExpression(step.elze($));
-    return step.elze($);
+    while (iz.conditionalExpression(elze($)))
+      $ = az.conditionalExpression(elze($));
+    return elze($);
   }
 
   /** returns the else statement of the last if in an if else if else if else
@@ -342,13 +344,9 @@ public enum extract {
     if (¢ == null)
       return null;
     IfStatement $ = ¢;
-    while (iz.ifStatement(step.elze($)))
-      $ = az.ifStatement(step.elze($));
-    return step.elze($);
-  }
-
-  public static Statement lastStatement(final Block ¢) {
-    return last(statements(¢));
+    while (iz.ifStatement(elze($)))
+      $ = az.ifStatement(elze($));
+    return elze($);
   }
 
   public static Statement lastStatement(final EnhancedForStatement ¢) {
@@ -360,7 +358,7 @@ public enum extract {
   }
 
   public static Statement lastStatement(final Statement ¢) {
-    return !iz.block(¢) ? ¢ : lastStatement(az.block(¢));
+    return !iz.block(¢) ? ¢ : hop.lastStatement(az.block(¢));
   }
 
   /** @param pattern JD
@@ -590,5 +588,42 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
+  }
+
+  public static List<ASTNode> updatedVariables(final Expression x) {
+    return new ExpressionBottomUp<List<ASTNode>>() {
+      @Override public List<ASTNode> reduce() {
+        return new LinkedList<>();
+      }
+
+      List<ASTNode> atomic(final Expression ¢) {
+        return Collections.singletonList(¢);
+      }
+
+      @Override protected List<ASTNode> map(final Assignment ¢) {
+        return reduce(list(¢), super.map(¢));
+      }
+
+      List<ASTNode> list(final ASTNode ¢) {
+        return new ArrayList<>(Collections.singletonList(¢));
+      }
+
+      @Override protected List<ASTNode> map(final PostfixExpression ¢) {
+        return reduce(Collections.singletonList(step.expression(¢)), super.map(¢));
+      }
+
+      @Override protected List<ASTNode> map(final PrefixExpression ¢) {
+        return reduce(!updating(¢) ? reduce() : atomic(¢.getOperand()), super.map(¢));
+      }
+
+      @Override public List<ASTNode> reduce(final List<ASTNode> l1, final List<ASTNode> l2) {
+        l1.addAll(l2);
+        return l1;
+      }
+
+      boolean updating(final PrefixExpression ¢) {
+        return in(¢.getOperator(), INCREMENT, DECREMENT);
+      }
+    }.map(x);
   }
 }

@@ -4,12 +4,12 @@ package il.org.spartan.plugin;
 
 /** Demo of recommended use of {@link Listener.S} Copy the code, changing the
  * name {@link ConfigurableObjectTemplate} to whatever you need. provide.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Oct 19, 2016 */
 public interface ConfigurableObjectTemplate {
   @SuppressWarnings({ "ClassWithTooManyFields", "CanBeFinal" })
   class Settings extends Listener.S {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -465808551880648371L;
     //@formatter:off
     /* default access */ int howMany;
     /* required here! */ boolean robustMode;
@@ -41,11 +41,11 @@ public interface ConfigurableObjectTemplate {
 
     /** Demo of the implementation. Don't change the name. Just change services
      * @see #go() the only service provided by this template
-     * @author Yossi Gil */
+     * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} */
     class Action extends Settings {
-      /** real serialVersionUID comes much later in production code */
-      private static final long serialVersionUID = 1L;
+      private static final long serialVersionUID = -1563529531663481546L;
 
+      /** real serialVersionUID comes much later in production code */
       int go() {
         listeners().push("started going");
         if (Settings.this.robustMode) {

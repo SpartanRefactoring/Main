@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -28,7 +27,7 @@ import il.org.spartan.spartanizer.engine.*;
  * make a single simplification of the tree. A tipper is so small that it is
  * idempotent: Applying a tipper to the output of itself is the empty operation.
  * @param <N> type of node which triggers the transformation.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
@@ -152,7 +151,7 @@ public abstract class Tipper<N extends ASTNode> //
     return super.hashCode();
   }
 
-  public static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+  public static boolean forbiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
     final ExpressionStatement x = (ExpressionStatement) nextStatement;

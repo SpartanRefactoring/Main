@@ -31,6 +31,6 @@ public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<Condi
   public static final ASTNode truee = wizard.ast("Boolean.TRUE"), falsee = wizard.ast("Boolean.FALSE");
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
-    return "eliminate teranry that evaluates to either Boolean.FALSE or Boolean.TRUE (not just one of these)";
+    return "eliminate ternary that evaluates to either Boolean.FALSE or Boolean.TRUE (not just one of these)";
   }
 }

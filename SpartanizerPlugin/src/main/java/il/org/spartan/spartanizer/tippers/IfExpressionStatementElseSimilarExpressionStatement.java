@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } into {@code
  * f(x ? a : b);
  * }
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-29 */
 public final class IfExpressionStatementElseSimilarExpressionStatement extends ReplaceCurrentNode<IfStatement> //
     implements TipperCategory.Ternarization {

@@ -3,8 +3,9 @@ package il.org.spartan.bloater.bloaters;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,13 +26,12 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   @Override public ASTNode replacement(final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
-    return subject.pair(step.operand(¢), $)
-        .to(step.operator(¢) != PrefixExpression.Operator.DECREMENT ? Operator.PLUS_ASSIGN : Operator.MINUS_ASSIGN);
+    return subject.pair(operand(¢), $).to(operator(¢) != PrefixExpression.Operator.DECREMENT ? Operator.PLUS_ASSIGN : Operator.MINUS_ASSIGN);
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {
-    final ASTNode $ = step.parent(¢);
-    return (step.operator(¢) == PrefixExpression.Operator.INCREMENT || step.operator(¢) == PrefixExpression.Operator.DECREMENT)
+    final ASTNode $ = parent(¢);
+    return (operator(¢) == PrefixExpression.Operator.INCREMENT || operator(¢) == PrefixExpression.Operator.DECREMENT)
         && (iz.expressionStatement($) || iz.forStatement($));
   }
 

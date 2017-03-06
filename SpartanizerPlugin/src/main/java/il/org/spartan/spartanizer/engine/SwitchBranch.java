@@ -8,6 +8,8 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
@@ -106,14 +108,14 @@ public class SwitchBranch {
   public static SwitchStatement makeSwitchStatement(final Iterable<SwitchBranch> bs, final Expression x, final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
-    addAll(step.statements($), bs);
+    addAll(statements($), bs);
     return $;
   }
 
   // TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
   @SuppressWarnings("null") public static List<SwitchBranch> intoBranches(final SwitchStatement n) {
-    final List<Statement> l = step.statements(n);
+    final List<Statement> l = statements(n);
     assert iz.switchCase(first(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
@@ -125,6 +127,7 @@ public class SwitchBranch {
         s = new ArrayList<>();
         $.add(new SwitchBranch(c, s));
         nextBranch = false;
+        // TODO: Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)
@@ -179,7 +182,7 @@ public class SwitchBranch {
     } else {
       // TODO: Yuval - please use class subject
       final Block b = a.newBlock();
-      step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
+      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
       $ = b;
     }
     return $;
