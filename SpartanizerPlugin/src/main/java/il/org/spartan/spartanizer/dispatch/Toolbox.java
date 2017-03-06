@@ -20,7 +20,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-08-22 */
 public class Toolbox {
   @SuppressWarnings("unchecked")
@@ -28,7 +29,7 @@ public class Toolbox {
     public static Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
     public static Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
     public static Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
-    public static Map<Class<? extends Tipper<?>>, TipperPreview> TipperPreviewCache = new HashMap<>();
+    public static Map<Class<? extends Tipper<?>>, String[][]> TipperExamplesCache = new HashMap<>();
     public static Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
@@ -36,7 +37,7 @@ public class Toolbox {
         TipperIDClassTranslationTable.put(id, (Class<? extends Tipper<?>>) t.getClass());
         TipperIDNameTranslationTable.put(id, t.getClass().getSimpleName());
         TipperDescriptionCache.put((Class<? extends Tipper<?>>) t.getClass(), t.description());
-        TipperPreviewCache.put((Class<? extends Tipper<?>>) t.getClass(), t.preview());
+        TipperExamplesCache.put((Class<? extends Tipper<?>>) t.getClass(), t.examples());
         TipperObjectByClassCache.put((Class<? extends Tipper<?>>) t.getClass(), t);
       }
     }
