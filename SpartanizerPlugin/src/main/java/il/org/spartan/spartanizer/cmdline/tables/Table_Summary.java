@@ -45,15 +45,15 @@ public class Table_Summary extends Table_ReusabilityIndices {
     if (excludeMethod(¢))
       return true;
     try {
-      final Integer key = Integer.valueOf(measure.statements(¢));
-      statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
-      statementsCoverageStatistics.get(key).add(m);
       final MethodDeclaration d = findFirst.instanceOf(MethodDeclaration.class)
           .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       if (d != null)
         npDistributionStatistics.logNode(d);
+      final Integer key = Integer.valueOf(measure.statements(d));
+      statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
+      statementsCoverageStatistics.get(key).add(m);
     } catch (final AssertionError __) {
       ___.unused(__);
     }

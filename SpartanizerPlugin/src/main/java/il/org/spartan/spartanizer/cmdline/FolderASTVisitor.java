@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 
@@ -12,16 +14,18 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Parse and visit all Java files under a given path.
  * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Dec 14, 2016 */
 public abstract class FolderASTVisitor extends ASTVisitor {
   @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
   @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
-  protected static final String[] defaultArguments = as.array(".");
+  protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends FolderASTVisitor> clazz;
   private static Constructor<? extends FolderASTVisitor> declaredConstructor;
   protected File presentFile;
@@ -50,6 +54,19 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     }
   }
 
+  public static class FieldsOnly extends FolderASTVisitor {
+    public static void main(final String[] args)
+        throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+      clazz = FalloutsCollector_loops.class;
+      FolderASTVisitor.main(args);
+    }
+
+    @Override public boolean visit(FieldDeclaration ¢) {
+      System.out.println(¢);
+      return true;
+    }
+  }
+
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);
@@ -69,12 +86,12 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   protected static String makeFile(final String fileName) {
-    return outputFolder + system.fileSeparator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
+    return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   protected void visit(final String path) {
     init(path);
-    presentSourceName = system.folder2File(presentSourcePath = inputFolder + system.fileSeparator + path);
+    presentSourceName = system.folder2File(presentSourcePath = inputFolder + File.separator + path);
     System.err.println("Processing: " + presentSourcePath);
     (dotter = new Dotter()).click();
     new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visit(presentFile = λ));

@@ -1,6 +1,3 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Jan 15, 2017 */
 package il.org.spartan.bloater;
 
 import java.util.*;
@@ -23,7 +20,9 @@ import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
-
+/** TODO: Yossi Gil please add a description
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @since Jan 15, 2017 */
 // TODO: Ori Roth why so many fields? --yg
 public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);

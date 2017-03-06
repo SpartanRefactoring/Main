@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Tested by {@link Issue1105}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-22 */
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 8015068204117686495L;
@@ -37,8 +37,8 @@ public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<I
   @Override public boolean prerequisite(final IfStatement ¢) {
     if (elze(¢) != null)
       return false;
-    final Statement $ = extract.lastStatement(az.block(then(¢)));
-    return iz.sequencer($) && wizard.same($, extract.lastStatement(az.block(parent(¢))));
+    final Statement $ = hop.lastStatement(az.block(then(¢)));
+    return iz.sequencer($) && wizard.same($, hop.lastStatement(az.block(parent(¢))));
   }
 
   @Override public String description() {

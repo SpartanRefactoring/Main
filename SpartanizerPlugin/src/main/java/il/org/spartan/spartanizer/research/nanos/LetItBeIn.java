@@ -35,7 +35,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!preDelegation(f, nextStatement))
         return null;
-      final Statement parent = az.variableDeclarationStatement(parent(f));
+      final Statement parent = parentStatement(f);
       if (parent == null || anyFurtherUsage(parent(nextStatement), name(f)))
         return null;
       final Expression initializer = initializer(f);

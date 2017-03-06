@@ -21,7 +21,7 @@ import il.org.spartan.tables.*;
 public class NanoInstancesCollector extends FolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
-  static final File out = new File(Table.temporariesFolder + system.fileSeparator + nano.getClass().getSimpleName() + ".txt");
+  static final File out = new File(Table.temporariesFolder + File.separator + nano.getClass().getSimpleName() + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

@@ -5,13 +5,14 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+/** Unit tests for loops
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0312 {
   @Test public void A$130() {
+    System.out.println("");
     trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
@@ -21,13 +22,12 @@ public class Issue0312 {
   }
 
   @Test public void bugInLastIfInMethod1() {
-    trimmingOf("        @Override public void f() {\n" + "          if (!isMessageSuppressed(message)) {\n"
-        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + "            messages.add(message);\n"
-        + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + "            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n" + "          }\n" + "        }")//
+    trimmingOf(" @Override public void f() {\n" + " if (!isMessageSuppressed(message)) {\n"
+        + " final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n" + " messages.add(message);\n"
+        + " stats.u += message.isSet(Flag.SEEN) ? 0 : 1;\n" + " stats.f += message.isSet(Flag.FLAGGED) ? 1 : 0;\n" + " if (listener != null)\n"
+        + " listener.listLocalMessagesAddMessages(account, null, messages);\n" + " }\n" + " }")//
             .gives(
-                "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
+                "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.u+=message.isSet(Flag.SEEN)?0:1;stats.f+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void chocolate1() {
@@ -42,9 +42,9 @@ public class Issue0312 {
   }
 
   @Test public void issue54ForPlain() {
-    trimmingOf("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
-        .gives("for (int i = 0; i <100;  ++i) b[i] = f();")//
-        .gives("for (int ¢ = 0; ¢ <100;  ++¢) b[¢] = f();")//
+    trimmingOf("int a = f(); for (int i = 0; i <100; ++i) b[i] = a;")//
+        .gives("for (int i = 0; i <100; ++i) b[i] = f();")//
+        .gives("for (int ¢ = 0; ¢ <100; ++¢) b[¢] = f();")//
         .stays();
   }
 

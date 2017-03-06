@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Matteo Orru'
  * @since Oct 2, 2016 */
 @SuppressWarnings("TooBroadScope")
@@ -121,9 +121,9 @@ final class BatchSpartanizer extends FolderASTVisitor {
 
   BatchSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
-    beforeFileName = outputDir + system.fileSeparator + name + ".before.java";
-    afterFileName = outputDir + system.fileSeparator + name + ".after.java";
-    reportFileName = outputDir + system.fileSeparator + name + ".CSV";
+    beforeFileName = outputDir + File.separator + name + ".before.java";
+    afterFileName = outputDir + File.separator + name + ".after.java";
+    reportFileName = outputDir + File.separator + name + ".CSV";
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());

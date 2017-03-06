@@ -8,7 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Unit test for {@link Table#classToNormalizedFileName(String)}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-05 */
 @SuppressWarnings("static-method")
 public class TableTest {

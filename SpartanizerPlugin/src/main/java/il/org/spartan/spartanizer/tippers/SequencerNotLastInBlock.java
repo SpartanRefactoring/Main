@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code throw X;statement;} to {@code throw X;}.
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public final class SequencerNotLastInBlock<S extends Statement> extends ReplaceToNextStatement<S>//
     implements TipperCategory.Deadcode {

@@ -1,14 +1,16 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -30,7 +32,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   @Override public Tip tip(final SwitchStatement s) {
-    final List<Statement> $ = getAdditionalStatements(step.statements(s), caseWithNoSequencer(s));
+    final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
     final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -48,7 +50,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
 
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
-    for (final Statement ¢ : step.statements(x)) // TOUGH
+    for (final Statement ¢ : statements(x)) // TOUGH
       if (iz.sequencerComplex(¢))
         $ = null;
       else if (¢ instanceof SwitchCase) {

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
- * @author Yossi Gil
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Doron Meshulam
  * @since 2016-09 */
 public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
