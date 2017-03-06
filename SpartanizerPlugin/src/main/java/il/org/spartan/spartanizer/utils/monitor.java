@@ -229,6 +229,7 @@ public enum monitor {
   }
 
   private static class Logger {
+    private static final String STEM = "spartanizer-error-log";
     private static final String UTF_8 = "utf-8";
     private static OutputStream outputStream;
     private static String fileName;
@@ -242,7 +243,7 @@ public enum monitor {
     public static String fileName() {
       if (fileName != null)
         return fileName;
-      fileName = System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
+      fileName = System.getProperty("java.io.tmpdir") + File.separator + STEM + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
       System.out.flush();
       System.err.flush();
       System.err.format("\n --- Your error log will be found in \n\t%s\n", fileName);
