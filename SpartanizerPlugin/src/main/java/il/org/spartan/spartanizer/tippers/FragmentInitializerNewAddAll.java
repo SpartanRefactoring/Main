@@ -24,11 +24,12 @@ import il.org.spartan.spartanizer.utils.*;
  * } to {@code
  * T a = new ArrayList
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-03-02 */
 public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
-  private Type type;
+  @SuppressWarnings("unused") private Type type;
 
   @Override public boolean prerequisite(final VariableDeclarationFragment f) {
     final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
