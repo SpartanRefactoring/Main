@@ -16,7 +16,8 @@ public class WhileToForUpdaters extends LoopReplacer<WhileStatement>//
   private static final long serialVersionUID = -3058381388098493922L;
 
   private static boolean notClaimedByOthers(final WhileStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.declarationRedundantInitializer(¢) //
+    return cantTip.declarationInitializerStatementTerminatingScope(¢) //
+        && cantTip.declarationRedundantInitializer(¢) //
         && cantTip.remvoeRedundantIf(¢);
   }
 
