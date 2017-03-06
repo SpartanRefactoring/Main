@@ -13,15 +13,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-<<<<<<< HEAD
-/** pushes down "{@code !}", the boolean negation operator as much as possible,
- * using the de-Morgan and other simplification rules.
- * @author Yossi Gil
-=======
 /** pushes down "{@code !}", the negation operator as much as possible, using
  * the de-Morgan and other simplification rules.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
->>>>>>> branch 'master' of git@github.com:SpartanRefactoring/Spartanizer.git
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Idiomatic {
@@ -51,7 +46,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
         || ($ = perhapsDoubleNegation(¢)) != null//
         || ($ = perhapsDeMorgan(¢)) != null//
         || ($ = perhapsComparison(¢)) != null //
-     //   || ($ = perhapsTernary(¢)) != null //
+            // || ($ = perhapsTernary(¢)) != null //
             ? $ : null;
   }
 
