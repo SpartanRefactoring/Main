@@ -44,8 +44,6 @@ public class Table_Summary extends Table_ReusabilityIndices {
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return true;
-    System.out.println("---------------------------------------");
-    System.out.println(¢);
     try {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
