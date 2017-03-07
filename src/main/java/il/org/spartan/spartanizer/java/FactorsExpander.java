@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
@@ -7,15 +8,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>
  * Functions named {@link #base} are non-recursive
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Niv Shalmon
  * @since 2016-08 */
 enum FactorsExpander {

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -11,8 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TDD: Unit tests for {@link Tipper#myActualOperandsClass()}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })

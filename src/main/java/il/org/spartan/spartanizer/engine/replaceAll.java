@@ -20,8 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Replace an occurrence of a {@link SimpleName} with an {@link Expression} in
  * an array of
  * @year 2015
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 13, 2016 */
 public interface replaceAll {
   static ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {

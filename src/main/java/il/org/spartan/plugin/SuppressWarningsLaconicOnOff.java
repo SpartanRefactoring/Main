@@ -1,5 +1,6 @@
 package il.org.spartan.plugin;
 
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.plugin.old.eclipse.*;
 
 import java.util.*;
@@ -12,8 +13,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

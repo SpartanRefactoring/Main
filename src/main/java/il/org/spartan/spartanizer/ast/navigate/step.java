@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
@@ -13,8 +12,7 @@ import il.org.spartan.spartanizer.java.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-16 */
 public enum step {
   ;

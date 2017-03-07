@@ -1,13 +1,12 @@
 package il.org.spartan.tables;
 
 import java.io.*;
-import java.util.*;
+import java.util.Map;
 
 import il.org.spartan.*;
 
 /** Class for writing a {@link Table} into a file
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-12-25 */
 public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file

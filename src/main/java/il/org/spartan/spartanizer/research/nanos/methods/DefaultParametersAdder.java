@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
@@ -7,8 +8,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;

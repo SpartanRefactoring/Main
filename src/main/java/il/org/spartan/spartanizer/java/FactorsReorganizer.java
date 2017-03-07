@@ -1,18 +1,16 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {
   static Expression simplify(final InfixExpression ¢) {

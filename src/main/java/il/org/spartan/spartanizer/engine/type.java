@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.spartanizer.engine.type.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -17,20 +17,15 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
+import static java.util.stream.Collectors.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Dor Maayan
  * @author Niv Shalmon
  * @since 2016 */
@@ -495,8 +490,7 @@ public interface type {
   }
 
   /** Types we do not fully understand yet.
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @author Niv Shalmon
    * @since 2016 */
   interface Odd extends inner.implementation {
@@ -527,8 +521,7 @@ public interface type {
   }
 
   /** Primitive type or a set of primitive types
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2016 */
   interface Primitive extends inner.implementation {
     /** @return All {@link Certain} types that an expression of this type can
@@ -537,8 +530,7 @@ public interface type {
 
     /** Primitive types known for certain. {@link String} is also considered
      * {@link Primitive.Certain}
-     * @author Yossi Gil
-     *         {@code yossi dot (optional) gil at gmail dot (required) com}
+     * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
      * @since 2016 */
     enum Certain implements Primitive {
       BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean")//
@@ -589,8 +581,7 @@ public interface type {
 
     /** A set of {@link Primitive.Certain} types, where the expressions type
      * cannot be determined for certain
-     * @author Yossi Gil
-     *         {@code yossi dot (optional) gil at gmail dot (required) com}
+     * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
      * @author Niv Shalmon
      * @since 2016-08-XX */
     enum Uncertain implements Primitive {

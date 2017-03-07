@@ -1,6 +1,5 @@
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.engine;
 
@@ -11,7 +10,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
