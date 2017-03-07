@@ -1373,7 +1373,7 @@ public interface iz {
   }
 
 
-  static boolean updater(PrefixExpression ¢) {
+  static boolean updater(final PrefixExpression ¢) {
     return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
   }
 }

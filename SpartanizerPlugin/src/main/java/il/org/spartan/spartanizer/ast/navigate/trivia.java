@@ -63,7 +63,7 @@ public interface trivia {
     return ¢ == null ? "null" : gist(¢ + "");
   }
 
-  static String gist(String ¢) {
+  static String gist(final String ¢) {
     return (¢.length() < 35 ? ¢ : ¢.substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 

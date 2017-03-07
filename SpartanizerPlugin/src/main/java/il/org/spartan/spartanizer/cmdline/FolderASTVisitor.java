@@ -147,7 +147,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
       FolderASTVisitor.main(args);
     }
 
-    @Override public boolean visit(FieldDeclaration ¢) {
+    @Override public boolean visit(final FieldDeclaration ¢) {
       System.out.println(¢);
       return true;
     }
