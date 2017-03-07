@@ -27,6 +27,9 @@ import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.Tipper.*;
+import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An handler for project configuration. User configuration is saved in a
@@ -247,10 +250,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           final SpartanTipper st = (SpartanTipper) o;
-          final String before = getPreviewString(st.preview(), 0);
+          final String before = getPreviewString(st.preview(), ex -> Boolean.valueOf(ex instanceof Converts), ex -> ((Converts) ex).from());
           final IDocument d = new Document(before);
           try {
-            final String after = getPreviewString(st.preview(), 1);
+            final String after = getPreviewString(st.preview(), ex -> Boolean.valueOf(ex instanceof Converts), ex -> ((Converts) ex).to());
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();
@@ -318,22 +321,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       }
   }
 
-  /** Returns preview as a single string, containing examples from the position
-   * column of the array.
-   * @param preview examples array
-   * @param position example column (before/after)
-   * @return unified example column string */
-  static String getPreviewString(final String[][] preview, final int position) {
-    assert position == 0 || position == 1;
+  /** Returns preview as a single string.
+   * @param preview tipper's preview
+   * @param filter examples filter
+   * @param converter Example --> String converter
+   * @return unified examples string */
+  static String getPreviewString(final Tipper.Example[] preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
     if (preview == null)
       return null;
-    final int counterPosition = 1 - position;
     final StringBuilder $ = new StringBuilder();
-    for (int i = 0; i < preview.length; ++i) {
-      $.append("/* Example ").append(i + 1).append(" */\n").append(preview[i][position]).append("\n\n");
-      for (int j = 0; j < preview[i][counterPosition].split("\n").length - preview[i][position].split("\n").length; ++j)
-        $.append("\n");
-    }
+    for (int i = 0, c = 1; i < preview.length; ++i)
+      if (filter.apply(preview[i]).booleanValue())
+        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(preview[i])).append("\n\n");
     return ($ + "").trim();
   }
 }
