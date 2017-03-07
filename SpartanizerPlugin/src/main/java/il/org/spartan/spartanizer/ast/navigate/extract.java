@@ -591,7 +591,7 @@ public enum extract {
   }
 
   public static List<ASTNode> updatedVariables(final Expression x) {
-    List<ASTNode> $ = new ExpressionBottomUp<List<ASTNode>>() {
+    final List<ASTNode> $ = new ExpressionBottomUp<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
         return new LinkedList<>();
       }

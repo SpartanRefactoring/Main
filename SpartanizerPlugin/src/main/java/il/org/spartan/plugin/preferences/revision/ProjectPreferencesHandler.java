@@ -323,12 +323,12 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param preview examples array
    * @param position example column (before/after)
    * @return unified example column string */
-  static String getPreviewString(String[][] preview, int position) {
+  static String getPreviewString(final String[][] preview, final int position) {
     assert position == 0 || position == 1;
     if (preview == null)
       return null;
-    int counterPosition = 1 - position;
-    StringBuilder $ = new StringBuilder();
+    final int counterPosition = 1 - position;
+    final StringBuilder $ = new StringBuilder();
     for (int i = 0; i < preview.length; ++i) {
       $.append("/* Example ").append(i + 1).append(" */\n").append(preview[i][position]).append("\n\n");
       for (int j = 0; j < preview[i][counterPosition].split("\n").length - preview[i][position].split("\n").length; ++j)
