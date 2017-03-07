@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -9,6 +7,7 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -35,8 +34,8 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       if (!preDelegation(f, nextStatement))
         return null;
-      final Statement parent = az.variableDeclarationStatement(parent(f));
-      if (parent == null || anyFurtherUsage(parent(nextStatement), name(f)))
+      final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
+      if (parent == null || fragments(parent).size() != 1 || anyFurtherUsage(parent(nextStatement), name(f)))
         return null;
       final Expression initializer = initializer(f);
       if (initializer == null)
@@ -45,30 +44,10 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
-      if (pp == null || fragments(pp).size() <= 1)
-        $.remove(parent, g);
-      else {
-        if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
-          return null;
-        final VariableDeclarationStatement pn = copy.of(pp);
-        final List<VariableDeclarationFragment> l = fragments(pp);
-        for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
-          if (l.get(¢).equals(f)) {
-            fragments(pn).remove(¢);
-            break;
-          }
-          if (iz.containsName(name(f), initializer(l.get(¢))))
-            return null;
-        }
-        $.replace(parent, pn, g);
-      }
-      for (final SimpleName ¢ : peelIdentifiers(nextStatement, name(f)))
-        $.replace(¢, e, g);
+      $.remove(parent, g);
+      $.replace(parent, wizard.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
+          + expression(nextStatement) + ");"), g);
       return $;
-    }
-
-    private static Iterable<SimpleName> peelIdentifiers(final Statement s, final SimpleName n) {
-      return collect.usesOf(n).in(s);
     }
 
     private static boolean anyFurtherUsage(final ASTNode node, final SimpleName n) {
