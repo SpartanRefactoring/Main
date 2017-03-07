@@ -13,6 +13,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
  * <p>
@@ -46,7 +47,7 @@ public enum minus {
   }
 
   public static int level(final InfixExpression ¢) {
-    return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
+    return out(operator(¢), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
   @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
@@ -54,7 +55,7 @@ public enum minus {
   }
 
   private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+    return az.bit(operator(¢) == wizard.MINUS1) + level(operand(¢));
   }
 
   public static Expression peel(final Expression $) {
@@ -66,7 +67,7 @@ public enum minus {
   }
 
   public static Expression peel(final InfixExpression ¢) {
-    return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
+    return out(operator(¢), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(operator(¢));
   }
 
   private static List<Expression> peel(final Collection<Expression> ¢) {
@@ -74,10 +75,10 @@ public enum minus {
   }
 
   public static Expression peel(final NumberLiteral $) {
-    return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
+    return !token($).startsWith("-") && !token($).startsWith("+") ? $ : $.getAST().newNumberLiteral(token($).substring(1));
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
+    return out(operator($), wizard.MINUS1, wizard.PLUS1) ? $ : peel(operand($));
   }
 }
