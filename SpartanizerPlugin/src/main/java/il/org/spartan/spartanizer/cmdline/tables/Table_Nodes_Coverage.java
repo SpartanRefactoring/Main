@@ -32,8 +32,6 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
-    System.out.println("----------------------------------------------------");
-    System.out.println(¢);
     try {
       statistics.logCompilationUnit(¢);
       final String spartanzied = spartanizer.fixedPoint(¢);
