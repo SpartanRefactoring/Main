@@ -48,6 +48,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 null) //
             .add(FieldDeclaration.class, //
                 new Constant(), //
+                new VanillaCollection(), //
                 null) //
             .add(ForStatement.class, //
                 new ForLoop.FindFirst(), //
