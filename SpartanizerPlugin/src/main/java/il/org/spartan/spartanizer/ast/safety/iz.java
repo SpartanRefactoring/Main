@@ -1371,4 +1371,9 @@ public interface iz {
       return iz.literal(az.stringLiteral(¢), s);
     }
   }
+
+
+  static boolean updater(PrefixExpression ¢) {
+    return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
+  }
 }

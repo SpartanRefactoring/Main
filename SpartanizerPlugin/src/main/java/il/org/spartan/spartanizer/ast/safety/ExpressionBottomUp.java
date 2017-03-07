@@ -33,6 +33,8 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
   }
 
   @Override public T map(final Expression ¢) {
+    if (¢ == null)
+      return reduce();
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
