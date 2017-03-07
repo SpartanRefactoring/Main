@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-16 */
 public enum make {
   /** Strategy for conversion into a compilation unit */
@@ -127,7 +127,7 @@ public enum make {
       return null;
     final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
     fragments($).addAll(extract.nextFragmentsOf(¢));
-    $.setType(copy.of(type(¢)));
+    $.setType(copy.of(step.type(¢)));
     extendedModifiers($).addAll(az.modifiersOf(¢));
     return $;
   }
@@ -174,7 +174,7 @@ public enum make {
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(to(¢), step.from(¢)).to(wizard.assign2infix($));
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
 
   /** Swap the order of the left and right operands to an expression, changing

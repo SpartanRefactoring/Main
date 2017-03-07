@@ -1,9 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import java.util.*;
 
@@ -24,7 +22,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-28 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
@@ -267,7 +265,7 @@ public enum extract {
   }
 
   private static List<VariableDeclarationFragment> fragmentsInto(final VariableDeclarationStatement s, final List<VariableDeclarationFragment> $) {
-    $.addAll(fragments(s));
+    $.addAll(step.fragments(s));
     return $;
   }
 
@@ -349,6 +347,10 @@ public enum extract {
     return elze($);
   }
 
+  public static Statement lastStatement(final Block ¢) {
+    return last(statements(¢));
+  }
+
   public static Statement lastStatement(final EnhancedForStatement ¢) {
     return lastStatement(body(¢));
   }
@@ -358,7 +360,7 @@ public enum extract {
   }
 
   public static Statement lastStatement(final Statement ¢) {
-    return !iz.block(¢) ? ¢ : hop.lastStatement(az.block(¢));
+    return !iz.block(¢) ? ¢ : lastStatement(az.block(¢));
   }
 
   /** @param pattern JD
@@ -588,42 +590,5 @@ public enum extract {
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
-  }
-
-  public static List<ASTNode> updatedVariables(final Expression x) {
-    return new ExpressionBottomUp<List<ASTNode>>() {
-      @Override public List<ASTNode> reduce() {
-        return new LinkedList<>();
-      }
-
-      List<ASTNode> atomic(final Expression ¢) {
-        return Collections.singletonList(¢);
-      }
-
-      @Override protected List<ASTNode> map(final Assignment ¢) {
-        return reduce(list(¢), super.map(¢));
-      }
-
-      List<ASTNode> list(final ASTNode ¢) {
-        return new ArrayList<>(Collections.singletonList(¢));
-      }
-
-      @Override protected List<ASTNode> map(final PostfixExpression ¢) {
-        return reduce(Collections.singletonList(step.expression(¢)), super.map(¢));
-      }
-
-      @Override protected List<ASTNode> map(final PrefixExpression ¢) {
-        return reduce(!updating(¢) ? reduce() : atomic(¢.getOperand()), super.map(¢));
-      }
-
-      @Override public List<ASTNode> reduce(final List<ASTNode> l1, final List<ASTNode> l2) {
-        l1.addAll(l2);
-        return l1;
-      }
-
-      boolean updating(final PrefixExpression ¢) {
-        return in(¢.getOperator(), INCREMENT, DECREMENT);
-      }
-    }.map(x);
   }
 }

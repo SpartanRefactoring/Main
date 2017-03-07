@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.tippers;
-
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -28,11 +27,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * }AssignmentUpdateAndSameUpdate
  * <p>
  * Tested by {@link Issue1132}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -1157844982389320057L;
+  private static final long serialVersionUID = 1L;
 
   @Override public String description(final Assignment ¢) {
     return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";

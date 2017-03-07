@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** As per {@link Issue1008}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-21 */
 public class MethodDeclarationConstructorMoveToInitializers extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {

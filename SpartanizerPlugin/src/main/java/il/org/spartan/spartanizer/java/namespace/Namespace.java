@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.namespace.definition.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
  * the current node and delegate to the parent unless it is null.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-28 */
 public final class Namespace implements Environment {
   private final List<Namespace> children = new ArrayList<>();

@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
 
 /** A function object representing a sequence of operations on an
  * {@link ASTRewrite} object.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-08-28 */
 public abstract class Tip extends Range {
   /** A factory function that converts a sequence of ASTNodes into a

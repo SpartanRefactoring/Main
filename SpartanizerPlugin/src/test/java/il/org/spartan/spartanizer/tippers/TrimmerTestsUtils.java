@@ -1,5 +1,5 @@
-/** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tippers;
 
@@ -14,7 +14,6 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -90,9 +89,7 @@ public enum TrimmerTestsUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled)) {
-        System.err.printf("Test failed!\n");
-        rerun(w);
-        System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;\n");
+        System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;");
         azzert.fail("Nothing done on " + get());
       }
       final String peeled = w.off(unpeeled);
@@ -101,7 +98,6 @@ public enum TrimmerTestsUtils {
       if (tide.clean(peeled).equals(tide.clean(get())))
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
-        System.err.printf("Test failed!\n");
         System.err.printf(//
             "Quick fix by mark, copy and paste is:\n" + //
                 "\n        .gives(\"%s\") //\n\n\n" + //
@@ -109,19 +105,9 @@ public enum TrimmerTestsUtils {
                 "\n        .gives(\"%s\") //\n",
             trivia.escapeQuotes(essence(peeled)), //
             trivia.escapeQuotes(essence($)));
-        rerun(w);
         azzert.that(essence(peeled), is(essence($)));
       }
       return new Operand($);
-    }
-
-    private void rerun(final Wrap ¢) {
-      System.err.printf("Rerunning test with logging on:\n");
-      TrimmerLog.on();
-      applyTrimmer(trimmer, ¢.on(get()));
-      TrimmerLog.off();
-      System.out.flush();
-      System.err.printf("Rerunning done\n");
     }
 
     /** Check whether one of the code options is correct

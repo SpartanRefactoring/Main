@@ -18,7 +18,7 @@ import java.util.Comparator;
  * </code> or <code>
  * <b>null</b>
  * </code> .
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-17 */
 public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
