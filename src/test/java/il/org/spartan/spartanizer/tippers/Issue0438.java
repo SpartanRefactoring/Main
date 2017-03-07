@@ -6,7 +6,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
 /** Failing (were ignored) tests of {@link TrimmerLogTest}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil <yossi.gil@gmail.com>
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")

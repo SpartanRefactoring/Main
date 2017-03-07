@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since Oct 3, 2016 */
 enum CollectMetrics {
   ;

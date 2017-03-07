@@ -24,6 +24,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
+    $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
     initializers($).add(Initializers(f));
     return $;
   }
@@ -33,7 +34,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
   }
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
-    return copy.of(az.variableDeclrationStatement(step.parentStatement(¢)));
+    return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
 
   // TODO: now fitting returns true iff all fragments fitting. We
@@ -45,6 +46,18 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
+  }
+
+  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+    return az.variableDeclrationStatement(step.parent(¢));
+  }
+
+  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+    // TODO Dor: use extract.core
+    return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
+            : iz.parenthesizedExpression(from)
+                ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Determines whether a specific SimpleName was used in a
@@ -65,7 +78,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
       final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    final VariableDeclarationStatement vds = step.parentStatement(f);
+    final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
       return null;
     final WhileStatement s = az.whileStatement(nextStatement);

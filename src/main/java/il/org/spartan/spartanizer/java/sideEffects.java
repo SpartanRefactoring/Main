@@ -9,6 +9,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
 import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -18,7 +19,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 public enum sideEffects {
   MISSING_CASE;

@@ -6,10 +6,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Catch without body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -24,15 +25,19 @@ public final class SuppressException extends NanoPatternTipper<CatchClause> {
   };
 
   @Override public boolean canTip(final CatchClause ¢) {
-    return anyTips(tippers, step.parent(¢));
+    return anyTips(tippers, parentAsTryStatement(¢));
   }
 
   @Override public Tip pattern(final CatchClause ¢) {
-    return firstTip(tippers, step.parent(¢));
+    return firstTip(tippers, parentAsTryStatement(¢));
   }
 
   @Override public Category category() {
     return Category.Exception;
+  }
+
+  private static TryStatement parentAsTryStatement(final CatchClause ¢) {
+    return az.tryStatement(parent(¢));
   }
 
   @Override public String technicalName() {

@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import java.util.Arrays;
 
 /** Maintain a canonical order of modifiers.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 public enum IExtendedModifiersRank {
   PUBLIC, //

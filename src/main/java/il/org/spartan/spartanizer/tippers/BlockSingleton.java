@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {

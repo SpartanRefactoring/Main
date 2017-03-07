@@ -53,8 +53,7 @@ import il.org.spartan.*;
  * <li>Using series for tests is the best way for doing TDD (test driven
  * development)
  * </ol>
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} // put your name
- *         here
+ * @author Yossi Gil // put your name here
  * @since 2016 // put the year/date here */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
