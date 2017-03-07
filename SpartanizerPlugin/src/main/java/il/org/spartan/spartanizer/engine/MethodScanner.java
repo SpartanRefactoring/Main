@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.engine;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

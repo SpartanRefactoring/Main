@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * } into {@code
  * int a = b ? 3 : 2;
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-08-07 */
 public final class FragmentInitializerIfUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {

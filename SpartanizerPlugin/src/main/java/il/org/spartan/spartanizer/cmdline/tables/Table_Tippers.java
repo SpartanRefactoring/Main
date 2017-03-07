@@ -10,7 +10,7 @@ import il.org.spartan.tables.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016-11-27 */
 public class Table_Tippers {
   public static void main(final String[] args) {

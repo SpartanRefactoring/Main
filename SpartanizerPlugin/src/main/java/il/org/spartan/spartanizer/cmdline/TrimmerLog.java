@@ -42,8 +42,6 @@ public enum TrimmerLog {
     logToFile = true;
   }
 
-
-
   public static void activateLogToScreen() {
     logToScreen = true;
   }

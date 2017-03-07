@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } to {@code
  * b
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-20 */
 public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onBooleans {

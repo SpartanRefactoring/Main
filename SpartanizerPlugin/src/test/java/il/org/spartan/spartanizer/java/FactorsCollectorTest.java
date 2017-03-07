@@ -1,5 +1,5 @@
-/** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.java;
 
@@ -214,7 +214,7 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test50() {
-    azzert.that(eliminate.peel(e("a*b")), iz("a*b"));
+    azzert.that(minus.peel(e("a*b")), iz("a*b"));
   }
 
   @Test public void test51() {

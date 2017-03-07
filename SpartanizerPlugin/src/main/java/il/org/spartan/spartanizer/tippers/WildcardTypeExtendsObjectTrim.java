@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code ? extends Object} to {@code ?}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-16 */
 public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<WildcardType>//
     implements TipperCategory.SyntacticBaggage {

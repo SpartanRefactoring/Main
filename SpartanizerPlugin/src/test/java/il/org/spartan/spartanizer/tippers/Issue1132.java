@@ -12,8 +12,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 
 /** Test of {@link AssignmentUpdateAndSameUpdate}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
- *         <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-04 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })
