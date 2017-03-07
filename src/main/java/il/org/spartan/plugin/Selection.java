@@ -1,8 +1,5 @@
 package il.org.spartan.plugin;
 
-import static java.util.stream.Collectors.*;
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -14,6 +11,10 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
+
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

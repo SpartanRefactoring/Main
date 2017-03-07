@@ -12,12 +12,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Various methods for comparing
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-19 */
 public enum ExpressionComparator implements Comparator<Expression> {
   /** Order on terms in addition: literals must be last. Sort literals by
    * length.
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2015-07-19 */
   ADDITION {
     @Override public int compare(final Expression e1, final Expression e2) {
@@ -27,7 +29,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
   },
   /** Order on terms in addition: except that we do not sort alphabetically
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2015-07-19 */
   PRUDENT {
     @Override public int compare(final Expression e1, final Expression e2) {
@@ -37,7 +40,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   },
   /** Order on terms in multiplication: literals must be last. Sort literals by
    * length.
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2015-07-19 */
   MULTIPLICATION {
     @Override public int compare(final Expression e1, final Expression e2) {

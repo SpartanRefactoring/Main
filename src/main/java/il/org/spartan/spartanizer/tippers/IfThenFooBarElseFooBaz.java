@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 
 import java.util.*;
@@ -10,6 +9,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,7 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * else
  *   baz();
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {

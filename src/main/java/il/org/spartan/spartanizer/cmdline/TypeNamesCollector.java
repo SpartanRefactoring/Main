@@ -14,7 +14,8 @@ import il.org.spartan.utils.*;
 
 /** Demonstrates iteration through files.
  * @year 2015
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Dec 20, 2016 */
 public enum TypeNamesCollector {
   ;

@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code T extends Object} to {@code T}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
     implements TipperCategory.SyntacticBaggage {

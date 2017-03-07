@@ -4,7 +4,8 @@ package il.org.spartan.plugin;
 
 /** Demo of recommended use of {@link Listener.S} Copy the code, changing the
  * name {@link ConfigurableObjectTemplate} to whatever you need. provide.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Oct 19, 2016 */
 public interface ConfigurableObjectTemplate {
   @SuppressWarnings({ "ClassWithTooManyFields", "CanBeFinal" })
@@ -41,7 +42,8 @@ public interface ConfigurableObjectTemplate {
 
     /** Demo of the implementation. Don't change the name. Just change services
      * @see #go() the only service provided by this template
-     * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} */
+     * @author Yossi Gil
+     *         {@code yossi dot (optional) gil at gmail dot (required) com} */
     class Action extends Settings {
       private static final long serialVersionUID = -1563529531663481546L;
 

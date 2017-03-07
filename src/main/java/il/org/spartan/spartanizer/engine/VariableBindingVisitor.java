@@ -8,7 +8,8 @@ import org.eclipse.jdt.core.dom.*;
  * binding. To use, extend as usual, except that the {@link #preVisit(ASTNode)}
  * function is now <code><b>final</b></code>. If you must, override
  * {@link #preBindingVisit()}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-08-08 18:11:23 +0300 */
 @SuppressWarnings("unused")
 public abstract class VariableBindingVisitor extends ASTVisitor {

@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -16,7 +15,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing the environment
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Jan 1, 2017 */
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends MetaFixture {

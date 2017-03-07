@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 import java.util.*;
@@ -13,12 +12,15 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.first;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import static java.util.stream.Collectors.*;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
