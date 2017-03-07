@@ -24,11 +24,16 @@ import il.org.spartan.spartanizer.utils.*;
  * } to {@code
  * T a = new ArrayList
  * }
+<<<<<<< HEAD
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+=======
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
  * @since 2017-03-02 */
 public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
-  private Type type;
+  @SuppressWarnings("unused") private Type type;
 
   @Override public boolean prerequisite(final VariableDeclarationFragment f) {
     final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
