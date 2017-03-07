@@ -24,6 +24,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A tipper is so small that it is
@@ -34,7 +35,21 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
     implements TipperCategory, Serializable {
-  private static final long serialVersionUID = -2252675511987504571L;
+  public static Converter converts(String from) {
+    return new Converter() {
+      @Override public Tipper.Example.Converts to(String to) {
+        return new Tipper.Example.Converts() {
+
+          @Override public String from() {
+return from;
+          }
+
+          @Override public String to() {
+return to;
+          }};
+      }
+    };
+  }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
    * fragments which are not live in the containing
@@ -98,13 +113,25 @@ public abstract class Tipper<N extends ASTNode> //
     return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
 
+  public static Tipper.Example.Ignores ignores(String code) {
+    return new Tipper.Example.Ignores() {
+      @Override public String code() {
+        return code;
+      }
+    };
+  }
+
   protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }
 
-  private Class<N> myOperandsClass;
+  private static final long serialVersionUID = -2252675511987504571L;
+
+  public String[] akas() {
+    return new String[] { className() };
+  }
 
   /** Determine whether the parameter is "eligible" for application of this
    * instance.
@@ -123,8 +150,8 @@ public abstract class Tipper<N extends ASTNode> //
     return !canTip(¢);
   }
 
-  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
-    return (Class<N>) c2;
+  public String className() {
+    return getClass().getSimpleName();
   }
 
   @Override public String description() {
@@ -137,24 +164,12 @@ public abstract class Tipper<N extends ASTNode> //
     return ¢ != null && getClass().equals(¢.getClass());
   }
 
+  public  Example[] examples() {
+    return new Example[]{};
+  }
+
   @Override public int hashCode() {
     return super.hashCode();
-  }
-
-  private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
-    for (final Method ¢ : getClass().getMethods())
-      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
-        $ = lowest($, ¢.getParameterTypes()[0]);
-    return $ != null ? $ : castClass(ASTNode.class);
-  }
-
-  private boolean isDefinedHere(final Method ¢) {
-    return ¢.getDeclaringClass() == getClass();
-  }
-
-  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
-    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
   /** Heuristics to find the class of operands on which this class works.
@@ -174,6 +189,10 @@ public abstract class Tipper<N extends ASTNode> //
     return getClass().getSimpleName();
   }
 
+  public String technicalName() {
+    return className();
+  }
+
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
@@ -188,15 +207,45 @@ public abstract class Tipper<N extends ASTNode> //
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  /** TODO Yossi Gil: Stub 'Tipper::examples' (created on 2017-03-07)." );
-   * <p>
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
-  public String[][] examples() {
-    // TODO Yossi Gil Auto-generated method stub for examples
-    if (new Object().hashCode() != 0)
-      throw new AssertionError("Stub 'Tipper::examples' not implemented yet (created on  2017-03-07).");
-    return null;
+  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
+    return (Class<N>) c2;
+  }
+
+  private Class<N> initializeMyOperandsClass() {
+    Class<N> $ = null;
+    for (final Method ¢ : getClass().getMethods())
+      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
+        $ = lowest($, ¢.getParameterTypes()[0]);
+    return $ != null ? $ : castClass(ASTNode.class);
+  }
+
+  private boolean isDefinedHere(final Method ¢) {
+    return ¢.getDeclaringClass() == getClass();
+  }
+
+  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
+    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
+  }
+
+  private Class<N> myOperandsClass;
+
+  /** Auxiliary class for FAPI
+   * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+   * @since 2017-03-07 */
+  @FunctionalInterface
+  public interface Converter {
+    Converts to(String to);
+  }
+
+  public interface Example {
+    public interface Converts extends Example {
+      String from();
+
+      String to();
+    }
+
+    public interface Ignores {
+      String code();
+    }
   }
 }
