@@ -28,7 +28,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * }AssignmentUpdateAndSameUpdate
  * <p>
  * Tested by {@link Issue1132}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {

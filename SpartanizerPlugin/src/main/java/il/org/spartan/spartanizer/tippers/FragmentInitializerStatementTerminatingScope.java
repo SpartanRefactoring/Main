@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -10,6 +9,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,7 +22,8 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-08-07 */
 public final class FragmentInitializerStatementTerminatingScope extends $FragementAndStatement //
     implements TipperCategory.Inlining {

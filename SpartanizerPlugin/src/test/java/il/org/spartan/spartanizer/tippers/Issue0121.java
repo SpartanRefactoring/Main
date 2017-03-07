@@ -5,7 +5,8 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public final class Issue0121 {

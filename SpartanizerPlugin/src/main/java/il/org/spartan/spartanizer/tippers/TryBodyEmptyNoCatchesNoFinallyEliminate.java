@@ -1,14 +1,17 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert pattern <code>try {s} [ finally { <i>empty</i> }]</code>, {@code s}
  * not empty, to {@code {s}}.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-19 */
 public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTipper<TryStatement>//
     implements TipperCategory.SyntacticBaggage {

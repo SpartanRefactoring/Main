@@ -6,7 +6,8 @@ import org.junit.*;
 
 /** Ignored arithmetic tests of issue 92 (arithmetic simplification) are moved
  * here.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @Ignore("Do not compute shifts, they have a reason")
 @SuppressWarnings("static-method")

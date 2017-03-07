@@ -22,7 +22,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * } to {@code
  * a = b = 3
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-08-28 */
 public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {

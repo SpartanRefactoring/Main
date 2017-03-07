@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -15,7 +14,8 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Failing tests of issue 295 - FragmentInitializerStatementTerminatingScope.
  * DeclarationInitializerStatementTerminatingScope.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")

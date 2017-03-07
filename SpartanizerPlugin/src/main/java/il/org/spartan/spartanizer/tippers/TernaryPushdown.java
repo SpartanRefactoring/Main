@@ -22,7 +22,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Pushdown a ternary as far down as possible
  * @year 2015
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 25, 2016 */
 public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {

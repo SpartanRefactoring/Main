@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
  * {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
     //

@@ -1,17 +1,19 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static java.util.stream.Collectors.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static java.util.stream.Collectors.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Extract items to which a given annotation applies
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-12-22 */
 public interface annotees {
   static List<SimpleName> names(final List<VariableDeclarationFragment> ¢) {
