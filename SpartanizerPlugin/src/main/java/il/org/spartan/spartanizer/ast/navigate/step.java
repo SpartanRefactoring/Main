@@ -27,6 +27,10 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
+  public static Type type(final ParameterizedType ¢) {
+    return ¢.getType();
+  }
+
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
