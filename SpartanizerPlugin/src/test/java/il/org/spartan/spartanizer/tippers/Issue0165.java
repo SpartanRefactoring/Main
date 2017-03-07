@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests for centification of a single parameter to a function
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

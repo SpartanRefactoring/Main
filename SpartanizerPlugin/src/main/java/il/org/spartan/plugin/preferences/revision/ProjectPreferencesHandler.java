@@ -247,10 +247,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           final SpartanTipper st = (SpartanTipper) o;
-          final String before = st.preview().before;
+          final String before = getPreviewString(st.preview(), 0);
           final IDocument d = new Document(before);
           try {
-            final String after = st.preview().after;
+            final String after = getPreviewString(st.preview(), 1);
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();
@@ -316,5 +316,24 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           }
         });
       }
+  }
+
+  /** Returns preview as a single string, containing examples from the position
+   * column of the array.
+   * @param preview examples array
+   * @param position example column (before/after)
+   * @return unified example column string */
+  static String getPreviewString(final String[][] preview, final int position) {
+    assert position == 0 || position == 1;
+    if (preview == null)
+      return null;
+    final int counterPosition = 1 - position;
+    final StringBuilder $ = new StringBuilder();
+    for (int i = 0; i < preview.length; ++i) {
+      $.append("/* Example ").append(i + 1).append(" */\n").append(preview[i][position]).append("\n\n");
+      for (int j = 0; j < preview[i][counterPosition].split("\n").length - preview[i][position].split("\n").length; ++j)
+        $.append("\n");
+    }
+    return ($ + "").trim();
   }
 }

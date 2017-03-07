@@ -5,7 +5,7 @@ import java.io.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing resources in try statement
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-01 */
 @SuppressWarnings({ "ALL", "TooBroadScope", "all" })
 public class FixtureFinally extends MetaFixture {

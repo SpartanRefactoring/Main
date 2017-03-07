@@ -13,9 +13,10 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
   private static final long serialVersionUID = -5815591308727978558L;
 
   private static boolean notClaimedByOthers(final ForStatement ¢) {
-    return cantTip.declarationInitializerStatementTerminatingScope(¢) && cantTip.forRenameInitializerToCent(¢) //
+    return cantTip.declarationInitializerStatementTerminatingScope(¢)//
+        && cantTip.forRenameInitializerToCent(¢) //
         && cantTip.declarationRedundantInitializer(¢)//
-        && cantTip.removeRedundantIf(¢);
+        && cantTip.remvoeRedundantIf(¢);
   }
 
   @Override public String description(final ForStatement ¢) {

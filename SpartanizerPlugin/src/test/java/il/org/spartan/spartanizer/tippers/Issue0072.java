@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Tests for {@Link InfixAdditionZero}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

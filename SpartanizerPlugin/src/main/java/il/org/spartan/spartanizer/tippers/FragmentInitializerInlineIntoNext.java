@@ -36,7 +36,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
-        || Tipper.forbiddenOpOnPrimitive(f, nextStatement))
+        || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:
@@ -56,8 +56,9 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
-    final VariableDeclarationStatement parent = parentStatement(f);
-    if (parent == null || iz.forStatement(parent))
+    final Statement parent = az.statement(parent(f));
+    if (parent == null//
+        || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//

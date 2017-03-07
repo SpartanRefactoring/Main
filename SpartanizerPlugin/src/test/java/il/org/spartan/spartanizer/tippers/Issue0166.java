@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** Unit test for
  * {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

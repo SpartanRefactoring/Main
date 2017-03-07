@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if (X || Y)
  *   return A;
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.CommnonFactoring {

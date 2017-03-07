@@ -6,11 +6,11 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-18 */
 public class Vocabulary extends HashMap<String, MethodDeclaration> {
-  private static final long serialVersionUID = -6053017568518719756L;
+  private static final long serialVersionUID = 1L;
 
   public static String mangle(final Assignment ¢) {
     return mangle(¢.getOperator());
