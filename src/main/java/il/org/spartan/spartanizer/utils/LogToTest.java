@@ -3,13 +3,13 @@
  * @since Dec 14, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.lisp.*;
-
 import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.util.*;

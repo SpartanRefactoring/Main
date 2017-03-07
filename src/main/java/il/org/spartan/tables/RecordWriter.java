@@ -1,7 +1,7 @@
 package il.org.spartan.tables;
 
 import java.io.*;
-import java.util.Map;
+import java.util.*;
 
 import il.org.spartan.*;
 

@@ -10,6 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 

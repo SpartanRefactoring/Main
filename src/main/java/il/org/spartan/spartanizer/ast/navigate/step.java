@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;

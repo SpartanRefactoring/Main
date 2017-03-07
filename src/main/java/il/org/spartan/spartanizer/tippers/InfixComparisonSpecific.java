@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -9,8 +11,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-
-import java.util.Comparator;
 
 /** reorder comparisons so that the specific value is placed on the right.
  * Specific value means a literal, or any of the two keywords <code>

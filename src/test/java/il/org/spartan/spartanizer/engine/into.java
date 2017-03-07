@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.engine;
 
-import static java.util.stream.Collectors.*;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;

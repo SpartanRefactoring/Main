@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.meta;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
 
 import java.io.*;
@@ -10,6 +8,10 @@ import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
