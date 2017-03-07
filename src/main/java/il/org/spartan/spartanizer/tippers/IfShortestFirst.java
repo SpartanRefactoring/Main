@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } into {@code
  * a ? c(d, e) : f(g, h)
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-08-15 */
 public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Sorting {

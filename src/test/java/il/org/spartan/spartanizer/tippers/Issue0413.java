@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.cmdline.*;
  * <li>azzert.that(Essence.stringRemove("abc"), iz("abc"));
  * <li>azzert.that(Essence.stringRemove("abc"), instanceOf(String.class));
  * </ul>
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //

@@ -4,9 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -22,7 +21,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
   private static final long serialVersionUID = -1007971487834999855L;
 
   @Override public ASTNode replacement(final TryStatement s) {
-    final List<CatchClause> catches = catchClauses(s);
+    final List<CatchClause> catches = step.catchClauses(s);
     CatchClause multiTypeCatch = null;
     int i = 0;
     // TODO: Ori Roth, this is a perfect example for extract method, which would
@@ -34,11 +33,11 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
       }
     if (multiTypeCatch == null)
       return null;
-    final List<Type> types = types(az.UnionType(multiTypeCatch.getException().getType()));
-    final Block commonBody = catchClauses(s).get(i).getBody();
+    final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
+    final Block commonBody = step.catchClauses(s).get(i).getBody();
     final SimpleName commonName = multiTypeCatch.getException().getName();
     final TryStatement $ = copy.of(s);
-    catchClauses($).remove(i);
+    step.catchClauses($).remove(i);
     for (final Type t : types) {
       final CatchClause c = s.getAST().newCatchClause();
       c.setBody(copy.of(commonBody));
@@ -46,7 +45,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
       e.setName(copy.of(commonName));
       e.setType(copy.of(t));
       c.setException(e);
-      catchClauses($).add(i, c);
+      step.catchClauses($).add(i, c);
       ++i;
     }
     return $;

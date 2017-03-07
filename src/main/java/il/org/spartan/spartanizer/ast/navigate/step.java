@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.java.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-16 */
 public enum step {
   ;
@@ -536,6 +536,10 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
+  public static Name name(final SimpleType ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
   public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -563,10 +567,6 @@ public enum step {
   }
 
   public static SimpleName name(final QualifiedName ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
-  public static Name name(final SimpleType ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -651,22 +651,6 @@ public enum step {
    * @return parent of the parameter */
   public static ASTNode parent(final ASTNode ¢) {
     return ¢ == null ? null : ¢.getParent();
-  }
-
-  public static TryStatement parent(final CatchClause ¢) {
-    return az.tryStatement(parent((ASTNode) ¢));
-  }
-
-  public static VariableDeclarationStatement parentStatement(final VariableDeclarationFragment ¢) {
-    return az.variableDeclrationStatement(parent(¢));
-  }
-
-  /** @param ¢ current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
-  public static Statement previousStatementInBody(final Statement ¢) {
-    return wizard.previous(¢, statements(az.block(parent(¢))));
   }
 
   public static Expression receiver(final MethodInvocation ¢) {
@@ -890,5 +874,13 @@ public enum step {
 
   @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
     return ¢ == null ? null : ¢.values();
+  }
+
+  /** @param ¢ current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  public static Statement previousStatementInBody(final Statement ¢) {
+    return wizard.previous(¢, statements(az.block(parent(¢))));
   }
 }

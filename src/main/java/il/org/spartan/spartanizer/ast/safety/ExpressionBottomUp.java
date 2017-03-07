@@ -8,53 +8,31 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Map-reduce on expression structure
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+/** TODO Yossi Gil: document class {@link }
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-29 */
-public abstract class ExpressionBottomUp<R> extends StatementBottomUp<R> {
-  protected R map(final ArrayAccess x) {
-    return reduce(map(x.getArray()), map(x.getIndex()));
+public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
+  protected T map(final ArrayAccess ¢) {
+    return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  protected R map(final ArrayCreation x) {
-    return reduce(reduceExpressions(dimensions(x)), map(x.getInitializer()));
+  protected T map(final ArrayCreation ¢) {
+    return reduce(reduceExpressions(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  protected R map(final ArrayInitializer x) {
-    return reduceExpressions(expressions(x));
+  protected T map(final Assignment ¢) {
+    return reduce(map(to(¢)), map(from(¢)));
   }
 
-  protected R map(final Assignment x) {
-    return reduce(map(to(x)), map(from(x)));
+  protected T map(final ClassInstanceCreation ¢) {
+    return reduce(map(¢.getExpression()), reduceExpressions(arguments(¢)));
   }
 
-  protected R map(@SuppressWarnings("unused") final BooleanLiteral x) {
-    return reduce();
-  }
-
-  protected R map(final CastExpression ¢) {
-    return reduce(map(¢.getExpression()));
-  }
-
-  protected R map(@SuppressWarnings("unused") final CharacterLiteral x) {
-    return reduce();
-  }
-
-  protected R map(final ClassInstanceCreation x) {
-    return reduce(map(x.getExpression()), reduceExpressions(arguments(x)));
-  }
-
-  protected R map(final ConditionalExpression ¢) {
+  protected T map(final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  protected R map(@SuppressWarnings("unused") final CreationReference x) {
-    return reduce();
-  }
-
-  @Override public R map(final Expression ¢) {
-    if (¢ == null)
-      return reduce();
+  @Override public T map(final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
@@ -83,99 +61,23 @@ public abstract class ExpressionBottomUp<R> extends StatementBottomUp<R> {
       case SUPER_METHOD_INVOCATION:
         return map((SuperMethodInvocation) ¢);
       default:
-        return reduce();
+        return null;
     }
   }
 
-  protected R map(@SuppressWarnings("unused") final ExpressionMethodReference __) {
-    return reduce();
+  protected T map(final MethodInvocation ¢) {
+    return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  protected R map(final FieldAccess x) {
-    return reduce(map(x.getExpression()), map(x.getName()));
-  }
-
-  protected R map(final InfixExpression ¢) {
-    return map(¢.getLeftOperand());
-  }
-
-  protected R map(final InstanceofExpression ¢) {
-    return map(¢.getLeftOperand());
-  }
-
-  protected R map(@SuppressWarnings("unused") final LambdaExpression __) {
-    return reduce();
-  }
-
-  protected R map(final MethodInvocation x) {
-    return reduce(map(expression(x)), reduceExpressions(arguments(x)));
-  }
-
-  protected R map(@SuppressWarnings("unused") final MethodReference x) {
-    return reduce();
-  }
-
-  protected R map(final Name x) {
-    return map(x.isSimpleName() ? (SimpleName) x : (QualifiedName) x);
-  }
-
-  protected R map(@SuppressWarnings("unused") final NullLiteral x) {
-    return reduce();
-  }
-
-  protected R map(@SuppressWarnings("unused") final NumberLiteral x) {
-    return reduce();
-  }
-
-  protected R map(final ParenthesizedExpression ¢) {
-    return map(¢.getExpression());
-  }
-
-  protected R map(final PostfixExpression ¢) {
+  protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
 
-  protected R map(final PrefixExpression ¢) {
+  protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
 
-  protected R map(final QualifiedName x) {
-    return reduce(map(x.getName()), map(x.getQualifier()));
-  }
-
-  protected R map(@SuppressWarnings("unused") final SimpleName x) {
-    return reduce();
-  }
-
-  protected R map(@SuppressWarnings("unused") final StringLiteral x) {
-    return reduce();
-  }
-
-  protected R map(@SuppressWarnings("unused") final SuperFieldAccess x) {
-    return reduce();
-  }
-
-  @Override protected R map(final SuperMethodInvocation x) {
-    return map(x.getQualifier());
-  }
-
-  protected R map(@SuppressWarnings("unused") final SuperMethodReference x) {
-    return reduce();
-  }
-
-  protected R map(final ThisExpression ¢) {
-    return map(¢.getQualifier());
-  }
-
-  protected R map(@SuppressWarnings("unused") final TypeLiteral x) {
-    return reduce();
-  }
-
-  protected R map(@SuppressWarnings("unused") final TypeMethodReference x) {
-    return reduce();
-  }
-
-  @Override protected R map(@SuppressWarnings("unused") final VariableDeclarationExpression __) {
-    return reduce();
+  protected T map(final InstanceofExpression ¢) {
+    return map(¢.getLeftOperand());
   }
 }

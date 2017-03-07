@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-29 */
 public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {

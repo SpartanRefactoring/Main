@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
  * should read like a sentence phrase.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 public interface hop {
   /** Provides a {@link Iterable} access to the ancestors of an {@link ASTNode},
@@ -59,7 +59,7 @@ public interface hop {
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
-    return hop.correspondingVariableDeclarationFragment(fragments(s), n);
+    return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
@@ -127,9 +127,5 @@ public interface hop {
 
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
-  }
-
-  static Statement lastStatement(final Block ¢) {
-    return lisp.last(extract.statements(¢));
   }
 }

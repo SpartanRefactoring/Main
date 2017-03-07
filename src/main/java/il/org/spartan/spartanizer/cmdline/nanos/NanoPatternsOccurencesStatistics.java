@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 2, 2017 */
 public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int, HashMap<String, Int>>> {
-  private static final long serialVersionUID = -4997244204514115505L;
+  private static final long serialVersionUID = 1L;
   private final ASTVisitor typesDistributionCounter = new ASTVisitor() {
     @Override public void preVisit(final ASTNode ¢) {
       countNode(¢);

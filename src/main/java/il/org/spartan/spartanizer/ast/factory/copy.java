@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty <code><b>enum</b></code> with a variety of {@code public
  * static} functions for restructuring expressions.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-07-21 */
 public enum copy {
   ;

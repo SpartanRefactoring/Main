@@ -1,7 +1,7 @@
 /**
  * Before and afer spartanization 
  *
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} 
+ * @author Yossi Gil <yossi.gil@gmail.com>
  * @since Oct 23, 2016
  */
 public final class Hello {
