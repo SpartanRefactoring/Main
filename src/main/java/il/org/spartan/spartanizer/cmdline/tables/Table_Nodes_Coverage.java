@@ -33,7 +33,6 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
-    ¢.accept(new CleanerVisitor());
     try {
       statistics.logCompilationUnit(¢);
       final String spartanzied = spartanizer.fixedPoint(¢);
@@ -47,6 +46,7 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
 
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
+    statistics.clear();
   }
 
   private static void initializeWriter() {
@@ -65,14 +65,10 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
   }
 
   private static double coverage() {
-    return format.perc(nodesCovered(), nodes());
+    return statistics.covergae();
   }
 
   private static int nodes() {
-    return 0;
-  }
-
-  private static int nodesCovered() {
-    return 0;
+    return statistics.nodes();
   }
 }
