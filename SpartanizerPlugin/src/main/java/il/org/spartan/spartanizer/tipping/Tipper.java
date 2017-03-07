@@ -39,14 +39,14 @@ public abstract class Tipper<N extends ASTNode> //
     return new Converter() {
       @Override public Tipper.Example.Converts to(String to) {
         return new Tipper.Example.Converts() {
-
           @Override public String from() {
-return from;
+            return from;
           }
 
           @Override public String to() {
-return to;
-          }};
+            return to;
+          }
+        };
       }
     };
   }
@@ -164,8 +164,8 @@ return to;
     return ¢ != null && getClass().equals(¢.getClass());
   }
 
-  public  Example[] examples() {
-    return new Example[]{};
+  @SuppressWarnings("static-method") public Example[] examples() {
+    return new Example[] {};
   }
 
   @Override public int hashCode() {
