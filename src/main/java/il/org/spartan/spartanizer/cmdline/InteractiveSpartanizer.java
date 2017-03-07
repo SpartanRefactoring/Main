@@ -54,6 +54,10 @@ public class InteractiveSpartanizer {
     return new Trimmer(toolbox).fixed(from + "");
   }
 
+  public String once(final String from) {
+    return new Trimmer(toolbox).spartanizeOnce(from);
+  }
+
   ASTVisitor collect(final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
