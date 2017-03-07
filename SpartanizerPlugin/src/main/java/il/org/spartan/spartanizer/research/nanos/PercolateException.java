@@ -37,7 +37,7 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
     return Category.Exception;
   }
 
-  @SuppressWarnings("unused") private static TryStatement parentAsTryStatement(final CatchClause ¢) {
+  private static TryStatement parentAsTryStatement(final CatchClause ¢) {
     return az.tryStatement(parent(¢));
   }
 
