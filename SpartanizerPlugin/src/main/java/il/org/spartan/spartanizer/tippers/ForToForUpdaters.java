@@ -43,7 +43,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
     final Block bodyBlock = az.block(step.body(¢));
-    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || statements(bodyBlock).size() < 2
+    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2
         || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
