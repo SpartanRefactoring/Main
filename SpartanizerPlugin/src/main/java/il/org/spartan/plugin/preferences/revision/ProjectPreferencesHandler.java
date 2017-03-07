@@ -331,10 +331,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     StringBuilder $ = new StringBuilder();
     for (int i = 0; i < preview.length; ++i) {
       $.append("/* Example ").append(i + 1).append(" */\n").append(preview[i][position]).append("\n\n");
-      int diff = preview[i][counterPosition].split("\n").length - preview[i][position].split("\n").length;
-      for (int j = 0; j < diff; ++j)
+      for (int j = 0; j < preview[i][counterPosition].split("\n").length - preview[i][position].split("\n").length; ++j)
         $.append("\n");
     }
-    return $.toString().trim();
+    return ($ + "").trim();
   }
 }
