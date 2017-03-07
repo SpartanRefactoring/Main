@@ -36,11 +36,15 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
       statistics.logCompilationUnit(¢);
       final String spartanzied = spartanizer.fixedPoint(¢);
       statistics.logAfterSpartanization(into.cu(spartanzied));
-      spartanalyzer.fixedPoint(spartanzied);
+      analyze(spartanzied);
     } catch (final AssertionError __) {
       ___.unused(__);
     }
     return true;
+  }
+
+  @SuppressWarnings("static-method") protected String analyze(final String spartanzied) {
+    return spartanalyzer.fixedPoint(spartanzied);
   }
 
   @Override protected void done(final String path) {
