@@ -3,9 +3,11 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -26,18 +28,22 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
   }
 
   public double covergae() {
-    return stream().mapToDouble(λ -> safe.div(λ.nodesCoveredByNanoPatterns, λ.nodesAfterSpartanization)).average().orElseGet(() -> 1);
+    return format.perc(nodesCovered(), nodes());
   }
 
   public int nodes() {
     return stream().mapToInt(λ -> λ.nodesAfterSpartanization).sum();
+  }
+
+  private int nodesCovered() {
+    return stream().mapToInt(λ -> λ.nodesCovered).sum();
   }
 }
 
 class CompilationUnitRecord {
   public int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
-  public int nodesCoveredByNanoPatterns;
+  public int nodesCovered;
   public final Set<String> nps = new HashSet<>();
 
   public CompilationUnitRecord(final CompilationUnit cu) {
@@ -53,7 +59,7 @@ class CompilationUnitRecord {
   }
 
   public void markNP(final ASTNode n, final String np) {
-    nodesCoveredByNanoPatterns += count.nodes(n);
+    nodesCovered += count.nodes(n);
     nps.add(np);
   }
 }
