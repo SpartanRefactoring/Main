@@ -40,7 +40,7 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
   }
 
   boolean noContinue() {
-    return !haz.continueStatement(body);
+    return !haz.ContinueStatement(body);
   }
 
   boolean validUpdates() {
