@@ -24,7 +24,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
-      if (!$.get(¢).before($.get(¢ + 1))) {
+      if (!$.get(¢).compareTo($.get(¢ + 1))) {
         final switchBranch tmp = $.get(¢ + 1);
         $.set(¢ + 1, $.get(¢));
         $.set(¢, tmp);

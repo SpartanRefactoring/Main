@@ -29,6 +29,10 @@ import il.org.spartan.spartanizer.engine.*;
  * idempotent: Applying a tipper to the output of itself is the empty operation.
  * @param <N> type of node which triggers the transformation.
  * @author Yossi Gil
+<<<<<<< HEAD
+=======
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
@@ -87,10 +91,10 @@ public abstract class Tipper<N extends ASTNode> //
   public abstract String description(N n);
 
   // TODO Roth: make abstract
-  /** Return a {@link TipperPreview} containing a before-after use case example.
+  /** Returns before-after use case example.
    * @return preview of the tipper */
-  @SuppressWarnings("static-method") public TipperPreview preview() {
-    return TipperPreview.empty();
+  @SuppressWarnings("static-method") public String[][] examples() {
+    return new String[][] {};
   }
 
   /** Heuristics to find the class of operands on which this class works.
