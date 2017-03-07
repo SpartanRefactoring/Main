@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tipping;
 
-import static il.org.spartan.lisp.*;
 import static java.lang.reflect.Modifier.*;
 
 import java.io.*;
@@ -18,6 +17,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,7 +34,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
     implements TipperCategory, Serializable {
-
   private static final long serialVersionUID = -2252675511987504571L;
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
@@ -174,7 +174,6 @@ public abstract class Tipper<N extends ASTNode> //
     return getClass().getSimpleName();
   }
 
-
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
@@ -189,16 +188,15 @@ public abstract class Tipper<N extends ASTNode> //
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  /** 
-    * TODO Yossi Gil: Stub 'Tipper::examples' (created on  2017-03-07)." );
-    * <p>
-    * @return
-    * <p> [[SuppressWarningsSpartan]]
-    */
+  /** TODO Yossi Gil: Stub 'Tipper::examples' (created on 2017-03-07)." );
+   * <p>
+   * @return
+   *         <p>
+   *         [[SuppressWarningsSpartan]] */
   public String[][] examples() {
     // TODO Yossi Gil Auto-generated method stub for examples
     if (new Object().hashCode() != 0)
-     throw new AssertionError("Stub 'Tipper::examples' not implemented yet (created on  2017-03-07)." );
+      throw new AssertionError("Stub 'Tipper::examples' not implemented yet (created on  2017-03-07).");
     return null;
   }
 }

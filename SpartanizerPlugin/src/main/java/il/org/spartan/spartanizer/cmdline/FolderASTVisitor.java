@@ -140,6 +140,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     });
     return $ > 0;
   }
+
   public static class FieldsOnly extends FolderASTVisitor {
     public static void main(final String[] args)
         throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

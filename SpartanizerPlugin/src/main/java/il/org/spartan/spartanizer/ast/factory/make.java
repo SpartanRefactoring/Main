@@ -1,10 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static java.util.stream.Collectors.*;
-import static il.org.spartan.lisp.*;
-
-import il.org.spartan.*;
-
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -19,6 +14,11 @@ import org.eclipse.jface.text.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;

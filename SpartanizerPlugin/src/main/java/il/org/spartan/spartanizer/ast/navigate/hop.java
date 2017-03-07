@@ -1,17 +1,16 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.last;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.lisp.first;
-
-import il.org.spartan.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.java;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-
-import java.util.Arrays;
 
 /** Maintain a canonical order of modifiers.
  * @author Yossi Gil

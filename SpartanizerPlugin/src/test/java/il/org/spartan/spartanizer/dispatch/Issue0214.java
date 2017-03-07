@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.dispatch;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 

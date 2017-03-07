@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.is;
-import static il.org.spartan.azzert.not;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 

@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.research.utils;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
