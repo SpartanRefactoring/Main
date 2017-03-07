@@ -24,12 +24,9 @@ import il.org.spartan.spartanizer.utils.*;
  * } to {@code
  * T a = new ArrayList
  * }
-<<<<<<< HEAD
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
-=======
  * @author Yossi Gil
  *         {@code yossi dot (optional) gil at gmail dot (required) com}
->>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
  * @since 2017-03-02 */
 public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
@@ -51,7 +48,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
-        || Tipper.frobiddenOpOnPrimitive(f, nextStatement))
+        || Tipper.forbiddenOpOnPrimitive(f, nextStatement))
       return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:

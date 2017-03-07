@@ -591,7 +591,7 @@ public enum extract {
   }
 
   public static List<ASTNode> updatedVariables(final Expression x) {
-    final ExpressionBottomUp<List<ASTNode>> $ = new ExpressionBottomUp<List<ASTNode>>() {
+    List<ASTNode> $ = new ExpressionBottomUp<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
         return new LinkedList<>();
       }
@@ -628,8 +628,7 @@ public enum extract {
       boolean updating(final PrefixExpression ¢) {
         return in(¢.getOperator(), INCREMENT, DECREMENT);
       }
-    };
-    List<ASTNode> map = $.map(x);
-    return map != null ? map : new ArrayList<ASTNode>();
+    }.map(x);
+    return $ != null ? $ : new ArrayList<ASTNode>();
   }
 }
