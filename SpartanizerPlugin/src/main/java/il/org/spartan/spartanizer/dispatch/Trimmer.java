@@ -93,18 +93,36 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   public String fixed(final String from) {
-    for (final IDocument $ = new Document(from);;) {
-      final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
-      try {
-        e.apply($);
-      } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        if (!silent)
-          monitor.logEvaluationError(this, ¢);
-        throw new AssertionError(¢);
-      }
-      if (!e.hasChildren())
+    for (final IDocument $ = new Document(from);;)
+      if (fixed(iteration($)))
         return $.get();
+  }
+
+  public String spartanizeOnce(final String from) {
+    final IDocument $ = new Document(from);
+    iteration($);
+    return $.get();
+  }
+
+  /** return if got to fixed point of code */
+  private static boolean fixed(final TextEdit ¢) {
+    return !¢.hasChildren();
+  }
+
+  /** Performs one iteration of Spartanization
+   * @param $ idocument object
+   * @return
+   * @throws AssertionError */
+  public TextEdit iteration(final IDocument $) throws AssertionError {
+    final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+    try {
+      e.apply($);
+    } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      if (!silent)
+        monitor.logEvaluationError(this, ¢);
+      throw new AssertionError(¢);
     }
+    return e;
   }
 
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
