@@ -20,8 +20,10 @@ import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.utils.*;
+
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Jan 15, 2017 */
 // TODO: Ori Roth why so many fields? --yg
 public class InflaterListener implements MouseWheelListener, KeyListener {

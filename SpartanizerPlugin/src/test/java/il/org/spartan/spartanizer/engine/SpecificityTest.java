@@ -1,18 +1,19 @@
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 8, 2016 */
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-
-import java.util.Comparator;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })

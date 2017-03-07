@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {

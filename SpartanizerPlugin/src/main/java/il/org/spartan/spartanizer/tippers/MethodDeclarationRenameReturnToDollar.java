@@ -23,7 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO: Artium Nihamkin (original) please add a description
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <tt><boris.van.sosin [at] gmail.com></tt> (v2)
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} (v3)
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com} (v3)
  * @since 2013/01/01 */
 public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Dollarization {

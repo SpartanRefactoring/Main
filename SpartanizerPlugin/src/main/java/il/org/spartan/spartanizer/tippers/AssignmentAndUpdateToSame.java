@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -24,7 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * }AssignmentUpdateAndSameUpdate
  * <p>
  * Tested by {@link Issue1133}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-03-04 */
 public final class AssignmentAndUpdateToSame extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {

@@ -9,7 +9,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2014/05/24
  * @author Yossi GIl */
 @SuppressWarnings("unused")
@@ -123,7 +124,8 @@ public class FileTestUtils {
    * overriding {@link #go(List,File)} as per customer's need.
    * @seTestUtils.SATestSuite.Files
    * @see FileTestUtils.Traverse
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2014/05/24 */
   public abstract static class Directories extends FileTestUtils.Traverse {
     /** Adds a test case to the collection of all test cases generated in the
@@ -143,7 +145,8 @@ public class FileTestUtils {
    * overriding {@link #go(List,File)} as per customer's need.
    * @seTestUtils.SATestSuite.Directories
    * @see FileTestUtils.Traverse
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2014/05/24 */
   public abstract static class Files extends FileTestUtils.Traverse {
     @Override public void go(final List<Object[]> $, final File d) {
@@ -167,7 +170,8 @@ public class FileTestUtils {
    * {@link #location} while generating test cases.
    * @seTestUtils.SATestSuite.Files
    * @seTestUtils.SATestSuite.Directories
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2014/05/24 */
   public abstract static class Traverse extends FileTestUtils {
     /** @return a collection of all test cases generated in the traversal */

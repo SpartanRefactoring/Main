@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
  * f(); } provided that this <code><b>if</b></code> statement is the last
  * statement in a method.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {

@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
@@ -11,9 +10,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.type.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
  * expression using {@link Axiom} .
@@ -24,7 +26,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
-   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} */
+   * @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com} */
   @Ignore
   public static class NotWorkingYet {
     // All test work now

@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import static il.org.spartan.lisp.*;
-
-import il.org.spartan.*;
-
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
 import java.io.*;
@@ -13,6 +9,9 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;

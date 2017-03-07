@@ -5,7 +5,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Fluent API.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-05 */
 public interface JohnDoe {
   static boolean property(final SingleVariableDeclaration ¢) {
