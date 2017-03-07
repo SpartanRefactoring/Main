@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
-
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -13,9 +11,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
 
 /** Generates a table that shows how many times each nano occurred in each
  * project
@@ -23,6 +20,7 @@ import il.org.spartan.tables.*;
  * @since 2017-01-03 */
 public class Table_RawNanoStatistics extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer().addRejected();
+  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static {
@@ -42,28 +40,19 @@ public class Table_RawNanoStatistics extends FolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     FolderASTVisitor.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
   }
 
-  @Override public boolean visit(final MethodDeclaration $) {
-    if (!excludeMethod($))
-      try {
-        spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
-        System.err.print("X");
-      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-        System.err.print("I");
-      }
+  @Override public boolean visit(final CompilationUnit $) {
+    try {
+      spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
+    } catch (final AssertionError __) {
+      ___.unused(__);
+    }
     return super.visit($);
   }
 
   @Override public boolean visit(final FieldDeclaration ¢) {
     spartanalyzer.fixedPoint(ast(¢ + ""));
-    return true;
-  }
-
-  @Override public boolean visit(final CompilationUnit ¢) {
-    ¢.accept(new CleanerVisitor());
     return true;
   }
 
