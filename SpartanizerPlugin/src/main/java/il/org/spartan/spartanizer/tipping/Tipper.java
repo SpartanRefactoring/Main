@@ -174,12 +174,6 @@ public abstract class Tipper<N extends ASTNode> //
     return getClass().getSimpleName();
   }
 
-  // TODO Roth: make abstract
-  /** Return a {@link TipperPreview} containing a before-after use case example.
-   * @return preview of the tipper */
-  @SuppressWarnings("static-method") public TipperPreview preview() {
-    return TipperPreview.empty();
-  }
 
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
@@ -193,5 +187,18 @@ public abstract class Tipper<N extends ASTNode> //
    * @return a tip given for the ASTNode ¢. */
   public Tip tip(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
+  }
+
+  /** 
+    * TODO Yossi Gil: Stub 'Tipper::examples' (created on  2017-03-07)." );
+    * <p>
+    * @return
+    * <p> [[SuppressWarningsSpartan]]
+    */
+  public String[][] examples() {
+    // TODO Yossi Gil Auto-generated method stub for examples
+    if (new Object().hashCode() != 0)
+     throw new AssertionError("Stub 'Tipper::examples' not implemented yet (created on  2017-03-07)." );
+    return null;
   }
 }

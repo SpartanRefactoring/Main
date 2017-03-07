@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
-import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
