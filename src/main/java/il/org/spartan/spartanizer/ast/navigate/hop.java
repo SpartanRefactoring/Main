@@ -79,7 +79,7 @@ public interface hop {
    * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
    *         <code><b>null</b></code> if not such sideEffects exists. */
-  static ASTNode lastStatement(final Statement ¢) {
+  static Statement lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
   }
 
