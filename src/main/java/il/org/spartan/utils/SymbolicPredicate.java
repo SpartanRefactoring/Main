@@ -1,5 +1,5 @@
-package il.org.spartan.spartanizer.utils;
-
+package il.org.spartan.utils;
+import static il.org.spartan.lisp.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -8,32 +8,32 @@ import il.org.spartan.*;
 
 /** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-06 */
-public interface Condition extends BooleanSupplier {
+public interface SymbolicPredicate extends BooleanSupplier {
   static Inner and(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Conjunction(s1, s2, ss);
   }
 
-  static Negation not(final BooleanSupplier ¢) {
+  static Negation NOT(final BooleanSupplier ¢) {
     return new Negation(¢);
   }
 
   static Inner of(final BooleanSupplier ¢) {
-    return new Wrapper(¢);
+    return new Parenthesis(¢);
   }
 
   static Inner condition(final BooleanSupplier ¢) {
-    return new Wrapper(¢);
+    return new Parenthesis(¢);
   }
 
-  static Inner or(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Inner OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Disjunction(s1, s2, ss);
   }
 
-  BooleanSupplier X = Condition.of(() -> {
+  SymbolicPredicate X = SymbolicPredicate.of(() -> {
     throw new AssertionError();
   });
-  BooleanSupplier F = new Wrapper(() -> false);
-  BooleanSupplier T = new Wrapper(() -> true);
+  SymbolicPredicate F = new Parenthesis(() -> false);
+  SymbolicPredicate T = new Parenthesis(() -> true);
 
   abstract class Compound implements Inner {
     protected Stream<BooleanSupplier> stream() {
@@ -55,7 +55,7 @@ public interface Condition extends BooleanSupplier {
       return add(c2, cs);
     }
 
-    private final List<BooleanSupplier> inner = new ArrayList<>();
+     final List<BooleanSupplier> inner = new ArrayList<>();
   }
 
   class Conjunction extends Compound {
@@ -75,16 +75,12 @@ public interface Condition extends BooleanSupplier {
       return stream().allMatch(λ -> λ.getAsBoolean());
     }
 
-    @Override public BooleanSupplier or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Inner or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new Disjunction(this, c, cs);
     }
   }
 
   final class Disjunction extends Compound {
-    public Disjunction(final Conjunction c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
-      add(c1, c2, cs);
-    }
-
     public Disjunction(final BooleanSupplier c, final BooleanSupplier... cs) {
       add(c, cs);
     }
@@ -94,25 +90,33 @@ public interface Condition extends BooleanSupplier {
     }
 
     @Override public Inner and(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return add(c, cs);
+      final BooleanSupplier last = last(inner);
+      SymbolicPredicate x = SymbolicPredicate.of(last);
+      final Inner and = SymbolicPredicate.and(x,c,cs);
+      inner.set(inner.size()-1, and); 
+      return this;
     }
 
     @Override public boolean getAsBoolean() {
       return stream().anyMatch(λ -> λ.getAsBoolean());
     }
 
-    @Override public BooleanSupplier or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Inner or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return add(c, cs);
     }
   }
 
-  interface Inner extends Condition {
+  interface Inner extends SymbolicPredicate {
     Inner and(BooleanSupplier c, BooleanSupplier... cs);
 
-    BooleanSupplier or(BooleanSupplier c, BooleanSupplier... cs);
+    default boolean eval() {
+      return getAsBoolean();
+    }
+
+    Inner or(BooleanSupplier c, BooleanSupplier... cs);
   }
 
-  class Negation extends Wrapper {
+  class Negation extends Parenthesis {
     public Negation(final BooleanSupplier s) {
       super(s);
     }
@@ -122,8 +126,8 @@ public interface Condition extends BooleanSupplier {
     }
   }
 
-  class Wrapper implements Inner {
-    public Wrapper(final BooleanSupplier inner) {
+  class Parenthesis implements Inner {
+    public Parenthesis(final BooleanSupplier inner) {
       if (inner == null)
         throw new IllegalArgumentException();
       this.inner = inner;
