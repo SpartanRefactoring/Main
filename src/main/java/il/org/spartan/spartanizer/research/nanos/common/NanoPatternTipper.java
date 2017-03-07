@@ -68,7 +68,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return "";
   }
 
-  public String technicalName() {
+  @Override public String technicalName() {
     return className();
   }
 
@@ -80,10 +80,9 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return "";
   }
 
-  public String[] akas() {
+  @Override public String[] akas() {
     return new String[] { className() };
   }
-
 
   protected abstract Tip pattern(N ¢);
 
