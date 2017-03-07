@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** A test suite for class {@link namer}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-18
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -9,7 +9,8 @@ import il.org.spartan.utils.*;
 
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, type of subclass
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {
   private static final long serialVersionUID = 429192337773634368L;
@@ -51,7 +52,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Adds a key and a <code><b>double</b><code> value to this instance 
-                   * @param key The key to be added; must not be <code><b>null</b></code>
+                    * @param key The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
   public Self col(final String key, final double value) {

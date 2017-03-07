@@ -9,7 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Map-reduce on expression structure
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-29 */
 public abstract class ExpressionBottomUp<R> extends StatementBottomUp<R> {
   protected R map(final ArrayAccess x) {

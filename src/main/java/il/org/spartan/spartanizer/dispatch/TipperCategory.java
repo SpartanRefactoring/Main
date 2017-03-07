@@ -3,7 +3,8 @@ package il.org.spartan.spartanizer.dispatch;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 /** Classification of tippers
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 28, 2016 */
 @FunctionalInterface
 public interface TipperCategory {

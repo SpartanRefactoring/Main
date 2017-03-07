@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.is;
-import static il.org.spartan.azzert.not;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
@@ -12,7 +11,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })

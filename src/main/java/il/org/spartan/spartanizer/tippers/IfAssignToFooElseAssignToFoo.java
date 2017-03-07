@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * } into {@code
  * a += x ? 3 : 9;
  * }
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Ternarization {

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.meta;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
 
 import java.io.*;
@@ -10,6 +8,10 @@ import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
@@ -24,7 +26,8 @@ import il.org.spartan.spartanizer.utils.*;
  * <p>
  * The main method is {@link #reflectedCompilationUnit()} which returns a handle
  * to the AST of the {@link CompilationUnit} in which the instance was defined.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016-12-18 */
 public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");

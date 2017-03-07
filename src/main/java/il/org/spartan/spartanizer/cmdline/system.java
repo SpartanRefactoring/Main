@@ -9,7 +9,8 @@ import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Not such a good name for a bunch of static functions
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public interface system {
   static Process bash(final String shellCommand) {
@@ -48,7 +49,8 @@ public interface system {
     return $;
   }
 
-  /** @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+  /** @author Yossi Gil
+   *         {@code yossi dot (optional) gil at gmail dot (required) com}
    * @author Yarden Lev
    * @author Sharon Kuninin
    * @since 2016 Returns the essence of this code fragment, removing

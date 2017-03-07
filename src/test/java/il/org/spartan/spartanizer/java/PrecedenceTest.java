@@ -9,7 +9,8 @@ import org.junit.*;
 import il.org.spartan.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
+ *         {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-17 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class PrecedenceTest {
