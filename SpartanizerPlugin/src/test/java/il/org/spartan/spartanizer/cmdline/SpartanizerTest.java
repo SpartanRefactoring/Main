@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

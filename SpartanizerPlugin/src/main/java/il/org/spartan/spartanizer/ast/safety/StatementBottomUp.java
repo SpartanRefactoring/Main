@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.ast.safety;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -13,8 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO Yossi Gil: document class {@link }
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-29 */
 public abstract class StatementBottomUp<R> extends Reducer<R> {
   protected R map(final AssertStatement ¢) {

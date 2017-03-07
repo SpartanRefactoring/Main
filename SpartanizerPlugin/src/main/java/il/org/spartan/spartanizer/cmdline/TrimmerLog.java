@@ -13,8 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Logging stuff
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 20, 2016 */
 public enum TrimmerLog {
   ;
@@ -34,7 +33,7 @@ public enum TrimmerLog {
   public static void off() {
     maxApplications = maxTips = maxVisitations = -1;
   }
-
+  
   public static void on() {
     maxApplications = maxTips = maxVisitations = 30;
   }
@@ -42,6 +41,8 @@ public enum TrimmerLog {
   public static void activateLogToFile() {
     logToFile = true;
   }
+
+
 
   public static void activateLogToScreen() {
     logToScreen = true;

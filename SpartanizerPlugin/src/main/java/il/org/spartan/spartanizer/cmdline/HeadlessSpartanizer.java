@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
 
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.report.*;

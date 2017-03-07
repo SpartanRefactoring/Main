@@ -12,8 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

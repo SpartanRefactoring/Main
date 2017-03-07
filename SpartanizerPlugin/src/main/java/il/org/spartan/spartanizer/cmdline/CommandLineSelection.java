@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static java.util.stream.Collectors.*;
 import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;

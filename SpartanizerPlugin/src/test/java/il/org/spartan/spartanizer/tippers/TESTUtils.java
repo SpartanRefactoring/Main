@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.utils.Wrap.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -15,8 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-17 */
 @SuppressWarnings("javadoc")
 public enum TESTUtils {

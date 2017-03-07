@@ -6,8 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests of {@link IfStatementBlockSequencerBlockSameSequencer}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Jan 23, 2017 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @Ignore

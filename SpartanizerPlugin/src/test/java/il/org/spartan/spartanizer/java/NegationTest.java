@@ -12,8 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** A test suite for class {@link eliminate}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-18
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
