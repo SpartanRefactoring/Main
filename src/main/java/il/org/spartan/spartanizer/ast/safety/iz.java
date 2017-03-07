@@ -1372,8 +1372,11 @@ public interface iz {
     }
   }
 
-
   static boolean updater(final PrefixExpression ¢) {
     return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
+  }
+
+  static boolean parameterizedType(final ASTNode ¢) {
+    return ¢ instanceof ParameterizedType;
   }
 }
