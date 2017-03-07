@@ -31,7 +31,7 @@ public class Toolbox {
     public static Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
     public static Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
     public static Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
-    public static Map<Class<? extends Tipper<?>>, String[][]> TipperExamplesCache = new HashMap<>();
+    public static Map<Class<? extends Tipper<?>>, Tipper.Example[]> TipperExamplesCache = new HashMap<>();
     public static Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {

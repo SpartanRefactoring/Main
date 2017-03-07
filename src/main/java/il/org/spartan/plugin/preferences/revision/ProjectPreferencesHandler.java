@@ -27,6 +27,7 @@ import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An handler for project configuration. User configuration is saved in a
@@ -323,7 +324,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param preview examples array
    * @param position example column (before/after)
    * @return unified example column string */
-  static String getPreviewString(final String[][] preview, final int position) {
+  static String getPreviewString(final Tipper.Example[] preview, final int position) {
     assert position == 0 || position == 1;
     if (preview == null)
       return null;
