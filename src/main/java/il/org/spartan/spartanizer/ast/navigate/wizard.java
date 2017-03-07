@@ -361,7 +361,7 @@ public interface wizard {
   static boolean endsWithSequencer(final Statement ¢) {
     if (¢ == null)
       return false;
-    final Statement $ = (Statement) hop.lastStatement(¢);
+    final Statement $ = hop.lastStatement(¢);
     if ($ == null)
       return false;
     switch ($.getNodeType()) {
