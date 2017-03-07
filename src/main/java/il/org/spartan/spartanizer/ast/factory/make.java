@@ -1,5 +1,10 @@
 package il.org.spartan.spartanizer.ast.factory;
 
+import static java.util.stream.Collectors.*;
+import static il.org.spartan.lisp.*;
+
+import il.org.spartan.*;
+
 import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -13,13 +18,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jface.text.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.type;
 
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
-
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -30,8 +29,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-16 */
 public enum make {
   /** Strategy for conversion into a compilation unit */

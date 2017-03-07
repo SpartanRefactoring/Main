@@ -19,8 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Replace a variable with an expression
  * @year 2015
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 13, 2016 */
 public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode... ns) {

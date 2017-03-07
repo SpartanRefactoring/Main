@@ -13,8 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/** @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+/** @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-28 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore

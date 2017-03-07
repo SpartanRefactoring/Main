@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** eliminates redundant comparison with <code><b>true</b> </code> and
  * <code><b>false</b></code> .
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-17 */
 public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onBooleans {

@@ -1,23 +1,22 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @author Dan Greenstein
  * @since */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

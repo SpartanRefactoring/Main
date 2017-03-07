@@ -1,14 +1,13 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -17,8 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
  * should read like a sentence phrase.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {

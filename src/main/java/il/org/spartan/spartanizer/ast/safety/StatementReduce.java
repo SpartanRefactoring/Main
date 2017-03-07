@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class {@link }
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
   protected T map(final ArrayAccess ¢) {

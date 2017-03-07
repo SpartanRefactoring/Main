@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

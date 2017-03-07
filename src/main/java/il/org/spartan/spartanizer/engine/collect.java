@@ -17,9 +17,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.
  * @author Boris van Sosin <boris.van.sosin @ gmail.com>
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com} (major
- *         refactoring 2013/07/10)
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com} (major refactoring
+ *         2013/07/10)
  * @since 2013/07/01 */
 public enum collect {
   /** collects semantic (multiple uses for loops) uses of an variable */
@@ -447,8 +446,7 @@ public enum collect {
   /** An abstract class to carry out the collection process. Should not be
    * instantiated or used directly by clients, other than the use as part of
    * fluent API.
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2015-09-06 */
   public abstract static class Collector {
     final SimpleName name;
@@ -484,8 +482,7 @@ public enum collect {
    * for the search, will carry out the search for the captured value in its
    * location parameter.
    * @see collect#of
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2013/14/07 */
   public abstract static class Of {
     /** Determine whether this instance occurs in a bunch of expressions

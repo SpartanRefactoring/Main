@@ -11,8 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 
 /** convert {@code int a = 3;return a;} into {@code return a;}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnExpression extends $FragementAndStatement//
     implements TipperCategory.Inlining {

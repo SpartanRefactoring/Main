@@ -17,8 +17,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Abstract tipper to deal with combining a fragment with the next statement
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since Sep 25, 2016 */
 public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
   private static final long serialVersionUID = 7723281513517888L;

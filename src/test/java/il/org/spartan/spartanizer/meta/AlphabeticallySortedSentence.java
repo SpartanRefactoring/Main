@@ -25,8 +25,7 @@ import il.org.spartan.utils.*;
  * engine knows how to process them in order.
  * <p>
  * Don't be afraid to experiment. The error messages should guide you.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
   public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
