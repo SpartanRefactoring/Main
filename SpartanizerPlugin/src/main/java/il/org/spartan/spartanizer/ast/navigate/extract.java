@@ -629,6 +629,6 @@ public enum extract {
         return in(¢.getOperator(), INCREMENT, DECREMENT);
       }
     }.map(x);
-    return $ != null ? $ : new ArrayList<ASTNode>();
+    return $ != null ? $ : new ArrayList<>();
   }
 }
