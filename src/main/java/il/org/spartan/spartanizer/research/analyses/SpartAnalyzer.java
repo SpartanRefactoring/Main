@@ -4,18 +4,16 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
-import il.org.spartan.spartanizer.tippers.*;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
  * @since Dec 15, 2016 */
-public class SpartAnalyzer extends InteractiveSpartanizer {
+public class SpartAnalyzer extends AgileSpartanizer {
   public SpartAnalyzer() {
     addNanoPatterns();
   }
@@ -76,18 +74,6 @@ public class SpartAnalyzer extends InteractiveSpartanizer {
                 new While.CountIf(), //
                 null)//
     ;
-    remove(SwitchStatement.class, //
-        new SwitchEmpty(), //
-        new MergeSwitchBranches(), //
-        new RemoveRedundantSwitchReturn(), //
-        new RemoveRedundantSwitchContinue(), //
-        new SwitchWithOneCaseToIf(), //
-        new SwitchBranchSort(), //
-        null)//
-            .remove(SwitchCase.class, //
-                new RemoveRedundantSwitchCases(), //
-                new SwitchCaseLocalSort(), //
-                null);
     return this;
   }
 
