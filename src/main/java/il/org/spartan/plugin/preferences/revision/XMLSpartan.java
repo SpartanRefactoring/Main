@@ -21,6 +21,7 @@ import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
@@ -35,7 +36,7 @@ public class XMLSpartan {
   private static final String TIPPER = "tipper";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
-  private static final String[][] EMPTY_PREVIEW = { { "[no available preview]", "[no available preview]" } };
+  private static final Example[] EMPTY_PREVIEW = { Tipper.converts("[no available preview]").to("[no available preview]") };
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
@@ -74,7 +75,7 @@ public class XMLSpartan {
       if (tc == null)
         continue;
       final String description = Toolbox.Tables.TipperDescriptionCache.get(tc);
-      final String[][] preview = Toolbox.Tables.TipperExamplesCache.get(tc);
+      final Example[] preview = Toolbox.Tables.TipperExamplesCache.get(tc);
       final TipperGroup g = Toolbox.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
         tgs.put(g, new ArrayList<>());
@@ -308,9 +309,9 @@ public class XMLSpartan {
   public static class SpartanTipper extends SpartanElement {
     private final SpartanCategory parent;
     private final String description;
-    private final String[][] preview;
+    private final Example[] preview;
 
-    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description, final String[][] preview) {
+    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description, final Example[] preview) {
       super(name, enabled);
       this.parent = parent;
       this.description = description;
@@ -325,7 +326,7 @@ public class XMLSpartan {
       return description;
     }
 
-    public String[][] preview() {
+    public Example[] preview() {
       return preview;
     }
   }

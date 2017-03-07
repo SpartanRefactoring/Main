@@ -84,9 +84,6 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return new String[] { className() };
   }
 
-  String className() {
-    return getClass().getSimpleName();
-  }
 
   protected abstract Tip pattern(N ¢);
 
