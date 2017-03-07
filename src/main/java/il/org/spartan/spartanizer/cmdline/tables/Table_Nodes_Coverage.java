@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-07 */
 public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
-  static final InteractiveSpartanizer spartanizer = new InteractiveSpartanizer();
+  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;
