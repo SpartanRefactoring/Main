@@ -20,8 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
  * files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @author Ori Roth
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015/08/01 */
 public final class SpartanizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;

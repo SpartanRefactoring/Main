@@ -13,8 +13,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Various metrics, which can be written fluent API style with this type's name
  * prefix.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 public interface count {
   static int imports(final CompilationUnit u) {

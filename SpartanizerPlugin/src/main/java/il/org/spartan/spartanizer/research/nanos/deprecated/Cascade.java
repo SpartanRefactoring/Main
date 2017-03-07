@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.research.nanos.deprecated;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.IntStream;
 
 import org.eclipse.jdt.core.dom.*;
 

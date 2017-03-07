@@ -19,8 +19,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** A demo on testing with a {!@link {@link MetaFixture}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-17 */
 public enum SentenceTestTemplate {
   ;
@@ -37,8 +36,7 @@ public enum SentenceTestTemplate {
 
   /** A phrase is made of two consecutive words. If a sentence has n words, then
    * it has n-1 phrases.
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2017-01-18 */
   @Ignore
   @RunWith(Parameterized.class)
@@ -67,8 +65,7 @@ public enum SentenceTestTemplate {
 
   /** A phrase is made of two consecutive words. If a sentence has n words, then
    * it has n-1 phrases.
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2017-01-18 */
   @Ignore
   @RunWith(Parameterized.class)
@@ -115,8 +112,7 @@ public enum SentenceTestTemplate {
 
   /** A period is a any word in a sentence whose method does not have a
    * {@link disabling} label in its javaDoc.
-   * @author Yossi Gil
-   *         {@code yossi dot (optional) gil at gmail dot (required) com}
+   * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
    * @since 2017-01-18 */
   @RunWith(Parameterized.class)
   public static class Stays {

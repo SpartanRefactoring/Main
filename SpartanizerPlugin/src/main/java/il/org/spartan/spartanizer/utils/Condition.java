@@ -9,30 +9,29 @@ import il.org.spartan.*;
 /** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-06 */
 public interface Condition extends BooleanSupplier {
-  static Inner and(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Inner and(BooleanSupplier s1, BooleanSupplier s2, BooleanSupplier ...ss ) {
     return new Conjunction(s1, s2, ss);
   }
-
   static Negation not(final BooleanSupplier ¢) {
     return new Negation(¢);
   }
-
-  static Inner of(final BooleanSupplier ¢) {
+  static Inner of(BooleanSupplier ¢) {
+    return new Wrapper(¢);
+  }
+  static Inner condition(BooleanSupplier ¢) {
     return new Wrapper(¢);
   }
 
-  static Inner condition(final BooleanSupplier ¢) {
-    return new Wrapper(¢);
-  }
 
-  static Inner or(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+
+  static Inner or(BooleanSupplier s1, BooleanSupplier s2, BooleanSupplier...ss) {
     return new Disjunction(s1, s2, ss);
-  }
 
-  BooleanSupplier X = Condition.of(() -> {
-    throw new AssertionError();
-  });
+  }
+  BooleanSupplier X = Condition.of(()->{throw new AssertionError();});
+
   BooleanSupplier F = new Wrapper(() -> false);
+
   BooleanSupplier T = new Wrapper(() -> true);
 
   abstract class Compound implements Inner {
@@ -89,7 +88,7 @@ public interface Condition extends BooleanSupplier {
       add(c, cs);
     }
 
-    public Disjunction(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
+    public Disjunction(BooleanSupplier c1, BooleanSupplier c2, BooleanSupplier[] cs) {
       add(c1, c2, cs);
     }
 
@@ -106,11 +105,13 @@ public interface Condition extends BooleanSupplier {
     }
   }
 
+
   interface Inner extends Condition {
     Inner and(BooleanSupplier c, BooleanSupplier... cs);
 
     BooleanSupplier or(BooleanSupplier c, BooleanSupplier... cs);
   }
+
 
   class Negation extends Wrapper {
     public Negation(final BooleanSupplier s) {
@@ -121,6 +122,7 @@ public interface Condition extends BooleanSupplier {
       return !inner.getAsBoolean();
     }
   }
+
 
   class Wrapper implements Inner {
     public Wrapper(final BooleanSupplier inner) {
@@ -143,4 +145,6 @@ public interface Condition extends BooleanSupplier {
 
     public final BooleanSupplier inner;
   }
+
+
 }

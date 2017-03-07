@@ -12,8 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** Unit test for {@link FragmentInitializerStatementTerminatingScope} for the
  * case of inlining into the expression of an enhanced for
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

@@ -9,8 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Unit tests of {@link TryBodyNotEmptyNoCatchesNoFinallyRemove}
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })

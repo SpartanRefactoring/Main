@@ -5,8 +5,7 @@ import java.io.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing statements in a block.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2017-01-01 */
 public class FixtureBlock extends MetaFixture {
   @SuppressWarnings("InfiniteRecursion") private int f(@knows("ps") final int... ps) throws IOException {

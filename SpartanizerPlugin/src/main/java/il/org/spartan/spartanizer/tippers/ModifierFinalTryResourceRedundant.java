@@ -10,8 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert <code><b>abstract</b> <b>interface</b>a{}</code> to
  * <code><b>interface</b> a{}</code>, etc.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
  * @since 2015-07-29 */
 public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {

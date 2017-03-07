@@ -4,8 +4,6 @@ import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.bloaters.*;
-
 /** Test case for {@link OutlineTernaryMethodInvocation}
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-18 */
