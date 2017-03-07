@@ -595,4 +595,8 @@ public enum az {
       return az.numberLiteral(operand(¢)).getToken();
     }
   }
+
+  public static ParameterizedType parameterizedType(final ASTNode ¢) {
+    return !iz.parameterizedType(¢) ? null : (ParameterizedType) ¢;
+  }
 }
