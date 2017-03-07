@@ -11,11 +11,12 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class LetItBeTest {
   @Test public void a() {
-    trimmingOf("{{A x = foo(); return bar(x,x);} another();}")//
+    trimmingOf("{{A λ = foo(); return bar(λ,λ);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{ return bar(foo(),foo());} another();}")//
-        .gives("return bar(foo(),foo()); another();")//
-        .gives("return bar(foo(),foo());")//
+        .gives("{{{return let(()->foo()).in(λ->bar(λ,λ));}return bar(λ,λ);}another();}") //
+        .gives("return let(()->foo()).in(λ->bar(λ,λ));return bar(λ,λ);another();") //
+        .gives("return let(()->foo()).in(λ->bar(λ,λ));another();") //
+        .gives("return let(()->foo()).in(λ->bar(λ,λ));") //
         .stays();
   }
 
