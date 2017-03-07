@@ -15,8 +15,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Test class for class {@link iz}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}, Aviad Cohen, Noam
- *         Yefet
+ * @author Yossi Gil, Aviad Cohen, Noam Yefet
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method", "ConstantConditions" }) //
 public final class izTest {

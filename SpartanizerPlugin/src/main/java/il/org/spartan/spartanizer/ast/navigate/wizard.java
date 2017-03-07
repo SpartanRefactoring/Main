@@ -35,7 +35,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
@@ -302,6 +302,15 @@ public interface wizard {
    *         "+". */
   static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
     return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
+  }
+
+  /** @param ns unknown number of nodes to check
+   * @return <code><b>true</b></code> <em>iff</em>one of the nodes is an
+   *         Expression Statement of type Post or Pre Expression with ++ or --
+   *         operator. false if none of them are or if the given parameter is
+   *         null. */
+  static boolean containIncOrDecExp(final ASTNode... ns) {
+    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
   }
 
   static InfixExpression.Operator convertToInfix(final Operator ¢) {

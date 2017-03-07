@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+/** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since Jan 23, 2017 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })

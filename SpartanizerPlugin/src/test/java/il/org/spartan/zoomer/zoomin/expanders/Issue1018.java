@@ -9,7 +9,7 @@ import il.org.spartan.bloater.bloaters.*;
 /** Unit test for {@link IfElseToSwitch}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-01-06 */
-@Ignore // TODO: Doron Meshulam deal with @Ignore --yg
+@Ignore // TODO: Doron Meshulam
 @SuppressWarnings("static-method")
 public class Issue1018 {
   @Test public void a() {

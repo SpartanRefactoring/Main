@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
  * {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016-09 */
 public final class SingleVariableDeclarationEnhancedForRenameParameterToCent extends EagerTipper<SingleVariableDeclaration>
     //
@@ -68,7 +68,8 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
   private static boolean isNameDefined(final Statement s, final SimpleName n) {
     final Statement $ = az.statement(s.getParent());
     return Environment
-        .of($ == null ? s : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)
+        .of($ == null ? s
+            : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)
         .has(identifier(n));
   }
 }
