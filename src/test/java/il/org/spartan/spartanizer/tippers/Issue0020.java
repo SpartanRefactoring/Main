@@ -6,10 +6,10 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore // TODO: Doron Mehsulam deal with this @Ignore --yg
+@Ignore // TODO: Doron Mehsulam --yg
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0020 {
   /** Correct way of trimming does not change */

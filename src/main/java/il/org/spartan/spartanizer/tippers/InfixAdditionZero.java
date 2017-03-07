@@ -82,18 +82,18 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
-    final int n = eliminate.level($);
-    if (n == 0 || n == 1 && eliminate.level(first($)) == 1)
+    final int n = minus.level($);
+    if (n == 0 || n == 1 && minus.level(first($)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = n % 2 == 0 ? null : first($);
-        $.stream().filter(λ -> λ != first && eliminate.level(λ) > 0)
-            .forEach(λ -> r.replace(λ, make.plant(copy.of(eliminate.peel(λ))).into(λ.getParent()), g));
+        $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
+            .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)
-          r.replace(first, make.plant(subject.operand(eliminate.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

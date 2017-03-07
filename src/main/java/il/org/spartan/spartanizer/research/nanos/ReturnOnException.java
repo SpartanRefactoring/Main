@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -27,15 +27,19 @@ public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
   };
 
   @Override public boolean canTip(final CatchClause ¢) {
-    return anyTips(tippers, parent(¢));
+    return anyTips(tippers, parentAsTryStatement(¢));
   }
 
   @Override public Tip pattern(final CatchClause ¢) {
-    return firstTip(tippers, step.parent(¢));
+    return firstTip(tippers, parentAsTryStatement(¢));
   }
 
   @Override public Category category() {
     return Category.Exception;
+  }
+
+  private static TryStatement parentAsTryStatement(final CatchClause ¢) {
+    return az.tryStatement(parent(¢));
   }
 
   @Override public String example() {

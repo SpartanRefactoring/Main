@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 /** Expands terms of * or / expressions without reordering.
  * <p>
  * Functions named {@link #base} are non-recursive
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016-08 */
 enum FactorsExpander {
