@@ -6,11 +6,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Catch without body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

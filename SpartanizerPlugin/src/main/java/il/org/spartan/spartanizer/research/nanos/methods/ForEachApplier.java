@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
 import java.util.*;
@@ -9,7 +8,10 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Method with one statement which matches the {@link ForEach} nano

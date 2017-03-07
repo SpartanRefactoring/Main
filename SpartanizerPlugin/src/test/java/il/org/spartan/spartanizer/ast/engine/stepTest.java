@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.engine;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import java.util.*;
@@ -11,6 +10,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

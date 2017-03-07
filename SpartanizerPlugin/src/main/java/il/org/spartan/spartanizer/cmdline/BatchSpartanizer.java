@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.Arrays;
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
