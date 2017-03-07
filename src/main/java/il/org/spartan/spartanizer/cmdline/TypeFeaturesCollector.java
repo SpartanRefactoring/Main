@@ -108,7 +108,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
   }
 
   @Override public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
-    // TODO Yossi Gil Auto-generated method stub
+    // TODO Auto-generated method stub
     return null;
   }
 }

@@ -65,18 +65,18 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
-    final int totalNegation = eliminate.level(x);
-    if (totalNegation == 0 || totalNegation == 1 && eliminate.level(left(x)) == 1)
+    final int totalNegation = minus.level(x);
+    if (totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1)
       return null;
     if (exclude != null)
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first($);
-        $.stream().filter(λ -> λ != first && eliminate.level(λ) > 0)
-            .forEach(λ -> r.replace(λ, make.plant(copy.of(eliminate.peel(λ))).into(λ.getParent()), g));
+        $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
+            .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)
-          r.replace(first, make.plant(subject.operand(eliminate.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
+          r.replace(first, make.plant(subject.operand(minus.peel(first)).to(PrefixExpression.Operator.MINUS)).into(first.getParent()), g);
       }
     };
   }

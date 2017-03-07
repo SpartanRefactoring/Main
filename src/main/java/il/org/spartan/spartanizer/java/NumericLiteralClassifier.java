@@ -4,7 +4,7 @@ import il.org.spartan.spartanizer.engine.type.*;
 
 /** A utility to determine the exact type of a Java character or numerical
  * literal.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2015-08-30 */
 public final class NumericLiteralClassifier {
   public static Primitive.Certain of(final String literal) {

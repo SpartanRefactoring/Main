@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
-
 /** Unit tests for {@link TernaryPushdownStrings}
  * @author Niv Shalmon
  * @since 2016 */
@@ -34,7 +32,6 @@ public class Issue0236 {
   }
 
   @Test public void issue236_04() {
-    TrimmerLog.on();
     trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"")//
         .gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"")//
         .stays();

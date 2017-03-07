@@ -17,7 +17,7 @@ public class cantTipTest {
   }
 
   @Test public void testRemoveoRedundantIfInFor() {
-    assert !cantTip.removeRedundantIf(findFirst.forStatement(into.s("{for(;;){if(true){}}}")));
+    assert !cantTip.remvoeRedundantIf(findFirst.forStatement(into.s("{for(;;){if(true){}}}")));
   }
 
   @Test public void testRemoveRedundantIfInWhile() {

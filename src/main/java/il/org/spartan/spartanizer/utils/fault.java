@@ -5,7 +5,7 @@ import java.nio.charset.*;
 import java.util.stream.*;
 
 /** Fluent API
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since 2016 */
 public interface fault {
   static String done() {
