@@ -10,7 +10,7 @@ import il.org.spartan.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
- * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil
  * @since Nov 13, 2016 */
 public enum monitor {
   /** Log to external file if in debug mode, see issue #196 */
@@ -244,8 +244,6 @@ public enum monitor {
       if (fileName != null)
         return fileName;
       fileName =  System.getProperty("java.io.tmpdir") + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
-      fileName = System.getProperty("java.io.tmpdir") + File.separator + STEM + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
-      fileName = System.getProperty("java.io.tmpdir") + File.separator + STEM + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
       System.out.flush();
       System.err.flush();
       System.err.format("\n --- Your error log will be found in \n\t%s\n", fileName);
