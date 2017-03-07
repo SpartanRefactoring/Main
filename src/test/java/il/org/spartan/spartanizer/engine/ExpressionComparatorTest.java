@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -14,11 +13,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for {@link ExpressionComparator}
- * @author Yossi Gil 
- * @author Assaf Lustig 
- * @author Dan Abramovich 
- * @author Arthur
- *         Spozhnikov
+ * @author Yossi Gil
+ * @author Assaf Lustig
+ * @author Dan Abramovich
+ * @author Arthur Spozhnikov
  * @since 2015-07-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })

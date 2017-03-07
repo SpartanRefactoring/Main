@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import static il.org.spartan.lisp.*;
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;

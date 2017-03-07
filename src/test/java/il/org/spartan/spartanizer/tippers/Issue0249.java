@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.junit.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

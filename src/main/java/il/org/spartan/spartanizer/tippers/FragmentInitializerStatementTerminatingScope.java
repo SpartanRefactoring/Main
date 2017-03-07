@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
@@ -10,6 +9,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

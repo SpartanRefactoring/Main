@@ -2,6 +2,7 @@
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.engine;
+
 import java.util.*;
 import java.util.stream.*;
 

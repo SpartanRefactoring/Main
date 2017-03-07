@@ -6,11 +6,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.lisp.*;
 
 /** Nano matches fields
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
