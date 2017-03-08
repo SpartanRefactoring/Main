@@ -16,7 +16,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.util.*;
@@ -28,6 +27,8 @@ import il.org.spartan.utils.*;
 /** Old class for some anlyzes, sort of deprecated since we use
  * {@link FolderASTVisitor}
  * @author Ori Marcovitch */
+@Deprecated
+@SuppressWarnings("deprecation")
 public enum Analyze {
   ;
   static {
@@ -80,17 +81,17 @@ public enum Analyze {
       report //
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
-          .put("#NP Statements", m.numNPStatements) //
-          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements, m.numStatements))) //
+          .put("#NP Statements", m.numNPStatements()) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements(), m.numStatements))) //
           .put("#Expressions", m.numExpressions) //
-          .put("#NP expressions", m.numNPExpressions) //
-          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions, m.numExpressions))) //
+          .put("#NP expressions", m.numNPExpressions()) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions(), m.numExpressions))) //
           .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
-      sumSratio += m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements, m.numStatements));
-      sumEratio += m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions, m.numExpressions));
+      sumSratio += m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements(), m.numStatements));
+      sumEratio += m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions(), m.numExpressions));
     }
     System.out.println("Total methods: " + Logger.numMethods);
     System.out.println("Average statement ratio: " + safe.div(sumSratio, Logger.numMethods));
@@ -159,10 +160,6 @@ public enum Analyze {
 
   private static void initializeSpartanizer() {
     spartanizer = new SpartAnalyzer();
-  }
-
-  public static Toolbox toolboxWithNanoPatterns() {
-    return new SpartAnalyzer().toolbox;
   }
 
   /** run an interactive classifier to classify nanos! */

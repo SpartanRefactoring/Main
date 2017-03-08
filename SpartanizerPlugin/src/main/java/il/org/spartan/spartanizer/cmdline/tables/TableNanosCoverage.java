@@ -17,9 +17,10 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Table representing coverage for methods up to 30 statements
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
+@Deprecated
 public class TableNanosCoverage extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
@@ -108,11 +109,11 @@ public class TableNanosCoverage extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
-    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
-    return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
+    return rs.stream().map(λ -> λ.numNPStatements()).reduce((x, y) -> x + y).get();
   }
 
   private static double min(final double a, final double d) {

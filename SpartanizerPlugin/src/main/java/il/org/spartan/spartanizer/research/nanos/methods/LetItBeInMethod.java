@@ -21,10 +21,10 @@ public class LetItBeInMethod extends JavadocMarkerNanoPattern {
   private static final FragmentInitializerStatementTerminatingScope rival = new FragmentInitializerStatementTerminatingScope();
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return hazTwoStatements(¢)//
-        && iz.variableDeclarationStatement(firstStatement(¢))//
+    return hazTwoStatements(¢) //
+        && iz.variableDeclarationStatement(firstStatement(¢)) //
         && preDelegation(secondStatement(¢)) //
-        && rival.cantTip(first(fragments(az.variableDeclarationStatement(firstStatement(¢)))))//
+        && rival.cantTip(first(fragments(az.variableDeclarationStatement(firstStatement(¢))))) //
         && usesAssignment(¢);
   }
 
@@ -33,7 +33,7 @@ public class LetItBeInMethod extends JavadocMarkerNanoPattern {
   }
 
   private static boolean preDelegation(final Statement secondStatement) {
-    return iz.expressionStatement(secondStatement)//
+    return iz.expressionStatement(secondStatement) //
         || iz.returnStatement(secondStatement);
   }
 }

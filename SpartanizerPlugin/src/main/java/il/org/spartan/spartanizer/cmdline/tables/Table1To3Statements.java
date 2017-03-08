@@ -18,9 +18,11 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** Table representing coverage for methods with 1 to 3 statements
+ * @deprecated
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
+@Deprecated
 public class Table1To3Statements extends FolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MIN_STATEMENTS_REPORTED = 1;
@@ -122,11 +124,11 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
-    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
   private static double fractionOfMethodsTouched(final Collection<MethodRecord> rs) {
-    return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
+    return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
 
   private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final Collection<MethodRecord> rs) {
@@ -138,7 +140,7 @@ public class Table1To3Statements extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
-    return rs.stream().map(λ -> λ.numNPStatements).reduce((x, y) -> x + y).get();
+    return rs.stream().map(λ -> λ.numNPStatements()).reduce((x, y) -> x + y).get();
   }
 
   private static double min(final double a, final double d) {
