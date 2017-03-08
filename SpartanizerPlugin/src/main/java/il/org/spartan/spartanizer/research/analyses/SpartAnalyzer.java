@@ -124,22 +124,22 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
-        new DoNothingReturnParam(), // R.I.P
+        // new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
-        new Down.Caster(), // R.I.P
+        // new Down.Caster(), // R.I.P
         new Empty(), //
         new Examiner(), //
         new Getter(), //
         new LetItBeInMethod(), //
-        new ForEachApplier(), // R.I.P, we have ForEach
-        new SelfCaster(), // R.I.P --> merger into Caster?
+        // new ForEachApplier(), // R.I.P, we have ForEach
+        // new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
         new Setter(), //
         // new Signature(), //
         new SuperDelegator(), //
         new Thrower(), //
         // new TypeChecker(), // R.I.P --> merged into examiner
-        new Up.Caster(), // R.I.P
+        // new Up.Caster(), // R.I.P
         null);
     return this;
   }
