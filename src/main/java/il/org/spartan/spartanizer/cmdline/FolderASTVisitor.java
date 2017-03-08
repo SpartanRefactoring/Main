@@ -94,6 +94,9 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   void visit(final File f) {
+    System.out.println("+++++++++++++++++++++++++");
+    System.out.println(f.getName());
+    System.out.println("+++++++++++++++++++++++++");
     dotter.click();
     if (!system.isTestFile(f) && !containsTestAnnotation(f))
       try {
