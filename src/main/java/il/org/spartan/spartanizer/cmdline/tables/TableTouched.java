@@ -9,10 +9,11 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> Infix please add a
- * description
+/** Old table presenting touched methods (%)
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
  * @since 2016-12-25 */
+@Deprecated
+@SuppressWarnings("deprecation")
 public class TableTouched extends TableNanosCoverage {
   private static Table touchedWriter;
 
@@ -54,6 +55,6 @@ public class TableTouched extends TableNanosCoverage {
   }
 
   private static double totalMethodsTouched(final Collection<MethodRecord> rs) {
-    return rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count();
+    return rs.stream().filter(λ -> λ.touched()).count();
   }
 }

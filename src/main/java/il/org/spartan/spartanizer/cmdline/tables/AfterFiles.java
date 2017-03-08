@@ -25,6 +25,7 @@ import il.org.spartan.utils.*;
 /** Generates files after nano spartanization+replacing
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
+@Deprecated
 public class AfterFiles extends FolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
@@ -133,7 +134,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   private static double fractionOfMethodsTouched(final Collection<MethodRecord> rs) {
-    return safe.div(rs.stream().filter(λ -> λ.numNPStatements > 0 || λ.numNPExpressions > 0).count(), rs.size());
+    return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
 
   private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final Collection<MethodRecord> rs) {
@@ -145,7 +146,7 @@ public class AfterFiles extends FolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
-    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements, λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
+    return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
