@@ -9,7 +9,7 @@ import org.junit.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-01 */
 @SuppressWarnings("static-method")
-public class LetItBeTest {
+public class LetItBeInTest {
   @Test public void a() {
     trimmingOf("{{A λ = foo(); return bar(λ,λ);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
@@ -38,24 +38,24 @@ public class LetItBeTest {
   @Test public void d() {
     trimmingOf("{{A x = foo(); bar(x,x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{  bar(foo(),foo());} another();}")//
-        .gives("bar(foo(),foo());another();") //
+        .gives("{{{let(()->foo()).in(x->bar(x,x));}bar(x,x);}another();}") //
+        .gives("let(()->foo()).in(x->bar(x,x));bar(x,x);another();") //
+        .gives("let(()->foo()).in(λ->bar(λ,λ));bar(x,x);another();") //
         .stays();
   }
 
   @Test public void e() {
     trimmingOf("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{A y = bar();  bar(foo(),foo()); print(y);} another();}")//
-        .gives("A y=bar();bar(foo(),foo());print(y);another();") //
         .stays();
   }
 
   @Test public void f() {
     trimmingOf("{{A x = foo(); bar(x,x); print(x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{bar(foo(),foo());print(x);}another();}") //
-        .gives("bar(foo(),foo());print(x);another();") //
+        .gives("{{{let(()->foo()).in(x->bar(x,x));}bar(x,x);print(x);}another();}") //
+        .gives("let(()->foo()).in(x->bar(x,x));bar(x,x);print(x);another();") //
+        .gives("let(()->foo()).in(λ->bar(λ,λ));bar(x,x);print(x);another();") //
         .stays();
   }
 
@@ -82,13 +82,11 @@ public class LetItBeTest {
         + "}")//
             .using(VariableDeclarationFragment.class, new LetItBeIn())//
             .gives(
-                "{f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)));}});}") //
+                "{{let(()->(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)).in(a->f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(a);}}));}f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(a);}});}") //
             .gives(
-                "f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)));}});") //
+                "let(()->(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)).in(a->f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(a);}}));f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(a);}});") //
             .gives(
-                "f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework ¢){¢.interceptor(((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)));}});") //
-            .gives(
-                "f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework ¢){¢.interceptor((AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass));}});") //
+                "let(()->(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)).in(a->f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework ¢){¢.interceptor(a);}}));f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework ¢){¢.interceptor(a);}});") //
             .stays();
   }
 }
