@@ -53,7 +53,7 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
   }
 
   @Override protected void done(final String path) {
-    summarizeSortedMethodStatistics(path);
+    summarizeStatistics(path);
     statistics.clear();
   }
 
@@ -61,7 +61,7 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
     writer = new Table(clazz);
   }
 
-  public static void summarizeSortedMethodStatistics(final String path) {
+  public static void summarizeStatistics(final String path) {
     if (writer == null)
       initializeWriter();
     writer//

@@ -76,7 +76,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   @Override protected void done(final String path) {
-    summarizeSortedMethodStatistics(path);
+    summarizeStatistics(path);
     clearAll();
     System.err.println("Output is in: " + Table.temporariesFolder + path);
   }
@@ -103,7 +103,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
     writer = new Table(clazz);
   }
 
-  public static void summarizeSortedMethodStatistics(final String path) {
+  public static void summarizeStatistics(final String path) {
     if (writer == null)
       initializeWriter();
     writer//
