@@ -116,6 +116,10 @@ public interface SymbolicPredicate extends BooleanSupplier {
       super(s);
     }
 
+    @Override public boolean getAsBoolean() {
+      return !inner.getAsBoolean();
+    }
+
   }
 
   class Parenthesis implements SymbolicPredicate {
