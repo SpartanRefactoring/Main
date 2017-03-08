@@ -14,7 +14,7 @@ public class SymbolicPredicateTest {
   Object object;
   BooleanSupplier supplier;
   SymbolicPredicate condition;
-  SymbolicPredicate.Inner inner;
+  SymbolicPredicate inner;
 
   @Test(expected = AssertionError.class) public void a() {
     X.getAsBoolean();
@@ -43,70 +43,70 @@ public class SymbolicPredicateTest {
     assert SymbolicPredicate.T.getAsBoolean();
     assert !SymbolicPredicate.F.getAsBoolean();
     // of() exists
-    SymbolicPredicate.of(SymbolicPredicate.T);
-    SymbolicPredicate.of(SymbolicPredicate.F);
-    SymbolicPredicate.of(SymbolicPredicate.T);
-    SymbolicPredicate.of(SymbolicPredicate.F);
+    SymbolicPredicate.S(SymbolicPredicate.T);
+    SymbolicPredicate.S(SymbolicPredicate.F);
+    SymbolicPredicate.S(SymbolicPredicate.T);
+    SymbolicPredicate.S(SymbolicPredicate.F);
     // of() is not void
-    (SymbolicPredicate.of(SymbolicPredicate.T) + "").hashCode();
-    (SymbolicPredicate.of(SymbolicPredicate.F) + "").hashCode();
-    (SymbolicPredicate.of(SymbolicPredicate.T) + "").hashCode();
-    (SymbolicPredicate.of(SymbolicPredicate.F) + "").hashCode();
+    (SymbolicPredicate.S(SymbolicPredicate.T) + "").hashCode();
+    (SymbolicPredicate.S(SymbolicPredicate.F) + "").hashCode();
+    (SymbolicPredicate.S(SymbolicPredicate.T) + "").hashCode();
+    (SymbolicPredicate.S(SymbolicPredicate.F) + "").hashCode();
     // of() returns not null
-    assert SymbolicPredicate.of(SymbolicPredicate.T) != null;
-    assert SymbolicPredicate.of(SymbolicPredicate.F) != null;
-    assert SymbolicPredicate.of(SymbolicPredicate.T) != null;
-    assert SymbolicPredicate.of(SymbolicPredicate.F) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.T) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.F) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.T) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.F) != null;
     // of() returns an object
-    object = SymbolicPredicate.of(SymbolicPredicate.T);
-    object = SymbolicPredicate.of(SymbolicPredicate.F);
-    object = SymbolicPredicate.of(SymbolicPredicate.T);
-    object = SymbolicPredicate.of(SymbolicPredicate.F);
+    object = SymbolicPredicate.S(SymbolicPredicate.T);
+    object = SymbolicPredicate.S(SymbolicPredicate.F);
+    object = SymbolicPredicate.S(SymbolicPredicate.T);
+    object = SymbolicPredicate.S(SymbolicPredicate.F);
     // of() returns not null
-    assert SymbolicPredicate.of(SymbolicPredicate.T) != null;
-    assert SymbolicPredicate.of(SymbolicPredicate.F) != null;
-    assert SymbolicPredicate.of(SymbolicPredicate.T) != null;
-    assert SymbolicPredicate.of(SymbolicPredicate.F) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.T) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.F) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.T) != null;
+    assert SymbolicPredicate.S(SymbolicPredicate.F) != null;
     // of() is of type condition
-    condition = SymbolicPredicate.of(SymbolicPredicate.T);
-    condition = SymbolicPredicate.of(SymbolicPredicate.F);
-    condition = SymbolicPredicate.of(SymbolicPredicate.T);
-    condition = SymbolicPredicate.of(SymbolicPredicate.F);
+    condition = SymbolicPredicate.S(SymbolicPredicate.T);
+    condition = SymbolicPredicate.S(SymbolicPredicate.F);
+    condition = SymbolicPredicate.S(SymbolicPredicate.T);
+    condition = SymbolicPredicate.S(SymbolicPredicate.F);
     // make sure that of() is reasonably behaved
-    assert SymbolicPredicate.of(() -> true).getAsBoolean();
-    assert SymbolicPredicate.of(() -> condition != null).getAsBoolean();
-    assert !SymbolicPredicate.of(() -> false).getAsBoolean();
-    assert SymbolicPredicate.of(() -> hashCode() == hashCode()).getAsBoolean();
+    assert SymbolicPredicate.S(() -> true).getAsBoolean();
+    assert SymbolicPredicate.S(() -> condition != null).getAsBoolean();
+    assert !SymbolicPredicate.S(() -> false).getAsBoolean();
+    assert SymbolicPredicate.S(() -> hashCode() == hashCode()).getAsBoolean();
     // make sure that of() is also correct on our four constants:
-    assert SymbolicPredicate.of(SymbolicPredicate.T).getAsBoolean();
-    assert !SymbolicPredicate.of(SymbolicPredicate.F).getAsBoolean();
-    assert SymbolicPredicate.of(SymbolicPredicate.T).getAsBoolean();
-    assert !SymbolicPredicate.of(SymbolicPredicate.F).getAsBoolean();
+    assert SymbolicPredicate.S(SymbolicPredicate.T).getAsBoolean();
+    assert !SymbolicPredicate.S(SymbolicPredicate.F).getAsBoolean();
+    assert SymbolicPredicate.S(SymbolicPredicate.T).getAsBoolean();
+    assert !SymbolicPredicate.S(SymbolicPredicate.F).getAsBoolean();
     // Force and() signature
-    SymbolicPredicate.and(T, T);
-    SymbolicPredicate.and(T, T);
-    SymbolicPredicate.and(T, T, T);
-    SymbolicPredicate.and(T, T, T, T);
-    assert SymbolicPredicate.and(T, T).getAsBoolean();
+    SymbolicPredicate.AND(T, T);
+    SymbolicPredicate.AND(T, T);
+    SymbolicPredicate.AND(T, T, T);
+    SymbolicPredicate.AND(T, T, T, T);
+    assert SymbolicPredicate.AND(T, T).getAsBoolean();
     // Force and() type
-    supplier = and(T, T);
-    condition = and(T, T);
-    inner = and(T, T);
+    supplier = AND(T, T);
+    condition = AND(T, T);
+    inner = AND(T, T);
     // Force and() behavior
-    assert SymbolicPredicate.and(T, T).getAsBoolean();
-    assert !SymbolicPredicate.and(T, F).getAsBoolean();
-    assert !SymbolicPredicate.and(F, T).getAsBoolean();
-    assert !SymbolicPredicate.and(F, F).getAsBoolean();
+    assert SymbolicPredicate.AND(T, T).getAsBoolean();
+    assert !SymbolicPredicate.AND(T, F).getAsBoolean();
+    assert !SymbolicPredicate.AND(F, T).getAsBoolean();
+    assert !SymbolicPredicate.AND(F, F).getAsBoolean();
     // Force and() semantic ternary
-    assert SymbolicPredicate.and(T, T, T).getAsBoolean();
-    assert !SymbolicPredicate.and(T, F, T).getAsBoolean();
-    assert !SymbolicPredicate.and(F, T, T).getAsBoolean();
-    assert !SymbolicPredicate.and(F, F, T).getAsBoolean();
+    assert SymbolicPredicate.AND(T, T, T).getAsBoolean();
+    assert !SymbolicPredicate.AND(T, F, T).getAsBoolean();
+    assert !SymbolicPredicate.AND(F, T, T).getAsBoolean();
+    assert !SymbolicPredicate.AND(F, F, T).getAsBoolean();
     // Force and() short circuit
-    assert SymbolicPredicate.and(T, T, T).getAsBoolean();
-    assert !SymbolicPredicate.and(T, F, X).getAsBoolean();
-    assert !SymbolicPredicate.and(F, X, X).getAsBoolean();
-    assert !SymbolicPredicate.and(F, F, X).getAsBoolean();
+    assert SymbolicPredicate.AND(T, T, T).getAsBoolean();
+    assert !SymbolicPredicate.AND(T, F, X).getAsBoolean();
+    assert !SymbolicPredicate.AND(F, X, X).getAsBoolean();
+    assert !SymbolicPredicate.AND(F, F, X).getAsBoolean();
     // Force or() signature
     SymbolicPredicate.OR(T, T);
     SymbolicPredicate.OR(T, T);
@@ -154,7 +154,8 @@ public class SymbolicPredicateTest {
     assert NOT(F).and(NOT(F)).or(T).or(X).eval();
     assert NOT(F).and(NOT(F)).or(T).or(X, X).eval();
     // Check precedence: A || B && C
-    assert SymbolicPredicate.of(F).or(T).and(T).eval();
+    assert SymbolicPredicate.S(F).or(T).and(T).eval();
+    // Check precedence: (A || B) && C
     assert OR(F, T).and(T).eval();
     assert OR(F, T).and(T).or(X).eval();
     assert !OR(F, T).and(T).and(F).eval();
