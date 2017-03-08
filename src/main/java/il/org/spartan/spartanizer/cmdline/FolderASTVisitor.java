@@ -83,10 +83,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
 
   void collect(final CompilationUnit u) {
     try {
-      if (count.lines(u) < 5000)
-        u.accept(this);
-      else
-        System.out.println("S");
+      u.accept(this);
     } catch (final NullPointerException ¢) {
       ¢.printStackTrace();
     }
