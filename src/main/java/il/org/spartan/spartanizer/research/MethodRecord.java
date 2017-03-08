@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -15,23 +16,26 @@ import il.org.spartan.spartanizer.research.util.*;
 public class MethodRecord {
   public final String methodName;
   public final String methodClassName;
-  public int numNPStatements;
-  public int numNPExpressions;
+  private int numNPStatements;
+  private int numNPNodes;
+  int numNPExpressions;
   public final Collection<String> nps = new ArrayList<>();
   public final int numParameters;
   public final int numStatements;
   public final int numExpressions;
+  public final int numNodes;
   public final MethodDeclaration before;
   public MethodDeclaration after;
   private boolean fullyMatched;
 
   public MethodRecord(final MethodDeclaration d) {
     before = d;
-    methodName = d.getName() + "";
+    methodName = identifier(name(d));
     methodClassName = findTypeAncestor(d);
-    numParameters = d.parameters().size();
+    numParameters = parameters(d).size();
     numStatements = measure.statements(d);
     numExpressions = measure.expressions(d);
+    numNodes = count.nodes(d);
   }
 
   void setAfter(final MethodDeclaration ¢) {
@@ -42,11 +46,28 @@ public class MethodRecord {
     return fullyMatched;
   }
 
+  public boolean touched() {
+    return numNPStatements > 0 || numNPExpressions > 0;
+  }
+
+  public int numNPStatements() {
+    return Math.min(numNPStatements, numStatements);
+  }
+
+  public int numNPExpressions() {
+    return Math.min(numNPExpressions, numExpressions);
+  }
+
+  public int numNPNodes() {
+    return Math.min(numNPNodes, numNodes);
+  }
+
   public void markNP(final ASTNode n, final String np) {
     if (excluded(np))
       return;
     numNPStatements += measure.statements(n);
     numNPExpressions += measure.expressions(n);
+    numNPNodes += count.nodes(n);
     if (epxressionWholeStatement(n))
       ++numNPStatements;
     nps.add(np);

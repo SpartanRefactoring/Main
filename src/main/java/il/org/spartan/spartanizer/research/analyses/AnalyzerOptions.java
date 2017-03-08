@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** Created out of {@link ConfigurableObjectTemplate}
  * @author Ori Marcovitch
  * @since Nov 1, 2016 */
+@Deprecated
+@SuppressWarnings("deprecation")
 public enum AnalyzerOptions {
   ;
   static final Map<String, Map<String, String>> options = new HashMap<>();

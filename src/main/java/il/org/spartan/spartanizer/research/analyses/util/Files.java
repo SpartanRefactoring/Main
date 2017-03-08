@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** File utils
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public enum Files {
@@ -22,11 +22,11 @@ public enum Files {
       dir.mkdir();
   }
 
-  public static String getProperty(final String ¢) {
+  @SuppressWarnings("deprecation") public static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyze.class.getSimpleName(), ¢);
   }
 
-  public static void set(final String key, final String value) {
+  @SuppressWarnings("deprecation") public static void set(final String key, final String value) {
     AnalyzerOptions.set(key, value);
   }
 
