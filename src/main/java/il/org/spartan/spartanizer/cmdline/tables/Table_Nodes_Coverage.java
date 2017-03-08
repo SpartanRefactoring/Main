@@ -41,7 +41,7 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
       statistics.logCompilationUnit(¢);
       final String spartanzied = spartanizer.fixedPoint(¢);
       statistics.logAfterSpartanization(into.cu(spartanzied));
-      analyze(spartanzied);
+      System.out.println(analyze(spartanzied));
     } catch (final AssertionError __) {
       ___.unused(__);
     }
