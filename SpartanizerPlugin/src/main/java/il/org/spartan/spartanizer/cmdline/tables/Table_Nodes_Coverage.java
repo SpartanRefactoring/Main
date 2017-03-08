@@ -4,7 +4,6 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -33,15 +32,15 @@ public class Table_Nodes_Coverage extends Table_ReusabilityIndices {
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
-    if (count.lines(¢) > 5000) {
-      System.out.print("S");
-      return false;
-    }
+    // if (count.lines(¢) > 5000) {
+    // System.out.print("S");
+    // return false;
+    // }
     try {
       statistics.logCompilationUnit(¢);
       final String spartanzied = spartanizer.fixedPoint(¢);
       statistics.logAfterSpartanization(into.cu(spartanzied));
-      System.out.println(analyze(spartanzied));
+      analyze(spartanzied);
     } catch (final AssertionError __) {
       ___.unused(__);
     }
