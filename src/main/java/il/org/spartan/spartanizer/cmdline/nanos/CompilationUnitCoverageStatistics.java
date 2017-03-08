@@ -9,7 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
@@ -46,9 +47,9 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
 class CompilationUnitRecord {
   public int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
-  public Map<String, MethodRecord> nodesCovered = new HashMap<>();
+  public int nodesCovered;
+  public Map<String, VanillaMethodRecord> methods = new HashMap<>();
   public final Set<String> nps = new HashSet<>();
-  private String currentMethod;
 
   public CompilationUnitRecord(final CompilationUnit cu) {
     nodesBeforeSpartanization = count.nodes(cu);
@@ -62,17 +63,52 @@ class CompilationUnitRecord {
     return !nps.isEmpty();
   }
 
-  public void logMethod(final MethodDeclaration ¢) {
-    currentMethod = identifier(name(¢)) + "$" + arity(¢);
-    nodesCovered.putIfAbsent(currentMethod, new MethodRecord(¢));
+  public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
+    String mangle = Vocabulary.mangle(¢);
+    methods.putIfAbsent(mangle, new VanillaMethodRecord(¢));
+    nodesCovered += methods.get(mangle).logAndGet(count.nodes(n));
   }
 
   public void markNP(final ASTNode n, final String np) {
-    nodesCovered.get(currentMethod).markNP(n, np);
+    MethodDeclaration $ = ancestorMethod(n);
+    if ($ == null)
+      markRegular(n);
+    else
+      markContainedInMethod($, n);
     nps.add(np);
   }
 
+  private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
+    for (ASTNode $ = ¢; $ != null; $ = parent($)) {
+      if (iz.methodDeclaration($))
+        return az.methodDeclaration($);
+      if (iz.typeDeclaration($))
+        break;
+    }
+    return null;
+  }
+
+  private void markRegular(ASTNode ¢) {
+    nodesCovered += count.nodes(¢);
+  }
+
   public int nodesCovered() {
-    return nodesCovered.values().stream().mapToInt(MethodRecord::numNPNodes).sum();
+    return Math.min(nodesCovered, nodesAfterSpartanization);
+  }
+
+  class VanillaMethodRecord {
+    private final int numNodes;
+    private int numNPNodes;
+
+    public VanillaMethodRecord(MethodDeclaration ¢) {
+      numNodes = count.nodes(¢);
+    }
+
+    /** makes sure we don't exceed 100% of nodes of a method */
+    public int logAndGet(int nodes) {
+      final int $ = Math.min(nodes, numNodes - numNPNodes);
+      numNPNodes += $;
+      return $;
+    }
   }
 }
