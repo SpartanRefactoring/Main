@@ -394,6 +394,10 @@ public enum step {
     return ¢ == null ? null : ¢.getIdentifier();
   }
 
+  public static int arity(final MethodDeclaration ¢) {
+    return ¢ == null ? -1 : parameters(¢) == null ? 0 : parameters(¢).size();
+  }
+
   public static String identifier(final SingleVariableDeclaration ¢) {
     return identifier(name(¢));
   }

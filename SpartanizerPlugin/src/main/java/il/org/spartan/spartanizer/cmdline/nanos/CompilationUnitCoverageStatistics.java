@@ -4,9 +4,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
@@ -36,15 +39,16 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
   }
 
   private int nodesCovered() {
-    return stream().mapToInt(λ -> λ.nodesCovered).sum();
+    return stream().mapToInt(CompilationUnitRecord::nodesCovered).sum();
   }
 }
 
 class CompilationUnitRecord {
   public int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
-  public int nodesCovered;
+  public Map<String, MethodRecord> nodesCovered = new HashMap<>();
   public final Set<String> nps = new HashSet<>();
+  private String currentMethod;
 
   public CompilationUnitRecord(final CompilationUnit cu) {
     nodesBeforeSpartanization = count.nodes(cu);
@@ -58,8 +62,17 @@ class CompilationUnitRecord {
     return !nps.isEmpty();
   }
 
+  public void logMethod(final MethodDeclaration ¢) {
+    currentMethod = identifier(name(¢)) + "$" + arity(¢);
+    nodesCovered.putIfAbsent(currentMethod, new MethodRecord(¢));
+  }
+
   public void markNP(final ASTNode n, final String np) {
-    nodesCovered += count.nodes(n);
+    nodesCovered.get(currentMethod).markNP(n, np);
     nps.add(np);
+  }
+
+  public int nodesCovered() {
+    return nodesCovered.values().stream().mapToInt(MethodRecord::numNPNodes).sum();
   }
 }

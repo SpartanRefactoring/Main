@@ -22,6 +22,8 @@ import il.org.spartan.spartanizer.utils.*;
  * Oh, and create az.Clazz method on the fly.
  * @author Ori Marcovitch
  * @since 2016 */
+@Deprecated
+@SuppressWarnings("deprecation")
 public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final long serialVersionUID = 4421426553044419392L;
   private static final String API_LEVEL_FILE = "file";

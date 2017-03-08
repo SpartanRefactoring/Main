@@ -127,11 +127,11 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static int statementsCovered() {
-    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPStatements).sum();
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPStatements()).sum();
   }
 
   private static int expressionsCovered() {
-    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPExpressions).sum();
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPExpressions()).sum();
   }
 
   private static int expressions() {
@@ -175,8 +175,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static int methodsTouched() {
-    return (int) statementsCoverageStatistics.values().stream().flatMap(Collection::stream)
-        .filter(λ -> (λ.numNPStatements > 0 || λ.numNPExpressions > 0) && !λ.fullyMatched()).count();
+    return (int) statementsCoverageStatistics.values().stream().flatMap(Collection::stream).filter(λ -> λ.touched() && !λ.fullyMatched()).count();
   }
 
   private static int methodsCovered() {
