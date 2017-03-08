@@ -83,7 +83,10 @@ public abstract class FolderASTVisitor extends ASTVisitor {
 
   void collect(final CompilationUnit u) {
     try {
-      u.accept(this);
+      if (count.lines(u) < 5000)
+        u.accept(this);
+      else
+        System.out.println("S");
     } catch (final NullPointerException ¢) {
       ¢.printStackTrace();
     }
@@ -94,9 +97,6 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   }
 
   void visit(final File f) {
-    System.out.println("+++++++++++++++++++++++++");
-    System.out.println(f.getName());
-    System.out.println("+++++++++++++++++++++++++");
     dotter.click();
     if (!system.isTestFile(f) && !containsTestAnnotation(f))
       try {
