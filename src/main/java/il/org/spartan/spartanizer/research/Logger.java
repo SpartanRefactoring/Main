@@ -61,7 +61,7 @@ public final class Logger {
    * @param ¢ compilation unit */
   public static void logCompilationUnit(final CompilationUnit ¢) {
     currentType = new Stack<>();
-    yieldDescendants.ofClass(AbstractTypeDeclaration.class).from(¢).stream().filter(haz::methods).forEach(Logger::logType);
+    yieldDescendants.whoseClassIs(AbstractTypeDeclaration.class).from(¢).stream().filter(haz::methods).forEach(Logger::logType);
   }
 
   /** Collect statistics of a compilation unit which will be analyzed.
