@@ -48,7 +48,7 @@ class CompilationUnitRecord {
   public int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
   public int nodesCovered;
-  public Map<String, VanillaMethodRecord> methods = new HashMap<>();
+  public Map<String, LightWeightMethodRecord> methods = new HashMap<>();
   public final Set<String> nps = new HashSet<>();
 
   public CompilationUnitRecord(final CompilationUnit cu) {
@@ -65,7 +65,7 @@ class CompilationUnitRecord {
 
   public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
     String mangle = Vocabulary.mangle(¢);
-    methods.putIfAbsent(mangle, new VanillaMethodRecord(¢));
+    methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
     nodesCovered += methods.get(mangle).logAndGet(count.nodes(n));
   }
 
@@ -96,11 +96,11 @@ class CompilationUnitRecord {
     return Math.min(nodesCovered, nodesAfterSpartanization);
   }
 
-  class VanillaMethodRecord {
+  class LightWeightMethodRecord {
     private final int numNodes;
     private int numNPNodes;
 
-    public VanillaMethodRecord(MethodDeclaration ¢) {
+    public LightWeightMethodRecord(MethodDeclaration ¢) {
       numNodes = count.nodes(¢);
     }
 
