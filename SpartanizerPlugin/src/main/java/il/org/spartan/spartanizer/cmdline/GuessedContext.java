@@ -7,7 +7,6 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -90,11 +89,8 @@ public enum GuessedContext {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
-    azzert.fail("GuessContext error: \n" + //
-        "Here are the attempts I made at literal [" + codeFragment + "]:,\n" + //
-        "\n" + //
-        enumerateFailingAttempts(codeFragment));
-    throw new RuntimeException();
+    monitor.debug("GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n" + "\n" + enumerateFailingAttempts(codeFragment));
+    return GuessedContext.STATEMENTS_LOOK_ALIKE;
   }
 
   private static boolean methodInvocationLookAlike(final String codeFragment) {
