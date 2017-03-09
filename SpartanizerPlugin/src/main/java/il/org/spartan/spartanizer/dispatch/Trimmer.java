@@ -114,8 +114,9 @@ public class Trimmer extends AbstractGUIApplicator {
    * @return
    * @throws AssertionError */
   public TextEdit once(final IDocument $) throws AssertionError {
-    final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+    final TextEdit e;
     try {
+      e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       e.apply($);
     } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)
