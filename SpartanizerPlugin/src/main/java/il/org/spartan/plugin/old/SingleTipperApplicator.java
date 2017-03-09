@@ -179,15 +179,10 @@ public final class SingleTipperApplicator {
 
     protected final void apply(final Tipper<?> w, final ASTNode n) {
       tipper = w;
-      switch (type) {
-        case DECLARATION:
-          applyDeclaration(w, n);
-          return;
-        case FILE:
-          applyFile(w, n);
-          return;
-        default:
-      }
+      if (type == Type.DECLARATION)
+        applyDeclaration(w, n);
+      else if (type == Type.FILE)
+        applyFile(w, n);
     }
 
     protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
