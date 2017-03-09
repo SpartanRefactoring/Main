@@ -23,7 +23,7 @@ public interface metrics {
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int bodySize(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         if (¢.getBody() != null)
           $.inner += count.nodes(¢.getBody());
@@ -56,7 +56,7 @@ public interface metrics {
    * @return */
   static Set<String> dictionary(final ASTNode u) {
     final Set<String> $ = new LinkedHashSet<>();
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public void endVisit(final SimpleName node) {
         $.add(step.identifier(node));
       }
@@ -114,7 +114,7 @@ public interface metrics {
 
   static Set<String> literals(final ASTNode n) {
     final Set<String> $ = new LinkedHashSet<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void endVisit(final BooleanLiteral node) {
         $.add(node + "");
       }
@@ -165,7 +165,7 @@ public interface metrics {
 
   static int countStatements(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement && !(¢ instanceof Block))
           $.step();
@@ -180,7 +180,7 @@ public interface metrics {
 
   static int countStatementsOfType(final Statement s, final int type) {
     final Int $ = new Int();
-    s.accept(new ASTVisitor() {
+    s.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getNodeType() == type)
           $.step();
@@ -195,7 +195,7 @@ public interface metrics {
 
   static int countExpressions(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Expression)
           $.step();
@@ -206,7 +206,7 @@ public interface metrics {
 
   static int countMethods(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final MethodDeclaration __) {
         $.step();
         return true;
@@ -223,7 +223,7 @@ public interface metrics {
     final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
     final Int $ = Int.valueOf(-1);
-    n.getRoot().accept(new ASTVisitor() {
+    n.getRoot().accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if ($.inner != -1)
           return;
@@ -252,7 +252,7 @@ public interface metrics {
     final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         $.inner += depth.inner + siblings.peek().inner;
         ++depth.inner;
@@ -276,7 +276,7 @@ public interface metrics {
     final Stack<Int> variables = new Stack<>();
     variables.push(new Int());
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         ifStatementIncreaseResult(¢);
         unlessBlockIncreaseDepth(¢);

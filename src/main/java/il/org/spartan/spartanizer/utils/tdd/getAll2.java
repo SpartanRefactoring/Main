@@ -27,7 +27,7 @@ public enum getAll2 {
     if (u == null)
       return null;
     final List<MethodDeclaration> $ = new ArrayList<>();
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
         return super.visit(¢);
@@ -47,7 +47,7 @@ public enum getAll2 {
     if (b == null)
       return null;
     final List<Name> $ = new ArrayList<>();
-    b.accept(new ASTVisitor() {
+    b.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode an) {
         if (iz.name(an))
           $.add(az.name(an));
@@ -83,7 +83,7 @@ public enum getAll2 {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    ¢.accept(new ASTVisitor() {
+    ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration node) {
         if ("String".equals(node.getType() + ""))
           $.add(node);

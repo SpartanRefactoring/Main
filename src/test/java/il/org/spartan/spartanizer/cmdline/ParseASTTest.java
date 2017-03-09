@@ -18,7 +18,7 @@ public class ParseASTTest {
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\n" + "public class Test {\n"
         + " @Ignore(\"comment\") @Test public void testMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}");
     assert u != null;
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         return extendedModifiers(d).stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
@@ -125,7 +125,7 @@ public class ParseASTTest {
         "package test;\n" + "import static il.org.spartan.plugin.demos.Inline.*;\n" + "import  static il.org.spartan.azzert.*; import org.junit.*;\n"
             + "public class Test {\n" + " @Ignore(\"comment\") @Test public void aTestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n"
             + " }\n" + " public void notATestMethod(){\n " + "   int i = 1;\n" + "   assert (i>0);\n" + " }\n" + "}")
-        .accept(new ASTVisitor() {
+        .accept(new ASTVisitor(true) {
           @Override public boolean visit(final MethodDeclaration $) {
             for (final Statement o : statements(step.body($))) {
               print("class: " + o.getClass());

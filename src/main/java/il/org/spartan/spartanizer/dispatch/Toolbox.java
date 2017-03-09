@@ -68,7 +68,7 @@ public class Toolbox {
     disabling.scan(root);
     final Bool done = new Bool();
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode n) {
         if (done.get())
           return false;

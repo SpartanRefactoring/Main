@@ -65,7 +65,7 @@ public enum SpartanizationComparator {
 
   private static void collect(final CompilationUnit u, final String id) {
     // dotter.click();
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         consider(¢, id);
         return true;

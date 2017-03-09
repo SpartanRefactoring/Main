@@ -279,7 +279,7 @@ public enum collect {
    * @return ASTVisitor that adds all the uses of the SimpleName to the provided
    *         list. */
   private static ASTVisitor usesCollector(final SimpleName what, final Collection<SimpleName> into, final boolean lexicalOnly) {
-    return new ASTVisitor() {
+    return new ASTVisitor(true) {
       int loopDepth;
 
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
@@ -392,7 +392,7 @@ public enum collect {
 
       Collection<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
         final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
-        classNode.accept(new ASTVisitor() {
+        classNode.accept(new ASTVisitor(true) {
           @Override public boolean visit(final FieldDeclaration ¢) {
             $.addAll(fragments(¢));
             return false;
