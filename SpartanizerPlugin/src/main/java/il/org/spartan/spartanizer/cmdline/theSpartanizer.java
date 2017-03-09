@@ -27,9 +27,15 @@ public interface theSpartanizer {
   }
 
   static String fixedPoint(final String from) {
-    for (String $ = from, next = from;; next = once(from))
+    int n = 0;
+    for (String $ = from, next = from;; next = once(from)) {
       if (next == null)
         return $;
+      if (++n > 20) {
+        monitor.debug($);
+        return $;
+      }
+    }
   }
 
   /** Apply trimming once
@@ -64,7 +70,7 @@ public interface theSpartanizer {
         } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
           monitor.logEvaluationError(trimmer, ¢);
         }
-        return true;
+        return false;
       }
     });
     return from.equals($.get()) ? null : $.get();
