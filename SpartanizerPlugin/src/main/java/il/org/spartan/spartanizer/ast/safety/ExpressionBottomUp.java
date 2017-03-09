@@ -19,6 +19,8 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     switch (¢.getNodeType()) {
       case SIMPLE_NAME:
         return map((SimpleName) ¢);
+      case QUALIFIED_NAME:
+        return map((QualifiedName) ¢);
       case THIS_EXPRESSION:
         return map((ThisExpression) ¢);
       case NUMBER_LITERAL:
@@ -54,7 +56,7 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
       case SUPER_METHOD_INVOCATION:
         return map((SuperMethodInvocation) ¢);
       default:
-        assert fault.unreachable(): fault.specifically("Unrecognized type", ¢);
+        assert fault.unreachable() : fault.specifically("Unrecognized type", ¢);
         return null;
     }
   }
@@ -115,7 +117,11 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return map(¢.getQualifier());
   }
 
-  protected T map(SimpleName ¢) {
+  protected T map(@SuppressWarnings("unused") final SimpleName ¢) {
     return reduce();
+  }
+
+  protected T map(final QualifiedName ¢) {
+    return reduce(map(¢.getQualifier()), map(¢.getName()));
   }
 }
