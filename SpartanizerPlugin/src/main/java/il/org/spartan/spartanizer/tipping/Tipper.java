@@ -35,18 +35,14 @@ import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
     implements TipperCategory, Serializable {
-  public static Converter converts(String from) {
-    return new Converter() {
-      @Override public Tipper.Example.Converts to(String to) {
-        return new Tipper.Example.Converts() {
-          @Override public String from() {
-            return from;
-          }
+  public static Converter converts(final String from) {
+    return to -> new Tipper.Example.Converts() {
+      @Override public String from() {
+        return from;
+      }
 
-          @Override public String to() {
-            return to;
-          }
-        };
+      @Override public String to() {
+        return to;
       }
     };
   }
@@ -113,12 +109,8 @@ public abstract class Tipper<N extends ASTNode> //
     return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
 
-  public static Tipper.Example.Ignores ignores(String code) {
-    return new Tipper.Example.Ignores() {
-      @Override public String code() {
-        return code;
-      }
-    };
+  public static Tipper.Example.Ignores ignores(final String code) {
+    return () -> code;
   }
 
   protected static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {

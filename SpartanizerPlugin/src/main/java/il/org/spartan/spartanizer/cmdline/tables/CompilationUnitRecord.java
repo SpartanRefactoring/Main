@@ -36,9 +36,9 @@ public class CompilationUnitRecord {
     numStatements = measure.statements(inner);
     numExpressions = measure.expressions(inner);
     linesOfCode = countLines(inner + "");
-    numMethods = yieldDescendants.whoseClassIs(MethodDeclaration.class).from(inner).size();
-    numClasses = yieldDescendants.whoseClassIs(AbstractTypeDeclaration.class).from(inner).size();
-    final PackageDeclaration p = first(yieldDescendants.whoseClassIs(PackageDeclaration.class).from(inner));
+    numMethods = descendants.whoseClassIs(MethodDeclaration.class).from(inner).size();
+    numClasses = descendants.whoseClassIs(AbstractTypeDeclaration.class).from(inner).size();
+    final PackageDeclaration p = first(descendants.whoseClassIs(PackageDeclaration.class).from(inner));
     pakcage = p == null ? "" : p.getName() + "";
     countTestAnnotation(inner);
     // testCount = Int.valueOf(countTestAnnotation(inner));

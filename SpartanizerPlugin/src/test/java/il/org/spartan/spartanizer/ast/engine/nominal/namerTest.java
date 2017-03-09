@@ -33,12 +33,19 @@ public final class namerTest {
     azzert.that(namer.components("with_bTable"), equalTo(new String[] { "with", "b", "Table" }));
   }
 
+  @Test public void streamOfInts() {
+    azzert.that(namer.shorten(t("Stream<Integer> __;")), is("is"));
+  }
+  @Test public void streamOfIntsFail() {
+    azzert.that(namer.shorten(t("StRe1am<Integer> __;")), is("i"));
+  }
+
   @Test public void listOfInts() {
-    azzert.that(namer.shorten(t("List<Set<Integer>> __;")), equalTo("iss"));
+    azzert.that(namer.shorten(t("List<Set<Integer>> __;")), is("iss"));
   }
 
   @Test public void shortNameASTRewriter() {
-    azzert.that(namer.shorten(t("ASTRewriter __;")), equalTo("r"));
+    azzert.that(namer.shorten(t("ASTRewriter __;")), is("r"));
   }
 
   @Test public void shortNameChar() {
