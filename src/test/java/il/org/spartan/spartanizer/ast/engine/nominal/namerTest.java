@@ -36,6 +36,7 @@ public final class namerTest {
   @Test public void streamOfInts() {
     azzert.that(namer.shorten(t("Stream<Integer> __;")), is("is"));
   }
+
   @Test public void streamOfIntsFail() {
     azzert.that(namer.shorten(t("StRe1am<Integer> __;")), is("i"));
   }

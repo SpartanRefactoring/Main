@@ -236,7 +236,7 @@ public abstract class Tipper<N extends ASTNode> //
       String to();
     }
 
-    interface Ignores {
+    interface Ignores extends Example {
       String code();
     }
   }
