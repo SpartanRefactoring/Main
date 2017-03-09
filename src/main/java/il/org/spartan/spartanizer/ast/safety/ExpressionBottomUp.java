@@ -19,6 +19,8 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     switch (¢.getNodeType()) {
       case SIMPLE_NAME:
         return map((SimpleName) ¢);
+      case QUALIFIED_NAME:
+        return map((QualifiedName) ¢);
       case THIS_EXPRESSION:
         return map((ThisExpression) ¢);
       case NUMBER_LITERAL:
@@ -115,7 +117,11 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return map(¢.getQualifier());
   }
 
-  protected T map(SimpleName ¢) {
+  protected T map(@SuppressWarnings("unused") SimpleName ¢) {
     return reduce();
+  }
+
+  protected T map(QualifiedName ¢) {
+    return reduce(map(¢.getQualifier()),map(¢.getName()));
   }
 }

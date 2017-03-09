@@ -20,7 +20,7 @@ public class Issue0815 {
 
   @Test @SuppressWarnings("static-method") public void assertCoverForOfMethod() {
     try {
-      assertNotEquals(guessName.of("A_abc_CLASS_1"), guessName.CLASS_CONSTANT);
+      assertNotEquals(guessName.of("A_abc_CLASS_1"), guessName.STATIC_CONSTANT);
       fail();
     } catch (final Error ¢) {
       azzert.that(AssertionError.class, is(¢.getClass()));
@@ -34,12 +34,12 @@ public class Issue0815 {
   }
 
   @Test @SuppressWarnings("static-method") public void classConstCheckForOfMethod() {
-    azzert.that(guessName.CLASS_CONSTANT, is(guessName.of("A_ABC_CLASS_1")));
-    azzert.that(guessName.CLASS_CONSTANT, is(guessName.of("B99")));
-    azzert.that(guessName.CLASS_CONSTANT, is(guessName.of("A_35")));
-    azzert.that(guessName.CLASS_CONSTANT, is(guessName.of("A______4")));
-    assertNotEquals(guessName.of("a_35"), guessName.CLASS_CONSTANT);
-    assertNotEquals(guessName.of("_A_A"), guessName.CLASS_CONSTANT);
+    azzert.that(guessName.STATIC_CONSTANT, is(guessName.of("A_ABC_CLASS_1")));
+    azzert.that(guessName.STATIC_CONSTANT, is(guessName.of("B99")));
+    azzert.that(guessName.STATIC_CONSTANT, is(guessName.of("A_35")));
+    azzert.that(guessName.STATIC_CONSTANT, is(guessName.of("A______4")));
+    assertNotEquals(guessName.of("a_35"), guessName.STATIC_CONSTANT);
+    assertNotEquals(guessName.of("_A_A"), guessName.STATIC_CONSTANT);
   }
 
   @Test @SuppressWarnings("static-method") public void classNameCheckForOfMethod() {
