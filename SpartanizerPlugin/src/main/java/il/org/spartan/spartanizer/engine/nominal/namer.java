@@ -13,6 +13,7 @@ import static il.org.spartan.lisp.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
@@ -60,8 +61,9 @@ public interface namer {
     return shorten(¢.getElementType()) + repeat(¢.getDimensions(), 's');
   }
 
-  static String shorten(@SuppressWarnings("unused") final IntersectionType __) {
-    return null;
+  static String shorten(final IntersectionType ¢) {
+    assert fault.unreachable() : fault.specifically("Should not shorten intersection type", ¢);
+    return ¢ + "";
   }
 
   static String shorten(final List<Type> ¢) {
