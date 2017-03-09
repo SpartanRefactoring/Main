@@ -150,7 +150,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>il.org.spartan.spartanizer.cmdline.tables.HelloWorld</mainClass>
+							<mainClass>il.org.spartan.spartanizer.cmdline.tables.Table_Nodes_Coverage2</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
