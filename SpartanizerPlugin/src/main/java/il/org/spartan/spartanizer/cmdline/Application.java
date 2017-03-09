@@ -42,7 +42,7 @@ public final class Application implements IApplication {
 
   static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodInvocation ¢) {
         if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
           $.set(¢);
@@ -81,7 +81,7 @@ public final class Application implements IApplication {
   }
 
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;

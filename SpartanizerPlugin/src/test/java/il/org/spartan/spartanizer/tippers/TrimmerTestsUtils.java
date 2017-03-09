@@ -186,7 +186,7 @@ public enum TrimmerTestsUtils {
 
     private N firstInstance(final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
-      u.accept(new ASTVisitor() {
+      u.accept(new ASTVisitor(true) {
         /** The implementation of the visitation procedure in the JDT seems to
          * be buggy. Each time we find a node which is an instance of the sought
          * class, we return false. Hence, we do not anticipate any further calls

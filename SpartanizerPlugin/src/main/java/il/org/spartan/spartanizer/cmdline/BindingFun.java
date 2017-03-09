@@ -20,7 +20,7 @@ final class BindingFun implements IApplication {
   private static final String C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS = "C:\\Users\\sorimar\\workspace\\testAddComments";
 
   private static void iterateMethodInvocations(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodInvocation ¢) {
         assert ¢.getAST().hasResolvedBindings();
         System.out.println(¢.resolveMethodBinding());
@@ -38,7 +38,7 @@ final class BindingFun implements IApplication {
 
   private static String getPackageNameFromSource(final ASTNode n) {
     final Wrapper<String> $ = new Wrapper<>("");
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
