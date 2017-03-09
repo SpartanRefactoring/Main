@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.utils.*;
 public enum guessName {
   STATIC_CONSTANT, //
   CLASS_NAME() {
-    @Override boolean special(String name) {
+    @Override boolean special(final String name) {
       return iz.in(name, "extract", "into", "azzert");
     }
   }, //
@@ -38,7 +38,7 @@ public enum guessName {
   public static guessName of(final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
-    for (guessName $ : guessName.values())
+    for (final guessName $ : guessName.values())
       if ($.special(nameOfSomething))
         return $;
     if (nameOfSomething.matches("[_]+")) //
@@ -67,7 +67,7 @@ public enum guessName {
     return guessName.UNKNOWN;
   }
 
-  @SuppressWarnings("static-method") boolean special(@SuppressWarnings("unused") String nameOfSomething) {
+  @SuppressWarnings("static-method") boolean special(@SuppressWarnings("unused") final String nameOfSomething) {
     return false;
   }
 }
