@@ -23,8 +23,11 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
 
   @Override public Example[] examples() {
     return new Example[] { //
-        Tipper.converts("@SuppressWarnings({\"unchecked\"}) void f() {\n}") //
-            .to("@SuppressWarnings(\"unchecked\") void f() {\n}") };
+        converts("@SuppressWarnings({\"unchecked\"}) void f() {}") //
+            .to("@SuppressWarnings(\"unchecked\") void f() {}"), //
+        ignores("@SuppressWarnings(\"unchecked\") void f() {}"), //
+        ignores("@SuppressWarnings() void f() {}"), //
+        ignores("@SuppressWarnings void f() {}") };
   }
 
   @Override public ASTNode replacement(final SingleMemberAnnotation a) {

@@ -51,7 +51,7 @@ public class ExamplesTests {
   }
 
   private AssertionError wrapFailure(AssertionError x) {
-    return new AssertionError("Example failure at " + tipper.className() + ":" + x.getMessage(), x.getCause());
+    return new AssertionError("Example failure at " + tipper.className() + ": " + x.getMessage(), x.getCause());
   }
 
   @Parameters public static Collection<Object[]> data() {
