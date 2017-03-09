@@ -15,10 +15,10 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @since 2017-03-09
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
+@Ignore("Unignore one by one")
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version300 {
-  @Test public void issue085_86b() {
+  @Test public void strangeFixedPoint() {
     azzert.that(theSpartanizer.fixedPoint("A a(A b) throws B { A c; c = b; return c; }"), iz("A a(A b) throws B { return b; }"));
   }
   @Test public void negationPushdownTernary() {
