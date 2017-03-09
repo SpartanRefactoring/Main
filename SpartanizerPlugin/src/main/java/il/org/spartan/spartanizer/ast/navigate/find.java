@@ -22,7 +22,7 @@ public enum find {
   public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
     return new Operand<N>() {
       @Override public N under(final ASTNode ¢) {
-        return lisp.first(yieldDescendants.ofClass(c).from(¢));
+        return lisp.first(yieldDescendants.whoseClassIs(c).from(¢));
       }
     };
   }

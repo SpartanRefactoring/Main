@@ -23,7 +23,7 @@ public class Issue0410 {
   }
 
   @Test public void removeCommentsTest() {
-    similar(trivia.removeComments2("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
+    similar(trivia.removeComments("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
 
   private void similar(final String s1, final String s2) {

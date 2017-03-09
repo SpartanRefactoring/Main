@@ -93,7 +93,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
   }
 
   private static boolean containsLambda(final Statement nextStatement) {
-    return !yieldDescendants.ofClass(LambdaExpression.class).from(nextStatement).isEmpty();
+    return !yieldDescendants.whoseClassIs(LambdaExpression.class).from(nextStatement).isEmpty();
   }
 
   private static boolean preOrPostfix(final SimpleName id) {
@@ -103,7 +103,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
   }
 
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
-    return !yieldDescendants.ofClass(ClassInstanceCreation.class).from(nextStatement).isEmpty();
+    return !yieldDescendants.whoseClassIs(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
@@ -143,6 +143,6 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
   }
 
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
-    return yieldDescendants.ofClass(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
+    return yieldDescendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

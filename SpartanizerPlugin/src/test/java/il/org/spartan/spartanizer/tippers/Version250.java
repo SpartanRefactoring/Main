@@ -24,10 +24,6 @@ public final class Version250 {
         .gives("@a(\"a\")void f(){}");
   }
 
-  @Test public void negationPushdownTernary() {
-    trimmingOf("a = !(b ? c: d)")//
-        .using(PrefixExpression.class, new PrefixNotPushdown()).gives("a = b ? !c : !d");
-  }
 
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;")//
