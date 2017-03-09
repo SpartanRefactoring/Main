@@ -30,7 +30,7 @@ public enum SentenceTestTemplate {
   }
 
   static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... ¢) {
-    return Arrays.stream(¢).flatMap(λ -> yieldDescendants.ofClass(AnonymousClassDeclaration.class).from(λ.reflectedCompilationUnit()).stream())
+    return Arrays.stream(¢).flatMap(λ -> yieldDescendants.whoseClassIs(AnonymousClassDeclaration.class).from(λ.reflectedCompilationUnit()).stream())
         .map(AlphabeticallySortedSentence::reify).filter(Objects::nonNull).map(λ -> new ArrayList<>(λ.values())).collect(toList());
   }
 

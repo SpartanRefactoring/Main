@@ -144,7 +144,7 @@ public enum BloatingTestUtilities {
     }
 
     private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-      final List<MethodDeclaration> $ = yieldDescendants.ofClass(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f))
+      final List<MethodDeclaration> $ = yieldDescendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f))
           .from(u);
       if ($.isEmpty())
         azzert.fail("No such method Exists");

@@ -17,6 +17,9 @@ public interface trivia {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }
 
+  static String squeezeSpaces(final String ¢) {
+    return ¢.trim().replaceAll("\\s+", " ");
+  }
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
@@ -25,7 +28,7 @@ public interface trivia {
   }
 
   static String cleanForm(final ASTNode ¢) {
-    return tide.clean(¢ + "");
+    return fixTideClean(¢ + "");
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}. The
@@ -44,7 +47,7 @@ public interface trivia {
   }
 
   static String essence(final String codeFragment) {
-    return trivia.fixTideClean(tide.clean(trivia.removeComments2(codeFragment)));
+    return trivia.fixTideClean(tide.clean(trivia.removeComments(codeFragment)));
   }
 
   /** This method fixes a bug from tide.clean which causes ^ to replaced with
@@ -91,12 +94,6 @@ public interface trivia {
 
   static String removeComments(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n")//
-        .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
-  }
-
-  static String removeComments2(final String codeFragment) {
-    return codeFragment//
-        .replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 }

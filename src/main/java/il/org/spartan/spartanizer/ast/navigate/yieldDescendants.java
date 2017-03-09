@@ -13,8 +13,8 @@ public abstract class yieldDescendants<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
    * @param pattern JD
    * @return a newly created instance */
-  public static <N extends ASTNode> yieldDescendants<N> ofClass(final Class<N> ¢) {
-    return new ofClass<>(¢);
+  public static <N extends ASTNode> yieldDescendants<N> whoseClassIs(final Class<N> ¢) {
+    return new whoseClassIs<>(¢);
   }
 
   /** @param n JD
@@ -29,15 +29,15 @@ public abstract class yieldDescendants<N extends ASTNode> {
    * @return add predicate to filter elements */
   public abstract yieldDescendants<N> suchThat(Predicate<N> ¢);
 
-  static class ofClass<N extends ASTNode> extends yieldDescendants<N> {
+  static class whoseClassIs<N extends ASTNode> extends yieldDescendants<N> {
     final Class<N> clazz;
     Predicate<N> p = λ -> true;
 
-    ofClass(final Class<N> clazz) {
+    whoseClassIs(final Class<N> clazz) {
       this.clazz = clazz;
     }
 
-    @Override public ofClass<N> suchThat(final Predicate<N> ¢) {
+    @Override public whoseClassIs<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }
@@ -63,5 +63,15 @@ public abstract class yieldDescendants<N extends ASTNode> {
       });
       return $;
     }
+  }
+
+  public static List<ASTNode> of(ASTNode n) {
+    final List<ASTNode> $ = new ArrayList<>();
+    n.accept(new ASTVisitor() {
+      @Override public void preVisit(final ASTNode ¢) {
+        $.add(¢);
+      }
+    });
+    return $;
   }
 }

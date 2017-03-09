@@ -66,7 +66,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a05() {
-    assert first(yieldDescendants.ofClass(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
+    assert first(yieldDescendants.whoseClassIs(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
   }
 
   @Test public void a06() {
@@ -347,7 +347,7 @@ public class definitionTest extends MetaFixture {
   }
 
   Collection<MarkerAnnotation> markers() {
-    return yieldDescendants.ofClass(MarkerAnnotation.class).from(reflectedCompilationUnit());
+    return yieldDescendants.whoseClassIs(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }
 // @formatter:off
