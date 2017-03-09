@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.spartanizer.research.util.*;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
@@ -112,6 +113,15 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new Exhaust(), // R.I.P
                 null)//
     ;
+    add(MethodDeclaration.class, //
+        new DoNothingReturnParam(), // R.I.P
+        new Down.Caster(), // rare
+        new ForEachApplier(), // rare + we have ForEach
+        new SelfCaster(), // rare
+        new TypeChecker(), // rare --> merged into examiner
+        new Up.Caster(), // rare
+        new Signature(), // not interesting
+        null);
     return this;
   }
 
@@ -124,22 +134,15 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
-        // new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
-        // new Down.Caster(), // R.I.P
         new Empty(), //
         new Examiner(), //
         new Getter(), //
         new LetItBeInMethod(), //
-        // new ForEachApplier(), // R.I.P, we have ForEach
-        // new SelfCaster(), // R.I.P --> merger into Caster?
         new Cascading.Setter(), ///
         new Setter(), //
-        // new Signature(), //
         new SuperDelegator(), //
         new Thrower(), //
-        // new TypeChecker(), // R.I.P --> merged into examiner
-        // new Up.Caster(), // R.I.P
         null);
     return this;
   }
@@ -154,6 +157,11 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new ToStringMethod(), // Not Counted, actually skipped
         null);
     return this;
+  }
+
+  @Override public String fixedPoint(ASTNode ¢) {
+    ¢.accept(new AnnotationCleanerVisitor());
+    return super.fixedPoint(¢);
   }
 
   public Collection<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
