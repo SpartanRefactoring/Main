@@ -34,7 +34,7 @@ public interface hIndex {
     final Map<String, Pair<String, Int>> ranking = new HashMap<>();
     for (final File f : inputFiles()) {
       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
-      yieldDescendants.ofClass(MethodInvocation.class).from(cu).forEach(m -> {
+      yieldDescendants.whoseClassIs(MethodInvocation.class).from(cu).forEach(m -> {
         final String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
         ranking.putIfAbsent(key, new Pair<>(key, new Int()));
         ++ranking.get(key).second.inner;

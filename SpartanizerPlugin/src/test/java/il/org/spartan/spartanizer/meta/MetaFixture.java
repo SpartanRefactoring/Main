@@ -111,7 +111,7 @@ public abstract class MetaFixture {
   }
 
   public Iterable<Annotation> annotations() {
-    return yieldDescendants.ofClass(Annotation.class).from(reflectedCompilationUnit());
+    return yieldDescendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
 
   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
@@ -125,7 +125,7 @@ public abstract class MetaFixture {
   }
 
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
-    return first(yieldDescendants.ofClass(¢).from(reflectedCompilationUnit()));
+    return first(yieldDescendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
   }
 
   public String name() {
@@ -151,6 +151,6 @@ public abstract class MetaFixture {
   }
 
   public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
-    return yieldDescendants.ofClass(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
+    return yieldDescendants.whoseClassIs(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 }
