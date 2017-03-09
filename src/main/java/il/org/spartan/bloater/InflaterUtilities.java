@@ -32,27 +32,27 @@ public enum InflaterUtilities {
    *         more expanders should be added to the change ASTNode in a "for
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
-  static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup __) {
+  static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup g) {
     boolean $ = false;
     for (final ASTNode statement : ns) {
       final ReturnTernaryExpander cc = new ReturnTernaryExpander();
       if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {
-        cc.tip(az.returnStatement(statement)).go(r, __);
+        cc.tip(az.returnStatement(statement)).go(r, g);
         $ = true;
       } else {
         final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
         if (statement instanceof VariableDeclarationStatement && s.canTip(az.variableDeclarationStatement(statement))) {
-          s.tip(az.variableDeclarationStatement(statement)).go(r, __);
+          s.tip(az.variableDeclarationStatement(statement)).go(r, g);
           $ = true;
         } else {
           final CasesSplit x = new CasesSplit();
           if (statement instanceof SwitchStatement && x.canTip((SwitchStatement) statement)) {
-            x.tip((SwitchStatement) statement).go(r, __);
+            x.tip((SwitchStatement) statement).go(r, g);
             $ = true;
           } else {
             final DeclarationWithInitializerBloater s1 = new DeclarationWithInitializerBloater();
             if (statement instanceof VariableDeclarationStatement && s1.canTip(az.variableDeclarationStatement(statement))) {
-              s1.tip(az.variableDeclarationStatement(statement)).go(r, __);
+              s1.tip(az.variableDeclarationStatement(statement)).go(r, g);
               $ = true;
             }
           }
