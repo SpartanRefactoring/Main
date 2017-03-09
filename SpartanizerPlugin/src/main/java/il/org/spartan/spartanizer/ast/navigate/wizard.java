@@ -192,6 +192,8 @@ public interface wizard {
   }
 
   static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
+    if (ns == null)
+      return $;
     boolean add = false;
     for (final ASTNode x : ns)
       if (add)
