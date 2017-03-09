@@ -33,6 +33,14 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return "Inline the prefix expression after the access to the array";
   }
 
+  @Override public Tipper.Example[] examples() {
+    return new Example[] { //
+        converts("array[i] = 1; ++i;") //
+            .to("array[i++] = 1;"), //
+        ignores("array[i].f(); ++i;"), //
+        ignores("f(array[i]); ++i;") };
+  }
+
   @Override public Tip tip(final ArrayAccess a) {
     return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), a, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
