@@ -45,7 +45,7 @@ public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<
     if (!iz.statement(parent))
       return null;
     final Assignment a2 = extract.assignment(nextStatement);
-    if (a1.getOperator() != a2.getOperator())
+    if (operator(a1) != operator(a2))
       return null;
     final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
