@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Collects boolean features of methods
  * @author Yossi Gil
  * @since Dec 20, 2016 */
-public final class MethodFeaturesCollector extends FolderASTVisitor {
+public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
   static {
     clazz = MethodFeaturesCollector.class;
   }
@@ -89,7 +89,7 @@ public final class MethodFeaturesCollector extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     // final String spartanized = new InteractiveSpartanizer().fixedPoint(s);
     // spartanize(input);
     // consider(output);

@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.ast.navigate.trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.io.*;
-import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -26,50 +25,49 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** Parse and visit all Java files under a given path.
- * @author Yossi Gil
- * @since Dec 14, 2016 */
-public abstract class FolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
+/** Parse and AST visit all Java files under a given path.
+ * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @since 2017-03-09 */
+public class FileSystemASTVisitor {
+  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp();
+  @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
-  protected static Class<? extends FolderASTVisitor> clazz;
-  private static Constructor<? extends FolderASTVisitor> declaredConstructor;
+  protected static Class<? extends FileSystemASTVisitor> clazz;
   protected File presentFile;
-  protected static String presentSourceName;
+  protected String presentSourceName;
   private static int $;
   protected String presentSourcePath;
   protected Dotter dotter;
   protected String absolutePath;
   protected String relativePath;
-  private final boolean silent = true;
+  private ASTVisitor astVisitor;
+  private final List<String> locations;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
   }
 
-  private static Constructor<? extends FolderASTVisitor> declaredConstructor() {
-    if (clazz == null) {
-      monitor.logProbableBug(clazz, fault.stackCapture());
-      System.exit(1);
-    }
-    try {
-      return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
-    } catch (NoSuchMethodException | SecurityException ¢) {
-      monitor.logProbableBug(clazz, ¢);
-      System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
-      throw new RuntimeException();
-    }
+  public FileSystemASTVisitor() {
+    this(null);
   }
 
-  public static void main(final String[] args)
-      throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    visit(args.length != 0 ? args : defaultArguments);
+  public FileSystemASTVisitor(String[] args) {
+    locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
-  public static void visit(final String... arguments) throws InstantiationException, IllegalAccessException, InvocationTargetException {
-    for (final String ¢ : External.Introspector.extract(arguments, clazz))
-      declaredConstructor().newInstance().visit(¢);// NANO - can't, throws
+  public static void main(final String[] args) {
+    new FileSystemASTVisitor(args) {
+      /* Override here which every method you like */
+    }.fire(new ASTVisitor() {
+      /* OVerride here which every method you like */
+      });
+  }
+
+  public void fire(ASTVisitor v) {
+    astVisitor = v;
+    for (final String location : locations)
+      visit(location);// NANO - can't, throws
   }
 
   @SuppressWarnings("static-method") protected void done(final String path) {
@@ -80,7 +78,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
-  protected static String makeFile(final String fileName) {
+  protected String makeFile(final String fileName) {
     return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
@@ -96,7 +94,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
 
   void collect(final CompilationUnit u) {
     try {
-      u.accept(this);
+      u.accept(astVisitor);
     } catch (final NullPointerException ¢) {
       ¢.printStackTrace();
     }
@@ -121,33 +119,24 @@ public abstract class FolderASTVisitor extends ASTVisitor {
       }
   }
 
-  /** Check if a file contains Test annotations
-   * <p>
-   * @param f
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
-  public static boolean containsTestAnnotation(final File f) {
-    String javaCode = null;
+  public static boolean containsTestAnnotation(final File $) {
     try {
-      javaCode = FileUtils.read(f);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "File = " + f);
+      return containsTestAnnotation(FileUtils.read($));
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "File = " + $);
+      return true;
     }
-    return containsTestAnnotation(javaCode);
   }
 
   /** Check if a String contains Test annotations
    * <p>
    * @param f
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
+   * @return */
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     $ = 0;
     cu.accept(new ASTVisitor() {
-      @SuppressWarnings("synthetic-access") @Override public boolean visit(final MethodDeclaration node) {
+      @Override @SuppressWarnings("synthetic-access") public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
           ++$;
         return false;
@@ -156,56 +145,52 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     return $ > 0;
   }
 
-  public static class FieldsOnly extends FolderASTVisitor {
-    public static void main(final String[] args)
-        throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-      clazz = FieldsOnly.class;
-      FolderASTVisitor.main(args);
-    }
-
-    @Override public boolean visit(final FieldDeclaration ¢) {
-      System.out.println(¢);
-      return true;
+  public static class FieldsOnly {
+    public static void main(final String[] args) {
+      new FileSystemASTVisitor(args).fire(new ASTVisitor() {
+        @Override public boolean visit(final FieldDeclaration ¢) {
+          System.out.println(¢);
+          return true;
+        }
+      });
     }
   }
 
-  public static class BucketMethods extends FolderASTVisitor {
-    private static BufferedWriter out;
-    private int interesting;
-    private int total;
+  public static class BucketMethods {
+    static BufferedWriter out;
+    static int interesting;
+    static int total;
 
-    public static void main(final String[] args)
-        throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-      clazz = BucketMethods.class;
+    public static void main(final String[] args) {
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
       } catch (final IOException ¢) {
         monitor.infoIOException(¢);
         return;
       }
-      FolderASTVisitor.main(args);
-    }
-
-    @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
-      ++total;
-      if (interesting(d)) {
-        ++interesting;
-        final String summary = squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(d + "")))) + "\n";
-        System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
-        try {
-          out.write(summary);
-        } catch (final IOException ¢) {
-          System.err.println("Error: " + ¢.getMessage());
+      new FileSystemASTVisitor(args).fire(new ASTVisitor() {
+        @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
+          ++total;
+          if (interesting(d)) {
+            ++interesting;
+            final String summary = squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(d + "")))) + "\n";
+            System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
+            try {
+              out.write(summary);
+            } catch (final IOException ¢) {
+              System.err.println("Error: " + ¢.getMessage());
+            }
+          }
+          return true;
         }
-      }
-      return true;
+      });
     }
 
-    private static boolean interesting(final MethodDeclaration ¢) {
+    static boolean interesting(final MethodDeclaration ¢) {
       return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
     }
 
-    private static boolean leaking(final Stream<ASTNode> ns) {
+    static boolean leaking(final Stream<ASTNode> ns) {
       return ns.noneMatch(λ -> leaking(λ));
     }
 

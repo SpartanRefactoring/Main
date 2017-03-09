@@ -20,7 +20,7 @@ public class TableTouched extends TableNanosCoverage {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = TableTouched.class;
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override protected void done(final String path) {

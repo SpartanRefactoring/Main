@@ -21,7 +21,7 @@ import il.org.spartan.tables.*;
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public class TableNanosStatistics extends FolderASTVisitor {
+public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
@@ -43,7 +43,7 @@ public class TableNanosStatistics extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     pWriter.close();
     System.err.println("Your output is in: " + Table.temporariesFolder + pWriter.name);
   }

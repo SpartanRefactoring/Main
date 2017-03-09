@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-19 */
-public class MethodsCounter extends FolderASTVisitor {
+public class MethodsCounter extends DeprecatedFolderASTVisitor {
   private final SortedMap<Integer, Int> methods = new TreeMap<>();
   static {
     clazz = MethodsCounter.class;
@@ -28,7 +28,7 @@ public class MethodsCounter extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     wizard.setParserResolveBindings();
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {

@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-27 */
 @Deprecated
-public class Table1To3Statements extends FolderASTVisitor {
+public class Table1To3Statements extends DeprecatedFolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MIN_STATEMENTS_REPORTED = 1;
   protected static final int MAX_STATEMENTS_REPORTED = 3;
@@ -42,7 +42,7 @@ public class Table1To3Statements extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {

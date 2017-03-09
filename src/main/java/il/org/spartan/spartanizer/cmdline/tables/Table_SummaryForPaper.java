@@ -18,7 +18,7 @@ import il.org.spartan.tables.*;
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
  * @since 2017-02-10 */
-public class Table_SummaryForPaper extends FolderASTVisitor {
+public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   private static Table writer;
   @SuppressWarnings("unused") private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
   private static Collection<String> packages = new HashSet<>();
@@ -34,7 +34,7 @@ public class Table_SummaryForPaper extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     writer.close();
     System.err.println("Your output is in: " + Table.temporariesFolder);
   }
