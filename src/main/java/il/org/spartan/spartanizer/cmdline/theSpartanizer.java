@@ -67,6 +67,6 @@ public interface theSpartanizer {
         return true;
       }
     });
-    return $.get();
+    return from.equals($.get()) ? null : $.get();
   }
 }
