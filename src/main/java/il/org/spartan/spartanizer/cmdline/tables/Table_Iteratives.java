@@ -22,7 +22,7 @@ import il.org.spartan.tables.*;
  * to loops.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-21 */
-public class Table_Iteratives extends FolderASTVisitor {
+public class Table_Iteratives extends DeprecatedFolderASTVisitor {
   private static final int ENHANCED = ASTNode.ENHANCED_FOR_STATEMENT;
   private static final int WHILE = ASTNode.WHILE_STATEMENT;
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
@@ -38,7 +38,7 @@ public class Table_Iteratives extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     closeWriters();
   }
 

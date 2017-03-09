@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Old class for some anlyzes, sort of deprecated since we use
- * {@link FolderASTVisitor}
+ * {@link DeprecatedFolderASTVisitor}
  * @author Ori Marcovitch */
 @Deprecated
 @SuppressWarnings("deprecation")

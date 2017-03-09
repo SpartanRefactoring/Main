@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 @Deprecated
-public class AfterFiles extends FolderASTVisitor {
+public class AfterFiles extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(Integer::compareTo);
@@ -38,7 +38,7 @@ public class AfterFiles extends FolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     // wizard.setParserResolveBindings();
     TrimmerLog.off();
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {

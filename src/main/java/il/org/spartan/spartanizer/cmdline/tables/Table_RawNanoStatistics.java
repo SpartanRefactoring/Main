@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * project
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public class Table_RawNanoStatistics extends FolderASTVisitor {
+public class Table_RawNanoStatistics extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer().addRejected();
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   private static Table pWriter;
@@ -38,7 +38,7 @@ public class Table_RawNanoStatistics extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     pWriter.close();
   }
 

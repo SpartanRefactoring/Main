@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Matteo Orru'
  * @since Oct 2, 2016 */
 @SuppressWarnings("TooBroadScope")
-final class BatchSpartanizer extends FolderASTVisitor {
+final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   private static final String folder = "/tmp";
   private static final String script = "./src/test/resources/essence";
   private static final InteractiveSpartanizer interactiveSpartanizer = new InteractiveSpartanizer().disable(Nominal.class)
