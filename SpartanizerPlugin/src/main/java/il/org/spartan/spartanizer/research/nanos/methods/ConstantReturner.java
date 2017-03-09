@@ -1,12 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano a method returns some constant
@@ -15,16 +10,16 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class ConstantReturner extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 6491594906301190270L;
   private static final JavadocMarkerNanoPattern rival = new Default();
-  private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
+  private static final NanoPatternContainer<Statement> tippers = new NanoPatternContainer<Statement>() {
     @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {
-      add(patternTipper("return $L;", "", ""));
-      add(patternTipper("return -$L;", "", ""));
+      patternTipper("return $L;", "", "");
+      patternTipper("return -$L;", "", "");
     }
   };
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return anyTips(tippers, onlyStatement(¢))//
+    return tippers.canTip(onlyStatement(¢))//
         && !rival.matches(¢);
   }
 
