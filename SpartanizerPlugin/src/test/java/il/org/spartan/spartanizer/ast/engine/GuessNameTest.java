@@ -39,15 +39,15 @@ public class GuessNameTest {
   }
 
   @Test public void classConstant1() {
-    azzert.that(guessName.of("ABC"), is(guessName.CLASS_CONSTANT));
+    azzert.that(guessName.of("ABC"), is(guessName.STATIC_CONSTANT));
   }
 
   @Test public void classConstant2() {
-    azzert.that(guessName.of("ABC"), is(guessName.CLASS_CONSTANT));
+    azzert.that(guessName.of("ABC"), is(guessName.STATIC_CONSTANT));
   }
 
   @Test public void classConstant3() {
-    azzert.that(guessName.of("ABC"), is(guessName.CLASS_CONSTANT));
+    azzert.that(guessName.of("ABC"), is(guessName.STATIC_CONSTANT));
   }
 
   @Test public void className1() {

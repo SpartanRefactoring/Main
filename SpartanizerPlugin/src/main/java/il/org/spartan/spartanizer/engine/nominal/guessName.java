@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since Jan 5, 2017 */
 public enum guessName {
-  CLASS_CONSTANT, //
+  STATIC_CONSTANT, //
   CLASS_NAME, //
   SETTTER_METHOD, //
   GETTER_METHOD, //
@@ -43,7 +43,7 @@ public enum guessName {
     if (nameOfSomething.matches("[_$¢]+")) //
       return guessName.WEIRDO;
     if (nameOfSomething.matches("[A-Z][_A-Z0-9]*")) //
-      return guessName.CLASS_CONSTANT;
+      return guessName.STATIC_CONSTANT;
     if (nameOfSomething.matches("is[A-Z][A-Z0-9_]*")) //
       return guessName.IS_METHOD;
     if (nameOfSomething.matches("set[A-Z][a-zA-Z0-9]*")) //

@@ -29,9 +29,8 @@ public class UsedNamesTest {
   @Test public void e() {
     azzert.that(extract.usedNames(into.e("this.f(a)")).size(), is(1));
   }
-  @Ignore("Working on it --yg")
   @Test public void f() {
-    final List<String> usedNames = extract.usedNames(into.e("azzert.that(extract.usedNames(into.e(X)).size(), is(1))"));
+    final List<String> usedNames = extract.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
     azzert.that(usedNames + "", usedNames.size(), is(0));
   }
 }
