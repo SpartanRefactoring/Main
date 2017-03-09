@@ -13,16 +13,16 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** Generates table presenting {@link ASTNode}s coverage
+/** TODO orimarco: document class {@link }
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2017-03-07 */
-public class Table_Nodes_Coverage extends FolderASTVisitor {
+ * @since 2017-03-09 */
+public class CoverageVisitor extends FolderASTVisitor {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;
   static {
-    clazz = Table_Nodes_Coverage.class;
+    clazz = CoverageVisitor.class;
     Logger.subscribe(statistics::markNP);
   }
 
