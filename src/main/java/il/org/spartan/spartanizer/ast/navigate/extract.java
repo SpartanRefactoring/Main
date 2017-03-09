@@ -120,12 +120,12 @@ public enum extract {
         return ss1;
       }
 
-      @Override protected List<String> map(SimpleName ¢) {
+      @Override protected List<String> map(final SimpleName ¢) {
         final String $ = ¢.getIdentifier();
         return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list($);
       }
 
-      @Override protected List<String> map(@SuppressWarnings("unused") ThisExpression ¢) {
+      @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
         return reduce();
       }
     }.map(x);

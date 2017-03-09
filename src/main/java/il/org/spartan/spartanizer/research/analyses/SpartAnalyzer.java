@@ -160,7 +160,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @Override public String fixedPoint(ASTNode ¢) {
+  @Override public String fixedPoint(final ASTNode ¢) {
     ¢.accept(new AnnotationCleanerVisitor());
     return super.fixedPoint(¢);
   }
