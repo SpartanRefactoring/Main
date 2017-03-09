@@ -71,8 +71,8 @@ public interface theSpartanizer {
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
-    } catch (final Exception x) {
-      return monitor.logProbableBug(x);
+    } catch (final Exception ¢) {
+      return monitor.logProbableBug(¢);
     }
   }
 
