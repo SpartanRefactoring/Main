@@ -16,17 +16,22 @@ import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-/** TODO Ori Roth: document class {@link }
+/** A test generator for {@link Tipper}s, creating tests from their declared
+ * examples (see {@link Tipper#examples}).
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-03-09 */
 @SuppressWarnings("static-method")
 @RunWith(Parameterized.class)
 public class ExamplesTests {
-  // In case we want to test tippers that are not in the {@link Toolbox}.
+  /** In case we want to test tippers that are not in the {@link Toolbox}. */
   private static final Tipper<?>[] ADDITIONAL_TIPPERS_FOR_TESTING = {};
+  /** Is true iff creates tests without examples (empty tests, always
+   * successful). */
   private static final boolean TEST_WITHOUT_EXAMPLES = true;
+  /** Current tipper, loaded dynamically. */
   private Tipper<? extends ASTNode> tipper;
 
+  /** Redirects examples to tests according to type */
   @Test public void testExamples() {
     for (Example e : tipper.examples())
       try {
@@ -53,6 +58,9 @@ public class ExamplesTests {
     return allTippers().stream().map(t -> new Object[] { t }).collect(Collectors.toList());
   }
 
+  /** Get all tippers from {@link Toolbox} and
+   * {@link ADDITIONAL_TIPPERS_FOR_TESTING}
+   * @return all tippers to be tested */
   private static Collection<Tipper<? extends ASTNode>> allTippers() {
     Set<Tipper<? extends ASTNode>> $ = new HashSet<>();
     $.addAll(Toolbox.freshCopyOfAllTippers().getAllTippers());
