@@ -104,6 +104,7 @@ public class FileSystemASTVisitor {
   }
 
   void visit(final File f) {
+    monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
     if (!system.isTestFile(f) && !containsTestAnnotation(f))
