@@ -157,4 +157,18 @@ public interface MethodPatternUtilitiesTrait {
     statements($).remove(statements($).size() - 1);
     return $;
   }
+
+  default boolean getter(final MethodDeclaration ¢) {
+    return tippers.canTip(onlyStatement(¢));
+  }
+
+  NanoPatternContainer<Statement> tippers = new NanoPatternContainer<Statement>() {
+    static final long serialVersionUID = 1L;
+    {
+      patternTipper("return $N;", "", "");
+      patternTipper("return this.$N;", "", "");
+      patternTipper("return ($T)$N;", "", "");
+      patternTipper("return ($T)this.$N;", "", "");
+    }
+  };
 }

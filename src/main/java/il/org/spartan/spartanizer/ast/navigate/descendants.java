@@ -56,6 +56,8 @@ public abstract class descendants<N extends ASTNode> {
 
     @Override public List<N> inclusiveFrom(final ASTNode n) {
       final List<N> $ = new ArrayList<>();
+      if (n == null)
+        return $;
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
           if (clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
