@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -21,74 +20,72 @@ import il.org.spartan.utils.*;
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
-public class Table_Summary extends Table_ReusabilityIndices {
+public class Table_Summary {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
-  private static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
-  private static final Stack<MethodRecord> scope = new Stack<>();
+  static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
+  static final Stack<MethodRecord> scope = new Stack<>();
   private static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
-    clazz = Table_Summary.class;
     Logger.subscribe(Table_Summary::logNanoContainingMethodInfo);
     Logger.subscribe(npStatistics::logNPInfo);
     Logger.subscribe(npDistributionStatistics::logNPInfo);
   }
 
-  public static void main(final String[] args)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    DeprecatedFolderASTVisitor.main(args);
+  public static void main(final String[] args) {
+    new FileSystemASTVisitor(args) {
+      @Override protected void done(final String path) {
+        summarizeStatistics(path);
+        clearAll();
+        System.err.println("Output is in: " + Table.temporariesFolder + path);
+      }
+    }.fire(new ASTVisitor() {
+      @Override public boolean visit(final MethodDeclaration ¢) {
+        if (excludeMethod(¢))
+          return true;
+        try {
+          final MethodRecord m = new MethodRecord(¢);
+          scope.push(m);
+          final MethodDeclaration d = findFirst.instanceOf(MethodDeclaration.class)
+              .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+          if (d != null)
+            npDistributionStatistics.logNode(d);
+          final Integer key = Integer.valueOf(measure.statements(d));
+          statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
+          statementsCoverageStatistics.get(key).add(m);
+        } catch (final AssertionError __) {
+          ___.unused(__);
+        }
+        return true;
+      }
+
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        spartanalyzer.fixedPoint(ast(¢ + ""));
+        return true;
+      }
+
+      @Override public void endVisit(final MethodDeclaration ¢) {
+        if (!excludeMethod(¢))
+          scope.pop();
+      }
+
+      @Override public boolean visit(final CompilationUnit ¢) {
+        ¢.accept(new CleanerVisitor());
+        return true;
+      }
+    });
     writer.close();
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
-    if (excludeMethod(¢))
-      return true;
-    try {
-      final MethodRecord m = new MethodRecord(¢);
-      scope.push(m);
-      final MethodDeclaration d = findFirst.instanceOf(MethodDeclaration.class)
-          .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
-      if (d != null)
-        npDistributionStatistics.logNode(d);
-      final Integer key = Integer.valueOf(measure.statements(d));
-      statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
-      statementsCoverageStatistics.get(key).add(m);
-    } catch (final AssertionError __) {
-      ___.unused(__);
-    }
-    return true;
-  }
-
-  @Override public boolean visit(final FieldDeclaration ¢) {
-    spartanalyzer.fixedPoint(ast(¢ + ""));
-    return true;
-  }
-
-  @Override public void endVisit(final MethodDeclaration ¢) {
-    if (!excludeMethod(¢))
-      scope.pop();
-  }
-
-  @Override public boolean visit(final CompilationUnit ¢) {
-    ¢.accept(new CleanerVisitor());
-    return true;
-  }
-
-  @Override protected void done(final String path) {
-    summarizeStatistics(path);
-    clearAll();
-    System.err.println("Output is in: " + Table.temporariesFolder + path);
-  }
-
-  private static void clearAll() {
+  static void clearAll() {
     statementsCoverageStatistics.clear();
     npDistributionStatistics.clear();
     npStatistics.clear();
     scope.clear();
   }
 
-  private static boolean excludeMethod(final MethodDeclaration ¢) {
+  static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
         || step.body(¢) == null//
         || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
@@ -100,7 +97,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
   }
 
   private static void initializeWriter() {
-    writer = new Table(clazz);
+    writer = new Table(Table_Summary.class);
   }
 
   public static void summarizeStatistics(final String path) {
