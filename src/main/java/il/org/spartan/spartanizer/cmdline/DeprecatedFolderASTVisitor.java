@@ -42,7 +42,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   protected Dotter dotter;
   protected String absolutePath;
   protected String relativePath;
-  private final boolean silent = true;
+  private final boolean silent = false;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
