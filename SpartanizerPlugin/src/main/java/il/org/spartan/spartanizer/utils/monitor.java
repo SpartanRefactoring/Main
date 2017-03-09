@@ -26,10 +26,12 @@ public enum monitor {
 
     <T> T logToFile(final String message) {
       try {
-        if (Logger.writer() != null)
+        if (Logger.writer() != null) {
           Logger.writer().write(message + "\n");
-      } catch (@SuppressWarnings("unused") final IOException __) {
-        // Ignore exceptions since we cannot log them
+          Logger.writer().flush();
+        }
+      } catch (final IOException x) {
+        x.printStackTrace();
       }
       return null¢();
     }
@@ -257,7 +259,7 @@ public enum monitor {
           + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
       System.out.flush();
       System.err.flush();
-      System.err.format("\n --- Your error log will be found in \n\t%s\n", fileName);
+      System.err.format("\n --- Your secret log file will be found in \n\t%s\n", fileName);
       System.out.flush();
       return fileName;
     }
