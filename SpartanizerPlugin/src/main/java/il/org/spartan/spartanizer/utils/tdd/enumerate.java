@@ -22,7 +22,7 @@ public enum enumerate {
       return 0;
     final Int $ = new Int();
     $.inner = 0;
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢))
           $.step();
@@ -39,7 +39,7 @@ public enum enumerate {
     if (n == null)
       return 0;
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
           $.step();
@@ -57,7 +57,7 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor() {
+    ¢.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
         $.step();
         return true;
@@ -73,7 +73,7 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor() {
+    ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration node) {
         if (step.statements(step.body(node)) != null && !step.statements(step.body(node)).isEmpty())
           $.step();
@@ -130,7 +130,7 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor() {
+    ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
         $.step();
         return true;
@@ -143,7 +143,7 @@ public enum enumerate {
     if (n == null)
       return 0;
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final WhileStatement ¢) {
         return push(¢);
       }
@@ -172,7 +172,7 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor() {
+    ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {
         $.step();
         return true;

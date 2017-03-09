@@ -409,7 +409,7 @@ public final class Matcher {
     $.set(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
     try {
-      ast(replacement).accept(new ASTVisitor() {
+      ast(replacement).accept(new ASTVisitor(true) {
         @Override public boolean preVisit2(final ASTNode ¢) {
           if (iz.name(¢) && enviroment.containsKey(¢ + ""))
             $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
@@ -436,7 +436,7 @@ public final class Matcher {
     final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
-    ast(replacement).accept(new ASTVisitor() {
+    ast(replacement).accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
           $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));

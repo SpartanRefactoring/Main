@@ -73,7 +73,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
     if (a == null || !"FlatEnvUse".equals(a.getTypeName() + ""))
       return;
     foundTestedAnnotation = true;
-    a.accept(new ASTVisitor() {
+    a.accept(new ASTVisitor(true) {
       @Override public boolean visit(final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(step.values(¢));

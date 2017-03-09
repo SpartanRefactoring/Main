@@ -104,7 +104,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof BodyDeclaration)
           unEnable($, (BodyDeclaration) ¢);
@@ -130,7 +130,7 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   private static void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {

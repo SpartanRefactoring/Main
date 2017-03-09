@@ -72,7 +72,7 @@ public interface trivia {
   }
 
   static <N extends ASTNode> N removeComments(final N n) {
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       boolean delete(final ASTNode ¢) {
         ¢.delete();
         return true;

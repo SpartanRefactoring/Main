@@ -186,7 +186,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   @Override void collect(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return collect(¢);
       }

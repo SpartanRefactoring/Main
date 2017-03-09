@@ -173,7 +173,7 @@ public enum haz {
 
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       boolean continue¢(final Collection<VariableDeclarationFragment> fs) {
         return fs.stream().anyMatch(λ -> continue¢(step.name(λ)));
       }

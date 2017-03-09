@@ -27,7 +27,7 @@ public enum determineIf {
       return false;
     final Int $ = new Int();
     $.inner = 0;
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
         ++$.inner;
         return true;
@@ -48,7 +48,7 @@ public enum determineIf {
       return false;
     final Int $ = new Int();
     $.inner = 0;
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.statement(¢))
           $.step();
@@ -80,7 +80,7 @@ public enum determineIf {
     if (d == null)
       return false;
     final Int $ = new Int();
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
         $.step();
         return true;
@@ -113,7 +113,7 @@ public enum determineIf {
     if (mDec == null)
       return false;
     final Collection<ReturnStatement> $ = new ArrayList<>();
-    mDec.accept(new ASTVisitor() {
+    mDec.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;
       }
@@ -147,7 +147,7 @@ public enum determineIf {
       return false;
     final Bool $ = new Bool();
     $.inner = false;
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       void innerVisit(final Name node) {
         $.inner = node.getFullyQualifiedName().equals(name);
       }

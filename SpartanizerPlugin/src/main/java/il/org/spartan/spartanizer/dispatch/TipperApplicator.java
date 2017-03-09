@@ -31,7 +31,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
   }
 
   @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
@@ -41,7 +41,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
   }
 
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
-    return new ASTVisitor() {
+    return new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         progressMonitor.worked(1);
