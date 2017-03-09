@@ -162,6 +162,7 @@ public class FileSystemASTVisitor {
     static int total;
 
     public static void main(final String[] args) {
+      monitor.now = monitor.LOG_TO_FILE;
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
       } catch (final IOException ¢) {
