@@ -10,12 +10,12 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
-/** * Unit tests for the nesting class Unit test for the containing class. Note
- * our naming convention: a) test methods do not use the redundant "test"
- * prefix. b) test methods begin with the name of the method they check.
- * @author Yossi Gil
- * @since 2014-07-10 */
+/** Misc unit tests with no better other place for version 3.00 
+ * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @since 2017-03-09
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version300 {
   @Test public void issue085_86b() {
