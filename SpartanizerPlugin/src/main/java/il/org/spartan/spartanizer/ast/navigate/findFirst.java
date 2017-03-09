@@ -50,7 +50,7 @@ public interface findFirst {
    *         value could be found. */
   static ConditionalExpression conditionalExpression(final ASTNode n) {
     final Wrapper<ConditionalExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final ConditionalExpression ¢) {
         if ($.get() != null)
           return false;
@@ -101,7 +101,7 @@ public interface findFirst {
    *         could be found. */
   static InfixExpression infixPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final InfixExpression ¢) {
         if ($.get() != null)
           return false;
@@ -124,7 +124,7 @@ public interface findFirst {
       if (n == null)
         return null;
       final Wrapper<N> $ = new Wrapper<>();
-      n.accept(new ASTVisitor() {
+      n.accept(new ASTVisitor(true) {
         @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
           if ($.get() != null)
             return false;

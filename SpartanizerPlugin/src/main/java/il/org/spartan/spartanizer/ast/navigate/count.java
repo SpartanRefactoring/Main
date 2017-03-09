@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
 public interface count {
   static int imports(final CompilationUnit u) {
     final Int $ = new Int();
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(ImportDeclaration.class))
           $.step();
@@ -29,7 +29,7 @@ public interface count {
 
   static int lines(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode child) {
         if (Statement.class.isAssignableFrom(child.getClass()))
           addWeight($, child);
@@ -61,7 +61,7 @@ public interface count {
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nodes(final ASTNode root) {
     final Int $ = new Int();
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         $.step();
       }
@@ -71,7 +71,7 @@ public interface count {
 
   static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> c) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢.getClass().equals(c))
           $.step();
@@ -82,7 +82,7 @@ public interface count {
 
   static int noimports(final CompilationUnit root) {
     final Int $ = new Int();
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class))
           $.step();
@@ -96,7 +96,7 @@ public interface count {
    * @return */
   static int noImportsNoComments(final ASTNode root) {
     final Int $ = new Int();
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (!¢.getClass().equals(ImportDeclaration.class) || !¢.getClass().equals(Comment.class))
           $.step();
@@ -117,7 +117,7 @@ public interface count {
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int statements(final ASTNode root) {
     final Int $ = new Int();
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(as.bit(iz.statement(¢)));
       }

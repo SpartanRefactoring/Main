@@ -30,7 +30,7 @@ public class Table_Nodes_Coverage {
         summarizeStatistics(path);
         statistics.clear();
       }
-    }.fire(new ASTVisitor() {
+    }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new AnnotationCleanerVisitor());
         try {

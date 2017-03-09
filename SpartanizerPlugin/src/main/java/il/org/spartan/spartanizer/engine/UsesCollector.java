@@ -230,7 +230,7 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean declaredIn(final AbstractTypeDeclaration d) {
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final FieldDeclaration ¢) {
         return !hidden() && !declaredIn(¢);
       }
@@ -394,7 +394,7 @@ class StringCollector extends HidingDepth {
   }
 
   private boolean declaredIn(final AbstractTypeDeclaration d) {
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final FieldDeclaration ¢) {
         return !hidden() && !declaredIn(¢);
       }

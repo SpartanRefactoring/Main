@@ -15,7 +15,7 @@ public enum measure {
     if (n == null)
       return 0;
     final Int $ = new Int();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
           $.step();
@@ -28,7 +28,7 @@ public enum measure {
     final Int $ = new Int();
     if (n == null)
       return 0;
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
           $.step();
