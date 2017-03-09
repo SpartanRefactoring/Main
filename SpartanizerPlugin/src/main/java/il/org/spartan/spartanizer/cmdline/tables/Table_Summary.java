@@ -37,7 +37,7 @@ public class Table_Summary extends Table_ReusabilityIndices {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     writer.close();
   }
 

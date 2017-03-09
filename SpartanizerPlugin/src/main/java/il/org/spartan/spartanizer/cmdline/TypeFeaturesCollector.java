@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since 2016 */
 // TODO Matteo: others? even finer?
 @SuppressWarnings("rawtypes")
-public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCollector {
+public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements FeatureCollector {
   int classNesting;
   TypeDeclaration lastNode;
   private final CSVLineWriter writer = new CSVLineWriter(makeFile("class-properties"));
@@ -85,7 +85,7 @@ public class TypeFeaturesCollector extends FolderASTVisitor implements FeatureCo
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {

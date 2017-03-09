@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 @Deprecated
-public class TableNanosCoverage extends FolderASTVisitor {
+public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
   private static final Stack<MethodRecord> scope = new Stack<>();
@@ -37,7 +37,7 @@ public class TableNanosCoverage extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {

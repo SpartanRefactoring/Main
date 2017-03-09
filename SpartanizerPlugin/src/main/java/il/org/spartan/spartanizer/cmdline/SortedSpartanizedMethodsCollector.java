@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 @Deprecated
-public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
+public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisitor {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(Integer::compareTo);
@@ -37,7 +37,7 @@ public class SortedSpartanizedMethodsCollector extends FolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     wizard.setParserResolveBindings();
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {

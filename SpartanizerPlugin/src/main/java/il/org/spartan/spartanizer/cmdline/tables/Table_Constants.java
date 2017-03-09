@@ -13,7 +13,7 @@ import il.org.spartan.tables.*;
 /** Generates a table, counting constants in repositories
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-08 */
-public class Table_Constants extends FolderASTVisitor {
+public class Table_Constants extends DeprecatedFolderASTVisitor {
   private static Table writer;
   public static int ints;
   public static int longs;
@@ -28,7 +28,7 @@ public class Table_Constants extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     writer.close();
   }
 

@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 /** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-29 */
-public class Table_NanosDistribution extends FolderASTVisitor {
+public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final Map<Integer, Table> writers = new HashMap<>();
   private static final NanoPatternsOccurencesStatistics npStatistics = new NanoPatternsOccurencesStatistics();
@@ -39,7 +39,7 @@ public class Table_NanosDistribution extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     writers.values().forEach(Table::close);
     System.err.println("Your output is in: " + Table.temporariesFolder);
   }

@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * which is not fun at all. Not ready yet.
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
-public abstract class FolderWithBindingASTVisitor extends FolderASTVisitor implements IApplication {
+public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVisitor implements IApplication {
   @Override void visit(final File ¢) {
     dotter.click();
     collect(¢);

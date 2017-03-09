@@ -205,4 +205,8 @@ public interface system {
   static boolean windows() {
     return System.getProperty("os.name").contains("indows");
   }
+
+  static String tmp() {
+    return System.getProperty("java.io.tmpdir");
+  }
 }
