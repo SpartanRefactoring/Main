@@ -14,7 +14,7 @@ public enum guessName {
   STATIC_CONSTANT, //
   CLASS_NAME() {
     @Override boolean special(final String name) {
-      return iz.in(name, "extract", "into", "azzert");
+      return iz.in(name, "extract", "into", "azzert", "iz", "az", "is", "az", "has", "haz");
     }
   }, //
   SETTTER_METHOD, //
