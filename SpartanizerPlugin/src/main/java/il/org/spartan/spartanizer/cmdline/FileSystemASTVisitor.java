@@ -51,7 +51,7 @@ public class FileSystemASTVisitor {
     this(null);
   }
 
-  public FileSystemASTVisitor(String[] args) {
+  public FileSystemASTVisitor(final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
@@ -63,7 +63,7 @@ public class FileSystemASTVisitor {
     });
   }
 
-  public void fire(ASTVisitor v) {
+  public void fire(final ASTVisitor v) {
     astVisitor = v;
     for (final String location : locations)
       visit(location);// NANO - can't, throws
