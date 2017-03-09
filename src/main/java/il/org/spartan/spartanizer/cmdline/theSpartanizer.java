@@ -33,7 +33,7 @@ public interface theSpartanizer {
    * @param from what to process
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
-  static String once(final String from) {
+  @SuppressWarnings("hiding") static String once(final String from) {
     final Trimmer trimmer = new Trimmer(toolbox);
     final IDocument $ = new Document(from);
     final ASTNode n = wizard.ast(from);
