@@ -55,7 +55,7 @@ public class InteractiveSpartanizer {
   }
 
   public String once(final String from) {
-    return new Trimmer(toolbox).spartanizeOnce(from);
+    return new Trimmer(toolbox).once(from);
   }
 
   ASTVisitor collect(final List<Tip> $) {

@@ -94,13 +94,13 @@ public class Trimmer extends AbstractGUIApplicator {
 
   public String fixed(final String from) {
     for (final IDocument $ = new Document(from);;)
-      if (fixed(iteration($)))
+      if (fixed(once($)))
         return $.get();
   }
 
-  public String spartanizeOnce(final String from) {
+  public String once(final String from) {
     final IDocument $ = new Document(from);
-    iteration($);
+    once($);
     return $.get();
   }
 
@@ -113,7 +113,7 @@ public class Trimmer extends AbstractGUIApplicator {
    * @param $ idocument object
    * @return
    * @throws AssertionError */
-  public TextEdit iteration(final IDocument $) throws AssertionError {
+  public TextEdit once(final IDocument $) throws AssertionError {
     final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
     try {
       e.apply($);
