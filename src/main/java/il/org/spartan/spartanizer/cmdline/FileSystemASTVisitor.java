@@ -36,7 +36,6 @@ public class FileSystemASTVisitor {
   protected static Class<? extends FileSystemASTVisitor> clazz;
   protected File presentFile;
   protected String presentSourceName;
-  private static int $;
   protected String presentSourcePath;
   protected Dotter dotter;
   protected String absolutePath;
@@ -135,15 +134,15 @@ public class FileSystemASTVisitor {
    * @return */
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    $ = 0;
+    final Bool $ = new Bool();
     cu.accept(new ASTVisitor() {
-      @Override @SuppressWarnings("synthetic-access") public boolean visit(final MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
-          ++$;
-        return false;
+          $.set();
+        return !$.get();
       }
     });
-    return $ > 0;
+    return $.get();
   }
 
   public static class FieldsOnly {
@@ -163,6 +162,7 @@ public class FileSystemASTVisitor {
     static int total;
 
     public static void main(final String[] args) {
+      monitor.now = monitor.LOG_TO_FILE;
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
       } catch (final IOException ¢) {

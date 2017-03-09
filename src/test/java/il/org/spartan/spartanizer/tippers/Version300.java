@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore("Unignore one by one")
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version300 {
   @Test public void strangeFixedPoint() {
     azzert.that(theSpartanizer.fixedPoint("A a(A b) throws B { A c; c = b; return c; }"), iz("A a(A b) throws B { return b; }"));
   }
 
+//@Ignore("Unignore one by one")
   @Test public void negationPushdownTernary() {
     trimmingOf("a = !(b ? c: d)")//
         .using(PrefixExpression.class, new PrefixNotPushdown())//
