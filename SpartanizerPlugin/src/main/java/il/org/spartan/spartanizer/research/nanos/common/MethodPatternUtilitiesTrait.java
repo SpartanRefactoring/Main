@@ -159,10 +159,10 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default boolean getter(final MethodDeclaration ¢) {
-    return tippers.canTip(onlyStatement(¢));
+    return getterTippers.canTip(onlyStatement(¢));
   }
 
-  NanoPatternContainer<Statement> tippers = new NanoPatternContainer<Statement>() {
+  NanoPatternContainer<Statement> getterTippers = new NanoPatternContainer<Statement>() {
     static final long serialVersionUID = 1L;
     {
       patternTipper("return $N;", "", "");
