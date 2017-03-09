@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.lisp.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -129,5 +130,31 @@ public interface MethodPatternUtilitiesTrait {
 
   default Statement onlySynchronizedStatementStatement(final MethodDeclaration ¢) {
     return onlyStatement(az.synchronizedStatement(onlyStatement(¢)));
+  }
+
+  NanoPatternContainer<Expression> setterTippers = new NanoPatternContainer<Expression>() {
+    static final long serialVersionUID = 1L;
+    {
+      patternTipper("this.$N1 = $N2", "", "");
+      patternTipper("this.$N1 = $L", "", "");
+      patternTipper("$N1 = $N2", "", "");
+      patternTipper("$N1 = $L", "", "");
+    }
+  };
+
+  default boolean setter(final MethodDeclaration ¢) {
+    final List<String> $ = parametersNames(¢);
+    return statements(¢).stream()
+        .allMatch(λ -> setterTippers.canTip(expression(λ)) && isRightSideParameterOrLiteral(right(az.assignment(expression(λ))), $));
+  }
+
+  default boolean isRightSideParameterOrLiteral(final Expression $, final Collection<String> paramNames) {
+    return iz.literal($) || paramNames.contains(identifier(az.name($)));
+  }
+
+  default MethodDeclaration withoutLast(final MethodDeclaration ¢) {
+    final MethodDeclaration $ = copy.of(¢);
+    statements($).remove(statements($).size() - 1);
+    return $;
   }
 }
