@@ -228,23 +228,23 @@ public interface wizard {
 
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
-   * @param p string to convert
+   * @param javaSnippet string to convert
    * @return AST, if string is not a valid AST according to any form, then
    *         null */
-  static ASTNode ast(final String p) {
-    switch (GuessedContext.find(p)) {
+  static ASTNode ast(final String javaSnippet) {
+    switch (GuessedContext.find(javaSnippet)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
-        return into.cu(p);
+        return into.cu(javaSnippet);
       case EXPRESSION_LOOK_ALIKE:
-        return into.e(p);
+        return into.e(javaSnippet);
       case METHOD_LOOK_ALIKE:
-        return into.m(p);
+        return into.m(javaSnippet);
       case OUTER_TYPE_LOOKALIKE:
-        return into.t(p);
+        return into.t(javaSnippet);
       case STATEMENTS_LOOK_ALIKE:
-        return into.s(p);
+        return into.s(javaSnippet);
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(first(statements(az.block(into.s(p)))));
+        return az.astNode(first(statements(az.block(into.s(javaSnippet)))));
       default:
         return null;
     }

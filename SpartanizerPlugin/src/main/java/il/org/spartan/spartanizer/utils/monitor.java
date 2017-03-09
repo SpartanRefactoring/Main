@@ -85,7 +85,7 @@ public enum monitor {
   };
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-  public static final monitor now = monitor.LOG_TO_FILE;
+  public static monitor now = monitor.LOG_TO_FILE;
 
   public static String className(final Class<?> ¢) {
     final String $ = ¢.getCanonicalName();
@@ -96,8 +96,18 @@ public enum monitor {
     return className(¢.getClass());
   }
 
-  public static void debug(final Object o, final Throwable t) {
-    debug(//
+  public static <T> T debug(final Class<?> o, final Throwable t) {
+    return debug(//
+        "A static method of " + className(o) + //
+            "\n was hit by a " + className(t.getClass()) + // 
+            " exception. This is expected and printed only for the purpose of debugging" + //
+            "\n x = '" + t + "'" + //
+            "\n o = " + o + "'");
+  }
+
+
+  public static <T> T debug(final Object o, final Throwable t) {
+    return debug(//
         "An instance of " + className(o) + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
             " exception. This is expected and printed only for the purpose of debugging" + //
