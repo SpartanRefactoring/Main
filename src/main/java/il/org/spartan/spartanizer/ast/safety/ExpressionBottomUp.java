@@ -44,7 +44,7 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
       case ASSIGNMENT:
         return map((Assignment) ¢);
       case ARRAY_INITIALIZER:
-        return map((ArrayAccess) ¢);
+        return map((ArrayInitializer) ¢);
       case ARRAY_CREATION:
         return map((ArrayCreation) ¢);
       case CLASS_INSTANCE_CREATION:
@@ -59,6 +59,10 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
         assert fault.unreachable() : fault.specifically("Unrecognized type", ¢);
         return null;
     }
+  }
+
+  private T map(ArrayInitializer ¢) {
+    return reduceExpressions(expressions(¢));
   }
 
   protected T map(@SuppressWarnings("unused") final StringLiteral ¢) {
