@@ -109,7 +109,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
     final ASTNode parent = parent(nextStatement);
-    parent.accept(new ASTVisitor() {
+    parent.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (parent.equals(¢))
           return true;
@@ -126,7 +126,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
 
   private static boolean leftSide(final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    nextStatement.accept(new ASTVisitor() {
+    nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
         if (iz.simpleName(left(¢))//
             && identifier(az.simpleName(left(¢))).equals(id))

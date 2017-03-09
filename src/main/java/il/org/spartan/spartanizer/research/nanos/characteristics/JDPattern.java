@@ -35,7 +35,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     set.addAll(getInfluenced(d, ps));
     final Bool $ = new Bool();
     $.inner = true;
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final IfStatement ¢) {
         return checkContainsParameter(expression(¢));
       }
@@ -79,7 +79,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   static boolean containsParameter(final ASTNode root, final Collection<String> ss) {
     final Bool $ = new Bool();
     $.inner = false;
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName n) {
         ss.stream().filter(λ -> (n + "").equals(λ) && !nullCheckExpression(az.infixExpression(parent(n)))).forEach(λ -> $.inner = true);
         return false;
@@ -90,7 +90,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
 
   static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
     final Collection<String> $ = new HashSet<>(ps);
-    body(root).accept(new ASTVisitor() {
+    body(root).accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
         if (containsParameter(right(¢), $))
           $.add(extractName(left(¢)));
@@ -114,7 +114,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
 
   protected static String extractName(final Expression root) {
     final StringBuilder $ = new StringBuilder();
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
         $.append(¢);
         return false;

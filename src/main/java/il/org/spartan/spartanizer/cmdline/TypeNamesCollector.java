@@ -38,7 +38,7 @@ public enum TypeNamesCollector {
   }
 
   private static void collect(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleType ¢) {
         record(hop.simpleName(¢) + "");
         return true;

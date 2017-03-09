@@ -310,7 +310,7 @@ public interface iz {
     if (!iz.loop(n))
       return false;
     final Bool $ = new Bool(true);
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final BreakStatement ¢) {
         mark(¢);
         return false;

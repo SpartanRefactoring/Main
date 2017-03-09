@@ -53,7 +53,7 @@ public class Table_RawNanoStatistics {
             .filter(λ -> !npStatistics.keySet().contains(λ))//
             .forEach(λ -> pWriter.col(λ, 0));
       }
-    }.fire(new ASTVisitor() {
+    }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
         try {
           $.accept(new AnnotationCleanerVisitor());

@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since Jan 2, 2017 */
 public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int, HashMap<String, Int>>> {
   private static final long serialVersionUID = 1L;
-  private final ASTVisitor typesDistributionCounter = new ASTVisitor() {
+  private final ASTVisitor typesDistributionCounter = new ASTVisitor(true) {
     @Override public void preVisit(final ASTNode ¢) {
       countNode(¢);
     }
