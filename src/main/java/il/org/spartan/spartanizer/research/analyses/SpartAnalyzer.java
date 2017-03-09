@@ -139,6 +139,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new Examiner(), //
         new Getter(), //
         new LetItBeInMethod(), //
+        new PojoConstructor(), //
         new Cascading.CascadingSetter(), ///
         new Setter(), //
         new SuperDelegator(), //
