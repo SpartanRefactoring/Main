@@ -44,7 +44,16 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
         || ($ = perhapsDoubleNegation(¢)) != null//
         || ($ = perhapsDeMorgan(¢)) != null//
         || ($ = perhapsComparison(¢)) != null //
+        || ($ = perhapsTernary(¢)) != null //
             ? $ : null;
+  }
+
+  static Expression perhapsTernary(Expression ¢) {
+    return perhapsTernary(az.conditionalExpression(core(¢)));
+  }
+
+  static Expression perhapsTernary(ConditionalExpression ¢) {
+    return ¢ == null ? null : subject.pair(then(¢), elze(¢)).toCondition(pushdownNot(¢.getExpression()));
   }
 
   private static Expression comparison(final InfixExpression ¢) {
@@ -52,7 +61,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static boolean hasOpportunity(final Expression inner) {
-    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null;
+    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null || az.conditionalExpression(inner) !=null;
   }
 
   private static boolean hasOpportunity(final PrefixExpression ¢) {
