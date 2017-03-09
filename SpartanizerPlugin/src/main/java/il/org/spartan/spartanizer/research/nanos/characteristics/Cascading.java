@@ -6,13 +6,14 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 /** Nano to match setter method which returns this
  * @author Ori Marcovitch */
 public class Cascading {
   public static class CascadingSetter extends JavadocMarkerNanoPattern {
     private static final long serialVersionUID = -2893413461939243057L;
-    private static final CascadingSetter setter = new CascadingSetter();
+    private static final Setter setter = new Setter();
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
       return hazAtLeastTwoStatements(¢)//
