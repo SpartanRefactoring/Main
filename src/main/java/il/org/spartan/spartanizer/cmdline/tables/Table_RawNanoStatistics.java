@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
@@ -54,6 +55,7 @@ public class Table_RawNanoStatistics {
       }
     }.fire(new ASTVisitor() {
       @Override public boolean visit(final CompilationUnit $) {
+        $.accept(new AnnotationCleanerVisitor());
         try {
           spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
         } catch (final AssertionError __) {
