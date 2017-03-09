@@ -107,7 +107,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
     final List<Expression> $ = new ArrayList<>();
-    s.accept(new ASTVisitor() {
+    s.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)
           consider($, (Expression) ¢);
@@ -210,7 +210,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final String s = $ + "";
     if (!s.startsWith("? extends "))
       return $;
-    $.accept(new ASTVisitor() {
+    $.accept(new ASTVisitor(true) {
       boolean stop;
 
       @Override public boolean preVisit2(final ASTNode ¢) {

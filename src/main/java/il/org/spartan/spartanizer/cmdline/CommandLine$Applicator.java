@@ -78,7 +78,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     // ReportGenerator.report("tips").put("ClassTokenBefore", metrics.tokens(u +
     // ""));
     ReportGenerator.Util.initialize();
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         assert ¢ != null;
         System.out.println(¢.getClass() + ": " + selectedNodeTypes.contains(¢.getClass()));
@@ -309,7 +309,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
     for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
       System.out.println("presentFileName: " + presentFileName);
       System.out.println("presentFilePath: " + presentFilePath);
-      w.compilationUnit.accept(new ASTVisitor() {
+      w.compilationUnit.accept(new ASTVisitor(true) {
         @Override public boolean preVisit2(final ASTNode ¢) {
           return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // ||
                                                                      // !filter(¢)

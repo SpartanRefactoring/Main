@@ -28,7 +28,7 @@ import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Revisioned global preferences page for the plugin.
+/** Revised global preferences page for the plugin.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-02-24 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {

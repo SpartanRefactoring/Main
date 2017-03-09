@@ -40,7 +40,7 @@ public class Table_Summary {
         clearAll();
         System.err.println("Output is in: " + Table.temporariesFolder + path);
       }
-    }.fire(new ASTVisitor() {
+    }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         if (excludeMethod(¢))
           return true;

@@ -124,7 +124,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
 
   <N extends ASTNode> N firstInstance(final Class<N> clazz) {
     final Wrapper<N> $ = new Wrapper<>();
-    compilationUnit.accept(new ASTVisitor() {
+    compilationUnit.accept(new ASTVisitor(true) {
       /** The implementation of the visitation procedure in the JDT seems to be
        * buggy. Each time we find a node which is an instance of the sought
        * class, we return false. Hence, we do not anticipate any further calls
