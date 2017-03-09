@@ -28,14 +28,13 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     return "Remove empty " + (iz.static¢(¢) ? "" : "non-") + "static initializer";
   }
 
-  @Override public il.org.spartan.spartanizer.tipping.Tipper.Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         converts("class C {{}}") //
             .to("class C {}"), //
         converts("class C {static {}}") //
             .to("class C {}"), //
         ignores("class C {/***/ {}}"), //
-        ignores("class C {/***/ static {}}") //
-    };
+        ignores("class C {/***/ static {}}") };
   }
 }
