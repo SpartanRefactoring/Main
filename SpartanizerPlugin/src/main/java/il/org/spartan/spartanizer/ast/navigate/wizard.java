@@ -132,7 +132,8 @@ public interface wizard {
           final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
           monitor.debug("Found node type number of  " + nodeClassForType);
           put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException ¢) {
+        } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
+         // We must suffer this exception; no other way to find the first unused node type 
           break;
         } catch (final Exception ¢) {
           monitor.logEvaluationError(this, ¢);
