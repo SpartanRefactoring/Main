@@ -58,7 +58,7 @@ public class FileSystemASTVisitor {
   public static void main(final String[] args) {
     new FileSystemASTVisitor(args) {
       /* Override here which every method you like */
-    }.fire(new ASTVisitor() {
+    }.fire(new ASTVisitor(true) {
       /* OVerride here which every method you like */
     });
   }
@@ -135,7 +135,7 @@ public class FileSystemASTVisitor {
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     final Bool $ = new Bool();
-    cu.accept(new ASTVisitor() {
+    cu.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
           $.set();
@@ -147,7 +147,7 @@ public class FileSystemASTVisitor {
 
   public static class FieldsOnly {
     public static void main(final String[] args) {
-      new FileSystemASTVisitor(args).fire(new ASTVisitor() {
+      new FileSystemASTVisitor(args).fire(new ASTVisitor(true) {
         @Override public boolean visit(final FieldDeclaration ¢) {
           System.out.println(¢);
           return true;
@@ -173,7 +173,7 @@ public class FileSystemASTVisitor {
         {
           silent = true;
         }
-      }.fire(new ASTVisitor() {
+      }.fire(new ASTVisitor(true) {
         @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
           ++total;
           if (interesting(d)) {

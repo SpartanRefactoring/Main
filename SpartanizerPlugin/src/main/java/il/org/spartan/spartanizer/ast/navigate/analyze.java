@@ -21,7 +21,7 @@ public enum analyze {
   ;
   public static Collection<String> dependencies(final ASTNode n) {
     final Collection<String> $ = new HashSet<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
         if (!izMethodName(node))
           $.add(identifier(node));
@@ -70,7 +70,7 @@ public enum analyze {
 
   private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
     final Str $ = new Str();
-    d.accept(new ASTVisitor() {
+    d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         if ($.notEmpty() || !identifier(¢).equals(n + ""))
           return true;

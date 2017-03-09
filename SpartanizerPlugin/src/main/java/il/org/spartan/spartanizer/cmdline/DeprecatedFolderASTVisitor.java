@@ -146,7 +146,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     $ = 0;
-    cu.accept(new ASTVisitor() {
+    cu.accept(new ASTVisitor(true) {
       @SuppressWarnings("synthetic-access") @Override public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
           ++$;

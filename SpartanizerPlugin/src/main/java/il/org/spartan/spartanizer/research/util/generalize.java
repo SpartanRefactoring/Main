@@ -43,7 +43,7 @@ public enum generalize {
     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
     final Map<String, String> renaming = new HashMap<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final StringLiteral $) {
         final StringLiteral ¢ = ast.newStringLiteral();
         ¢.setLiteralValue(renderIdentifier("L"));

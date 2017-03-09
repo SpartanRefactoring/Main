@@ -48,7 +48,7 @@ public interface hop {
     if (root == null)
       return null;
     final List<ASTNode> $ = new ArrayList<>();
-    root.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);
       }

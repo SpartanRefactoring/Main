@@ -25,7 +25,7 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
     final Collection<Boolean> cc = new ArrayList<>();
-    body(s).accept(new ASTVisitor() {
+    body(s).accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
         cc.add(true);
         return true;

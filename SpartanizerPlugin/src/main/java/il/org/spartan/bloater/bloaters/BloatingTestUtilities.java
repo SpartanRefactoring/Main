@@ -132,7 +132,7 @@ public enum BloatingTestUtilities {
         return null;
       counter = 0;
       final CompilationUnit $ = copy.of(u);
-      $.accept(new ASTVisitor() {
+      $.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode an) {
           if (!iz.simpleName(an))
             return;

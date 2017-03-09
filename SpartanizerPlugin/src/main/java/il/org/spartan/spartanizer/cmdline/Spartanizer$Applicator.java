@@ -44,7 +44,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       assert w != null;
       assert w.compilationUnit != null;
       System.out.println(w.compilationUnit);
-      w.compilationUnit.accept(new ASTVisitor() {
+      w.compilationUnit.accept(new ASTVisitor(true) {
         @Override public boolean preVisit2(final ASTNode ¢) {
           return !selectedNodeTypes.contains(¢.getClass()) || go(¢); // ||
                                                                      // !filter(¢)
@@ -65,7 +65,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   }
 
   void go(final CompilationUnit u) {
-    u.accept(new ASTVisitor() {
+    u.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         System.out.println("!selectedNodeTypes.contains(¢.getClass()): " + !selectedNodeTypes.contains(¢.getClass()));
         // System.out.println("!filter(¢): " + !filter(¢));
