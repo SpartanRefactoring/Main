@@ -119,11 +119,11 @@ public class FileSystemASTVisitor {
       }
   }
 
-  public static boolean containsTestAnnotation(final File f) {
+  public static boolean containsTestAnnotation(final File $) {
     try {
-      return containsTestAnnotation(FileUtils.read(f));
+      return containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "File = " + f);
+      monitor.infoIOException(¢, "File = " + $);
       return true;
     }
   }

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.lang.reflect.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
@@ -16,45 +16,41 @@ import il.org.spartan.utils.*;
 /** Generates table presenting {@link ASTNode}s coverage
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-07 */
-public class Table_Nodes_Coverage extends DeprecatedFolderASTVisitor {
+public class Table_Nodes_Coverage {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  protected static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;
-  static {
-    clazz = Table_Nodes_Coverage.class;
-    Logger.subscribe(statistics::markNP);
-  }
+  protected static Function<String, String> analyze = λ -> spartanalyzer.fixedPoint(λ);
 
-  public static void main(final String[] args)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    DeprecatedFolderASTVisitor.main(args);
+  public static void main(final String[] args) {
+    new FileSystemASTVisitor(args) {
+      @Override protected void done(final String path) {
+        summarizeStatistics(path);
+        statistics.clear();
+      }
+    }.fire(new ASTVisitor() {
+      @Override public boolean visit(final CompilationUnit ¢) {
+        try {
+          statistics.logCompilationUnit(¢);
+          final String spartanzied = spartanizer.fixedPoint(¢);
+          statistics.logAfterSpartanization(into.cu(spartanzied));
+          analyze.apply(spartanzied);
+        } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+          ___.unused(__);
+        }
+        return true;
+      }
+    });
     writer.close();
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
-    try {
-      statistics.logCompilationUnit(¢);
-      final String spartanzied = spartanizer.fixedPoint(¢);
-      statistics.logAfterSpartanization(into.cu(spartanzied));
-      analyze(spartanzied);
-    } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
-      ___.unused(__);
-    }
-    return true;
-  }
-
-  @SuppressWarnings("static-method") protected String analyze(final String spartanzied) {
-    return spartanalyzer.fixedPoint(spartanzied);
-  }
-
-  @Override protected void done(final String path) {
-    summarizeStatistics(path);
-    statistics.clear();
+  static {
+    Logger.subscribe(statistics::markNP);
   }
 
   private static void initializeWriter() {
-    writer = new Table(clazz);
+    writer = new Table(Table_Nodes_Coverage.class);
   }
 
   public static void summarizeStatistics(final String path) {
