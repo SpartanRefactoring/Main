@@ -113,8 +113,8 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           Job.createSystem(pm -> {
             try {
               if (mp.type == Type.new_project) {
-                  eclipse.addNature(mp.p);
-                  mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+                eclipse.addNature(mp.p);
+                mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
               }
             } catch (final Exception ¢) {
               monitor.log(¢);
