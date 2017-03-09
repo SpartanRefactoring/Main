@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -18,66 +17,60 @@ import il.org.spartan.utils.*;
  * project
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public class Table_RawNanoStatistics extends DeprecatedFolderASTVisitor {
-  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer().addRejected();
+public class Table_RawNanoStatistics {
+  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  private static Table pWriter;
-  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+  static Table pWriter;
+  static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static {
-    clazz = Table_RawNanoStatistics.class;
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
-  private static void initializeWriter() {
-    pWriter = new Table(outputFileName());
-  }
+  public static void main(final String[] args) {
+    new FileSystemASTVisitor(args) {
+      @Override protected void done(final String path) {
+        summarizeNPStatistics(path);
+        System.err.println(" " + path + " Done");
+      }
 
-  private static String outputFileName() {
-    return Table_RawNanoStatistics.class.getSimpleName();
-  }
+      public void summarizeNPStatistics(final String path) {
+        if (pWriter == null)
+          initializeWriter();
+        pWriter.col("Project", path);
+        npStatistics.keySet().stream()//
+            .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
+            .map(npStatistics::get)//
+            .forEach(λ -> pWriter.col(λ.name, λ.occurences));
+        fillAbsents();
+        pWriter.nl();
+        npStatistics.clear();
+      }
 
-  public static void main(final String[] args)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    DeprecatedFolderASTVisitor.main(args);
+      void fillAbsents() {
+        spartanalyzer.getAllPatterns().stream()//
+            .map(λ -> λ.getClass().getSimpleName())//
+            .filter(λ -> !npStatistics.keySet().contains(λ))//
+            .forEach(λ -> pWriter.col(λ, 0));
+      }
+    }.fire(new ASTVisitor() {
+      @Override public boolean visit(final CompilationUnit $) {
+        try {
+          spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
+        } catch (final AssertionError __) {
+          ___.unused(__);
+        }
+        return super.visit($);
+      }
+
+      @Override public boolean visit(final FieldDeclaration ¢) {
+        spartanalyzer.fixedPoint(ast(¢ + ""));
+        return true;
+      }
+    });
     pWriter.close();
   }
 
-  @Override public boolean visit(final CompilationUnit $) {
-    try {
-      spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
-    } catch (final AssertionError __) {
-      ___.unused(__);
-    }
-    return super.visit($);
-  }
-
-  @Override public boolean visit(final FieldDeclaration ¢) {
-    spartanalyzer.fixedPoint(ast(¢ + ""));
-    return true;
-  }
-
-  @Override protected void done(final String path) {
-    summarizeNPStatistics(path);
-    System.err.println(" " + path + " Done");
-  }
-
-  public static void summarizeNPStatistics(final String path) {
-    if (pWriter == null)
-      initializeWriter();
-    pWriter.col("Project", path);
-    npStatistics.keySet().stream()//
-        .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
-        .map(npStatistics::get)//
-        .forEach(λ -> pWriter.col(λ.name, λ.occurences));
-    fillAbsents();
-    pWriter.nl();
-    npStatistics.clear();
-  }
-
-  private static void fillAbsents() {
-    spartanalyzer.getAllPatterns().stream()//
-        .map(λ -> λ.getClass().getSimpleName())//
-        .filter(λ -> !npStatistics.keySet().contains(λ))//
-        .forEach(λ -> pWriter.col(λ, 0));
+  static void initializeWriter() {
+    pWriter = new Table(Table_RawNanoStatistics.class);
   }
 }

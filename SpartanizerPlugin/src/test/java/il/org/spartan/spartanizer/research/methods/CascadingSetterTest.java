@@ -4,13 +4,12 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
-/** Tests {@link Cascading.Setter}
+/** Tests {@link Cascading.CascadingSetter}
  * @author Ori Marcovitch */
-@Ignore
 @SuppressWarnings("static-method")
 public class CascadingSetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new Cascading.Setter());
+    setNano(new Cascading.CascadingSetter());
   }
 
   @Test public void a() {

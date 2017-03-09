@@ -22,6 +22,9 @@ public class AgileSpartanizer extends InteractiveSpartanizer {
         new SwitchWithOneCaseToIf(), //
         new SwitchBranchSort(), //
         null)//
+            .remove(InfixExpression.class, //
+                new InfixAdditionSubtractionExpand(), //
+                null) //
             .remove(SwitchCase.class, //
                 new RemoveRedundantSwitchCases(), //
                 new SwitchCaseLocalSort(), //
