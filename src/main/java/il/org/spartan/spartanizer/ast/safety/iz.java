@@ -285,7 +285,8 @@ public interface iz {
    * @param x Expression to search the identifier in it
    * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final ASTNode x) {
-    return !descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
+    return n != null
+        && !descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
   }
 
   static boolean containsOperator(final ASTNode ¢) {
