@@ -2,14 +2,14 @@ package il.org.spartan.spartanizer.engine.nominal;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Fluent API.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-05 */
 public interface JohnDoe {
   static boolean property(final SingleVariableDeclaration ¢) {
-    return ¢ != null && property(step.type(¢), ¢.getName());
+    return ¢ != null && property(type(¢), name(¢));
   }
 
   static boolean property(final String typeName, final String variableName) {
@@ -17,6 +17,6 @@ public interface JohnDoe {
   }
 
   static boolean property(final Type t, final SimpleName n) {
-    return n != null && property(t + "", n.getIdentifier());
+    return n != null && property(t + "", identifier(n));
   }
 }
