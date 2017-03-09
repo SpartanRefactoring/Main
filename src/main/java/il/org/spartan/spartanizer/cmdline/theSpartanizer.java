@@ -48,7 +48,7 @@ public interface theSpartanizer {
     wizard.ast(from).accept(new DispatchingVisitor() {
       boolean done;
 
-      @Override protected <N extends ASTNode> boolean go(final N n) {
+      @SuppressWarnings("hiding") @Override protected <N extends ASTNode> boolean go(final N n) {
         if (done)
           return false;
         final Tipper<N> t = safeFirstTipper(n);
