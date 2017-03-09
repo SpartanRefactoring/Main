@@ -339,13 +339,13 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     return ($ + "").trim();
   }
 
-  static String prettify(String code) {
+  static String prettify(final String code) {
     if (formatter == null)
       formatter = ToolFactory.createCodeFormatter(null);
-    TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
+    final TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;
-    IDocument $ = new Document(code);
+    final IDocument $ = new Document(code);
     try {
       e.apply($);
     } catch (MalformedTreeException | BadLocationException ¢) {

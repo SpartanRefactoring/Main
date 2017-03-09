@@ -18,6 +18,7 @@ import static il.org.spartan.lisp.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -119,12 +120,12 @@ public enum extract {
         return ss1;
       }
 
-      @Override protected List<String> map(SimpleName ¢) {
-        return as.list(¢.getIdentifier()); 
+      @Override protected List<String> map(final SimpleName ¢) {
+        final String $ = ¢.getIdentifier();
+        return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list($);
       }
 
-
-      @Override protected List<String> map(ThisExpression ¢) {
+      @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
         return reduce();
       }
     }.map(x);
@@ -179,7 +180,7 @@ public enum extract {
     }
   }
 
-  /** Extract the {@link Statement} that contains a given node.
+  /** extract the {@link Statement} that contains a given node.
    * @param pattern JD
    * @return inner most {@link Statement} in which the parameter is nested, or
    *         <code><b>null</b></code>, if no such statement exists. */
@@ -236,7 +237,7 @@ public enum extract {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
 
-  /** Extract list of fragments in a {@link Statement}.
+  /** extract list of fragments in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static List<VariableDeclarationFragment> fragments(final Statement ¢) {
@@ -252,7 +253,7 @@ public enum extract {
     }
   }
 
-  /** Extract the single {@link ReturnStatement} embedded in a node.
+  /** extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link IfStatement} embedded in the parameter or
    *         <code><b>null</b></code> if not such sideEffects exists. */
@@ -260,7 +261,7 @@ public enum extract {
     return az.ifStatement(extract.singleStatement(¢));
   }
 
-  /** Extract list of {@link IfStatement}s in a {@link Statement}.
+  /** extract list of {@link IfStatement}s in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static Collection<IfStatement> ifStatements(final Statement ¢) {
@@ -371,7 +372,7 @@ public enum extract {
     return chop($);
   }
 
-  /** Extract the {@link IfStatement} that immediately follows a given node
+  /** extract the {@link IfStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
@@ -387,7 +388,7 @@ public enum extract {
     return az.prefixExpression(expression(az.expressionStatement(extract.nextStatement(¢))));
   }
 
-  /** Extract the {@link ReturnStatement} that immediately follows a given node
+  /** extract the {@link ReturnStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
@@ -395,7 +396,7 @@ public enum extract {
     return az.returnStatement(extract.nextStatement(¢));
   }
 
-  /** Extract the {@link Statement} that immediately follows a given node.
+  /** extract the {@link Statement} that immediately follows a given node.
    * @param pattern JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
@@ -403,7 +404,7 @@ public enum extract {
     return nextStatement(containingStatement(¢));
   }
 
-  /** Extract the {@link Statement} that immediately follows a given SwitchCase
+  /** extract the {@link Statement} that immediately follows a given SwitchCase
    * statement, inside the switch statement
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
@@ -436,7 +437,7 @@ public enum extract {
     return $ == null ? null : $.getExpression();
   }
 
-  /** Extract the single {@link ReturnStatement} embedded in a node.
+  /** extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link ReturnStatement} embedded in the parameter, and
    *         return it; <code><b>null</b></code> if not such sideEffects
@@ -478,7 +479,7 @@ public enum extract {
     return extract.singleStatement(then(¢));
   }
 
-  /** Extract the list of non-empty statements embedded in node (nesting within
+  /** extract the list of non-empty statements embedded in node (nesting within
    * control structure such as <code><b>if</b></code> are not removed.)
    * @param pattern JD
    * @return list of such sideEffects. */
@@ -500,7 +501,7 @@ public enum extract {
     return $ == null ? null : $.getExpression();
   }
 
-  /** Extract the single {@link ThrowStatement} embedded in a node.
+  /** extract the single {@link ThrowStatement} embedded in a node.
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; <code><b>null</b></code> if not such sideEffects exists. */
@@ -622,7 +623,7 @@ public enum extract {
     return range.to(ss.size() - 1).stream().filter(λ -> ss.get(λ) == s).map(λ -> ss.get(λ + 1)).findFirst().orElse(null);
   }
 
-  /** Extract the {@link Statement} that immediately follows a given statement
+  /** extract the {@link Statement} that immediately follows a given statement
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         <code><b>null</b></code>, if no such statement exists. */
