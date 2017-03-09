@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 /** TODO orimarco: document class {@link }
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-09 */
-public class CoverageVisitor extends FolderASTVisitor {
+public class CoverageVisitor extends DeprecatedFolderASTVisitor {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
@@ -28,7 +28,7 @@ public class CoverageVisitor extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     writer.close();
   }
 
