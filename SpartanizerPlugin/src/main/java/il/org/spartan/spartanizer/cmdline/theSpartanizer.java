@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
 public interface theSpartanizer {
   static String fixedPoint(final String from) {
     int n = 0;
-    for (String $ = from, next; ; $= next ) {
+    for (String $ = from, next;; $ = next) {
       next = once($);
       if (next == null || same($, next) || ++n > 20)
         return $;
