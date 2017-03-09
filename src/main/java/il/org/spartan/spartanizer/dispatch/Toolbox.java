@@ -115,7 +115,8 @@ public class Toolbox {
         .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
-        .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()).add(CatchClause.class, new CatchClauseRenameParameterToCent())
+        .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()) //
+        .add(CatchClause.class, new CatchClauseRenameParameterToCent()) //
         .add(Javadoc.class, new JavadocEmptyRemove()).add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne())
         .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
