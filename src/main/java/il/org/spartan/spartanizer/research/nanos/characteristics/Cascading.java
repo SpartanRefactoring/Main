@@ -10,9 +10,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Nano to match setter method which returns this
  * @author Ori Marcovitch */
 public class Cascading {
-  public static class Setter extends JavadocMarkerNanoPattern {
+  public static class CascadingSetter extends JavadocMarkerNanoPattern {
     private static final long serialVersionUID = -2893413461939243057L;
-    private static final Setter setter = new Setter();
+    private static final CascadingSetter setter = new CascadingSetter();
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
       return hazAtLeastTwoStatements(¢)//
