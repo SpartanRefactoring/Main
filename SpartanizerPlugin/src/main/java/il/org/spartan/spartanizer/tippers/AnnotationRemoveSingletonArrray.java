@@ -21,6 +21,12 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
+  @Override public Example[] examples() {
+    return new Example[] { //
+        Tipper.converts("@SuppressWarnings({\"unchecked\"}) void f() {\n}") //
+            .to("@SuppressWarnings(\"unchecked\") void f() {\n}") };
+  }
+
   @Override public ASTNode replacement(final SingleMemberAnnotation a) {
     final Expression x = lisp.onlyOne(expressions(az.arrayInitializer(a.getValue())));
     if (x == null)
