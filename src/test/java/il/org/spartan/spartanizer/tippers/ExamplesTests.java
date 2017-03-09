@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -14,8 +16,6 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
-
 /** A test generator for {@link Tipper}s, creating tests from their declared
  * examples (see {@link Tipper#examples}).
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
@@ -24,28 +24,28 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 @SuppressWarnings("static-method")
 public class ExamplesTests {
   /** Current tipper, loaded dynamically. */
-  private Tipper<? extends ASTNode> tipper;
+  private final Tipper<? extends ASTNode> tipper;
 
   /** Redirects examples to tests according to type */
   @Test public void testExamples() {
-    for (Example e : tipper.examples())
+    for (final Example e : tipper.examples())
       try {
         if (e instanceof Converts)
           testConverts((Converts) e);
-      } catch (AssertionError x) {
+      } catch (final AssertionError x) {
         throw wrapFailure(x);
       }
   }
 
-  private void testConverts(Converts ¢) {
+  private void testConverts(final Converts ¢) {
     trimmingOf(¢.from()).gives(¢.to());
   }
 
-  public ExamplesTests(Tipper<? extends ASTNode> tipper) {
+  public ExamplesTests(final Tipper<? extends ASTNode> tipper) {
     this.tipper = tipper;
   }
 
-  private AssertionError wrapFailure(AssertionError x) {
+  private AssertionError wrapFailure(final AssertionError x) {
     return new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
   }
 
