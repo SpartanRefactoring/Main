@@ -345,12 +345,12 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;
-    IDocument d = new Document(code);
+    IDocument $ = new Document(code);
     try {
-      e.apply(d);
-    } catch (MalformedTreeException | BadLocationException x) {
-      monitor.log(x);
+      e.apply($);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      monitor.log(¢);
     }
-    return d.get();
+    return $.get();
   }
 }
