@@ -30,8 +30,8 @@ public enum monitor {
           Logger.writer().write(message + "\n");
           Logger.writer().flush();
         }
-      } catch (final IOException x) {
-        x.printStackTrace();
+      } catch (final IOException ¢) {
+        ¢.printStackTrace();
       }
       return null¢();
     }
