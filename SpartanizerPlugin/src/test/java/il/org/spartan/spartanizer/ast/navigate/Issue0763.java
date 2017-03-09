@@ -18,26 +18,26 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0763 {
   @Test public void a() {
-    azzert.that(analyze.type(first(yieldDescendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "") && iz.methodInvocation(λ.getParent()))
+    azzert.that(analyze.type(first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "") && iz.methodInvocation(λ.getParent()))
         .from(wizard.ast("class C{ Map x; void foo(){ print(x);}}")))), is("Map"));
   }
 
   @Test public void b() {
     azzert.that(
         analyze.type(first(
-            yieldDescendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(wizard.ast("class C{  void foo(){Map x; print(x);}}")))),
+            descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(wizard.ast("class C{  void foo(){Map x; print(x);}}")))),
         is("Map"));
   }
 
   @Test public void c() {
     azzert.that(
-        analyze.type(
-            first(yieldDescendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(wizard.ast("class C{  void foo(Map x){ print(x);}}")))),
+        analyze.type(first(
+            descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(wizard.ast("class C{  void foo(Map x){ print(x);}}")))),
         is("Map"));
   }
 
   @Test public void d() {
-    azzert.that(analyze.type(first(yieldDescendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + ""))
+    azzert.that(analyze.type(first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + ""))
         .from(wizard.ast("class C{  void foo(Map<String,String> x){ print(x);}}")))), is("Map<String,String>"));
   }
 }

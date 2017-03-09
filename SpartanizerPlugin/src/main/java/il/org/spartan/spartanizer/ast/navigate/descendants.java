@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -9,11 +10,11 @@ import org.eclipse.jdt.core.dom.*;
  * {@link yieldAncestors}
  * @author Ori Marcovitch
  * @since 2016 */
-public abstract class yieldDescendants<N extends ASTNode> {
+public abstract class descendants<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
    * @param pattern JD
    * @return a newly created instance */
-  public static <N extends ASTNode> yieldDescendants<N> whoseClassIs(final Class<N> ¢) {
+  public static <N extends ASTNode> descendants<N> whoseClassIs(final Class<N> ¢) {
     return new whoseClassIs<>(¢);
   }
 
@@ -27,9 +28,9 @@ public abstract class yieldDescendants<N extends ASTNode> {
 
   /** @param ¢ JD
    * @return add predicate to filter elements */
-  public abstract yieldDescendants<N> suchThat(Predicate<N> ¢);
+  public abstract descendants<N> suchThat(Predicate<N> ¢);
 
-  static class whoseClassIs<N extends ASTNode> extends yieldDescendants<N> {
+  static class whoseClassIs<N extends ASTNode> extends descendants<N> {
     final Class<N> clazz;
     Predicate<N> p = λ -> true;
 
@@ -65,7 +66,7 @@ public abstract class yieldDescendants<N extends ASTNode> {
     }
   }
 
-  public static List<ASTNode> of(ASTNode n) {
+  public static List<ASTNode> of(final ASTNode n) {
     final List<ASTNode> $ = new ArrayList<>();
     n.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {
@@ -73,5 +74,9 @@ public abstract class yieldDescendants<N extends ASTNode> {
       }
     });
     return $;
+  }
+
+  public static Stream<ASTNode> streamOf(MethodDeclaration ¢) {
+    return of(¢).stream();
   }
 }

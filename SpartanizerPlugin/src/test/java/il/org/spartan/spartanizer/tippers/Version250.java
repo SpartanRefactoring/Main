@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -23,7 +22,6 @@ public final class Version250 {
     trimmingOf("@a({\"a\"})void f(){}")//
         .gives("@a(\"a\")void f(){}");
   }
-
 
   @Test public void additionZeroTest_a() {
     trimmingOf("b = a + 0;")//
