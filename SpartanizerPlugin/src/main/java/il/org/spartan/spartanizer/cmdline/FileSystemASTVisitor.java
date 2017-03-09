@@ -29,19 +29,42 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-09 */
 public class FileSystemASTVisitor {
-  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp();
-  @External(alias = "s", value = "silent") protected boolean silent;
-  protected static final String[] defaultArguments = as.array("..");
+  public static boolean containsTestAnnotation(final File $) {
+    try {
+      return containsTestAnnotation(FileUtils.read($));
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "File = " + $);
+      return true;
+    }
+  }
+
+  /** Check if a String contains Test annotations
+   * <p>
+   * @param f
+   * @return */
+  public static boolean containsTestAnnotation(final String javaCode) {
+    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    final Bool $ = new Bool();
+    cu.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final MethodDeclaration node) {
+        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+          $.set();
+        return !$.get();
+      }
+    });
+    return $.get();
+  }
+
+  public static void main(final String[] args) {
+    new FileSystemASTVisitor(args) {
+      /* Override here which every method you like */
+    }.fire(new ASTVisitor(true) {
+      /* OVerride here which every method you like */
+    });
+  }
+
   protected static Class<? extends FileSystemASTVisitor> clazz;
-  protected File presentFile;
-  protected String presentSourceName;
-  protected String presentSourcePath;
-  protected Dotter dotter;
-  protected String absolutePath;
-  protected String relativePath;
-  private ASTVisitor astVisitor;
-  private final List<String> locations;
+  protected static final String[] defaultArguments = as.array("..");
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
@@ -53,14 +76,6 @@ public class FileSystemASTVisitor {
 
   public FileSystemASTVisitor(final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
-  }
-
-  public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
-      /* Override here which every method you like */
-    }.fire(new ASTVisitor(true) {
-      /* OVerride here which every method you like */
-    });
   }
 
   public void fire(final ASTVisitor v) {
@@ -119,30 +134,67 @@ public class FileSystemASTVisitor {
       }
   }
 
-  public static boolean containsTestAnnotation(final File $) {
-    try {
-      return containsTestAnnotation(FileUtils.read($));
-    } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "File = " + $);
-      return true;
-    }
-  }
+  private ASTVisitor astVisitor;
+  private final List<String> locations;
+  protected String absolutePath;
+  protected Dotter dotter;
+  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp();
+  protected File presentFile;
+  protected String presentSourceName;
+  protected String presentSourcePath;
+  protected String relativePath;
+  @External(alias = "s", value = "silent") protected boolean silent;
 
-  /** Check if a String contains Test annotations
-   * <p>
-   * @param f
-   * @return */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    final Bool $ = new Bool();
-    cu.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
-          $.set();
-        return !$.get();
+  public static class BucketMethods {
+    public static void main(final String[] args) {
+      monitor.now = monitor.LOG_TO_FILE;
+      try {
+        out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢);
+        return;
       }
-    });
-    return $.get();
+      new FileSystemASTVisitor(args) {
+        {
+          silent = true;
+        }
+      }.fire(new FilterVisitor() {
+        @Override boolean interesting(final MethodDeclaration ¢) {
+          return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
+        }
+
+        @Override protected void record(final String summary) {
+          try {
+            out.write(summary);
+          } catch (final IOException ¢) {
+            System.err.println("Error: " + ¢.getMessage());
+          }
+          super.record(summary);
+        }
+
+        boolean interesting(final List<Statement> ¢) {
+          return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
+        }
+
+        boolean leaking(final ASTNode ¢) {
+          return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
+              SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
+        }
+
+        boolean leaking(final Stream<ASTNode> ns) {
+          return ns.noneMatch(λ -> leaking(λ));
+        }
+      });
+    }
+
+    static boolean letItBeIn(final List<Statement> ¢) {
+      return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
+    }
+
+    static int interesting;
+    static BufferedWriter out;
+    static int total;
   }
 
   public static class FieldsOnly {
@@ -156,60 +208,29 @@ public class FileSystemASTVisitor {
     }
   }
 
-  public static class BucketMethods {
-    static BufferedWriter out;
-    static int interesting;
-    static int total;
+  private static class FilterVisitor extends ASTVisitor {
+    FilterVisitor() {
+      super(true);
+    }
 
-    public static void main(final String[] args) {
-      monitor.now = monitor.LOG_TO_FILE;
-      try {
-        out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
-      } catch (final IOException ¢) {
-        monitor.infoIOException(¢);
-        return;
+    @Override public boolean visit(final MethodDeclaration ¢) {
+      ++total;
+      if (interesting(¢)) {
+        ++interesting;
+        record(squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(¢ + "")))) + "\n");
       }
-      new FileSystemASTVisitor(args) {
-        {
-          silent = true;
-        }
-      }.fire(new ASTVisitor(true) {
-        @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
-          ++total;
-          if (interesting(d)) {
-            ++interesting;
-            final String summary = squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(d + "")))) + "\n";
-            System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
-            try {
-              out.write(summary);
-            } catch (final IOException ¢) {
-              System.err.println("Error: " + ¢.getMessage());
-            }
-          }
-          return true;
-        }
-      });
+      return true;
     }
 
-    static boolean interesting(final MethodDeclaration ¢) {
-      return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
+    @SuppressWarnings("boxing") protected void record(final String summary) {
+      System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
     }
 
-    static boolean leaking(final Stream<ASTNode> ns) {
-      return ns.noneMatch(λ -> leaking(λ));
+    @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final MethodDeclaration __) {
+      return false;
     }
 
-    private static boolean interesting(final List<Statement> ¢) {
-      return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
-    }
-
-    static boolean letItBeIn(final List<Statement> ¢) {
-      return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
-    }
-
-    private static boolean leaking(final ASTNode ¢) {
-      return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
-          SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
-    }
+    private int interesting;
+    private int total;
   }
 }
