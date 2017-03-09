@@ -55,10 +55,10 @@ public class Table_RawNanoStatistics {
       }
     }.fire(new ASTVisitor() {
       @Override public boolean visit(final CompilationUnit $) {
-        $.accept(new AnnotationCleanerVisitor());
         try {
+          $.accept(new AnnotationCleanerVisitor());
           spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
-        } catch (final AssertionError __) {
+        } catch (final IllegalArgumentException | AssertionError __) {
           ___.unused(__);
         }
         return super.visit($);
