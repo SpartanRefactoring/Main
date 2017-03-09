@@ -512,6 +512,8 @@ public interface wizard {
    *         <p>
    *         [[SuppressWarningsSpartan]] */
   static boolean isString(final String typeName) {
+    if (typeName == null)
+      return false;
     switch (typeName) {
       case "String":
       case "java.lang.String":
