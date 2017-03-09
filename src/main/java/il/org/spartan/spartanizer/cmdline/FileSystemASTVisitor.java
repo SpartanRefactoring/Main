@@ -61,7 +61,7 @@ public class FileSystemASTVisitor {
       /* Override here which every method you like */
     }.fire(new ASTVisitor() {
       /* OVerride here which every method you like */
-      });
+    });
   }
 
   public void fire(ASTVisitor v) {
@@ -119,11 +119,11 @@ public class FileSystemASTVisitor {
       }
   }
 
-  public static boolean containsTestAnnotation(final File $) {
+  public static boolean containsTestAnnotation(final File f) {
     try {
-      return containsTestAnnotation(FileUtils.read($));
+      return containsTestAnnotation(FileUtils.read(f));
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "File = " + $);
+      monitor.infoIOException(¢, "File = " + f);
       return true;
     }
   }

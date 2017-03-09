@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 /** Generates table presenting {@link ASTNode}s coverage
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-07 */
-public class Table_Nodes_Coverage extends FolderASTVisitor {
+public class Table_Nodes_Coverage extends DeprecatedFolderASTVisitor {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
