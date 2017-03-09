@@ -29,7 +29,7 @@ public enum step {
   }
 
   public static Type type(final ParameterizedType ¢) {
-    return ¢.getType();
+    return ¢ == null ? null : ¢.getType();
   }
 
   /** Expose the list of arguments in a {@link MethodInvocation}
