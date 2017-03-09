@@ -146,6 +146,38 @@ public class FileSystemASTVisitor {
   protected String relativePath;
   @External(alias = "s", value = "silent") protected boolean silent;
 
+  public static class ExpressionChain {
+    public static void main(final String[] args) {
+      monitor.now = monitor.LOG_TO_FILE;
+      try {
+        out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢);
+        return;
+      }
+      new FileSystemASTVisitor(args) {
+        {
+          silent = true;
+        }
+      }.fire(new FilterVisitor() {
+        @Override boolean interesting(final ExpressionStatement ¢) {
+          return extract.usedNames(¢.getExpression()).size() == 1;
+        }
+
+        @Override protected void record(final String summary) {
+          try {
+            out.write(summary);
+          } catch (final IOException ¢) {
+            System.err.println("Error: " + ¢.getMessage());
+          }
+          super.record(summary);
+        }
+      });
+    }
+
+    static BufferedWriter out;
+  }
+
   public static class BucketMethods {
     public static void main(final String[] args) {
       monitor.now = monitor.LOG_TO_FILE;
@@ -192,9 +224,7 @@ public class FileSystemASTVisitor {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
 
-    static int interesting;
     static BufferedWriter out;
-    static int total;
   }
 
   public static class FieldsOnly {
@@ -211,6 +241,19 @@ public class FileSystemASTVisitor {
   private static class FilterVisitor extends ASTVisitor {
     FilterVisitor() {
       super(true);
+    }
+
+    @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") ExpressionStatement ¢) {
+      return false;
+    }
+
+    @Override public boolean visit(final ExpressionStatement ¢) {
+      ++total;
+      if (interesting(¢)) {
+        ++interesting;
+        record(squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(¢ + "")))) + "\n");
+      }
+      return true;
     }
 
     @Override public boolean visit(final MethodDeclaration ¢) {
