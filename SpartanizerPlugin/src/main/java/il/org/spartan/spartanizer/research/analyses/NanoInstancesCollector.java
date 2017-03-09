@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 
-public class NanoInstancesCollector extends FolderASTVisitor {
+public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
   static final File out = new File(Table.temporariesFolder + File.separator + nano.getClass().getSimpleName() + ".txt");
@@ -46,7 +46,7 @@ public class NanoInstancesCollector extends FolderASTVisitor {
         return nano.description(¢);
       }
     });
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {

@@ -17,7 +17,7 @@ import il.org.spartan.tables.*;
 /** Find all loops not matched by a nano pattern
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 11, 2017 */
-public class FalloutsCollector_loops extends FolderASTVisitor {
+public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static final File out = new File(Table.temporariesFolder + File.separator + "loops" + ".txt");
 
@@ -25,7 +25,7 @@ public class FalloutsCollector_loops extends FolderASTVisitor {
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = FalloutsCollector_loops.class;
     blank(out);
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {

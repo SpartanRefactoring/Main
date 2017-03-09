@@ -16,7 +16,7 @@ import il.org.spartan.tables.*;
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil
  * @since 2016 */
-public class Table_ReusabilityIndices extends FolderASTVisitor {
+public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
   static {
     clazz = Table_ReusabilityIndices.class;
   }
@@ -29,7 +29,7 @@ public class Table_ReusabilityIndices extends FolderASTVisitor {
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
     System.out.println("Your output is in " + writer.description());
     writer.close();
   }

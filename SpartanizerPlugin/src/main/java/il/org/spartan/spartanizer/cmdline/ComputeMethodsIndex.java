@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * tokens for methods...
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
-public class ComputeMethodsIndex extends FolderASTVisitor {
+public class ComputeMethodsIndex extends DeprecatedFolderASTVisitor {
   static {
     clazz = ComputeMethodsIndex.class;
   }
 
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    FolderASTVisitor.main(args);
+    DeprecatedFolderASTVisitor.main(args);
   }
 
   @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration ¢) {
