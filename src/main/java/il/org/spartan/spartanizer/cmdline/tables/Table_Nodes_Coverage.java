@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
@@ -31,6 +32,7 @@ public class Table_Nodes_Coverage {
       }
     }.fire(new ASTVisitor() {
       @Override public boolean visit(final CompilationUnit ¢) {
+        ¢.accept(new AnnotationCleanerVisitor());
         try {
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);

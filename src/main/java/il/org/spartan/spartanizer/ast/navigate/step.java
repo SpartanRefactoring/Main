@@ -892,4 +892,8 @@ public enum step {
   public static Statement previousStatementInBody(final Statement ¢) {
     return wizard.previous(¢, statements(az.block(parent(¢))));
   }
+
+  public static Expression value(final SingleMemberAnnotation ¢) {
+    return ¢ == null ? null : ¢.getValue();
+  }
 }
