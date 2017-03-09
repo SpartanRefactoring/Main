@@ -27,7 +27,7 @@ public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
     final Collection<Boolean> cc = new ArrayList<>();
-    body(s).accept(new ASTVisitor() {
+    body(s).accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final Block node) {
         cc.add(box.it(true));
         return true;

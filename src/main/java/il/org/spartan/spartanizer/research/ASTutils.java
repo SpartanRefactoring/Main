@@ -63,7 +63,7 @@ public enum ASTutils {
     final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
     final Wrapper<ASTNode> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;

@@ -90,7 +90,7 @@ public class Issue0691 {
     res.add("toString");
     azzert.that(res,
         is(getAll.invocations(az.methodDeclaration(wizard.ast("public static Set<String> invocations(final MethodDeclaration ¢) {if(¢ == null)"
-            + "return null;Set<String> $ = new TreeSet<>();if(statements(body(¢)).isEmpty())return  $;¢.accept(new ASTVisitor() {"
+            + "return null;Set<String> $ = new TreeSet<>();if(statements(body(¢)).isEmpty())return  $;¢.accept(new ASTVisitor(true) {"
             + "@Override public boolean visit (MethodInvocation m) {$.add(m.getName().toString());return true;}});return $;" + "}")))));
   }
 }

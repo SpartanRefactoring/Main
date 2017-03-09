@@ -12,7 +12,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Jan 5, 2017 */
 public enum guessName {
   STATIC_CONSTANT, //
-  CLASS_NAME, //
+  CLASS_NAME() {
+    @Override boolean special(final String name) {
+      return iz.in(name, "extract", "into", "azzert", "iz", "az", "is", "az", "has", "haz");
+    }
+  }, //
   SETTTER_METHOD, //
   GETTER_METHOD, //
   IS_METHOD, //
@@ -34,6 +38,9 @@ public enum guessName {
   public static guessName of(final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
+    for (final guessName $ : guessName.values())
+      if ($.special(nameOfSomething))
+        return $;
     if (nameOfSomething.matches("[_]+")) //
       return guessName.ANONYMOUS;
     if (nameOfSomething.matches("[$]*")) //
@@ -58,5 +65,9 @@ public enum guessName {
         "\n nameOfSomething=" + nameOfSomething + //
         fault.done();
     return guessName.UNKNOWN;
+  }
+
+  @SuppressWarnings("static-method") boolean special(@SuppressWarnings("unused") final String nameOfSomething) {
+    return false;
   }
 }

@@ -107,7 +107,7 @@ final class BatchSpartanizerApplication implements IApplication {
   }
 
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
@@ -287,7 +287,7 @@ final class BatchSpartanizerApplication implements IApplication {
   // System.out.println(dra.passes());
   // Object sta = SingleTipper.getApplicator(¢);
   // .defaultRunAction(SingleTipper.getApplicator(¢)).passes(1).selection(Selection.Util.getCurrentCompilationUnit(¢).buildAll()).go());
-  // u.accept(new ASTVisitor() {
+  // u.accept(new ASTVisitor(true) {
   // @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
   // return collect(¢);
   // }

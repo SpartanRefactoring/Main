@@ -88,7 +88,7 @@ public enum InflaterUtilities {
    *         we add more expanders */
   static List<ASTNode> getStatements(final WrappedCompilationUnit u) {
     final List<ASTNode> $ = new ArrayList<>();
-    u.compilationUnit.accept(new ASTVisitor() {
+    u.compilationUnit.accept(new ASTVisitor(true) {
       @Override public boolean visit(final ReturnStatement node) {
         $.add(node);
         return true;

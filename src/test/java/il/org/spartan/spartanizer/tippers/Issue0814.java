@@ -24,7 +24,7 @@ public class Issue0814 {
   @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
     final ReturnStatement s = first(new MethodExplorer(m).returnStatements());
-    m.accept(new ASTVisitor() {
+    m.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment a) {
         final ASTRewrite r = ASTRewrite.create(m.getAST());
         assert new AssignmentAndReturn().go(r, a, s, new TextEditGroup("")) != null;

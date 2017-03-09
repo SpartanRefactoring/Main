@@ -77,7 +77,7 @@ public enum leonidasSays {
     final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
     final Wrapper<ASTNode> $ = new Wrapper<>();
-    n.accept(new ASTVisitor() {
+    n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
@@ -147,7 +147,7 @@ public enum leonidasSays {
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
       final Bool tipped = new Bool();
-      n.accept(new ASTVisitor() {
+      n.accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
           if (!tipper.canTip(¢))
             return true;
@@ -260,7 +260,7 @@ public enum leonidasSays {
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
       final Bool tipped = new Bool();
-      n.accept(new ASTVisitor() {
+      n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
           if (!tipper.canTip(¢))
             return;
