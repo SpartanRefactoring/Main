@@ -10,8 +10,6 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -72,21 +70,19 @@ public interface replaceAll {
     public boolean canGo() {
       if (with == null || occurrences.isEmpty())
         return false;
-      switch (nodeType(with)) {
-        case BOOLEAN_LITERAL:
-        case CHARACTER_LITERAL:
-        case FIELD_ACCESS:
-        case LAMBDA_EXPRESSION:
-        case NULL_LITERAL:
-        case NUMBER_LITERAL:
-        case QUALIFIED_NAME:
-        case SIMPLE_NAME:
-        case STRING_LITERAL:
-        case THIS_EXPRESSION:
-        case TYPE_LITERAL:
-          return true;
-        default:
-      }
+      if (iz.nodeTypeIn(with, //
+          BOOLEAN_LITERAL, //
+          CHARACTER_LITERAL, //
+          FIELD_ACCESS, //
+          LAMBDA_EXPRESSION, //
+          NULL_LITERAL, //
+          NUMBER_LITERAL, //
+          QUALIFIED_NAME, //
+          SIMPLE_NAME, //
+          STRING_LITERAL, //
+          THIS_EXPRESSION, //
+          TYPE_LITERAL))
+        return true;
       final SimpleName occurrence = lisp.onlyOne(occurrences);
       if (occurrence == null)
         return false;

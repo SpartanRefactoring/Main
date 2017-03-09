@@ -15,10 +15,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch */
 public class Examiner extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 7361477859663262247L;
-  private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<>(as.list(//
+  private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(//
       patternTipper("return $X;", "", ""), //
       patternTipper("synchronized ($X1) { return $X2;}", "", "")//
-  ));
+  );
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return haz.booleanReturnType(¢)//
