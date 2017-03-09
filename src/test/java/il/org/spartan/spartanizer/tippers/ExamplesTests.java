@@ -20,13 +20,15 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
  * examples (see {@link Tipper#examples}).
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-03-09 */
-@SuppressWarnings("static-method")
 @RunWith(Parameterized.class)
+@SuppressWarnings("static-method")
 public class ExamplesTests {
+  // TODO: Ori Roth - kill this flag, I will explain on the phone why --yg
   /** In case we want to test tippers that are not in the {@link Toolbox}. */
   private static final Tipper<?>[] ADDITIONAL_TIPPERS_FOR_TESTING = {};
   /** Is true iff creates tests without examples (empty tests, always
    * successful). */
+  // TODO: Ori Roth - kill this flag, I will explain on the phone why --yg
   private static final boolean TEST_WITHOUT_EXAMPLES = true;
   /** Current tipper, loaded dynamically. */
   private Tipper<? extends ASTNode> tipper;
@@ -42,8 +44,8 @@ public class ExamplesTests {
       }
   }
 
-  private void testConverts(Converts c) {
-    trimmingOf(c.from()).gives(c.to());
+  private void testConverts(Converts ¢) {
+    trimmingOf(¢.from()).gives(¢.to());
   }
 
   public ExamplesTests(Tipper<? extends ASTNode> tipper) {
@@ -51,11 +53,11 @@ public class ExamplesTests {
   }
 
   private AssertionError wrapFailure(AssertionError x) {
-    return new AssertionError("Example failure at " + tipper.className() + ":" + x.getMessage(), x.getCause());
+    return new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
   }
 
   @Parameters public static Collection<Object[]> data() {
-    return allTippers().stream().map(t -> new Object[] { t }).collect(Collectors.toList());
+    return allTippers().stream().map(λ -> new Object[] { λ }).collect(Collectors.toList());
   }
 
   /** Get all tippers from {@link Toolbox} and
@@ -66,7 +68,7 @@ public class ExamplesTests {
     $.addAll(Toolbox.freshCopyOfAllTippers().getAllTippers());
     Collections.addAll($, ADDITIONAL_TIPPERS_FOR_TESTING);
     if (!TEST_WITHOUT_EXAMPLES)
-      $.removeIf(t -> t.examples().length == 0);
+      $.removeIf(λ -> λ.examples().length == 0);
     return $;
   }
 }

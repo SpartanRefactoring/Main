@@ -16,15 +16,87 @@ import il.org.spartan.spartanizer.cmdline.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version300 {
-  @Test public void strangeFixedPoint() {
-    azzert.that(theSpartanizer.fixedPoint("A a(A b) throws B { A c; c = b; return c; }"), iz("A a(A b) throws B { return b; }"));
-  }
-
-//@Ignore("Unignore one by one")
+  // @Ignore("Unignore one by one")
   @Test public void negationPushdownTernary() {
     trimmingOf("a = !(b ? c: d)")//
         .using(PrefixExpression.class, new PrefixNotPushdown())//
         .gives("a = b ? !c : !d") //
     ;
+  }
+
+  @Test public void a() {
+    azzert.that(
+        theSpartanizer.once(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c? true : false; }") //
+    );
+  }
+
+  @Test public void b() {
+    azzert.that(
+        theSpartanizer.twice(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c || false; }") //
+    );
+  }
+
+  @Test public void c() {
+    azzert.that(
+        theSpartanizer.thrice(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c; }") //
+    );
+  }
+
+  @Test public void d() {
+    azzert.that(
+        theSpartanizer.fixedPoint(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c; }") //
+    );
+  }
+
+  @Test public void stAgives() {
+    trimmingOf("boolean a(int[] b, int c){ if (d == c) return true; return false; }") //
+        .gives("boolean a(int[] b, int c){ return d == c ? true: false; }") //
+        .gives("boolean a(int[] b, int c){ return d == c || false; }") //
+        .gives("boolean a(int[] b, int c){ return d == c; }") //
+        .stays() //
+    ;
+  }
+
+  @Test public void stA() {
+    azzert.that(
+        theSpartanizer.fixedPoint(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c; }") //
+    );
+  }
+
+  @Test public void stB() {
+    azzert.that(
+        theSpartanizer.fixedPoint(//
+            "A a(A b) throws B { A $; $ = b; return $; }"), //
+        iz("A a(A b) throws B { return b; }"));
+  }
+
+  @Test public void stC() {
+    azzert.that(
+        theSpartanizer.fixedPoint(//
+            "A a(A b) throws B { A $ = b; return $; }"), //
+        iz("A a(A b) throws B { return b; }"));
+  }
+
+  @Test public void stZ() {
+    azzert.that(
+        theSpartanizer.fixedPoint(//
+            "A a(A b)throws B{ A c; c = b; return c; }"), //
+        iz(//
+            "A a(A b) throws B { return b; }"));
   }
 }

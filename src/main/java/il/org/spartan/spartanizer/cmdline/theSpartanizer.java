@@ -11,31 +11,22 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** simple no-gimmicks singleton serives that does the simple job of applying a
+/** simple no-gimmicks singleton service that does the simple job of applying a
  * spartanizer once.
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-08 */
 public interface theSpartanizer {
-  Toolbox toolbox = Toolbox.defaultInstance();
-
-  static <N extends ASTNode> Tipper<N> safeFirstTipper(final N ¢) {
-    try {
-      return toolbox.firstTipper(¢);
-    } catch (final Exception $) {
-      return monitor.debug(theSpartanizer.class, $);
+  static String fixedPoint(final String from) {
+    int n = 0;
+    for (String $ = from, next;; $ = next) {
+      next = once($);
+      if (next == null || same($, next) || ++n > 20)
+        return $;
     }
   }
 
-  static String fixedPoint(final String from) {
-    int n = 0;
-    for (String $ = from, next = from;; next = once(from)) {
-      if (next == null)
-        return $;
-      if (++n > 20) {
-        monitor.debug($);
-        return $;
-      }
-    }
+  static boolean same(String s1, final String s2) {
+    return s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 
   /** Apply trimming once
@@ -45,34 +36,53 @@ public interface theSpartanizer {
   static String once(final String from) {
     final Trimmer trimmer = new Trimmer(toolbox);
     final IDocument $ = new Document(from);
-    wizard.ast(from).accept(new DispatchingVisitor() {
-      boolean done;
-
-      @SuppressWarnings("hiding") @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (done)
-          return false;
-        final Tipper<N> t = safeFirstTipper(n);
-        if (t == null)
-          return true;
-        final Tip $ = t.tip(n);
-        if ($ == null)
-          return true;
-        done = true;
-        return apply($, n);
-      }
-
-      <N extends ASTNode> boolean apply(final Tip t, final N n) {
-        final ASTRewrite r = ASTRewrite.create(n.getAST());
-        t.go(r, null);
-        final TextEdit e = r.rewriteAST($, null);
-        try {
-          e.apply($);
-        } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-          monitor.logEvaluationError(trimmer, ¢);
+    final ASTNode n = wizard.ast(from);
+    if (n != null)
+      n.accept(new DispatchingVisitor() {
+        @Override protected <N extends ASTNode> boolean go(final N n) {
+          if (!searching)
+            return false;
+          final Tipper<N> t = safeFirstTipper(n);
+          if (t == null)
+            return true;
+          final Tip $ = t.tip(n);
+          if ($ == null)
+            return true;
+          apply($, n);
+          return searching = false;
         }
-        return false;
-      }
-    });
-    return from.equals($.get()) ? null : $.get();
+
+        <N extends ASTNode> void apply(final Tip t, final N n) {
+          final ASTRewrite r = ASTRewrite.create(n.getAST());
+          t.go(r, null);
+          final TextEdit e = r.rewriteAST($, null);
+          try {
+            e.apply($);
+          } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+            monitor.logEvaluationError(trimmer, ¢);
+          }
+        }
+
+        boolean searching = true;
+      });
+    return $.get();
   }
+
+  static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
+    try {
+      return toolbox.firstTipper($);
+    } catch (final Exception ¢) {
+      return monitor.logProbableBug(¢);
+    }
+  }
+
+  static String thrice(final String javaCode) {
+    return once(twice(javaCode));
+  }
+
+  static String twice(final String javaCode) {
+    return once(once(javaCode));
+  }
+
+  Toolbox toolbox = Toolbox.defaultInstance();
 }

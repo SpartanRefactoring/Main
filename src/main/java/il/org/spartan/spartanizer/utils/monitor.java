@@ -26,10 +26,12 @@ public enum monitor {
 
     <T> T logToFile(final String message) {
       try {
-        if (Logger.writer() != null)
+        if (Logger.writer() != null) {
           Logger.writer().write(message + "\n");
-      } catch (@SuppressWarnings("unused") final IOException __) {
-        // Ignore exceptions since we cannot log them
+          Logger.writer().flush();
+        }
+      } catch (final IOException ¢) {
+        ¢.printStackTrace();
       }
       return null¢();
     }
@@ -99,12 +101,11 @@ public enum monitor {
   public static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
         "A static method of " + className(o) + //
-            "\n was hit by a " + className(t.getClass()) + // 
+            "\n was hit by a " + className(t.getClass()) + //
             " exception. This is expected and printed only for the purpose of debugging" + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
   }
-
 
   public static <T> T debug(final Object o, final Throwable t) {
     return debug(//
@@ -253,11 +254,10 @@ public enum monitor {
     public static String fileName() {
       if (fileName != null)
         return fileName;
-      fileName = system.tmp() + File.separator + "spartanizer"
-          + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
+      fileName = system.tmp() + File.separator + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
       System.out.flush();
       System.err.flush();
-      System.err.format("\n --- Your error log will be found in \n\t%s\n", fileName);
+      System.err.format("\n --- Your secret log file will be found in \n\t%s\n", fileName);
       System.out.flush();
       return fileName;
     }

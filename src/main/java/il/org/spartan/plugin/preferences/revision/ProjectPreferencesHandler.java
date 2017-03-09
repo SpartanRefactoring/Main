@@ -9,6 +9,8 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
+import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
@@ -38,6 +40,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
   private static final boolean REFRESH_OPENS_DIALOG = false;
+  private static CodeFormatter formatter;
 
   /* (non-Javadoc)
    *
@@ -250,10 +253,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           final SpartanTipper st = (SpartanTipper) o;
-          final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> ((Converts) λ).from());
+          final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
           final IDocument d = new Document(before);
           try {
-            final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> ((Converts) λ).to());
+            final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();
@@ -334,5 +337,20 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       if (filter.apply(preview[¢]).booleanValue())
         $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(preview[¢])).append("\n\n");
     return ($ + "").trim();
+  }
+
+  static String prettify(String code) {
+    if (formatter == null)
+      formatter = ToolFactory.createCodeFormatter(null);
+    TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
+    if (e == null)
+      return code;
+    IDocument $ = new Document(code);
+    try {
+      e.apply($);
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      monitor.log(¢);
+    }
+    return $.get();
   }
 }
