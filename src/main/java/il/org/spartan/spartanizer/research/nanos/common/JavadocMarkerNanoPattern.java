@@ -20,7 +20,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
     final Javadoc $ = javadoc(¢);
     return ($ == null || !($ + "").contains(tag()))//
         && prerequisites(¢)//
-        && !(extract.annotations(¢) + "").contains("({");
+    ;
   }
 
   public final boolean matches(final MethodDeclaration ¢) {
