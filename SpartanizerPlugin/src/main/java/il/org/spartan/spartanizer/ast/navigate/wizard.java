@@ -128,12 +128,11 @@ public interface wizard {
     {
       for (int nodeType = 1;; ++nodeType)
         try {
-          monitor.debug("Searching for " + nodeType);
-          final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
-          monitor.debug("Found node type number of  " + nodeClassForType);
-          put(nodeClassForType, Integer.valueOf(nodeType));
+          // monitor.debug("Found node type number of " + nodeClassForType);
+          put(ASTNode.nodeClassForType(nodeType), Integer.valueOf(nodeType));
         } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
-         // We must suffer this exception; no other way to find the first unused node type 
+          // We must suffer this exception; no other way to find the first
+          // unused node type
           break;
         } catch (final Exception ¢) {
           monitor.logEvaluationError(this, ¢);
