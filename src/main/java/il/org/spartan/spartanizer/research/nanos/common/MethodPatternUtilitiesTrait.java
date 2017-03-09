@@ -44,7 +44,7 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
-    return yieldDescendants.whoseClassIs(ReturnStatement.class).from(¢);
+    return descendants.whoseClassIs(ReturnStatement.class).from(¢);
   }
 
   default boolean hazNoParameters(final MethodDeclaration ¢) {

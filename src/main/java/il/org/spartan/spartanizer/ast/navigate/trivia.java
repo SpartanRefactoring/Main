@@ -20,6 +20,7 @@ public interface trivia {
   static String squeezeSpaces(final String ¢) {
     return ¢.trim().replaceAll("\\s+", " ");
   }
+
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */

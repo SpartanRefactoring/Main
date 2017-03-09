@@ -1,15 +1,18 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.trivia.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -39,7 +42,7 @@ public abstract class FolderASTVisitor extends ASTVisitor {
   protected Dotter dotter;
   protected String absolutePath;
   protected String relativePath;
-  private boolean silent = true;
+  private final boolean silent = true;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
@@ -166,18 +169,18 @@ public abstract class FolderASTVisitor extends ASTVisitor {
     }
   }
 
-  public static class SinkMethods extends FolderASTVisitor {
+  public static class BucketMethods extends FolderASTVisitor {
     private static BufferedWriter out;
     private int interesting;
     private int total;
 
     public static void main(final String[] args)
         throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-      clazz = SinkMethods.class;
+      clazz = BucketMethods.class;
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
-      } catch (IOException x) {
-        monitor.infoIOException(x);
+      } catch (final IOException ¢) {
+        monitor.infoIOException(¢);
         return;
       }
       FolderASTVisitor.main(args);
@@ -187,25 +190,34 @@ public abstract class FolderASTVisitor extends ASTVisitor {
       ++total;
       if (interesting(d)) {
         ++interesting;
-        String summary = squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(d + "")))) + "\n";
+        final String summary = squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(d + "")))) + "\n";
         System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
         try {
           out.write(summary);
-        } catch (IOException ¢) {
+        } catch (final IOException ¢) {
           System.err.println("Error: " + ¢.getMessage());
         }
       }
       return true;
     }
 
-    private static boolean interesting(MethodDeclaration $) {
-      if ($.isConstructor())
-        return false;
-      List<Statement> ss = statements($.getBody());
-      return ss != null && ss.size() >= 2 && yieldDescendants.of($).stream().noneMatch(λ -> leaking(λ));
+    private static boolean interesting(final MethodDeclaration ¢) {
+      return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
     }
 
-    private static boolean leaking(ASTNode ¢) {
+    private static boolean leaking(final Stream<ASTNode> ns) {
+      return ns.noneMatch(λ -> leaking(λ));
+    }
+
+    private static boolean interesting(final List<Statement> ¢) {
+      return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
+    }
+
+    static boolean letItBeIn(final List<Statement> ¢) {
+      return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
+    }
+
+    private static boolean leaking(final ASTNode ¢) {
       return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
           SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
     }
