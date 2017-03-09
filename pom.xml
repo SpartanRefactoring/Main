@@ -149,13 +149,22 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>il.org.spartan.spartanizer.cmdline.tables.Table_Summary</mainClass>
+							<addClasspath>true</addClasspath>
+							<mainClass>il.org.spartan.spartanizer.cmdline.tables.HelloWorld</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 				</configuration>
+				<executions>
+					<execution>
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>
