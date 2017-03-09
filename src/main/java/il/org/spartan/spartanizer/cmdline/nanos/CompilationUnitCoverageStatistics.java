@@ -64,13 +64,13 @@ class CompilationUnitRecord {
   }
 
   public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
-    String mangle = Vocabulary.mangle(¢);
+    final String mangle = Vocabulary.mangle(¢);
     methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
     nodesCovered += methods.get(mangle).logAndGet(count.nodes(n));
   }
 
   public void markNP(final ASTNode n, final String np) {
-    MethodDeclaration $ = ancestorMethod(n);
+    final MethodDeclaration $ = ancestorMethod(n);
     if ($ == null)
       markRegular(n);
     else
@@ -88,7 +88,7 @@ class CompilationUnitRecord {
     return null;
   }
 
-  private void markRegular(ASTNode ¢) {
+  private void markRegular(final ASTNode ¢) {
     nodesCovered += count.nodes(¢);
   }
 
@@ -100,12 +100,12 @@ class CompilationUnitRecord {
     private final int numNodes;
     private int numNPNodes;
 
-    public LightWeightMethodRecord(MethodDeclaration ¢) {
+    public LightWeightMethodRecord(final MethodDeclaration ¢) {
       numNodes = count.nodes(¢);
     }
 
     /** makes sure we don't exceed 100% of nodes of a method */
-    public int logAndGet(int nodes) {
+    public int logAndGet(final int nodes) {
       final int $ = Math.min(nodes, numNodes - numNPNodes);
       numNPNodes += $;
       return $;
