@@ -132,7 +132,7 @@ public interface wizard {
           final Class<? extends ASTNode> nodeClassForType = ASTNode.nodeClassForType(nodeType);
           monitor.debug("Found node type number of  " + nodeClassForType);
           put(nodeClassForType, Integer.valueOf(nodeType));
-        } catch (final IllegalArgumentException ¢) {
+        } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
           break;
         } catch (final Exception ¢) {
           monitor.logEvaluationError(this, ¢);

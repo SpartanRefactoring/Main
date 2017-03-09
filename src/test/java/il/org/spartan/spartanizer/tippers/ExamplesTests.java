@@ -23,13 +23,6 @@ import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
 @RunWith(Parameterized.class)
 @SuppressWarnings("static-method")
 public class ExamplesTests {
-  // TODO: Ori Roth - kill this flag, I will explain on the phone why --yg
-  /** In case we want to test tippers that are not in the {@link Toolbox}. */
-  private static final Tipper<?>[] ADDITIONAL_TIPPERS_FOR_TESTING = {};
-  /** Is true iff creates tests without examples (empty tests, always
-   * successful). */
-  // TODO: Ori Roth - kill this flag, I will explain on the phone why --yg
-  private static final boolean TEST_WITHOUT_EXAMPLES = true;
   /** Current tipper, loaded dynamically. */
   private Tipper<? extends ASTNode> tipper;
 
@@ -64,11 +57,6 @@ public class ExamplesTests {
    * {@link ADDITIONAL_TIPPERS_FOR_TESTING}
    * @return all tippers to be tested */
   private static Collection<Tipper<? extends ASTNode>> allTippers() {
-    Set<Tipper<? extends ASTNode>> $ = new HashSet<>();
-    $.addAll(Toolbox.freshCopyOfAllTippers().getAllTippers());
-    Collections.addAll($, ADDITIONAL_TIPPERS_FOR_TESTING);
-    if (!TEST_WITHOUT_EXAMPLES)
-      $.removeIf(λ -> λ.examples().length == 0);
-    return $;
+    return Toolbox.freshCopyOfAllTippers().getAllTippers();
   }
 }
