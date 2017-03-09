@@ -87,7 +87,7 @@ public enum monitor {
   };
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-  public static monitor now = monitor.LOG_TO_FILE;
+  public static monitor now = monitor.PRODUCTION;
 
   public static String className(final Class<?> ¢) {
     final String $ = ¢.getCanonicalName();
