@@ -76,7 +76,7 @@ public abstract class descendants<N extends ASTNode> {
     return $;
   }
 
-  public static Stream<ASTNode> streamOf(MethodDeclaration ¢) {
+  public static Stream<ASTNode> streamOf(final MethodDeclaration ¢) {
     return of(¢).stream();
   }
 }

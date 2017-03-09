@@ -25,7 +25,7 @@ public interface theSpartanizer {
     }
   }
 
-  static boolean same(String s1, final String s2) {
+  static boolean same(final String s1, final String s2) {
     return s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 
