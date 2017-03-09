@@ -133,7 +133,6 @@ public interface wizard {
           monitor.debug("Found node type number of  " + nodeClassForType);
           put(nodeClassForType, Integer.valueOf(nodeType));
         } catch (final IllegalArgumentException ¢) {
-          monitor.debug(this, ¢);
           break;
         } catch (final Exception ¢) {
           monitor.logEvaluationError(this, ¢);

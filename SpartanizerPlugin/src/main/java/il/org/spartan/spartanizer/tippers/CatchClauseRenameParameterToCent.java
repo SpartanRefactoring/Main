@@ -23,6 +23,14 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
   }
 
+  @Override public Example[] examples() {
+    return new Example[] { //
+        converts("try {f();} catch (Exception e) {e.printStackTrace();}") //
+            .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //
+        ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}"), //
+        ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
+  }
+
   @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))
