@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Replace an occurrence of a {@link SimpleName} with an {@link Expression} in
  * an array of
@@ -70,7 +71,7 @@ public interface replaceAll {
     public boolean canGo() {
       if (with == null || occurrences.isEmpty())
         return false;
-      switch (with.getNodeType()) {
+      switch (nodeType(with)) {
         case BOOLEAN_LITERAL:
         case CHARACTER_LITERAL:
         case FIELD_ACCESS:

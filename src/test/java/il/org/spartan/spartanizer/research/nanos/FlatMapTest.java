@@ -14,6 +14,8 @@ public class FlatMapTest {
     trimmingOf(
         "  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  other.addAll(onBroadcast(e));")//
             .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
+            .gives("other.addAll((willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).stream().flatMap(¢->onBroadcast(e)));") //
+            .gives("other.addAll((willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).stream().flatMap(λ->onBroadcast(e)));") //
             .stays();
   }
 
