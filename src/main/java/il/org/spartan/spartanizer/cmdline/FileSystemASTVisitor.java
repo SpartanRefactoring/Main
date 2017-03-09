@@ -169,7 +169,12 @@ public class FileSystemASTVisitor {
         monitor.infoIOException(¢);
         return;
       }
-      new FileSystemASTVisitor(args).fire(new ASTVisitor() {
+      new FileSystemASTVisitor(args){
+        {
+        silent = true;
+        }
+      }
+        .fire(new ASTVisitor() {
         @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
           ++total;
           if (interesting(d)) {
