@@ -111,15 +111,10 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
       /** see issue #467 */
       @Override public void pop(final Object... ¢) {
-        switch (level--) {
-          case DIALOG_CREATION:
-            if (dialogOpen)
-              Dialogs.messageUnsafe(separate.these(message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)),
-                  message.passes.get(activityNamer.getEd(), Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)),
-                  message.time.get(Linguistic.time(System.nanoTime() - startTime))).by("\n")).open();
-            break;
-          default:
-        }
+        if (level-- == DIALOG_CREATION && dialogOpen)
+          Dialogs.messageUnsafe(separate.these(message.title.get(separate.these(¢).by(Linguistic.SEPARATOR)),
+              message.passes.get(activityNamer.getEd(), Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)),
+              message.time.get(Linguistic.time(System.nanoTime() - startTime))).by("\n")).open();
       }
     });
     $.operationName(OPERATION_ACTIVITY);
