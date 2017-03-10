@@ -33,7 +33,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return "Go Fluent: Generalized Switch";
   }
 
-  @Override public boolean canTip(final N ¢) {
+  @Override public boolean interesting(final N ¢) {
     return !¢.equals(then(az.conditionalExpression(parent(¢))))//
         && differsInSingleAtomic(branchesExpressions(¢))//
         || differsInSingleExpression(branchesExpressions(¢));

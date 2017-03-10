@@ -59,12 +59,12 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$03canSuggest() {
     A$04_init();
-    assert tipper.canTip(focus);
+    assert tipper.interesting(focus);
   }
 
   @Test public void B$03demands() {
     A$04_init();
-    assert tipper.canTip(focus);
+    assert tipper.interesting(focus);
   }
 
   @Test public void B$04tipNotNull() {

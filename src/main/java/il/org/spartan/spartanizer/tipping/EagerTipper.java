@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class EagerTipper<N extends ASTNode> extends Tipper<N> {
   private static final long serialVersionUID = -767334519852933504L;
 
-  @Override public final boolean canTip(final N ¢) {
+  @Override public final boolean interesting(final N ¢) {
     return tip(¢) != null;
   }
 }

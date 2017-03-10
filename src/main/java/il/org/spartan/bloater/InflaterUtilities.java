@@ -36,22 +36,22 @@ public enum InflaterUtilities {
     boolean $ = false;
     for (final ASTNode statement : ns) {
       final ReturnTernaryExpander cc = new ReturnTernaryExpander();
-      if (statement instanceof ReturnStatement && cc.canTip(az.returnStatement(statement))) {
+      if (statement instanceof ReturnStatement && cc.interesting(az.returnStatement(statement))) {
         cc.tip(az.returnStatement(statement)).go(r, g);
         $ = true;
       } else {
         final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
-        if (statement instanceof VariableDeclarationStatement && s.canTip(az.variableDeclarationStatement(statement))) {
+        if (statement instanceof VariableDeclarationStatement && s.interesting(az.variableDeclarationStatement(statement))) {
           s.tip(az.variableDeclarationStatement(statement)).go(r, g);
           $ = true;
         } else {
           final CasesSplit x = new CasesSplit();
-          if (statement instanceof SwitchStatement && x.canTip((SwitchStatement) statement)) {
+          if (statement instanceof SwitchStatement && x.interesting((SwitchStatement) statement)) {
             x.tip((SwitchStatement) statement).go(r, g);
             $ = true;
           } else {
             final DeclarationWithInitializerBloater s1 = new DeclarationWithInitializerBloater();
-            if (statement instanceof VariableDeclarationStatement && s1.canTip(az.variableDeclarationStatement(statement))) {
+            if (statement instanceof VariableDeclarationStatement && s1.interesting(az.variableDeclarationStatement(statement))) {
               s1.tip(az.variableDeclarationStatement(statement)).go(r, g);
               $ = true;
             }

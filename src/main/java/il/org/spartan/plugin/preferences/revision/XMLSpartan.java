@@ -202,7 +202,7 @@ public class XMLSpartan {
 
   /** Adds a new tipper to the XML document.
    * @param d JD
-   * @param t JD
+   * @param p JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
