@@ -104,7 +104,7 @@ public class XMLSpartan {
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
-    $.removeIf(λ->ets.contains(λ.getSimpleName()));
+    $.removeIf(λ -> ets.contains(λ.getSimpleName()));
     return $;
   }
 

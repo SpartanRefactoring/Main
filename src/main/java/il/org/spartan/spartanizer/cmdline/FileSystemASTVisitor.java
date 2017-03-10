@@ -194,7 +194,7 @@ public class FileSystemASTVisitor {
       return MethodHandles.lookup().lookupClass().getClass().getSimpleName();
     }
 
-    private static Class<?> myEnclosingClass() {
+    static Class<?> myEnclosingClass() {
       return new Object().getClass().getEnclosingClass();
     }
 
@@ -230,11 +230,11 @@ public class FileSystemASTVisitor {
 
         {
           hook(ExpressionStatement.class, new Rule<ExpressionStatement, Void>() {
-            @Override public boolean interesting(ExpressionStatement ¢) {
+            @Override public boolean interesting(final ExpressionStatement ¢) {
               return extract.usedNames(¢.getExpression()).size() == 1;
             }
 
-            @Override public Void tip(ExpressionStatement ¢) {
+            @Override public Void tip(@SuppressWarnings("unused") final ExpressionStatement ¢) {
               return null;
             }
           });

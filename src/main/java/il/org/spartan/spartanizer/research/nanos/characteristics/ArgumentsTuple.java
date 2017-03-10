@@ -20,7 +20,7 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
     if (!hazAtLeastTwoParameters(d))
       return false;
     final String $ = stringify(d);
-    List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
+    final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
     return invocations.stream()//
         .map(ArgumentsTuple::stringify)
         .allMatch(λ -> λ != null//

@@ -1,11 +1,13 @@
 package il.org.spartan.spartanizer.utils;
-import static java.util.stream.Collectors.*;
+
 import static il.org.spartan.spartanizer.utils.fault.*;
 
 import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.stream.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -192,10 +194,9 @@ public enum monitor {
         "  trace = \n" + printStackTrace(t) + "'\n");
   }
 
-  private static String printStackTrace(Throwable ¢) {
+  private static String printStackTrace(final Throwable ¢) {
     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
   }
-
 
   public static <T> T logProbableBug(final Throwable x) {
     return now.error(//

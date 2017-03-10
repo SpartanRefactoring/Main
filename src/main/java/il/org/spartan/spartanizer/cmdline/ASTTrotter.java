@@ -25,9 +25,9 @@ public class ASTTrotter extends ASTVisitor {
       dispatch = (List<Rule<?, ?>>[]) new List<?>[nodeTypesCount()];
   }
 
-  public <N extends ASTNode, T> void hook(Class<N> c, Rule<N, T> r) {
+  public <N extends ASTNode, T> void hook(final Class<N> c, final Rule<N, T> r) {
     init();
-    Integer nodeType = wizard.classToNodeType.get(c);
+    final Integer nodeType = wizard.classToNodeType.get(c);
     assert nodeType != null : fault.specifically("Unrecongized class", c);
     get(nodeType.intValue());
     dispatch[nodeType.intValue()].add(r);
@@ -37,9 +37,9 @@ public class ASTTrotter extends ASTVisitor {
     return folding;
   }
 
-  @SuppressWarnings({ "cast", "unchecked" }) private <N extends ASTNode, T> Collection<Rule<N, T>> get(N ¢) {
-    @SuppressWarnings("rawtypes") Collection $ = get(¢.getNodeType());
-    return (Collection<Rule<N, T>>) $;
+  @SuppressWarnings("unchecked") private <N extends ASTNode, T> Collection<Rule<N, T>> get(final N ¢) {
+    @SuppressWarnings("rawtypes") final Collection $ = get(¢.getNodeType());
+    return $;
   }
 
   private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
@@ -54,19 +54,19 @@ public class ASTTrotter extends ASTVisitor {
     super(true);
   }
 
-  @Override public final boolean preVisit2(ASTNode ¢) {
+  @Override public final boolean preVisit2(final ASTNode ¢) {
     return !isFolding() && go(¢) != null;
   }
 
-  @SuppressWarnings("unchecked") private <N extends ASTNode, T> T go(N n) {
+  @SuppressWarnings("unchecked") private <N extends ASTNode, T> T go(final N n) {
     return dispatch == null ? null : (T) get(n).stream().filter(λ -> λ.interesting(n)).map(λ -> λ.tip(n)).findFirst().orElse(null);
   }
 
-  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") ASTNode __) {
+  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final ASTNode __) {
     return true;
   }
 
-  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") ExpressionStatement ¢) {
+  @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final ExpressionStatement ¢) {
     return false;
   }
 

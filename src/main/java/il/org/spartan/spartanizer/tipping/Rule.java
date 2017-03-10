@@ -22,7 +22,7 @@ public interface Rule<N extends ASTNode, T> {
     return new String[] { technicalName() };
   }
 
-  default String describe(N ¢) {
+  default String describe(final N ¢) {
     return trivia.gist(¢);
   }
 
@@ -30,7 +30,7 @@ public interface Rule<N extends ASTNode, T> {
     return technicalName();
   }
 
-  default String description(N ¢) {
+  default String description(final N ¢) {
     return String.format(verb(), describe(¢));
   }
 

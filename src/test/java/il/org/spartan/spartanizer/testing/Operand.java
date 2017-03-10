@@ -38,7 +38,7 @@ public class Operand extends Wrapper<String> {
   public void doesNotCrash() {
     try {
       apply();
-    } catch (Throwable ¢) {
+    } catch (final Throwable ¢) {
       System.err.println("*** Test crashed with " + ¢.getClass().getSimpleName());
       System.err.println("*** Test crashed with " + ¢.getMessage());
       System.err.println("*** Test crashed rerunning ");
@@ -77,7 +77,7 @@ public class Operand extends Wrapper<String> {
     return new Operand($);
   }
 
-  private void copyPasteReformat(String format, Object... os) {
+  private void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
   }
