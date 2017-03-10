@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -52,7 +53,7 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     Table_ReusabilityIndices.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + Table.temporariesFolder + outputFileName());
+    System.err.println("Your output is in: " + system.temporariesFolder + outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

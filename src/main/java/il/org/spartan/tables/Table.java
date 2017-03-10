@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.statistics.*;
@@ -45,7 +46,7 @@ public class Table extends Row<Table> implements Closeable {
   private final List<RecordWriter> writers = new ArrayList<>();
 
   public String baseName() {
-    return temporariesFolder + name + ".*";
+    return system.temporariesFolder + name + ".*";
   }
 
   @Override public void close() {
@@ -116,7 +117,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private String path() {
-    return temporariesFolder + name;
+    return system.temporariesFolder + name;
   }
 
   public Table noStatistics() {
@@ -155,8 +156,6 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private static final long serialVersionUID = 1L;
-  public static final String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
-
   public static String classToNormalizedFileName(final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
   }

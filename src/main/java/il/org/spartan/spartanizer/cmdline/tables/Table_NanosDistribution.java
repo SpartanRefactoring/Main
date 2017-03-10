@@ -41,7 +41,7 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     writers.values().forEach(Table::close);
-    System.err.println("Your output is in: " + Table.temporariesFolder);
+    System.err.println("Your output is in: " + system.temporariesFolder);
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

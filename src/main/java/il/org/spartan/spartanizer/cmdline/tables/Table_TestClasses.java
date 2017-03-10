@@ -18,7 +18,7 @@ public class Table_TestClasses extends Table_SummaryForPaper {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     testClassesWriter.close();
-    System.err.println("Your output is in: " + Table.temporariesFolder);
+    System.err.println("Your output is in: " + system.temporariesFolder);
   }
 
   private void writeTestClasses(final String path) {

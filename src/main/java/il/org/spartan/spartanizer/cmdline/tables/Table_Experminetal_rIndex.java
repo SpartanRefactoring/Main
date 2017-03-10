@@ -41,7 +41,7 @@ public class Table_Experminetal_rIndex extends Table_ReusabilityIndices {
     super.done(path);
     summarize(path);
     clearAll();
-    System.err.println("Output is in: " + Table.temporariesFolder + path);
+    System.err.println("Output is in: " + system.temporariesFolder + path);
   }
 
   private static void clearAll() {

@@ -38,7 +38,7 @@ public class Table_Summary {
       @Override protected void done(final String path) {
         summarizeStatistics(path);
         clearAll();
-        System.err.println("Output is in: " + Table.temporariesFolder + path);
+        System.err.println("Output is in: " + system.temporariesFolder + path);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
