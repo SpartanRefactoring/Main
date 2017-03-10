@@ -43,8 +43,6 @@ public abstract class Tipper<N extends ASTNode> //
     return new String[] { className() };
   }
 
-
-
   /** Determines whether this instance can make a {@link Tip} for the parameter
    * instance.
    * @param e JD
@@ -65,11 +63,9 @@ public abstract class Tipper<N extends ASTNode> //
 
   @Override public abstract String description(N n);
 
-
   @Override public Example[] examples() {
     return new Example[] {};
   }
-
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
@@ -82,14 +78,12 @@ public abstract class Tipper<N extends ASTNode> //
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
-
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
   @Override public Tip tip(final N ¢) {
     return tip(¢, null);
   }
-
 
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.

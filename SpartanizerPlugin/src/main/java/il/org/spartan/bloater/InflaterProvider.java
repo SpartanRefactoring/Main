@@ -82,8 +82,8 @@ public class InflaterProvider extends OperationsProvider {
     ;//
   }
 
-    @Override public <N extends ASTNode> Tipper<N>getTipper(final N ¢) {
-      return toolbox.firstTipper(¢);
+  @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+    return toolbox.firstTipper(¢);
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
