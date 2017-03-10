@@ -41,7 +41,7 @@ public class Operand extends Wrapper<String> {
     } catch (Throwable ¢) {
       System.err.println("*** Test crashed with " + ¢.getClass().getSimpleName());
       System.err.println("*** Test crashed with " + ¢.getMessage());
-      System.err.println("*** Test crashed rerunning " );
+      System.err.println("*** Test crashed rerunning ");
       monitor.now = monitor.INTERACTIVE_TDD;
       apply();
     }
@@ -77,7 +77,8 @@ public class Operand extends Wrapper<String> {
     return new Operand($);
   }
 
-  private static void copyPasteReformat(String format, Object... os) {
+  private void copyPasteReformat(String format, Object... os) {
+    rerun();
     System.err.printf(QUICK + format, os);
   }
 
@@ -115,9 +116,7 @@ public class Operand extends Wrapper<String> {
     final String expected = get();
     if (expected.equals(peeled) || essence(peeled).equals(essence(expected)))
       return;
-    rerun();
-    copyPasteReformat(
-        "\n .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
+    copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
         essence(peeled), //
         essence(expected));
     azzert.that(essence(peeled), is(essence(expected)));
