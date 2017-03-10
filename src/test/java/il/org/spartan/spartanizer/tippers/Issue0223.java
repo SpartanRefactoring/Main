@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -173,7 +174,7 @@ public final class Issue0223 {
     final Operand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final String wrap = Wrap.find(a.get()).on(a.get());
-    if (wrap.equals(applyTrimmer(new Trimmer(), wrap)))
+    if (wrap.equals(trim.apply(new Trimmer(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
@@ -184,7 +185,7 @@ public final class Issue0223 {
     assert u != null;
     final Document d = new Document(wrap);
     assert d != null;
-    final Document $ = TESTUtils.rewrite(new Trimmer(), u, d);
+    final Document $ = trim.rewrite(new Trimmer(), u, d);
     assert $ != null;
     if (wrap.equals($.get()))
       azzert.fail("Nothing done on " + a.get());

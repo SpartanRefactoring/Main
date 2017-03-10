@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.junit.*;
 

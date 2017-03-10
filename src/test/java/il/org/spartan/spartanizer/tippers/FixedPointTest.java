@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TESTUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.junit.*;
 import org.junit.runners.*;

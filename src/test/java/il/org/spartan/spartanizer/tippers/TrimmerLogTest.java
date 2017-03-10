@@ -4,7 +4,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.utils.*;
 
 @SuppressWarnings("static-method") //

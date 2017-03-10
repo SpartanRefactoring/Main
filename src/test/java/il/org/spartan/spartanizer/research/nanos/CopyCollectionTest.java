@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
