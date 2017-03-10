@@ -44,13 +44,13 @@ public enum GuessedContext {
           , //
           ",0)) return g();\n" //
               + STATEMENTS_LOOK_ALIKE.after //
-  ), not_statment_may_occur_in_initializer_block(//
+  ), not_statement_may_occur_in_initializer_block(//
       METHOD_LOOK_ALIKE.before + //
           "\n\t\t\t { /* BEGIN Instance initializer block */\n" //
       , //
       "\n\t\t\t } /* END instance initializer block */\n" + //
           METHOD_LOOK_ALIKE.after //
-  ), not_statment_may_occur_in_static_initializer_block(//
+  ), not_statement_may_occur_in_static_initializer_block(//
       METHOD_LOOK_ALIKE.before + //
           "\n\t\t\t static{ /* BEGIN Instance initializer block */\n" //
       , //
@@ -65,8 +65,8 @@ public enum GuessedContext {
       STATEMENTS_LOOK_ALIKE, //
       METHOD_LOOK_ALIKE, //
       EXPRESSION_LOOK_ALIKE, //
-      not_statment_may_occur_in_initializer_block, //
-      not_statment_may_occur_in_static_initializer_block, //
+      not_statement_may_occur_in_initializer_block, //
+      not_statement_may_occur_in_static_initializer_block, //
   };
 
   /** Finds the most appropriate Guess for a given code fragment
