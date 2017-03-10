@@ -13,6 +13,7 @@ public class PojoConstructor extends JavadocMarkerNanoPattern {
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
-        && setter(¢);
+        && setter(¢) //
+        && notEmpty(¢);
   }
 }
