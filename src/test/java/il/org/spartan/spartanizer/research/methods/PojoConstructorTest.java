@@ -44,4 +44,16 @@ public class PojoConstructorTest extends JavadocerTest {
   @Test public void j() {
     assert is("public class Foo{ public static Foo() {    cacheEnabled = true;  }}");
   }
+
+  @Test public void k() {
+    assert not("public class Foo{ public Foo() {    cacheEnabled = a;  }}");
+  }
+
+  @Test public void l() {
+    assert not("public class Foo{ public Foo() {}}");
+  }
+
+  @Test public void m() {
+    assert not("public class Foo{ public Foo(Object o) {}}");
+  }
 }
