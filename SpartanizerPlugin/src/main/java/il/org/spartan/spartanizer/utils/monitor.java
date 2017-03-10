@@ -36,18 +36,17 @@ public enum monitor {
       return null¢();
     }
   },
-  /** Not clear why we need this */
-  LOG_TO_STDOUT {
+  INTERACTIVE_TDD {
     @Override public <T> T debugMessage(final String message) {
       return info(message);
     }
 
     @Override public <T> T error(final String message) {
-      System.out.println(message);
+      System.err.println(message);
       return null¢();
     }
   },
-  /** Used for real headless system; logs are simply ignore */
+  /** Used for real headless system; logs are simply ignored */
   OBLIVIOUS {
     @Override public <T> T error(final String message) {
       return null¢(message);
@@ -236,7 +235,7 @@ public enum monitor {
   public abstract <T> T error(String message);
 
   @SuppressWarnings("static-method") public <T> T info(final String message) {
-    System.out.println(message);
+    System.err.println(message);
     return null¢();
   }
 

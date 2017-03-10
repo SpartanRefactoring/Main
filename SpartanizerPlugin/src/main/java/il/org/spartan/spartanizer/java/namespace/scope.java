@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -17,15 +19,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016-12 */
 public interface scope {
   static ASTNode delimiter(final ASTNode ¢) {
-    if (iz.block(¢) || iz.switchStatement(¢))
+    if (iz.nodeTypeIn(¢, BLOCK, SWITCH_STATEMENT))
       return ¢;
     for (final ASTNode $ : ancestors.of(¢))
-      switch (nodeType($)) {
-        case ASTNode.BLOCK:
-        case ASTNode.SWITCH_STATEMENT:
-          return $;
-        default:
-      }
+      if (iz.nodeTypeIn($, BLOCK, SWITCH_STATEMENT))
+        return $;
     return null;
   }
 

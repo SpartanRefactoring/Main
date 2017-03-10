@@ -20,10 +20,8 @@ import il.org.spartan.spartanizer.utils.*;
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
- * @author Yossi Gil <<<<<<< HEAD =======
- *         {@code yossi dot (optional) gil at gmail dot (required) com} >>>>>>>
- *         branch 'master' of
- *         https://github.com/SpartanRefactoring/Spartanizer.git
+ * @author Yossi Gil 
+ *         {@code yossi dot (optional) gil at gmail dot (required) com} 
  * @since 2015-08-22 */
 public class Toolbox {
   @SuppressWarnings("unchecked")
