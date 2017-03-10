@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -60,6 +61,7 @@ public enum TrimmerTestsUtils {
   }
 
   public static class Operand extends Wrapper<String> {
+    private static final String QUICK = "Quick fix by mark, copy and paste is";
     private final Trimmer trimmer;
 
     public Operand(final String inner) {
@@ -89,7 +91,8 @@ public enum TrimmerTestsUtils {
       final Wrap w = Wrap.find(get());
       final String wrap = w.on(get()), unpeeled = applyTrimmer(trimmer, wrap);
       if (wrap.equals(unpeeled)) {
-        System.err.printf("Quick fix by mark, copy and paste is:\n        .stays()//\n    ;");
+        rerun(wrap);
+        System.err.printf(QUICK + ":\n        .stays()//\n    ;");
         azzert.fail("Nothing done on " + get());
       }
       final String peeled = w.off(unpeeled);
@@ -99,7 +102,7 @@ public enum TrimmerTestsUtils {
         azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
       if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
         System.err.printf(//
-            "Quick fix by mark, copy and paste is:\n" + //
+            QUICK + ":\n" + //
                 "\n        .gives(\"%s\") //\n\n\n" + //
                 "Compare with current " + //
                 "\n        .gives(\"%s\") //\n",
@@ -144,14 +147,23 @@ public enum TrimmerTestsUtils {
       final String expected = get();
       if (expected.equals(peeled) || essence(peeled).equals(essence(expected)))
         return;
+      rerun(wrap);
       System.err.printf(
-          "Quick fix by mark, copy and paste is:\n" + //
-              "        .gives(\"%s\") //\n\n\n\n" + //
-              "Compare with \n" + //
-              "        .gives(\"%s\") //\n", //
+          "%s\n .gives(\"%s\") //\n" + //
+              "Compare with\n .gives(\"%s\") //\n", //
+          QUICK, //
           essence(peeled), //
           essence(expected));
       azzert.that(essence(peeled), is(essence(expected)));
+    }
+
+    private void rerun(String wrap) {
+      System.err.println("Test failed, rerunning to collect more information:" );
+      TrimmerLog.on();
+      monitor.now = monitor.INTERACTIVE_TDD;
+      applyTrimmer(trimmer, wrap);
+      TrimmerLog.off();
+      System.err.println("Rerun done." );
     }
 
     public <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N> ¢) {

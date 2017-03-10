@@ -67,7 +67,6 @@ public class Trimmer extends AbstractGUIApplicator {
           w = getTipper(t, n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
-          monitor.logToFile(¢, fileName, n, n.getRoot());
         }
         if (w == null)
           return true;
