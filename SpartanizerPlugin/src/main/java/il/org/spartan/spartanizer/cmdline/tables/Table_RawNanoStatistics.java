@@ -36,7 +36,8 @@ public class Table_RawNanoStatistics {
 
       public void summarizeNPStatistics(final String path) {
         if (pWriter == null)
-          initializeWriter();
+          initializeWriter(outputFolder);
+        //initializeWriter();
         pWriter.col("Project", path);
         npStatistics.keySet().stream()//
             .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
@@ -70,6 +71,10 @@ public class Table_RawNanoStatistics {
       }
     });
     pWriter.close();
+  }
+  
+  static void initializeWriter(String outputFolder) {
+    pWriter = new Table(Table_RawNanoStatistics.class, outputFolder);
   }
 
   static void initializeWriter() {

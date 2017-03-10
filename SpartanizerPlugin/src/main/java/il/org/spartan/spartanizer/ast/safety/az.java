@@ -600,4 +600,8 @@ public enum az {
   public static ParameterizedType parameterizedType(final ASTNode ¢) {
     return !iz.parameterizedType(¢) ? null : (ParameterizedType) ¢;
   }
+
+  public static SuperConstructorInvocation superConstructorInvocation(final ASTNode ¢) {
+    return !iz.superConstructorInvocation(¢) ? null : (SuperConstructorInvocation) ¢;
+  }
 }
