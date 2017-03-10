@@ -15,6 +15,8 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
+  private String path;
+
   public Table(final Object o) {
     this(o.getClass());
   }
@@ -30,6 +32,32 @@ public class Table extends Row<Table> implements Closeable {
   @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
     as.list(rs).forEach(r -> {
+      try {
+        writers.add(new RecordWriter(r, path()));
+      } catch (final IOException ¢) {
+        close();
+        throw new RuntimeException(¢);
+      }
+    });
+  }
+
+  public Table(String name, String outputFolder) {
+    this.name = name.toLowerCase();
+    this.path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
+    as.list(TableRenderer.builtin.values()).forEach(r -> {
+      try {
+        writers.add(new RecordWriter(r, path()));
+      } catch (final IOException ¢) {
+        close();
+        throw new RuntimeException(¢);
+      }
+    });
+  }
+
+  public Table(final Class<?> c, String outputFolder) {
+    this.name = classToNormalizedFileName(c).toLowerCase();
+    this.path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
+    as.list(TableRenderer.builtin.values()).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
       } catch (final IOException ¢) {
@@ -117,7 +145,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private String path() {
-    return system.tmp + name;
+    return (path != null ? path : system.tmp) + name;
   }
 
   public Table noStatistics() {
