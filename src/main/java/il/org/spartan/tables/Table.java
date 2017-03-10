@@ -46,7 +46,7 @@ public class Table extends Row<Table> implements Closeable {
   private final List<RecordWriter> writers = new ArrayList<>();
 
   public String baseName() {
-    return system.temporariesFolder + name + ".*";
+    return system.tmp + name + ".*";
   }
 
   @Override public void close() {
@@ -117,7 +117,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private String path() {
-    return system.temporariesFolder + name;
+    return system.tmp + name;
   }
 
   public Table noStatistics() {

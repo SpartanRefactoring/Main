@@ -39,7 +39,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     writer.close();
-    System.err.println("Your output is in: " + system.temporariesFolder);
+    System.err.println("Your output is in: " + system.tmp);
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
