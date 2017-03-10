@@ -16,12 +16,11 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.tables.*;
 
 public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
-  static final File out = new File(system.temporariesFolder + File.separator + nano.getClass().getSimpleName() + ".txt");
+  static final File out = new File(system.tmp + File.separator + nano.getClass().getSimpleName() + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

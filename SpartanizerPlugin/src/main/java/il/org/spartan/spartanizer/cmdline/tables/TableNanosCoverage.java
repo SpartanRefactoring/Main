@@ -70,7 +70,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
-    System.err.println("Output is in: " + system.temporariesFolder + path);
+    System.err.println("Output is in: " + system.tmp + path);
   }
 
   private static boolean excludeMethod(final MethodDeclaration ¢) {

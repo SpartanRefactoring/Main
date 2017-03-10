@@ -53,7 +53,7 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     Table_ReusabilityIndices.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + system.temporariesFolder + outputFileName());
+    System.err.println("Your output is in: " + system.tmp + outputFileName());
   }
 
   @Override public boolean visit(final MethodDeclaration $) {
