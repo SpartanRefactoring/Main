@@ -73,6 +73,7 @@ public class Issue0230 {
 
   @Test public void h() {
     trimmingOf("@Retention(RetentionPolicy.RUNTIME)@Target({ElementType.METHOD})public @interface Tweezable {}")//
+        .gives("@Retention(RetentionPolicy.RUNTIME)@Target(ElementType.METHOD)public @interface Tweezable{}") //
         .stays();
   }
 
