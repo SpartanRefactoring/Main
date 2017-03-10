@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.junit.*;
 
-/** A test clas for {@link ParenthesizedRemoveExtraParenthesis}
+/** A test class for {@link ParenthesizedRemoveExtraParenthesis}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
 @SuppressWarnings("static-method")

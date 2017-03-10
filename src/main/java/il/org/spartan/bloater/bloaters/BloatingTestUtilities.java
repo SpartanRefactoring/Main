@@ -1,7 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.tippers.TESTUtils.*;
+import static il.org.spartan.spartanizer.testing.TESTUtils.*;
 
 import java.util.*;
 
