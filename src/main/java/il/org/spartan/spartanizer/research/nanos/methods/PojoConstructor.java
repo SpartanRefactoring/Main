@@ -12,8 +12,6 @@ public class PojoConstructor extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 4172021544627831813L;
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
-    if (iz.constructor(¢))
-      System.out.println(¢);
     return iz.constructor(¢)//
         && setter(¢) //
         && notEmpty(¢);
