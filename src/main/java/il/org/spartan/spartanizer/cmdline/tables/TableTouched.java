@@ -54,7 +54,7 @@ public class TableTouched extends TableNanosCoverage {
     return safe.div(totalMethodsTouched(¢), ¢.size());
   }
 
-  private static double totalMethodsTouched(final Collection<MethodRecord> rs) {
-    return rs.stream().filter(λ -> λ.touched()).count();
+  private static double totalMethodsTouched(final Collection<MethodRecord> ¢) {
+    return ¢.stream().filter(MethodRecord::touched).count();
   }
 }

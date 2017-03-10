@@ -78,10 +78,9 @@ public class FileSystemASTVisitor {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
-  public void fire(final ASTVisitor v) {
-    astVisitor = v;
-    for (final String location : locations)
-      visit(location);// NANO - can't, throws
+  public void fire(final ASTVisitor ¢) {
+    astVisitor = ¢;
+    locations.forEach(this::visit);
   }
 
   @SuppressWarnings("static-method") protected void done(final String path) {
@@ -214,8 +213,8 @@ public class FileSystemASTVisitor {
               SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
         }
 
-        boolean leaking(final Stream<ASTNode> ns) {
-          return ns.noneMatch(λ -> leaking(λ));
+        boolean leaking(final Stream<ASTNode> ¢) {
+          return ¢.noneMatch(this::leaking);
         }
       });
     }
