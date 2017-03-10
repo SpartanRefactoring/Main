@@ -142,6 +142,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new PojoConstructor(), //
         new Cascading.FluentSetter(), ///
         new Setter(), //
+        new SuperConstructor(), //
         new SuperDelegator(), //
         new Thrower(), //
         null);
