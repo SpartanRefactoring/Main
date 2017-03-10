@@ -19,7 +19,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   private static final long serialVersionUID = 8818334037409089691L;
   static final TypeChecker c = new TypeChecker();
 
-  @Override public boolean canTip(final InstanceofExpression ¢) {
+  @Override public boolean interesting(final InstanceofExpression ¢) {
     if (!(type(¢) instanceof SimpleType))
       return false;
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
