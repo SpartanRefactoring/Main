@@ -112,6 +112,8 @@ public final class Version230 {
   @Test public void assignmentAssignmentChain5() {
     trimmingOf("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));")//
         .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(((b4=(b5=13))));") //
+        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=((b4=(b5=13)));") //
+        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(b4=(b5=13));") //
         .stays()//
     ;
   }
@@ -2867,11 +2869,14 @@ public final class Version230 {
 
   @Test public void renameUnusedVariableToDoubleUnderscore3() {
     trimmingOf("void f(@SuppressWarnings({\"unused\"})int i){}")//
-        .gives("void f(@SuppressWarnings({\"unused\"})int __){}");
+        .gives("void f(@SuppressWarnings({\"unused\"})int __){}")//
+        .gives("void f(@SuppressWarnings(\"unused\")int __){}")//
+        .stays();
   }
 
   @Test public void renameUnusedVariableToDoubleUnderscore4() {
     trimmingOf("void f(@SuppressWarnings({\"unused\"})int x){}")//
+        .gives("void f(@SuppressWarnings(\"unused\")int x){}")//
         .stays();
   }
 

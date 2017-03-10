@@ -89,7 +89,8 @@ public enum GuessedContext {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
-    monitor.debug("GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n" + "\n" + enumerateFailingAttempts(codeFragment));
+    monitor.debug(
+        "GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n" + "\n" + enumerateFailingAttempts(codeFragment));
     return GuessedContext.STATEMENTS_LOOK_ALIKE;
   }
 
