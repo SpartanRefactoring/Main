@@ -1,11 +1,10 @@
-package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -22,16 +21,8 @@ public enum TESTUtils {
   ;
   static final String WHITES = "(?m)\\s+";
 
-  static String apply(final Trimmer t, final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert $ != null;
-    final Document d = new Document(from);
-    assert d != null;
-    return TESTUtils.rewrite(t, $, d).get();
-  }
-
   public static void assertNoChange(final String input) {
-    assertSimilar(input, Wrap.Expression.off(apply(new Trimmer(), Wrap.Expression.on(input))));
+    assertSimilar(input, Wrap.Expression.off(trim.apply(new Trimmer(), Wrap.Expression.on(input))));
   }
 
   static void assertNoOpportunity(final AbstractGUIApplicator a, final String from) {
@@ -73,14 +64,5 @@ public enum TESTUtils {
     final ASTNode $ = makeAST.STATEMENTS.from(statement);
     assert $ != null;
     return extract.singleStatement($);
-  }
-
-  public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
-    try {
-      a.createRewrite(u).rewriteAST($, null).apply($);
-      return $;
-    } catch (MalformedTreeException | BadLocationException ¢) {
-      throw new AssertionError(¢);
-    }
   }
 }
