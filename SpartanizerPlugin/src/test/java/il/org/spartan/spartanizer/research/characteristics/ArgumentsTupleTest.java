@@ -55,7 +55,7 @@ public class ArgumentsTupleTest extends JavadocerTest {
   }
 
   @Test public void k() {
-    assert is("boolean foo(int a, int b){}");
+    assert not("boolean foo(int a, int b){}");
   }
 
   @Test public void l() {
@@ -72,5 +72,9 @@ public class ArgumentsTupleTest extends JavadocerTest {
 
   @Test public void o() {
     assert not("boolean foo(int a, int b){if(x) return foo(c,a,b,d); else foo(c,a,b,d).f(a);}");
+  }
+
+  @Test public void p() {
+    assert not("boolean foo(int a, int b){this.a = a; this.b = b;}");
   }
 }

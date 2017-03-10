@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.characteristics;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -7,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.utils.*;
 
 /** sequence of parameters which occur few times together in a method
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -19,10 +20,12 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
     if (!hazAtLeastTwoParameters(d))
       return false;
     final String $ = stringify(d);
-    ___.nothing();
-    return descendants.whoseClassIs(MethodInvocation.class).from(d).stream()//
-        .map(ArgumentsTuple::stringify)//
-        .allMatch(λ -> λ != null && λ.contains($));
+    List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
+    return invocations.stream()//
+        .map(ArgumentsTuple::stringify)
+        .allMatch(λ -> λ != null//
+            && λ.contains($))//
+        && !invocations.isEmpty();
   }
 
   private static String stringify(final MethodDeclaration ¢) {
