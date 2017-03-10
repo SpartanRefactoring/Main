@@ -15,6 +15,11 @@ import il.org.spartan.spartanizer.research.*;
 public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefinedTipper<N>> {
   private static final long serialVersionUID = 1L;
 
+  @SafeVarargs public NanoPatternContainer(UserDefinedTipper<N>... ts) {
+    for (UserDefinedTipper<N> ¢ : ts)
+      add(¢);
+  }
+
   public NanoPatternContainer<N> patternTipper(final String pattern, final String replacement, final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
