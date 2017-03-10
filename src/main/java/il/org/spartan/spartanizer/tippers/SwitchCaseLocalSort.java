@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** sorts cases of a local branch {@code switch(x) { case 2: case 1: break; }}
