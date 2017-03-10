@@ -78,11 +78,11 @@ public final class ExpressionComparatorTest {
     azzert.that(cs("if (f()) g(); else h();"), is(11));
   }
 
-  @Test public void countStatementsIfWithElseAndEmptyStatments() {
+  @Test public void countStatementsIfWithElseAndEmptyStatements() {
     azzert.that(cs("if (f()) {;;;g();{}} else h();"), is(11));
   }
 
-  @Test public void countStatementsIfWithElseManyMoreEmptyStatments() {
+  @Test public void countStatementsIfWithElseManyMoreEmptyStatements() {
     azzert.that(cs("if (f()) {;;;g();{}} else {{;;}; {} ; h();;;;}"), is(11));
   }
 
