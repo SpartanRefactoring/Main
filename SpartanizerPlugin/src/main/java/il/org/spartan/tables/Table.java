@@ -55,16 +55,17 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   public Table(final Class<?> c, String outputFolder) {
-    this.name = classToNormalizedFileName(c).toLowerCase();
-    this.path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
-    as.list(TableRenderer.builtin.values()).forEach(r -> {
-      try {
-        writers.add(new RecordWriter(r, path()));
-      } catch (final IOException ¢) {
-        close();
-        throw new RuntimeException(¢);
-      }
-    });
+    this(classToNormalizedFileName(c), outputFolder);
+//    this.name = classToNormalizedFileName(c).toLowerCase();
+//    this.path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
+//    as.list(TableRenderer.builtin.values()).forEach(r -> {
+//      try {
+//        writers.add(new RecordWriter(r, path()));
+//      } catch (final IOException ¢) {
+//        close();
+//        throw new RuntimeException(¢);
+//      }
+//    });
   }
 
   private int length;
