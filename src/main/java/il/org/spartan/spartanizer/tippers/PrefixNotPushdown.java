@@ -61,7 +61,8 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static boolean hasOpportunity(final Expression inner) {
-    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null || az.conditionalExpression(inner) !=null;
+    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null
+        || az.conditionalExpression(inner) != null;
   }
 
   private static boolean hasOpportunity(final PrefixExpression ¢) {
