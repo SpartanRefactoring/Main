@@ -30,8 +30,7 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 
-  @Override
-  public ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override public ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;
