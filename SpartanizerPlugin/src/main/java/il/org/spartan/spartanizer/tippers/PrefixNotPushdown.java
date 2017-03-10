@@ -48,11 +48,11 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
             ? $ : null;
   }
 
-  static Expression perhapsTernary(Expression ¢) {
+  static Expression perhapsTernary(final Expression ¢) {
     return perhapsTernary(az.conditionalExpression(core(¢)));
   }
 
-  static Expression perhapsTernary(ConditionalExpression ¢) {
+  static Expression perhapsTernary(final ConditionalExpression ¢) {
     return ¢ == null ? null : subject.pair(then(¢), elze(¢)).toCondition(pushdownNot(¢.getExpression()));
   }
 

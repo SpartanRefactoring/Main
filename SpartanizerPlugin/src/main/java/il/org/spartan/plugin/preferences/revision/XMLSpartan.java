@@ -104,7 +104,7 @@ public class XMLSpartan {
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
-    $.removeIf(λ->ets.contains(λ.getSimpleName()));
+    $.removeIf(λ -> ets.contains(λ.getSimpleName()));
     return $;
   }
 
@@ -202,14 +202,14 @@ public class XMLSpartan {
 
   /** Adds a new tipper to the XML document.
    * @param d JD
-   * @param t JD
+   * @param p JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
   private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
-    final String n = t.getClass().getSimpleName();
+    final String n = t.className();
     if (seen.contains(n))
       return;
     final Element $ = d.createElement(TIPPER);

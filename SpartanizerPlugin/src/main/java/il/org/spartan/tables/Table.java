@@ -41,7 +41,7 @@ public class Table extends Row<Table> implements Closeable {
     });
   }
 
-  public Table(String name, String outputFolder) {
+  @SuppressWarnings("resource") public Table(final String name, final String outputFolder) {
     this.name = name.toLowerCase();
     this.path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
     as.list(TableRenderer.builtin.values()).forEach(r -> {
@@ -54,7 +54,7 @@ public class Table extends Row<Table> implements Closeable {
     });
   }
 
-  public Table(final Class<?> c, String outputFolder) {
+  public Table(final Class<?> c, final String outputFolder) {
     this(classToNormalizedFileName(c), outputFolder);
   }
 
@@ -175,6 +175,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private static final long serialVersionUID = 1L;
+
   public static String classToNormalizedFileName(final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
   }

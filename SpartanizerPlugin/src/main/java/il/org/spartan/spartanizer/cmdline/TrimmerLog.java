@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -100,34 +101,31 @@ public enum TrimmerLog {
     if (logToFile) {
       init();
       output.put("File", fileName);
-      output.put("Tipper", clazz(w));
+      output.put("Tipper", wizard.className(w));
       output.put("Named", w.description());
       output.put("Kind", w.tipperGroup());
       output.put("Described", w.description(n));
-      output.put("Can tip", w.canTip(n));
+      output.put("Can tip", w.interesting(n));
       output.put("Suggests", w.tip(n));
       output.nl();
     }
     if (!logToScreen)
       return;
     System.out.println("        File: " + fileName);
-    System.out.println("      Tipper: " + clazz(w));
+    System.out.println("      Tipper: " + wizard.className(w));
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.tipperGroup());
     System.out.println("   Described: " + w.description(n));
-    System.out.println("     Can tip: " + w.canTip(n));
+    System.out.println("     Can tip: " + w.interesting(n));
     System.out.println("    Suggests: " + w.tip(n));
   }
 
   public static void visitation(final ASTNode ¢) {
     if (--maxVisitations > 0)
-      System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + clazz(¢) + ")" + " parent = " + clazz(parent(¢)));
+      System.out.println(
+          "VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + wizard.className(¢) + ")" + " parent = " + wizard.className(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
-  }
-
-  private static String clazz(final Object n) {
-    return n.getClass().getSimpleName();
   }
 
   private static CSVStatistics init() {

@@ -107,6 +107,6 @@ public class CompilationUnitRecord {
   }
 
   public boolean noTests() {
-    return testCount == 0; 
+    return testCount == 0;
   }
 }

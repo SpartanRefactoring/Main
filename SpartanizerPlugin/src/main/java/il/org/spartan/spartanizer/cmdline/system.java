@@ -206,17 +206,14 @@ public interface system {
   static boolean windows() {
     return System.getProperty("os.name").contains("indows");
   }
+
   interface Extension {
     File dot(String extentsion);
-      
-  }
-    String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
-  static Extension ephemeral(String stem) {
-    return new Extension() {
-      @Override public File dot(String extension) {
-        return new File(system.tmp +stem  + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + extension);
-      }
-    };
   }
 
+  String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
+
+  static Extension ephemeral(final String stem) {
+    return λ -> new File(system.tmp + stem + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + λ);
+  }
 }

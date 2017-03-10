@@ -22,7 +22,7 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     }
   };
 
-  @Override public boolean canTip(final ForStatement ¢) {
+  @Override public boolean interesting(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
 
