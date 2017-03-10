@@ -45,7 +45,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     pWriter.close();
-    System.err.println("Your output is in: " + system.temporariesFolder + pWriter.name);
+    System.err.println("Your output is in: " + system.tmp + pWriter.name);
   }
 
   @Override public boolean visit(final MethodDeclaration $) {
