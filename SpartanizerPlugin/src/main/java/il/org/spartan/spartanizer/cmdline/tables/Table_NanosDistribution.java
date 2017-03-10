@@ -37,11 +37,10 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
     writers.put(Integer.valueOf(type), new Table("distribution_" + ASTNode.nodeClassForType(type).getSimpleName()));
   }
 
-  public static void main(final String[] args)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+  public static void main(final String[] args) throws InstantiationException, IllegalAccessException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     writers.values().forEach(Table::close);
-    System.err.println("Your output is in: " + system.temporariesFolder);
+    System.err.println("Your output is in: " + system.tmp);
   }
 
   @Override public boolean visit(final MethodDeclaration $) {

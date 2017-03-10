@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import java.io.*;
+import java.lang.invoke.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -138,7 +139,7 @@ public class FileSystemASTVisitor {
   protected String absolutePath;
   protected Dotter dotter;
   @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp();
+  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp;
   protected File presentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
@@ -181,7 +182,7 @@ public class FileSystemASTVisitor {
     public static void main(final String[] args) {
       monitor.now = monitor.LOG_TO_FILE;
       try {
-        out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
+        out = new BufferedWriter(new FileWriter(system.ephemeral(myClass()).dot("txt")));
       } catch (final IOException ¢) {
         monitor.infoIOException(¢);
         return;
@@ -217,6 +218,12 @@ public class FileSystemASTVisitor {
           return ¢.noneMatch(this::leaking);
         }
       });
+    }
+
+    private static String myClass() {
+      Class<?> a = MethodHandles.lookup().lookupClass();
+      String s = a.getClass().getSimpleName();
+      return s;
     }
 
     static boolean letItBeIn(final List<Statement> ¢) {

@@ -12,14 +12,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.tables.*;
 
 /** Find all loops not matched by a nano pattern
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 11, 2017 */
 public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final File out = new File(system.temporariesFolder + File.separator + "loops" + ".txt");
+  private static final File out = new File(system.tmp + File.separator + "loops" + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
