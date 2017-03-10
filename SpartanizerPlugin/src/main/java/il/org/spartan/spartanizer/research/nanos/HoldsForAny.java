@@ -33,7 +33,7 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
 
-  @Override public boolean canTip(final EnhancedForStatement x) {
+  @Override public boolean interesting(final EnhancedForStatement x) {
     return tippers.canTip(az.block(parent(x)))//
         || tippers2.canTip(x);
   }

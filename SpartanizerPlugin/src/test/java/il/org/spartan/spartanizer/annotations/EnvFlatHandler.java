@@ -68,7 +68,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
+   * @param whatThisGlobalStaticVariableDoing JD */
   private void handler(final SingleMemberAnnotation a) {
     if (a == null || !"FlatEnvUse".equals(a.getTypeName() + ""))
       return;

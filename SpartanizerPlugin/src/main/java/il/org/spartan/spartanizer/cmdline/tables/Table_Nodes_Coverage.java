@@ -22,7 +22,7 @@ public class Table_Nodes_Coverage {
   protected static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;
-  protected static Function<String, String> analyze = λ -> spartanalyzer.fixedPoint(λ);
+  protected static Function<String, String> analyze = spartanalyzer::fixedPoint;
 
   public static void main(final String[] args) {
     new FileSystemASTVisitor(args) {

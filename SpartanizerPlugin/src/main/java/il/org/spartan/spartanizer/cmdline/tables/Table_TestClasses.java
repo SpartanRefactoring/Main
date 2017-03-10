@@ -22,14 +22,12 @@ public class Table_TestClasses extends Table_SummaryForPaper {
   }
 
   private void writeTestClasses(final String path) {
-    for (final CompilationUnitRecord ¢ : compilationUnitRecords)
-      if (¢.testCount() > 0)
-        testClassesWriter//
+    compilationUnitRecords.stream().filter(λ -> λ.testCount() > 0).forEachOrdered(λ -> testClassesWriter//
             .col("Project", path)//
-            .col("AbsolutePath", ¢.getPath())//
-            .col("RelativePath", ¢.getRelativePath())//
-            .col("#TestMethods", ¢.testCount())//
-            .nl();
+            .col("AbsolutePath", λ.getPath())//
+            .col("RelativePath", λ.getRelativePath())//
+            .col("#TestMethods", λ.testCount())//
+            .nl());
   }
 
   @Override protected void done(final String path) {

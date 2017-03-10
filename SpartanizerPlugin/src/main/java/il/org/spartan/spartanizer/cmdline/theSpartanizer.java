@@ -42,7 +42,7 @@ public interface theSpartanizer {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           if (!searching)
             return false;
-          final Tipper<N> t = safeFirstTipper(n);
+          final Rule<N, Tip> t = safeFirstTipper(n);
           if (t == null)
             return true;
           final Tip $ = t.tip(n);
@@ -68,7 +68,7 @@ public interface theSpartanizer {
     return $.get();
   }
 
-  static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
+  static <N extends ASTNode> Rule<N, Tip> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
     } catch (final Exception ¢) {

@@ -54,7 +54,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
 
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     // TODO Dor: use extract.core
-    return iz.infix(from) ? Tipper.goInfix(copy.of(az.infixExpression(from)), s)
+    return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
                 ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;

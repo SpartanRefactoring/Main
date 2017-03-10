@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -29,7 +30,7 @@ public enum TestsUtilsTrimmer {
       this.clazz = clazz;
     }
 
-    private N findNode(final Tipper<N> t) {
+    private N findNode(final Rule<N, Tip> t) {
       assert t != null;
       final Wrap wrap = Wrap.find(get());
       assert wrap != null;
@@ -64,13 +65,13 @@ public enum TestsUtilsTrimmer {
       return $.get();
     }
 
-    public OperandToTipper<N> in(final Tipper<N> ¢) {
-      assert ¢.canTip(findNode(¢));
+    public OperandToTipper<N> in(final Rule<N, Tip> ¢) {
+      assert ¢.interesting(findNode(¢));
       return this;
     }
 
-    public OperandToTipper<N> notIn(final Tipper<N> ¢) {
-      assert !¢.canTip(findNode(¢));
+    public OperandToTipper<N> notIn(final Rule<N, Tip> ¢) {
+      assert !¢.interesting(findNode(¢));
       return this;
     }
   }

@@ -23,7 +23,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final long serialVersionUID = -7203054410598850023L;
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
-  @Override public boolean canTip(final MethodDeclaration ¢) {
+  @Override public boolean interesting(final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     final List<Statement> ss = statements(¢.getBody());
@@ -33,7 +33,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     if (!iz.assignment(e))
       return false;
     final Assignment $ = az.assignment(e);
-    return (iz.name(left($)) || tipper.canTip(left($))) && wizard.same(right($), first(parameters(¢)).getName());
+    return (iz.name(left($)) || tipper.interesting(left($))) && wizard.same(right($), first(parameters(¢)).getName());
   }
 
   @Override public Tip pattern(final MethodDeclaration d) {
