@@ -40,7 +40,13 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
     clazz = Table_NanosReusabilityIndices.class;
     Logger.subscribe(npStatistics::logNPInfo);
   }
+  
+  @SuppressWarnings("hiding")
+  private static void initializeWriter(String outputFolder) {
+    pWriter = new Table(outputFileName(), outputFolder);
+  }
 
+  @SuppressWarnings("unused")
   private static void initializeWriter() {
     pWriter = new Table(outputFileName());
   }
@@ -82,7 +88,8 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
 
   public void summarizeNPStatistics(final String path) {
     if (pWriter == null)
-      initializeWriter();
+      initializeWriter(outputFolder);
+      // initializeWriter();
     final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
     pWriter.put("Project", path);
     npStatistics.keySet().stream()//
@@ -93,6 +100,7 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
     pWriter.nl();
     npStatistics.clear();
   }
+
 
   private static void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//
