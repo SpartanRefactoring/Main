@@ -201,7 +201,7 @@ public enum monitor {
   }
 
   private static String printStackTrace(Throwable ¢) {
-    return separate.these(Stream.of(¢.getStackTrace()).map(λ -> λ.toString()).collect(toList())).by(";\n");
+    return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
   }
 
 

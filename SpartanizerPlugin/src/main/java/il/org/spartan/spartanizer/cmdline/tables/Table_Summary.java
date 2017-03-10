@@ -124,11 +124,11 @@ public class Table_Summary {
   }
 
   private static int statementsCovered() {
-    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPStatements()).sum();
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(MethodRecord::numNPStatements).sum();
   }
 
   private static int expressionsCovered() {
-    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numNPExpressions()).sum();
+    return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(MethodRecord::numNPExpressions).sum();
   }
 
   private static int expressions() {

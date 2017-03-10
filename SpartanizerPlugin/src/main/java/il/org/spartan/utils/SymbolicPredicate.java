@@ -82,7 +82,7 @@ public interface SymbolicPredicate extends BooleanSupplier {
     }
 
     @Override public boolean getAsBoolean() {
-      return stream().allMatch(λ -> λ.getAsBoolean());
+      return stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 
     @Override public SymbolicPredicate or(final BooleanSupplier c, final BooleanSupplier... cs) {
@@ -105,7 +105,7 @@ public interface SymbolicPredicate extends BooleanSupplier {
     }
 
     @Override public boolean getAsBoolean() {
-      return stream().anyMatch(λ -> λ.getAsBoolean());
+      return stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 
     @Override public SymbolicPredicate or(final BooleanSupplier c, final BooleanSupplier... cs) {

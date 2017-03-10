@@ -104,10 +104,7 @@ public class XMLSpartan {
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
-    final Collection<Class<Tipper<? extends ASTNode>>> l = new ArrayList<>($);
-    for (final Class<Tipper<? extends ASTNode>> ¢ : l)
-      if (!ets.contains(¢.getSimpleName()))
-        $.remove(¢);
+    $.removeIf(λ->ets.contains(λ.getSimpleName()));
     return $;
   }
 
