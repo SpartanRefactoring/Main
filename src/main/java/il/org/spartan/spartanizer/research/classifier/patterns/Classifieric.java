@@ -21,7 +21,7 @@ public class Classifieric {
       }
     };
 
-    @Override public boolean canTip(final ForStatement ¢) {
+    @Override public boolean interesting(final ForStatement ¢) {
       return anyTips(tippers, ¢);
     }
 

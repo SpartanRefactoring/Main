@@ -50,7 +50,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
 
-  @Override public boolean canTip(final EnhancedForStatement x) {
+  @Override public boolean interesting(final EnhancedForStatement x) {
     return anyTips(tippers, az.block(parent(x)))//
         && nonTips(rivals, x)//
     ;

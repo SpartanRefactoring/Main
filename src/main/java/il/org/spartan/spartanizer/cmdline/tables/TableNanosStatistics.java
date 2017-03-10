@@ -95,6 +95,6 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.interesting(d));
   }
 }

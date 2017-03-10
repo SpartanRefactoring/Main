@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
@@ -89,19 +90,10 @@ public enum monitor {
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
   public static monitor now = monitor.PRODUCTION;
 
-  public static String className(final Class<?> ¢) {
-    final String $ = ¢.getCanonicalName();
-    return ¢.getSimpleName() + "[" + ($ == null ? ¢ : $) + "]";
-  }
-
-  public static String className(final Object ¢) {
-    return className(¢.getClass());
-  }
-
   public static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
-        "A static method of " + className(o) + //
-            "\n was hit by a " + className(t.getClass()) + //
+        "A static method of " + wizard.className(o) + //
+            "\n was hit by a " + wizard.className(t.getClass()) + //
             " exception. This is expected and printed only for the purpose of debugging" + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
@@ -109,7 +101,7 @@ public enum monitor {
 
   public static <T> T debug(final Object o, final Throwable t) {
     return debug(//
-        "An instance of " + className(o) + //
+        "An instance of " + wizard.className(o) + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
             " exception. This is expected and printed only for the purpose of debugging" + //
             "\n x = '" + t + "'" + //
@@ -122,7 +114,7 @@ public enum monitor {
 
   public static <T> T infoIOException(final Exception ¢) {
     return now.info(//
-        "   Got an exception of type : " + className(¢) + //
+        "   Got an exception of type : " + wizard.className(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
     );
@@ -130,7 +122,7 @@ public enum monitor {
 
   public static <T> T infoIOException(final Exception x, final String message) {
     return now.info(//
-        "   Got an exception of type : " + className(x) + //
+        "   Got an exception of type : " + wizard.className(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
@@ -140,7 +132,7 @@ public enum monitor {
 
   public static <T> T infoIOException(final IOException ¢) {
     return now.info(//
-        "   Got an exception of type : " + className(¢) + //
+        "   Got an exception of type : " + wizard.className(¢) + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + ¢ + "'" //
     );
   }
@@ -156,7 +148,7 @@ public enum monitor {
    * @param ¢ JD */
   public static <T> T logCancellationRequest(final Exception ¢) {
     return now.info(//
-        " " + className(¢) + //
+        " " + wizard.className(¢) + //
             " (probably cancellation) exception." + //
             "\n x = '" + ¢ + "'" //
     );
@@ -167,8 +159,8 @@ public enum monitor {
    * @param x JD */
   public static <T> T logCancellationRequest(final Object o, final Exception x) {
     return now.info(//
-        "An instance of " + className(o) + //
-            "\n was hit by a " + className(x) + //
+        "An instance of " + wizard.className(o) + //
+            "\n was hit by a " + wizard.className(x) + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
             "\n o = " + o + "'");
@@ -177,7 +169,7 @@ public enum monitor {
   public static <T> T logEvaluationError(final Object o, final Throwable t) {
     System.err.println(//
         dump() + //
-            "\n An instance of " + className(o) + //
+            "\n An instance of " + wizard.className(o) + //
             "\n was hit by a " + t.getClass().getSimpleName() + //
             "\n      exeption, probably due to unusual Java constructs in the input:" + //
             "\n   x = '" + t + "'" + //
@@ -192,8 +184,8 @@ public enum monitor {
   }
 
   public static <T> T logProbableBug(final Object o, final Throwable t) {
-    return now.error("An instance of " + className(o) + //
-        "was hit by an '" + className(t) + "'\n" + //
+    return now.error("An instance of " + wizard.className(o) + //
+        "was hit by an '" + wizard.className(t) + "'\n" + //
         "exception, which typically indicates bug in your code." + //
         "  o = " + o + "'\n" + //
         "  x = '" + t + "'\n" + //
@@ -207,7 +199,7 @@ public enum monitor {
 
   public static <T> T logProbableBug(final Throwable x) {
     return now.error(//
-        "A static method was hit by a " + className(x) + //
+        "A static method was hit by a " + wizard.className(x) + //
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + x + "'" //
     );

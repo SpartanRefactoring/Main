@@ -266,14 +266,14 @@ public class CommandLine$Applicator extends Generic$Applicator {
       }
 
       <N extends ASTNode> void tick(final Tipper<N> w) {
-        final String key = monitor.className(w.getClass());
+        final String key = wizard.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
       <N extends ASTNode> void tick2(@SuppressWarnings("unused") final N __, final Tipper<N> w) {
-        @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + monitor.className(w.getClass());
+        @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + wizard.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);

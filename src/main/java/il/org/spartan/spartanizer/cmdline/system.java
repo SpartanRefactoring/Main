@@ -212,11 +212,7 @@ public interface system {
   }
     String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
   static Extension ephemeral(String stem) {
-    return new Extension() {
-      @Override public File dot(String extension) {
-        return new File(system.tmp +stem  + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + extension);
-      }
-    };
+    return λ -> new File(system.tmp +stem  + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + λ);
   }
 
 }

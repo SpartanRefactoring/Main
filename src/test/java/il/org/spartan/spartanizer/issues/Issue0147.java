@@ -38,7 +38,7 @@ public class Issue0147 {
   }
 
   @Test public void eligible() {
-    assert TIPPER.canTip(FOR);
+    assert TIPPER.interesting(FOR);
   }
 
   @Test public void extractFirstIf() {
@@ -50,7 +50,7 @@ public class Issue0147 {
   }
 
   @Test public void notEligible() {
-    assert !TIPPER.canTip(FOR1);
+    assert !TIPPER.interesting(FOR1);
   }
 
   @Ignore

@@ -23,18 +23,18 @@ public final class TipperApplicator extends AbstractGUIApplicator {
    * @param statementsTipper The tipper we wish to convert
    * @param name The title of the refactoring */
   @SuppressWarnings("unchecked") public TipperApplicator(final Tipper<? extends ASTNode> w) {
-    super(w.myName());
+    super(w.technicalName());
     tipper = (Tipper<ASTNode>) w;
     clazz = w.myActualOperandsClass();
     // assert clazz != null : "Oops, cannot find kind of operands of " +
-    // w.myName();
+    // w.technicalName();
   }
 
   @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || tipper.canTip(¢) || inRange(m, ¢))
+        if (¢.getClass() == clazz || tipper.interesting(¢) || inRange(m, ¢))
           tipper.tip(¢).go(r, null);
       }
     });
@@ -48,7 +48,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
         if (¢.getClass() == clazz)
           return;
         progressMonitor.worked(1);
-        if (!tipper.canTip(¢))
+        if (!tipper.interesting(¢))
           return;
         progressMonitor.worked(1);
         $.add(tipper.tip(¢));

@@ -25,7 +25,7 @@ public final class Min extends NanoPatternTipper<ConditionalExpression> {
     }
   };
 
-  @Override public boolean canTip(final ConditionalExpression ¢) {
+  @Override public boolean interesting(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);
   }
 

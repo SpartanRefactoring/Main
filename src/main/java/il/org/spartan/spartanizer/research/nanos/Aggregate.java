@@ -39,7 +39,7 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
 
-  @Override public boolean canTip(final EnhancedForStatement x) {
+  @Override public boolean interesting(final EnhancedForStatement x) {
     return anyTips(tippers, x)//
         && rival.cantTip(x);
   }
