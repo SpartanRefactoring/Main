@@ -30,7 +30,7 @@ public class Table_NanosByCategories {
             final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
             final String category = Category.pretty(np.category() != null ? np.category() + "" : Toolbox.intToClassName(i));
             categories.putIfAbsent(category, new TreeSet<>());
-            categories.get(category).add(np.getClass().getSimpleName());
+            categories.get(category).add(np.className());
           }
     try (Table t = new Table(this)) {
       t.noStatistics().add(Statistic.Σ);

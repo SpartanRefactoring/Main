@@ -24,7 +24,7 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
 
-  @Override public boolean canTip(final EnhancedForStatement ¢) {
+  @Override public boolean interesting(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
   }
 

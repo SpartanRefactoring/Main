@@ -92,8 +92,8 @@ public class issue0411 {
   }
 
   @Test public void B17() {
-    assert tipper.canTip(variableDeclarationFragment) : fault.dump() + "\n variableDeclarationFragment = " + variableDeclarationFragment + "\n for = "
-        + forr + fault.done();
+    assert tipper.interesting(variableDeclarationFragment) : fault.dump() + "\n variableDeclarationFragment = " + variableDeclarationFragment
+        + "\n for = " + forr + fault.done();
   }
 
   @Test public void B20() {

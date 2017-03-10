@@ -67,7 +67,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(extract.core(from));
-    return $ != null ? handleAssignmentCondition($, s) : e != null ? goInfix(e, s) : from;
+    return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
   }
 
   /** @param t JD
@@ -76,7 +76,8 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? goInfix(az.infixExpression(from), s) : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
+    return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
+        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {

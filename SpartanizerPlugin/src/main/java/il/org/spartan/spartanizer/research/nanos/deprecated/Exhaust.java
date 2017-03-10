@@ -22,7 +22,7 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
     }
   };
 
-  @Override public boolean canTip(final WhileStatement ¢) {
+  @Override public boolean interesting(final WhileStatement ¢) {
     return anyTips(tippers, ¢);
   }
 

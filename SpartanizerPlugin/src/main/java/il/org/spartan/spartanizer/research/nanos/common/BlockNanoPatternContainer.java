@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.research.*;
 public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
   private static final long serialVersionUID = 1L;
 
-  @SafeVarargs public BlockNanoPatternContainer(UserDefinedTipper<Block>... ts) {
-    for (UserDefinedTipper<Block> ¢ : ts)
+  @SafeVarargs public BlockNanoPatternContainer(final UserDefinedTipper<Block>... ts) {
+    for (final UserDefinedTipper<Block> ¢ : ts)
       add(¢);
   }
 

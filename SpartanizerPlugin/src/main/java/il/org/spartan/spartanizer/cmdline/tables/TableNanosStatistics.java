@@ -89,12 +89,12 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
 
   private static void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//
-        .map(λ -> λ.getClass().getSimpleName())//
+        .map(λ -> λ.className())//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.col(λ, 0));
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.interesting(d));
   }
 }

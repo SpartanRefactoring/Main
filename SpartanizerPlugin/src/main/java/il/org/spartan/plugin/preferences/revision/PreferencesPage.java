@@ -1,4 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
+
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
@@ -204,8 +205,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     @Override protected String[] parseString(final String stringList) {
-      return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)
-          : elements.stream().map(Entry::getKey).toArray(String[]::new);
+      return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements.stream().map(Entry::getKey).toArray(String[]::new);
     }
 
     @Override protected String getNewInputObject() {

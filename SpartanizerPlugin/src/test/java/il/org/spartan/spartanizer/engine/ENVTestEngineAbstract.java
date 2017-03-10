@@ -134,7 +134,7 @@ public abstract class ENVTestEngineAbstract {
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
-   * @param $ JD */
+   * @param whatThisGlobalStaticVariableDoing JD */
   protected abstract void handler(Annotation ¢);
 
   /** define: outer annotation = OutOfOrderNestedENV, InOrderFlatENV, Begin,
