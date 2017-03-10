@@ -37,7 +37,7 @@ public class Table_RawNanoStatistics {
       public void summarizeNPStatistics(final String path) {
         if (pWriter == null)
           initializeWriter(outputFolder);
-        //initializeWriter();
+        // initializeWriter();
         pWriter.col("Project", path);
         npStatistics.keySet().stream()//
             .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
@@ -50,7 +50,7 @@ public class Table_RawNanoStatistics {
 
       void fillAbsents() {
         spartanalyzer.getAllPatterns().stream()//
-            .map(λ -> λ.getClass().getSimpleName())//
+            .map(λ -> λ.className())//
             .filter(λ -> !npStatistics.keySet().contains(λ))//
             .forEach(λ -> pWriter.col(λ, 0));
       }
@@ -72,8 +72,8 @@ public class Table_RawNanoStatistics {
     });
     pWriter.close();
   }
-  
-  static void initializeWriter(String outputFolder) {
+
+  static void initializeWriter(final String outputFolder) {
     pWriter = new Table(Table_RawNanoStatistics.class, outputFolder);
   }
 

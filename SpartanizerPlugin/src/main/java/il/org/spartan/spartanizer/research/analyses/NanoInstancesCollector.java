@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.util.*;
 public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
-  static final File out = new File(system.tmp + File.separator + nano.getClass().getSimpleName() + ".txt");
+  static final File out = new File(system.tmp + File.separator + nano.className() + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

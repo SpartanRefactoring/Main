@@ -76,7 +76,8 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
   private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s) : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
+    return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
+        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {

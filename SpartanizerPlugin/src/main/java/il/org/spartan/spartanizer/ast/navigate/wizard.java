@@ -23,6 +23,7 @@ import org.eclipse.text.edits.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
@@ -654,7 +655,7 @@ public interface wizard {
   }
 
   static String nodeName(final Class<? extends ASTNode> ¢) {
-    return wizard.className(¢); 
+    return wizard.className(¢);
   }
 
   /** Determine whether a node is an infix expression whose operator is
