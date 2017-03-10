@@ -22,7 +22,8 @@ public class Table_TestClasses extends Table_SummaryForPaper {
   }
 
   private void writeTestClasses(final String path) {
-    compilationUnitRecords.stream().filter(λ -> λ.testCount() > 0).forEachOrdered(λ -> testClassesWriter//
+    compilationUnitRecords.stream().filter(λ -> λ.testCount() > 0)
+        .forEachOrdered(λ -> testClassesWriter//
             .col("Project", path)//
             .col("AbsolutePath", λ.getPath())//
             .col("RelativePath", λ.getRelativePath())//
