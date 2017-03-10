@@ -25,7 +25,7 @@ public class Table_Summary {
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
   static final Stack<MethodRecord> scope = new Stack<>();
-  private static Table writer;
+  static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
     Logger.subscribe(Table_Summary::logNanoContainingMethodInfo);
@@ -39,6 +39,25 @@ public class Table_Summary {
         summarizeStatistics(path);
         clearAll();
         System.err.println("Output is in: " + system.tmp + path);
+      }
+      
+      public void summarizeStatistics(final String path) {
+        if (writer == null)
+          initializeWriter(outputFolder);
+        writer//
+            .col("Project", path)//
+            .col("Statements", statementsCoverage())//
+            .col("Expressions", expressionsCoverage())//
+            .col("methodsCovered", fMethods())//
+            .col("methodsTouched", touched())//
+            .col("Iteratives", iterativesCoverage())//
+            .col("ConditionalExpressions", conditionalExpressionsCoverage())//
+            .col("ConditionalCommands", conditionalStatementsCoverage())//
+            // .col("R-Index", rMethod())//
+            // .col("Nanos adopted", adopted())//
+            .col("total Commands", statements())//
+            .col("total Methods", methods())//
+            .nl();
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
@@ -96,30 +115,35 @@ public class Table_Summary {
       scope.peek().markNP(n, np);
   }
 
+  @SuppressWarnings("unused")
   private static void initializeWriter() {
     writer = new Table(Table_Summary.class);
   }
 
-  public static void summarizeStatistics(final String path) {
-    if (writer == null)
-      initializeWriter();
-    writer//
-        .col("Project", path)//
-        .col("Statements", statementsCoverage())//
-        .col("Expressions", expressionsCoverage())//
-        .col("methodsCovered", fMethods())//
-        .col("methodsTouched", touched())//
-        .col("Iteratives", iterativesCoverage())//
-        .col("ConditionalExpressions", conditionalExpressionsCoverage())//
-        .col("ConditionalCommands", conditionalStatementsCoverage())//
-        // .col("R-Index", rMethod())//
-        // .col("Nanos adopted", adopted())//
-        .col("total Commands", statements())//
-        .col("total Methods", methods())//
-        .nl();
+//  public static void summarizeStatistics(final String path) {
+//    if (writer == null)
+//      initializeWriter(outputFolder);
+//    writer//
+//        .col("Project", path)//
+//        .col("Statements", statementsCoverage())//
+//        .col("Expressions", expressionsCoverage())//
+//        .col("methodsCovered", fMethods())//
+//        .col("methodsTouched", touched())//
+//        .col("Iteratives", iterativesCoverage())//
+//        .col("ConditionalExpressions", conditionalExpressionsCoverage())//
+//        .col("ConditionalCommands", conditionalStatementsCoverage())//
+//        // .col("R-Index", rMethod())//
+//        // .col("Nanos adopted", adopted())//
+//        .col("total Commands", statements())//
+//        .col("total Methods", methods())//
+//        .nl();
+//  }
+
+  static void initializeWriter(final String outputFolder) {
+   writer = new Table(Table_Summary.class, outputFolder);
   }
 
-  private static int statements() {
+  static int statements() {
     return statementsCoverageStatistics.keySet().stream().mapToInt(λ -> Unbox.it(λ) * statementsCoverageStatistics.get(λ).size()).sum();
   }
 
@@ -135,11 +159,11 @@ public class Table_Summary {
     return statementsCoverageStatistics.values().stream().flatMap(Collection::stream).mapToInt(λ -> λ.numExpressions).sum();
   }
 
-  private static int methods() {
+  static int methods() {
     return (int) statementsCoverageStatistics.values().stream().mapToLong(Collection::size).sum();
   }
 
-  private static double fMethods() {
+  static double fMethods() {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
 
@@ -147,27 +171,27 @@ public class Table_Summary {
     return npDistributionStatistics.coverage(type);
   }
 
-  private static double iterativesCoverage() {
+  static double iterativesCoverage() {
     return getNodeCoverage(ASTNode.ENHANCED_FOR_STATEMENT);
   }
 
-  private static double conditionalExpressionsCoverage() {
+  static double conditionalExpressionsCoverage() {
     return getNodeCoverage(ASTNode.CONDITIONAL_EXPRESSION);
   }
 
-  private static double conditionalStatementsCoverage() {
+  static double conditionalStatementsCoverage() {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
 
-  private static double touched() {
+  static double touched() {
     return format.perc(methodsTouched(), methods() - methodsCovered());
   }
 
-  private static double statementsCoverage() {
+  static double statementsCoverage() {
     return format.perc(statementsCovered(), statements());
   }
 
-  private static double expressionsCoverage() {
+  static double expressionsCoverage() {
     return format.perc(expressionsCovered(), expressions());
   }
 
