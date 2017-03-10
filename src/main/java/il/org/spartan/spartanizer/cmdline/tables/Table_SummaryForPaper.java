@@ -2,10 +2,13 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -40,13 +43,18 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   }
 
   @Override public boolean visit(final CompilationUnit ¢) {
-    final CompilationUnitRecord cur = new CompilationUnitRecord(¢);
-    cur.setPath(absolutePath);
-    cur.setRelativePath(relativePath);
-    compilationUnitRecords.add(cur);
+    compilationUnitRecords.add(foo(¢));
+    // TODO MATTEO: Check this code
     count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
+  }
+
+  private CompilationUnitRecord foo(final CompilationUnit ¢) {
+    final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
+    $.setPath(absolutePath);
+    $.setRelativePath(relativePath);
+    return $;
   }
 
   @Override public boolean visit(final PackageDeclaration ¢) {
@@ -95,43 +103,31 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   }
 
   private int countTestClasses() {
-    final Int $ = new Int();
-    for (final CompilationUnitRecord ¢ : compilationUnitRecords)
-      if (¢.testCount() > 0)
-        ++$.inner;
-    return $.inner;
+    return compilationUnitRecords.stream().filter(λ -> !λ.noTests()).mapToInt(λ -> λ.numClasses).sum();
   }
 
   private int countNoTestClasses() {
-    int $ = 0;
-    for (final CompilationUnitRecord ¢ : compilationUnitRecords)
-      if (¢.testCount() == 0)
-        $ += ¢.numClasses;
-    return $;
+    return productionCompilationUnits().mapToInt(λ -> λ.numClasses).sum();
   }
 
   private int countNoTestLOC() {
-    int $ = 0;
-    for (final CompilationUnitRecord ¢ : compilationUnitRecords)
-      if (¢.testCount() == 0)
-        $ += ¢.linesOfCode;
-    return $;
+    return productionCompilationUnits().mapToInt(λ -> λ.linesOfCode).sum();
+  }
+
+  private boolean noTests(final CompilationUnitRecord ¢) {
+    return ¢.noTests();
   }
 
   private int countNoTestMethods() {
-    int $ = 0;
-    for (final CompilationUnitRecord ¢ : compilationUnitRecords)
-      if (¢.testCount() == 0)
-        $ += ¢.numMethods;
-    return $;
+    return productionCompilationUnits().mapToInt(λ -> λ.numMethods).sum();
+  }
+
+  private Stream<CompilationUnitRecord> productionCompilationUnits() {
+    return compilationUnitRecords.stream().filter(this::noTests);
   }
 
   private int countNoTestPackages() {
-    final Collection<String> $ = new HashSet<>();
-    for (final CompilationUnitRecord ¢ : compilationUnitRecords)
-      if (¢.testCount() == 0)
-        $.add(¢.pakcage);
-    return $.size();
+    return productionCompilationUnits().map(λ -> λ.pakcage).collect(toSet()).size();
   }
 
   private static void initializeWriter() {

@@ -17,7 +17,7 @@ public abstract class Reducer<R> {
   public abstract R reduce(R t1, R t2);
 
   public final R reduce(final R[] $) {
-    return $ == null ? reduce() : Stream.of($).filter(λ -> λ != null).reduce((¢1, ¢2) -> reduce(¢1, ¢2)).orElse(reduce());
+    return $ == null ? reduce() : Stream.of($).filter(λ -> λ != null).reduce(this::reduce).orElse(reduce());
   }
 
   @SafeVarargs public final R reduce(final R t1, final R t2, final R... rs) {

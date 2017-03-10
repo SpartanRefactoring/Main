@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.dispatch;
-
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -8,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
@@ -213,10 +214,7 @@ public class Trimmer extends AbstractGUIApplicator {
       return toolboxes.get(p);
     final Toolbox $ = Toolbox.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
-    final Collection<Tipper<?>> xs = new ArrayList<>();
-    for (final Tipper<?> ¢ : $.getAllTippers())
-      if (!es.contains(¢.getClass()))
-        xs.add(¢);
+    final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
       ¢.removeAll(xs);
     toolboxes.put(p, $);
