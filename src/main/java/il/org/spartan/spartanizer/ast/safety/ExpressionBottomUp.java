@@ -61,7 +61,7 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     }
   }
 
-  private T map(ArrayInitializer ¢) {
+  private T map(final ArrayInitializer ¢) {
     return reduceExpressions(expressions(¢));
   }
 

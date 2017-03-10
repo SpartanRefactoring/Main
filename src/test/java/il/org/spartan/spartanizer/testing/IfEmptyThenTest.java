@@ -23,7 +23,7 @@ public final class IfEmptyThenTest {
   private static final IfEmptyThen TIPPER = new IfEmptyThen();
 
   @Test public void eligible() {
-    assert TIPPER.canTip(IF);
+    assert TIPPER.interesting(IF);
   }
 
   @Test public void emptyThen() {
@@ -39,6 +39,6 @@ public final class IfEmptyThenTest {
   }
 
   @Test public void scopeIncludes() {
-    assert TIPPER.canTip(IF);
+    assert TIPPER.interesting(IF);
   }
 }

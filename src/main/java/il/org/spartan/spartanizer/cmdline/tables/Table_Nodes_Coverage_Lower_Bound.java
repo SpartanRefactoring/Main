@@ -7,6 +7,6 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2017-03-07 */
 public class Table_Nodes_Coverage_Lower_Bound extends Table_Nodes_Coverage {
   {
-    analyze = λ -> spartanalyzer.once(λ);
+    analyze = spartanalyzer::once;
   }
 }

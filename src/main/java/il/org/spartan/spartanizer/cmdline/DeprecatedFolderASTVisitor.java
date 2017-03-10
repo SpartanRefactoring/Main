@@ -37,7 +37,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor;
   protected File presentFile;
   protected static String presentSourceName;
-  private static int $;
+  static int whatThisGlobalStaticVariableDoing;
   protected String presentSourcePath;
   protected Dotter dotter;
   protected String absolutePath;
@@ -109,7 +109,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   void visit(final File f) {
     if (!silent)
       dotter.click();
-    if (!system.isTestFile(f) && !containsTestAnnotation(f))
+    if (!system.isTestFile(f) && !FileSystemASTVisitor.containsTestAnnotation(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
@@ -119,41 +119,6 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       } catch (final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
-  }
-
-  /** Check if a file contains Test annotations
-   * <p>
-   * @param f
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
-  public static boolean containsTestAnnotation(final File f) {
-    String javaCode = null;
-    try {
-      javaCode = FileUtils.read(f);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "File = " + f);
-    }
-    return containsTestAnnotation(javaCode);
-  }
-
-  /** Check if a String contains Test annotations
-   * <p>
-   * @param f
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    $ = 0;
-    cu.accept(new ASTVisitor(true) {
-      @SuppressWarnings("synthetic-access") @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
-          ++$;
-        return false;
-      }
-    });
-    return $ > 0;
   }
 
   public static class FieldsOnly extends DeprecatedFolderASTVisitor {
@@ -205,8 +170,8 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
     }
 
-    private static boolean leaking(final Stream<ASTNode> ns) {
-      return ns.noneMatch(λ -> leaking(λ));
+    private static boolean leaking(final Stream<ASTNode> ¢) {
+      return ¢.noneMatch(BucketMethods::leaking);
     }
 
     private static boolean interesting(final List<Statement> ¢) {

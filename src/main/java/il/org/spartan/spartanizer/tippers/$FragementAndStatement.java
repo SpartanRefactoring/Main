@@ -34,7 +34,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
 
   static int eliminationSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
+    final List<VariableDeclarationFragment> live = wizard.live(f, fragments(parent));
     final int $ = metrics.size(parent);
     if (live.isEmpty())
       return $;

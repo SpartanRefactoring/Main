@@ -23,7 +23,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   private static final LetInliner letInliner = new LetInliner();
   private static final FragmentInitializerInlineIntoNext fragmentInliner = new FragmentInitializerInlineIntoNext();
 
-  @Override public boolean canTip(final VariableDeclarationFragment ¢) {
+  @Override public boolean interesting(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢) != null//
         && fragmentInliner.cantTip(¢);
   }

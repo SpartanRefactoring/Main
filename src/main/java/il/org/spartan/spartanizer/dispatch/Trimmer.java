@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.dispatch;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;

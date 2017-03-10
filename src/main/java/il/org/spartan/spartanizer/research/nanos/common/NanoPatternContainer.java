@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.research.*;
 public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefinedTipper<N>> {
   private static final long serialVersionUID = 1L;
 
-  @SafeVarargs public NanoPatternContainer(UserDefinedTipper<N>... ts) {
-    for (UserDefinedTipper<N> ¢ : ts)
+  @SafeVarargs public NanoPatternContainer(final UserDefinedTipper<N>... ts) {
+    for (final UserDefinedTipper<N> ¢ : ts)
       add(¢);
   }
 
@@ -32,7 +32,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
 
   public boolean canTip(final N ¢) {
     return ¢ != null//
-        && stream().anyMatch(λ -> λ.canTip(¢));
+        && stream().anyMatch(λ -> λ.interesting(¢));
   }
 
   public boolean cantTip(final N ¢) {
@@ -44,7 +44,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
   }
 
   public UserDefinedTipper<N> firstTipper(final N ¢) {
-    return stream().filter(λ -> λ.canTip(¢)).findFirst().get();
+    return stream().filter(λ -> λ.interesting(¢)).findFirst().get();
   }
 
   public String firstPattern() {

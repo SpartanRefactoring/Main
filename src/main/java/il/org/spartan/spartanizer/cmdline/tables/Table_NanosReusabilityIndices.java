@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
@@ -104,12 +105,12 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
 
   private static void fillAbsents() {
     spartanalyzer.getAllPatterns().stream()//
-        .map(λ -> λ.getClass().getSimpleName())//
+        .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.put(λ, "-"));
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(λ -> λ.canTip(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.interesting(d));
   }
 }
