@@ -1,6 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import org.junit.*;
 
