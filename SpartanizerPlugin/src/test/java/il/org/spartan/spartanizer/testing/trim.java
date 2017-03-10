@@ -18,10 +18,9 @@ import il.org.spartan.spartanizer.tipping.*;
  * trimming.of("a+(b-c)")//
  *     .gives("a+b-c")
  * } or {@code
- * trimming.with(InfixExpression.class, new InfixTermsExpand()).of("a+(b-c)")//
+ * trimming.with({@link InfixExpression}.class, new {@link InfixTermsExpand()}).of("a+(b-c)")//
  *     .gives("a+b+c")
- * } */
-/** TODO: Yossi Gil please add a description
+ * } 
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
@@ -53,6 +52,12 @@ public interface trim {
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
+  }
+
+  static String apply(final Tipper<? extends ASTNode> t, final String from) {
+    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert $ != null;
+    return rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }
 
   /** Starting point of fluent API for @Testing:

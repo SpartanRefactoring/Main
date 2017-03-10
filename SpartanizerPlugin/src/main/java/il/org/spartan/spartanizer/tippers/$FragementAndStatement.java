@@ -62,7 +62,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
     return $;
   }
 
-  static int removalSaving(final VariableDeclarationFragment f) {
+  public static int removalSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final int $ = metrics.size(parent);
     if (parent.fragments().size() <= 1)
