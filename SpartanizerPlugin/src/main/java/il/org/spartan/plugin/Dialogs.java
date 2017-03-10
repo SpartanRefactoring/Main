@@ -103,14 +103,10 @@ public enum Dialogs {
 
       @Override protected void buttonPressed(final int ¢) {
         super.buttonPressed(¢);
-        switch (¢) {
-          case RIB_ID:
-            decrementNestingDepth();
-            close();
-            break;
-          default:
-            return;
-        }
+        if (¢ != RIB_ID)
+          return;
+        decrementNestingDepth();
+        close();
       }
 
       @Override public Image getInfoImage() {

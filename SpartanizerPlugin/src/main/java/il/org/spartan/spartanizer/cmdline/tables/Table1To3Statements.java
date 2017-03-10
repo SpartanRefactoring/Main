@@ -140,7 +140,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
-    return rs.stream().map(λ -> λ.numNPStatements()).reduce((x, y) -> x + y).get();
+    return rs.stream().map(MethodRecord::numNPStatements).reduce((x, y) -> x + y).get();
   }
 
   private static double min(final double a, final double d) {

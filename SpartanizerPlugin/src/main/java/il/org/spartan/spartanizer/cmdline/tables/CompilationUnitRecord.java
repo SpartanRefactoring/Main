@@ -105,4 +105,8 @@ public class CompilationUnitRecord {
   public String getRelativePath() {
     return relativePath;
   }
+
+  public boolean noTests() {
+    return testCount == 0; 
+  }
 }

@@ -1,5 +1,4 @@
 package il.org.spartan.plugin.preferences.revision;
-
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
@@ -7,7 +6,6 @@ import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -20,6 +18,8 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+
+import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -48,7 +48,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     final List<Entry<String, Object>> ps = getProjects();
-    changes = new Changes(ps.stream().map(Entry::getValue).collect(Collectors.toList()));
+    changes = new Changes(ps.stream().map(Entry::getValue).collect(toList()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     addField(new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), ps,
         p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
@@ -204,12 +204,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     @Override protected String[] parseString(final String stringList) {
-      if (stringList != null && !stringList.isEmpty())
-        return stringList.split(DELIMETER);
-      final List<String> $ = new ArrayList<>();
-      for (final Entry<String, Object> ¢ : elements)
-        $.add(¢.getKey());
-      return $.toArray(new String[elements.size()]);
+      return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)
+          : elements.stream().map(Entry::getKey).toArray(String[]::new);
     }
 
     @Override protected String getNewInputObject() {
