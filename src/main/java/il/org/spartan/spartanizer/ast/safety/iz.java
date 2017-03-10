@@ -1388,4 +1388,8 @@ public interface iz {
       return iz.literal(az.stringLiteral(¢), s);
     }
   }
+
+  static boolean superConstructorInvocation(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, SUPER_CONSTRUCTOR_INVOCATION);
+  }
 }
