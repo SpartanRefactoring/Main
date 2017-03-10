@@ -221,9 +221,7 @@ public class FileSystemASTVisitor {
     }
 
     private static String myClass() {
-      Class<?> a = MethodHandles.lookup().lookupClass();
-      String s = a.getClass().getSimpleName();
-      return s;
+      return MethodHandles.lookup().lookupClass().getClass().getSimpleName();
     }
 
     static boolean letItBeIn(final List<Statement> ¢) {
