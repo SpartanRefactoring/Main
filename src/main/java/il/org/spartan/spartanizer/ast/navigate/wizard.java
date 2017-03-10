@@ -654,7 +654,7 @@ public interface wizard {
   }
 
   static String nodeName(final Class<? extends ASTNode> ¢) {
-    return ¢.getSimpleName();
+    return wizard.className(¢); 
   }
 
   /** Determine whether a node is an infix expression whose operator is

@@ -209,7 +209,7 @@ public class XMLSpartan {
   private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
-    final String n = t.getClass().getSimpleName();
+    final String n = t.className();
     if (seen.contains(n))
       return;
     final Element $ = d.createElement(TIPPER);
