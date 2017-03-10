@@ -209,4 +209,6 @@ public interface system {
   static String tmp() {
     return System.getProperty("java.io.tmpdir");
   }
+
+  String temporariesFolder = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 }
