@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Reduction extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 4064181238809686028L;
 
-  @Override public boolean canTip(final MethodInvocation ¢) {
+  @Override public boolean interesting(final MethodInvocation ¢) {
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }

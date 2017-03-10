@@ -5,6 +5,7 @@ import java.util.stream.*;
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Classification of Expanders
  * @author Raviv Rachmiel
@@ -27,7 +28,7 @@ public interface ExpanderCategory {
   }
 
   static String getLabel(final Class<? extends ExpanderCategory> ¢) {
-    return ¢.getSimpleName();
+    return wizard.className(¢);
   }
 
   // TODO: Roth, to preferences?

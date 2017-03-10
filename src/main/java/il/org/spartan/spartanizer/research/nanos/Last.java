@@ -22,7 +22,7 @@ public final class Last extends NanoPatternTipper<MethodInvocation> {
     }
   };
 
-  @Override public boolean canTip(final MethodInvocation ¢) {
+  @Override public boolean interesting(final MethodInvocation ¢) {
     return anyTips(tippers, ¢);
   }
 

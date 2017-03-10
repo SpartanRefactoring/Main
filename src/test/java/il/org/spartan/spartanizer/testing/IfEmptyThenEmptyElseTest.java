@@ -28,7 +28,7 @@ public final class IfEmptyThenEmptyElseTest {
   private static final IfEmptyThenEmptyElse TIPPER = new IfEmptyThenEmptyElse();
 
   @Test public void eligible() {
-    assert TIPPER.canTip(IF);
+    assert TIPPER.interesting(IF);
   }
 
   @Test public void emptyElse() {
@@ -63,6 +63,6 @@ public final class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void scopeIncludes() {
-    assert TIPPER.canTip(IF);
+    assert TIPPER.interesting(IF);
   }
 }
