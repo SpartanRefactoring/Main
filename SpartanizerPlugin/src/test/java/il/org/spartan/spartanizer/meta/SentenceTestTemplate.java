@@ -15,6 +15,7 @@ import static java.util.stream.Collectors.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -55,7 +56,7 @@ public enum SentenceTestTemplate {
     @Parameter(0) public String name;
 
     @Test public void changes() {
-      final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = Wrap.Method.off(unpeeled);
       azzert.that("No trimming of " + name, peeled, is(not(from)));
@@ -88,7 +89,7 @@ public enum SentenceTestTemplate {
     @Parameter(2) public MethodDeclaration second;
 
     @Test public void chagesTo() {
-      final String peeled = Wrap.Method.off(TrimmerTestsUtils.applyTrimmer(trimmer, Wrap.Method.on(firstBody()))), to = secondBody();
+      final String peeled = Wrap.Method.off(trim.apply(trimmer, Wrap.Method.on(firstBody()))), to = secondBody();
       if (!to.equals(peeled))
         azzert.that(Wrap.essence(peeled), is(Wrap.essence(to)));
     }
@@ -131,7 +132,7 @@ public enum SentenceTestTemplate {
     @Parameter(1) public MethodDeclaration stays;
 
     @Test public void stays() {
-      final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = TrimmerTestsUtils.applyTrimmer(trimmer, wrap);
+      final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = Wrap.Method.off(unpeeled);

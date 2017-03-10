@@ -3,7 +3,7 @@
  * @since Jan 6, 2017 */
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;
+import static il.org.spartan.spartanizer.testing.TrimmerTestsUtils.*;
 
 import org.junit.*;
 

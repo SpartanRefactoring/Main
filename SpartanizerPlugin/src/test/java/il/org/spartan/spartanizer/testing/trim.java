@@ -1,13 +1,17 @@
-package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.testing;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
+import org.eclipse.text.edits.*;
 import org.junit.*;
 
 import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Fluent API for testing: {@code
@@ -32,6 +36,23 @@ public interface trim {
   @SafeVarargs //
   static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
     return new fluentTrimmer(clazz, ts);
+  }
+
+  static String apply(final Trimmer t, final String from) {
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    assert u != null;
+    final Document $ = trim.rewrite(t, u, new Document(from));
+    assert $ != null;
+    return $.get();
+  }
+
+  static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
+    try {
+      a.createRewrite(u).rewriteAST($, null).apply($);
+      return $;
+    } catch (MalformedTreeException | BadLocationException ¢) {
+      throw new AssertionError(¢);
+    }
   }
 
   /** Starting point of fluent API for @Testing:
