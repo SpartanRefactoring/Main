@@ -1,16 +1,16 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
-import static il.org.spartan.bloater.bloaters.BloatingTestUtilities.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import java.util.stream.*;
 
 import org.junit.*;
 
-import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.testing.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
- * {@link BloatingTestUtilities} .
+ * {@link TestUtilsBloating} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
 // TODO: Yuval Simon: use fixture or inline.
