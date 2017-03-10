@@ -1,10 +1,11 @@
 package il.org.spartan.spartanizer.utils;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
 
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -191,13 +192,18 @@ public enum monitor {
   }
 
   public static <T> T logProbableBug(final Object o, final Throwable t) {
-    return now.error(//
-        "An instance of " + className(o) + //
-            "\n was hit by a " + className(t) + //
-            " exception, which may indicate a bug somwhwere." + //
-            "\n x = '" + t + "'" + //
-            "\n o = " + o + "'");
+    return now.error("An instance of " + className(o) + //
+        "was hit by an '" + className(t) + "'\n" + //
+        "exception, which typically indicates bug in your code." + //
+        "  o = " + o + "'\n" + //
+        "  x = '" + t + "'\n" + //
+        "  trace = \n" + printStackTrace(t) + "'\n");
   }
+
+  private static String printStackTrace(Throwable ¢) {
+    return separate.these(Stream.of(¢.getStackTrace()).map(λ -> λ.toString()).collect(toList())).by(";\n");
+  }
+
 
   public static <T> T logProbableBug(final Throwable x) {
     return now.error(//

@@ -21,7 +21,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
 
   @Override public String description(final MethodInvocation ¢) {
     final Expression $ = receiver(¢);
-    return "Append \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
+    return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {

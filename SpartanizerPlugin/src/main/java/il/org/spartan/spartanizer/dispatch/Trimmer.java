@@ -66,7 +66,7 @@ public class Trimmer extends AbstractGUIApplicator {
         try {
           w = getTipper(t, n);
         } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
+          monitor.logProbableBug(this, ¢);
         }
         if (w == null)
           return true;
