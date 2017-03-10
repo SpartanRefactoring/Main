@@ -120,25 +120,6 @@ public class Table_Summary {
     writer = new Table(Table_Summary.class);
   }
 
-//  public static void summarizeStatistics(final String path) {
-//    if (writer == null)
-//      initializeWriter(outputFolder);
-//    writer//
-//        .col("Project", path)//
-//        .col("Statements", statementsCoverage())//
-//        .col("Expressions", expressionsCoverage())//
-//        .col("methodsCovered", fMethods())//
-//        .col("methodsTouched", touched())//
-//        .col("Iteratives", iterativesCoverage())//
-//        .col("ConditionalExpressions", conditionalExpressionsCoverage())//
-//        .col("ConditionalCommands", conditionalStatementsCoverage())//
-//        // .col("R-Index", rMethod())//
-//        // .col("Nanos adopted", adopted())//
-//        .col("total Commands", statements())//
-//        .col("total Methods", methods())//
-//        .nl();
-//  }
-
   static void initializeWriter(final String outputFolder) {
    writer = new Table(Table_Summary.class, outputFolder);
   }

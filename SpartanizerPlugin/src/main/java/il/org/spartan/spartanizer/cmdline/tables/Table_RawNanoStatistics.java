@@ -37,7 +37,6 @@ public class Table_RawNanoStatistics {
       public void summarizeNPStatistics(final String path) {
         if (pWriter == null)
           initializeWriter(outputFolder);
-        // initializeWriter();
         pWriter.col("Project", path);
         npStatistics.keySet().stream()//
             .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
