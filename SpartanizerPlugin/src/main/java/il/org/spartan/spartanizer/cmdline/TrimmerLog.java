@@ -123,7 +123,7 @@ public enum TrimmerLog {
   public static void visitation(final ASTNode ¢) {
     if (--maxVisitations > 0)
       System.out.println(
-          "VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + wizard.className(¢) + ")" + " parent = " + wizard.className(parent(¢)));
+          "VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + wizard.className(¢) + ") parent = " + wizard.className(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }

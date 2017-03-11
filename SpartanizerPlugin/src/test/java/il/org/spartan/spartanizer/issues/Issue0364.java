@@ -23,12 +23,12 @@ public class Issue0364 {
   }
 
   @Test public void notTerminatingRealWorld() {
-    trimmingOf("@Test public void fz() throws E {" + " String[] cmd = {S.p(\"java.home\") + F.s + \"bin\""
-        + " + F.s + \"java\", \"-cp\", gc().gl().getResource(\".\").getFile()" + " + F.p + S.p(\"java.class.path\"), gc().n() + \"$Exit\"};"
-        + " Process o = R.getR().e(cmd); for (I ¢ = o.getI(); ¢.r() != -1;) ;" + " w.a(EXIT_CODE, o.waitFor());}")
-            .gives("@Test public void fz() throws E {" + " Process o = R.getR().e(new String[] {S.p(\"java.home\") + F.s + \"bin\""
-                + " + F.s + \"java\", \"-cp\", gc().gl().getResource(\".\").getFile()" + " + F.p + S.p(\"java.class.path\"), gc().n() + \"$Exit\"});"
-                + " for (I ¢ = o.getI(); ¢.r() != -1;) ;" + " w.a(EXIT_CODE, o.waitFor());}");
+    trimmingOf("@Test public void fz() throws E { String[] cmd = {S.p(\"java.home\") + F.s + \"bin\""
+        + " + F.s + \"java\", \"-cp\", gc().gl().getResource(\".\").getFile() + F.p + S.p(\"java.class.path\"), gc().n() + \"$Exit\"};"
+        + " Process o = R.getR().e(cmd); for (I ¢ = o.getI(); ¢.r() != -1;) ; w.a(EXIT_CODE, o.waitFor());}")
+            .gives("@Test public void fz() throws E { Process o = R.getR().e(new String[] {S.p(\"java.home\") + F.s + \"bin\""
+                + " + F.s + \"java\", \"-cp\", gc().gl().getResource(\".\").getFile() + F.p + S.p(\"java.class.path\"), gc().n() + \"$Exit\"});"
+                + " for (I ¢ = o.getI(); ¢.r() != -1;) ; w.a(EXIT_CODE, o.waitFor());}");
   }
 
   @Test public void realLifeExample() {

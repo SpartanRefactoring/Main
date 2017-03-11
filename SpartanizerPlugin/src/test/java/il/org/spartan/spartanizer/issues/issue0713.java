@@ -23,14 +23,14 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 public class issue0713 {
   final TypeDeclaration noPublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class noPublic {   } "))));
   final TypeDeclaration onlyPrivates = (TypeDeclaration) first(
-      types(az.compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x; " + " private boolean aflag; } "))));
+      types(az.compilationUnit(wizard.ast("public class onlyPrivates { private int z,y,x;  private boolean aflag; } "))));
   final TypeDeclaration onePublic = (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePublic {  public int x; } "))));
   final TypeDeclaration notOnlyPublic = (TypeDeclaration) first(
-      types(az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x;" + " private boolean flag; public char ch; } "))));
+      types(az.compilationUnit(wizard.ast("public class notOnlyPublic {  public int x; private boolean flag; public char ch; } "))));
   final TypeDeclaration listOfPublicFields = (TypeDeclaration) first(
-      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y, z;" + " protected boolean flag; public char ch; } "))));
+      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y, z; protected boolean flag; public char ch; } "))));
   final TypeDeclaration notCountingMethods = (TypeDeclaration) first(
-      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y;" + " public void func(){ int pi;} } "))));
+      types(az.compilationUnit(wizard.ast("public class foo {  public int x, y; public void func(){ int pi;} } "))));
 
   @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;

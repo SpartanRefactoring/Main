@@ -24,7 +24,7 @@ public class Issue0180 {
   @Test public void renameToCentRealWorld() {
     trimmingOf("/** Retrieve all operands, including parenthesized ones, under an expression\n * @param x JD\n"
         + " * @return a {@link List} of all operands to the parameter */\n"
-        + "public static List<Expression> allOperands(final InfixExpression x) {\n  assert x != null;\n" + "  return hop.operands(flatten.of(x));\n}")
+        + "public static List<Expression> allOperands(final InfixExpression x) {\n  assert x != null;\n  return hop.operands(flatten.of(x));\n}")
             .gives("/** Retrieve all operands, including parenthesized ones, under an expression\n * @param ¢ JD\n"
                 + " * @return a {@link List} of all operands to the parameter */\n"
                 + "public static List<Expression> allOperands(final InfixExpression ¢) {\n  assert ¢ != null;\n"

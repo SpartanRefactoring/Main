@@ -72,9 +72,9 @@ public final class SpartanizeProject extends BaseHandler {
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int $ = countTips();
-    return eclipse.announce(status + "Laconizing '" + javaProject.getElementName() + "' project \n" + "Completed in " + passNumber + " passes. \n"
-        + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\n" + "Tips before: " + initialCount
-        + "\n" + "Tips after: " + $ + "\n");
+    return eclipse.announce(status + "Laconizing '" + javaProject.getElementName() + "' project \nCompleted in " + passNumber + " passes. \n"
+        + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\nTips before: " + initialCount
+        + "\nTips after: " + $ + "\n");
   }
 
   final IWorkbench workench = PlatformUI.getWorkbench();
@@ -92,7 +92,7 @@ public final class SpartanizeProject extends BaseHandler {
     final Bool $ = new Bool();
     try {
       ps.run(true, true, pm -> {
-        pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - " + "Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
+        pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
             todo.size());
         int n = 0;
         for (final ICompilationUnit ¢ : todo) {

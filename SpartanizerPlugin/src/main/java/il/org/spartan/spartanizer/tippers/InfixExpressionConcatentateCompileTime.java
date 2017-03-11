@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Concat some strings to one string {@code
- * "ab" + "c" + "de"
+ * "abcde"
  * } to {@code
  * "abcde"
  * }

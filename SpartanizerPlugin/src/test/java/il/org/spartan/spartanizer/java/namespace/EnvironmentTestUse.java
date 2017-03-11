@@ -33,8 +33,8 @@ public class EnvironmentTestUse {
   }
 
   @Test public void useTestUsesAndDefinitions3() {
-    final Set<Map.Entry<String, Binding>> $ = Environment.uses(
-        makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}" + "catch(final UnsupportedOperationException e)" + "{z=3;}").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment
+        .uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}catch(final UnsupportedOperationException e){z=3;}").get()));
     assert $.contains("x");
     assert $.contains("y");
     assert $.contains("z");
