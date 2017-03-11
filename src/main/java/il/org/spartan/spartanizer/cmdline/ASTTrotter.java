@@ -22,7 +22,7 @@ public class ASTTrotter extends ASTVisitor {
 
   @SuppressWarnings("unchecked") private void init() {
     if (dispatch == null)
-      dispatch = (List<Rule<?, ?>>[]) new List<?>[nodeTypesCount()];
+      dispatch = (List<Rule<? extends ASTNode, ?>>[]) new List<?>[nodeTypesCount()];
   }
 
   public <N extends ASTNode, T> void hook(final Class<N> c, final Rule<N, T> r) {
