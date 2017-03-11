@@ -19,7 +19,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
     }
   };
 
-  @Override public boolean check(final InfixExpression ¢) {
+  @Override public boolean canTip(final InfixExpression ¢) {
     return tippers.canTip(¢);
   }
 

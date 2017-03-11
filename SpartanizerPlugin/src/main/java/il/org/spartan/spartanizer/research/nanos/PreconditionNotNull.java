@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public final class PreconditionNotNull extends NotNullOrReturn {
   private static final long serialVersionUID = -1274198165790503754L;
 
-  @Override public boolean check(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
         && first(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
   }

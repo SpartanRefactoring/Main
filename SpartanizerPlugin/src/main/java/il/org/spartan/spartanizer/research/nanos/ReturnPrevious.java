@@ -25,7 +25,7 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
     }
   };
 
-  @Override public boolean check(final ReturnStatement x) {
+  @Override public boolean canTip(final ReturnStatement x) {
     return anyTips(tippers, az.block(parent(x)));
   }
 

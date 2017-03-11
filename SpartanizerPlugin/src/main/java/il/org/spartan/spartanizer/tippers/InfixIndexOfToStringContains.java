@@ -31,7 +31,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
 
   /** Indicates if the infix expression contains two strings with string
    * operation between them */
-  @Override public boolean check(final InfixExpression x) {
+  @Override public boolean canTip(final InfixExpression x) {
     return tippers.stream().anyMatch(λ -> λ.check(x) && certain.string(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
   }
 

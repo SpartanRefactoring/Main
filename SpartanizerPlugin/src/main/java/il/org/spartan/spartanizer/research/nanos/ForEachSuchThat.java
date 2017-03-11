@@ -27,7 +27,7 @@ public class ForEachSuchThat extends ForEach {
     }
   };
 
-  @Override public boolean check(final EnhancedForStatement ¢) {
+  @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢)//
         && nonTips(rivals, ¢);
   }

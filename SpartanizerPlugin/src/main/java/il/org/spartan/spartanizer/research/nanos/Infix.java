@@ -30,7 +30,7 @@ public final class Infix {
       }
     };
 
-    @Override public boolean check(final InfixExpression ¢) {
+    @Override public boolean canTip(final InfixExpression ¢) {
       return anyTips(tippers, ¢);
     }
 
