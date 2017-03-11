@@ -17,7 +17,7 @@ public interface trivia {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }
 
-  static String squeezeSpaces(final String ¢) {
+  static String squeeze(final String ¢) {
     return ¢.trim().replaceAll("\\s+", " ");
   }
 

@@ -90,7 +90,6 @@ public enum monitor {
   };
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-  public static monitor now = monitor.PRODUCTION;
 
   public static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
@@ -111,11 +110,11 @@ public enum monitor {
   }
 
   public static <T> T debug(final String message) {
-    return now.debugMessage(message);
+    return now().debugMessage(message);
   }
 
   public static <T> T infoIOException(final Exception ¢) {
-    return now.info(//
+    return now().info(//
         "   Got an exception of type : " + wizard.className(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
@@ -123,7 +122,7 @@ public enum monitor {
   }
 
   public static <T> T infoIOException(final Exception x, final String message) {
-    return now.info(//
+    return now().info(//
         "   Got an exception of type : " + wizard.className(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
@@ -133,7 +132,7 @@ public enum monitor {
   }
 
   public static <T> T infoIOException(final IOException ¢) {
-    return now.info(//
+    return now().info(//
         "   Got an exception of type : " + wizard.className(¢) + //
             "\n      (probably I/O exception)" + "\n   The exception says: '" + ¢ + "'" //
     );
@@ -142,14 +141,14 @@ public enum monitor {
   /** logs an error in the plugin
    * @param tipper an error */
   public static <T> T log(final Throwable ¢) {
-    return now.error(¢ + "");
+    return now().error(¢ + "");
   }
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param ¢ JD */
   public static <T> T logCancellationRequest(final Exception ¢) {
-    return now.info(//
+    return now().info(//
         " " + wizard.className(¢) + //
             " (probably cancellation) exception." + //
             "\n x = '" + ¢ + "'" //
@@ -160,7 +159,7 @@ public enum monitor {
    * @param o JD
    * @param x JD */
   public static <T> T logCancellationRequest(final Object o, final Exception x) {
-    return now.info(//
+    return now().info(//
         "An instance of " + wizard.className(o) + //
             "\n was hit by a " + wizard.className(x) + //
             " (probably cancellation) exception." + //
@@ -182,11 +181,11 @@ public enum monitor {
   }
 
   public static <T> T logEvaluationError(final Throwable ¢) {
-    return logEvaluationError(now, ¢);
+    return logEvaluationError(now(), ¢);
   }
 
   public static <T> T logProbableBug(final Object o, final Throwable t) {
-    return now.error("An instance of " + wizard.className(o) + //
+    return now().error("An instance of " + wizard.className(o) + //
         "was hit by an '" + wizard.className(t) + "'\n" + //
         "exception, which typically indicates bug in your code." + //
         "  o = " + o + "'\n" + //
@@ -199,7 +198,7 @@ public enum monitor {
   }
 
   public static <T> T logProbableBug(final Throwable x) {
-    return now.error(//
+    return now().error(//
         "A static method was hit by a " + wizard.className(x) + //
             " exception, which may indicate a bug somwhwere." + //
             "\n x = '" + x + "'" //
@@ -283,5 +282,20 @@ public enum monitor {
         return null;
       }
     }
+  }
+
+  private static Stack<monitor> states = new Stack<>();
+
+  public static void set(monitor interactiveTdd) {
+    states.push(interactiveTdd);
+  }
+
+  public static monitor now() {
+    return !states.empty() ? states.peek() : monitor.PRODUCTION;
+  }
+
+
+  public static monitor pop() {
+    return states.pop();
   }
 }

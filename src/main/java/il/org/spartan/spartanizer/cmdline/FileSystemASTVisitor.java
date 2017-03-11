@@ -150,7 +150,7 @@ public class FileSystemASTVisitor {
 
   public static class BucketMethods {
     public static void main(final String[] args) {
-      monitor.now = monitor.LOG_TO_FILE;
+      monitor.set(monitor.LOG_TO_FILE);
       try {
         out = new BufferedWriter(new FileWriter(system.ephemeral(myClass()).dot("txt")));
       } catch (final IOException ¢) {
@@ -207,7 +207,7 @@ public class FileSystemASTVisitor {
 
   public static class ExpressionChain {
     public static void main(final String[] args) {
-      monitor.now = monitor.LOG_TO_FILE;
+      monitor.set(monitor.LOG_TO_FILE);
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
       } catch (final IOException ¢) {

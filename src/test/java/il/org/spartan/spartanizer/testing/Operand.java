@@ -10,11 +10,13 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 public class Operand extends Wrapper<String> {
   private static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
+  private static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
   private final Trimmer trimmer;
 
   public Operand(final String inner) {
@@ -42,8 +44,9 @@ public class Operand extends Wrapper<String> {
       System.err.println("*** Test crashed with " + ¢.getClass().getSimpleName());
       System.err.println("*** Test crashed with " + ¢.getMessage());
       System.err.println("*** Test crashed rerunning ");
-      monitor.now = monitor.INTERACTIVE_TDD;
+      monitor.set(monitor.INTERACTIVE_TDD);
       apply();
+      monitor.pop();
     }
   }
 
@@ -55,7 +58,6 @@ public class Operand extends Wrapper<String> {
     final Wrap w = Wrap.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
-      rerun();
       copyPasteReformat("stays()//\n  ;");
       azzert.fail("Nothing done on " + get());
     }
@@ -65,11 +67,7 @@ public class Operand extends Wrapper<String> {
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
     if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
-      System.err.printf(//
-          QUICK + ":\n" + //
-              "\n        .gives(\"%s\") //\n\n\n" + //
-              "Compare with current " + //
-              "\n        .gives(\"%s\") //\n",
+      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
           trivia.escapeQuotes(essence(peeled)), //
           trivia.escapeQuotes(essence($)));
       azzert.that(essence(peeled), is(essence($)));
@@ -80,6 +78,27 @@ public class Operand extends Wrapper<String> {
   private void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
+    System.err.printf(NEW_UNIT_TEST + fullBatch()); 
+    fullBatch();
+  }
+
+  private String fullBatch() {
+    final String $ = trivia.squeeze(trivia.removeComments(anonymize.code(essence(get()))));
+    StringBuilder body = new StringBuilder("  trimming.of(%s) // \n");
+    for (String from = $;;) {
+      String to = theSpartanizer.once(from);
+      if (to == null || essence(to).equals(from)) {
+        body.append(String.format("\n .stays() //\n  "));
+        break;
+      }
+      body.append(String.format("\n .gives(\"%s\") //", trivia.escapeQuotes(essence(to))));
+      from = to;
+    }
+    return String.format("/** Automatically generate */\n @Test public void %s() {\n %s\n}\n", signature($), body);
+  }
+
+  private static String signature(String start) {
+    return start.replaceAll("\\p{Punct}", "");
   }
 
   /** Check whether one of the code options is correct
@@ -101,7 +120,7 @@ public class Operand extends Wrapper<String> {
     for (final String $ : options)
       if (essence($).equals(essence(peeled)))
         return new Operand($);
-    azzert.fail("Expects: " + peeled + " But None of the given options match");
+    azzert.fail("Expects: " + peeled + " But none of the given options match");
     return null;
   }
 
@@ -117,17 +136,18 @@ public class Operand extends Wrapper<String> {
     if (expected.equals(peeled) || essence(peeled).equals(essence(expected)))
       return;
     copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
-        essence(peeled), //
-        essence(expected));
+        trivia.escapeQuotes(essence(peeled)), //
+        trivia.escapeQuotes(essence(expected)));
     azzert.that(essence(peeled), is(essence(expected)));
   }
 
   private void rerun() {
     System.err.println("*** Test failed (rerunning to collect more information)");
     TrimmerLog.on();
-    monitor.now = monitor.INTERACTIVE_TDD;
+    monitor.set(monitor.INTERACTIVE_TDD);
     apply();
     TrimmerLog.off();
+    monitor.pop();
     System.err.println("*** Rerun done. (scroll back to find logging infromation)");
   }
 

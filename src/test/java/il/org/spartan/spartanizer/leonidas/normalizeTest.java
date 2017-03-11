@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.research.util.*;
 @SuppressWarnings("static-method") //
 public class normalizeTest {
   @Test public void a() {
-    azzert.that(normalize.code("a.x.c.d.e()"), is("a.h()"));
+    azzert.that(anonymize.code("a.x.c.d.e()"), is("a.h()"));
   }
 
   @Test public void testRenaming() {
-    azzert.that(normalize.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"), is("if(a == b) return c(a, d());"));
+    azzert.that(anonymize.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"), is("if(a == b) return c(a, d());"));
   }
 
   @Test public void testRenamingWithCapital() {
-    azzert.that(normalize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"), is("if(a == A) return b(a, B());"));
+    azzert.that(anonymize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"), is("if(a == A) return b(a, B());"));
   }
 }
