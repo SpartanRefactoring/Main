@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -20,13 +21,13 @@ public interface theSpartanizer {
     int n = 0;
     for (String $ = from, next;; $ = next) {
       next = once($);
-      if (next == null || same($, next) || ++n > 20)
+      if (same($, next) || ++n > 20)
         return $;
     }
   }
 
   static boolean same(final String s1, final String s2) {
-    return s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
+    return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 
   /** Apply trimming once
@@ -36,13 +37,13 @@ public interface theSpartanizer {
   @SuppressWarnings("hiding") static String once(final String from) {
     final Trimmer trimmer = new Trimmer(toolbox);
     final IDocument $ = new Document(from);
-    final ASTNode n = wizard.ast(from);
-    if (n != null)
-      n.accept(new DispatchingVisitor() {
+    final ASTNode root = wizard.ast(from);
+    if (root != null)
+      root.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           if (!searching)
             return false;
-          final Rule<N, Tip> t = safeFirstTipper(n);
+          final Tipper<N> t = safeFirstTipper(n);
           if (t == null)
             return true;
           final Tip $ = t.tip(n);
@@ -68,7 +69,7 @@ public interface theSpartanizer {
     return $.get();
   }
 
-  static <N extends ASTNode> Rule<N, Tip> safeFirstTipper(final N $) {
+  static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
     } catch (final Exception ¢) {
@@ -85,4 +86,24 @@ public interface theSpartanizer {
   }
 
   Toolbox toolbox = Toolbox.defaultInstance();
+
+  static Tipper<?> firstTipper(String from) {
+    final Wrapper<Tipper<?>> $ = new Wrapper<>();
+    final ASTNode n = wizard.ast(from);
+    if (n != null)
+      n.accept(new DispatchingVisitor() {
+        @Override protected <N extends ASTNode> boolean go(final N n) {
+          if (!searching)
+            return false;
+          final Tipper<N> t = safeFirstTipper(n);
+          if (t == null)
+            return true;
+          $.set(t);
+          return searching = false;
+        }
+
+        boolean searching = true;
+      });
+    return $.get();
+  }
 }
