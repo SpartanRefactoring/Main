@@ -78,33 +78,7 @@ public class Operand extends Wrapper<String> {
   private void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + unitTestFunction());
-  }
-
-  String unitTestFunction() {
-    final String $ = trivia.squeeze(trivia.removeComments(anonymize.code(essence(get()))));
-    return String.format("%s @Test public void %s() {\n %s\n}\n", comment(), signature($), body($));
-  }
-
-  private static String comment() {
-    return String.format("/** Automatically generated on %s */\n", system.now());
-  }
-
-  private static String body(final String input) {
-    for (String $ = String.format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
-      final String to = theSpartanizer.once(from);
-      if (theSpartanizer.same(to, from))
-        return $ + "  .stays() //\n  ;";
-      final Tipper<?> t = theSpartanizer.firstTipper(from);
-      assert t != null;
-      $ += String.format(" .using(%s.class,new %s()) //\n", t.node().getClass().getSimpleName(), t.className());
-      $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
-      from = to;
-    }
-  }
-
-  private static String signature(final String start) {
-    return start.replaceAll("\\p{Punct}", "").replaceAll("\\s", "").toLowerCase();
+    System.err.println(NEW_UNIT_TEST + anonymize.makeUnitTest(get()));
   }
 
   /** Check whether one of the code options is correct
