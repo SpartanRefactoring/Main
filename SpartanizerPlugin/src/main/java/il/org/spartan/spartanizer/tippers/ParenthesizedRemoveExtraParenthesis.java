@@ -13,9 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** ((x)) to (x) <br>
- * (x); to x; <br>
- * (x).y to x.y
+/** Use {@link #examples()} for documentation
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
@@ -36,11 +34,11 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
 
   @Override public Example[] examples() {
     return new Example[] { //
-        converts("((x)).f();") //
+        convert("((x)).f();") //
             .to("(x).f();"), //
-        converts("(x).f();") //
+        convert("(x).f();") //
             .to("x.f();"), //
-        converts("f((x));") //
+        convert("f((x));") //
             .to("f(x);"), //
         // TODO Marco: does not pass
         // converts("int i = (x).y;")
