@@ -58,14 +58,20 @@ public interface Rule<N, T> {
   }
 
   abstract class Stateful<R, T> implements Rule<R, T> {
-    R current;
+    private R current;
 
+    
     @Override public final boolean check(R n) {
-      current = n;
       return ok(n); 
     }
 
     abstract boolean ok(R n);
+
+    public R current() {
+      return current;
+    }
+
+
   }
 
   abstract class Delegator<N, T> extends Stateful<N, T> {
