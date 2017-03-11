@@ -25,7 +25,7 @@ public class While {
       }
     };
 
-    @Override public boolean check(final WhileStatement ¢) {
+    @Override public boolean canTip(final WhileStatement ¢) {
       return anyTips(tippers, ¢);
     }
 

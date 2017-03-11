@@ -20,7 +20,7 @@ public class CopyArray extends NanoPatternTipper<ForStatement> {
     }
   };
 
-  @Override public boolean check(final ForStatement ¢) {
+  @Override public boolean canTip(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
 

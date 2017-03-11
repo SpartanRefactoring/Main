@@ -27,7 +27,7 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     }
   };
 
-  @Override public boolean check(final IfStatement x) {
+  @Override public boolean canTip(final IfStatement x) {
     return anyTips(tippers, x)//
         && !throwing(then(x))//
         && !iz.returnStatement(then(x))//

@@ -53,6 +53,13 @@ public abstract class Tipper<N extends ASTNode> //
     return !check(¢);
   }
 
+  @Override public final boolean check(final N ¢) {
+    node = ¢;
+    return canTip(¢);
+  }
+
+  public abstract boolean canTip(N n);
+
   public String className() {
     return getClass().getSimpleName();
   }
@@ -134,8 +141,9 @@ public abstract class Tipper<N extends ASTNode> //
     }
   }
 
-    N node;
+  N node;
+
   public final N node() {
-    return node; 
+    return node;
   }
 }

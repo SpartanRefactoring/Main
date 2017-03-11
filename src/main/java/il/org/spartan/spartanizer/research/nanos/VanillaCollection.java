@@ -22,7 +22,7 @@ public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration>
   private static final List<String> abstractTypes = Arrays.asList("List", "Set", "Map");
   private static final List<String> specificTypes = Arrays.asList("ArrayList", "HashSet", "TreeSet", "HashMap");
 
-  @Override public boolean check(final FieldDeclaration $) {
+  @Override public boolean canTip(final FieldDeclaration $) {
     return abstractTypes.contains(type(az.parameterizedType(type($))) + "")
         && specificTypes.contains(type(az.parameterizedType(type(az.classInstanceCreation(initializer(onlyOne(fragments($))))))) + "");
   }
