@@ -24,7 +24,7 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final String description = "replace with aszert.notNull(X)";
   private static final PreconditionNotNull rival = new PreconditionNotNull();
 
-  @Override public boolean check(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
         && returnsDefault(then(¢)) //
         && rival.cantTip(¢)//

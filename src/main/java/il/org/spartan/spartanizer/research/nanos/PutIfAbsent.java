@@ -26,7 +26,7 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
     }
   };
 
-  @Override public boolean check(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢);
   }
 
