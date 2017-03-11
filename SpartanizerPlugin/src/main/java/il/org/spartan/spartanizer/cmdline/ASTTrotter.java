@@ -59,7 +59,7 @@ public class ASTTrotter extends ASTVisitor {
   }
 
   @SuppressWarnings("unchecked") private <N extends ASTNode, T> T go(final N n) {
-    return dispatch == null ? null : (T) get(n).stream().filter(λ -> λ.interesting(n)).map(λ -> λ.tip(n)).findFirst().orElse(null);
+    return dispatch == null ? null : (T) get(n).stream().filter(λ -> λ.check(n)).map(λ -> λ.tip(n)).findFirst().orElse(null);
   }
 
   @SuppressWarnings("static-method") boolean interesting(@SuppressWarnings("unused") final ASTNode __) {

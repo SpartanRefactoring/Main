@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodDeclaration> implements MethodPatternUtilitiesTrait {
   private static final long serialVersionUID = -3476158475903575781L;
 
-  @Override public final boolean interesting(final MethodDeclaration ¢) {
+  @Override public final boolean check(final MethodDeclaration ¢) {
     final Javadoc $ = javadoc(¢);
     return ($ == null || !($ + "").contains(tag()))//
         && prerequisites(¢)//

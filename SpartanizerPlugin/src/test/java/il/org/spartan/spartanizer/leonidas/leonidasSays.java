@@ -149,7 +149,7 @@ public enum leonidasSays {
       final Bool tipped = new Bool();
       n.accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
-          if (!tipper.interesting(¢))
+          if (!tipper.check(¢))
             return true;
           tipped.inner = true;
           tipper.tip(¢).go(r, null);
@@ -203,11 +203,11 @@ public enum leonidasSays {
     }
 
     public void nottips(final String ¢) {
-      assert !tipper.interesting(az.block(wizard.ast(¢)));
+      assert !tipper.check(az.block(wizard.ast(¢)));
     }
 
     public void tips(final String ¢) {
-      assert tipper.interesting(az.block(wizard.ast(¢)));
+      assert tipper.check(az.block(wizard.ast(¢)));
     }
 
     public blockTurns turns(final String ¢) {
@@ -231,11 +231,11 @@ public enum leonidasSays {
     }
 
     public void nottips(final String ¢) {
-      assert !tipper.interesting(wizard.ast(¢));
+      assert !tipper.check(wizard.ast(¢));
     }
 
     public void tips(final String ¢) {
-      assert tipper.interesting(extractStatementIfOne(wizard.ast(¢)));
+      assert tipper.check(extractStatementIfOne(wizard.ast(¢)));
     }
 
     public turns turns(final String ¢) {
@@ -262,7 +262,7 @@ public enum leonidasSays {
       final Bool tipped = new Bool();
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
-          if (!tipper.interesting(¢))
+          if (!tipper.check(¢))
             return;
           tipped.inner = true;
           tipper.tip(¢).go(r, null);

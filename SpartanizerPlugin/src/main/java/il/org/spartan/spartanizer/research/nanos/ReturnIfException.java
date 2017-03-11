@@ -24,7 +24,7 @@ public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
     }
   };
 
-  @Override public boolean interesting(final CatchClause ¢) {
+  @Override public boolean check(final CatchClause ¢) {
     return anyTips(tippers, parent(¢));
   }
 

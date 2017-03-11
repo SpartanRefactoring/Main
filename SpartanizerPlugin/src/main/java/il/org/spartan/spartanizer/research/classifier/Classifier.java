@@ -87,7 +87,7 @@ public class Classifier extends ASTVisitor {
       again = false;
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::interesting).collect(toList()));
+        final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
@@ -103,11 +103,11 @@ public class Classifier extends ASTVisitor {
   }
 
   private static boolean anyTips(final EnhancedForStatement ¢) {
-    return enhancedForKnownPatterns.stream().anyMatch(λ -> λ.interesting(¢));
+    return enhancedForKnownPatterns.stream().anyMatch(λ -> λ.check(¢));
   }
 
   private static boolean anyTips(final ForStatement ¢) {
-    return forKnownPatterns.stream().anyMatch(λ -> λ.interesting(¢));
+    return forKnownPatterns.stream().anyMatch(λ -> λ.check(¢));
   }
 
   /** @param ¢ to classify */

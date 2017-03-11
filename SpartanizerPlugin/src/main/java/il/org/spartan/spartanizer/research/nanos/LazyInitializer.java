@@ -22,7 +22,7 @@ public final class LazyInitializer extends NanoPatternTipper<Assignment> {
     }
   };
 
-  @Override public boolean interesting(final Assignment x) {
+  @Override public boolean check(final Assignment x) {
     return anyTips(tippers, x);
   }
 

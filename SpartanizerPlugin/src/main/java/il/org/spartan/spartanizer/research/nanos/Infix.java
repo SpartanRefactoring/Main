@@ -30,7 +30,7 @@ public final class Infix {
       }
     };
 
-    @Override public boolean interesting(final InfixExpression ¢) {
+    @Override public boolean check(final InfixExpression ¢) {
       return anyTips(tippers, ¢);
     }
 
