@@ -66,12 +66,12 @@ public enum TestsUtilsTrimmer {
     }
 
     public OperandToTipper<N> in(final Rule<N, Tip> ¢) {
-      assert ¢.interesting(findNode(¢));
+      assert ¢.check(findNode(¢));
       return this;
     }
 
     public OperandToTipper<N> notIn(final Rule<N, Tip> ¢) {
-      assert !¢.interesting(findNode(¢));
+      assert !¢.check(findNode(¢));
       return this;
     }
   }

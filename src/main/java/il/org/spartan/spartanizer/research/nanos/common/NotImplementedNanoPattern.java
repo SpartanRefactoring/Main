@@ -18,7 +18,7 @@ public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTip
     return null;
   }
 
-  @Override public boolean interesting(@SuppressWarnings("unused") final N __) {
+  @Override public boolean check(@SuppressWarnings("unused") final N __) {
     return false;
   }
 }

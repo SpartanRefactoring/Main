@@ -24,7 +24,7 @@ public class Reduce extends NanoPatternTipper<ForStatement> {
     }
   };
 
-  @Override public boolean interesting(final ForStatement ¢) {
+  @Override public boolean check(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
 

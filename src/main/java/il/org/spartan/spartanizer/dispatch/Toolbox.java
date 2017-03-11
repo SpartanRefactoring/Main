@@ -105,7 +105,7 @@ public class Toolbox {
   }
 
   @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
-    return Stream.of(ts).filter(λ -> λ.interesting(n)).findFirst().orElse(null);
+    return Stream.of(ts).filter(λ -> λ.check(n)).findFirst().orElse(null);
   }
 
   public static Toolbox freshCopyOfAllTippers() {
@@ -369,7 +369,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final Collection<Tipper<?>> ts) {
-    return ts.stream().filter(λ -> ((Tipper<N>) λ).interesting(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
+    return ts.stream().filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
   /** Implementation */

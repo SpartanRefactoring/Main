@@ -59,12 +59,12 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
       return firstTip(tippers, ¢);
     }
 
-    @Override public boolean interesting(final EnhancedForStatement ¢) {
+    @Override public boolean check(final EnhancedForStatement ¢) {
       return anyTips(tippers, ¢);
     }
   }
 
-  @Override public boolean interesting(final EnhancedForStatement ¢) {
+  @Override public boolean check(final EnhancedForStatement ¢) {
     return anyTips(blockTippers, az.block(parent(¢)))//
         || anyTips(tippers, ¢);
   }

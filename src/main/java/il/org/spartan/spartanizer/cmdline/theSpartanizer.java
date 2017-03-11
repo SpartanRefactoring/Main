@@ -92,13 +92,17 @@ public interface theSpartanizer {
     final ASTNode n = wizard.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(final N n) {
+        @Override protected <N extends ASTNode> boolean go(final N ¢) {
           if (!searching)
             return false;
-          final Tipper<N> t = safeFirstTipper(n);
-          if (t == null)
+          final Tipper<N> $ = safeFirstTipper(¢);
+          return go($);
+        }
+
+        <N extends ASTNode> boolean go(final Tipper<N> ¢) {
+          if (¢ == null)
             return true;
-          $.set(t);
+          $.set(¢);
           return searching = false;
         }
 

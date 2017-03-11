@@ -17,7 +17,7 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
     @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
   };
 
-  @Override public boolean interesting(final ForStatement ¢) {
+  @Override public boolean check(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
 

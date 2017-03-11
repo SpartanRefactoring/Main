@@ -105,7 +105,7 @@ public enum TrimmerLog {
       output.put("Named", w.description());
       output.put("Kind", w.tipperGroup());
       output.put("Described", w.description(n));
-      output.put("Can tip", w.interesting(n));
+      output.put("Can tip", w.check(n));
       output.put("Suggests", w.tip(n));
       output.nl();
     }
@@ -116,7 +116,7 @@ public enum TrimmerLog {
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.tipperGroup());
     System.out.println("   Described: " + w.description(n));
-    System.out.println("     Can tip: " + w.interesting(n));
+    System.out.println("     Can tip: " + w.check(n));
     System.out.println("    Suggests: " + w.tip(n));
   }
 

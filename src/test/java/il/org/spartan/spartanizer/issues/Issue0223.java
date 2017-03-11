@@ -67,12 +67,12 @@ public final class Issue0223 {
 
   @Test public void B$030canSuggest() {
     A$040_init();
-    assert tipper.interesting(focus);
+    assert tipper.check(focus);
   }
 
   @Test public void B$030demands() {
     A$040_init();
-    assert tipper.interesting(focus);
+    assert tipper.check(focus);
   }
 
   @Test public void B$040tipNotNull() {
@@ -127,12 +127,12 @@ public final class Issue0223 {
 
   @Test public void B$140findTipperDemands() {
     A$040_init();
-    assert Toolbox.defaultInstance().firstTipper(focus).interesting(focus);
+    assert Toolbox.defaultInstance().firstTipper(focus).check(focus);
   }
 
   @Test public void B$150findTipperCanSuggest() {
     A$040_init();
-    assert Toolbox.defaultInstance().firstTipper(focus).interesting(focus);
+    assert Toolbox.defaultInstance().firstTipper(focus).check(focus);
   }
 
   @Test public void B$160findTipperReplacmenentNotNull() {
