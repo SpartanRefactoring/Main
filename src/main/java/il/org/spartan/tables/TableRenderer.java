@@ -42,12 +42,12 @@ public interface TableRenderer {
       @Override public String render(final Statistic ¢) {
         switch (¢) {
           case Σ:
-            return "\\hfill" + "$\\Sum$";
+            return "\\hfill$\\Sum$";
           case σ:
-            return "\\hfill" + "$\\sigma$";
+            return "\\hfill$\\sigma$";
           case max:
           case min:
-            return "\\hfill" + "$\\" + super.render(¢) + "$";
+            return "\\hfill$\\" + super.render(¢) + "$";
           default:
             return "\\hfill" + super.render(¢);
         }

@@ -45,43 +45,43 @@ public class issue0411 {
 
   @Test public void B01() {
     trimmingOf("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
-        + "List<VariableDeclarationFragment> lst =  fragments(s); " + "for (VariableDeclarationFragment ¢ : lst) "
-        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
+        + "List<VariableDeclarationFragment> lst =  fragments(s); for (VariableDeclarationFragment ¢ : lst) "
+        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .gives("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
                 + "for (VariableDeclarationFragment ¢ :  fragments(s);) "
-                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
+                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
 
   @Test public void B02() {
-    trimmingOf("void  f(V s) { " + "List<U> lst =  fragments(s); " + "for (U ¢ : lst) "
-        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
-            .gives("void f(V v) { " + "for (U ¢ :  fragments(v)) " + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) "
-                + "    return false; " + "return true; " + "}")
+    trimmingOf("void  f(V s) { List<U> lst =  fragments(s); for (U ¢ : lst) "
+        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
+            .gives("void f(V v) { for (U ¢ :  fragments(v))   if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) "
+                + "    return false; return true; }")
             .stays();
   }
 
   @Test public void B03() {
-    trimmingOf("void  f(V variableDeclarationFragment) { " + "List<U> lst =  fragments(variableDeclarationFragment); " + "for (U ¢ : lst) "
-        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
-            .gives("void f(V variableDeclarationFragment) { " + "for (U ¢ :  fragments(variableDeclarationFragment);) "
-                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
+    trimmingOf("void  f(V variableDeclarationFragment) { List<U> lst =  fragments(variableDeclarationFragment); for (U ¢ : lst) "
+        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
+            .gives("void f(V variableDeclarationFragment) { for (U ¢ :  fragments(variableDeclarationFragment);) "
+                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
 
   @Test public void B05() {
-    trimmingOf("boolean  f(V variableDeclarationFragment) { " + "V x=  fragments(variableDeclarationFragment); " + "for (U ¢ : x) "
-        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
-            .gives("boolean f(V variableDeclarationFragment) { " + "for (U ¢ :  fragments(variableDeclarationFragment);) "
-                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
+    trimmingOf("boolean  f(V variableDeclarationFragment) { V x=  fragments(variableDeclarationFragment); for (U ¢ : x) "
+        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
+            .gives("boolean f(V variableDeclarationFragment) { for (U ¢ :  fragments(variableDeclarationFragment);) "
+                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
 
   @Test public void B06() {
-    trimmingOf("boolean f() { " + "V x= g(variableDeclarationFragment); " + "for (U ¢ : x) "
-        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
-            .gives("boolean f() { " + "for (U ¢ : g(variableDeclarationFragment))"
-                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) " + "    return false; " + "return true; " + "}")
+    trimmingOf("boolean f() { V x= g(variableDeclarationFragment); for (U ¢ : x) "
+        + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
+            .gives("boolean f() { for (U ¢ : g(variableDeclarationFragment))"
+                + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
 
@@ -92,8 +92,8 @@ public class issue0411 {
   }
 
   @Test public void B17() {
-    assert tipper.check(variableDeclarationFragment) : fault.dump() + "\n variableDeclarationFragment = " + variableDeclarationFragment
-        + "\n for = " + forr + fault.done();
+    assert tipper.check(variableDeclarationFragment) : fault.dump() + "\n variableDeclarationFragment = " + variableDeclarationFragment + "\n for = "
+        + forr + fault.done();
   }
 
   @Test public void B20() {

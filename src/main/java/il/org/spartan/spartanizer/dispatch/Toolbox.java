@@ -397,7 +397,7 @@ public class Toolbox {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : fault.specifically(//
-          String.format("Did you forget to use create an enum instance in %s \n" + "for the %s of tipper %s \n (description= %s)?", //
+          String.format("Did you forget to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
               Toolbox.name(¢), //

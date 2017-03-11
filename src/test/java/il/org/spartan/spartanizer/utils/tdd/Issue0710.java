@@ -42,6 +42,6 @@ public class Issue0710 {
   }
 
   @Test public void test08() {
-    assert !determineIf.returnsNull(az.methodDeclaration(wizard.ast("Supplier<Integer> f() {" + " return () -> {" + " return null; }; " + "}")));
+    assert !determineIf.returnsNull(az.methodDeclaration(wizard.ast("Supplier<Integer> f() { return () -> { return null; }; }")));
   }
 }

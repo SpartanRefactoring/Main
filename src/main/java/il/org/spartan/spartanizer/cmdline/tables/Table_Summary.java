@@ -40,7 +40,7 @@ public class Table_Summary {
         clearAll();
         System.err.println("Output is in: " + system.tmp + path);
       }
-      
+
       public void summarizeStatistics(final String path) {
         if (writer == null)
           initializeWriter(outputFolder);
@@ -115,13 +115,12 @@ public class Table_Summary {
       scope.peek().markNP(n, np);
   }
 
-  @SuppressWarnings("unused")
-  private static void initializeWriter() {
+  @SuppressWarnings("unused") private static void initializeWriter() {
     writer = new Table(Table_Summary.class);
   }
 
   static void initializeWriter(final String outputFolder) {
-   writer = new Table(Table_Summary.class, outputFolder);
+    writer = new Table(Table_Summary.class, outputFolder);
   }
 
   static int statements() {

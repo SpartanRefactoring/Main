@@ -134,7 +134,7 @@ public enum monitor {
   public static <T> T infoIOException(final IOException ¢) {
     return now().info(//
         "   Got an exception of type : " + wizard.className(¢) + //
-            "\n      (probably I/O exception)" + "\n   The exception says: '" + ¢ + "'" //
+            "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     );
   }
 
@@ -293,7 +293,6 @@ public enum monitor {
   public static monitor now() {
     return !states.empty() ? states.peek() : monitor.PRODUCTION;
   }
-
 
   public static monitor pop() {
     return states.pop();

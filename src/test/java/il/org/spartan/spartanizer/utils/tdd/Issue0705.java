@@ -30,14 +30,12 @@ public class Issue0705 {
   }
 
   @Test public void c() {
-    azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {" + "Integer obj = 5;" + "if(obj instanceof Object){} }")).size(),
-        is(1));
+    azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {Integer obj = 5;if(obj instanceof Object){} }")).size(), is(1));
   }
 
   @Test public void d() {
     azzert.that(getAll
-        .instanceofs(
-            (MethodDeclaration) wizard.ast("boolean func (){" + "Integer obj = 5;" + "return (obj instanceof Object) || (obj instanceof Integer); }"))
+        .instanceofs((MethodDeclaration) wizard.ast("boolean func (){Integer obj = 5;return (obj instanceof Object) || (obj instanceof Integer); }"))
         .size(), is(2));
   }
 }

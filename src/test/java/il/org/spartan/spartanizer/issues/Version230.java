@@ -215,7 +215,7 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod2() {
-    trimmingOf(" public void f(){  if(!g(message)){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
+    trimmingOf(" public void f(){  if(!g(message)){   final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
         + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
         + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
@@ -224,7 +224,7 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod3() {
-    trimmingOf(" public void f(){  if(!g(a)){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
+    trimmingOf(" public void f(){  if(!g(a)){   final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
         + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
         + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
@@ -233,7 +233,7 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod4() {
-    trimmingOf(" public void f(){  if(!g){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
+    trimmingOf(" public void f(){  if(!g){   final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages.add(message); "
         + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; "
         + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; if(listener !=null) "
         + "  listener.listLocalMessagesAddMessages(account, null, messages); } }")//
@@ -242,8 +242,8 @@ public final class Version230 {
   }
 
   @Test public void bugInLastIfInMethod5() {
-    trimmingOf(" public void f(){  if(!g){ " + "  final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages2.add(message); "
-        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1; " + "  stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; } }")//
+    trimmingOf(" public void f(){  if(!g){   final List<LocalMessage> messages=new ArrayList<LocalMessage>(); messages2.add(message); "
+        + "  stats.unreadMessageCount +=message.isSet(Flag.SEEN)? 0 : 1;   stats.flaggedMessageCount +=message.isSet(Flag.FLAGGED)? 1 : 0; } }")//
             .gives(
                 "public void f(){if(g)return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages2.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;}");
   }
@@ -945,7 +945,7 @@ public final class Version230 {
   }
 
   @Test public void duplicatePartialIfBranches() {
-    trimmingOf(" if(a){ f();g();++i;} else { f();g(); " + " --i;}")//
+    trimmingOf(" if(a){ f();g();++i;} else { f();g();  --i;}")//
         .gives(" f();g();if(a)++i;else  --i;");
   }
 
@@ -1007,26 +1007,24 @@ public final class Version230 {
   }
 
   @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
-    trimmingOf(
-        "public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!'); " + " ++i;} else { i +=2;System.h('@');System.h('@');++i;} }")//
-            .gives("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!'); "
-                + " } else { i +=2;System.h('@');System.h('@');} ++i;}");
+    trimmingOf("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');  ++i;} else { i +=2;System.h('@');System.h('@');++i;} }")//
+        .gives(
+            "public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!'); " + " } else { i +=2;System.h('@');System.h('@');} ++i;}");
   }
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
-    trimmingOf("public final static final void f(){ if(tr()){ int i=0;System.h(i + 0);++i; " + " } else { int i=1;System.h(i * 1);++i;} }");
+    trimmingOf("public final static final void f(){ if(tr()){ int i=0;System.h(i + 0);++i;  } else { int i=1;System.h(i * 1);++i;} }");
   }
 
   @Test public void ifBugSecondTry() {
-    trimmingOf(
-        " final int c=2;if(c==c + 1){ if(c==c + 2)return null;c=f().charAt(3); " + " } else if(Character.digit(c, 16)==-1)return null;return null;")
-            .gives(" final int c=2;if(c !=c + 1){ if(Character.digit(c, 16)==-1)return null; "
-                + " } else { if(c==c + 2)return null;c=f().charAt(3);} " + " return null;");
+    trimmingOf(" final int c=2;if(c==c + 1){ if(c==c + 2)return null;c=f().charAt(3);  } else if(Character.digit(c, 16)==-1)return null;return null;")
+        .gives(" final int c=2;if(c !=c + 1){ if(Character.digit(c, 16)==-1)return null; "
+            + " } else { if(c==c + 2)return null;c=f().charAt(3);}  return null;");
   }
 
   @Test public void ifBugSimplified() {
     trimmingOf(" if(x){ if(z)return null;c=f().charAt(3);} else if(y)return; ")
-        .gives(" if(!x){ if(y)return;} else { if(z)return null; " + " c=f().charAt(3);} ");
+        .gives(" if(!x){ if(y)return;} else { if(z)return null;  c=f().charAt(3);} ");
   }
 
   @Test public void ifBugWithPlainEmptyElse() {
@@ -1254,8 +1252,8 @@ public final class Version230 {
   }
 
   @Test public void infiniteLoopBug2() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd){ return hasAnnotation(n.modifiers()); " + " }")
-        .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd){ " + " return hasAnnotation(s.modifiers());}");
+    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd){ return hasAnnotation(n.modifiers());  }")
+        .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd){  return hasAnnotation(s.modifiers());}");
   }
 
   @Test public void infiniteLoopBug3() {
@@ -1330,10 +1328,10 @@ public final class Version230 {
     trimmingOf("public Statement methodBlock(FrameworkMethod m){ final Statement statement=methodBlock(m); "
         + " return new Statement(){ public void evaluate()throws Throwable { try {  statement.evaluate(); "
         + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){  handleAssumptionViolation(e); "
-        + " } catch(Throwable e){  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));} " + " } }; }")
+        + " } catch(Throwable e){  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));}  } }; }")
             .gives("public Statement methodBlock(FrameworkMethod m){ final Statement $=methodBlock(m);return new Statement(){ "
                 + " public void evaluate()throws Throwable { try {  $.evaluate(); "
-                + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){ " + "  handleAssumptionViolation(e);} catch(Throwable e){ "
+                + "  handleDataPointSuccess();} catch(AssumptionViolatedException e){   handleAssumptionViolation(e);} catch(Throwable e){ "
                 + "  reportParameterizedError(e, complete.getArgumentStrings(nullsOk()));} } }; }");
   }
 
@@ -1625,7 +1623,7 @@ public final class Version230 {
   }
 
   @Test public void issue38() {
-    trimmingOf(" return o==null ? null : o==CONDITIONAL_AND ? CONDITIONAL_OR  " + "  : o==CONDITIONAL_OR ? CONDITIONAL_AND   : null;")//
+    trimmingOf(" return o==null ? null : o==CONDITIONAL_AND ? CONDITIONAL_OR    : o==CONDITIONAL_OR ? CONDITIONAL_AND   : null;")//
         .stays();
   }
 
@@ -1634,13 +1632,13 @@ public final class Version230 {
   }
 
   @Test public void issue39base() {
-    trimmingOf("if(name==null){ if(other.name !=null)return false; } else if(!name.equals(other.name)) " + " return false; return true;")//
+    trimmingOf("if(name==null){ if(other.name !=null)return false; } else if(!name.equals(other.name))  return false; return true;")//
         .stays();
   }
 
   public void issue39baseDual() {
-    trimmingOf("if(name !=null){ if(!name.equals(other.name))return false; } else if(other.name !=null) " + " return false; return true;")
-        .gives("if(name==null){ if(other.name !=null)return false; } else if(!name.equals(other.name)) " + " return false; return true;");
+    trimmingOf("if(name !=null){ if(!name.equals(other.name))return false; } else if(other.name !=null)  return false; return true;")
+        .gives("if(name==null){ if(other.name !=null)return false; } else if(!name.equals(other.name))  return false; return true;");
   }
 
   @Test(timeout = 100) public void issue39versionA() {
@@ -2290,7 +2288,7 @@ public final class Version230 {
   }
 
   @Test public void paramAbbreviateConflictingWithLocal2() {
-    trimmingOf("TCPConnection conn(TCPConnection tcpCon){ UDPConnection c=new UDPConnection(57);if(tcpCon.isConnected())" + " c.disconnect();}")
+    trimmingOf("TCPConnection conn(TCPConnection tcpCon){ UDPConnection c=new UDPConnection(57);if(tcpCon.isConnected()) c.disconnect();}")
         .gives("TCPConnection conn(TCPConnection tcpCon){ if(tcpCon.isConnected())(new UDPConnection(57)).disconnect();}");
   }
 
@@ -2388,9 +2386,8 @@ public final class Version230 {
   }
 
   @Test public void pushdowConditionalActualExampleSecondtest() {
-    trimmingOf(
-        "return f( determineEncoding(bytes)==Encoding.B ? ENC_WORD_PREFIX+mimeCharset+B" + " : ENC_WORD_PREFIX+mimeCharset+Q,text,charset,bytes);")
-            .gives("return f( ENC_WORD_PREFIX + mimeCharset +(determineEncoding(bytes)==Encoding.B ?B : Q), text,charset,bytes" + ");");
+    trimmingOf("return f( determineEncoding(bytes)==Encoding.B ? ENC_WORD_PREFIX+mimeCharset+B : ENC_WORD_PREFIX+mimeCharset+Q,text,charset,bytes);")
+        .gives("return f( ENC_WORD_PREFIX + mimeCharset +(determineEncoding(bytes)==Encoding.B ?B : Q), text,charset,bytes);");
   }
 
   @Test public void pushdownNot2LevelNotOfFalse() {
@@ -2814,12 +2811,10 @@ public final class Version230 {
   }
 
   @Test public void redundantButNecessaryBrackets3() {
-    trimmingOf(
-        "if(b1)if(b2)print1('!');else { if(b3)print3('#');} else { " + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$'); "
-            + " print4('$');print4('$');print4('$');print4('$');print4('$'); }")
-                .gives("if(b1)if(b2)print1('!');else  if(b3)print3('#'); else { "
-                    + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$'); "
-                    + " print4('$');print4('$');print4('$');print4('$');print4('$'); }");
+    trimmingOf("if(b1)if(b2)print1('!');else { if(b3)print3('#');} else {  print4('$');print4('$');print4('$');print4('$');print4('$');print4('$'); "
+        + " print4('$');print4('$');print4('$');print4('$');print4('$'); }").gives(
+            "if(b1)if(b2)print1('!');else  if(b3)print3('#'); else { " + " print4('$');print4('$');print4('$');print4('$');print4('$');print4('$'); "
+                + " print4('$');print4('$');print4('$');print4('$');print4('$'); }");
   }
 
   @Test public void removeSuper() {
@@ -2848,7 +2843,7 @@ public final class Version230 {
         + "  }  throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\");}")
             .gives(" public static DeletePolicy fromInt(int initialSetting){  for(DeletePolicy $: values()){ "
                 + "  if($.setting==initialSetting){   return $; } "
-                + "  }  throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\"); " + " }");
+                + "  }  throw new IllegalArgumentException(\"DeletePolicy \" + initialSetting + \" unknown\");  }");
   }
 
   @Test public void renameToDollarEnhancedFor() {
@@ -2994,37 +2989,36 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst01() {
-    trimmingOf(
-        "if(s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')" + " u +=2;} else if(s.charAt(i)=='d')u -=1;return u;")
-            .gives("if(!s.equals(0xDEAD)){ if(s.charAt(i)=='d')u-=1;} else { int u=0;"
-                + " for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u+=2;} return u;");
+    trimmingOf("if(s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a') u +=2;} else if(s.charAt(i)=='d')u -=1;return u;")
+        .gives("if(!s.equals(0xDEAD)){ if(s.charAt(i)=='d')u-=1;} else { int u=0;"
+            + " for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u+=2;} return u;");
   }
 
   @Test public void shortestIfBranchFirst02() {
     trimmingOf("if(!s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2;"
         + " else if(s.charAt(i)=='d')u -=1;return u;} else { return 8;}")
-            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i) " + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
+            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i)  if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
                 + "  u -=1;return u; ");
   }
 
   @Test public void shortestIfBranchFirst02a() {
-    trimmingOf(" if(!s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i) " + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
+    trimmingOf(" if(!s.equals(0xDEAD)){ int u=0;for(int i=0;i<s.length();++i)  if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
         + "  u -=1;return u;} return 8;")
-            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i) " + " if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
+            .gives(" if(s.equals(0xDEAD))return 8;int u=0;for(int i=0;i<s.length();++i)  if(s.charAt(i)=='a')u +=2;else if(s.charAt(i)=='d') "
                 + "  u -=1;return u; ");
   }
 
   @Test public void shortestIfBranchFirst02b() {
-    trimmingOf(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2; " + " else if(s.charAt(i)=='d')--u;return u; ")
-        .gives(" int u=0;for(int ¢=0;¢<s.length();++¢)if(s.charAt(¢)=='a')u +=2; " + " else if(s.charAt(¢)=='d')--u;return u; ").stays();
+    trimmingOf(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2;  else if(s.charAt(i)=='d')--u;return u; ")
+        .gives(" int u=0;for(int ¢=0;¢<s.length();++¢)if(s.charAt(¢)=='a')u +=2;  else if(s.charAt(¢)=='d')--u;return u; ").stays();
   }
 
   @Test public void shortestIfBranchFirst02c() {
     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
-        .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a') " + "  u +=2;else if(s.charAt(i)=='d')u -=1;return u; "));
+        .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')   u +=2;else if(s.charAt(i)=='d')u -=1;return u; "));
     assert f != null;
     azzert.that(f, iz(" u=0"));
-    azzert.that(extract.nextStatement(f), iz(" for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2; " + " else if(s.charAt(i)=='d')u -=1; "));
+    azzert.that(extract.nextStatement(f), iz(" for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')u +=2;  else if(s.charAt(i)=='d')u -=1; "));
   }
 
   @Test public void shortestIfBranchWithFollowingCommandsSequencer() {
@@ -3434,7 +3428,7 @@ public final class Version230 {
   }
 
   @Test public void synchronizedBraces() {
-    trimmingOf(" synchronized(variables){ for(final String key : variables.keySet()) " + " $.variables.put(key, variables.get(key));}")//
+    trimmingOf(" synchronized(variables){ for(final String key : variables.keySet())  $.variables.put(key, variables.get(key));}")//
         .stays();
   }
 
@@ -3588,7 +3582,7 @@ public final class Version230 {
   }
 
   @Test public void ternarize46() {
-    trimmingOf(" int a , b=0;if(m.equals(NG)==true)if(b==3){ return 3;} else { " + " a+=7;} else if(b==3){ return 2;} else { a=7;}")
+    trimmingOf(" int a , b=0;if(m.equals(NG)==true)if(b==3){ return 3;} else {  a+=7;} else if(b==3){ return 2;} else { a=7;}")
         .gives("int a;if(m.equals(NG)==true)if(0==3){return 3;}else{a+=7;}else if(0==3){return 2;}else{a=7;}");
   }
 
@@ -3645,9 +3639,9 @@ public final class Version230 {
   }
 
   @Test public void unsafeBlockSimlify() {
-    trimmingOf("public void testParseInteger(){ String source=\"10\";use(source);{ " + " BigFraction c=properFormat.parse(source);assert c !=null; "
-        + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator()); " + " azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());} { "
-        + " BigFraction c=improperFormat.parse(source);assert c !=null; " + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator()); "
+    trimmingOf("public void testParseInteger(){ String source=\"10\";use(source);{  BigFraction c=properFormat.parse(source);assert c !=null; "
+        + " azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator());  azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());} { "
+        + " BigFraction c=improperFormat.parse(source);assert c !=null;  azzert.wizard.assertEquals(BigInteger.TEN, c.getNumerator()); "
         + " azzert.wizard.assertEquals(BigInteger.ONE, c.getDenominator());} }")//
             .stays();
   }

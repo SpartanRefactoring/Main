@@ -258,7 +258,7 @@ public final class Issue0194 {
             .gives("if(!b1)"//
                 + "return w;"//
                 + "if(!b2)"//
-                + "return z;" + "while(b3)"//
+                + "return z;while(b3)"//
                 + "return x;"//
                 + "do{"//
                 + "return y;"//

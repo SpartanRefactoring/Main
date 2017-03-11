@@ -11,12 +11,10 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1014 {
   @Test public void test0() {
-    trimmingOf("for (final MarkerAnnotation a : new definitionTest().markers()) {" + "final String key = (a + \"\").substring(1);"
-        + "if (!definition.Kind.has(key))" + "continue;" + "for (final SimpleName ¢ : annotees.of(a))"
-        + "$.add(as.array(definition.Kind.valueOf(key), ¢));" + "}") //
-            .gives("for (final MarkerAnnotation a : new definitionTest().markers()) {" + "final String key = (a + \"\").substring(1);"
-                + "if (definition.Kind.has(key))" + "for (final SimpleName ¢ : annotees.of(a))" + "$.add(as.array(definition.Kind.valueOf(key), ¢));"
-                + "}")
+    trimmingOf("for (final MarkerAnnotation a : new definitionTest().markers()) {final String key = (a + \"\").substring(1);"
+        + "if (!definition.Kind.has(key))continue;for (final SimpleName ¢ : annotees.of(a))" + "$.add(as.array(definition.Kind.valueOf(key), ¢));}") //
+            .gives("for (final MarkerAnnotation a : new definitionTest().markers()) {final String key = (a + \"\").substring(1);"
+                + "if (definition.Kind.has(key))for (final SimpleName ¢ : annotees.of(a))$.add(as.array(definition.Kind.valueOf(key), ¢));" + "}")
             .stays();
   }
 

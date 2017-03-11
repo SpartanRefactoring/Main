@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since Jan 11, 2017 */
 public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final File out = new File(system.tmp + File.separator + "loops" + ".txt");
+  private static final File out = new File(system.tmp + File.separator + "loops.txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
