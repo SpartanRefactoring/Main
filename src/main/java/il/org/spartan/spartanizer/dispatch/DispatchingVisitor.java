@@ -12,6 +12,10 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since Sep 18, 2016 */
 public abstract class DispatchingVisitor extends ASTVisitor {
+  public DispatchingVisitor() {
+    super(true);
+  }
+
   public final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
