@@ -64,7 +64,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.close("methods");
       ReportGenerator.closeFile("before");
       ReportGenerator.closeFile("after");
-      System.err.println("commandLineApplicator: " + "Done!");
+      System.err.println("commandLineApplicator: Done!");
       if (selection)
         defaultApplicator2.defaultListenerNoisy()
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))

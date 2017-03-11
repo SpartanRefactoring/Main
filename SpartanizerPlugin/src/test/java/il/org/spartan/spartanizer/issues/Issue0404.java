@@ -180,11 +180,11 @@ public class Issue0404 {
 
   @Test public void lb() {
     final List<String> $ = dig.stringLiterals(into.cu(//
-        "class A{\n" + "char c1 = '\"';"//
+        "class A{\nchar c1 = '\"';"//
             + "int i = \"four\".size();\n"//
             + "String foo(){\n"//
             + "return \"fooFunc\";\n"//
-            + "}\n" + "char c2 = '\"';"//
+            + "}\nchar c2 = '\"';"//
             + "}"));
     assert $.size() == 2 : "The List did not contain the expected number of elements.";
     assert $.contains("four") : "List did not contain expected element \"four\"";
@@ -192,7 +192,7 @@ public class Issue0404 {
   }
 
   @Test public void lc() {
-    final List<String> $ = dig.stringLiterals(into.d("int f(String a){\n" + "return a.equals(\"2\") ? \"3\".size() : \"one\".size();\n"//
+    final List<String> $ = dig.stringLiterals(into.d("int f(String a){\nreturn a.equals(\"2\") ? \"3\".size() : \"one\".size();\n"//
         + "}"));
     assert $.size() == 3 : "The List did not contain the expected number of elements";
     assert $.contains("2") : "List did not contain expected element \"2\"";
@@ -217,7 +217,7 @@ public class Issue0404 {
   @Test public void lf() {
     final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
         + "int i = \"first\".size();\n"//
-        + "String s = \"second\"" + "String foo(){\n"//
+        + "String s = \"second\"String foo(){\n"//
         + "return i> 5 ? \"third\" : \"fourth\";\n"//
         + "}\n"//
         + "}"));
@@ -289,7 +289,7 @@ public class Issue0404 {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "int i = \"ĀĆ\".size();\n"//
-            + "String s = \"Ēċ\"" + "String foo(){\n"//
+            + "String s = \"Ēċ\"String foo(){\n"//
             + "return i> 5 ? \"ĘŦţţſ\" : \"ŒĤĦfgdr453Ŵ\";\n"//
             + "}\n"//
             + "}"));
@@ -304,7 +304,7 @@ public class Issue0404 {
     final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "int i = \"עוד חוזר הניגון שזנחת לשווא\".size();\n"//
-            + "String s = \"והדרך עודנה נפקחת לאורך\"" + "String foo(){\n"//
+            + "String s = \"והדרך עודנה נפקחת לאורך\"String foo(){\n"//
             + "return i> 5 ? \"וענן בשמיו ואילן בגשמיו\" :\n"//
             + "\"מצפים עוד לך, עובר אורח\";\n"//
             + "}\n"//

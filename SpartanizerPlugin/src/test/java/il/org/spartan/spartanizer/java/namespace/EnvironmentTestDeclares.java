@@ -60,8 +60,8 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declare_7() {
-    final Set<Entry<String, Binding>> $ = declaresDown(makeAST.COMPILATION_UNIT
-        .from("class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\n" + "not_in_env++;}}}"));
+    final Set<Entry<String, Binding>> $ = declaresDown(
+        makeAST.COMPILATION_UNIT.from("class MyClass{int a;static class RangeIterator{void func(MyClass my, int b){String s=4;\nnot_in_env++;}}}"));
     assert $.contains("a");
     assert $.contains("b");
     assert $.contains("my");
@@ -89,7 +89,7 @@ public class EnvironmentTestDeclares {
 
   @Test public void declaresDownMethodDeclaration03() {
     for (final Entry<String, Binding> ¢ : Environment
-        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){class B{" + "void g(int a){}" + "}" + "}}"))))
+        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void f(int a){class B{void g(int a){}}}}"))))
       assert ".A.f.a".equals(¢.getKey()) || ".A.f.#block0.B.g.a".equals(¢.getKey()) && ¢.getValue().hiding != null;
   }
 

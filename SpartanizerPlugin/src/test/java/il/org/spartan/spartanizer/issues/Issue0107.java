@@ -16,8 +16,8 @@ public final class Issue0107 {
   }
 
   @Test public void b() {
-    trimmingOf("for(int c = 0; c <5; c-=1)\n" + "c*=2;")//
-        .gives("for(int c = 0; c <5; --c)\n" + "c*=2;")//
+    trimmingOf("for(int c = 0; c <5; c-=1)\nc*=2;")//
+        .gives("for(int c = 0; c <5; --c)\nc*=2;")//
         .stays();
   }
 
@@ -58,7 +58,7 @@ public final class Issue0107 {
   }
 
   @Test public void m() {
-    trimmingOf("s = \"hello\"; \n" + "s += 1;")//
+    trimmingOf("s = \"hello\"; \ns += 1;")//
         .stays();
   }
 

@@ -47,7 +47,7 @@ public final class FixedPointTest {
   }
 
   @Test public void commonPrefixIfBranchesInBlock() {
-    assertConvertsTo("{" + " if (a) { f(); g(); ++i; } else { f(); g();\n" + " --i; }" + "}", " f(); g(); if (a)  ++i; else  --i;");
+    assertConvertsTo("{ if (a) { f(); g(); ++i; } else { f(); g();\n --i; }}", " f(); g(); if (a)  ++i; else  --i;");
   }
 
   @Test(timeout = 2000) public void desiredSimplificationOfExample() {
@@ -98,8 +98,7 @@ public final class FixedPointTest {
   }
 
   @Test public void issue43() {
-    assertConvertsTo("String tipper = Z2; " + " tipper = tipper.f(A).f(b) + tipper.f(c); " + "return (tipper + 3); ",
-        "return(Z2.f(A).f(b)+Z2.f(c)+3);");
+    assertConvertsTo("String tipper = Z2;  tipper = tipper.f(A).f(b) + tipper.f(c); return (tipper + 3); ", "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
   @Test(timeout = 2000) public void multipleInline() {
@@ -136,11 +135,11 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst13() {
-    assertConvertsTo(" int a = 0; if (a> 0) return 6; else { int b = 9; b *= b;\n" + " return b; } ;", "return 0>0?6:81;");
+    assertConvertsTo(" int a = 0; if (a> 0) return 6; else { int b = 9; b *= b;\n return b; } ;", "return 0>0?6:81;");
   }
 
   @Test(timeout = 2000) public void shortestIfBranchFirst14() {
-    assertConvertsTo(" int a = 0; if (a> 0) { int b = 9; b *= b; return 6; } else {\n" + " int a = 5; return b; }", "return 0>0?6:b;");
+    assertConvertsTo(" int a = 0; if (a> 0) { int b = 9; b *= b; return 6; } else {\n int a = 5; return b; }", "return 0>0?6:b;");
   }
 
   @Test(timeout = 2000) public void shortestOperand03() {
@@ -194,7 +193,7 @@ public final class FixedPointTest {
   }
 
   @Test public void ternarize07a() {
-    assertConvertsTo("String $;" + "$ = s; " + "if ($==true) " + " $ = s + 0xABBA; " + "x.y.f($); ", "x.y.f(!s?s:s+0xABBA);");
+    assertConvertsTo("String $;$ = s; if ($==true)  $ = s + 0xABBA; x.y.f($); ", "x.y.f(!s?s:s+0xABBA);");
   }
 
   @Test(timeout = 2000) public void ternarize11() {
@@ -202,12 +201,12 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void ternarize17() {
-    assertConvertsTo(" int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n" + " else b = a; else if (b == 3) b = r(); else b = a;",
+    assertConvertsTo(" int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n else b = a; else if (b == 3) b = r(); else b = a;",
         "int b=5!=3?3:r();");
   }
 
   @Test(timeout = 2000) public void ternarize18() {
-    assertConvertsTo(" String s = X; String $ = s; int a = 0; if (s.equals($)) x.y.f(tH3 + $);\n" + " else x.y.f(h2A+ $ + a + s);",
+    assertConvertsTo(" String s = X; String $ = s; int a = 0; if (s.equals($)) x.y.f(tH3 + $);\n else x.y.f(h2A+ $ + a + s);",
         "x.y.f(X.equals(X)?tH3+X:h2A+X+0+X);");
   }
 
@@ -228,11 +227,11 @@ public final class FixedPointTest {
     assertConvertsTo(
         " int size = 17; if (m.equals(153)==true) for (final Integer ¢ : range.to(size)){ sum += ¢;\n"
             + " } else for (final Integer ¢ : range.to(size)){ S.out.l('f',¢); }",
-        "if(m.equals(153))" + "for(final Integer ¢ : range.to(17))sum += ¢;else " + " for(final Integer ¢ : range.to(17)) " + "S.out.l('f',¢);");
+        "if(m.equals(153))for(final Integer ¢ : range.to(17))sum += ¢;else  for(final Integer ¢ : range.to(17)) S.out.l('f',¢);");
   }
 
   @Test(timeout = 2000) public void ternarize54() {
-    assertConvertsTo("if (s == null) return Z2;if (!s.contains(delimiter())) return s;\n" + "return s.replaceAll(delimiter(), ABC + delimiter());",
+    assertConvertsTo("if (s == null) return Z2;if (!s.contains(delimiter())) return s;\nreturn s.replaceAll(delimiter(), ABC + delimiter());",
         "return s==null?Z2:!s.contains(delimiter())?s:s.replaceAll(delimiter(),ABC+delimiter());");
   }
 }

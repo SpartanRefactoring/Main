@@ -145,7 +145,7 @@ public class Issue0291 {
 
   /** Infinite Loop test check Issue #1021 */
   @Test public void test22() {
-    trimmingOf("  public class C {" + "public  void foo() {" + "t(A + 50 < B);" + "}" + "}")//
+    trimmingOf("  public class C {public  void foo() {t(A + 50 < B);}}")//
         .stays();
   }
 }

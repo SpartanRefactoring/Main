@@ -25,8 +25,8 @@ public class Issue0714 {
   }
 
   @Test public void testClassWithFUnction() {
-    assert determineIf.isImmutable(typeConvert("public class A {" + "final static int x; " + "static final double y;"
-        + "public void abc(int x, double y){" + "int b; final int c;" + "}" + "public class b{" + "int h;" + "}" + "final boolean g;" + "}"));
+    assert determineIf.isImmutable(typeConvert("public class A {final static int x; static final double y;"
+        + "public void abc(int x, double y){int b; final int c;}public class b{int h;}final boolean g;}"));
   }
 
   @Test public void testDoubleNotFinal() {

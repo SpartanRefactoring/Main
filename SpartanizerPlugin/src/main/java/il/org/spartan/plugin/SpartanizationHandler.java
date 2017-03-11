@@ -167,7 +167,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         }).does(¢ -> {
           if (openDialog.get())
             Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root))
-                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files" + " in "
+                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
                 + plurales("pass", (Int) ¢.get(event.run_pass))).open();
         })));
     $.runContext(r -> {

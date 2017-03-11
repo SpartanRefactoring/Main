@@ -16,19 +16,18 @@ public class Issue0283 {
   /** Automatically generated */
   @Test public void abclasscad3ed3fpublicvoida() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
-  .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
-  .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
-
-  .stays() //
-   ;
- }
+        .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+        .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
+        .stays() //
+    ;
+  }
 
   @Test public void test0() {
     trimmingOf("@SuppressWarnings(\"unused\") " //
         + "@Deprecated " //
         + "@Override " //
         + " void myMethod() { }") //
-            .gives("@Deprecated " + "@Override " + "@SuppressWarnings(\"unused\") " //
+            .gives("@Deprecated @Override @SuppressWarnings(\"unused\") " //
                 + " void myMethod() { }")//
             .stays();
   }
@@ -46,6 +45,7 @@ public class Issue0283 {
     azzert.that(AnnotationSort.compare("SomeUserDefinedA", "SomeUserDefinedB"), lessThan(0));
     azzert.that(AnnotationSort.compare("SupportedSourceVersion", "WebServiceProvider"), lessThan(0));
   }
+
   @Test public void test2() {
     trimmingOf("public class Point {" //
         + "@ConstructorProperties({\"x\", \"y\"}) @Deprecated " //
@@ -61,13 +61,14 @@ public class Issue0283 {
                 + "}}")//
             .stays();
   }
+
   @Test public void test3() {
     trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ 3 }) @Inherited @NonNull @Deprecated public void test0() { }}")
-        .gives(
-            "@Ignore class Test123{@Deprecated @SuppressWarnings(3)@Test @SuppressWarnings({3})@NonNull public void test0(){}}") //
+        .gives("@Ignore class Test123{@Deprecated @SuppressWarnings(3)@Test @SuppressWarnings({3})@NonNull public void test0(){}}") //
         .gives("@Ignore class Test123{@Deprecated @Test@SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
         .stays();
   }
+
   @Test public void test4() {
     trimmingOf(
         "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings({ 3 }) @Inherited @NonNull @Deprecated public void test0() { }}")
@@ -80,10 +81,8 @@ public class Issue0283 {
 
   @Test public void test5() {
     trimmingOf("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings({3}) @Inherited @NonNull @Deprecated public void test0(){}}")
-        .gives(
-            "@Deprecated @Ignore class Test123{@Deprecated @SuppressWarnings(3) @Test @SuppressWarnings({3}) @NonNull public void test0(){}}") //
-        .gives(
-            "@Deprecated @Ignore class Test123{@Deprecated @Test@SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
+        .gives("@Deprecated @Ignore class Test123{@Deprecated @SuppressWarnings(3) @Test @SuppressWarnings({3}) @NonNull public void test0(){}}") //
+        .gives("@Deprecated @Ignore class Test123{@Deprecated @Test@SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
         .stays();
   }
 }

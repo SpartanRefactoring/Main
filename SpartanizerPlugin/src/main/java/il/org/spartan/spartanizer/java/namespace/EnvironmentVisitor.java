@@ -244,27 +244,27 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @Override public boolean visit(final AnonymousClassDeclaration ¢) {
-    scopePath += "." + "#anon_extends_" + anonymousClassDeclarationParentName(¢);
+    scopePath += ".#anon_extends_" + anonymousClassDeclarationParentName(¢);
     return true;
   }
 
   @Override public boolean visit(final Block ¢) {
-    scopePath += "." + "#block" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#block" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
   @Override public boolean visit(final CatchClause ¢) {
-    scopePath += "." + "#catch" + orderOfCatchInTryParent(¢);
+    scopePath += ".#catch" + orderOfCatchInTryParent(¢);
     return true;
   }
 
   @Override public boolean visit(final DoStatement ¢) {
-    scopePath += "." + "#do" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#do" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
   @Override public boolean visit(final EnhancedForStatement ¢) {
-    scopePath += "." + "#enhancedFor" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#enhancedFor" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
@@ -284,12 +284,12 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @Override public boolean visit(final ForStatement ¢) {
-    scopePath += "." + "#for" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#for" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
   @Override public boolean visit(final IfStatement ¢) {
-    scopePath += "." + "#if" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#if" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
@@ -304,12 +304,12 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @Override public boolean visit(final SwitchStatement ¢) {
-    scopePath += "." + "#switch" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#switch" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
   @Override public boolean visit(final TryStatement ¢) {
-    scopePath += "." + "#try" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#try" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 
@@ -329,7 +329,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @Override public boolean visit(final WhileStatement ¢) {
-    scopePath += "." + "#while" + statementOrderAmongTypeInParent(¢);
+    scopePath += ".#while" + statementOrderAmongTypeInParent(¢);
     return true;
   }
 }
