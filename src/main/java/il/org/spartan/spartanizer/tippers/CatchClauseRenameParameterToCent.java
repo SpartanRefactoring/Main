@@ -12,7 +12,8 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert {@code catch(Exceprion e){}} to {@code catch(Exceprion ¢){}}
+/** Use {@link #examples()} for documentation 
+
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
@@ -25,7 +26,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
 
   @Override public Example[] examples() {
     return new Example[] { //
-        converts("try {f();} catch (Exception e) {e.printStackTrace();}") //
+        convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
             .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //
         ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}"), //
         ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };

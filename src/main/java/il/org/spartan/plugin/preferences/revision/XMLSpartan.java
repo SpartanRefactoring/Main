@@ -36,7 +36,7 @@ public class XMLSpartan {
   private static final String TIPPER = "tipper";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
-  private static final Example[] EMPTY_PREVIEW = { Tipper.converts("[no available preview]").to("[no available preview]") };
+  private static final Example[] EMPTY_PREVIEW = { Tipper.convert("[no available preview]").to("[no available preview]") };
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //

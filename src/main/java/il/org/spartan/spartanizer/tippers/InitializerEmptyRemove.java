@@ -30,9 +30,9 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
 
   @Override public Example[] examples() {
     return new Example[] { //
-        converts("class C {{}}") //
+        convert("class C {{}}") //
             .to("class C {}"), //
-        converts("class C {static {}}") //
+        convert("class C {static {}}") //
             .to("class C {}"), //
         ignores("class C {/***/ {}}"), //
         ignores("class C {/***/ static {}}") };

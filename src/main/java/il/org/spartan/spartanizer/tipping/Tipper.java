@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> //
     implements TipperCategory, Serializable, Rule<N, Tip> {
-  public static Converter converts(final String from) {
+  public static Converter convert(final String from) {
     return to -> new Tipper.Example.Converts() {
       @Override public String from() {
         return from;
