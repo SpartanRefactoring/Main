@@ -79,19 +79,22 @@ public enum GuessedContext {
       return BLOCK_LOOK_ALIKE;
     if (methodInvocationLookAlike(codeFragment))
       return EXPRESSION_LOOK_ALIKE;
-    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
-      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
-        return $;
-    return accuratelyCheckedContext(codeFragment);
-  }
-
-  private static GuessedContext accuratelyCheckedContext(final String codeFragment) {
-    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
-      if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
-        return $;
+    final GuessedContext $ = qfind(codeFragment);
+    if ($ != null)
+      return $;
     monitor.debug(
         "GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
     return GuessedContext.STATEMENTS_LOOK_ALIKE;
+  }
+
+  public static GuessedContext qfind(final String codeFragment) {
+    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
+      if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
+        return $;
+    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
+      if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
+        return $;
+    return null;
   }
 
   private static boolean methodInvocationLookAlike(final String codeFragment) {
