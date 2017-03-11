@@ -1,16 +1,15 @@
 package il.org.spartan.spartanizer.tipping;
 
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
 
-/** TODO Yossi Gil: document class
+/** An abstract interface defining tippers, bloaters, and light weight pattern
+ * search, logging, computing stats, etc.
  * @param <N>
  * @param <T>
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-10 */
-public interface Rule<N extends ASTNode, T> {
+public interface Rule<N, T> {
   /** Determine whether the parameter is "eligible" for application of this
    * instance.
    * @param n JD
