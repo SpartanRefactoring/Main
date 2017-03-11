@@ -78,27 +78,33 @@ public class Operand extends Wrapper<String> {
   private void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.printf(NEW_UNIT_TEST + fullBatch()); 
-    fullBatch();
+    System.err.println(NEW_UNIT_TEST + unitTestFunction());
   }
 
-  private String fullBatch() {
+  String unitTestFunction() {
     final String $ = trivia.squeeze(trivia.removeComments(anonymize.code(essence(get()))));
-    StringBuilder body = new StringBuilder("  trimming.of(%s) // \n");
-    for (String from = $;;) {
-      String to = theSpartanizer.once(from);
-      if (to == null || essence(to).equals(from)) {
-        body.append(String.format("\n .stays() //\n  "));
-        break;
-      }
-      body.append(String.format("\n .gives(\"%s\") //", trivia.escapeQuotes(essence(to))));
+    return String.format("%s @Test public void %s() {\n %s\n}\n", comment(), signature($), body($));
+  }
+
+  private static String comment() {
+    return String.format("/** Automatically generated on %s */", system.now());
+  }
+
+  private static String body(final String input) {
+    for (String $ = String.format("  trimmingOjf(\"%s\") //\n", input), from = input;;) {
+      final String to = theSpartanizer.once(from);
+      if (theSpartanizer.same(to, from))
+        return $ + String.format("\n .stays() //\n  ;");
+      Tipper<?> t = theSpartanizer.firstTipper(from);
+      assert t != null;
+      $ += (String.format(" .using(%s.class,new %s()) //\n", wizard.className(t.node()), t.className()));
+      $ += (String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to))));
       from = to;
     }
-    return String.format("/** Automatically generate */\n @Test public void %s() {\n %s\n}\n", signature($), body);
   }
 
   private static String signature(String start) {
-    return start.replaceAll("\\p{Punct}", "");
+    return start.replaceAll("\\p{Punct}", "").replaceAll("\\s", "").toLowerCase();
   }
 
   /** Check whether one of the code options is correct
@@ -135,7 +141,7 @@ public class Operand extends Wrapper<String> {
     final String expected = get();
     if (expected.equals(peeled) || essence(peeled).equals(essence(expected)))
       return;
-    copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
+    copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
         trivia.escapeQuotes(essence(peeled)), //
         trivia.escapeQuotes(essence(expected)));
     azzert.that(essence(peeled), is(essence(expected)));

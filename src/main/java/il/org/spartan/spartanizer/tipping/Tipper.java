@@ -133,4 +133,9 @@ public abstract class Tipper<N extends ASTNode> //
       String code();
     }
   }
+
+    N node;
+  public final N node() {
+    return node; 
+  }
 }
