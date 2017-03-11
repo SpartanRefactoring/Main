@@ -31,7 +31,7 @@ public final class CollectedTests {
   }
 
   @Test public void d() {
-    trimmingOf("    final W s = new W(\"bob\");\n" + "    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
+    trimmingOf("    final W s = new W(\"bob\");\n    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
         .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 

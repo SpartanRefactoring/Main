@@ -118,13 +118,13 @@ final class ArithmeticTest {
 
     @Test public void issue206_11() {
       trimmingOf(
-          "public int compareTo(final Fraction other) {" + "return other == this || numerator == other.numerator && denominator == other.denominator"
+          "public int compareTo(final Fraction other) {return other == this || numerator == other.numerator && denominator == other.denominator"
               + "|| 1L * 1L * numerator * other.denominator == 1L * 1L * denominator * other.numerator ? 0"
-              + ": 1L * 1L * numerator * other.denominator <1L * 1L * denominator * other.numerator ? -1 : 1;" + "}")
+              + ": 1L * 1L * numerator * other.denominator <1L * 1L * denominator * other.numerator ? -1 : 1;}")
                   .gives("public int compareTo(final Fraction other) {"
                       + "return other == this || numerator == other.numerator && denominator == other.denominator"
                       + "|| 1L * numerator * other.denominator == 1L * denominator * other.numerator ? 0"
-                      + ": 1L * numerator * other.denominator <1L * denominator * other.numerator ? -1 : 1;" + "}");
+                      + ": 1L * numerator * other.denominator <1L * denominator * other.numerator ? -1 : 1;}");
     }
 
     @Test public void issue206_12() {

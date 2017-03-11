@@ -88,7 +88,7 @@ public class SpartanizerTest {
   private final String test2 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
       + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
-      + " public void notATestMethod(){int i = 1;assert (i>0);} public void ASecondNotTestMethod(){" + " int i = 1;assert (i>0);} }";
+      + " public void notATestMethod(){int i = 1;assert (i>0);} public void ASecondNotTestMethod(){ int i = 1;assert (i>0);} }";
 
   boolean countMethods() {
     ++nMethods;
@@ -203,7 +203,7 @@ public class SpartanizerTest {
 
   @Test public void testSpartanizerCheckMethod_03() {
     final String test4 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
-        + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{public void method1(){int i = 1;" + " assert (i>0);} }";
+        + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{public void method1(){int i = 1; assert (i>0);} }";
     print(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;

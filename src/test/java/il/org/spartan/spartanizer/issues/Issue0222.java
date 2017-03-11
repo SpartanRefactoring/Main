@@ -13,7 +13,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0222 {
   @Test public void chocolate1() {
-    trimmingOf("L<E> os(I x){if(x==null)return null;int y=x;++y;" + " L<E> $=new A<>();$.a(l(x));$.a(r(x));if(x.h())" + " $.d(s.es(x));return $;}")//
+    trimmingOf("L<E> os(I x){if(x==null)return null;int y=x;++y; L<E> $=new A<>();$.a(l(x));$.a(r(x));if(x.h()) $.d(s.es(x));return $;}")//
         .stays();
   }
 

@@ -60,7 +60,7 @@ public class Issue1077 {
   @Test public void t5() {
     trimmingOf("class a { final List<Statement> l; @SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {"
         + "final ASTNode ¢;for (final Statement s : (List<Statement>) ((Block) ¢).statements())if (s.has())return true;}"
-        + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {for (final Statement s : l)if (s.has())return 1;" + "return 0;}}")
+        + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int type) {for (final Statement s : l)if (s.has())return 1;return 0;}}")
             .gives("class a { final List<Statement> l; "
                 + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int type) {final ASTNode ¢;"
                 + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())if (s.has())return true;}"

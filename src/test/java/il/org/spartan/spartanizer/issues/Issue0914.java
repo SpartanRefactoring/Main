@@ -12,8 +12,8 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0914 {
   @Test public void actualBug() {
-    trimmingOf("  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {" + "ASTNode $ = ¢;"
-        + "while (!iz.methodDeclaration($) && $ != null)" + "$ = $.getParent();" + "return az.methodDeclaration($);" + "}")//
+    trimmingOf("  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {ASTNode $ = ¢;"
+        + "while (!iz.methodDeclaration($) && $ != null)$ = $.getParent();return az.methodDeclaration($);}")//
             .stays();
   }
 
@@ -24,22 +24,21 @@ public class Issue0914 {
   }
 
   @Test public void initializers_while_3() {
-    trimmingOf("public boolean check(int i) {" + "int p = i, a = 0; ++a;" + "while(p <10) ++p;" + "return false;" + "}")//
+    trimmingOf("public boolean check(int i) {int p = i, a = 0; ++a;while(p <10) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_while_4() {
-    trimmingOf("public boolean check(ASTNode i) {" + "ASTNode p = i; int a = 5; ++a;" + "while(p <10) p = p.getParent();" + "return false;" + "}")
-        .stays();
+    trimmingOf("public boolean check(ASTNode i) {ASTNode p = i; int a = 5; ++a;while(p <10) p = p.getParent();return false;}").stays();
   }
 
   @Test public void t05() {
-    trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")//
+    trimmingOf("static X f(final S ¢) {X $ = ¢.elze();while ($ instanceof S)$ = ((S) $).elze();return $;}")//
         .stays();
   }
 
   @Test public void test0() {
-    trimmingOf("static X f(final S ¢) {" + "X $ = ¢.elze();" + "while ($ instanceof S)" + "$ = ((S) $).elze();" + "return $;" + "}")//
+    trimmingOf("static X f(final S ¢) {X $ = ¢.elze();while ($ instanceof S)$ = ((S) $).elze();return $;}")//
         .stays();
   }
 }

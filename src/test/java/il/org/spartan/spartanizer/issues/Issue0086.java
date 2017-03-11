@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0086 extends Issue____ {
-  private static final String INPUT = "{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}";
+  private static final String INPUT = "{   throw Something();  f(); a = 3; return 2;}";
   Statement context;
   ThrowStatement focus;
   Tipper<ThrowStatement> tipper;
@@ -119,13 +119,11 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void doubleVanillaThrow() {
     A$04_init();
-    trimmingOf("int f() {" + " if (false) " + "   i++; " + " else { " + "   g(i); " + "   throw new RuntimeException(); " + " } " + " f();"
-        + " a = 3;" + " return 2;" + "}")//
-            .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}")
-            .gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
-            .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//
-            .gives("int f(){g(i);throw new RuntimeException();}")//
-            .stays();
+    trimmingOf("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f();" + " a = 3; return 2;}")//
+        .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
+        .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//
+        .gives("int f(){g(i);throw new RuntimeException();}")//
+        .stays();
   }
 
   private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
@@ -133,7 +131,7 @@ public final class Issue0086 extends Issue____ {
   }
 
   @Test public void vanilla() {
-    trimmingOf("{" + "   throw Something(); " + " f();" + " a = 3;" + " return 2;" + "}")//
+    trimmingOf("{   throw Something();  f(); a = 3; return 2;}")//
         .gives("throw Something();f(); a=3; return 2;").gives("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//

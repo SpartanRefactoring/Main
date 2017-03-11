@@ -42,7 +42,7 @@ public class Issue0810 {
   }
 
   @Test public void test4() {
-    assert !haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x)" + "{}"));
+    assert !haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x){}"));
   }
 
   @Test public void test5() {

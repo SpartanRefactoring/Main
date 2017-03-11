@@ -72,8 +72,7 @@ public class Table_RawNanoStatistics {
     pWriter.close();
   }
 
-  
- static void initializeWriter(final String outputFolder) {
+  static void initializeWriter(final String outputFolder) {
     pWriter = new Table(Table_RawNanoStatistics.class, outputFolder);
   }
 

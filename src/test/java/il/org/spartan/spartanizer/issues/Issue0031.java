@@ -12,10 +12,10 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0031 {
   @Test public void a() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n" + "      return hasAnnotation(now.modifiers());\n"
-        + "    }")
+    trimmingOf(
+        " static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(now.modifiers());\n" + "    }")
             .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
-                + "      return hasAnnotation(now.modifiers());\n" + "    }");
+                + "      return hasAnnotation(now.modifiers());\n    }");
   }
 
   @Test public void b() {

@@ -12,7 +12,7 @@ import il.org.spartan.*;
 
 @SuppressWarnings("static-method")
 public final class TermsExpanderTest {
-  final String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +" + "\"Total changes: \" + (initialCount - finalCount)";
+  final String complexStringCase = "\"Completed in \" + (1 + i) + \" passes.\" +\"Total changes: \" + (initialCount - finalCount)";
 
   @Test public void test00() {
     azzert.that(TermsExpander.simplify(i("7-3")), iz("7-3"));

@@ -16,12 +16,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class WrapTest {
   @Test public void dealWithBothKindsOfComment() {
-    similar("if (b) {\n" + " /* empty */" + "; \n" + "} { // no else \n" + " throw new Exception();\n" + "}", //
+    similar("if (b) {\n /* empty */; \n} { // no else \n throw new Exception();\n}", //
         "if (b) {;} { throw new Exception(); }");
   }
 
   @Test public void dealWithComment() {
-    azzert.that(Wrap.find("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"), is(Wrap.Statement));
+    azzert.that(Wrap.find("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), is(Wrap.Statement));
   }
 
   @Test public void essenceTest() {
@@ -97,8 +97,7 @@ public final class WrapTest {
   }
 
   @Test public void removeComments() {
-    similar(trivia.removeComments("if (b) {\n" + " /* empty */" + "} else {\n" + " throw new Exception();\n" + "}"),
-        "if (b) {} else { throw new Exception(); }");
+    similar(trivia.removeComments("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), "if (b) {} else { throw new Exception(); }");
   }
 
   private void similar(final String s1, final String s2) {

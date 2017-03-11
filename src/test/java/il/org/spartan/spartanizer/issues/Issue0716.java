@@ -36,10 +36,10 @@ public class Issue0716 {
   }
 
   @Test public void checkWithIf() {
-    assert !determineIf.hasManyStatements(
-        (MethodDeclaration) wizard.ast("public void withIf() {" + "int a = 1;" + "if (a == 2) {" + "    ++a; ++a; ++a; ++a; ++a; ++a;} }"));
-    assert determineIf.hasManyStatements(
-        (MethodDeclaration) wizard.ast("public void withIf() {" + "int a = 1;" + "if (a == 2) {" + "    ++a; ++a; ++a; ++a; ++a; ++a; ++a;} }"));
+    assert !determineIf
+        .hasManyStatements((MethodDeclaration) wizard.ast("public void withIf() {int a = 1;if (a == 2) {    ++a; ++a; ++a; ++a; ++a; ++a;} }"));
+    assert determineIf
+        .hasManyStatements((MethodDeclaration) wizard.ast("public void withIf() {int a = 1;if (a == 2) {    ++a; ++a; ++a; ++a; ++a; ++a; ++a;} }"));
   }
 
   @Test public void nullFalse() {

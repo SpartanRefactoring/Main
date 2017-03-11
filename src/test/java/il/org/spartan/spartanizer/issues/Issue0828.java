@@ -33,19 +33,17 @@ public class Issue0828 {
   }
 
   @Before public void initialize() {
-    simpleFor = (ForStatement) first(
-        statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{for(int i=0;i<5;i++){x=7;}}")).getBody()));
-    trueFor = (ForStatement) first(
-        statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{for(int i=0;true;i++){x=7;}}")).getBody()));
+    simpleFor = (ForStatement) first(statements(((MethodDeclaration) wizard.ast("public void foo(int x){for(int i=0;i<5;i++){x=7;}}")).getBody()));
+    trueFor = (ForStatement) first(statements(((MethodDeclaration) wizard.ast("public void foo(int x){for(int i=0;true;i++){x=7;}}")).getBody()));
     trueStatementFor = (ForStatement) statements(
-        ((MethodDeclaration) wizard.ast("public void foo(int x)" + "{x=7; for(int i=0;x==7;i++){x=7;}}")).getBody()).get(1);
+        ((MethodDeclaration) wizard.ast("public void foo(int x){x=7; for(int i=0;x==7;i++){x=7;}}")).getBody()).get(1);
     obviouseTrueStatement = (ForStatement) first(
-        statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{for(int i=0;i==i;i++){x=7;}}")).getBody()));
+        statements(((MethodDeclaration) wizard.ast("public void foo(int x){for(int i=0;i==i;i++){x=7;}}")).getBody()));
     numEqualTrueStatement = (ForStatement) first(
-        statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{for(int i=0;5>3;i++){x=7;}}")).getBody()));
+        statements(((MethodDeclaration) wizard.ast("public void foo(int x){for(int i=0;5>3;i++){x=7;}}")).getBody()));
     strEqualTrueStatement = (ForStatement) first(
-        statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{for(int i=0;!\"h\".equals(\"828\");i++){x=7;}}")).getBody()));
-    falseFor = (ForStatement) statements(((MethodDeclaration) wizard.ast("public void foo(int x)" + "{x=7; for(int i=0;false;i++){x=7;}}")).getBody())
+        statements(((MethodDeclaration) wizard.ast("public void foo(int x){for(int i=0;!\"h\".equals(\"828\");i++){x=7;}}")).getBody()));
+    falseFor = (ForStatement) statements(((MethodDeclaration) wizard.ast("public void foo(int x){x=7; for(int i=0;false;i++){x=7;}}")).getBody())
         .get(1);
     forTrueConditionRemove = new ForTrueConditionRemove();
   }

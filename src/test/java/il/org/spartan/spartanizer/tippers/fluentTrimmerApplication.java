@@ -157,7 +157,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n   to '" + expected + "', but, both look" //
               + "\n pretty much the same to me. You may want"//
               + "\n change your @Test to <code>" + //
-              "\n\tipper\tipper spartiziation.of(" + codeFragment + ").stays()" + "\n </code>." //
+              "\n\tipper\tipper spartiziation.of(" + codeFragment + ").stays()\n </code>." //
       );
     }
     if (common(codeFragment) != null) {

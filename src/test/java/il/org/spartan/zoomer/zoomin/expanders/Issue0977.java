@@ -13,7 +13,7 @@ import il.org.spartan.bloater.bloaters.*;
 public class Issue0977 {
   @Test public void complexMerging() {
     bloatingOf("switch (x){case 1:f(1);case 2:f(2);default:f(3);throw new Exception();}")
-        .gives("switch (x){case 1:f(1);f(2);f(3);throw new Exception();case 2:f(2);" + "default:f(3);throw new Exception();}")
+        .gives("switch (x){case 1:f(1);f(2);f(3);throw new Exception();case 2:f(2);default:f(3);throw new Exception();}")
         .gives("switch (x){case 1:f(1);f(2);f(3);throw new Exception();case 2:f(2);"
             + " f(3);throw new Exception();default:f(3);throw new Exception();}")
         .stays();
@@ -21,13 +21,13 @@ public class Issue0977 {
 
   // see issue #1046
   @Test public void complexSequencer() {
-    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2:" + " e();}")//
+    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e();}")//
         .stays();
   }
 
   // see issue #1046
   @Test public void complexSequencerNotLast() {
-    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} f();" + "case 2:e();}")//
+    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} f();case 2:e();}")//
         .stays();
   }
 
@@ -39,9 +39,9 @@ public class Issue0977 {
   }
 
   @Test public void simpleSequencers() {
-    bloatingOf("switch (x){case 1:f(1);case 2:f(2);break;case 3:f(3);case 4:" + " throw new Exception();default:}")
-        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:" + " f(3);case 4:throw new Exception();default:}")
-        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3:" + " f(3);throw new Exception();case 4:throw new Exception();default:}")
+    bloatingOf("switch (x){case 1:f(1);case 2:f(2);break;case 3:f(3);case 4: throw new Exception();default:}")
+        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3: f(3);case 4:throw new Exception();default:}")
+        .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3: f(3);throw new Exception();case 4:throw new Exception();default:}")
         .stays();
   }
 }

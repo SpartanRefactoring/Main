@@ -10,8 +10,8 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0281 {
   @Test public void test0() {
-    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {" + "Statement $ = ¢.getElseStatement();" + "while ($ instanceof IfStatement)"
-        + "$ = ((IfStatement) $).getElseStatement();" + "return $;" + "}")//
+    trimmingOf("static Statement recursiveElze(final IfStatement ¢) {Statement $ = ¢.getElseStatement();while ($ instanceof IfStatement)"
+        + "$ = ((IfStatement) $).getElseStatement();return $;}")//
             .stays();
   }
 

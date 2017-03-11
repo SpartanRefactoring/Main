@@ -15,7 +15,7 @@ public class Issue0826 {
   }
 
   @Test public void b() {
-    trimmingOf("public void b() {" + "    int i = 210;" + "    if (++i < 5)" + "      a(i);" + "    else" + "      a(i);")//
+    trimmingOf("public void b() {    int i = 210;    if (++i < 5)      a(i);    else      a(i);")//
         .stays();
   }
 }
