@@ -13,6 +13,16 @@ import il.org.spartan.spartanizer.tippers.*;
 
 @SuppressWarnings("static-method")
 public class Issue0283 {
+  /** Automatically generated */
+  @Test public void abclasscad3ed3fpublicvoida() {
+    trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
+  .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+  .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
+
+  .stays() //
+   ;
+ }
+
   @Test public void test0() {
     trimmingOf("@SuppressWarnings(\"unused\") " //
         + "@Deprecated " //
@@ -36,7 +46,6 @@ public class Issue0283 {
     azzert.that(AnnotationSort.compare("SomeUserDefinedA", "SomeUserDefinedB"), lessThan(0));
     azzert.that(AnnotationSort.compare("SupportedSourceVersion", "WebServiceProvider"), lessThan(0));
   }
-
   @Test public void test2() {
     trimmingOf("public class Point {" //
         + "@ConstructorProperties({\"x\", \"y\"}) @Deprecated " //
@@ -52,7 +61,6 @@ public class Issue0283 {
                 + "}}")//
             .stays();
   }
-
   @Test public void test3() {
     trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ 3 }) @Inherited @NonNull @Deprecated public void test0() { }}")
         .gives(
