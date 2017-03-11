@@ -26,7 +26,7 @@ public final class LastIndex extends NanoPatternTipper<InfixExpression> {
   };
   static final Last rival = new Last();
 
-  @Override public boolean interesting(final InfixExpression ¢) {
+  @Override public boolean check(final InfixExpression ¢) {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 

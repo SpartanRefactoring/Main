@@ -111,6 +111,6 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
   }
 
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(λ -> λ.interesting(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 }

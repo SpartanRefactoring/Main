@@ -230,7 +230,7 @@ public class FileSystemASTVisitor {
 
         {
           hook(ExpressionStatement.class, new Rule<ExpressionStatement, Void>() {
-            @Override public boolean interesting(final ExpressionStatement ¢) {
+            @Override public boolean check(final ExpressionStatement ¢) {
               return extract.usedNames(¢.getExpression()).size() == 1;
             }
 

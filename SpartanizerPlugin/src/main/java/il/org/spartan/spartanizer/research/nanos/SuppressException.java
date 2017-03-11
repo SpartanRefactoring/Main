@@ -25,7 +25,7 @@ public final class SuppressException extends NanoPatternTipper<CatchClause> {
     }
   };
 
-  @Override public boolean interesting(final CatchClause ¢) {
+  @Override public boolean check(final CatchClause ¢) {
     return anyTips(tippers, parentAsTryStatement(¢));
   }
 

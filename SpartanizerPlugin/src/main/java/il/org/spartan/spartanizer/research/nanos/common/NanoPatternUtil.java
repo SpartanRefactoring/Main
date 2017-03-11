@@ -20,25 +20,25 @@ public interface NanoPatternUtil {
   }
 
   static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-    return d != null && ps.stream().anyMatch(λ -> λ.interesting(d));
+    return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 
   static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
-    return n != null && ts.stream().anyMatch(λ -> λ.interesting(n));
+    return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
 
   static boolean nullCheck(final Expression ¢) {
     return nullComparison(¢)//
-        || nullComparisonOr.interesting(¢)//
+        || nullComparisonOr.check(¢)//
             && nullCheck(right(az.infixExpression(¢)));
   }
 
   static boolean nullComparison(final Expression ¢) {
-    return nullComparison.interesting(¢);
+    return nullComparison.check(¢);
   }
 
   static boolean nullComparisonIncremental(final Expression ¢) {
-    return nullComparisonOr.interesting(¢);
+    return nullComparisonOr.check(¢);
   }
 
   UserDefinedTipper<Expression> nullComparison = patternTipper("$X == null", "", "");

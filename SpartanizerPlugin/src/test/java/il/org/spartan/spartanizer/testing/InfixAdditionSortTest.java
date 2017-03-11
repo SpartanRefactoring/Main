@@ -39,11 +39,11 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test02() {
-    assert new InfixAdditionSort().interesting(INPUT);
+    assert new InfixAdditionSort().check(INPUT);
   }
 
   @Test public void test03() {
-    assert new InfixAdditionSort().interesting(INPUT);
+    assert new InfixAdditionSort().check(INPUT);
   }
 
   @Test public void test04() {
@@ -51,11 +51,11 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test05() {
-    assert !new InfixAdditionSubtractionExpand().interesting(INPUT);
+    assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
 
   @Test public void test06() {
-    assert !new InfixAdditionSubtractionExpand().interesting(INPUT);
+    assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
 
   @Test public void test07() {

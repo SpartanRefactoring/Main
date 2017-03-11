@@ -16,7 +16,7 @@ public interface Rule<N extends ASTNode, T> {
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
-  boolean interesting(N n);
+  boolean check(N n);
 
   default String[] akas() {
     return new String[] { technicalName() };

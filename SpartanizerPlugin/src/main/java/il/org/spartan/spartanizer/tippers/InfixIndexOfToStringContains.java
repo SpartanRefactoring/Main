@@ -31,17 +31,17 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
 
   /** Indicates if the infix expression contains two strings with string
    * operation between them */
-  @Override public boolean interesting(final InfixExpression x) {
-    return tippers.stream().anyMatch(λ -> λ.interesting(x) && certain.string(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
+  @Override public boolean check(final InfixExpression x) {
+    return tippers.stream().anyMatch(λ -> λ.check(x) && certain.string(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
   }
 
   /** Operates the first tip that can be implemented. */
   @Override public Tip tip(final InfixExpression ¢) {
-    return tippers.stream().filter(λ -> λ.interesting(¢)).map(λ -> λ.tip(¢)).findFirst().orElse(null);
+    return tippers.stream().filter(λ -> λ.check(¢)).map(λ -> λ.tip(¢)).findFirst().orElse(null);
   }
 
   /** @return the first description of tip that can be implemented. */
   @Override public String description(final InfixExpression ¢) {
-    return tippers.stream().filter(λ -> λ.interesting(¢)).map(λ -> λ.description(¢)).findFirst().orElse(null);
+    return tippers.stream().filter(λ -> λ.check(¢)).map(λ -> λ.description(¢)).findFirst().orElse(null);
   }
 }

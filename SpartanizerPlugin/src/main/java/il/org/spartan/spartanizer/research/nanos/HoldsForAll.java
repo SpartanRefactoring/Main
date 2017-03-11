@@ -32,7 +32,7 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
 
-  @Override public boolean interesting(final EnhancedForStatement x) {
+  @Override public boolean check(final EnhancedForStatement x) {
     return tippers.canTip(az.block(parent(x)))//
         || tippers2.canTip(x);
   }

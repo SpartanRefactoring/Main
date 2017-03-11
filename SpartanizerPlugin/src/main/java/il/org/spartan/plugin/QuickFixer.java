@@ -127,7 +127,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
     @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(final Toolbox __, final ASTNode ¢) {
       assert check(¢);
-      return !tipper.interesting((N) ¢) ? null : tipper;
+      return !tipper.check((N) ¢) ? null : tipper;
     }
 
     @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker $) {

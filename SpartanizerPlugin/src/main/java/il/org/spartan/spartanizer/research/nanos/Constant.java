@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Constant extends NanoPatternTipper<FieldDeclaration> {
   private static final long serialVersionUID = 2694420776077369062L;
 
-  @Override public boolean interesting(final FieldDeclaration ¢) {
+  @Override public boolean check(final FieldDeclaration ¢) {
     return iz.constant(¢)//
         && (iz.primitiveType(type(¢))//
             || iz.stringType(type(¢))//
