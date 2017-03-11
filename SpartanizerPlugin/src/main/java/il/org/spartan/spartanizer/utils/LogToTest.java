@@ -92,7 +92,7 @@ public enum LogToTest {
 
   private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
       final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
-    ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, normalize.unwarpedTestcase(rawCode),
+    ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, anonymize.unwarpedTestcase(rawCode),
         errorLocationFileUnclean));
   }
 
