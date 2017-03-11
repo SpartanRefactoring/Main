@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
-public abstract class Tipper<N extends ASTNode> //
-    implements TipperCategory, Serializable, Rule<N, Tip> {
+public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
+    implements TipperCategory, Serializable{
   public static Converter convert(final String from) {
     return to -> new Tipper.Example.Converts() {
       @Override public String from() {
@@ -53,8 +53,7 @@ public abstract class Tipper<N extends ASTNode> //
     return !check(¢);
   }
 
-  @Override public final boolean check(final N ¢) {
-    node = ¢;
+  @Override public final boolean ok(final N ¢) {
     return canTip(¢);
   }
 
@@ -139,11 +138,5 @@ public abstract class Tipper<N extends ASTNode> //
     interface Ignores extends Example {
       String code();
     }
-  }
-
-  N node;
-
-  public final N node() {
-    return node;
   }
 }
