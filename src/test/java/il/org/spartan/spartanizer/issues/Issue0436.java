@@ -17,6 +17,6 @@ import il.org.spartan.spartanizer.research.util.*;
 @SuppressWarnings("static-method")
 public class Issue0436 {
   @Test public void testRenamingWithQualified() {
-    azzert.that(normalize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear.foo());"), is("if(a == A) return b(a, B());"));
+    azzert.that(anonymize.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear.foo());"), is("if(a == A) return b(a, B());"));
   }
 }

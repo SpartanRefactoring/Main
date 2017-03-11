@@ -74,7 +74,7 @@ public class ASTTrotter extends ASTVisitor {
     ++total;
     if (interesting(¢)) {
       ++interesting;
-      record(squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(¢ + "")))) + "\n");
+      record(squeeze(theSpartanizer.fixedPoint(removeComments(anonymize.code(¢ + "")))) + "\n");
     }
     return true;
   }
@@ -87,7 +87,7 @@ public class ASTTrotter extends ASTVisitor {
     ++total;
     if (interesting(¢)) {
       ++interesting;
-      record(squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(¢ + "")))) + "\n");
+      record(squeeze(theSpartanizer.fixedPoint(removeComments(anonymize.code(¢ + "")))) + "\n");
     }
     return true;
   }
@@ -96,7 +96,7 @@ public class ASTTrotter extends ASTVisitor {
     ++total;
     if (interesting(¢)) {
       ++interesting;
-      record(squeezeSpaces(theSpartanizer.fixedPoint(removeComments(normalize.code(¢ + "")))) + "\n");
+      record(squeeze(theSpartanizer.fixedPoint(removeComments(anonymize.code(¢ + "")))) + "\n");
     }
     return true;
   }

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch */
-public enum normalize {
+public enum anonymize {
   ;
   public static String testcase(final String name, final String raw) {
     return wrapTest(name, linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw)))));
@@ -109,7 +109,7 @@ public enum normalize {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
-      System.out.println(normalize.testcase("a", s));
+      System.out.println(anonymize.testcase("a", s));
     }
   }
 }
