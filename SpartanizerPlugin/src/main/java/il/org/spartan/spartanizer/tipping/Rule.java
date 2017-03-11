@@ -11,32 +11,38 @@ import il.org.spartan.spartanizer.tipping.Tipper.*;
  * @since 2017-03-10 */
 public interface Rule<N, T> {
   /** Determine whether the parameter is "eligible" for application of this
-   * instance.
+   * instance. Should be overridden
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
    *         the simplification offered by this object. */
   boolean check(N n);
 
+  /** Should be overridden */
   default String[] akas() {
     return new String[] { technicalName() };
   }
 
+  /** Should be overridden */
   default String describe(final N ¢) {
     return trivia.gist(¢);
   }
 
+  /** Should be overridden */
   default String description() {
     return technicalName();
   }
 
+  /** Should be overridden */
   default String description(final N ¢) {
     return String.format(verb(), describe(¢));
   }
 
+  /** Should be overridden */
   default Example[] examples() {
     return new Example[0];
   }
 
+  /** Should not be overridden */
   default String technicalName() {
     return getClass().getSimpleName();
   }
@@ -46,7 +52,63 @@ public interface Rule<N, T> {
    * @return a tip given for the ASTNode ¢. */
   T tip(N ¢);
 
+  /** Should be overridden */
   default String verb() {
     return String.format("apply '%s' to '%%s'", technicalName());
+  }
+
+  abstract class Stateful<R, T> implements Rule<R, T> {
+    R current;
+
+    @Override public final boolean check(R n) {
+      current = n;
+      return ok(n); 
+    }
+
+    abstract boolean ok(R n);
+  }
+
+  abstract class Delegator<N, T> extends Stateful<N, T> {
+    public final Rule<N, T> inner;
+
+    @Override public boolean ok(final N ¢) {
+      return inner.check(¢);
+    }
+
+    @Override public String[] akas() {
+      return inner.akas();
+    }
+
+    @Override public String describe(final N ¢) {
+      return inner.describe(¢);
+    }
+
+    @Override public String description() {
+      return inner.description();
+    }
+
+    @Override public String description(final N ¢) {
+      return inner.description(¢);
+    }
+
+    @Override public Example[] examples() {
+      return inner.examples();
+    }
+
+    @Override public String technicalName() {
+      return inner.technicalName();
+    }
+
+    @Override public T tip(final N ¢) {
+      return inner.tip(¢);
+    }
+
+    @Override public String verb() {
+      return inner.verb();
+    }
+
+    public Delegator(final Rule<N, T> inner) {
+      this.inner = inner;
+    }
   }
 }
