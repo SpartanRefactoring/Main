@@ -44,8 +44,6 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     compilationUnitRecords.add(foo(¢));
-    // TODO MATTEO: Check this code
-    count.lines(¢);
     ¢.accept(new CleanerVisitor());
     return true;
   }
