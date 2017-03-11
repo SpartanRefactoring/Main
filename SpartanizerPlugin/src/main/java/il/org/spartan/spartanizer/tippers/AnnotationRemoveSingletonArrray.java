@@ -10,7 +10,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Yossi Gil: document class {@link }
+
+/** Use {@link #examples()} for documentation 
+
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-02-10 */
 public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<SingleMemberAnnotation>//
@@ -23,7 +25,7 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
 
   @Override public Example[] examples() {
     return new Example[] { //
-        converts("@SuppressWarnings({\"unchecked\"}) void f() {}") //
+        convert("@SuppressWarnings({\"unchecked\"}) void f() {}") //
             .to("@SuppressWarnings(\"unchecked\") void f() {}"), //
         ignores("@SuppressWarnings(\"unchecked\") void f() {}"), //
         ignores("@SuppressWarnings() void f() {}"), //

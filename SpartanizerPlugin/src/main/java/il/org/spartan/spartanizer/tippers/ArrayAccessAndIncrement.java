@@ -17,12 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** convert : {@code
- * array[i];
- * ++i;
- * } to : {@code
- * array[i++];
- * }
+/** Use {@link #examples()} for documentation 
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
 public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
@@ -35,7 +30,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
 
   @Override public Tipper.Example[] examples() {
     return new Example[] { //
-        converts("array[i] = 1; ++i;") //
+        convert("array[i] = 1; ++i;") //
             .to("array[i++] = 1;"), //
         ignores("array[i].f(); ++i;"), //
         ignores("f(array[i]); ++i;") };
