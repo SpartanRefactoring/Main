@@ -48,9 +48,9 @@ public abstract class Tipper<N extends ASTNode> //
    * @param e JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
    *         the simplification offered by this object.
-   * @see #interesting(InfixExpression) */
+   * @see #check(InfixExpression) */
   public final boolean cantTip(final N ¢) {
-    return !interesting(¢);
+    return !check(¢);
   }
 
   public String className() {

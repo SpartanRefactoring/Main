@@ -23,7 +23,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     }
   };
 
-  @Override public boolean interesting(final InfixExpression ¢) {
+  @Override public boolean check(final InfixExpression ¢) {
     return anyTips(tippers, ¢);
   }
 

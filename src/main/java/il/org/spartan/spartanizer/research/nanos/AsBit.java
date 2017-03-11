@@ -24,7 +24,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     }
   };
 
-  @Override public boolean interesting(final ConditionalExpression ¢) {
+  @Override public boolean check(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);
   }
 

@@ -37,8 +37,8 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
         };
       }
 
-      @Override public boolean interesting(final EnhancedForStatement ¢) {
-        return nano.interesting(¢);
+      @Override public boolean check(final EnhancedForStatement ¢) {
+        return nano.check(¢);
       }
 
       @Override public String description(final EnhancedForStatement ¢) {
