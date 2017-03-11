@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.research.util;
 
+import static il.org.spartan.spartanizer.utils.Wrap.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,7 +12,10 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch */
@@ -111,5 +116,31 @@ public enum anonymize {
         s += "\n" + reader.nextLine();
       System.out.println(anonymize.testcase("a", s));
     }
+  }
+
+  public static String makeUnitTest(final String codeFragment) {
+    final String $ = trivia.squeeze(trivia.removeComments(code(essence(codeFragment))));
+    return String.format("%s @Test public void %s() {\n %s\n}\n", anonymize.comment(), anonymize.signature($), anonymize.body($));
+  }
+
+  public static String comment() {
+    return String.format("/** Automatically generated on %s */\n", system.now());
+  }
+
+  public static String body(final String input) {
+    for (String $ = String.format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
+      final String to = theSpartanizer.once(from);
+      if (theSpartanizer.same(to, from))
+        return $ + "  .stays() //\n  ;";
+      final Tipper<?> t = theSpartanizer.firstTipper(from);
+      assert t != null;
+      $ += String.format(" .using(%s.class,new %s()) //\n", t.current().getClass().getSimpleName(), t.className());
+      $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
+      from = to;
+    }
+  }
+
+  public static String signature(final String start) {
+    return start.replaceAll("\\p{Punct}", "").replaceAll("\\s", "").toLowerCase();
   }
 }
