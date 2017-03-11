@@ -91,7 +91,7 @@ public class Operand extends Wrapper<String> {
   }
 
   private static String body(final String input) {
-    for (String $ = String.format("  trimmingOjf(\"%s\") //\n", input), from = input;;) {
+    for (String $ = String.format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
         return $ + "  .stays() //\n  ;";

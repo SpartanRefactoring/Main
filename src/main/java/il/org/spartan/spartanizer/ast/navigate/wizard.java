@@ -333,8 +333,20 @@ public interface wizard {
       case BLOCK_LOOK_ALIKE:
         return az.astNode(first(statements(az.block(into.s(javaSnippet)))));
       default:
+        for (int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
+            ASTParser.K_COMPILATION_UNIT)) {
+          final ASTParser p = wizard.parser(guess);
+          p.setSource(javaSnippet.toCharArray());
+          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
+          if (valid($))
+            return $;
+        }
         return null;
     }
+  }
+
+  static boolean valid(ASTNode $) {
+    return !($ instanceof CompilationUnit) || ((CompilationUnit) $).getProblems().length == 0;
   }
 
   static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
@@ -693,12 +705,11 @@ public interface wizard {
   }
 
   static ASTParser parser(final int kind) {
-    final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
+    final ASTParser $ = ASTParser.newParser(AST.JLS8);
     setBinding($);
     $.setKind(kind);
     final Map<String, String> options = JavaCore.getOptions();
-    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8); // or newer
-    // version
+    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
     $.setCompilerOptions(options);
     return $;
   }
