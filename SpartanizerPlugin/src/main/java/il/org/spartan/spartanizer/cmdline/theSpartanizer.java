@@ -93,10 +93,7 @@ public interface theSpartanizer {
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
-          if (!searching)
-            return false;
-          final Tipper<N> $ = safeFirstTipper(¢);
-          return go($);
+          return searching && go(safeFirstTipper(¢));
         }
 
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {

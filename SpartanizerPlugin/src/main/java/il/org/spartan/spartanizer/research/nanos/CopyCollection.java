@@ -24,7 +24,7 @@ public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreatio
     return "";
   }
 
-  @Override public boolean check(final ClassInstanceCreation x) {
+  @Override public boolean canTip(final ClassInstanceCreation x) {
     return tippers.canTip(az.block(parent(parent(parent(x)))));
   }
 

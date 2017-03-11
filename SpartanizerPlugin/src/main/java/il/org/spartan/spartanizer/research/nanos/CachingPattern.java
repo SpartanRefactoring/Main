@@ -21,7 +21,7 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
           "return $X1!=null?$X1:($X1=$X2);", //
           "Caching pattern: rewrite as return of ternary");
 
-  @Override public boolean check(final IfStatement x) {
+  @Override public boolean canTip(final IfStatement x) {
     return tipper.check(az.block(parent(x)));
   }
 

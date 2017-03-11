@@ -52,7 +52,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
         "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
   }
 
-  @Override public boolean check(final ForStatement s) {
+  @Override public boolean canTip(final ForStatement s) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.check(s)) {
         final SimpleName n = az.simpleName(¢.getMatching(s, "$N"));

@@ -22,7 +22,7 @@ public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
     }
   };
 
-  @Override public boolean check(final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢);
   }
 

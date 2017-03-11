@@ -33,7 +33,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final String API_LEVEL = "apiLevel";
   private static final Down.Caster c = new Down.Caster();
 
-  @Override public boolean check(final CastExpression ¢) {
+  @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
       return false;
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);

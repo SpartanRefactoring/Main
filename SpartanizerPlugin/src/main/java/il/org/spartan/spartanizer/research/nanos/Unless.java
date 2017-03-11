@@ -30,7 +30,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     }
   };
 
-  @Override public boolean check(final ConditionalExpression ¢) {
+  @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 

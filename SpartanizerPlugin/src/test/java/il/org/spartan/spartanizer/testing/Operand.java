@@ -87,23 +87,23 @@ public class Operand extends Wrapper<String> {
   }
 
   private static String comment() {
-    return String.format("/** Automatically generated on %s */", system.now());
+    return String.format("/** Automatically generated on %s */\n", system.now());
   }
 
   private static String body(final String input) {
     for (String $ = String.format("  trimmingOjf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
-        return $ + String.format("\n .stays() //\n  ;");
-      Tipper<?> t = theSpartanizer.firstTipper(from);
+        return $ + "  .stays() //\n  ;";
+      final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      $ += (String.format(" .using(%s.class,new %s()) //\n", wizard.className(t.node()), t.className()));
-      $ += (String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to))));
+      $ += String.format(" .using(%s.class,new %s()) //\n", t.node().getClass().getSimpleName(), t.className());
+      $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
       from = to;
     }
   }
 
-  private static String signature(String start) {
+  private static String signature(final String start) {
     return start.replaceAll("\\p{Punct}", "").replaceAll("\\s", "").toLowerCase();
   }
 

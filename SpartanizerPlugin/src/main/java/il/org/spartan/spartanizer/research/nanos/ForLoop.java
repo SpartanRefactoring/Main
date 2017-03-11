@@ -44,7 +44,7 @@ public final class ForLoop {
       }
     };
 
-    @Override public boolean check(final ForStatement x) {
+    @Override public boolean canTip(final ForStatement x) {
       return anyTips(tippers, az.block(parent(x)))//
       ;
     }
