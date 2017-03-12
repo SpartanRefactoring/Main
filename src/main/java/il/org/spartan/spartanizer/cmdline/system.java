@@ -6,6 +6,7 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import il.org.spartan.*;
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -13,6 +14,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface system {
+  String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
   static Process bash(final String shellCommand) {
     if (windows())
       return null;
@@ -47,6 +49,10 @@ public interface system {
       monitor.infoIOException(¢, $ + "");
     }
     return $;
+  }
+
+  static Extension ephemeral(final String stem) {
+    return λ -> new File(system.tmp + stem + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + λ);
   }
 
   /** @author Yossi Gil
@@ -124,6 +130,10 @@ public interface system {
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$");
   }
 
+  static String lowerFirst(final String ¢) {
+    return (lisp.first(¢) + "").toLowerCase() + ¢.substring(1);
+  }
+
   static String now() {
     return (new Date() + "").replaceAll(" ", "-");
   }
@@ -195,6 +205,14 @@ public interface system {
     }
   }
 
+  static String upperFirst(final String ¢) {
+    return (lisp.first(¢) + "").toUpperCase() + ¢.substring(1);
+  }
+
+  static String userName() {
+    return upperFirst(System.getProperty("user.name", "Killroy"));
+  }
+
   /** This function counts the number of words the given string contains. Words
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted
@@ -207,13 +225,42 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  interface Extension {
-    File dot(String extentsion);
+  /** swaps two elements in an indexed list in given indexes, if they are legal
+   * @param ts the indexed list
+   * @param i1 the index of the first element
+   * @param i2 the index of the second element
+   * @return the list after swapping the elements */
+  static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+    if (i1 < $.size() && i2 < $.size()) {
+      final T t = $.get(i1);
+      lisp.replace($, $.get(i2), i1);
+      lisp.replace($, t, i2);
+    }
+    return $;
   }
 
-  String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
+  static String nth(final int i, final Collection<?> os) {
+    return system.nth(i, os.size());
+  }
 
-  static Extension ephemeral(final String stem) {
-    return λ -> new File(system.tmp + stem + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + λ);
+  static String nth(final int i, final int n) {
+    return nth(i + "", n + "");
+  }
+
+  static String nth(final String s, final String n) {
+    return " #" + s + "/" + n;
+  }
+
+  static String className(final Class<?> ¢) {
+    final String $ = ¢.getCanonicalName();
+    return ¢.getSimpleName() + "[" + ($ == null ? ¢ : $) + "]";
+  }
+
+  static String className(final Object ¢) {
+    return className(¢.getClass());
+  }
+
+  interface Extension {
+    File dot(String extentsion);
   }
 }

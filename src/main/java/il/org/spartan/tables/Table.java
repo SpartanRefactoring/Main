@@ -15,7 +15,7 @@ import il.org.spartan.statistics.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
-  private String path;
+  String path;
 
   public Table(final Object o) {
     this(o.getClass());

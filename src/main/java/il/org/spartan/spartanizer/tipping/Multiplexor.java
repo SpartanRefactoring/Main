@@ -16,13 +16,13 @@ public interface Multiplexor<E> {
   class Linear<E> implements Multiplexor<E> {
     protected final Multiplexor<E>[] inner;
 
-    @SafeVarargs public Linear(Multiplexor<E>... inner) {
+    @SafeVarargs public Linear(final Multiplexor<E>... inner) {
       this.inner = inner;
     }
 
     @Override public Stream<E> stream() {
       Stream<E> $ = Stream.empty();
-      for (Multiplexor<E> ¢ : inner)
+      for (final Multiplexor<E> ¢ : inner)
         $ = Stream.concat($, ¢.stream());
       return $;
     }

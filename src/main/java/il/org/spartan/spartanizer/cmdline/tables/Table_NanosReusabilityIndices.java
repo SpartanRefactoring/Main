@@ -42,7 +42,7 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
-  @SuppressWarnings("hiding") private static void initializeWriter(String outputFolder) {
+  @SuppressWarnings("hiding") private static void initializeWriter(final String outputFolder) {
     pWriter = new Table(outputFileName(), outputFolder);
   }
 

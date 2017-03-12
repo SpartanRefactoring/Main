@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -23,10 +24,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {
-  static String lowerFirst(String keyword) {
-    return (lisp.first(keyword) + "").toLowerCase() + keyword.substring(1);
-  }
-
   static String[] components(final Name ¢) {
     return components(¢);
   }
@@ -47,7 +44,7 @@ public interface namer {
   static boolean isSpecial(final SimpleName $) {
     return in($.getIdentifier(), specials);
   }
-  static String lowerFirstLetter(String input) { 
+  static String lowerFirstLetter(final String input) {
     return 
       input.substring(0, 1).toUpperCase() + input.substring(1);
   }
@@ -129,8 +126,8 @@ public interface namer {
 
   static String signature(final String code) {
     String $ = code;
-    for (String keyword : wizard.keywords)
-      $ = $.replaceAll("\\b" + keyword + "\\b", lowerFirst(keyword));
+    for (final String keyword : wizard.keywords)
+      $ = $.replaceAll("\\b" + keyword + "\\b", system.lowerFirst(keyword));
     return lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
 

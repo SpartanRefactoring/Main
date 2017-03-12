@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code T extends Object} to {@code T}
@@ -27,7 +28,7 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
   @Override public TypeParameter replacement(final TypeParameter p) {
     final TypeParameter $ = copy.of(p);
     final List<Type> ts = typeBounds($);
-    if (!hasObject(ts))
+    if (!haz.hasObject(ts))
       return null;
     for (final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
       if (isObject(¢.next()))

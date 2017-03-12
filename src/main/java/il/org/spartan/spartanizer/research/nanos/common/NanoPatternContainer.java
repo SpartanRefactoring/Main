@@ -16,8 +16,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
   private static final long serialVersionUID = 1L;
 
   @SafeVarargs public NanoPatternContainer(final UserDefinedTipper<N>... ts) {
-    for (final UserDefinedTipper<N> ¢ : ts)
-      add(¢);
+    addAll(Arrays.asList(ts));
   }
 
   public NanoPatternContainer<N> patternTipper(final String pattern, final String replacement, final String description) {

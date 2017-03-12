@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
+import java.util.Objects;
 import java.util.stream.*;
 
 /** TODO Yossi Gil: document class {@link }
@@ -17,7 +18,7 @@ public abstract class Reducer<R> {
   public abstract R reduce(R t1, R t2);
 
   public final R reduce(final R[] $) {
-    return $ == null ? reduce() : Stream.of($).filter(λ -> λ != null).reduce(this::reduce).orElse(reduce());
+    return $ == null ? reduce() : Stream.of($).filter(Objects::nonNull).reduce(this::reduce).orElse(reduce());
   }
 
   @SafeVarargs public final R reduce(final R t1, final R t2, final R... rs) {

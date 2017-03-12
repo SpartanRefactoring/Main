@@ -235,7 +235,7 @@ public class FileSystemASTVisitor {
               return null;
             }
 
-            @Override public boolean ok(ExpressionStatement ¢) {
+            @Override public boolean ok(final ExpressionStatement ¢) {
               return extract.usedNames(¢.getExpression()).size() == 1;
             }
           });

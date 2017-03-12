@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -22,7 +23,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
 
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
-    wizard.swap($, 0, 1);
+    system.swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
   }
 

@@ -7,6 +7,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
@@ -94,12 +95,12 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
 
     @Override public final String[] akas() {
       before("akas");
-      return listenAkas(() -> inner.akas());
+      return listenAkas(inner::akas);
     }
 
     @Override public final R apply(final T ¢) {
       before("apply");
-      return listenTip(λ -> inner.apply(λ), ¢);
+      return listenTip(inner::apply, ¢);
     }
 
     public Void before(@SuppressWarnings("unused") final String key, @SuppressWarnings("unused") final Object... arguments) {
@@ -107,11 +108,11 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
     }
 
     @Override public final String describe(final T n) {
-      return listenDescribe((final T x) -> inner.describe(x), n);
+      return listenDescribe(inner::describe, n);
     }
 
     @Override public final String description() {
-      return listenDescription(() -> inner.description());
+      return listenDescription(inner::description);
     }
 
     @Override public final String description(final T ¢) {
@@ -119,7 +120,7 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
     }
 
     @Override public final Example[] examples() {
-      return listenExamples(() -> inner.examples());
+      return listenExamples(inner::examples);
     }
 
     @Override public boolean ok(final T ¢) {
@@ -128,12 +129,12 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
     }
 
     @Override public final String technicalName() {
-      return listenTechnicalName(() -> inner.technicalName());
+      return listenTechnicalName(inner::technicalName);
     }
 
     @Override public final String verb() {
       before("verb");
-      return listenVerb(() -> inner.verb());
+      return listenVerb(inner::verb);
     }
   }
 
@@ -199,8 +200,8 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
           new IllegalStateException(//
               format(//
                   "Invalid order of method calls on a %s (dynamic type %):\n", //
-                  wizard.className(Rule.class), //
-                  wizard.className(this)) //
+                  system.className(Rule.class), //
+                  system.className(this)) //
                   + //
                   format(//
                       "  REASON: %s\n", //
