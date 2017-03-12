@@ -120,18 +120,20 @@ public enum anonymize {
 
   public static String makeUnitTest(final String codeFragment) {
     final String $ = trivia.squeeze(trivia.removeComments(code(essence(codeFragment))));
-    return String.format("%s @Test public void %s() {\n %s\n}\n", anonymize.comment(), namer.signature($), anonymize.body($));
+    return String.format("%s@Test public void %s() {\n %s\n}\n", anonymize.comment(), namer.signature($), anonymize.body($));
   }
 
   public static String comment() {
-    return String.format("/** Automatically generated on %s */\n", system.now());
+    return String.format("/** Automatically generated on %s, copied by %s */\n", //
+        system.now(),
+        system.userName());
   }
 
   public static String body(final String input) {
     for (String $ = String.format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
-        return $ + "  .stays() //\n  ;\n";
+        return $ + "  .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
       assert t.get() != null;

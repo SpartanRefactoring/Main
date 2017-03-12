@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.util.*;
 
+import il.org.spartan.spartanizer.tipping.Tipper;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
@@ -49,7 +50,7 @@ public class Table_RawNanoStatistics {
 
       void fillAbsents() {
         spartanalyzer.getAllPatterns().stream()//
-            .map(λ -> λ.className())//
+            .map(Tipper::className)//
             .filter(λ -> !npStatistics.keySet().contains(λ))//
             .forEach(λ -> pWriter.col(λ, 0));
       }
