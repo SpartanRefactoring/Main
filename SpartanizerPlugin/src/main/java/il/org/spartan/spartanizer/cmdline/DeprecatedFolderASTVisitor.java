@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
-
+import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -11,8 +11,6 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -30,8 +28,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") protected static final String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected static final String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor;
@@ -109,7 +107,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   void visit(final File f) {
     if (!silent)
       dotter.click();
-    if (!system.isTestFile(f) && !FileSystemASTVisitor.containsTestAnnotation(f))
+    if (!system.isTestFile(f) && FileSystemASTVisitor.noTests(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();

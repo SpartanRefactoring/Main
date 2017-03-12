@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 public enum SpartanizationComparator {
   ;
   @External(alias = "i", value = "input folder") static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") static String outputFolder = "/tmp";
+  @External(alias = "o", value = "output folder") static final String outputFolder = "/tmp";
   static String presentSourcePath;
   static String presentSourceName;
   static int methodNesting;

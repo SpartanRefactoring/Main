@@ -28,8 +28,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
-  public static AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
-  public static AbstractTypeDeclaration reflection = types(instance.reflectedCompilationUnit()).stream()
+  public static final AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
+  public static final AbstractTypeDeclaration reflection = types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
     {

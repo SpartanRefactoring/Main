@@ -45,7 +45,7 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
 }
 
 class CompilationUnitRecord {
-  public int nodesBeforeSpartanization;
+  public final int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
   public int nodesCovered;
   public final Map<String, LightWeightMethodRecord> methods = new HashMap<>();

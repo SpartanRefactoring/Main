@@ -54,7 +54,7 @@ public enum haz {
    * @param ¢ JD
    * @return {@code true } iff ¢ contains any continue statement
    * @see {@link convertWhileToFor} */
-  @SuppressWarnings("boxing") public static boolean ContinueStatement(final ASTNode ¢) {
+  @SuppressWarnings("boxing") public static boolean continueStatement(final ASTNode ¢) {
     return ¢ != null
         && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
