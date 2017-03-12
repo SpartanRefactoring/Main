@@ -31,7 +31,7 @@ public interface namer {
   String[] specials = { forbidden, return¢, anonymous, current, lambda };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
-      assuming = new GenericsCategory("Class", "Tipper", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
+      assuming = new GenericsCategory("Class", "Tipper", "Function", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
       plurals = new GenericsCategory(//
           "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
           "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //
