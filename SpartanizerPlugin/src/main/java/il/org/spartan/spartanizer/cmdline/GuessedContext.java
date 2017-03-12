@@ -2,12 +2,11 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.Utils.*;
 
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -121,14 +120,9 @@ public enum GuessedContext {
       $.append("\n\t\t Properly formatted, this bit should look like so: ");
       $.append("\n\t\t\t```").append(u).append("'''");
       $.append("\n\t\t And the full list of problems was: ");
-      $.append("\n\t\t\t```").append(problems(u)).append("'''");
+      $.append("\n\t\t\t```").append(wizard.problems(u)).append("'''");
     }
     return $ + "";
-  }
-
-  private static String problems(final CompilationUnit u) {
-    final Int $ = new Int();
-    return Stream.of(u.getProblems()).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
   private final String before;
