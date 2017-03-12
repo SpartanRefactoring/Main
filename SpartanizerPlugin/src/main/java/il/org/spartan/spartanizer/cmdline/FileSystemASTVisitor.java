@@ -229,13 +229,14 @@ public class FileSystemASTVisitor {
         }
 
         {
-          hook(ExpressionStatement.class, new Rule<ExpressionStatement, Void>() {
-            @Override public boolean check(final ExpressionStatement ¢) {
-              return extract.usedNames(¢.getExpression()).size() == 1;
+          hook(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
+
+            @Override public Void fire() {
+              return null;
             }
 
-            @Override public Void tip(@SuppressWarnings("unused") final ExpressionStatement ¢) {
-              return null;
+            @Override public boolean ok(ExpressionStatement ¢) {
+              return extract.usedNames(¢.getExpression()).size() == 1;
             }
           });
         }
