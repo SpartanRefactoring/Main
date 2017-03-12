@@ -14,6 +14,7 @@ import static java.util.stream.Collectors.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to environment. Holds all the names defined till current PC. In

@@ -1,6 +1,3 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
- * @since Oct 7, 2016 */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
@@ -10,8 +7,11 @@ import org.eclipse.jface.text.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
+/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
+ * @author Yossi Gil <yossi.gil@gmail.com>
+ * @since Oct 7, 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class WrapTest {
   @Test public void dealWithBothKindsOfComment() {

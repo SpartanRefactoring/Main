@@ -30,7 +30,7 @@ public abstract class Applicator {
   /** Applicator's name. */
   private String name;
   /** Applicator's operation namer. */
-  private Linguistic.Activity operationName;
+  private English.Activity operationName;
 
   /** Tell this applicator it should not run. */
   public void stop() {
@@ -131,14 +131,14 @@ public abstract class Applicator {
   }
 
   /** @return applicator's name */
-  Linguistic.Activity operationName() {
+  English.Activity operationName() {
     return operationName;
   }
 
   /** Name this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-  public Applicator operationName(final Linguistic.Activity ¢) {
+  public Applicator operationName(final English.Activity ¢) {
     operationName = ¢;
     return this;
   }

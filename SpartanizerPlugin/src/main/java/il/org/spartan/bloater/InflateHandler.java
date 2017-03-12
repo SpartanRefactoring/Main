@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
-  private static final Linguistic.Activity OPERATION_ACTIVITY = Linguistic.Activity.simple("Zoom");
+  private static final English.Activity OPERATION_ACTIVITY = English.Activity.simple("Zoom");
   public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
