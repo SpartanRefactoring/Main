@@ -211,4 +211,12 @@ public enum haz {
     });
     return $.get().booleanValue();
   }
+
+  public static boolean hasObject(final List<Type> ¢) {
+    return ¢ != null && ¢.stream().anyMatch(λ ->wizard.isObject(λ));
+  }
+
+  public static boolean hasSafeVarags(final MethodDeclaration d) {
+    return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
+  }
 }

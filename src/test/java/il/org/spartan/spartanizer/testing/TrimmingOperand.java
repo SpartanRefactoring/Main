@@ -66,7 +66,7 @@ public class TrimmingOperand extends Wrapper<String> {
     final Wrap w = Wrap.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
-      copyPasteReformat("stays()//\n  ;");
+      copyPasteReformat("  .stays()//\n  ;\n");
       azzert.fail("Nothing done on " + get());
     }
     final String peeled = w.off(unpeeled);

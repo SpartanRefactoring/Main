@@ -660,4 +660,8 @@ public enum extract {
         return $;
     }
   }
+
+  public static int arity(final InfixExpression ¢) {
+    return 2 + step.extendedOperands(¢).size();
+  }
 }

@@ -120,7 +120,7 @@ public class Issue0404 {
 
   @Test public void ka() {
     assert dig.stringLiterals(into.e("\"\"")).size() == 1 : "The List did not contain the expected number of elements.";
-    assert "".equals(first(dig.stringLiterals(into.e("\"\"")))) : "The contained element was not the expected one.";
+    assert first(dig.stringLiterals(into.e("\"\""))) != null && first(dig.stringLiterals(into.e("\"\""))).isEmpty() : "The contained element was not the expected one.";
   }
 
   @Test public void kb() {

@@ -87,7 +87,7 @@ public interface theSpartanizer {
 
   Toolbox toolbox = Toolbox.defaultInstance();
 
-  static Tipper<?> firstTipper(String from) {
+  static Tipper<?> firstTipper(final String from) {
     final Wrapper<Tipper<?>> $ = new Wrapper<>();
     final ASTNode n = wizard.ast(from);
     if (n != null)
