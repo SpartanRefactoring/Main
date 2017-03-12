@@ -23,18 +23,18 @@ public enum analyze {
     final Collection<String> $ = new HashSet<>();
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
-        if (!izMethodName(node))
+        if (notMethodName(node))
           $.add(identifier(node));
         return true;
       }
 
-      boolean izMethodName(final Name ¢) {
-        return iz.methodInvocation(parent(¢)) && identifier(az.methodInvocation(parent(¢))).equals(¢ + "")
-            || iz.methodDeclaration(parent(¢)) && identifier(az.methodDeclaration(parent(¢))).equals(¢ + "");
+      boolean notMethodName(final Name ¢) {
+        return (!iz.methodInvocation(parent(¢)) || !identifier(az.methodInvocation(parent(¢))).equals(¢ + ""))
+                && (!iz.methodDeclaration(parent(¢)) || !identifier(az.methodDeclaration(parent(¢))).equals(¢ + ""));
       }
 
       @Override public boolean visit(final QualifiedName node) {
-        if (!izMethodName(node))
+        if (notMethodName(node))
           $.add(identifier(node));
         return true;
       }

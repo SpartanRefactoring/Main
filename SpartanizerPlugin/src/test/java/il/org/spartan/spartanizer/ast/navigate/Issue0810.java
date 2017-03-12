@@ -22,7 +22,7 @@ public class Issue0810 {
   final ASTNode ast = makeAST.COMPILATION_UNIT.from(f);
 
   @Test public void test0() {
-    assert !haz.ContinueStatement(ast);
+    assert !haz.continueStatement(ast);
   }
 
   @Test public void test1() {

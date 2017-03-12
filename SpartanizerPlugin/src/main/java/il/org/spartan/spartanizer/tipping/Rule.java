@@ -72,7 +72,7 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   }
 
   abstract class CountingDelegator<T, R> extends Delegator<T, R> {
-    Map<String, Integer> count = new LinkedHashMap<>();
+    final Map<String, Integer> count = new LinkedHashMap<>();
 
     public CountingDelegator(final Rule<T, R> inner) {
       super(inner);
