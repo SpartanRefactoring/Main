@@ -269,7 +269,7 @@ public class XMLSpartan {
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-25 */
   public abstract static class SpartanElement {
-    public static SpartanElement[] EMPTY = new SpartanElement[0];
+    public static final SpartanElement[] EMPTY = new SpartanElement[0];
     private final String name;
     private boolean enabled;
 

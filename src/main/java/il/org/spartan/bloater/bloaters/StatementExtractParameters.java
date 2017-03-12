@@ -245,8 +245,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: move class to utility file
   protected class ASTMatcherSpecific extends ASTMatcher {
-    ASTNode toMatch;
-    Consumer<ASTNode> onMatch;
+    final ASTNode toMatch;
+    final Consumer<ASTNode> onMatch;
 
     public ASTMatcherSpecific(final ASTNode toMatch, final Consumer<ASTNode> onMatch) {
       this.toMatch = toMatch;

@@ -42,7 +42,7 @@ public enum measure {
     return as.list(//
         Block.class, //
         // BreakStatement.class, //
-        // ContinueStatement.class, //
+        // continueStatement.class, //
         EmptyStatement.class //
     // LabeledStatement.class, //
     // SwitchCase.class, //
