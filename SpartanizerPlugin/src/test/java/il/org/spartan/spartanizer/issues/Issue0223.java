@@ -172,7 +172,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla02() {
-    final Operand a = trimmingOf("new Integer(3)");
+    final TrimmingOperand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final String wrap = Wrap.find(a.get()).on(a.get());
     if (wrap.equals(trim.apply(new Trimmer(), wrap)))
@@ -180,7 +180,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla03() {
-    final Operand a = trimmingOf("new Integer(3)");
+    final TrimmingOperand a = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(a.get()).on(a.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -193,7 +193,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla04() {
-    final Operand o = trimmingOf("new Integer(3)");
+    final TrimmingOperand o = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -211,7 +211,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla05() {
-    final Operand o = trimmingOf("new Integer(3)");
+    final TrimmingOperand o = trimmingOf("new Integer(3)");
     final String wrap = Wrap.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
