@@ -13,6 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -113,13 +114,13 @@ public enum anonymize {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
-      System.out.println(anonymize.testcase("a", s));
+      System.out.println(anonymize.testcase(namer.signature(s), s));
     }
   }
 
   public static String makeUnitTest(final String codeFragment) {
     final String $ = trivia.squeeze(trivia.removeComments(code(essence(codeFragment))));
-    return String.format("%s @Test public void %s() {\n %s\n}\n", anonymize.comment(), anonymize.signature($), anonymize.body($));
+    return String.format("%s @Test public void %s() {\n %s\n}\n", anonymize.comment(), namer.signature($), anonymize.body($));
   }
 
   public static String comment() {
@@ -137,9 +138,5 @@ public enum anonymize {
       $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
       from = to;
     }
-  }
-
-  public static String signature(final String start) {
-    return start.replaceAll("\\p{Punct}", "").replaceAll("\\s", "").toLowerCase();
   }
 }

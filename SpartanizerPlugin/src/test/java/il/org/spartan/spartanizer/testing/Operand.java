@@ -18,6 +18,7 @@ public class Operand extends Wrapper<String> {
   private static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
   private static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
   private final Trimmer trimmer;
+  private int rerunsLeft = 5;
 
   public Operand(final String inner) {
     super(inner);
@@ -46,7 +47,7 @@ public class Operand extends Wrapper<String> {
       System.err.println("*** Test crashed rerunning ");
       monitor.set(monitor.INTERACTIVE_TDD);
       apply();
-      monitor.pop();
+      monitor.unset();
     }
   }
 
@@ -122,13 +123,16 @@ public class Operand extends Wrapper<String> {
   }
 
   private void rerun() {
+    if (rerunsLeft < 1)
+      return;
     System.err.println("*** Test failed (rerunning to collect more information)");
     TrimmerLog.on();
     monitor.set(monitor.INTERACTIVE_TDD);
     apply();
     TrimmerLog.off();
-    monitor.pop();
-    System.err.println("*** Rerun done. (scroll back to find logging infromation)");
+    monitor.unset();
+    System.err.printf("*** Rerun done. (scroll back to find logging infromation)\n");
+    System.err.printf("*** %d reruns left \n ", box.it(--rerunsLeft));
   }
 
   public <N extends ASTNode> Operand using(final Class<N> c, final Tipper<N> ¢) {
