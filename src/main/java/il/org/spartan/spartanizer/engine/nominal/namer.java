@@ -23,36 +23,9 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {
-  static String capitalize(String keyword) {
-    return (lisp.first(keyword) + "").toUpperCase() + keyword.substring(1);
+  static String lowerFirst(String keyword) {
+    return (lisp.first(keyword) + "").toLowerCase() + keyword.substring(1);
   }
-
-  static String lowerFirstLetter(String input) { 
-    return 
-      input.substring(0, 1).toUpperCase() + input.substring(1);
-  }
-
-  static String signature(final String code) {
-    String $ = code;
-    for (String keyword : wizard.keywords)
-      $ = $.replaceAll("\\b" + keyword + "\\b", capitalize(keyword));
-    return lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
-  }
-
-  String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
-  String forbidden = "_"; //
-  String anonymous = "__"; //
-  String return¢ = "$"; //
-  String current = "¢"; //
-  String lambda = "λ"; //
-  String[] specials = { forbidden, return¢, anonymous, current, lambda };
-  GenericsCategory //
-  yielding = new GenericsCategory("Supplier", "Iterator"), //
-      assuming = new GenericsCategory("Class", "Tipper", "Function", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
-      plurals = new GenericsCategory(//
-          "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
-          "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //
-          "TreeSet", "Vector");
 
   static String[] components(final Name ¢) {
     return components(¢);
@@ -65,15 +38,25 @@ public interface namer {
   static String[] components(final SimpleType ¢) {
     return components(¢.getName());
   }
-
   static String[] components(final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
   }
-
+  static boolean interestingType(final Type ¢) {
+    return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
+  }
+  static boolean isSpecial(final SimpleName $) {
+    return in($.getIdentifier(), specials);
+  }
+  static String lowerFirstLetter(String input) { 
+    return 
+      input.substring(0, 1).toUpperCase() + input.substring(1);
+  }
+  static SimpleName newCurrent(final ASTNode ¢) {
+    return make.from(¢).identifier(current);
+  }
   static String repeat(final int i, final char c) {
     return String.valueOf(new char[i]).replace('\0', c);
   }
-
   static String shorten(final ArrayType ¢) {
     return shorten(¢.getElementType()) + repeat(¢.getDimensions(), 's');
   }
@@ -85,14 +68,6 @@ public interface namer {
 
   static String shorten(final List<Type> ¢) {
     return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
-  }
-
-  static boolean interestingType(final Type ¢) {
-    return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
-  }
-
-  static boolean usefulTypeName(final String typeName) {
-    return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
   }
 
   static String shorten(final Name ¢) {
@@ -152,6 +127,17 @@ public interface namer {
     return ¢.getBound() == null ? "o" : shorten(¢.getBound());
   }
 
+  static String signature(final String code) {
+    String $ = code;
+    for (String keyword : wizard.keywords)
+      $ = $.replaceAll("\\b" + keyword + "\\b", lowerFirst(keyword));
+    return lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+  }
+
+  static boolean usefulTypeName(final String typeName) {
+    return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
+  }
+
   static String variableName(final SimpleType t) {
     final List<String> ss = as.list(components(t));
     String $ = first(ss).toLowerCase();
@@ -160,17 +146,29 @@ public interface namer {
     return $;
   }
 
-  static boolean isSpecial(final SimpleName $) {
-    return in($.getIdentifier(), specials);
-  }
+  String anonymous = "__"; //
 
-  static SimpleName newCurrent(final ASTNode ¢) {
-    return make.from(¢).identifier(current);
-  }
+  String current = "¢"; //
+
+  String forbidden = "_"; //
+
+  String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
+
+  String lambda = "λ"; //
+
+  String return¢ = "$"; //
+
+  String[] specials = { forbidden, return¢, anonymous, current, lambda };
+
+  GenericsCategory //
+  yielding = new GenericsCategory("Supplier", "Iterator"), //
+      assuming = new GenericsCategory("Class", "Tipper", "Function", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
+      plurals = new GenericsCategory(//
+          "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
+          "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //
+          "TreeSet", "Vector");
 
   class GenericsCategory {
-    public final Set<String> set;
-
     public GenericsCategory(final String... names) {
       set = new LinkedHashSet<>(as.list(names));
     }
@@ -178,5 +176,7 @@ public interface namer {
     public boolean contains(final ParameterizedType ¢) {
       return set.contains(¢.getType() + "");
     }
+
+    public final Set<String> set;
   }
 }
