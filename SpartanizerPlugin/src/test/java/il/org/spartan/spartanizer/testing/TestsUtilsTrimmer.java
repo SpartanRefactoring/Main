@@ -18,11 +18,11 @@ public enum TestsUtilsTrimmer {
     return new OperandToTipper<>(from, clazz);
   }
 
-  public static Operand trimmingOf(final String from) {
-    return new Operand(from);
+  public static TrimmingOperand trimmingOf(final String from) {
+    return new TrimmingOperand(from);
   }
 
-  public static class OperandToTipper<N extends ASTNode> extends Operand {
+  public static class OperandToTipper<N extends ASTNode> extends TrimmingOperand {
     final Class<N> clazz;
 
     OperandToTipper(final String from, final Class<N> clazz) {
