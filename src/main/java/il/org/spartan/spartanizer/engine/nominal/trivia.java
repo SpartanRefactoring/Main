@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.ast.navigate;
+package il.org.spartan.spartanizer.engine.nominal;
 
 import static il.org.spartan.Utils.*;
 

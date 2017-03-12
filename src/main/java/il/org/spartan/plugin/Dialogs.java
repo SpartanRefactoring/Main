@@ -74,7 +74,7 @@ public enum Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog message(final String message) {
-    return messageUnsafe(Linguistic.trim(message));
+    return messageUnsafe(English.trim(message));
   }
 
   /** Simple non-modal dialog. Does not wait for user operation (i.e., non

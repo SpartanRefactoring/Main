@@ -6,6 +6,7 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -13,10 +14,32 @@ import il.org.spartan.spartanizer.tippers.*;
 
 @SuppressWarnings("static-method")
 public class Issue0283 {
+  /** Automatically generated on Sun-Mar-12-17:16:16-IST-2017, copied by
+   * Iossi */
+  @Test public void aBclassCAD3ED3Fpublicvoida() {
+    trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
+        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
+        .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+        .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
+        .stays() //
+    ;
+  }
+
   /** Automatically generated */
   @Test public void abclasscad3ed3fpublicvoida() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
         .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+        .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
+        .stays() //
+    ;
+  }
+
+  @Test public void aBClassCAD3ED3FPublicVoida() {
+    trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
+        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
+        .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
         .stays() //
     ;
