@@ -45,7 +45,7 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
   }
 
   boolean validUpdates() {
-    return updates.stream().allMatch(λ -> λ instanceof SimpleName);
+    return updates.stream().allMatch(SimpleName.class::isInstance);
   }
 
   public boolean bodyDeclaresElementsOf(final ASTNode n) {

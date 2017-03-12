@@ -48,7 +48,7 @@ class CompilationUnitRecord {
   public int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
   public int nodesCovered;
-  public Map<String, LightWeightMethodRecord> methods = new HashMap<>();
+  public final Map<String, LightWeightMethodRecord> methods = new HashMap<>();
   public final Set<String> nps = new HashSet<>();
 
   public CompilationUnitRecord(final CompilationUnit cu) {

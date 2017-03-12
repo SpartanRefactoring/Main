@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
+import static il.org.spartan.spartanizer.cmdline.system.*;
+
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
@@ -13,6 +15,88 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since 2.6 */
 public interface Linguistic {
+  static String indefinite(String className) {
+    String $ = namer.components(className)[0];
+    final char openingLetter = first($);
+    return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
+        (Utils.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
+  }
+
+  static boolean isAcronym(String $) {
+    return $.toUpperCase().equals($);
+  }
+
+  static String pronounce(char ¢) {
+    if (Character.isUpperCase(¢))
+      return pronounce(Character.toLowerCase(¢));
+    switch (¢) {
+      case 'a':
+        return "aey";
+      case 'b':
+        return "bee";
+      case 'c':
+        return "see";
+      case 'd':
+        return "dee";
+      case 'e':
+        return "eae";
+      case 'f':
+        return "eff";
+      case 'g':
+        return "gee";
+      case 'h':
+        return "eitch";
+      case 'i':
+        return "eye";
+      case 'j':
+        return "jay";
+      case 'k':
+        return "kay";
+      case 'l':
+        return "ell";
+      case 'm':
+        return "em";
+      case 'n':
+        return "en";
+      case 'o':
+        return "oh";
+      case 'p':
+        return "pee";
+      case 'q':
+        return "queue";
+      case 'r':
+        return "ar";
+      case 's':
+        return "ess";
+      case 't':
+        return "tee";
+      case 'u':
+        return "you";
+      case 'v':
+        return "vee";
+      case 'x':
+        return "exx";
+      case 'y':
+        return "why";
+      case 'z':
+        return "zee";
+      default:
+        return "some character";
+    }
+  }
+
+  static String indefinite(final Object ¢) {
+    return indefinite(className(¢));
+  }
+
+  static String lowerFirstLetter(final String input) {
+    return input.substring(0, 1).toUpperCase() + input.substring(1);
+  }
+
+  static String repeat(final int i, final char c) {
+    return String.valueOf(new char[i]).replace('\0', c);
+  }
+
   interface Activity {
     static Activity simple(final String base) {
       return new Activity() {
@@ -49,7 +133,7 @@ public interface Linguistic {
    * @return a linguistic list of the items */
   static String list(final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
-        : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(Linguistic.SEPARATOR) + " and " + last(¢);
+        : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.

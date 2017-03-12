@@ -41,7 +41,7 @@ public enum az {
    * @param $ result
    * @return parameter thus converted, or <code><b>null</b> if the conversion is
    *         not possible for it */
-  public static InfixExpression andOrOr(final Expression $) {
+  public static InfixExpression shortcircuit(final Expression $) {
     return !iz.infixExpression($) || !iz.deMorgan(infixExpression($).getOperator()) ? null : infixExpression($);
   }
 
