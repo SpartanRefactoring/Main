@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
+import static il.org.spartan.lisp.*;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -10,8 +11,6 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -33,12 +32,12 @@ public class FileSystemASTVisitor {
    * <p>
    * @param f
    * @return */
-  public static boolean containsTestAnnotation(final File $) {
+  public static boolean noTests(final File $) {
     try {
-      return containsTestAnnotation(FileUtils.read($));
+      return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
       monitor.infoIOException(¢, "File = " + $);
-      return true;
+      return false;
     }
   }
 
@@ -124,7 +123,7 @@ public class FileSystemASTVisitor {
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
-    if (!system.isTestFile(f) && !containsTestAnnotation(f))
+    if (!system.isTestFile(f) && noTests(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
@@ -140,8 +139,8 @@ public class FileSystemASTVisitor {
   private final List<String> locations;
   protected String absolutePath;
   protected Dotter dotter;
-  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp;
+  @External(alias = "i", value = "input folder") protected final String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected final String outputFolder = system.tmp;
   protected File presentFile;
   protected String presentSourceName;
   protected String presentSourcePath;

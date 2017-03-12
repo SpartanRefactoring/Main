@@ -16,13 +16,13 @@ import il.org.spartan.utils.*;
  * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
  * @since 2017-02-10 */
 public class CompilationUnitRecord {
-  public CompilationUnit inner;
+  public final CompilationUnit inner;
   final int linesOfCode;
   public final int numClasses;
   public final int numExpressions;
-  int numMethods;
-  public int numStatements;
-  public String pakcage;
+  final int numMethods;
+  public final int numStatements;
+  public final String pakcage;
   int testCount;
   String path;
   String relativePath;

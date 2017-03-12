@@ -913,7 +913,7 @@ public interface wizard {
   }
 
   static String problems(final CompilationUnit u) {
-    IProblem[] v =  u.getProblems();
+    final IProblem[] v =  u.getProblems();
     if (v.length == 0)
       return "???";
     final Int $ = new Int();

@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
+import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -41,7 +40,7 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
   }
 
   boolean noContinue() {
-    return !haz.ContinueStatement(body);
+    return !haz.continueStatement(body);
   }
 
   boolean validUpdates() {

@@ -26,11 +26,11 @@ import il.org.spartan.spartanizer.utils.*;
 public class Toolbox {
   @SuppressWarnings("unchecked")
   public static class Tables {
-    public static Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
-    public static Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
-    public static Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
-    public static Map<Class<? extends Tipper<?>>, Tipper.Example[]> TipperExamplesCache = new HashMap<>();
-    public static Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
+    public static final Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
+    public static final Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
+    public static final Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
+    public static final Map<Class<? extends Tipper<?>>, Tipper.Example[]> TipperExamplesCache = new HashMap<>();
+    public static final Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
         final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
