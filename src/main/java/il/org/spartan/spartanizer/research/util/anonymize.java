@@ -134,8 +134,8 @@ public enum anonymize {
         return $ + "  .stays() //\n  ;\n";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      assert t.current() != null;
-      $ += String.format(" .using(%s.class,new %s()) //\n", t.current().getClass().getSimpleName(), t.className());
+      assert t.get() != null;
+      $ += String.format(" .using(%s.class,new %s()) //\n", t.get().getClass().getSimpleName(), t.className());
       $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
       from = to;
     }

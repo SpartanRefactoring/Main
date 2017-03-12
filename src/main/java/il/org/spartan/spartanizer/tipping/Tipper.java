@@ -87,8 +87,12 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
-  @Override public Tip tip(final N ¢) {
+  public Tip tip(final N ¢) {
     return tip(¢, null);
+  }
+
+  @Override public final Tip fire() {
+    return tip(get());
   }
 
   /** @param n an ASTNode
