@@ -35,6 +35,8 @@ public class Issue0283 {
     ;
   }
 
+  /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
+   * Yossi */
   @Test public void aBClassCAD3ED3FPublicVoida() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
         .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
