@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine.nominal;
-
+import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.Utils.*;
 
 import java.util.*;
@@ -14,7 +14,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An empty <code><b>interface</b></code> for fluent programming. The name
@@ -53,7 +52,7 @@ public interface namer {
   }
 
   static String shorten(final ArrayType ¢) {
-    return shorten(¢.getElementType()) + Linguistic.repeat(¢.getDimensions(), 's');
+    return shorten(¢.getElementType()) + English.repeat(¢.getDimensions(), 's');
   }
 
   static String shorten(final IntersectionType ¢) {
@@ -125,8 +124,8 @@ public interface namer {
   static String signature(final String code) {
     String $ = code;
     for (final String keyword : wizard.keywords)
-      $ = $.replaceAll("\\b" + keyword + "\\b", system.lowerFirst(keyword));
-    return Linguistic.lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+      $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
+    return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
 
   static boolean usefulTypeName(final String typeName) {

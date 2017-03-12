@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.research.util;
-
-import static il.org.spartan.spartanizer.ast.navigate.trivia.*;
+import static il.org.spartan.spartanizer.engine.nominal.namer.*;
+import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 
 import java.util.*;
 
@@ -10,7 +10,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -119,8 +118,8 @@ public enum anonymize {
   }
 
   public static String makeUnitTest(final String codeFragment) {
-    final String $ = squeeze(removeComments(code(trivia.essence(codeFragment))));
-    return String.format("%s@Test public void %s() {\n %s\n}\n", comment(), namer.signature($), body($));
+    final String $ = squeeze(removeComments(code(essence(codeFragment))));
+    return String.format("%s@Test public void %s() {\n %s\n}\n", comment(), signature($), body($));
   }
 
   public static String comment() {

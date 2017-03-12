@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
  * @since 2.6 */
-public interface Linguistic {
+public interface English {
   /** Error string, replacing null/error value. */
   String UNKNOWN = "???";
 
@@ -47,8 +47,11 @@ public interface Linguistic {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
   }
-  static String lowerFirstLetter(final String input) {
+  static String upperFirstLetter(final String input) {
     return input.substring(0, 1).toUpperCase() + input.substring(1);
+  }
+  static String lowerFirstLetter(final String input) {
+    return input.substring(0, 1).toLowerCase() + input.substring(1);
   }
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize

@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.testing;
 import static il.org.spartan.azzert.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil

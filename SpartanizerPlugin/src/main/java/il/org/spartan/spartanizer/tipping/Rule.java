@@ -6,8 +6,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;

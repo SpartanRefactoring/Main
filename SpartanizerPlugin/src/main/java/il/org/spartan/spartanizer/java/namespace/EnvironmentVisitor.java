@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Three groups of visitors here: 1. Non-declarations with a name. 2.
