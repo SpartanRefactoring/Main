@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.research.util;
 
-import static il.org.spartan.spartanizer.utils.Wrap.*;
+import static il.org.spartan.spartanizer.ast.navigate.trivia.*;
 
 import java.util.*;
 
@@ -22,11 +22,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public enum anonymize {
   ;
   public static String testcase(final String name, final String raw) {
-    return wrapTest(name, linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw)))));
+    return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
   public static String unwarpedTestcase(final String raw) {
-    return linify(trivia.escapeQuotes(format.code(shortenIdentifiers(raw))));
+    return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
   public static String code(final String raw) {
@@ -119,14 +119,13 @@ public enum anonymize {
   }
 
   public static String makeUnitTest(final String codeFragment) {
-    final String $ = trivia.squeeze(trivia.removeComments(code(essence(codeFragment))));
-    return String.format("%s@Test public void %s() {\n %s\n}\n", anonymize.comment(), namer.signature($), anonymize.body($));
+    final String $ = squeeze(removeComments(code(trivia.essence(codeFragment))));
+    return String.format("%s@Test public void %s() {\n %s\n}\n", comment(), namer.signature($), body($));
   }
 
   public static String comment() {
     return String.format("/** Automatically generated on %s, copied by %s */\n", //
-        system.now(),
-        system.userName());
+        system.now(), system.userName());
   }
 
   public static String body(final String input) {
@@ -138,7 +137,7 @@ public enum anonymize {
       assert t != null;
       assert t.get() != null;
       $ += String.format(" .using(%s.class,new %s()) //\n", t.get().getClass().getSimpleName(), t.className());
-      $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
+      $ += String.format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
   }

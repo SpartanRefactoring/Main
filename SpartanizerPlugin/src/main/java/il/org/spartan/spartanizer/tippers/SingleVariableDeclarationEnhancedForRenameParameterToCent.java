@@ -41,7 +41,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
-        if (in(sn.getIdentifier(), namer.current))
+        if (in(sn.getIdentifier(), namer.it))
           return null;
       }
     final Statement body = $.getBody();

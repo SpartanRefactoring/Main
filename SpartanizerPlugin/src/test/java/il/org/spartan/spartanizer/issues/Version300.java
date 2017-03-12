@@ -21,9 +21,18 @@ public final class Version300 {
   @Test public void negationPushdownTernary() {
     trimmingOf("a = !(b ? c: d)")//
         .using(PrefixExpression.class, new PrefixNotPushdown())//
-        .gives("a = b ? !c : !d") //
+        .gives("a=b?!c:!d") //
     ;
   }
+
+  @Test public void abcd() {
+     trimmingOf("a = !(b ? c : d)") //
+   .using(PrefixExpression.class,new PrefixNotPushdown()) //
+   .gives("a=b?!c:!d") //
+    .stays() //
+    ;
+  }
+
 
   @Test public void a() {
     azzert.that(

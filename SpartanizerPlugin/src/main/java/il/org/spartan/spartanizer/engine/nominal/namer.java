@@ -35,27 +35,25 @@ public interface namer {
   static String[] components(final SimpleType ¢) {
     return components(¢.getName());
   }
+
   static String[] components(final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
   }
+
   static boolean interestingType(final Type ¢) {
     return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
   }
+
   static boolean isSpecial(final SimpleName $) {
     return in($.getIdentifier(), specials);
   }
-  static String lowerFirstLetter(final String input) {
-    return 
-      input.substring(0, 1).toUpperCase() + input.substring(1);
-  }
+
   static SimpleName newCurrent(final ASTNode ¢) {
-    return make.from(¢).identifier(current);
+    return make.from(¢).identifier(it);
   }
-  static String repeat(final int i, final char c) {
-    return String.valueOf(new char[i]).replace('\0', c);
-  }
+
   static String shorten(final ArrayType ¢) {
-    return shorten(¢.getElementType()) + repeat(¢.getDimensions(), 's');
+    return shorten(¢.getElementType()) + Linguistic.repeat(¢.getDimensions(), 's');
   }
 
   static String shorten(final IntersectionType ¢) {
@@ -80,7 +78,7 @@ public interface namer {
   static String shorten(final ParameterizedType ¢) {
     if (yielding.contains(¢))
       return shorten(first(typeArguments(¢)));
-    if (plurals.contains(¢))
+    if (pluralizing.contains(¢))
       return shorten(first(typeArguments(¢))) + "s";
     if (assuming.contains(¢))
       return shorten(¢.getType());
@@ -128,7 +126,7 @@ public interface namer {
     String $ = code;
     for (final String keyword : wizard.keywords)
       $ = $.replaceAll("\\b" + keyword + "\\b", system.lowerFirst(keyword));
-    return lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+    return Linguistic.lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
 
   static boolean usefulTypeName(final String typeName) {
@@ -144,23 +142,16 @@ public interface namer {
   }
 
   String anonymous = "__"; //
-
-  String current = "¢"; //
-
+  String it = "¢"; //
   String forbidden = "_"; //
-
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
-
   String lambda = "λ"; //
-
   String return¢ = "$"; //
-
-  String[] specials = { forbidden, return¢, anonymous, current, lambda };
-
+  String[] specials = { forbidden, return¢, anonymous, it, lambda };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Function", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
-      plurals = new GenericsCategory(//
+      pluralizing = new GenericsCategory(//
           "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
           "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //
           "TreeSet", "Vector");

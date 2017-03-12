@@ -17,10 +17,6 @@ public interface trivia {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }
 
-  static String squeeze(final String ¢) {
-    return ¢.trim().replaceAll("\\s+", " ");
-  }
-
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
@@ -96,5 +92,9 @@ public interface trivia {
   static String removeComments(final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
+  }
+
+  static String squeeze(final String ¢) {
+    return ¢.trim().replaceAll("\\s+", " ");
   }
 }

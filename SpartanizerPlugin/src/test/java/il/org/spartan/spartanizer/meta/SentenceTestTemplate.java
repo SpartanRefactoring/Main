@@ -91,7 +91,7 @@ public enum SentenceTestTemplate {
     @Test public void chagesTo() {
       final String peeled = Wrap.Method.off(trim.apply(trimmer, Wrap.Method.on(firstBody()))), to = secondBody();
       if (!to.equals(peeled))
-        azzert.that(Wrap.essence(peeled), is(Wrap.essence(to)));
+        azzert.that(trivia.essence(peeled), is(trivia.essence(to)));
     }
 
     String firstBody() {
@@ -137,7 +137,7 @@ public enum SentenceTestTemplate {
         return;
       final String peeled = Wrap.Method.off(unpeeled);
       if (!peeled.equals(from) && !tide.clean(peeled).equals(tide.clean(from)))
-        azzert.that(Wrap.essence(peeled), is(Wrap.essence(from)));
+        azzert.that(trivia.essence(peeled), is(trivia.essence(from)));
     }
   }
 }

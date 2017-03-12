@@ -1,6 +1,9 @@
 package il.org.spartan.spartanizer.utils;
 
+import static il.org.spartan.spartanizer.cmdline.system.*;
+import static il.org.spartan.spartanizer.engine.nominal.Linguistic.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
+import static java.lang.String.*;
 
 import java.io.*;
 import java.text.*;
@@ -93,16 +96,16 @@ public enum monitor {
   public static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
         "A static method of " + system.className(o) + //
-            "\n was hit by a " + system.className(t.getClass()) + //
-            " exception. This is expected and printed only for the purpose of debugging" + //
-            "\n x = '" + t + "'" + //
-            "\n o = " + o + "'");
+            "was hit by " + indefinite(t) + "\n"+ //
+            "exception. This is expected and printed only for the purpose of debugging" + //
+            "x = '" + t + "'" + //
+            "o = " + o + "'");
   }
 
   public static <T> T debug(final Object o, final Throwable t) {
     return debug(//
         "An instance of " + system.className(o) + //
-            "\n was hit by a " + t.getClass().getSimpleName() + //
+            "\n was hit by " + indefinite(t) + //
             " exception. This is expected and printed only for the purpose of debugging" + //
             "\n x = '" + t + "'" + //
             "\n o = " + o + "'");
@@ -160,7 +163,7 @@ public enum monitor {
   public static <T> T logCancellationRequest(final Object o, final Exception x) {
     return now().info(//
         "An instance of " + system.className(o) + //
-            "\n was hit by a " + system.className(x) + //
+            "\n was hit by " + indefinite(x) + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
             "\n o = " + o + "'");
@@ -169,8 +172,8 @@ public enum monitor {
   public static <T> T logEvaluationError(final Object o, final Throwable t) {
     System.err.println(//
         dump() + //
-            "\n An instance of " + system.className(o) + //
-            "\n was hit by a " + t.getClass().getSimpleName() + //
+            "An instance of " + system.className(o) + "\n" + //
+            "\n was hit by " + indefinite(t) + //
             "\n      exeption, probably due to unusual Java constructs in the input:" + //
             "\n   x = '" + t + "'" + //
             "\n   o = " + o + "'" + //
@@ -184,23 +187,27 @@ public enum monitor {
   }
 
   public static <T> T logProbableBug(final Object o, final Throwable t) {
-    return now().error("An instance of " + system.className(o) + //
-        "was hit by an '" + system.className(t) + "'\n" + //
-        "exception, which typically indicates bug in your code." + //
-        "  o = " + o + "'\n" + //
-        "  x = '" + t + "'\n" + //
-        "  trace = \n" + printStackTrace(t) + "'\n");
+    return now().error(format(//
+        "An instance of %s was hit by %s exception.\n" + //
+            "This is an indication of a bug.\n", //
+        indefinite(o), indefinite(t) //
+    ) + //
+        format(" %s = '%s'\n", className(o), o) + //
+        format(" %s = '%s'\n", className(t), t) + //
+        format(" trace(%s) = '%s'\n", className(t), trace(t)) //
+    );
   }
 
-  private static String printStackTrace(final Throwable ¢) {
+  private static String trace(final Throwable ¢) {
     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
   }
 
-  public static <T> T logProbableBug(final Throwable x) {
+  public static <T> T logProbableBug(final Throwable ¢) {
     return now().error(//
-        "A static method was hit by a " + system.className(x) + //
-            " exception, which may indicate a bug somwhwere." + //
-            "\n x = '" + x + "'" //
+        "A static method was hit by " + indefinite(¢) + " exception.\n" + //
+            "This is an indication of a bug.\n" + //
+            format("%s = '%s'\n", className(¢), ¢) + //
+            format("trace(%s) = '%s'\n", className(¢), trace(¢)) //
     );
   }
 

@@ -35,7 +35,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));
-    if (sn == null || in(sn.getIdentifier(), namer.current))
+    if (sn == null || in(sn.getIdentifier(), namer.it))
       return null;
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName $ = d.getName();
@@ -55,6 +55,6 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   public static SimpleName newCurrent(final EnhancedForStatement ¢) {
-    return ¢.getAST().newSimpleName(namer.current);
+    return ¢.getAST().newSimpleName(namer.it);
   }
 }
