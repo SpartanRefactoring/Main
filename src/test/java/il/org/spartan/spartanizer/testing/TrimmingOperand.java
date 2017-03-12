@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
-import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -74,11 +73,11 @@ public class TrimmingOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    if (!$.equals(peeled) && !essence(peeled).equals(essence($))) {
+    if (!$.equals(peeled) && !trivia.essence(peeled).equals(trivia.essence($))) {
       copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
-          trivia.escapeQuotes(essence(peeled)), //
-          trivia.escapeQuotes(essence($)));
-      azzert.that(essence(peeled), is(essence($)));
+          trivia.escapeQuotes(trivia.essence(peeled)), //
+          trivia.escapeQuotes(trivia.essence($)));
+      azzert.that(trivia.essence(peeled), is(trivia.essence($)));
     }
     return new TrimmingOperand($);
   }
@@ -106,7 +105,7 @@ public class TrimmingOperand extends Wrapper<String> {
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
     for (final String $ : options)
-      if (essence($).equals(essence(peeled)))
+      if (trivia.essence($).equals(trivia.essence(peeled)))
         return new TrimmingOperand($);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
     return null;
@@ -121,12 +120,12 @@ public class TrimmingOperand extends Wrapper<String> {
     if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
       return;
     final String expected = get();
-    if (expected.equals(peeled) || essence(peeled).equals(essence(expected)))
+    if (expected.equals(peeled) || trivia.essence(peeled).equals(trivia.essence(expected)))
       return;
     copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
-        trivia.escapeQuotes(essence(peeled)), //
-        trivia.escapeQuotes(essence(expected)));
-    azzert.that(essence(peeled), is(essence(expected)));
+        trivia.escapeQuotes(trivia.essence(peeled)), //
+        trivia.escapeQuotes(trivia.essence(expected)));
+    azzert.that(trivia.essence(peeled), is(trivia.essence(expected)));
   }
 
   private void rerun() {

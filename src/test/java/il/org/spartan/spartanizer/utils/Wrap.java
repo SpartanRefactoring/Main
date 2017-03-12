@@ -31,10 +31,6 @@ public enum Wrap {
   ;
   public static final Wrap[] WRAPS = { Statement, Expression, Method, OUTER };
 
-  public static String essence(final String codeFragment) {
-    return tide.clean(trivia.removeComments(codeFragment));
-  }
-
   /** Finds the most appropriate Wrap for a given code fragment
    * @param codeFragment JD
    * @return most appropriate Wrap, or null, if the parameter could not be
@@ -54,10 +50,10 @@ public enum Wrap {
       final String on = w.on(codeFragment);
       final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
-      $.append("\n* I = <").append(essence(on)).append(">;");
-      $.append("\n* O = <").append(essence(n + "")).append(">;");
+      $.append("\n* I = <").append(trivia.essence(on)).append(">;");
+      $.append("\n* O = <").append(trivia.essence(n + "")).append(">;");
       $.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment)).append("");
-      $.append("\n* AST=").append(essence(n.getAST() + ""));
+      $.append("\n* AST=").append(trivia.essence(n.getAST() + ""));
       $.append("\n**** INPUT=\n").append(on);
       $.append("\n**** OUTPUT=\n").append(n);
     }
@@ -73,7 +69,7 @@ public enum Wrap {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap), $ = essence(inner), essence2 = essence(off);
+    final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
     assert essence2 != null;
     return essence2.contains($);
   }

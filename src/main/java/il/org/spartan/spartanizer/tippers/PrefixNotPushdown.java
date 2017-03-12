@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.factory.subject.*;
 import org.eclipse.jdt.core.dom.*;
-
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.factory.make.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
@@ -53,15 +55,20 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   static Expression perhapsTernary(final ConditionalExpression ¢) {
-    return ¢ == null ? null : subject.pair(then(¢), elze(¢)).toCondition(pushdownNot(¢.getExpression()));
+    if (¢ == null)
+      return null;
+    final Expression expression = ¢.getExpression(), then = ¢.getThenExpression(), elze = ¢.getElseExpression(),
+        $ = pushdownNot(pair(pair(expression, then).to(CONDITIONAL_AND), elze).to(CONDITIONAL_OR)),
+        $2 = pair(notOf(then), notOf(elze)).toCondition(expression);
+    return count.nodes($) < count.nodes($2) ? $ : $2;
   }
 
   private static Expression comparison(final InfixExpression ¢) {
-    return subject.pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
+    return pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {
-    return iz.booleanLiteral(inner) || az.not(inner) != null || az.andOrOr(inner) != null || az.comparison(inner) != null
+    return iz.booleanLiteral(inner) || az.not(inner) != null || az.shortcircuit(inner) != null || az.comparison(inner) != null
         || az.conditionalExpression(inner) != null;
   }
 
@@ -78,7 +85,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static Expression perhapsDeMorgan(final Expression ¢) {
-    return perhapsDeMorgan(az.andOrOr(¢));
+    return perhapsDeMorgan(az.shortcircuit(¢));
   }
 
   private static Expression perhapsDeMorgan(final InfixExpression ¢) {

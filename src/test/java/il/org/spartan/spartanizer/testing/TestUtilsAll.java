@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil
@@ -16,6 +16,6 @@ public enum TestUtilsAll {
    * @param actual JD */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      azzert.that(essence(actual), is(essence(expected)));
+      azzert.that(trivia.essence(actual), is(trivia.essence(expected)));
   }
 }
