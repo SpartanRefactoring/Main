@@ -118,7 +118,7 @@ public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
   }
 
   private String key(final InfixExpression ¢) {
-    return key(¢, wizard.arity(¢));
+    return key(¢, extract.arity(¢));
   }
 
   private String key(final InfixExpression ¢, final int arity) {

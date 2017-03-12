@@ -6,7 +6,7 @@ import org.eclipse.jface.preference.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -32,7 +32,7 @@ public enum PreferencesResources {
   public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
 
   public static String getLabel(final Class<? extends ExpanderCategory> $) {
-    return wizard.className($);
+    return system.className($);
   }
 
   /** An enum holding together all the "enabled spartanizations" options, also

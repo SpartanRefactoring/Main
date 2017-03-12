@@ -173,7 +173,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       }
 
       <N extends ASTNode> void tick(final Tipper<N> w) {
-        final String key = wizard.className(w.getClass());
+        final String key = system.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
@@ -225,7 +225,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       }
 
       <N extends ASTNode> void tick(final Tipper<N> w) {
-        final String key = wizard.className(w.getClass());
+        final String key = system.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);

@@ -23,8 +23,8 @@ import il.org.spartan.tables.*;
  * @since 2017-02-10 */
 public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   private static Table writer;
-  @SuppressWarnings("unused") private static HashMap<String, HashSet<String>> packageMap = new HashMap<>();
-  private static Collection<String> packages = new HashSet<>();
+  @SuppressWarnings("unused") private static final HashMap<String, HashSet<String>> packageMap = new HashMap<>();
+  private static final Collection<String> packages = new HashSet<>();
   protected final Collection<CompilationUnitRecord> compilationUnitRecords = new Stack<>();
   private final Stack<ClassRecord> classRecords = new Stack<>();
   protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
