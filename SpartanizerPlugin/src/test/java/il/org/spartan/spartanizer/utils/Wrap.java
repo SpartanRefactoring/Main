@@ -7,6 +7,7 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
@@ -56,6 +57,7 @@ public enum Wrap {
       $.append("\n* AST=").append(trivia.essence(n.getAST() + ""));
       $.append("\n**** INPUT=\n").append(on);
       $.append("\n**** OUTPUT=\n").append(n);
+      $.append("\n**** PROBLEMS=\n").append(wizard.problems(n));
     }
     return $ + "";
   }

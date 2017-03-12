@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.meta;
 import static il.org.spartan.azzert.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -32,7 +33,7 @@ public enum SentenceTestTemplate {
   }
 
   static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... ¢) {
-    return Arrays.stream(¢).flatMap(λ -> descendants.whoseClassIs(AnonymousClassDeclaration.class).from(λ.reflectedCompilationUnit()).stream())
+    return Stream.of(¢).flatMap(λ -> descendants.whoseClassIs(AnonymousClassDeclaration.class).from(λ.reflectedCompilationUnit()).stream())
         .map(AlphabeticallySortedSentence::reify).filter(Objects::nonNull).map(λ -> new ArrayList<>(λ.values())).collect(toList());
   }
 
