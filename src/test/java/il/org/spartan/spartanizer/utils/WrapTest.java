@@ -4,7 +4,6 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.utils.Wrap.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -25,7 +24,7 @@ public final class WrapTest {
   }
 
   @Test public void essenceTest() {
-    azzert.that("if(b){;}throw new Exception();", is(essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    azzert.that("if(b){;}throw new Exception();", is(trivia.essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
 
   @Test public void expression() {
@@ -101,7 +100,7 @@ public final class WrapTest {
   }
 
   private void similar(final String s1, final String s2) {
-    azzert.that(essence(s2), is(essence(s1)));
+    azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
   }
 
   @Test public void statement() {

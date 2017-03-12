@@ -46,7 +46,7 @@ public enum haz {
   }
 
   public static boolean cent(final ASTNode ¢) {
-    return !collect.usesOf(namer.current).inside(¢).isEmpty();
+    return !collect.usesOf(namer.it).inside(¢).isEmpty();
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a
@@ -213,7 +213,7 @@ public enum haz {
   }
 
   public static boolean hasObject(final List<Type> ¢) {
-    return ¢ != null && ¢.stream().anyMatch(λ ->wizard.isObject(λ));
+    return ¢ != null && ¢.stream().anyMatch(wizard::isObject);
   }
 
   public static boolean hasSafeVarags(final MethodDeclaration d) {

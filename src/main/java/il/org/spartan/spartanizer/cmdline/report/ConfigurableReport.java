@@ -22,26 +22,16 @@ import il.org.spartan.spartanizer.utils.*;
 public interface ConfigurableReport {
   class Settings extends Listener.S {
     private static final long serialVersionUID = 1L;
-    String outputFolder = "/tmp/"; // default modifier
-    String inputFolder; // default modifier
     private static String reportFileName;
     private static String header;
-    CSVStatistics report;
     private static ArrayList<ASTNode> inputList = new ArrayList<>();
     private static ArrayList<ASTNode> outputList = new ArrayList<>();
-
     public static void addInput(final ASTNode input) {
       getInputList().add(input);
     }
-
     public static void addOutput(final ASTNode output) {
       getOutputList().add(output);
     }
-
-    public CSVStatistics report() {
-      return report;
-    }
-
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
           m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
@@ -49,16 +39,62 @@ public interface ConfigurableReport {
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
+    public static String getFileName() {
+      return reportFileName;
+    }
+
+    static String getHeader() {
+      return header;
+    }
+
+    public static List<ASTNode> getInputList() {
+      return inputList;
+    }
+
+    public static List<ASTNode> getOutputList() {
+      return outputList;
+    }
+
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
+    public static void setFileName(final String ¢) {
+      reportFileName = ¢;
+    }
+    public static void setHeader(final String ¢) {
+      header = ¢;
+    }
+    public static void setInputList(final ArrayList<ASTNode> inputList) {
+      Settings.inputList = inputList;
+    }
+
+    public static void setOutputList(final ArrayList<ASTNode> outputList) {
+      Settings.outputList = outputList;
+    }
+
+    String outputFolder = "/tmp/"; // default modifier
+
+    String inputFolder; // default modifier
+
+    CSVStatistics report;
+
     private ASTNode input;
+
     private ASTNode output;
-    public boolean robustMode;
+
+    private boolean robustMode;
+
+    public Action getAction() {
+      return new Action();
+    }
 
     public ASTNode getInput() {
       return input;
+    }
+
+    public String getInputFolder() {
+      return inputFolder;
     }
 
     public ASTNode getOutput() {
@@ -69,16 +105,28 @@ public interface ConfigurableReport {
       return outputFolder;
     }
 
-    public void setOutputFolder(final String outputFolder) {
-      this.outputFolder = outputFolder;
+    public boolean isRobustMode() {
+      return robustMode;
     }
 
-    public String getInputFolder() {
-      return inputFolder;
+    public CSVStatistics report() {
+      return report;
+    }
+
+    public void setInput(final ASTNode ¢) {
+      input = ¢;
     }
 
     public void setInputFolder(final String inputFolder) {
       this.inputFolder = inputFolder;
+    }
+
+    public void setOutput(final ASTNode ¢) {
+      output = ¢;
+    }
+
+    public void setOutputFolder(final String outputFolder) {
+      this.outputFolder = outputFolder;
     }
 
     public void setReport(final String reportFilename, final String header) {
@@ -89,8 +137,8 @@ public interface ConfigurableReport {
       }
     }
 
-    static String getHeader() {
-      return header;
+    public void setRobustMode(final boolean robustMode) {
+      this.robustMode = robustMode;
     }
 
     /** Action provide services
@@ -102,9 +150,17 @@ public interface ConfigurableReport {
       /** real serialVersionUID comes much later in production code */
       private static final long serialVersionUID = 1L;
 
+      public void close() {
+        report().close();
+      }
+
+      private int defaultValue() {
+        return hashCode();
+      }
+
       @SuppressWarnings("boxing") int go() {
         // listeners().push("Initializing the " + getFileName() + " report.");
-        if (Settings.this.robustMode) {
+        if (Settings.this.isRobustMode()) {
           listeners().pop("we dare do nothing in robust mode");
           return 0;
         }
@@ -135,6 +191,14 @@ public interface ConfigurableReport {
         return defaultValue();
       }
 
+      public void initialize() {
+        try {
+          report = new CSVStatistics(getFileName(), getHeader());
+        } catch (final IOException ¢) {
+          monitor.infoIOException(¢);
+        }
+      }
+
       private void name(final ASTNode i) {
         report().put("name", extract.name(i));
         report().put("category", extract.category(i));
@@ -142,14 +206,6 @@ public interface ConfigurableReport {
 
       private void summaryFileName() {
         report().summaryFileName();
-      }
-
-      public void close() {
-        report().close();
-      }
-
-      private int defaultValue() {
-        return hashCode();
       }
 
       // running report
@@ -178,54 +234,6 @@ public interface ConfigurableReport {
           report().put(id + ¢.name() + " %", a);
         }
       }
-
-      public void initialize() {
-        try {
-          report = new CSVStatistics(getFileName(), getHeader());
-        } catch (final IOException ¢) {
-          monitor.infoIOException(¢);
-        }
-      }
-    }
-
-    public Action getAction() {
-      return new Action();
-    }
-
-    public static void setHeader(final String ¢) {
-      header = ¢;
-    }
-
-    public static void setFileName(final String ¢) {
-      reportFileName = ¢;
-    }
-
-    public static String getFileName() {
-      return reportFileName;
-    }
-
-    public void setInput(final ASTNode ¢) {
-      input = ¢;
-    }
-
-    public void setOutput(final ASTNode ¢) {
-      output = ¢;
-    }
-
-    public static List<ASTNode> getInputList() {
-      return inputList;
-    }
-
-    public static void setInputList(final ArrayList<ASTNode> inputList) {
-      Settings.inputList = inputList;
-    }
-
-    public static List<ASTNode> getOutputList() {
-      return outputList;
-    }
-
-    public static void setOutputList(final ArrayList<ASTNode> outputList) {
-      Settings.outputList = outputList;
     }
   }
 }
