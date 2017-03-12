@@ -164,10 +164,6 @@ public interface namer {
     return in($.getIdentifier(), specials);
   }
 
-  static SimpleName newReturn(final ASTNode ¢) {
-    return make.from(¢).identifier(current);
-  }
-
   static SimpleName newCurrent(final ASTNode ¢) {
     return make.from(¢).identifier(current);
   }
