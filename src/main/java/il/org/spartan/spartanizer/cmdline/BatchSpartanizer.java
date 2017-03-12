@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import java.io.*;
-import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -271,7 +271,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
 
   private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
     return f.getName().endsWith(".java") || f.isDirectory()
-        && Arrays.stream(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java"));
+        && Stream.of(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java"));
   }
 
   /** This method is called from outside, like in the case of

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -158,7 +159,7 @@ public interface definition {
     }
 
     public static boolean has(final String name) {
-      return name != null && Arrays.stream(values()).anyMatch(λ -> name.equals(λ + ""));
+      return name != null && Stream.of(values()).anyMatch(λ -> name.equals(λ + ""));
     }
   }
 

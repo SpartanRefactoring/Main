@@ -447,11 +447,11 @@ public class Toolbox {
   }
 
   public int tippersCount() {
-    return Arrays.stream(implementation).filter(Objects::nonNull).mapToInt(List::size).sum();
+    return Stream.of(implementation).filter(Objects::nonNull).mapToInt(List::size).sum();
   }
 
   public int nodesTypeCount() {
-    return (int) Arrays.stream(implementation).filter(Objects::nonNull).count();
+    return (int) Stream.of(implementation).filter(Objects::nonNull).count();
   }
 
   <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(final N ¢) {

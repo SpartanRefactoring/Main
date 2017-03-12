@@ -1,4 +1,6 @@
 package il.org.spartan.spartanizer.research.util;
+
+import static java.lang.String.*;
 import static il.org.spartan.spartanizer.engine.nominal.namer.*;
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 
@@ -119,25 +121,32 @@ public enum anonymize {
 
   public static String makeUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return String.format("%s@Test public void %s() {\n %s\n}\n", comment(), signature($), body($));
+    return format("%s@Test public void %s() {\n %s\n}\n", comment(), signature($), body($));
   }
 
   public static String comment() {
-    return String.format("/** Automatically generated on %s, copied by %s */\n", //
+    return format("/** Automatically generated on %s, copied by %s */\n", //
         system.now(), system.userName());
   }
 
   public static String body(final String input) {
-    for (String $ = String.format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
+    for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
         return $ + "  .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      assert t.get() != null;
-      $ += String.format(" .using(%s.class,new %s()) //\n", t.get().getClass().getSimpleName(), t.className());
-      $ += String.format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t));
+      $ += format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
+  }
+
+  private static String operandClass(final Tipper<?> ¢) {
+    return ¢.get().getClass().getSimpleName();
+  }
+
+  private static String tipperClass(final Tipper<?> ¢) {
+    return ¢.className() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
   }
 }

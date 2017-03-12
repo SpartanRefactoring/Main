@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.java;
-
-import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -57,7 +56,7 @@ public enum IExtendedModifiersRank {
   }
 
   static IExtendedModifiersRank find(final String modifier) {
-    return Arrays.stream(IExtendedModifiersRank.values()).filter(λ -> modifier.equals((λ + "").toLowerCase()) || modifier.equals("@" + λ)).findFirst()
+    return Stream.of(IExtendedModifiersRank.values()).filter(λ -> modifier.equals((λ + "").toLowerCase()) || modifier.equals("@" + λ)).findFirst()
         .orElse($USER_DEFINED_ANNOTATION$);
   }
 
