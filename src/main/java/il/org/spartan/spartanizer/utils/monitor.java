@@ -294,7 +294,7 @@ public enum monitor {
     return !states.empty() ? states.peek() : monitor.PRODUCTION;
   }
 
-  public static monitor pop() {
+  public static monitor unset() {
     return states.pop();
   }
 }
