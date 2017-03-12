@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.ast.navigate.trivia.*;
+import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 
 import java.util.*;
 

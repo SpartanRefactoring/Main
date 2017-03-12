@@ -184,7 +184,7 @@ public class CommandLineApplicator extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return Linguistic.unknownIfNull(os, λ -> λ[index]);
+      return English.unknownIfNull(os, λ -> λ[index]);
     }
   }
 }

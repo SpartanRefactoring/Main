@@ -8,6 +8,7 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.java.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Not such a good name for a bunch of static functions
@@ -130,10 +131,6 @@ public interface system {
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$");
   }
 
-  static String lowerFirst(final String ¢) {
-    return (lisp.first(¢) + "").toLowerCase() + ¢.substring(1);
-  }
-
   static String now() {
     return (new Date() + "").replaceAll(" ", "-");
   }
@@ -205,12 +202,8 @@ public interface system {
     }
   }
 
-  static String upperFirst(final String ¢) {
-    return (lisp.first(¢) + "").toUpperCase() + ¢.substring(1);
-  }
-
   static String userName() {
-    return upperFirst(System.getProperty("user.name", "Killroy"));
+    return English.upperFirstLetter(System.getProperty("user.name", "Killroy"));
   }
 
   /** This function counts the number of words the given string contains. Words

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.spartanizer.cmdline.system.*;
-import static il.org.spartan.spartanizer.engine.nominal.Linguistic.*;
+import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
 import static java.lang.String.*;
 

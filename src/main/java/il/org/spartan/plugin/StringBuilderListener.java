@@ -4,7 +4,7 @@ import static il.org.spartan.plugin.Listener.*;
 
 import il.org.spartan.*;
 import il.org.spartan.Separator;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** A kind of {@link Listener} that records a long string of the message it got.

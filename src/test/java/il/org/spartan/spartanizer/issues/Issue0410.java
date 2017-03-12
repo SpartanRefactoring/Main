@@ -6,8 +6,8 @@ import static il.org.spartan.spartanizer.cmdline.GuessedContext.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Test class for {@link GuessedContext} .
  * @since 2016 */
