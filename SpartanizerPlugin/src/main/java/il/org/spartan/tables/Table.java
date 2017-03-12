@@ -43,7 +43,7 @@ public class Table extends Row<Table> implements Closeable {
 
   @SuppressWarnings("resource") public Table(final String name, final String outputFolder) {
     this.name = name.toLowerCase();
-    this.path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
+    path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
     as.list(TableRenderer.builtin.values()).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
