@@ -12,6 +12,7 @@ import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
@@ -22,6 +23,22 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {
+  static String capitalize(String keyword) {
+    return (lisp.first(keyword) + "").toUpperCase() + keyword.substring(1);
+  }
+
+  static String lowerFirstLetter(String input) { 
+    return 
+      input.substring(0, 1).toUpperCase() + input.substring(1);
+  }
+
+  static String signature(final String code) {
+    String $ = code;
+    for (String keyword : wizard.keywords)
+      $ = $.replaceAll("\\b" + keyword + "\\b", capitalize(keyword));
+    return lowerFirstLetter(code.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+  }
+
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
   String forbidden = "_"; //
   String anonymous = "__"; //
