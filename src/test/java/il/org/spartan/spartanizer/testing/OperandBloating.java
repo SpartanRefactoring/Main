@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-public class OperandBloating extends Operand {
+public class OperandBloating extends TrimmingOperand {
   ASTNode ast;
   String xclassText;
 

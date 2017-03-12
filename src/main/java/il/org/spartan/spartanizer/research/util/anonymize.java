@@ -131,9 +131,10 @@ public enum anonymize {
     for (String $ = String.format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
-        return $ + "  .stays() //\n  ;";
+        return $ + "  .stays() //\n  ;\n";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
+      assert t.current() != null;
       $ += String.format(" .using(%s.class,new %s()) //\n", t.current().getClass().getSimpleName(), t.className());
       $ += String.format(" .gives(\"%s\") //\n", trivia.escapeQuotes(essence(to)));
       from = to;
