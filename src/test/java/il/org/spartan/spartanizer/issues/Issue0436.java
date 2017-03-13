@@ -8,7 +8,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.leonidas.*;
-import il.org.spartan.spartanizer.research.util.*;
 
 /** Failing test, originally from {@link normalizeTest} .
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
