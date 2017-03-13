@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** A class for analyzing a method.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-29 */
 public final class MethodExplorer {
   final MethodDeclaration inner;

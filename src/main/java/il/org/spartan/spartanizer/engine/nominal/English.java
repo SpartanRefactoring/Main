@@ -14,16 +14,12 @@ import il.org.spartan.spartanizer.utils.*;
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
  * @since 2.6 */
-public interface english {
+public interface English {
   /** Error string, replacing null/error value. */
   String UNKNOWN = "???";
-
   String SEPARATOR = ", ";
-
   String DOUBLE_FORMAT = "0.00";
-
   String TRIM_SUFFIX = "...";
-
   int TRIM_THRESHOLD = 50;
 
   static String indefinite(final Object ¢) {
@@ -40,6 +36,7 @@ public interface english {
   static boolean isAcronym(final String $) {
     return $.toUpperCase().equals($);
   }
+
   /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
    * @param ¢ list of items
    * @return a linguistic list of the items */
@@ -47,12 +44,15 @@ public interface english {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
   }
+
   static String upperFirstLetter(final String input) {
     return input.substring(0, 1).toUpperCase() + input.substring(1);
   }
+
   static String lowerFirstLetter(final String input) {
     return input.substring(0, 1).toLowerCase() + input.substring(1);
   }
+
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -60,6 +60,7 @@ public interface english {
   static String plurales(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "es";
   }
+
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize
    * @param i count

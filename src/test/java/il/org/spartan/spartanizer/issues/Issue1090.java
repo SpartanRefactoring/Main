@@ -7,7 +7,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Unit tests for {@link
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-17 */
 @Ignore
 @RunWith(Parameterized.class)

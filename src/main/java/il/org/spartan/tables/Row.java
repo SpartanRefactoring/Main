@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
 
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, type of subclass
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {
   public Row() {
@@ -49,9 +49,9 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Adds a key and a <code><b>double</b><code> value to this instance 
-                          * @param key The key to be added; must not be {@code null
-   * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+                           * &#64;param key The key to be added; must not be {@code null
+    * &#64;param value The value associated with the key
+    * @return <code><b>this</b></code> */
   public Self col(final String key, final double value) {
     return col(key, value + "");
   }
@@ -65,8 +65,8 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Add a key and a general {@link Object} value to this instance
-   * @param key The key to be added; must not be {@code null; must
-   *        not be {@code null
+   * @param key The key to be added; must not be {@code null; must not be
+   *        {@code null
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
   public final Self col(final String key, final Integer value) {
@@ -82,8 +82,8 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   }
 
   /** Add a key and a non specific {@link Object} value to this instance
-   * @param key The key to be added; must not be {@code null; must
-   *        not be {@code null
+   * @param key The key to be added; must not be {@code null; must not be
+   *        {@code null
    * @param value The value associated with the key
    * @return <code><b>this</b></code> */
   public final Self col(final String key, final Object value) {

@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert pattern <code>try {s} [ finally { <i>empty</i> }]</code>, {@code s}
  * not empty, to {@code {s}}.
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-19 */
 public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTipper<TryStatement>//
     implements TipperCategory.SyntacticBaggage {

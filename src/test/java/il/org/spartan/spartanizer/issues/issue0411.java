@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Failing tests of issue 295 - FragmentInitializerStatementTerminatingScope.
  * DeclarationInitializerStatementTerminatingScope.
- * @author Yossi Gil <yossi.gil@gmail.com>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @Ignore
 @SuppressWarnings("static-method")

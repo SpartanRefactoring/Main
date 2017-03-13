@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } into {@code
  * return a ? foo() : bar();
  * } return a; g(); }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {

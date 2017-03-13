@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } to {@code
  * b
  * }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.CommnonFactoring {

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * read like a sentence phrase. Specifically, this class determines precedence
  * and associativity of Java operators; data is drawn from
  * {@link "http://introcs.cs.princeton.edu/java/11precedence/"}
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-14 */
 public enum precedence {
   ;
@@ -42,8 +42,8 @@ public enum precedence {
   /** Compare precedence of two expressions.
    * @param host JD
    * @param e2 JD
-   * @return whether the precedence of the first
-   *         parameter is equal to that of the second parameter. */
+   * @return whether the precedence of the first parameter is equal to that of
+   *         the second parameter. */
   public static boolean equal(final ASTNode host, final ASTNode e2) {
     return precedence.of(host) == precedence.of(e2);
   }
@@ -51,8 +51,8 @@ public enum precedence {
   /** Compare precedence of two expressions.
    * @param e1 JD
    * @param e2 JD
-   * @return whether the precedence of the first
-   *         parameter is strictly greater than that of the second parameter. */
+   * @return whether the precedence of the first parameter is strictly greater
+   *         than that of the second parameter. */
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
     return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
   }
@@ -60,8 +60,7 @@ public enum precedence {
   /** determine whether the precedence of a given {@link Expression} can be
    * determined.
    * @param n JD
-   * @return whether the parameter a legal
-   *         precedence of Java. */
+   * @return whether the parameter a legal precedence of Java. */
   public static boolean known(final ASTNode ¢) {
     return is.legal(precedence.of(¢));
   }
@@ -108,8 +107,7 @@ public enum precedence {
    * operator.
    * @param o JD
    * @param x JD
-   * @return whether the precedence of the two
-   *         parameters is the same. */
+   * @return whether the precedence of the two parameters is the same. */
   public static boolean same(final InfixExpression.Operator o, final Expression x) {
     return precedence.of(o) == precedence.of(x);
   }
@@ -136,15 +134,14 @@ public enum precedence {
   /** *An empty <code><b>enum</b></code> for fluent programming. The name should
    * say it all: The name, followed by a dot, followed by a method name, should
    * read like a sentence phrase.
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-14 */
   public enum is {
     ;
     /** determine whether an integer falls within the legal range of
      * precedences.
      * @param precedence JD
-     * @return whether the parameter is a legal
-     *         precedence of Java. */
+     * @return whether the parameter is a legal precedence of Java. */
     public static boolean legal(final int precedence) {
       return precedence >= 1 && precedence <= 15;
     }

@@ -70,7 +70,7 @@ public class SpartanMovie extends AbstractHandler {
             monitor.log(¢);
           }
         }
-        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + english.plurals("file", filesModified));
+        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
         sleep(SLEEP_END);
         pm.done();
       });
@@ -87,7 +87,7 @@ public class SpartanMovie extends AbstractHandler {
    * <p>
    * Ori Roth says: it just looks better this way. Editors do not pile up and
    * create a mess.
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @param ¢ JD */
   // sure this is the right behavior
   public static void mightNotBeSlick(final IWorkbenchPage ¢) {

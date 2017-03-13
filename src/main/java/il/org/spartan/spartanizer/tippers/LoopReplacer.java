@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
-import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -14,8 +15,8 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** An abstract class to manipulate bodies of loops.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ *         {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-05 */
 public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNode<S> {
   private static final long serialVersionUID = 648254692142989542L;
