@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.util;
+package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.spartanizer.engine.nominal.namer.*;
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO: Ori Marcovitch please add a description
