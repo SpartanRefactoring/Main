@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
-
 import static il.org.spartan.Utils.*;
+
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -90,10 +91,7 @@ public enum GuessedContext {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
-    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
-      if ($.accurateContains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
-        return $;
-    return null;
+      return Stream.of(alternativeContextsToConsiderInThisOrder).filter(λ -> λ.accurateContains(λ.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper(λ, codeFragment)).findFirst().orElse(null);
   }
 
   private static boolean methodInvocationLookAlike(final String codeFragment) {
