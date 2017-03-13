@@ -6,9 +6,9 @@ import org.eclipse.jdt.core.dom.*;
 
 /** Enhances {@link ASTVisitor} with information on variable definition and
  * binding. To use, extend as usual, except that the {@link #preVisit(ASTNode)}
- * function is now <code><b>final</b></code>. If you must, override
+ * function is now {@code final}. If you must, override
  * {@link #preBindingVisit()}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-08-08 18:11:23 +0300 */
 @SuppressWarnings("unused")
 public abstract class VariableBindingVisitor extends ASTVisitor {

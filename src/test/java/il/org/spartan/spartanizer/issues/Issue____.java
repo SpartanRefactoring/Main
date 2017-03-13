@@ -12,11 +12,10 @@ import il.org.spartan.*;
 
 /** A template for unit tests for {@link NameYourClassHere} , can be used by:
  * <ul>
- * <li>Create a new test class that <code><b>extends</b></code> this class.
+ * <li>Create a new test class that {@code extends} this class.
  * <ol>
  * <li>All methods in this class will be executed in your code.
- * <li>You would probably want to copy the <code><b>imports</b></code> of this
- * class.
+ * <li>You would probably want to copy the {@code imports} of this class.
  * </ol>
  * <li>Create a <u>new</u> test class by copying the source of this one:
  * <ol>
@@ -25,30 +24,31 @@ import il.org.spartan.*;
  * <li>sooner or later you will want to erase from your copy:
  * <ul>
  * <li>{@link Test} copied from this class
- * <li>auxiliary <code><b>private</b></code> methods
+ * <li>auxiliary {@code private} methods
  * <li>everything else copied from this class
  * </ul>
  * </ol>
  * In writing tests, note the following
  * <ol>
- * <li>Use <code><b>assert</b></code> statement for the following:
+ * <li>Use {@code assert} statement for the following:
  * <ul>
- * <li><code><b>assert</b> something();</code>
- * <li><code><b>assert</b> !something();</code>
- * <li><code><b>assert</b> thing() != null;</code>
- * </ul>
- * The reason is that <code><b>assert</b></code> is short, clear, but does not
- * provide as much information as {@link azzert} . In the above situations, a
- * priori there is nothing to print.
+ * <li>{@code assert</b> something();</code>
+ * <li>{@code assert</b> !something();</code>
+ * <li>{@code assert</b> thing() != null;</code>
+ * 
+</ul>
+ * The reason is that {@code assert} is short, clear, but does not provide as
+ * much information as {@link azzert} . In the above situations, a priori there
+ * is nothing to print.
  * <p>
- * You can augment <code><b>assert</b> with a short {@link Object} (usually a
+ * You can augment {@code assert</b> with a short {@link Object} (usually a
  * {@link String} ) that can provide some debugging information (see the
  * implementation of {@link #Z$040()} or {@link #Z$060()} .)
  * <li>Instead, use class {@link azzert} for anything else:
  * <ul>
  * <li>to check whether something is {@code null, use
  * {@code azzer.notNull(something)} which prints the content of this something
- * if it is not <code><b>null</b></code<li>Test methods do not usually contain
+ * if it is not {@code null</b></code<li>Test methods do not usually contain
  * the word test in them. There is no point in repeating ourselves.
  * <li>Naming convention here is that test methods begin with a capital letter
  * A...Z, and are numbered.

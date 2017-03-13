@@ -87,7 +87,7 @@ public class SpartanMovie extends AbstractHandler {
    * <p>
    * Ori Roth says: it just looks better this way. Editors do not pile up and
    * create a mess.
-   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @param ¢ JD */
   // sure this is the right behavior
   public static void mightNotBeSlick(final IWorkbenchPage ¢) {

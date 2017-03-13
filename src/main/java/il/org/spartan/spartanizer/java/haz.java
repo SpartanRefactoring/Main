@@ -13,10 +13,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** An empty {@code enum} for fluent programming. The name should say it all:
+ * The name, followed by a dot, followed by a method name, should read like a
+ * sentence phrase.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09-12 */
 public enum haz {
   ;

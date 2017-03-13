@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** A kind of {@link Listener} that records a long string of the message it got.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public class StringBuilderListener implements Listener {
   private static final Tab tab = new Tab();

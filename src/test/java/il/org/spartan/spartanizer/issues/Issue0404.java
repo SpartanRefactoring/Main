@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Dan Greenstein
  * @since */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

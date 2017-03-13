@@ -26,7 +26,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return () -> code;
   }
 
-  @Override public boolean equals(Object ¢) {
+  @Override public boolean equals(final Object ¢) {
     return getClass().equals(¢.getClass());
   }
 

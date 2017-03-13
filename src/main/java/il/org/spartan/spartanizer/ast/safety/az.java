@@ -19,10 +19,10 @@ import static il.org.spartan.lisp.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** An empty {@code enum} for fluent programming. The name should say it all:
+ * The name, followed by a dot, followed by a method name, should read like a
+ * sentence phrase.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum az {
@@ -39,7 +39,7 @@ public enum az {
    * is either {@link InfixExpression.Operator#AND} or
    * {@link InfixExpression.Operator#OR}.
    * @param $ result
-   * @return parameter thus converted, or <code><b>null</b> if the conversion is
+   * @return parameter thus converted, or {@code null</b> if the conversion is
    *         not possible for it */
   public static InfixExpression shortcircuit(final Expression $) {
     return !iz.infixExpression($) || !iz.deMorgan(infixExpression($).getOperator()) ? null : infixExpression($);
@@ -103,8 +103,7 @@ public enum az {
 
   /** Converts a boolean into a bit value
    * @param $ result
-   * @return 1 if the parameter is {@code true}, 0 if it is
-   *         <code><b>false</b></code> */
+   * @return 1 if the parameter is {@code true}, 0 if it is {@code false} */
   @SuppressWarnings("BooleanParameter") public static int bit(final boolean $) {
     return as.bit($);
   }
@@ -151,7 +150,7 @@ public enum az {
    * is one of the six comparison operators: {@code <}, {@code <=}, {@code >},
    * {@code >=}, {@code !=}, or {@code ==}.
    * @param $ result
-   * @return parameter thus converted, or <code><b>null</b> if the conversion is
+   * @return parameter thus converted, or {@code null</b> if the conversion is
    *         not possible for it */
   public static InfixExpression comparison(final Expression $) {
     return !($ instanceof InfixExpression) ? null : az.comparison((InfixExpression) $);
@@ -331,7 +330,7 @@ public enum az {
   /** Convert an {@link Expression} into a {@link PrefixExpression} whose
    * operator is {@code !},
    * @param $ result
-   * @return parameter thus converted, or <code><b>null</b> if the conversion is
+   * @return parameter thus converted, or {@code null</b> if the conversion is
    *         not possible for it */
   public static PrefixExpression not(final Expression $) {
     return !($ instanceof PrefixExpression) ? null : not(prefixExpression($));

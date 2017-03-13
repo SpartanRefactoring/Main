@@ -29,8 +29,7 @@ import il.org.spartan.utils.*;
 /** the base class for all GUI applicators contains common functionality
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}: major refactoring
- *         2013/07/10
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}: major refactoring 2013/07/10
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 @SuppressWarnings("ALL")
@@ -250,8 +249,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** @param m marker which represents the range to apply the tipper within
-   * @param n the node which needs to be within the range of
-   *        <code><b>m</b></code>
+   * @param n the node which needs to be within the range of {@code m}
    * @return whetherthe node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);

@@ -22,9 +22,9 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
+/** An empty {@code enum} for fluent programming. The name should say it all:
+ * The name, followed by a dot, followed by a method name, should read like a
+ * sentence phrase.
  * @author Yossi Gil {@code yossi dot (optional) gil at gmail dot com}
  * @since 2015-07-28 */
 @SuppressWarnings("ClassWithTooManyMethods")
@@ -460,11 +460,11 @@ public enum extract {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }
 
-  /** Finds the single statement in the <code><b>else</b></code> branch of an
+  /** Finds the single statement in the {@code else} branch of an
    * {@link IfStatement}
    * @param subject JD
-   * @return single statement in the <code><b>else</b></code> branch of the
-   *         parameter, or {@code null, if no such statement
+   * @return single statement in the {@code else} branch of the parameter, or
+   *         {@code null, if no such statement
    *         exists. */
   public static Statement singleElse(final IfStatement ¢) {
     return extract.singleStatement(elze(¢));
@@ -486,7 +486,7 @@ public enum extract {
   }
 
   /** extract the list of non-empty statements embedded in node (nesting within
-   * control structure such as <code><b>if</b></code> are not removed.)
+   * control structure such as {@code if} are not removed.)
    * @param pattern JD
    * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
