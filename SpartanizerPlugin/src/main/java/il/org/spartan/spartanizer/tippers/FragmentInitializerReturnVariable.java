@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.*;
  * } into {@code
  * return a;
  * } https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnVariable extends $FragementAndStatement//
     implements TipperCategory.Inlining {

@@ -13,7 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Test of {@link AssignmentUpdateAndSameUpdate}
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-04 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })
