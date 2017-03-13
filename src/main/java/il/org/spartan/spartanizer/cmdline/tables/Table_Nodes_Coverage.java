@@ -69,7 +69,7 @@ public class Table_Nodes_Coverage {
   }
 
   private static double coverage() {
-    return statistics.covergae();
+    return statistics.nodesCoverage();
   }
 
   private static int nodes() {
