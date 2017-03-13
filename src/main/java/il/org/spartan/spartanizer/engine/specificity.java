@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 public final class specificity implements Comparator<Expression> {
   /** Determine
    * @param x JD
-   * @return whether the parameter has a defined
-   *         level of specificity. */
+   * @return whether the parameter has a defined level of specificity. */
   public static boolean defined(final Expression ¢) {
     return Level.defined(¢);
   }

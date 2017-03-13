@@ -66,9 +66,9 @@ public class Binding {
   }
 
   /** @param ¢
-   * @return whether the ASTNode (self) and its
-   *         parent (blockScope) are the same ones, the type's key() is the
-   *         same, and if the Information nodes hidden are equal. */
+   * @return whether the ASTNode (self) and its parent (blockScope) are the same
+   *         ones, the type's key() is the same, and if the Information nodes
+   *         hidden are equal. */
   // Required for MapEntry equality, which is, in turn, required for Set
   // containment check, which is required for testing.
   @Override public boolean equals(final Object ¢) {

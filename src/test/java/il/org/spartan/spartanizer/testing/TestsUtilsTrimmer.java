@@ -51,8 +51,7 @@ public enum TestsUtilsTrimmer {
          * does not seem to be the case. So, in the case our wrapper is not
          * null, we do not carry out any further tests.
          * @param pattern the node currently being visited.
-         * @return whether the sought node is
-         *         found. */
+         * @return whether the sought node is found. */
         @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
           if ($.get() != null)
             return false;

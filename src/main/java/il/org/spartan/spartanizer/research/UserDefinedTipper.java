@@ -17,8 +17,8 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   /** @param ¢ the ASTNode being inspected.
-   * @return whether the argument holds all the
-   *         conditions needed for a tip to be possible. */
+   * @return whether the argument holds all the conditions needed for a tip to
+   *         be possible. */
   protected abstract boolean prerequisite(N ¢);
 
   /** @param n the ASTNode to be inspected.
