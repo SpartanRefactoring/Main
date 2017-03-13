@@ -36,14 +36,13 @@ public class Table_Summary {
   public static void main(final String[] args) {
     new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
-        summarizeStatistics(path);
-        clearAll();
-        System.err.println("Output is in: " + system.tmp + path);
+        summarize(path);
+        resetAll();
       }
 
-      public void summarizeStatistics(final String path) {
+      public void summarize(final String path) {
         if (writer == null)
-          initializeWriter(outputFolder);
+          initializeWriter();
         writer//
             .col("Project", path)//
             .col("Commands", statementsCoverage())//
@@ -95,7 +94,7 @@ public class Table_Summary {
     writer.close();
   }
 
-  static void clearAll() {
+  static void resetAll() {
     statementsCoverageStatistics.clear();
     npDistributionStatistics.clear();
     npStatistics.clear();
@@ -113,8 +112,8 @@ public class Table_Summary {
       scope.peek().markNP(n, np);
   }
 
-  static void initializeWriter(final String outputFolder) {
-    writer = new Table(Table_Summary.class, outputFolder);
+  static void initializeWriter() {
+    writer = new Table(Table_Summary.class);
   }
 
   static int statements() {
