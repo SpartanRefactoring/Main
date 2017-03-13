@@ -11,12 +11,13 @@ import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Expands terms of +/- expressions without reordering, e.g., convert
  * {@code a + (b+c+(d-e))} into {@code a+b+c+d-e}
  * <p>
  * Functions named {@link #base} are non-recursive
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-08 */
 public enum TermsExpander {
   ;
@@ -77,7 +78,7 @@ public enum TermsExpander {
       return $;
     assert ts != null;
     assert !ts.isEmpty();
-    final Operator o = $.getOperator();
+    final Operator o = operator($);
     assert o != null;
     assert o == PLUS2 || o == MINUS2;
     final Term first = first(ts);
