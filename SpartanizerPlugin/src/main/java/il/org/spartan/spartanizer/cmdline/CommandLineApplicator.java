@@ -23,7 +23,7 @@ public class CommandLineApplicator extends Applicator {
 
   // private final CommandLine$Applicator a = new CommandLine$Applicator();
   /** Default listener configuration. Simple printing to console.
-   * @return <code><b>this</b></code> applicator */
+   * @return {@code this} applicator */
   @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       as.list(os).forEach(λ -> System.out.print(λ + " "));
@@ -32,20 +32,20 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return <code><b>this</b></code> */
+  /** @return {@code this} */
   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
 
-  /** @return <code><b>this</b></code> */
+  /** @return {@code this} */
   private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration, with many passes.
-   * @return <code><b>this</b></code> applicator */
+   * @return {@code this} applicator */
   public CommandLineApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
@@ -56,7 +56,7 @@ public class CommandLineApplicator extends Applicator {
   // Added a quick fix to your code. Also I do not understand why you wrote this
   // - we will inspect it once we meet. --or
   /** Applies {@link Spartanizer$Applicator} by default.
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   private CommandLineApplicator defaultRunAction() {
     System.out.println("defaultRunAction");
     setRunAction(λ -> Integer.valueOf(as.bit(new Spartanizer$Applicator().apply(λ, selection()))));
@@ -68,7 +68,7 @@ public class CommandLineApplicator extends Applicator {
   // Spartanize the
   // * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
   // * @param a JD
-  // * @return <code><b>this</b></code> applicator */
+  // * @return {@code this} applicator */
   // public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
   // setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
   // name(a.getName());
@@ -78,7 +78,7 @@ public class CommandLineApplicator extends Applicator {
    * {@link CompilationUnit} using received TODO maybe this method are going to
    * die (as well as Spartanize$Applicator) {@link Spartanizer$Applicator}.
    * @param a JD
-   * @return <code><b>this</b></code> applicator */
+   * @return {@code this} applicator */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
     setRunAction(λ -> Integer.valueOf(as.bit(a.apply(λ, selection()))));
     name(a.getClass().getSimpleName());
@@ -88,7 +88,7 @@ public class CommandLineApplicator extends Applicator {
   /** Default run action configuration of . Spartanize the
    * {@link CompilationUnit} using received {@link CommandLine$Applicator}.
    * @param a JD
-   * @return <code><b>this</b></code> applicator */
+   * @return {@code this} applicator */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
     CommandLine$Applicator.startingTime = new Date().getTime();
     setRunAction(λ -> Integer.valueOf(as.bit(a.apply(λ, selection()))));
@@ -96,13 +96,13 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return <code><b>this</b></code> */
+  /** @return {@code this} */
   private CommandLineApplicator defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
 
-  /** @return <code><b>this</b></code> */
+  /** @return {@code this} */
   private CommandLineApplicator defaultSelection() {
     // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
@@ -115,7 +115,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return <code><b>this</b></code> */
+  /** @return {@code this} */
   private CommandLineApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }

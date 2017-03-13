@@ -20,8 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
- *         {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-22 */
 public class Toolbox {
   @SuppressWarnings("unchecked")
@@ -380,7 +379,7 @@ public class Toolbox {
    * {@link ASTNode}.
    * @param c JD
    * @param ts JD
-   * @return <code><b>this</b></code>, for easy chaining. */
+   * @return {@code this}, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
     final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //

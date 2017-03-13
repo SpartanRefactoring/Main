@@ -6,7 +6,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 @SuppressWarnings("javadoc")
 public enum TestUtilsAll {

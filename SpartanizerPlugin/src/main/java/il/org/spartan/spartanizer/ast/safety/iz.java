@@ -26,10 +26,10 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-/** An empty <code><b>interface</b></code> for fluent programming. The name
- * should say it all: The name, followed by a dot, followed by a method name,
- * should read like a sentence phrase.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** An empty {@code interface} for fluent programming. The name should say it
+ * all: The name, followed by a dot, followed by a method name, should read like
+ * a sentence phrase.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
@@ -242,8 +242,8 @@ public interface iz {
     return ¢ != null && ¢.getOperator() == CONDITIONAL_OR;
   }
 
-  /** Determine whether a node is a "specific", i.e., {@code null
-    * or <code><b>this</b></code> or literal.
+  /** Determine whether a node is a "specific", i.e., {@code null or
+   * {@code this} or literal.
    * @param x JD
    * @return whether the parameter is a "specific" */
   static boolean constant(final Expression ¢) {
@@ -921,7 +921,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, NUMBER_LITERAL);
   }
 
-  /** Determine whether a node is <code><b>this</b></code> or {@code null
+  /** Determine whether a node is {@code this} or {@code null
    * @param x JD
    * @return whether the parameter is a block statement */
   static boolean numericLiteral(final Expression ¢) {
@@ -1009,9 +1009,8 @@ public interface iz {
     return ¢ != null && right(az.assignment(¢.getParent())).equals(¢);
   }
 
-  /** Determine whether a node is a "sequencer", i.e.,
-   * <code><b>return</b></code> , <code><b>break</b></code>,
-   * <code><b>continue</b></code> or <code><b>throw</b></code>
+  /** Determine whether a node is a "sequencer", i.e., {@code return} ,
+   * {@code break}, {@code continue} or {@code throw}
    * @param pattern JD
    * @return whether the parameter is a sequencer */
   static boolean sequencer(final ASTNode ¢) {
@@ -1170,14 +1169,14 @@ public interface iz {
     return ¢ instanceof ThisExpression;
   }
 
-  /** Determine whether a node is the <code><b>this</b></code> keyword
+  /** Determine whether a node is the {@code this} keyword
    * @param pattern JD
-   * @return whether is the <code><b>this</b></code> keyword */
+   * @return whether is the {@code this} keyword */
   static boolean thisLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, THIS_EXPRESSION);
   }
 
-  /** Determine whether a node is <code><b>this</b></code> or {@code null
+  /** Determine whether a node is {@code this} or {@code null
    * @param x JD
    * @return whether the parameter is a block statement */
   static boolean thisOrNull(final Expression ¢) {

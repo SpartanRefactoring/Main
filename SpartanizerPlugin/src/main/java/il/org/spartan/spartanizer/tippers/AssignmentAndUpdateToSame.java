@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }AssignmentUpdateAndSameUpdate
  * <p>
  * Tested by {@link Issue1133}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-04 */
 public final class AssignmentAndUpdateToSame extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {

@@ -13,9 +13,9 @@ import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** An empty <code><b>enum</b></code> with a variety of {@code public
+/** An empty {@code enum} with a variety of {@code public
  * static} functions for restructuring expressions.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-21 */
 public enum copy {
   ;

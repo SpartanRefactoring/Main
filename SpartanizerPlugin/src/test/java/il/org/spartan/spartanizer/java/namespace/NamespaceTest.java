@@ -38,7 +38,7 @@ class NamespaceFixture {
 }
 
 /** Unit test of {@link Namespace}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-15 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")

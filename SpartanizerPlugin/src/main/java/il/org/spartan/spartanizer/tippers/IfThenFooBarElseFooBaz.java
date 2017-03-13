@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * else
  *   baz();
  * }
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
 public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {

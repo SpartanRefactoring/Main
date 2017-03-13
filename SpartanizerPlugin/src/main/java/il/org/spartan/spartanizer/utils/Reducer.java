@@ -5,7 +5,7 @@ import java.util.stream.*;
 
 import il.org.spartan.utils.*;
 
-/** An abstract reducer 
+/** An abstract reducer
  * @param <R>
  * @since 2017-01-29 */
 public abstract class Reducer<@¢ R> {

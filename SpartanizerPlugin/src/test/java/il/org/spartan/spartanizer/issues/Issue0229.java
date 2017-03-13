@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for {@link SafeVarargs} in {@link ModifierRedundant}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

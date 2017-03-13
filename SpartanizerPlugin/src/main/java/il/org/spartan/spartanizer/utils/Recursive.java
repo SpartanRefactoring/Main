@@ -11,8 +11,8 @@ import junit.framework.*;
  * type parameter may present on all nodes on of this tree, including inner
  * nodes.
  * <p>
- * TODO Dor Maayan & Oran Gilboa: first assignment
- * TODO Oren Afek & Ori Roth & Matan Peled: first assignments 
+ * TODO Dor Maayan & Oran Gilboa: first assignment TODO Oren Afek & Ori Roth &
+ * Matan Peled: first assignments
  * <ol>
  * <li>Implement interface {@link Nested} for the same concept, except that
  * stream return ancestors.
