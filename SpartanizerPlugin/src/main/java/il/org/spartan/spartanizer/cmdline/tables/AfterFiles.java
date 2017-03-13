@@ -46,7 +46,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
       return false;
     Count.before(¢);
     try {
-      final Integer key = Integer.valueOf(measure.statements(¢));
+      final Integer key = Integer.valueOf(measure.commands(¢));
       methods.putIfAbsent(key, new ArrayList<>());
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
