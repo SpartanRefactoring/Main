@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
  * @since 2.6 */
-public interface English {
+public interface english {
   /** Error string, replacing null/error value. */
   String UNKNOWN = "???";
 
