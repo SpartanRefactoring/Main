@@ -33,7 +33,7 @@ public class MethodRecord {
     methodName = identifier(name(d));
     methodClassName = findTypeAncestor(d);
     numParameters = parameters(d).size();
-    numStatements = measure.statements(d);
+    numStatements = measure.commands(d);
     numExpressions = measure.expressions(d);
     numNodes = count.nodes(d);
   }
@@ -65,7 +65,7 @@ public class MethodRecord {
   public void markNP(final ASTNode n, final String np) {
     if (excluded(np))
       return;
-    numNPStatements += measure.statements(n);
+    numNPStatements += measure.commands(n);
     numNPExpressions += measure.expressions(n);
     numNPNodes += count.nodes(n);
     if (epxressionWholeStatement(n))
