@@ -154,16 +154,17 @@ public final class Matcher {
   private static boolean matchesAux(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
     if ($ == null || n == null)
       return false;
+    final String $1 = $ + "", n1 = n + "";
     if (is$X($))
-      return iz.expression(n) && consistent(ids, $ + "", n + "");
+      return iz.expression(n) && consistent(ids, $1, n1);
     if (is$T($))
-      return iz.type(n) && consistent(ids, $ + "", n + "");
-    if (iz.simpleName($) || iz.name($) && ($ + "").startsWith($N))
+      return iz.type(n) && consistent(ids, $1, n1);
+    if (iz.simpleName($) || iz.name($) && $1.startsWith($N))
       return sameName($, n, ids);
     if (iz.literal($))
       return sameLiteral($, n);
     if (isBlockVariable($))
-      return matchesBlock(n) && consistent(ids, blockVariableName($), n + "");
+      return matchesBlock(n) && consistent(ids, blockVariableName($), n1);
     if (isMethodInvocationAndHas$AArgument($) && !isMethodInvocationAndConsistentWith$AArgument($, n, ids))
       return false;
     if (isClassInstanceCreationAndHas$AArgument($))
@@ -171,7 +172,7 @@ public final class Matcher {
     if (differentTypes($, n))
       return false;
     if (iz.literal($))
-      return ($ + "").equals(n + "");
+      return $1.equals(n1);
     if (assignmentWithDifferentOperators($, n))
       return false;
     if (iz.infixExpression($) && !iz.parenthesizedExpression($))

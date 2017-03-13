@@ -6,10 +6,10 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.leonidas.*;
-import il.org.spartan.spartanizer.research.util.*;
 
-/** Failing test, originally from {@link normalizeTest} .
+/** Failing test, originally from {@link anonimizeTest} .
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
