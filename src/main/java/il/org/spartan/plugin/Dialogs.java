@@ -120,7 +120,7 @@ public enum Dialogs {
   }
 
   /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em> the user pressed any button
+   * @return whether the user pressed any button
    *         except close button. */
   public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
@@ -128,7 +128,7 @@ public enum Dialogs {
 
   /** @param ¢ JD
    * @param okIndex index of button to be pressed
-   * @return <code><b>true</b></code> <em>iff</em> the button selected has been
+   * @return whether the button selected has been
    *         pressed */
   public static boolean ok(final MessageDialog ¢, final int okIndex) {
     return ¢.open() == okIndex;

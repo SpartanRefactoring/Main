@@ -70,7 +70,7 @@ public interface disabling {
     });
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em> the node is spartanization
+  /** @return whether the node is spartanization
    *         disabled */
   static boolean on(final ASTNode ¢) {
     return property.has(¢, disabledPropertyId);
