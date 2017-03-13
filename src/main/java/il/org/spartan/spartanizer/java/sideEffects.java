@@ -26,7 +26,7 @@ public enum sideEffects {
   /** Determine whether the evaluation of an expression is guaranteed to be free
    * of any side effects.
    * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
+   * @return whether the parameter is an expression
    *         whose computation is guaranteed to be free of any side effects. */
   // VIM: /{/+,/}/-!sort -u
   private static final int[] alwaysFree = { //

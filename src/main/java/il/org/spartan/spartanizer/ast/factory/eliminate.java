@@ -28,7 +28,7 @@ public enum eliminate {
   ;
   /** Remove the last statement residing under a given {@link Statement}, if ¢
    * is empty or has only one statement return empty statement.
-   * @param ¢ JD <code><b>null</b></code> if not such sideEffects exists.
+   * @param ¢ JD {@code null if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement(final Statement $) {
