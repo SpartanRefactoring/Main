@@ -58,7 +58,7 @@ import il.org.spartan.utils.*;
  * @param <R> type of result of applying this rule
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
-public interface Rule<@JD T, @JD R> extends Function<T, R>, Recursive<Rule<T, R>> {
+public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Should be overridden */
   default String[] akas() {
     return new String[] { technicalName() };
