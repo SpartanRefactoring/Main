@@ -37,7 +37,7 @@ public abstract class Applicator {
     shouldRun = false;
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em> this applicator should
+  /** @return whether this applicator should
    *         run. */
   protected boolean shouldRun() {
     return shouldRun;
