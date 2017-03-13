@@ -83,7 +83,8 @@ public enum getAll2 {
     final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration node) {
         if ("String".equals(node.getType() + ""))
           $.add(node);

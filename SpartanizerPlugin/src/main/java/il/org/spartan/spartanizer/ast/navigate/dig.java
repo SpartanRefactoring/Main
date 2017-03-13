@@ -12,7 +12,8 @@ public interface dig {
     final List<String> $ = new ArrayList<>();
     if (n == null)
       return $;
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final StringLiteral ¢) {
         $.add(¢.getLiteralValue());
         return true;

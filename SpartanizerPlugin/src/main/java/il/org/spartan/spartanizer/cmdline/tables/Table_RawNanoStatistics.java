@@ -49,7 +49,8 @@ public class Table_RawNanoStatistics {
   }
 
   public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
+      //noinspection SameReturnValue
+      new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         summarize(path);
         System.err.println(" " + path + " Done");

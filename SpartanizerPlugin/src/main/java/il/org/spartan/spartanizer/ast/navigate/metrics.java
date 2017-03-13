@@ -24,7 +24,8 @@ public interface metrics {
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int bodySize(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         if (¢.getBody() != null)
           $.inner += count.nodes(¢.getBody());
@@ -207,7 +208,8 @@ public interface metrics {
 
   static int countMethods(final ASTNode n) {
     final Int $ = new Int();
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final MethodDeclaration __) {
         $.step();
         return true;
