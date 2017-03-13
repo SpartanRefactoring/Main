@@ -20,19 +20,7 @@ import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
-    implements TipperCategory, Serializable{
-  public static Converter convert(final String from) {
-    return to -> new Tipper.Example.Converts() {
-      @Override public String from() {
-        return from;
-      }
-
-      @Override public String to() {
-        return to;
-      }
-    };
-  }
-
+    implements TipperCategory, Serializable {
   public static Tipper.Example.Ignores ignores(final String code) {
     return () -> code;
   }
@@ -46,8 +34,8 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** Determines whether this instance can make a {@link Tip} for the parameter
    * instance.
    * @param e JD
-   * @return whether the argument is noneligible for
-   *         the simplification offered by this object.
+   * @return whether the argument is noneligible for the simplification offered
+   *         by this object.
    * @see #check(InfixExpression) */
   public final boolean cantTip(final N ¢) {
     return !check(¢);
@@ -64,7 +52,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public String description() {
-    return super.description(); 
+    return super.description();
   }
 
   public abstract String description(N n);
@@ -127,18 +115,30 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** Auxiliary class for FAPI
    * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
    * @since 2017-03-07 */
-  @FunctionalInterface
   public interface Converter {
     Converts to(String to);
   }
 
   public interface Example {
+    static Converter convert(final String from) {
+      return to -> new Tipper.Example.Converts() {
+        @Override public String from() {
+          return from;
+        }
+    
+        @Override public String to() {
+          return to;
+        }
+      };
+    }
+
     interface Converts extends Example {
       String from();
 
       String to();
     }
 
+    @FunctionalInterface
     interface Ignores extends Example {
       String code();
     }
