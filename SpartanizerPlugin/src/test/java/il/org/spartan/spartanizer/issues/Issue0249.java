@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-23 */
 public final class specificity implements Comparator<Expression> {
   /** Determine

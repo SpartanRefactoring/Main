@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * } into {@code
  * int a = 3;
  * }
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
 public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {

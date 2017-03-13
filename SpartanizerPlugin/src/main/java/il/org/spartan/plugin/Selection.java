@@ -96,7 +96,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   /** Extends text selection to include overlapping markers.
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;

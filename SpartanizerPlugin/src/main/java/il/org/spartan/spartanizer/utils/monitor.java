@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Nov 13, 2016 */
 public enum monitor {
   /** Log to external file if in debug mode, see issue #196 */

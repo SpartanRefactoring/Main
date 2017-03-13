@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Common strategy of all evaluators$EvaluateExpression
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {

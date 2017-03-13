@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Replace {@code 1*X} by {@code X}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {

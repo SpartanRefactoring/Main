@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09 */
 public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {

@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** A test suite for class {@link step}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-18
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
