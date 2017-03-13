@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** removes empty return, provided that it is last in method.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-7-17 */
 public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     implements TipperCategory.SyntacticBaggage {

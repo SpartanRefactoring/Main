@@ -5,7 +5,7 @@ import java.io.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing resources in try statement
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-01 */
 @SuppressWarnings("InfiniteRecursion")
 public class FixtureTryResources extends MetaFixture {

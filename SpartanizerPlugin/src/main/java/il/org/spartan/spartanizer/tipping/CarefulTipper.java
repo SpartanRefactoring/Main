@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 /** A {@link Tipper} in which {@link #tip(ASTNode)} is invoked only if
  * {@link #check(ASTNode)} returns true. However, in such cases
  * {@link #tip(ASTNode)} may still return null.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   private static final long serialVersionUID = -1200037106702768820L;
@@ -15,8 +15,8 @@ public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   }
 
   /** @param __ the ASTNode being inspected.
-   * @return whether the argument holds all the
-   *         conditions needed for a tip to be possible. */
+   * @return whether the argument holds all the conditions needed for a tip to
+   *         be possible. */
   protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;
   }

@@ -1,5 +1,5 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tippers;
 
@@ -132,8 +132,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
        * not seem to be the case. So, in the case our wrapper is not null, we do
        * not carry out any further tests.
        * @param pattern the node currently being visited.
-       * @return whether the sought node is
-       *         found. */
+       * @return whether the sought node is found. */
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;

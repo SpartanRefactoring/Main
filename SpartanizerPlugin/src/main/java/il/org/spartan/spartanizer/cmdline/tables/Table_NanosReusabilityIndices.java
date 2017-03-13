@@ -46,10 +46,6 @@ public class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
     pWriter = new Table(outputFileName(), outputFolder);
   }
 
-  @SuppressWarnings("unused") private static void initializeWriter() {
-    pWriter = new Table(outputFileName());
-  }
-
   private static String outputFileName() {
     return Table_NanosReusabilityIndices.class.getSimpleName();
   }

@@ -2,8 +2,8 @@ package il.org.spartan.tables;
 
 import il.org.spartan.statistics.*;
 
-/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-26 */
 public enum Statistic {
   N {

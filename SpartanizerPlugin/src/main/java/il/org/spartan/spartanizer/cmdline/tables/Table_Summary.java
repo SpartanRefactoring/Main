@@ -115,10 +115,6 @@ public class Table_Summary {
       scope.peek().markNP(n, np);
   }
 
-  @SuppressWarnings("unused") private static void initializeWriter() {
-    writer = new Table(Table_Summary.class);
-  }
-
   static void initializeWriter(final String outputFolder) {
     writer = new Table(Table_Summary.class, outputFolder);
   }

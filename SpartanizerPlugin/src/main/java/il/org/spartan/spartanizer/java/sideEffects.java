@@ -19,15 +19,15 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public enum sideEffects {
   MISSING_CASE;
   /** Determine whether the evaluation of an expression is guaranteed to be free
    * of any side effects.
    * @param e JD
-   * @return whether the parameter is an expression
-   *         whose computation is guaranteed to be free of any side effects. */
+   * @return whether the parameter is an expression whose computation is
+   *         guaranteed to be free of any side effects. */
   // VIM: /{/+,/}/-!sort -u
   private static final int[] alwaysFree = { //
       BOOLEAN_LITERAL, //

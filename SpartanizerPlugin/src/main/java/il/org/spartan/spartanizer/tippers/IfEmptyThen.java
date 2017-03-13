@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if (!x)
  * a;
  * } .
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-26 */
 public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.SyntacticBaggage {

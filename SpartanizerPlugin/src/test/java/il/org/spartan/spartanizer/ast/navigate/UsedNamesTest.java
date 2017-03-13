@@ -10,7 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** tests {@link extract#usedNames(Expression)}
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 @SuppressWarnings("static-method")
 public class UsedNamesTest {

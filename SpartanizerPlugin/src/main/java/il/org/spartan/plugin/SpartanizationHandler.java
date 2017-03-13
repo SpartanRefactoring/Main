@@ -1,6 +1,6 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.spartanizer.engine.nominal.english.*;
+import static il.org.spartan.spartanizer.engine.nominal.English.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
-  private static final english.Activity OPERATION_ACTIVITY = english.Activity.simple("Spartaniz");
+  private static final English.Activity OPERATION_ACTIVITY = English.Activity.simple("Spartaniz");
   public static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
@@ -49,7 +49,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static GUIBatchLaconizer applicator(final english.Activity activityNamer) {
+  public static GUIBatchLaconizer applicator(final English.Activity activityNamer) {
     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
@@ -74,7 +74,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
       @Override public void tick(final Object... ¢) {
         runAsynchronouslyInUIThread(() -> {
-          d.getProgressMonitor().subTask(english.trim(separate.these(¢).by(english.SEPARATOR)));
+          d.getProgressMonitor().subTask(English.trim(separate.these(¢).by(English.SEPARATOR)));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
@@ -87,7 +87,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         switch (++level) {
           case DIALOG_CREATION:
             if ($.selection().size() >= DIALOG_THRESHOLD)
-              if (!Dialogs.ok(Dialogs.messageUnsafe(separate.these(¢).by(english.SEPARATOR))))
+              if (!Dialogs.ok(Dialogs.messageUnsafe(separate.these(¢).by(English.SEPARATOR))))
                 $.stop();
               else {
                 dialogOpen = true;
@@ -98,8 +98,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
           case DIALOG_PROCESSING:
             if (dialogOpen)
               runAsynchronouslyInUIThread(() -> {
-                d.getProgressMonitor().beginTask(english.trim($.name()) + " : " + separate.these(¢).by(english.SEPARATOR),
-                    $.selection().size());
+                d.getProgressMonitor().beginTask(English.trim($.name()) + " : " + separate.these(¢).by(English.SEPARATOR), $.selection().size());
                 if (d.getProgressMonitor().isCanceled())
                   $.stop();
               });
@@ -113,9 +112,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       /** see issue #467 */
       @Override public void pop(final Object... ¢) {
         if (level-- == DIALOG_CREATION && dialogOpen)
-          Dialogs.messageUnsafe(separate.these(message.title.get(separate.these(¢).by(english.SEPARATOR)),
+          Dialogs.messageUnsafe(separate.these(message.title.get(separate.these(¢).by(English.SEPARATOR)),
               message.passes.get(activityNamer.getEd(), Integer.valueOf(compilationUnitCount), Integer.valueOf(passes)),
-              message.time.get(english.time(System.nanoTime() - startTime))).by("\n")).open();
+              message.time.get(English.time(System.nanoTime() - startTime))).by("\n")).open();
       }
     });
     $.operationName(OPERATION_ACTIVITY);
@@ -139,7 +138,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
           d.getProgressMonitor()
-              .subTask(english.trim(system.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
+              .subTask(English.trim(system.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
@@ -149,7 +148,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         .expand(EventMapper.recorderOf(event.run_pass).counter().does(¢ -> {
           if (openDialog.get())
             runAsynchronouslyInUIThread(() -> {
-              d.getProgressMonitor().beginTask(english.trim($.name()), $.selection().size());
+              d.getProgressMonitor().beginTask(English.trim($.name()), $.selection().size());
               if (d.getProgressMonitor().isCanceled())
                 $.stop();
             });
@@ -188,7 +187,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @since 2.6 */
   private enum message {
     title(1, λ -> λ[0] + ""), //
-    passes(3, λ -> λ[0] + " " + λ[1] + " compilation units in " + english.plurales("pass", (Integer) λ[2])), //
+    passes(3, λ -> λ[0] + " " + λ[1] + " compilation units in " + English.plurales("pass", (Integer) λ[2])), //
     time(1, λ -> "Run time " + λ[0] + " seconds");
     private final int inputCount;
     private final Function<Object[], String> printing;

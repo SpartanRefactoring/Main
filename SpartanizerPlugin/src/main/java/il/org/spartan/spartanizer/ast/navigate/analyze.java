@@ -30,7 +30,7 @@ public enum analyze {
 
       boolean notMethodName(final Name ¢) {
         return (!iz.methodInvocation(parent(¢)) || !identifier(az.methodInvocation(parent(¢))).equals(¢ + ""))
-                && (!iz.methodDeclaration(parent(¢)) || !identifier(az.methodDeclaration(parent(¢))).equals(¢ + ""));
+            && (!iz.methodDeclaration(parent(¢)) || !identifier(az.methodDeclaration(parent(¢))).equals(¢ + ""));
       }
 
       @Override public boolean visit(final QualifiedName node) {

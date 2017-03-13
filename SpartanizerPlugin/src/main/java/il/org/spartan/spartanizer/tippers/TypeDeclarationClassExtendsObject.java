@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Converts {@code class C extends Object {...}} to {@code class C {...}} to
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-15 */
 public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<TypeDeclaration>//
     implements TipperCategory.SyntacticBaggage {

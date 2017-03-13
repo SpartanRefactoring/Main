@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.spartanizer.cmdline.system.*;
-import static il.org.spartan.spartanizer.engine.nominal.english.*;
+import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
 import static java.lang.String.*;
 
@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since Nov 13, 2016 */
 public enum monitor {
   /** Log to external file if in debug mode, see issue #196 */
@@ -96,7 +96,7 @@ public enum monitor {
   public static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
         "A static method of " + system.className(o) + //
-            "was hit by " + indefinite(t) + "\n"+ //
+            "was hit by " + indefinite(t) + "\n" + //
             "exception. This is expected and printed only for the purpose of debugging" + //
             "x = '" + t + "'" + //
             "o = " + o + "'");

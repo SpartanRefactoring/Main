@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** {@link Iterable} over the ancestors of a given node.
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-23 */
 public interface ancestors {
   static List<ASTNode> path(final ASTNode n) {
