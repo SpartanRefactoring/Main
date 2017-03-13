@@ -14,8 +14,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
  * flatEnv outer annotation. * @author Dan Greenstein
  * @author Alex Kopzon
  * @since Oct 3, 2016 */
-public final class
-EnvFlatHandler extends ENVTestEngineAbstract {
+public final class EnvFlatHandler extends ENVTestEngineAbstract {
   static {
     testSet = generateSet();
   }

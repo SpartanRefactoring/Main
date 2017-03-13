@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @author Dan Greenstein
  * @since */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
@@ -120,7 +120,8 @@ public class Issue0404 {
 
   @Test public void ka() {
     assert dig.stringLiterals(into.e("\"\"")).size() == 1 : "The List did not contain the expected number of elements.";
-    assert first(dig.stringLiterals(into.e("\"\""))) != null && first(dig.stringLiterals(into.e("\"\""))).isEmpty() : "The contained element was not the expected one.";
+    assert first(dig.stringLiterals(into.e("\"\""))) != null
+        && first(dig.stringLiterals(into.e("\"\""))).isEmpty() : "The contained element was not the expected one.";
   }
 
   @Test public void kb() {

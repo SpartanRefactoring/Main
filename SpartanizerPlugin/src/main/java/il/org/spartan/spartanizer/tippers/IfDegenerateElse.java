@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * if (x)
  *   return b;
  * }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.SyntacticBaggage {

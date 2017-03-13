@@ -24,9 +24,9 @@ import il.org.spartan.spartanizer.utils.*;
  * } to {@code
  * T a = new ArrayList
  * }
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ *         {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-02 */
 public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {

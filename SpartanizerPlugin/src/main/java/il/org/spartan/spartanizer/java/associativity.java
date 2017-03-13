@@ -7,22 +7,21 @@ import org.eclipse.jdt.core.dom.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum associativity {
   ;
   /** Determine whether associativity is left-to-right
    * @param o JD
-   * @return whether the associativity of the
-   *         parameter is left-to-right. */
+   * @return whether the associativity of the parameter is left-to-right. */
   public static boolean isLeftToRight(final InfixExpression.Operator ¢) {
     return isRightToLeft(precedence.of(¢));
   }
 
   /** Determine whether associativity is right-to-left
    * @param x JD
-   * @return whether the associativity of parameter
-   *         present on the parameter is right-to-left. */
+   * @return whether the associativity of parameter present on the parameter is
+   *         right-to-left. */
   public static boolean isRightToLeft(final Expression ¢) {
     return isRightToLeft(precedence.of(¢));
   }

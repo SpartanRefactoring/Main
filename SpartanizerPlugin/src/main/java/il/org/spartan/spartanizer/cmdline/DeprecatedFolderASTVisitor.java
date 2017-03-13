@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.cmdline;
-import static il.org.spartan.lisp.*;
+
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -11,6 +11,8 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -25,7 +27,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Parse and visit all Java files under a given path.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   @External(alias = "i", value = "input folder") protected static final String inputFolder = system.windows() ? "" : ".";

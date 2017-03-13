@@ -41,11 +41,15 @@ import il.org.spartan.*;
  * provide as much information as {@link azzert} . In the above situations, a
  * priori there is nothing to print.
  * <p>
- * You can augment
- * <code><b>assert</b> with a short                                          {@link Object}                                           (usually a                                           {@link String}                                          ) that can provide some debugging information (see the implementation of                                          {@link #Z$040()}                                           or                                           {@link #Z$060()}                                          .) <li>Instead, use class                                           {@link azzert}                                           for anything else: <ul>  <li> to check whether something is {@code null,
- * use {@code azzer.notNull(something)} which prints the content of this
- * something if it is not <code><b>null</b></code<li>Test methods do not usually
- * contain the word test in them. There is no point in repeating ourselves.
+ * You can augment <code><b>assert</b> with a short {@link Object} (usually a
+ * {@link String} ) that can provide some debugging information (see the
+ * implementation of {@link #Z$040()} or {@link #Z$060()} .)
+ * <li>Instead, use class {@link azzert} for anything else:
+ * <ul>
+ * <li>to check whether something is {@code null, use
+ * {@code azzer.notNull(something)} which prints the content of this something
+ * if it is not <code><b>null</b></code<li>Test methods do not usually contain
+ * the word test in them. There is no point in repeating ourselves.
  * <li>Naming convention here is that test methods begin with a capital letter
  * A...Z, and are numbered.
  * <li>Also, as in BASIC, tests numbering is in multiple of tens, so as to make

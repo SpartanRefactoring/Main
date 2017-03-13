@@ -13,12 +13,12 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Various methods for comparing
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-19 */
 public enum ExpressionComparator implements Comparator<Expression> {
   /** Order on terms in addition: literals must be last. Sort literals by
    * length.
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-19 */
   ADDITION {
     @Override public int compare(final Expression e1, final Expression e2) {
@@ -28,7 +28,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     }
   },
   /** Order on terms in addition: except that we do not sort alphabetically
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-19 */
   PRUDENT {
     @Override public int compare(final Expression e1, final Expression e2) {
@@ -38,7 +38,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   },
   /** Order on terms in multiplication: literals must be last. Sort literals by
    * length.
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-19 */
   MULTIPLICATION {
     @Override public int compare(final Expression e1, final Expression e2) {
@@ -54,8 +54,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   /** Compare the length of the left and right arguments of an infix expression
    * @param x JD
-   * @return whether if the left operand of the
-   *         parameter is is longer than the second argument */
+   * @return whether if the left operand of the parameter is is longer than the
+   *         second argument */
   public static boolean longerFirst(final InfixExpression ¢) {
     return isLonger(left(¢), right(¢));
   }
@@ -63,8 +63,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /** Compare method invocations by the number of arguments
    * @param e1 JD
    * @param e2 JD
-   * @return whether the first argument is a method
-   *         invocation with more arguments that the second argument */
+   * @return whether the first argument is a method invocation with more
+   *         arguments that the second argument */
   public static boolean moreArguments(final Expression e1, final Expression e2) {
     return argumentsCompare(e1, e2) > 0;
   }

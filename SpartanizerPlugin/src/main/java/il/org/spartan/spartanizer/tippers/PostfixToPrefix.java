@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>//
     implements TipperCategory.Idiomatic {

@@ -44,7 +44,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
@@ -329,8 +329,8 @@ public interface wizard {
    * side(variable) and operator
    * @param base The assignment to compare all others to
    * @param as The assignments to compare
-   * @return whetherall assignments has the same
-   *         left hand side and operator as the first one or false otherwise */
+   * @return whetherall assignments has the same left hand side and operator as
+   *         the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
     return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> incompatible(base, λ));
   }
@@ -345,8 +345,7 @@ public interface wizard {
 
   /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
-   * @return whetherall the operator are the same
-   *         or false otherwise */
+   * @return whetherall the operator are the same or false otherwise */
   static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
     return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
   }
@@ -378,10 +377,9 @@ public interface wizard {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return whetherone of the nodes is an
-   *         Expression Statement of type Post or Pre Expression with ++ or --
-   *         operator. false if none of them are or if the given parameter is
-   *         null. */
+   * @return whetherone of the nodes is an Expression Statement of type Post or
+   *         Pre Expression with ++ or -- operator. false if none of them are or
+   *         if the given parameter is null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
     return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
   }
@@ -568,8 +566,7 @@ public interface wizard {
   }
 
   /** @param o JD
-   * @return whetherone of
-   *         {@link #InfixExpression.Operator.XOR},
+   * @return whetherone of {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
   static boolean isBitwiseOperator(final InfixExpression.Operator ¢) {
@@ -583,8 +580,7 @@ public interface wizard {
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
-   * @return whetherone of
-   *         {@link #InfixExpression.Operator.LESS},
+   * @return whetherone of {@link #InfixExpression.Operator.LESS},
    *         {@link #InfixExpression.Operator.GREATER},
    *         {@link #InfixExpression.Operator.LESS_EQUALS},
    *         {@link #InfixExpression.Operator.GREATER_EQUALS},
@@ -616,8 +612,7 @@ public interface wizard {
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
-   * @return whetherone of
-   *         {@link #InfixExpression.Operator.LEFT_SHIFT},
+   * @return whetherone of {@link #InfixExpression.Operator.LEFT_SHIFT},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_SIGNED},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false
    *         otherwise */
@@ -705,8 +700,8 @@ public interface wizard {
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
    * @param pattern JD
-   * @return whether the parameter is a node which
-   *         is an infix expression whose operator is */
+   * @return whether the parameter is a node which is an infix expression whose
+   *         operator is */
   static boolean nonAssociative(final ASTNode ¢) {
     return nonAssociative(az.infixExpression(¢));
   }
@@ -855,8 +850,8 @@ public interface wizard {
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
-   * Each of the parameters may be {@code null; a
-   * {@code null is only equal to{@code null
+   * Each of the parameters may be {@code null; a {@code null is only equal
+   * to{@code null
    * @param n1 JD
    * @param n2 JD
    * @return {@code true} if the parameters are the same. */
@@ -867,8 +862,7 @@ public interface wizard {
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
-   * @return whetherall names are the same (string
-   *         wise) or false otherwise */
+   * @return whetherall names are the same (string wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
     return Stream.of(xs).allMatch(λ -> same(λ, x));
   }
@@ -913,7 +907,7 @@ public interface wizard {
   }
 
   static String problems(final CompilationUnit u) {
-    final IProblem[] v =  u.getProblems();
+    final IProblem[] v = u.getProblems();
     if (v.length == 0)
       return "???";
     final Int $ = new Int();

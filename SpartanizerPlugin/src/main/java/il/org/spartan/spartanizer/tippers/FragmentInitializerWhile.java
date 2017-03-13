@@ -64,8 +64,8 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
    * {@link ForStatement}.
    * @param s JD
    * @param n JD
-   * @return whether the SimpleName is used in a
-   *         ForStatement's condition, updaters, or body. */
+   * @return whether the SimpleName is used in a ForStatement's condition,
+   *         updaters, or body. */
   private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }

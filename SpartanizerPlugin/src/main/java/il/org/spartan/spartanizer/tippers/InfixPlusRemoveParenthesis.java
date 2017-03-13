@@ -31,8 +31,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   /** Determines whether the parenthesis around an InfixExpression can be
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
-   * @return whetherthe parenthesis can be removed
-   *         and false otherwise */
+   * @return whetherthe parenthesis can be removed and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
         || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);

@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 import java.util.*;
 
-import il.org.spartan.spartanizer.tipping.Tipper;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -16,6 +15,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 
