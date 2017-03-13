@@ -77,10 +77,6 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
    *         the simplification offered by this instance. */
   @Check boolean check(T n);
 
-  default T object() {
-    return null;
-  }
-
   default String description() {
     return format("%s/[%s]%s=", //
         className(Rule.class), //
@@ -90,17 +86,17 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
         !ready() ? "not ready to " : "ready to " + verbObject());
   }
 
-  default String verbObject() {
-    return format(verb(), object());
+  /** Should be overridden */
+  default Example[] examples() {
+    return new Example[0];
+  }
+
+  default T object() {
+    return null;
   }
 
   default boolean ready() {
     return object() != null;
-  }
-
-  /** Should be overridden */
-  default Example[] examples() {
-    return new Example[0];
   }
 
   /** Should not be overridden */
@@ -116,6 +112,10 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   /** Should be overridden */
   default String verb() {
     return format("apply '%s' to '%%s'", technicalName());
+  }
+
+  default String verbObject() {
+    return format(verb(), object());
   }
 
   @Documented
