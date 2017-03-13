@@ -8,7 +8,7 @@ import il.org.spartan.utils.*;
 /** An abstract reducer 
  * @param <R>
  * @since 2017-01-29 */
-public abstract class Reducer<@JD R> {
+public abstract class Reducer<@¢ R> {
   public R reduce() {
     return null;
   }
