@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing enhanced for loops
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-01 */
 @SuppressWarnings("InfiniteRecursion")
 public class FixtureEnhancedFor extends MetaFixture {

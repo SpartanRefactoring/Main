@@ -21,8 +21,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * An empty <code><b>enum</b></code> for fluent programming. The name should say
  * it all: The name, followed by a dot, followed by a method name, should read
  * like a sentence phrase.
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public enum eliminate {
   ;
@@ -42,6 +41,10 @@ public enum eliminate {
     return $;
   }
 
+  @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
+    return xs.stream().map(eliminate::level).reduce((x, y) -> x + y).get();
+  }
+
   public static int level(final Expression ¢) {
     return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
         : iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
@@ -52,14 +55,6 @@ public enum eliminate {
 
   public static int level(final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
-  }
-
-  @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
-    return xs.stream().map(eliminate::level).reduce((x, y) -> x + y).get();
-  }
-
-  private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
   public static Expression peel(final Expression $) {
@@ -74,15 +69,19 @@ public enum eliminate {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  private static List<Expression> peel(final Collection<Expression> ¢) {
-    return ¢.stream().map(eliminate::peel).collect(toList());
-  }
-
   public static Expression peel(final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
   public static Expression peel(final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
+  }
+
+  private static int level(final PrefixExpression ¢) {
+    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+  }
+
+  private static List<Expression> peel(final Collection<Expression> ¢) {
+    return ¢.stream().map(eliminate::peel).collect(toList());
   }
 }

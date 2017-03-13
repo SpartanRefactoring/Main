@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for
  * {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

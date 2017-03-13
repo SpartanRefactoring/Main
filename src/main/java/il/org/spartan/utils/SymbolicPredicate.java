@@ -8,7 +8,7 @@ import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 
-/** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-06 */
 public interface SymbolicPredicate extends BooleanSupplier {
   static SymbolicPredicate AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {

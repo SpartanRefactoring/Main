@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a
  * spartanizer once.
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 public interface theSpartanizer {
   static String fixedPoint(final String from) {

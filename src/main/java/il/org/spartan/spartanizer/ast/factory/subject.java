@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Contains subclasses and tools to build expressions and sideEffects
- * @author Yossi Gil <yossi.gil@gmail.com>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Oct 7, 2016 */
 public enum subject {
   ;

@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Short name of {@link JohnDoe} parameter
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-13 */
 @Documented
 @Target({ElementType.PARAMETER, ElementType.TYPE_PARAMETER})

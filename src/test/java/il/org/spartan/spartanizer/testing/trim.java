@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *     .gives("a+b-c")
  * } or {@code trimming.with({@link InfixExpression}.class, new
  * {@link InfixTermsExpand()}).of("a+(b-c)")// .gives("a+b+c") }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface trim {
   static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
@@ -96,7 +96,7 @@ public interface trim {
   }
 
   /** Unit tests demonstrating the fluent API
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @since 2016 */
   @Ignore
   @SuppressWarnings("static-method")

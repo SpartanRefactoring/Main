@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests of {@link IfStatementBlockSequencerBlockSameSequencer}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 22, 2017 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @Ignore
