@@ -86,10 +86,10 @@ class CompilationUnitRecord {
     @SuppressWarnings("unused") private int beforeSpartanization;
     public int afterSpartanization;
     private int coveredByNonMethods;
-    private Function<ASTNode, Integer> count;
-    private Function<LightWeightMethodRecord, Integer> np;
+    private final Function<ASTNode, Integer> count;
+    private final Function<LightWeightMethodRecord, Integer> np;
 
-    public ElementCounter(final Function<ASTNode, Integer> count, Function<LightWeightMethodRecord, Integer> np) {
+    public ElementCounter(final Function<ASTNode, Integer> count, final Function<LightWeightMethodRecord, Integer> np) {
       this.count = count;
       this.np = np;
     }
@@ -218,7 +218,7 @@ class LightWeightMethodRecord {
     private final int total;
     private int np;
 
-    static NanoPatternCounter init(int ¢) {
+    static NanoPatternCounter init(final int ¢) {
       return new NanoPatternCounter(¢);
     }
 
@@ -230,11 +230,11 @@ class LightWeightMethodRecord {
       return Integer.valueOf(np);
     }
 
-    private NanoPatternCounter(int num) {
-      this.total = num;
+    private NanoPatternCounter(final int num) {
+      total = num;
     }
 
-    public int incAndGet(int amount) {
+    public int incAndGet(final int amount) {
       final int $ = Math.min(amount, total - np);
       np += $;
       return $;

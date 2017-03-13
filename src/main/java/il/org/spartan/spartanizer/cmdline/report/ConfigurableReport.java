@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Configurable Report that uses {@link Listener.S}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Matteo Orru'
  * @since Nov 14, 2016 */
 public interface ConfigurableReport {
@@ -143,7 +143,7 @@ public interface ConfigurableReport {
 
     /** Action provide services
      * @see #go()
-     * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+     * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
      * @author Matteo Orru' */
     @SuppressWarnings("TooBroadScope")
     public class Action extends Settings {

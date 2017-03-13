@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Tested by {@link Issue1115}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09 */
 public final class LambdaRenameSingleParameterToLambda extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {

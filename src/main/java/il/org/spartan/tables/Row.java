@@ -35,31 +35,31 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
 
   /** Add a key without a value to this instance.
    * @param key The key to be added; must not be {@code null
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public final Self col(final String key) {
     return col(key, "");
   }
 
-  /** Add a key and a <code><b>char</b></code> value to this instance
+  /** Add a key and a {@code char} value to this instance
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public final Self col(final String key, final char value) {
     return col(key, value + "");
   }
 
-  /** Adds a key and a <code><b>double</b><code> value to this instance 
-                           * &#64;param key The key to be added; must not be {@code null
-    * &#64;param value The value associated with the key
-    * @return <code><b>this</b></code> */
+  /** Adds a key and a {@code double</b><code> value to this instance &#64;param
+   * key The key to be added; must not be {@code null
+  * &#64;param value The value associated with the key
+   * @return {@code this} */
   public Self col(final String key, final double value) {
     return col(key, value + "");
   }
 
-  /** Add a key and an <code><b>int</b></code> value to this instance
+  /** Add a key and an {@code int} value to this instance
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public Self col(final String key, final int value) {
     return col(key, value + "");
   }
@@ -68,15 +68,15 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @param key The key to be added; must not be {@code null; must not be
    *        {@code null
    * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public final Self col(final String key, final Integer value) {
     return value == null ? col(key) : col(key, value.intValue());
   }
 
-  /** Add a key and a <code><b>long</b></code> value to this instance
+  /** Add a key and a {@code long} value to this instance
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public Self col(final String key, final long value) {
     return col(key, value + "");
   }
@@ -85,7 +85,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @param key The key to be added; must not be {@code null; must not be
    *        {@code null
    * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public final Self col(final String key, final Object value) {
     if (value == null)
       return col(key);
@@ -104,7 +104,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   /** A mutator to add a key and a general {@link String} value to this instance
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
-   * @return <code><b>this</b></code> */
+   * @return {@code this} */
   public final Self col(final String key, final String value) {
     super.put(key, value);
     return self();
