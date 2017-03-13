@@ -1,12 +1,14 @@
-package il.org.spartan.spartanizer.ast.safety;
+package il.org.spartan.spartanizer.utils;
 
 import java.util.Objects;
 import java.util.stream.*;
 
-/** TODO Yossi Gil: document class {@link }
+import il.org.spartan.utils.*;
+
+/** An abstract reducer 
  * @param <R>
  * @since 2017-01-29 */
-public abstract class Reducer<R> {
+public abstract class Reducer<@JD R> {
   public R reduce() {
     return null;
   }

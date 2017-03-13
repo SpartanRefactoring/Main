@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tipping;
+package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.spartanizer.cmdline.system.*;
 import static java.lang.String.*;
@@ -10,7 +10,6 @@ import java.util.stream.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
