@@ -151,7 +151,7 @@ public class Selection extends AbstractSelection<Selection> {
     if (isEmpty())
       return "{empty}";
     final int $ = inner == null ? 0 : inner.size();
-    return "{" + (inner == null ? null : $ + " " + English.plurals("file", $)) + ", " + (textSelection == null ? null : printable(textSelection))
+    return "{" + (inner == null ? null : $ + " " + english.plurals("file", $)) + ", " + (textSelection == null ? null : printable(textSelection))
         + "}";
   }
 
@@ -490,16 +490,16 @@ public class Selection extends AbstractSelection<Selection> {
       final List<String> $ = new ArrayList<>();
       ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())
-        $.add(English.plurals("root package", rs.size()));
+        $.add(english.plurals("root package", rs.size()));
       if (!hs.isEmpty())
-        $.add(English.plurals("package", hs.size()));
+        $.add(english.plurals("package", hs.size()));
       if (!us.isEmpty())
-        $.add(English.plurals("compilation unit", us.size()));
+        $.add(english.plurals("compilation unit", us.size()));
       if (!is.isEmpty())
-        $.add(English.plurals("marker", is.size()));
+        $.add(english.plurals("marker", is.size()));
       if (!ms.isEmpty())
-        $.add(English.plurals("code object", ms.size()));
-      return English.list($);
+        $.add(english.plurals("code object", ms.size()));
+      return english.list($);
     }
   }
 }

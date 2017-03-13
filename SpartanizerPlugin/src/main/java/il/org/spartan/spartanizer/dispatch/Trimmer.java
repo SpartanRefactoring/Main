@@ -57,7 +57,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final Int i) {
     final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
-    final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
+    final String fileName = english.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -133,8 +133,8 @@ public class Trimmer extends AbstractGUIApplicator {
       Toolbox t;
 
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        final String fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
-            λ -> λ.getJavaElement() == null ? English.UNKNOWN : λ.getJavaElement().getElementName());
+        final String fileName = english.unknownIfNull(az.compilationUnit(n.getRoot()),
+            λ -> λ.getJavaElement() == null ? english.UNKNOWN : λ.getJavaElement().getElementName());
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;

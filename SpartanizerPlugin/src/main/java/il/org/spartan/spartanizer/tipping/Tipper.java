@@ -64,10 +64,10 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public String description() {
-    return getClass().getSimpleName();
+    return super.description(); 
   }
 
-  @Override public abstract String description(N n);
+  public abstract String description(N n);
 
   @Override public Example[] examples() {
     return new Example[] {};
