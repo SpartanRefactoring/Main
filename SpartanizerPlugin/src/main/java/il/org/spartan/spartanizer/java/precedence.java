@@ -42,7 +42,7 @@ public enum precedence {
   /** Compare precedence of two expressions.
    * @param host JD
    * @param e2 JD
-   * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
+   * @return whether the precedence of the first
    *         parameter is equal to that of the second parameter. */
   public static boolean equal(final ASTNode host, final ASTNode e2) {
     return precedence.of(host) == precedence.of(e2);
@@ -51,7 +51,7 @@ public enum precedence {
   /** Compare precedence of two expressions.
    * @param e1 JD
    * @param e2 JD
-   * @return <code><b>true</b></code> <i>iff</i> the precedence of the first
+   * @return whether the precedence of the first
    *         parameter is strictly greater than that of the second parameter. */
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
     return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
@@ -60,7 +60,7 @@ public enum precedence {
   /** determine whether the precedence of a given {@link Expression} can be
    * determined.
    * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter a legal
+   * @return whether the parameter a legal
    *         precedence of Java. */
   public static boolean known(final ASTNode ¢) {
     return is.legal(precedence.of(¢));
@@ -108,7 +108,7 @@ public enum precedence {
    * operator.
    * @param o JD
    * @param x JD
-   * @return <code><b>true</b></code> <i>iff</i> the precedence of the two
+   * @return whether the precedence of the two
    *         parameters is the same. */
   public static boolean same(final InfixExpression.Operator o, final Expression x) {
     return precedence.of(o) == precedence.of(x);
@@ -143,7 +143,7 @@ public enum precedence {
     /** determine whether an integer falls within the legal range of
      * precedences.
      * @param precedence JD
-     * @return <code><b>true</b></code> <i>iff</i> the parameter is a legal
+     * @return whether the parameter is a legal
      *         precedence of Java. */
     public static boolean legal(final int precedence) {
       return precedence >= 1 && precedence <= 15;

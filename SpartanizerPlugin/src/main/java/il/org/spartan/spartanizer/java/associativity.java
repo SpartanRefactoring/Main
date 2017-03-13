@@ -13,7 +13,7 @@ public enum associativity {
   ;
   /** Determine whether associativity is left-to-right
    * @param o JD
-   * @return <code><b>true</b></code> <i>iff</i> the associativity of the
+   * @return whether the associativity of the
    *         parameter is left-to-right. */
   public static boolean isLeftToRight(final InfixExpression.Operator ¢) {
     return isRightToLeft(precedence.of(¢));
@@ -21,7 +21,7 @@ public enum associativity {
 
   /** Determine whether associativity is right-to-left
    * @param x JD
-   * @return <code><b>true</b></code> <i>iff</i> the associativity of parameter
+   * @return whether the associativity of parameter
    *         present on the parameter is right-to-left. */
   public static boolean isRightToLeft(final Expression ¢) {
     return isRightToLeft(precedence.of(¢));
