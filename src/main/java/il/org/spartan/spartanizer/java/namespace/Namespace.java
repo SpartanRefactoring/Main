@@ -123,7 +123,8 @@ public final class Namespace implements Environment {
     if (root == null)
       return false;
     property.attach(this).to(root);
-    root.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue,SameReturnValue
+      root.accept(new ASTVisitor(true) {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return ¢ == root || spawn(annotation, identifier(¢)).put(bodyDeclarations(¢)).fillScope(¢);
       }

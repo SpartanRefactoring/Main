@@ -34,7 +34,8 @@ public class Table_Summary {
   }
 
   public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue
+      new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         summarizeStatistics(path);
         clearAll();

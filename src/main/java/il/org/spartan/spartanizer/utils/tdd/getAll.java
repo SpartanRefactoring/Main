@@ -31,7 +31,8 @@ public enum getAll {
     if (¢ == null)
       return null;
     final Set<String> $ = new TreeSet<>();
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢¢) {
         if ((!iz.methodInvocation(parent(¢¢)) || !(step.name(az.methodInvocation(parent(¢¢))) + "").equals(¢¢ + ""))
             && (!iz.methodDeclaration(parent(¢¢)) || !(step.name(az.methodDeclaration(parent(¢¢))) + "").equals(¢¢ + "")))
@@ -52,7 +53,8 @@ public enum getAll {
     final Set<String> $ = new TreeSet<>();
     if (statements(body(¢)).isEmpty())
       return $;
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodInvocation ¢¢) {
         $.add(¢¢.getName() + "");
         return true;
@@ -70,7 +72,8 @@ public enum getAll {
     if (b == null)
       return null;
     final List<Name> $ = new ArrayList<>();
-    b.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
         $.add(¢);
         return true;
@@ -87,7 +90,8 @@ public enum getAll {
     if (d == null)
       return null;
     final List<InstanceofExpression> $ = new ArrayList<>();
-    d.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final InstanceofExpression node) {
         $.add(node);
         return true;
@@ -106,7 +110,8 @@ public enum getAll {
     if (d == null)
       return null;
     final Collection<CastExpression> $ = new ArrayList<>();
-    d.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final CastExpression node) {
         $.add(node);
         return true;
@@ -148,7 +153,8 @@ public enum getAll {
   }
 
   private static ASTVisitor publicFieldsCollector(final Collection<String> $) {
-    return new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      return new ASTVisitor(true) {
       @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))
           $.addAll(fragments(d).stream().map(λ -> step.name(λ) + "").collect(toList()));
@@ -185,7 +191,8 @@ public enum getAll {
     final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;
-    d.accept(new ASTVisitor(true) { // traverse all FieldDeclaration
+      //noinspection SameReturnValue
+      d.accept(new ASTVisitor(true) { // traverse all FieldDeclaration
       @Override public boolean visit(final FieldDeclaration current) {
         if (current.getModifiers() == Modifier.PRIVATE)
           $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));

@@ -107,7 +107,8 @@ final class BatchSpartanizerApplication implements IApplication {
   }
 
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;

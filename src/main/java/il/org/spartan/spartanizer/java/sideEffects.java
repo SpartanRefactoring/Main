@@ -63,7 +63,8 @@ public enum sideEffects {
     if (!sideEffects.free(x))
       return false;
     final Bool $ = new Bool(true);
-    x.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      x.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
         $.clear();
         return false;

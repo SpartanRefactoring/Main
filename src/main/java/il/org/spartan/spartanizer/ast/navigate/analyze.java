@@ -21,7 +21,8 @@ public enum analyze {
   ;
   public static Collection<String> dependencies(final ASTNode n) {
     final Collection<String> $ = new HashSet<>();
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue,SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
         if (notMethodName(node))
           $.add(identifier(node));

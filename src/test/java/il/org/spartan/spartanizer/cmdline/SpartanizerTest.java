@@ -22,7 +22,8 @@ public class SpartanizerTest {
         + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
         + " @Ignore(\"comment\") @Test public void testMethod(){int i = 1;assert (i>0);} }");
     assert u != null;
-    u.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      u.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         final List<?> $ = modifiers(d);
         return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
@@ -207,7 +208,8 @@ public class SpartanizerTest {
     print(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
     assert u != null;
-    u.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      u.accept(new ASTVisitor(true) {
       boolean storeMethodName(final SimpleName ¢) {
         method = ¢ + "";
         return false;

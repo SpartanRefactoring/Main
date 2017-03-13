@@ -161,7 +161,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
 
     @Override @Apply public final R apply(final T ¢) {
       before("apply");
-      return listenTip(inner::apply, ¢);
+      return listenTip(inner, ¢);
     }
 
     public Void before(@SuppressWarnings("unused") final String key, @SuppressWarnings("unused") final Object... arguments) {
