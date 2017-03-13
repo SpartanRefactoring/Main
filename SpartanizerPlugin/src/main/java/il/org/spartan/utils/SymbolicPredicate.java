@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -8,7 +9,13 @@ import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/*** <p>
+ * TODO second lecture
+ * <ol>
+ * <li>discuss asString()
+ * <li>discuss fullEval() *
+ * </ol>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-06 */
 public interface SymbolicPredicate extends BooleanSupplier {
   static SymbolicPredicate AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {

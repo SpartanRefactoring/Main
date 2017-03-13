@@ -5,13 +5,13 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method") //
-public class normalizeTest {
+public class anonimizeTest {
   @Test public void a() {
     azzert.that(anonymize.code("a.x.c.d.e()"), is("a.h()"));
   }
