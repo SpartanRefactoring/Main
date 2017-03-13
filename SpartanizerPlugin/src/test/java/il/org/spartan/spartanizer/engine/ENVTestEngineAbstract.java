@@ -147,7 +147,8 @@ public abstract class ENVTestEngineAbstract {
    * visited twice from the same outer annotation, but that should not cause
    * worry, since the outside visitor will do nothing. */
   protected void runTest() {
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
+      n.accept(new ASTVisitor(true) {
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */
       void checkAnnotations(final Iterable<Annotation> as) {

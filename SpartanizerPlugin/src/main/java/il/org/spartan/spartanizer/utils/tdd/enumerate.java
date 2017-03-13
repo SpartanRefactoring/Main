@@ -57,7 +57,8 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
         $.step();
         return true;
@@ -73,7 +74,8 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration node) {
         if (step.statements(step.body(node)) != null && !step.statements(step.body(node)).isEmpty())
           $.step();
@@ -130,7 +132,8 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
         $.step();
         return true;
@@ -143,7 +146,8 @@ public enum enumerate {
     if (n == null)
       return 0;
     final Int $ = new Int();
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final WhileStatement ¢) {
         return push(¢);
       }
@@ -172,7 +176,8 @@ public enum enumerate {
     if (¢ == null)
       return 0;
     final Int $ = new Int();
-    ¢.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {
         $.step();
         return true;

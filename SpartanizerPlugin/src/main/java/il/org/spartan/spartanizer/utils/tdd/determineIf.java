@@ -27,7 +27,8 @@ public enum determineIf {
       return false;
     final Int $ = new Int();
     $.inner = 0;
-    d.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      d.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
         ++$.inner;
         return true;
@@ -80,7 +81,8 @@ public enum determineIf {
     if (d == null)
       return false;
     final Int $ = new Int();
-    d.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      d.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
         $.step();
         return true;
@@ -113,7 +115,8 @@ public enum determineIf {
     if (mDec == null)
       return false;
     final Collection<ReturnStatement> $ = new ArrayList<>();
-    mDec.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
+      mDec.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;
       }

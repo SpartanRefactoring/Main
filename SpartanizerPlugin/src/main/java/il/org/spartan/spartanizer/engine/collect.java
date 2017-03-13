@@ -138,7 +138,8 @@ public enum collect {
    * @param n JD
    * @return <b>ASTVisitor</b> as described above. */
   static ASTVisitor declarationsCollector(final Collection<SimpleName> into, final ASTNode n) {
-    return new MethodExplorer.IgnoreNestedMethods() {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue
+      return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final ForStatement ¢) {
         return consider(initializers(¢));
       }
@@ -194,7 +195,8 @@ public enum collect {
    *      methods which are not taking place in the
    *      {@link declarationsCollector}. */
   static ASTVisitor definitionsCollector(final Collection<SimpleName> into, final ASTNode n) {
-    return new MethodExplorer.IgnoreNestedMethods() {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue
+      return new MethodExplorer.IgnoreNestedMethods() {
       @Override public boolean visit(final Assignment ¢) {
         return consider(to(¢));
       }
@@ -277,7 +279,8 @@ public enum collect {
    * @return ASTVisitor that adds all the uses of the SimpleName to the provided
    *         list. */
   private static ASTVisitor usesCollector(final SimpleName what, final Collection<SimpleName> into, final boolean lexicalOnly) {
-    return new ASTVisitor(true) {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
+      return new ASTVisitor(true) {
       int loopDepth;
 
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
@@ -390,7 +393,8 @@ public enum collect {
 
       Collection<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
         final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
-        classNode.accept(new ASTVisitor(true) {
+          //noinspection SameReturnValue
+          classNode.accept(new ASTVisitor(true) {
           @Override public boolean visit(final FieldDeclaration ¢) {
             $.addAll(fragments(¢));
             return false;

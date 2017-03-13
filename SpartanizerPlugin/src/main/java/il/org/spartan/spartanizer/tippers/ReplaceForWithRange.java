@@ -69,7 +69,8 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
 
   private static boolean ChangedInBlock(final String id, final Block b) {
     final Bool $ = new Bool();
-    b.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue,SameReturnValue,SameReturnValue
+      b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
         if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
           $.inner = true;

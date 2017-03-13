@@ -126,7 +126,8 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
 
   private static boolean leftSide(final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    nextStatement.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
         if (iz.simpleName(left(¢))//
             && identifier(az.simpleName(left(¢))).equals(id))

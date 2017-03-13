@@ -5,6 +5,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.meta.*;
 
+@SuppressWarnings("ALL")
 class NamespaceFixture {
   {
     int $ = 2;

@@ -50,7 +50,8 @@ public interface findFirst {
    *         value could be found. */
   static ConditionalExpression conditionalExpression(final ASTNode n) {
     final Wrapper<ConditionalExpression> $ = new Wrapper<>();
-    n.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final ConditionalExpression ¢) {
         if ($.get() != null)
           return false;
