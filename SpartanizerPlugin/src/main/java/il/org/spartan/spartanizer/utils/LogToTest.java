@@ -11,6 +11,7 @@ import java.util.stream.*;
 
 import static il.org.spartan.lisp.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.util.*;
 
