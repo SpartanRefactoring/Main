@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2016 */
 public interface system {
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
+
   static Process bash(final String shellCommand) {
     if (windows())
       return null;
@@ -203,7 +204,7 @@ public interface system {
   }
 
   static String userName() {
-    return english.upperFirstLetter(System.getProperty("user.name", "Killroy"));
+    return English.upperFirstLetter(System.getProperty("user.name", "Killroy"));
   }
 
   /** This function counts the number of words the given string contains. Words

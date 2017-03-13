@@ -26,8 +26,8 @@ public enum sideEffects {
   /** Determine whether the evaluation of an expression is guaranteed to be free
    * of any side effects.
    * @param e JD
-   * @return whether the parameter is an expression
-   *         whose computation is guaranteed to be free of any side effects. */
+   * @return whether the parameter is an expression whose computation is
+   *         guaranteed to be free of any side effects. */
   // VIM: /{/+,/}/-!sort -u
   private static final int[] alwaysFree = { //
       BOOLEAN_LITERAL, //

@@ -26,12 +26,15 @@ public interface ConfigurableReport {
     private static String header;
     private static ArrayList<ASTNode> inputList = new ArrayList<>();
     private static ArrayList<ASTNode> outputList = new ArrayList<>();
+
     public static void addInput(final ASTNode input) {
       getInputList().add(input);
     }
+
     public static void addOutput(final ASTNode output) {
       getOutputList().add(output);
     }
+
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
           m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
@@ -62,9 +65,11 @@ public interface ConfigurableReport {
     public static void setFileName(final String ¢) {
       reportFileName = ¢;
     }
+
     public static void setHeader(final String ¢) {
       header = ¢;
     }
+
     public static void setInputList(final ArrayList<ASTNode> inputList) {
       Settings.inputList = inputList;
     }
@@ -74,15 +79,10 @@ public interface ConfigurableReport {
     }
 
     String outputFolder = "/tmp/"; // default modifier
-
     String inputFolder; // default modifier
-
     CSVStatistics report;
-
     private ASTNode input;
-
     private ASTNode output;
-
     private boolean robustMode;
 
     public Action getAction() {

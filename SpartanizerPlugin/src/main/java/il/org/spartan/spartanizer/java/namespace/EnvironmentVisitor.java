@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static java.util.stream.Collectors.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;

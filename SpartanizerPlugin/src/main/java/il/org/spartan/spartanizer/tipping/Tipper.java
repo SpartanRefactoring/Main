@@ -125,7 +125,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
         @Override public String from() {
           return from;
         }
-    
+
         @Override public String to() {
           return to;
         }

@@ -30,15 +30,14 @@ public abstract class Applicator {
   /** Applicator's name. */
   private String name;
   /** Applicator's operation namer. */
-  private english.Activity operationName;
+  private English.Activity operationName;
 
   /** Tell this applicator it should not run. */
   public void stop() {
     shouldRun = false;
   }
 
-  /** @return whether this applicator should
-   *         run. */
+  /** @return whether this applicator should run. */
   protected boolean shouldRun() {
     return shouldRun;
   }
@@ -131,14 +130,14 @@ public abstract class Applicator {
   }
 
   /** @return applicator's name */
-  english.Activity operationName() {
+  English.Activity operationName() {
     return operationName;
   }
 
   /** Name this applicator.
    * @param ¢ JD
    * @return <code><b>this</b></code> applicator */
-  public Applicator operationName(final english.Activity ¢) {
+  public Applicator operationName(final English.Activity ¢) {
     operationName = ¢;
     return this;
   }
