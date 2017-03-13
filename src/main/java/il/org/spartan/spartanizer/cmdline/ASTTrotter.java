@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** An almost fully compatible, but more sane version of {@link ASTVisitor}
