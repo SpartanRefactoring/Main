@@ -51,7 +51,7 @@ public abstract class ENVTestEngineAbstract {
    * Comparison done in-order. Assertion fails <b>iff</b> testSet is not
    * contained in the same order in the provided set.
    * @param contains JD
-   * @return <code><b>true</b></code> <em>iff</em> the sets specified, are
+   * @return whether the sets specified, are
    *         equally the same. */
   private static void compareInOrder(final Iterable<Entry<String, Binding>> contains, final Iterable<Entry<String, Binding>> contained) {
     assert contained != null;
@@ -77,7 +77,7 @@ public abstract class ENVTestEngineAbstract {
    * Comparison done out-of-order. Assertion fails <b>iff</b> testSet is not
    * contained in the provided set.
    * @param contains JD
-   * @return <code><b>true</b></code> <em>iff</em> the specified
+   * @return whether the specified
    *         {@link LinkedHashSet} contains testSet. */
   private static void compareOutOfOrder(final Collection<Entry<String, Binding>> contains, final Collection<Entry<String, Binding>> contained) {
     assert contains != null;

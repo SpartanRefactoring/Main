@@ -46,7 +46,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** Determines whether this instance can make a {@link Tip} for the parameter
    * instance.
    * @param e JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is noneligible for
+   * @return whether the argument is noneligible for
    *         the simplification offered by this object.
    * @see #check(InfixExpression) */
   public final boolean cantTip(final N ¢) {

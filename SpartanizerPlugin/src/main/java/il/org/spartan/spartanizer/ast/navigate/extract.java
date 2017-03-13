@@ -61,7 +61,7 @@ public enum extract {
    * {@link Statement}, and return this statement.
    * @param ¢ The node from which to return statement.
    * @return single return statement contained in the parameter, or
-   *         <code><b>null</b></code> if no such value exists. */
+   *         {@code null if no such value exists. */
   public static ReturnStatement asReturn(final ASTNode ¢) {
     return asReturn(singleStatement(¢));
   }
@@ -189,7 +189,7 @@ public enum extract {
   /** extract the {@link Statement} that contains a given node.
    * @param pattern JD
    * @return inner most {@link Statement} in which the parameter is nested, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   public static Statement containingStatement(final ASTNode ¢) {
     for (ASTNode $ = ¢; $ != null; $ = parent($))
       if (iz.statement($))
@@ -217,7 +217,7 @@ public enum extract {
    * perhaps along with any number of empty sideEffects, then its Essence is
    * this single non-empty statement.
    * @param ¢ JD
-   * @return Essence of the parameter, or <code><b>null</b></code>, if there are
+   * @return Essence of the parameter, or {@code null, if there are
    *         no non-empty sideEffects within the parameter. If, however there
    *         are multiple non-empty sideEffects inside the parameter then the
    *         parameter itself is returned. */
@@ -262,7 +262,7 @@ public enum extract {
   /** extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link IfStatement} embedded in the parameter or
-   *         <code><b>null</b></code> if not such sideEffects exists. */
+   *         {@code null if not such sideEffects exists. */
   public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
   }
@@ -367,7 +367,7 @@ public enum extract {
   /** Find the {@link Assignment} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
-   *         <code><b>null</b></code> if not such value exists. */
+   *         {@code null if not such value exists. */
   public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
   }
@@ -381,7 +381,7 @@ public enum extract {
   /** extract the {@link IfStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link IfStatement} that immediately follows the parameter, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   public static IfStatement nextIfStatement(final ASTNode ¢) {
     return az.ifStatement(extract.nextStatement(¢));
   }
@@ -389,7 +389,7 @@ public enum extract {
   /** Find the {@link PrefixExpression} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
-   *         <code><b>null</b></code> if not such value exists. */
+   *         {@code null if not such value exists. */
   public static PrefixExpression nextPrefix(final ASTNode ¢) {
     return az.prefixExpression(expression(az.expressionStatement(extract.nextStatement(¢))));
   }
@@ -397,7 +397,7 @@ public enum extract {
   /** extract the {@link ReturnStatement} that immediately follows a given node
    * @param pattern JD
    * @return {@link ReturnStatement} that immediately follows the parameter, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   public static ReturnStatement nextReturn(final ASTNode ¢) {
     return az.returnStatement(extract.nextStatement(¢));
   }
@@ -405,7 +405,7 @@ public enum extract {
   /** extract the {@link Statement} that immediately follows a given node.
    * @param pattern JD
    * @return {@link Statement} that immediately follows the parameter, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   public static Statement nextStatement(final ASTNode ¢) {
     return nextStatement(containingStatement(¢));
   }
@@ -414,7 +414,7 @@ public enum extract {
    * statement, inside the switch statement
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   public static Statement nextStatementInside(final SwitchCase ¢) {
     if (¢ == null)
       return null;
@@ -446,7 +446,7 @@ public enum extract {
   /** extract the single {@link ReturnStatement} embedded in a node.
    * @param pattern JD
    * @return single {@link ReturnStatement} embedded in the parameter, and
-   *         return it; <code><b>null</b></code> if not such sideEffects
+   *         return it; {@code null if not such sideEffects
    *         exists. */
   public static ReturnStatement returnStatement(final ASTNode ¢) {
     return az.returnStatement(extract.singleStatement(¢));
@@ -464,7 +464,7 @@ public enum extract {
    * {@link IfStatement}
    * @param subject JD
    * @return single statement in the <code><b>else</b></code> branch of the
-   *         parameter, or <code><b>null</b></code>, if no such statement
+   *         parameter, or {@code null, if no such statement
    *         exists. */
   public static Statement singleElse(final IfStatement ¢) {
     return extract.singleStatement(elze(¢));
@@ -480,7 +480,7 @@ public enum extract {
   /** Finds the single statement in the "then" branch of an {@link IfStatement}
    * @param subject JD
    * @return single statement in the "then" branch of the parameter, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   public static Statement singleThen(final IfStatement ¢) {
     return extract.singleStatement(then(¢));
   }
@@ -510,7 +510,7 @@ public enum extract {
   /** extract the single {@link ThrowStatement} embedded in a node.
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
-   *         it; <code><b>null</b></code> if not such sideEffects exists. */
+   *         it; {@code null if not such sideEffects exists. */
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
@@ -632,7 +632,7 @@ public enum extract {
   /** extract the {@link Statement} that immediately follows a given statement
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
-   *         <code><b>null</b></code>, if no such statement exists. */
+   *         {@code null, if no such statement exists. */
   private static Statement nextStatement(final Statement ¢) {
     if (¢ == null)
       return null;
