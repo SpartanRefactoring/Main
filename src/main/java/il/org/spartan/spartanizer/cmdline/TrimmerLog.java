@@ -28,7 +28,8 @@ public enum TrimmerLog {
   private static String fileName;
   static {
     logToScreen = true;
-    off();
+     off();
+//    on();
   }
 
   public static void off() {

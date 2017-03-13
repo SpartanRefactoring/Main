@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
@@ -57,7 +57,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   @Override public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, final Int i) {
     final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
-    final String fileName = english.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
+    final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         progressMonitor.worked(1);
@@ -67,6 +67,7 @@ public class Trimmer extends AbstractGUIApplicator {
         Tipper<N> w = null;
         try {
           w = getTipper(t, n);
+//          System.out.println(w);
         } catch (final Exception ¢) {
           monitor.logProbableBug(this, ¢);
         }
@@ -118,10 +119,13 @@ public class Trimmer extends AbstractGUIApplicator {
     final TextEdit e;
     try {
       e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      // System.out.println(e);
       e.apply($);
-    } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      if (!silent)
+    } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException | NullPointerException ¢) {
+      if (!silent){
+        // ¢.printStackTrace();
         monitor.logEvaluationError(this, ¢);
+      }
       throw new AssertionError(¢);
     }
     return e;
@@ -133,8 +137,8 @@ public class Trimmer extends AbstractGUIApplicator {
       Toolbox t;
 
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        final String fileName = english.unknownIfNull(az.compilationUnit(n.getRoot()),
-            λ -> λ.getJavaElement() == null ? english.UNKNOWN : λ.getJavaElement().getElementName());
+        final String fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
+            λ -> λ.getJavaElement() == null ? English.UNKNOWN : λ.getJavaElement().getElementName());
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
