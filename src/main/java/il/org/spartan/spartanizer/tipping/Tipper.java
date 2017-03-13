@@ -17,13 +17,17 @@ import il.org.spartan.spartanizer.utils.*;
  * make a single simplification of the tree. A tipper is so small that it is
  * idempotent: Applying a tipper to the output of itself is the empty operation.
  * @param <N> type of node which triggers the transformation.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
   public static Tipper.Example.Ignores ignores(final String code) {
     return () -> code;
+  }
+
+  @Override public boolean equals(Object ¢) {
+    return getClass().equals(¢.getClass());
   }
 
   private static final long serialVersionUID = -2252675511987504571L;

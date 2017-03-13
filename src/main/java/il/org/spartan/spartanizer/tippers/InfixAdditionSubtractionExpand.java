@@ -7,9 +7,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** expand additive terms, e.g., convert {@code a-(b+c)} to /** {@code a-b-c}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
- * @since 2016 */
+/** expand additive terms, e.g., convert {@code a-(b+c)} to {@code a-b-c}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM} */
 public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = 8781877067464919917L;

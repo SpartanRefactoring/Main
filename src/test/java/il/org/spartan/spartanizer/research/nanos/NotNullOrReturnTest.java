@@ -13,12 +13,13 @@ public class NotNullOrReturnTest {
   @Test public void a() {
     trimmingOf("statement(); if(x == null) return; use(); use();")//
         .using(IfStatement.class, new NotNullOrReturn())//
-        .gives("statement(); aszert.notNull(x); use(); use();")//
+        .gives("statement(); azzert.notNull(x); use(); use();")//
+        .gives("statement();assert x!=null;use();use();") //
         .stays();
   }
 
   @Test public void sanity() {
-    trimmingOf("statement(); aszert.notNull(x); use(); use();")//
+    trimmingOf("statement(); azzert.notNull(x); use(); use();")//
         .using(IfStatement.class, new NotNullOrReturn())//
         .stays();
   }
@@ -26,21 +27,24 @@ public class NotNullOrReturnTest {
   @Test public void a2() {
     trimmingOf("statement(); if(x == null || y == null) return; use(); use();")//
         .using(IfStatement.class, new NotNullOrReturn())//
-        .gives("statement(); aszert.notNull(x,y); use(); use();")//
+        .gives("statement(); azzert.notNull(x,y); use(); use();")//
+        .gives("statement();assert y!=null:x;use();use();") //
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("statement(); if(x == null) return null; use(); use();")//
         .using(IfStatement.class, new NotNullOrReturn())//
-        .gives("statement(); aszert.notNull(x); use(); use();")//
+        .gives("statement(); azzert.notNull(x); use(); use();")//
+        .gives("statement();assert x!=null;use();use();") //
         .stays();
   }
 
   @Test public void b2() {
     trimmingOf("statement(); if(x == null || y == null) return null; use(); use();")//
         .using(IfStatement.class, new NotNullOrReturn())//
-        .gives("statement(); aszert.notNull(x,y); use(); use();")//
+        .gives("statement(); azzert.notNull(x,y); use(); use();")//
+        .gives("statement();assert y!=null:x;use();use();") //
         .stays();
   }
 
@@ -59,6 +63,8 @@ public class NotNullOrReturnTest {
   @Test public void respect3() {
     trimmingOf("void m(){use(); if(x == null) return; use(); use();}")//
         .using(IfStatement.class, new NotNullOrReturn())//
+        .gives("void m(){use();azzert.notNull(x);use();use();}") //
+        .gives("void m(){use();assert x!=null;use();use();}") //
         .stays();
   }
 

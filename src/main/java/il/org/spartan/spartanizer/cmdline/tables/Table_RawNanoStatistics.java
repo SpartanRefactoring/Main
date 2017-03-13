@@ -22,37 +22,37 @@ import il.org.spartan.utils.*;
 public class Table_RawNanoStatistics {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static Table pWriter;
+  static Table writer;
   static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
+  public static void summarize(final String path) {
+    if (writer == null)
+      initializeWriter();
+    writer.col("Project", path);
+    npStatistics.keySet().stream()//
+        .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
+        .map(npStatistics::get)//
+        .forEach(λ -> writer.col(λ.name, λ.occurences));
+    fillAbsents();
+    writer.nl();
+    npStatistics.clear();
+  }
+
+  static void fillAbsents() {
+    spartanalyzer.getAllPatterns().stream()//
+        .map(Tipper::className)//
+        .filter(λ -> !npStatistics.keySet().contains(λ))//
+        .forEach(λ -> writer.col(λ, 0));
+  }
+
   public static void main(final String[] args) {
     new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
-        summarizeNPStatistics(path);
+        summarize(path);
         System.err.println(" " + path + " Done");
-      }
-
-      public void summarizeNPStatistics(final String path) {
-        if (pWriter == null)
-          initializeWriter(outputFolder);
-        pWriter.col("Project", path);
-        npStatistics.keySet().stream()//
-            .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
-            .map(npStatistics::get)//
-            .forEach(λ -> pWriter.col(λ.name, λ.occurences));
-        fillAbsents();
-        pWriter.nl();
-        npStatistics.clear();
-      }
-
-      void fillAbsents() {
-        spartanalyzer.getAllPatterns().stream()//
-            .map(Tipper::className)//
-            .filter(λ -> !npStatistics.keySet().contains(λ))//
-            .forEach(λ -> pWriter.col(λ, 0));
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
@@ -70,14 +70,10 @@ public class Table_RawNanoStatistics {
         return true;
       }
     });
-    pWriter.close();
-  }
-
-  static void initializeWriter(final String outputFolder) {
-    pWriter = new Table(Table_RawNanoStatistics.class, outputFolder);
+    writer.close();
   }
 
   static void initializeWriter() {
-    pWriter = new Table(Table_RawNanoStatistics.class);
+    writer = new Table(Table_RawNanoStatistics.class);
   }
 }
