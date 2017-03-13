@@ -69,7 +69,15 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
   }
 
   public int touched() {
-    return stream().mapToInt(CompilationUnitRecord::touched).sum();
+    return stream().mapToInt(CompilationUnitRecord::methodsTouched).sum();
+  }
+
+  public int methodsCovered() {
+    return stream().mapToInt(CompilationUnitRecord::methodsCovered).sum();
+  }
+
+  public int methods() {
+    return stream().mapToInt(λ -> λ.methods.size()).sum();
   }
 }
 
@@ -138,14 +146,18 @@ class CompilationUnitRecord {
     expressions.after(¢);
   }
 
-  public int touched() {
+  public int methodsTouched() {
     return (int) methods.values().stream().filter(LightWeightMethodRecord::touched).count();
+  }
+
+  public int methodsCovered() {
+    return (int) methods.values().stream().filter(LightWeightMethodRecord::fullyCovered).count();
   }
 
   public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
     final String mangle = Vocabulary.mangle(¢);
     methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
-    methods.get(mangle).logAndGet(n);
+    methods.get(mangle).mark(n);
   }
 
   public void markNP(final ASTNode n, @SuppressWarnings("unused") final String np) {
@@ -177,6 +189,7 @@ class LightWeightMethodRecord {
   final NanoPatternCounter nodes;
   final NanoPatternCounter commands;
   final NanoPatternCounter expressions;
+  private boolean fullyCovered;
 
   public LightWeightMethodRecord(final MethodDeclaration ¢) {
     nodes = NanoPatternCounter.init(count.nodes(¢));
@@ -185,14 +198,20 @@ class LightWeightMethodRecord {
   }
 
   /** makes sure we don't exceed 100% of nodes of a method */
-  public void logAndGet(final ASTNode ¢) {
+  public void mark(final ASTNode ¢) {
     nodes.incAndGet(count.nodes(¢));
     commands.incAndGet(measure.commands(¢));
     expressions.incAndGet(measure.expressions(¢));
+    if (iz.methodDeclaration(¢))
+      fullyCovered = true;
   }
 
   public boolean touched() {
-    return nodes.np().intValue() > 0;
+    return nodes.np().intValue() > 0 && !fullyCovered;
+  }
+
+  public boolean fullyCovered() {
+    return fullyCovered;
   }
 
   static class NanoPatternCounter {
