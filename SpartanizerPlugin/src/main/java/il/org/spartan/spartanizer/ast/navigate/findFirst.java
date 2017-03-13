@@ -25,7 +25,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b></code> if there is no such statement. */
+   *         {@code null if there is no such statement. */
   static AssertStatement assertStatement(final ASTNode ¢) {
     return instanceOf(AssertStatement.class).in(¢);
   }
@@ -46,7 +46,7 @@ public interface findFirst {
    * in the usual visitation order.
    * @param n First node to visit
    * @return first {@link ConditionalExpression} representing an addition under
-   *         the parameter given node, or <code><b>null</b></code> if no such
+   *         the parameter given node, or {@code null if no such
    *         value could be found. */
   static ConditionalExpression conditionalExpression(final ASTNode n) {
     final Wrapper<ConditionalExpression> $ = new Wrapper<>();
@@ -70,7 +70,7 @@ public interface findFirst {
   /** Search for an {@link Expression} in the tree rooted at an {@link ASTNode}.
    * @param pattern JD
    * @return first {@link Expression} found in an {@link ASTNode n}, or
-   *         <code><b>null</b></code> if there is no such statement. */
+   *         {@code null if there is no such statement. */
   static Expression expression(final ASTNode ¢) {
     return findFirst.instanceOf(Expression.class).in(¢);
   }
@@ -79,7 +79,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b></code> if there is no such statement. */
+   *         {@code null if there is no such statement. */
   static ForStatement forStatement(final ASTNode ¢) {
     return instanceOf(ForStatement.class).in(¢);
   }
@@ -88,7 +88,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b></code> if there is no such statement. */
+   *         {@code null if there is no such statement. */
   static IfStatement ifStatement(final ASTNode ¢) {
     return instanceOf(IfStatement.class).in(¢);
   }
@@ -97,7 +97,7 @@ public interface findFirst {
    * given node, as found in the usual visitation order.
    * @param n JD
    * @return first {@link InfixExpression} representing an addition under the
-   *         parameter given node, or <code><b>null</b></code> if no such value
+   *         parameter given node, or {@code null if no such value
    *         could be found. */
   static InfixExpression infixPlus(final ASTNode n) {
     final Wrapper<InfixExpression> $ = new Wrapper<>();
@@ -149,7 +149,7 @@ public interface findFirst {
    * visit of the tree rooted a the parameter.
    * @param pattern JD
    * @return first such node encountered in a visit of the tree rooted a the
-   *         parameter, or <code><b>null</b></code> */
+   *         parameter, or {@code null */
   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
     return instanceOf(VariableDeclarationFragment.class).in(¢);
   }
@@ -158,7 +158,7 @@ public interface findFirst {
    * {@link ASTNode}.
    * @param pattern JD
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
-   *         <code><b>null</b></code> if there is no such statement. */
+   *         {@code null if there is no such statement. */
   static WhileStatement whileStatement(final ASTNode ¢) {
     return instanceOf(WhileStatement.class).in(¢);
   }

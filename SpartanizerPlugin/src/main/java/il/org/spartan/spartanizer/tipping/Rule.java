@@ -73,11 +73,11 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   /** Determine whether the parameter is "eligible" for application of this
    * instance. Should be overridden
    * @param n JD
-   * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
+   * @return whether the argument is eligible for
    *         the simplification offered by this instance. */
   @Check boolean check(T n);
 
-  default T operand() {
+  default T object() {
     return null;
   }
 
@@ -91,11 +91,11 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   }
 
   default String verbObject() {
-    return format(verb(), operand());
+    return format(verb(), object());
   }
 
   default boolean ready() {
-    return operand() != null;
+    return object() != null;
   }
 
   /** Should be overridden */

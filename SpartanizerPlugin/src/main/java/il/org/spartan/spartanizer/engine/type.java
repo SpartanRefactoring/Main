@@ -73,7 +73,7 @@ public interface type {
   }
 
   /** @param x JD
-   * @return <code><b>true</b></code> <i>if</i> the parameter is an expression
+   * @return {@code true} <i>if</i> the parameter is an expression
    *         whose type is provably not of type {@link String}, in the sense
    *         used in applying the {@code +} operator to concatenate strings.
    *         concatenation. */
@@ -108,7 +108,7 @@ public interface type {
     return this + "=" + key() + " (" + description() + ")";
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em>one of {@link #INT} ,
+  /** @return whetherone of {@link #INT} ,
    *         {@link #LONG} , {@link #CHAR} , {@link BYTE} , {@link SHORT} ,
    *         {@link FLOAT} , {@link #DOUBLE} , {@link #INTEGRAL} or
    *         {@link #NUMERIC} , {@link #STRING} , {@link #ALPHANUMERIC} or false
@@ -117,20 +117,20 @@ public interface type {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em>either a Primitive.Certain,
+  /** @return whethereither a Primitive.Certain,
    *         Primitive.Odd.NULL or a baptized type */
   default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em>one of {@link #INT} ,
+  /** @return whetherone of {@link #INT} ,
    *         {@link #LONG} , {@link #CHAR} , {@link BYTE} , {@link SHORT} ,
    *         {@link #INTEGRAL} or false otherwise */
   default boolean isIntegral() {
     return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
 
-  /** @return <code><b>true</b></code> <em>iff</em>one of {@link #INT} ,
+  /** @return whetherone of {@link #INT} ,
    *         {@link #LONG} , {@link #CHAR} , {@link BYTE} , {@link SHORT} ,
    *         {@link FLOAT} , {@link #DOUBLE} , {@link #INTEGRAL} ,
    *         {@link #NUMERIC} or false otherwise */
@@ -387,13 +387,13 @@ public interface type {
 
       /** used to determine whether an integral type behaves as itself under
        * operations or as an INT.
-       * @return <code><b>true</b></code> <em>iff</em>one of {@link #CHAR},
+       * @return whetherone of {@link #CHAR},
        *         {@link BYTE}, {@link SHORT} or false otherwise. */
       default boolean isIntUnderOperation() {
         return in(this, CHAR, BYTE, SHORT);
       }
 
-      /** @return <code><b>true</b></code> <em>iff</em>one of {@link #NOTHING},
+      /** @return whetherone of {@link #NOTHING},
        *         {@link #NULL} or false otherwise */
       default boolean isNoInfo() {
         return in(this, NOTHING, NULL);
