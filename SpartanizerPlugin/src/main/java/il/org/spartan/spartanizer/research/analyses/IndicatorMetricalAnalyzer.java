@@ -18,7 +18,7 @@ public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
   @Override protected abstract int metric(ASTNode n);
 
   @Override @SuppressWarnings("boxing") public void logMethod(final MethodDeclaration before, final MethodDeclaration after) {
-    getSafe(histogram, measure.statements(before)).add(Int.valueOf(as.bit(metric(before) >= metric(after))));
+    getSafe(histogram, measure.commands(before)).add(Int.valueOf(as.bit(metric(before) >= metric(after))));
   }
 
   private static Collection<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
