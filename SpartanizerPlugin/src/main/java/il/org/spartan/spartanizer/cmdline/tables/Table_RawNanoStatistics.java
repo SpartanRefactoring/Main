@@ -22,22 +22,22 @@ import il.org.spartan.utils.*;
 public class Table_RawNanoStatistics {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static Table pWriter;
+  static Table writer;
   static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
 
   public static void summarize(final String path) {
-    if (pWriter == null)
+    if (writer == null)
       initializeWriter();
-    pWriter.col("Project", path);
+    writer.col("Project", path);
     npStatistics.keySet().stream()//
         .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
         .map(npStatistics::get)//
-        .forEach(λ -> pWriter.col(λ.name, λ.occurences));
+        .forEach(λ -> writer.col(λ.name, λ.occurences));
     fillAbsents();
-    pWriter.nl();
+    writer.nl();
     npStatistics.clear();
   }
 
@@ -45,7 +45,7 @@ public class Table_RawNanoStatistics {
     spartanalyzer.getAllPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
-        .forEach(λ -> pWriter.col(λ, 0));
+        .forEach(λ -> writer.col(λ, 0));
   }
 
   public static void main(final String[] args) {
@@ -70,10 +70,10 @@ public class Table_RawNanoStatistics {
         return true;
       }
     });
-    pWriter.close();
+    writer.close();
   }
 
   static void initializeWriter() {
-    pWriter = new Table(Table_RawNanoStatistics.class);
+    writer = new Table(Table_RawNanoStatistics.class);
   }
 }
