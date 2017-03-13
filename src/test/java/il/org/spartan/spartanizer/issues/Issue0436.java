@@ -6,6 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.util.*;
 
