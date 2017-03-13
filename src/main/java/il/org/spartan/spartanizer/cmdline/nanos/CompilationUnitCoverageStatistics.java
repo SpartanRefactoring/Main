@@ -47,7 +47,7 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
 class CompilationUnitRecord {
   public final int nodesBeforeSpartanization;
   public int nodesAfterSpartanization;
-  public int nodesCovered;
+  public int nodesCoveredByNonMethods;
   public final Map<String, LightWeightMethodRecord> methods = new HashMap<>();
   public final Set<String> nps = new HashSet<>();
 
@@ -63,10 +63,14 @@ class CompilationUnitRecord {
     return !nps.isEmpty();
   }
 
+  private int nodesCoveredByMethods() {
+    return methods.values().stream().mapToInt(λ -> λ.nodes.np()).sum();
+  }
+
   public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
     final String mangle = Vocabulary.mangle(¢);
     methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
-    nodesCovered += methods.get(mangle).logAndGet(count.nodes(n));
+    methods.get(mangle).logAndGet(n);
   }
 
   public void markNP(final ASTNode n, final String np) {
@@ -89,25 +93,59 @@ class CompilationUnitRecord {
   }
 
   private void markRegular(final ASTNode ¢) {
-    nodesCovered += count.nodes(¢);
+    nodesCoveredByNonMethods += count.nodes(¢);
   }
 
   public int nodesCovered() {
-    return Math.min(nodesCovered, nodesAfterSpartanization);
+    return Math.min(nodesCoveredByNonMethods + nodesCoveredByMethods(), nodesAfterSpartanization);
   }
 
   class LightWeightMethodRecord {
-    private final int numNodes;
-    private int numNPNodes;
+    final NanoPatternCounter nodes;
+    private final NanoPatternCounter commands;
+    private final NanoPatternCounter expressions;
 
     public LightWeightMethodRecord(final MethodDeclaration ¢) {
-      numNodes = count.nodes(¢);
+      nodes = NanoPatternCounter.init(count.nodes(¢));
+      commands = NanoPatternCounter.init(measure.commands(¢));
+      expressions = NanoPatternCounter.init(measure.expressions(¢));
     }
 
     /** makes sure we don't exceed 100% of nodes of a method */
-    public int logAndGet(final int nodes) {
-      final int $ = Math.min(nodes, numNodes - numNPNodes);
-      numNPNodes += $;
+    public void logAndGet(final ASTNode ¢) {
+      nodes.incAndGet(count.nodes(¢));
+      commands.incAndGet(measure.commands(¢));
+      expressions.incAndGet(measure.expressions(¢));
+    }
+
+    public boolean touched() {
+      return nodes.np() > 0;
+    }
+  }
+
+  static class NanoPatternCounter {
+    private final int total;
+    private int np;
+
+    static NanoPatternCounter init(int ¢) {
+      return new NanoPatternCounter(¢);
+    }
+
+    public int total() {
+      return total;
+    }
+
+    public int np() {
+      return np;
+    }
+
+    private NanoPatternCounter(int num) {
+      this.total = num;
+    }
+
+    public int incAndGet(int amount) {
+      final int $ = Math.min(amount, total - np);
+      np += $;
       return $;
     }
   }
