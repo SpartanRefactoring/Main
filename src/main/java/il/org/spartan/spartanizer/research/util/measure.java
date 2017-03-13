@@ -1,12 +1,15 @@
 package il.org.spartan.spartanizer.research.util;
 
+import static il.org.spartan.lisp.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Utility class to measure number of statemetns\expressions in an ASTNode's
+ * subtree, skipping some ASTNode objects
  * @author Ori Marcovitch
  * @since Oct 28, 2016 */
 public enum measure {
@@ -47,9 +50,11 @@ public enum measure {
     // LabeledStatement.class, //
     // SwitchCase.class, //
     // TypeDeclarationStatement.class, //
-    // VariableDeclarationStatement.class //
+    // VariableDeclarationStatement.class //11
     )//
-        .contains(¢.getClass());
+        .contains(¢.getClass()) //
+        || iz.variableDeclarationStatement(¢)//
+            && initializer(onlyOne(fragments(az.variableDeclarationStatement(¢)))) == null;
   }
 
   static boolean excluded(final Expression ¢) {
