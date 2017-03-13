@@ -1,6 +1,8 @@
-package il.org.spartan.spartanizer.tipping;
+package il.org.spartan.spartanizer.utils;
 
 import java.util.stream.*;
+
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Organizes {@link Rule}s in a tree, supplying a stream of rules ready to be
  * applied.
