@@ -449,21 +449,19 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-  <menu id="org.eclipse.jdt.ui.refactoring.menu" label="Refactor" mnemonic="t">
-    <menu label="Spartanizer" mnemonic="S">
-      <menu label="Spartanize..." mnemonic="S">
-        <command commandId="il.org.spartan.LaconizeSelection" style="push" mnemonic="S"/>
-        <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="C"/>       
-        <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="A"/>
-      </menu>
-      <menu label="Zoom..." mnemonic="Z">
-        <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="S"/>
-        <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
-        <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
-      </menu>
-      <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
-      <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
+  <menu id="il.org.spartan" label="Spartanizer" mnemonic="S">
+    <menu label="Spartanize..." mnemonic="S">
+      <command commandId="il.org.spartan.LaconizeSelection" style="push" mnemonic="S"/>
+      <command commandId="il.org.spartan.LaconizeCurrent" style="push" mnemonic="C"/>       
+      <command commandId="il.org.spartan.LaconizeAll" style="push" mnemonic="A"/>
     </menu>
+    <menu label="Zoom..." mnemonic="Z">
+      <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="S"/>
+      <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
+      <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
+    </menu>
+    <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
+    <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
   </menu>
 </menuContribution>
 
