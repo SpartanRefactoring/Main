@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO Yossi Gil: document class {@link }
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class StatementBottomUp<R> extends Reducer<R> {
   protected R map(final AssertStatement ¢) {

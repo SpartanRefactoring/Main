@@ -1,12 +1,14 @@
 package il.org.spartan.spartanizer.research.util;
 
-import static il.org.spartan.lisp.*;
 import org.eclipse.jdt.core.dom.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Utility class to measure number of statemetns\expressions in an ASTNode's
  * subtree, skipping some ASTNode objects

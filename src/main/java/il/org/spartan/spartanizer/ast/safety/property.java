@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO: Yossi Gil <tt>yossi.gil@gmail.com</tt> please add a description
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-27 */
 public enum property {
   ;
@@ -33,8 +33,7 @@ public enum property {
   /** Checks node has a property.
    * @param n JD
    * @param key property name
-   * @return whether node contains the key
-   *         property */
+   * @return whether node contains the key property */
   public static boolean has(final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
   }

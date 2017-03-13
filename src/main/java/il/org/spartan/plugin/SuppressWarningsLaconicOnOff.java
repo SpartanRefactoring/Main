@@ -63,9 +63,8 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   /** @param n an {@link ASTNode}
-   * @return whether the node is disabled by an
-   *         ancestor {@link BodyDeclaration}, containing a disabler in its
-   *         JavaDoc. */
+   * @return whether the node is disabled by an ancestor
+   *         {@link BodyDeclaration}, containing a disabler in its JavaDoc. */
   static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {

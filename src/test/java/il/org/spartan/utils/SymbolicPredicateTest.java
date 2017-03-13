@@ -7,7 +7,7 @@ import java.util.function.*;
 import org.junit.*;
 
 /** Tests class {@link SymbolicPredicate}
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @SuppressWarnings("static-method")
 public class SymbolicPredicateTest {

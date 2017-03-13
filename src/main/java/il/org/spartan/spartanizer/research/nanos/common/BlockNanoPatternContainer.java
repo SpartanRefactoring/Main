@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.research.nanos.common;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.*;
-
-import java.util.Arrays;
 
 /** List that can contain {@link NanoPatternTipper<Block>}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //

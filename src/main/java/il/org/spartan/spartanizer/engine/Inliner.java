@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Replace a variable with an expression
  * @year 2015
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since Sep 13, 2016 */
 public final class Inliner {
   static Wrapper<ASTNode>[] wrap(final ASTNode... ns) {
@@ -90,8 +90,8 @@ public final class Inliner {
    * {@link ForStatement}.
    * @param s JD
    * @param n JD
-   * @return whether the SimpleName is used in a
-   *         ForStatement's condition, updaters, or body. */
+   * @return whether the SimpleName is used in a ForStatement's condition,
+   *         updaters, or body. */
   public static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }

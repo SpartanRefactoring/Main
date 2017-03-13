@@ -5,7 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016-10-07 */
 public interface dig {
   static List<String> stringLiterals(final ASTNode n) {

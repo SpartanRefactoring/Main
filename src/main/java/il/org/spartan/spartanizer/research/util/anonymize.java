@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.util;
 
-import static java.lang.String.*;
 import static il.org.spartan.spartanizer.engine.nominal.namer.*;
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
+import static java.lang.String.*;
 
 import java.util.*;
 

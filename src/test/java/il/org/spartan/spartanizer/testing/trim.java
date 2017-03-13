@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *     .gives("a+b-c")
  * } or {@code trimming.with({@link InfixExpression}.class, new
  * {@link InfixTermsExpand()}).of("a+(b-c)")// .gives("a+b+c") }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface trim {
   static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
@@ -61,10 +61,10 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                    * .repeatedly //  See {@link trim.repeatedely} 
-                    * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                    * .of("a+(b-c)") //  See {@link #of(String)} 
-                    * .gives("a+b-c")</code> */
+                     * .repeatedly //  See {@link trim.repeatedely} 
+                     * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                     * .of("a+(b-c)") //  See {@link #of(String)} 
+                     * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
@@ -96,7 +96,7 @@ public interface trim {
   }
 
   /** Unit tests demonstrating the fluent API
-   * @author Yossi Gil
+   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @since 2016 */
   @Ignore
   @SuppressWarnings("static-method")

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Test class for class {@link iz}
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class izTest {

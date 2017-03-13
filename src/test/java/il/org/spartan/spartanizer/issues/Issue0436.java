@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.leonidas.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Failing test, originally from {@link normalizeTest} .
- * @author Yossi Gil <yossi.gil@gmail.com>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore

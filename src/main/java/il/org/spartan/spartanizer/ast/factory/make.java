@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** An empty <code><b>enum</b></code> for fluent programming. The name should
  * say it all: The name, followed by a dot, followed by a method name, should
  * read like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum make {
   /** Strategy for conversion into a compilation unit */
@@ -304,8 +304,8 @@ public enum make {
     /** Determines whether an infix expression can be added to String concating
      * without parenthesis type wise.
      * @param Expression
-     * @return whethere is an infix expression and
-     *         if it's first operand is of type String and false otherwise */
+     * @return whethere is an infix expression and if it's first operand is of
+     *         type String and false otherwise */
     public static boolean isStringConactingSafe(final Expression ¢) {
       return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }

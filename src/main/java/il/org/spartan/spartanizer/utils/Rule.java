@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.tipping;
+package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.spartanizer.cmdline.system.*;
 import static java.lang.String.*;
@@ -10,7 +10,6 @@ import java.util.stream.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
@@ -33,7 +32,7 @@ import il.org.spartan.utils.*;
  * a @{@link Apply} method call. .</li>
  * </ol>
  * <li><b>Aggregation:</b> An instance of this class may be atomic, or compound,
- * i.e., implementing RuleMulti. Method {@link #stream()} returns a
+ * i.e., implementing RuleMulti. Method {@link #descendants()} returns a
  * {@link Stream} of nested instances, which is an singleton of {@code this} if
  * the instance is atomic, or include any number of instances, including
  * <li><b>Descriptive qualities:</b> {@link #examples()}, {@link #akas()},
@@ -57,9 +56,9 @@ import il.org.spartan.utils.*;
  * </nl>
  * @param <T> type of elements for which the rule is applicable
  * @param <R> type of result of applying this rule
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
-public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
+public interface Rule<@JD T, @JD R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Should be overridden */
   default String[] akas() {
     return new String[] { technicalName() };
@@ -73,8 +72,8 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   /** Determine whether the parameter is "eligible" for application of this
    * instance. Should be overridden
    * @param n JD
-   * @return whether the argument is eligible for
-   *         the simplification offered by this instance. */
+   * @return whether the argument is eligible for the simplification offered by
+   *         this instance. */
   @Check boolean check(T n);
 
   default String description() {
@@ -97,11 +96,6 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
 
   default boolean ready() {
     return object() != null;
-  }
-
-  /** Should not be overridden */
-  @Override default Stream<Rule<T, R>> stream() {
-    return Stream.of(this);
   }
 
   /** Should not be overridden */
@@ -150,7 +144,7 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
    * listener.
    * @param <T>
    * @param <R>
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   @SuppressWarnings("static-method")
   abstract class Delegator<T, R> extends Stateful<T, R> implements Listener<T, R> {
@@ -165,7 +159,7 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
       return listenAkas(inner::akas);
     }
 
-    @Override public final R apply(final T ¢) {
+    @Override @Apply public final R apply(final T ¢) {
       before("apply");
       return listenTip(inner::apply, ¢);
     }
@@ -232,7 +226,7 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   /** Default implementation of {@link Rule},
    * @param <T> {@see Rule}
    * @param <R> {@see Rule}
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R>, Supplier<T> {
     private T get;

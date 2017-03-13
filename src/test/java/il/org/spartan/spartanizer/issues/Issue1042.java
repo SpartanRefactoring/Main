@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for {@link ModifierFinalAbstractMethodRedundant}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

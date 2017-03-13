@@ -31,14 +31,12 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
   // public static final String UNKNOWN = "???";
 
-  /** @return whether the refactorer is a
-   *         handler */
+  /** @return whether the refactorer is a handler */
   public static boolean isHandler() {
     return false;
   }
 
-  /** @return whether the refactorer is a marker
-   *         resolution */
+  /** @return whether the refactorer is a marker resolution */
   public boolean isMarkerResolution() {
     return false;
   }
@@ -102,8 +100,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return IProgressMonitor.UNKNOWN;
   }
 
-  /** @return whether the refactorer shows a
-   *         display while working */
+  /** @return whether the refactorer shows a display while working */
   public boolean hasDisplay() {
     return false;
   }
