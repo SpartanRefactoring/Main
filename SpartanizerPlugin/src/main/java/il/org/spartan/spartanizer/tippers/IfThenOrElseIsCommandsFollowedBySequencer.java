@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code f() { x++; y++; if (a) { i++; j++; k++; } } } into {@code if
  * (x) { f(); return a; } g(); }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
 public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {

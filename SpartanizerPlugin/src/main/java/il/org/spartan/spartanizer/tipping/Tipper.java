@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * make a single simplification of the tree. A tipper is so small that it is
  * idempotent: Applying a tipper to the output of itself is the empty operation.
  * @param <N> type of node which triggers the transformation.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
@@ -114,7 +114,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   private Class<N> myOperandsClass;
 
   /** Auxiliary class for FAPI
-   * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-07 */
   public interface Converter {
     Converts to(String to);

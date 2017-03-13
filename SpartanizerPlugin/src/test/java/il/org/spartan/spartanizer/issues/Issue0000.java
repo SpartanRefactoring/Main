@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link ThisClass#thatFunction}
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //

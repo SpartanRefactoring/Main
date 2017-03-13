@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {

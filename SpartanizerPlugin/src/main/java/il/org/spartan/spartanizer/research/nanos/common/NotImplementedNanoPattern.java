@@ -1,5 +1,5 @@
-/** TODO: Yossi Gil <yossi.gil@gmail.com> please add a description
- * @author Yossi Gil <yossi.gil@gmail.com>
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 8, 2017 */
 package il.org.spartan.spartanizer.research.nanos.common;
 

@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Logging stuff
- * @author Yossi Gil
- *         {@code yossi dot (optional) gil at gmail dot (required) com}
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ *         {@code Yossi.Gil@GMail.COM}
  * @since Sep 20, 2016 */
 public enum TrimmerLog {
   ;

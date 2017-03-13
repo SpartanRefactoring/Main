@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * } into {@code
  * int a = 3;
  * }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
 public final class FragmentNoInitializerAssignment extends $FragementAndStatement//
     implements TipperCategory.Unite {

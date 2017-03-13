@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Not such a good name for a bunch of static functions
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface system {
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
@@ -57,7 +57,7 @@ public interface system {
     return λ -> new File(system.tmp + stem + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + λ);
   }
 
-  /** @author Yossi Gil
+  /** @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
    * @author Yarden Lev
    * @author Sharon Kuninin
    * @since 2016 Returns the essence of this code fragment, removing

@@ -56,7 +56,7 @@ import il.org.spartan.utils.*;
  * </nl>
  * @param <T> type of elements for which the rule is applicable
  * @param <R> type of result of applying this rule
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
 public interface Rule<@JD T, @JD R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Should be overridden */
@@ -144,7 +144,7 @@ public interface Rule<@JD T, @JD R> extends Function<T, R>, Recursive<Rule<T, R>
    * listener.
    * @param <T>
    * @param <R>
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   @SuppressWarnings("static-method")
   abstract class Delegator<T, R> extends Stateful<T, R> implements Listener<T, R> {
@@ -226,7 +226,7 @@ public interface Rule<@JD T, @JD R> extends Function<T, R>, Recursive<Rule<T, R>
   /** Default implementation of {@link Rule},
    * @param <T> {@see Rule}
    * @param <R> {@see Rule}
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R>, Supplier<T> {
     private T get;

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Tests of {@link SingelVariableDeclarationUnderscoreDoubled}
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
