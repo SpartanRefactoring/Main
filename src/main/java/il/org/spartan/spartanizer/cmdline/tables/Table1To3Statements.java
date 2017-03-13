@@ -49,7 +49,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
     if (excludeMethod(¢))
       return false;
     try {
-      final Integer key = Integer.valueOf(measure.statements(¢));
+      final Integer key = Integer.valueOf(measure.commands(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);

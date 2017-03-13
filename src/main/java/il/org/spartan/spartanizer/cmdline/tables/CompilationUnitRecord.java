@@ -33,7 +33,7 @@ public class CompilationUnitRecord {
 
   public CompilationUnitRecord(final CompilationUnit inner) {
     this.inner = inner;
-    numStatements = measure.statements(inner);
+    numStatements = measure.commands(inner);
     numExpressions = measure.expressions(inner);
     linesOfCode = countLines(inner + "");
     numMethods = descendants.whoseClassIs(MethodDeclaration.class).from(inner).size();
