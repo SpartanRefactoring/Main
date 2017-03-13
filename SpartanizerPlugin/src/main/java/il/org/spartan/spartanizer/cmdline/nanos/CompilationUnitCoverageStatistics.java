@@ -111,7 +111,7 @@ class CompilationUnitRecord {
     }
 
     private int coveredByMethods() {
-      return methods.values().stream().mapToInt(λ -> np(λ)).sum();
+      return methods.values().stream().mapToInt(this::np).sum();
     }
 
     public int covered() {

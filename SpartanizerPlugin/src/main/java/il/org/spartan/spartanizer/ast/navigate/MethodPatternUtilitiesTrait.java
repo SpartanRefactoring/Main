@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.nanos.common;
+package il.org.spartan.spartanizer.ast.navigate;
 
 import java.util.*;
 
@@ -9,10 +9,10 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** Utility class for method patterns
+/** Trait with useful fluent conditions on {@link MethodDeclaration} 
  * @author Ori Marcovitch
  * @since Dec 8, 2016 */
 public interface MethodPatternUtilitiesTrait {
