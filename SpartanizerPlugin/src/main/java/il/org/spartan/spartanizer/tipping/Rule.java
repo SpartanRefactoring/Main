@@ -1,19 +1,60 @@
 package il.org.spartan.spartanizer.tipping;
 
+import static il.org.spartan.spartanizer.cmdline.system.*;
 import static java.lang.String.*;
 
+import java.lang.annotation.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
- * search, logging, computing stats, etc.
+ * search, logging, computing statistics, etc.
+ * <p>
+ * A rule is a {@link Function} that is augmented with:
+ * <ol>
+ * <li><b>Typestate semantics:</b> Protocol is call to @{@link Check}
+ * {@link #check(Object)}, and only then @{@link Apply} {@link #apply(Object)}.
+ * <p>
+ * The order of method application must follow match the regular expression
+ * {@code (CC*A?)*}. This order is enforced by {@link Rule.Stateful} that, when
+ * possible, should be extended by clients.
+ * <p>
+ * An instance can thus be in one of two states:
+ * <ol>
+ * <li>{@link #ready()}, which is the state after {@code @}{@link Check} method
+ * call, and a prerequisite for @{@link Apply} method call.</li>
+ * <li>not {@link #ready()}, which is the initial state, and the state after
+ * a @{@link Apply} method call. .</li>
+ * </ol>
+ * <li><b>Aggregation:</b> An instance of this class may be atomic, or compound,
+ * i.e., implementing RuleMulti. Method {@link #stream()} returns a
+ * {@link Stream} of nested instances, which is an singleton of {@code this} if
+ * the instance is atomic, or include any number of instances, including
+ * <li><b>Descriptive qualities:</b> {@link #examples()}, {@link #akas()},
+ * {@link #describe(Object)}, {@link #description(Object)}, and more.
+ * </ol>
+ * <p>
+ * Note: In sub-classes the sub-interfaces methods marked {@code @}{@link Check}
+ * and {@code @}{@link Apply} are often overridden and marked {@code final},
+ * while delegating to another (typically {@code abstract}) method. This other
+ * methods should be marked as either {@code @}{@link Apply} or
+ * {@code @}{@link Check}.
+ * <p>
+ * TODO:
+ * <nl>
+ * <li>List of descriptive qualities requires re-thinking.
+ * <li>Convert {@code @}{@link Check} and {@code @}{@link Apply} into a single
+ * annotation, that takes an {@code enum} defined to include all state .
+ * <li>No method other than {@link #check(Object)} should be allowed to take
+ * parameters. Defunct {@link #describe(Object)} and
+ * {@link #description(Object)}.
+ * </nl>
  * @param <T> type of elements for which the rule is applicable
  * @param <R> type of result of applying this rule
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
@@ -27,28 +68,34 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
   /** Apply this instance to a parameter
    * @param ¢ subject of this application
    * @return result of application of this instance on the given subject */
-  @Override R apply(T ¢);
+  @Override @Apply R apply(T ¢);
 
   /** Determine whether the parameter is "eligible" for application of this
    * instance. Should be overridden
    * @param n JD
    * @return <code><b>true</b></code> <i>iff</i> the argument is eligible for
-   *         the simplification offered by this object. */
-  boolean check(T n);
+   *         the simplification offered by this instance. */
+  @Check boolean check(T n);
 
-  /** Should be overridden */
-  default String describe(final T ¢) {
-    return trivia.gist(¢);
+  default T operand() {
+    return null;
   }
 
-  /** Should be overridden */
   default String description() {
-    return technicalName();
+    return format("%s/[%s]%s=", //
+        className(Rule.class), //
+        className(this), //
+        technicalName() == className(this) ? "" : technicalName(), //
+        technicalName(), //
+        !ready() ? "not ready to " : "ready to " + verbObject());
   }
 
-  /** Should be overridden */
-  default String description(final T ¢) {
-    return format(verb(), describe(¢));
+  default String verbObject() {
+    return format(verb(), operand());
+  }
+
+  default boolean ready() {
+    return operand() != null;
   }
 
   /** Should be overridden */
@@ -71,6 +118,20 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
     return format("apply '%s' to '%%s'", technicalName());
   }
 
+  @Documented
+  @Inherited
+  @Target(ElementType.METHOD)
+  @interface Apply {
+    String value() default "A method for applying this instance";
+  }
+
+  @Documented
+  @Inherited
+  @Target(ElementType.METHOD)
+  @interface Check {
+    String value() default "A boolean method for checking prior to application of this instance";
+  }
+
   abstract class CountingDelegator<T, R> extends Delegator<T, R> {
     final Map<String, Integer> count = new LinkedHashMap<>();
 
@@ -85,6 +146,12 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
     }
   }
 
+  /** Default implementation of a delegating {@link Rule}, equipped with a
+   * listener.
+   * @param <T>
+   * @param <R>
+   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @since 2017-03-13 */
   @SuppressWarnings("static-method")
   abstract class Delegator<T, R> extends Stateful<T, R> implements Listener<T, R> {
     public final Rule<T, R> inner;
@@ -107,16 +174,8 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
       return null;
     }
 
-    @Override public final String describe(final T n) {
-      return listenDescribe(inner::describe, n);
-    }
-
     @Override public final String description() {
       return listenDescription(inner::description);
-    }
-
-    @Override public final String description(final T ¢) {
-      return listenDescription(() -> inner.description(¢));
     }
 
     @Override public final Example[] examples() {
@@ -145,11 +204,6 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
       return $.get();
     }
 
-    /** [[SuppressWarningsSpartan]] */
-    default String listenDescribe(final Function<T, String> f, final T t) {
-      return f.apply(t);
-    }
-
     default String listenDescription(final Supplier<String> $) {
       return $.get();
     }
@@ -175,6 +229,11 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
     }
   }
 
+  /** Default implementation of {@link Rule},
+   * @param <T> {@see Rule}
+   * @param <R> {@see Rule}
+   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R>, Supplier<T> {
     private T get;
 
@@ -188,7 +247,7 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
         return badTypeState(//
             "Argument to rule application is distinct from previous checked argument\n" + //
                 "    Previously checked arguments was: %s\n" + //
-                "    Argument to rule application is: %s\n",
+                "    Operand to rule application is: %s\n",
             ¢, get());
       final R $ = fire();
       get = null;
@@ -216,11 +275,11 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
       return ok(n);
     }
 
+    public abstract R fire();
+
     @Override public final T get() {
       return get;
     }
-
-    public abstract R fire();
 
     public abstract boolean ok(T n);
   }
