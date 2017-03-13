@@ -32,7 +32,7 @@ import il.org.spartan.utils.*;
  * a @{@link Apply} method call. .</li>
  * </ol>
  * <li><b>Aggregation:</b> An instance of this class may be atomic, or compound,
- * i.e., implementing RuleMulti. Method {@link #stream()} returns a
+ * i.e., implementing RuleMulti. Method {@link #descendants()} returns a
  * {@link Stream} of nested instances, which is an singleton of {@code this} if
  * the instance is atomic, or include any number of instances, including
  * <li><b>Descriptive qualities:</b> {@link #examples()}, {@link #akas()},
@@ -58,7 +58,7 @@ import il.org.spartan.utils.*;
  * @param <R> type of result of applying this rule
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-10 */
-public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
+public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Should be overridden */
   default String[] akas() {
     return new String[] { technicalName() };
@@ -96,11 +96,6 @@ public interface Rule<T, R> extends Function<T, R>, Multiplexor<Rule<T, R>> {
 
   default boolean ready() {
     return object() != null;
-  }
-
-  /** Should not be overridden */
-  @Override default Stream<Rule<T, R>> stream() {
-    return Stream.of(this);
   }
 
   /** Should not be overridden */
