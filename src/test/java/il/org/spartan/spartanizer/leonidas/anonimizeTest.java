@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method") //
-public class normalizeTest {
+public class anonimizeTest {
   @Test public void a() {
     azzert.that(anonymize.code("a.x.c.d.e()"), is("a.h()"));
   }
