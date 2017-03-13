@@ -15,10 +15,10 @@ import il.org.spartan.spartanizer.research.util.*;
 @SuppressWarnings("static-method")
 public class measureTest {
   @Test public void a() {
-    azzert.that(measure.statements(ast("public void foo(){}")), is(0));
+    azzert.that(measure.commands(ast("public void foo(){}")), is(0));
   }
 
   @Test public void b() {
-    azzert.that(measure.statements(ast("public void foo(){use();}")), is(1));
+    azzert.that(measure.commands(ast("public void foo(){use();}")), is(1));
   }
 }

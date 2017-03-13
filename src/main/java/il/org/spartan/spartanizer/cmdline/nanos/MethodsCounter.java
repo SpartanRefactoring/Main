@@ -34,7 +34,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
-    final Integer key = Integer.valueOf(measure.statements(¢));
+    final Integer key = Integer.valueOf(measure.commands(¢));
     methods.putIfAbsent(key, new Int());
     ++methods.get(key).inner;
     return true;
