@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -10,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -20,22 +23,24 @@ import il.org.spartan.utils.*;
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
-public class Table_Summary {
+public class Table_Summary2 {
+  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
+  static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  protected static Function<String, String> analyze = spartanalyzer::fixedPoint;
   private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
   static final Stack<MethodRecord> scope = new Stack<>();
   static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
-    Logger.subscribe(Table_Summary::logNanoContainingMethodInfo);
+    Logger.subscribe(Table_Summary2::logNanoContainingMethodInfo);
     Logger.subscribe(npStatistics::logNPInfo);
     Logger.subscribe(npDistributionStatistics::logNPInfo);
   }
 
   public static void main(final String[] args) {
-      //noinspection SameReturnValue,SameReturnValue,SameReturnValue
-      new FileSystemASTVisitor(args) {
+    new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         summarize(path);
         resetAll();
@@ -88,7 +93,15 @@ public class Table_Summary {
       }
 
       @Override public boolean visit(final CompilationUnit ¢) {
-        ¢.accept(new CleanerVisitor());
+        ¢.accept(new AnnotationCleanerVisitor());
+        try {
+          statistics.logCompilationUnit(¢);
+          final String spartanzied = spartanizer.fixedPoint(¢);
+          statistics.logAfterSpartanization(into.cu(spartanzied));
+          analyze.apply(spartanzied);
+        } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+          ___.unused(__);
+        }
         return true;
       }
     });
@@ -114,7 +127,7 @@ public class Table_Summary {
   }
 
   static void initializeWriter() {
-    writer = new Table(Table_Summary.class);
+    writer = new Table(Table_Summary2.class);
   }
 
   static int statements() {

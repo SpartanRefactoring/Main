@@ -53,7 +53,6 @@ public class Table_RawNanoStatistics {
       new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         summarize(path);
-        System.err.println(" " + path + " Done");
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {

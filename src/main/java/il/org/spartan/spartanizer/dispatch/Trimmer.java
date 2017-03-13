@@ -119,7 +119,7 @@ public class Trimmer extends AbstractGUIApplicator {
     try {
       e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       e.apply($);
-    } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)
         monitor.logEvaluationError(this, ¢);
       throw new AssertionError(¢);
