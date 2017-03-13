@@ -22,14 +22,12 @@ import il.org.spartan.utils.*;
  * @since 2016-12-25 */
 public class Table_Summary {
   static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
   static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
   static final Stack<MethodRecord> scope = new Stack<>();
   static Table writer;
   protected static final SortedMap<Integer, List<MethodRecord>> statementsCoverageStatistics = new TreeMap<>(Integer::compareTo);
   static {
     Logger.subscribe(Table_Summary::logNanoContainingMethodInfo);
-    Logger.subscribe(npStatistics::logNPInfo);
     Logger.subscribe(npDistributionStatistics::logNPInfo);
   }
 
@@ -37,7 +35,7 @@ public class Table_Summary {
     new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         summarize(path);
-        resetAll();
+        reset();
       }
 
       public void summarize(final String path) {
@@ -94,10 +92,9 @@ public class Table_Summary {
     writer.close();
   }
 
-  static void resetAll() {
+  static void reset() {
     statementsCoverageStatistics.clear();
     npDistributionStatistics.clear();
-    npStatistics.clear();
     scope.clear();
   }
 
