@@ -61,7 +61,7 @@ public interface idiomatic {
    * of {@link Exception} thrown by {@link Producer#λ()}
    * @param <T> JD
    * @param $ JD
-   * @return result of invoking the parameter, or <code><b>null</b></code> if an
+   * @return result of invoking the parameter, or {@code null if an
    *         exception occurred. */
   static <T> T katching(final Producer<T> $) {
     try {
@@ -182,17 +182,17 @@ public interface idiomatic {
    * @since 2016 */
   @FunctionalInterface
   interface Holder<T> extends Supplier<T> {
-    /** Return value when condition is <code><b>true</b></code>
+    /** Return value when condition is {@code true}
      * @param unless condition on which value is returned
-     * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
-     *         otherwise <code><b>null</b></code>. */
+     * @return {@link #get()} when the parameter is {@code true} ,
+     *         otherwise {@code null. */
     default T unless(final boolean unless) {
       return when(!unless);
     }
 
-    /** Return value when condition is <code><b>true</b></code>
-     * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
-     *         otherwise <code><b>null</b></code>.
+    /** Return value when condition is {@code true}
+     * @return {@link #get()} when the parameter is {@code true} ,
+     *         otherwise {@code null.
      * @param when condition on which value is returned */
     default T when(final boolean when) {
       return when ? get() : null;
