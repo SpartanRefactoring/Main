@@ -25,6 +25,11 @@ Click on the picture below to watch a video demonstration on YouTube.
 
  [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer)
 
+
+
+![spartan resized](https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png)
+
+
 # What is this?
 The Spartanizer is an  Eclipse plugin that automatically applies the principles
 of *[Spartan Programming]* to your Java code. It applies many different tippers,
@@ -126,8 +131,6 @@ by one to the tree.
 
 After the traversal is complete, the transformations made to the AST are
 written back to the source code.
-
-
 
 ## License
 The project is available under the **[MIT License]**
