@@ -90,8 +90,8 @@ public final class Inliner {
    * {@link ForStatement}.
    * @param s JD
    * @param n JD
-   * @return whether the SimpleName is used in a
-   *         ForStatement's condition, updaters, or body. */
+   * @return whether the SimpleName is used in a ForStatement's condition,
+   *         updaters, or body. */
   public static boolean variableUsedInFor(final ForStatement s, final SimpleName n) {
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -7,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 
 /** Restructuring
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>

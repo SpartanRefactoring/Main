@@ -19,8 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to
- * <code><b>false</b></code>, and {@code x.size()>=0} to
- * {@code true}.
+ * <code><b>false</b></code>, and {@code x.size()>=0} to {@code true}.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @author Yossi Gil
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>

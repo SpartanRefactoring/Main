@@ -89,8 +89,7 @@ public final class Namespace implements Environment {
         : ":\n" + separate.these(children.stream().map(λ -> λ.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
   }
 
-  /** @return whether {@link Environment} is
-   *         empty. */
+  /** @return whether {@link Environment} is empty. */
   @Override public boolean empty() {
     return flat.isEmpty() && nest.empty();
   }

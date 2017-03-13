@@ -13,16 +13,15 @@ public enum associativity {
   ;
   /** Determine whether associativity is left-to-right
    * @param o JD
-   * @return whether the associativity of the
-   *         parameter is left-to-right. */
+   * @return whether the associativity of the parameter is left-to-right. */
   public static boolean isLeftToRight(final InfixExpression.Operator ¢) {
     return isRightToLeft(precedence.of(¢));
   }
 
   /** Determine whether associativity is right-to-left
    * @param x JD
-   * @return whether the associativity of parameter
-   *         present on the parameter is right-to-left. */
+   * @return whether the associativity of parameter present on the parameter is
+   *         right-to-left. */
   public static boolean isRightToLeft(final Expression ¢) {
     return isRightToLeft(precedence.of(¢));
   }

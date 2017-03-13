@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java;
+
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;

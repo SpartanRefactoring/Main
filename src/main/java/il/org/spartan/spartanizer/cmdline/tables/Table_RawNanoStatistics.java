@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.util.*;
 
-import il.org.spartan.spartanizer.tipping.Tipper;
 import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
@@ -12,6 +11,7 @@ import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 

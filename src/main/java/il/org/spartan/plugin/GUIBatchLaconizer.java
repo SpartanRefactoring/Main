@@ -143,7 +143,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default operation name.
    * @return <code><b>this</b></code> applicator */
   public GUIBatchLaconizer defaultOperationName() {
-    operationName(english.Activity.simple(DEFAULT_OPERATION_NAME));
+    operationName(English.Activity.simple(DEFAULT_OPERATION_NAME));
     return this;
   }
 
@@ -163,13 +163,13 @@ public class GUIBatchLaconizer extends Applicator {
    * @author Ori Roth
    * @since 2.6 */
   private enum message {
-    run_start(2, inp -> printableAt(inp, 0, λ -> ((english.Activity) λ).getIng()) + " " + printableAt(inp, 1)), //
+    run_start(2, inp -> printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " " + printableAt(inp, 1)), //
     run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
     run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
     visit_cu(6,
-        inp -> system.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((english.Activity) λ).getIng()) + " "
+        inp -> system.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
-    run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((english.Activity) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
+    run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));
     private final int inputCount;
     private final Function<Object[], String> printing;
@@ -185,11 +185,11 @@ public class GUIBatchLaconizer extends Applicator {
     }
 
     private static String printableAt(final Object[] os, final int index) {
-      return english.unknownIfNull(os, λ -> λ[index]);
+      return English.unknownIfNull(os, λ -> λ[index]);
     }
 
     private static String printableAt(final Object[] os, final int index, final Function<Object, String> operation) {
-      return english.unknownIfNull(os, λ -> operation.apply(λ[index]));
+      return English.unknownIfNull(os, λ -> operation.apply(λ[index]));
     }
   }
 

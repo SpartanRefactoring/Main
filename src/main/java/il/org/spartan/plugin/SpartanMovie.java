@@ -70,7 +70,7 @@ public class SpartanMovie extends AbstractHandler {
             monitor.log(¢);
           }
         }
-        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + english.plurals("file", filesModified));
+        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
         sleep(SLEEP_END);
         pm.done();
       });
