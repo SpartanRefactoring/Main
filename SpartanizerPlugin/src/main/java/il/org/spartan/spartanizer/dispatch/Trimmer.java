@@ -67,7 +67,6 @@ public class Trimmer extends AbstractGUIApplicator {
         Tipper<N> w = null;
         try {
           w = getTipper(t, n);
-//          System.out.println(w);
         } catch (final Exception ¢) {
           monitor.logProbableBug(this, ¢);
         }
@@ -119,13 +118,10 @@ public class Trimmer extends AbstractGUIApplicator {
     final TextEdit e;
     try {
       e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
-      // System.out.println(e);
       e.apply($);
-    } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException | NullPointerException ¢) {
-      if (!silent){
-        // ¢.printStackTrace();
+    } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      if (!silent)
         monitor.logEvaluationError(this, ¢);
-      }
       throw new AssertionError(¢);
     }
     return e;
