@@ -25,7 +25,7 @@ public class NanoPatternRecord {
     ++occurences;
     if (MethodRecord.excluded(name))
       return;
-    numNPStatements += measure.statements(¢);
+    numNPStatements += measure.commands(¢);
     numNPExpressions += measure.expressions(¢);
   }
 }

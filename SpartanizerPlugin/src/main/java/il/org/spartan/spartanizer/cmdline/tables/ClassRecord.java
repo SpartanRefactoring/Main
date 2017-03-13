@@ -16,7 +16,7 @@ public class ClassRecord {
   public ClassRecord(final TypeDeclaration t) {
     before = t;
     className = t.getName() + "";
-    numStatements = measure.statements(t);
+    numStatements = measure.commands(t);
     numExpressions = measure.expressions(t);
   }
 }

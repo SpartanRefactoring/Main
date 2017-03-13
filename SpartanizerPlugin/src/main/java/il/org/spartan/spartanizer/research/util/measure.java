@@ -27,7 +27,7 @@ public enum measure {
     return $.inner;
   }
 
-  public static int statements(final ASTNode n) {
+  public static int commands(final ASTNode n) {
     final Int $ = new Int();
     if (n == null)
       return 0;
