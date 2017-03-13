@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -7,9 +8,6 @@ import java.util.stream.*;
 import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.utils.*;
-import junit.framework.*;
 
 /*** <p>
  * TODO second lecture
