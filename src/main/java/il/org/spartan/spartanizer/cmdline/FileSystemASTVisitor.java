@@ -32,7 +32,7 @@ public class FileSystemASTVisitor {
    * <p>
    * @param f
    * @return */
-  public static boolean noTests(@JD final File $) {
+  public static boolean noTests(@¢ final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {

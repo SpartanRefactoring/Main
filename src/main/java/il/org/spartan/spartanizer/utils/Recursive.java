@@ -36,7 +36,7 @@ import junit.framework.*;
  * @see Atomic
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-11 */
-public interface Recursive<@JD T> {
+public interface Recursive<@¢ T> {
   default Stream<T> streamSelf() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
@@ -52,7 +52,7 @@ public interface Recursive<@JD T> {
   /** An atomic recursive structure specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Atomic<@JD T> extends Recursive<T> {
+  interface Atomic<@¢ T> extends Recursive<T> {
     @Override default Stream<T> descendants() {
       return streamSelf();
     }
@@ -61,7 +61,7 @@ public interface Recursive<@JD T> {
   /** A compound recursive structure, specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Compound<@JD T> extends Recursive<T> {
+  interface Compound<@¢ T> extends Recursive<T> {
     Iterable<Recursive<T>> children();
 
     @Override default T self() {
