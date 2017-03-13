@@ -13,8 +13,6 @@ import junit.framework.*;
  * <p>
  * TODO Dor Maayan & Oran Gilboa: first assignment
  * <ol>
- * <li>Apply self judgment, don't come running to me with every little dilemma
- * you have.
  * <li>Implement interface {@link Nested} for the same concept, except that
  * stream return ancestors.
  * <li>Factor commonalities between the new interface and this interface. What
@@ -31,6 +29,8 @@ import junit.framework.*;
  * <li>If there are {@code }{@link Test} methods, make sure they run. Don't add
  * any tests, even if you think you know what you are doing, before attending
  * the TDD lecture.
+ * <li>Apply self judgment, don't come running to me with every little dilemma
+ * you have.
  * </ol>
  * @see Compound
  * @see Atomic
