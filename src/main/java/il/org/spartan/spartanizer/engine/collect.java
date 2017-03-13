@@ -160,7 +160,7 @@ public enum collect {
        * candidate.
        * @param candidate to be inserter to the list provided by the closure
        *        (into).
-       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
+       * @return whether the identifier of the given
        *         {@SimpleName} is equal to the ASTnode's provided by the closure
        *         (n) */
       boolean add(final SimpleName ¢) {
@@ -181,7 +181,7 @@ public enum collect {
        * the given list (es).
        * @param xs is a {@link List} of any type which extends a
        *        {@link Expression}
-       * @return <code><b>true</b></code> <i>iff</i> addFragment() succeeds with
+       * @return whether addFragment() succeeds with
        *         the {@link VariableDeclarationFragment}s from each (extended)
        *         Expression in the parameter. */
       boolean consider(final Iterable<? extends Expression> xs) {
@@ -245,7 +245,7 @@ public enum collect {
       /** ThiWs function is needed cause a definition can be not in a
        * declaration form, and then #asVariableDeclarationExpression() will fail
        * @param x JD
-       * @return <code><b>true</b></code> <i>iff</i> the identifier of the given
+       * @return whether the identifier of the given
        *         {@link Expression} is equal to the ASTnode's provided by the
        *         closure (n) */
       boolean consider(final Expression ¢) {
@@ -486,7 +486,7 @@ public enum collect {
   public abstract static class Of {
     /** Determine whether this instance occurs in a bunch of expressions
      * @param ns JD
-     * @return <code><b>true</b></code> <i>iff</i> this instance occurs in the
+     * @return whether this instance occurs in the
      *         Parameter. */
     public boolean existIn(final ASTNode... ¢) {
       return !in(¢).isEmpty();

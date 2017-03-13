@@ -329,7 +329,7 @@ public interface wizard {
    * side(variable) and operator
    * @param base The assignment to compare all others to
    * @param as The assignments to compare
-   * @return <code><b>true</b></code> <em>iff</em>all assignments has the same
+   * @return whetherall assignments has the same
    *         left hand side and operator as the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
     return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> incompatible(base, λ));
@@ -345,7 +345,7 @@ public interface wizard {
 
   /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
-   * @return <code><b>true</b></code> <em>iff</em>all the operator are the same
+   * @return whetherall the operator are the same
    *         or false otherwise */
   static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
     return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
@@ -378,7 +378,7 @@ public interface wizard {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return <code><b>true</b></code> <em>iff</em>one of the nodes is an
+   * @return whetherone of the nodes is an
    *         Expression Statement of type Post or Pre Expression with ++ or --
    *         operator. false if none of them are or if the given parameter is
    *         null. */
@@ -568,7 +568,7 @@ public interface wizard {
   }
 
   /** @param o JD
-   * @return <code><b>true</b></code> <em>iff</em>one of
+   * @return whetherone of
    *         {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
@@ -583,7 +583,7 @@ public interface wizard {
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
-   * @return <code><b>true</b></code> <em>iff</em>one of
+   * @return whetherone of
    *         {@link #InfixExpression.Operator.LESS},
    *         {@link #InfixExpression.Operator.GREATER},
    *         {@link #InfixExpression.Operator.LESS_EQUALS},
@@ -616,7 +616,7 @@ public interface wizard {
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
-   * @return <code><b>true</b></code> <em>iff</em>one of
+   * @return whetherone of
    *         {@link #InfixExpression.Operator.LEFT_SHIFT},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_SIGNED},
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false
@@ -705,7 +705,7 @@ public interface wizard {
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
    * @param pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a node which
+   * @return whether the parameter is a node which
    *         is an infix expression whose operator is */
   static boolean nonAssociative(final ASTNode ¢) {
     return nonAssociative(az.infixExpression(¢));
@@ -855,11 +855,11 @@ public interface wizard {
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
-   * Each of the parameters may be <code><b>null</b></code>; a
-   * <code><b>null</b></code> is only equal to<code><b>null</b></code>
+   * Each of the parameters may be {@code null; a
+   * {@code null is only equal to{@code null
    * @param n1 JD
    * @param n2 JD
-   * @return <code><b>true</b></code> if the parameters are the same. */
+   * @return {@code true} if the parameters are the same. */
   static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
@@ -867,7 +867,7 @@ public interface wizard {
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
-   * @return <code><b>true</b></code> <em>iff</em>all names are the same (string
+   * @return whetherall names are the same (string
    *         wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
     return Stream.of(xs).allMatch(λ -> same(λ, x));

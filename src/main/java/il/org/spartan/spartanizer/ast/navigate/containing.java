@@ -42,7 +42,7 @@ public interface containing {
   /** Extract the {@link MethodDeclaration} that contains a given node.
    * @param pattern JD
    * @return inner most {@link MethodDeclaration} in which the parameter is
-   *         nested, or <code><b>null</b></code>, if no such statement
+   *         nested, or {@code null, if no such statement
    *         exists. */
   static MethodDeclaration methodDeclaration(final ASTNode ¢) {
     for (ASTNode $ = ¢; $ != null; $ = parent($))
