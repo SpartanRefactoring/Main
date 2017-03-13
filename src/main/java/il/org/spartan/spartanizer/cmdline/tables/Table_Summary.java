@@ -46,7 +46,7 @@ public class Table_Summary {
           initializeWriter(outputFolder);
         writer//
             .col("Project", path)//
-            .col("Statements", statementsCoverage())//
+            .col("Commands", statementsCoverage())//
             .col("Expressions", expressionsCoverage())//
             .col("methodsCovered", fMethods())//
             .col("methodsTouched", touched())//
@@ -70,7 +70,7 @@ public class Table_Summary {
               .in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
           if (d != null)
             npDistributionStatistics.logNode(d);
-          final Integer key = Integer.valueOf(measure.statements(d));
+          final Integer key = Integer.valueOf(measure.commands(d));
           statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
           statementsCoverageStatistics.get(key).add(m);
         } catch (final AssertionError __) {

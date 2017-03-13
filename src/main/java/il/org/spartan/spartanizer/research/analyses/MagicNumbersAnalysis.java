@@ -10,6 +10,6 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since Nov 3, 2016 */
 public class MagicNumbersAnalysis extends IntegerMetricalAnalyzer {
   @Override protected int metric(final ASTNode ¢) {
-    return measure.statements(¢);
+    return measure.commands(¢);
   }
 }
