@@ -37,7 +37,8 @@ public class Issue0177 {
         }
 
         int g() {
-          class C {
+            //noinspection SameReturnValue
+            class C {
             C() {
               h();
               ++a;
@@ -100,7 +101,8 @@ public class Issue0177 {
         }
 
         int g() {
-          class C {
+            //noinspection SameReturnValue
+            class C {
             C() {
               h();
               ++a;
@@ -141,7 +143,8 @@ public class Issue0177 {
         }
 
         int g() {
-          class C {
+            //noinspection SameReturnValue
+            class C {
             C() {
               h();
               ++a;
@@ -167,7 +170,8 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffects() {
-    @SuppressWarnings("PointlessBooleanExpression")
+      //noinspection SameReturnValue
+      @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       int a;
 
@@ -189,7 +193,8 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
-    @SuppressWarnings("PointlessBooleanExpression")
+      //noinspection SameReturnValue
+      @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       final Inner in = new Inner(0);
 
@@ -240,7 +245,8 @@ public class Issue0177 {
         }
 
         boolean g() {
-          class C {
+            //noinspection SameReturnValue
+            class C {
             C() {
               h();
               ++a;
@@ -266,7 +272,8 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffects() {
-    @SuppressWarnings("PointlessBooleanExpression")
+      //noinspection SameReturnValue
+      @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       int a;
 
@@ -288,7 +295,8 @@ public class Issue0177 {
   }
 
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
-    @SuppressWarnings("PointlessBooleanExpression")
+      //noinspection SameReturnValue
+      @SuppressWarnings("PointlessBooleanExpression")
     class Class {
       final Inner in = new Inner(0);
 
@@ -338,7 +346,8 @@ public class Issue0177 {
         }
 
         int g() {
-          class C {
+            //noinspection SameReturnValue
+            class C {
             C() {
               h();
               ++a;

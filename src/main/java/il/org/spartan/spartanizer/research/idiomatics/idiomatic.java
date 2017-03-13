@@ -213,7 +213,7 @@ public interface idiomatic {
   interface Producer<T> {
     /** @return next value provided by this instance
      * @throws Exception JD */
-    T λ() throws Exception;
+    T λ();
   }
 
   /** Evaluate a {@link Runnable} when a condition applies or unless a condition

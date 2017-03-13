@@ -32,7 +32,8 @@ public enum LibrariesManagement {
     // TODO: Ori Roth: update version 2.6.3 upon release. DO NOT remove this
     // todo.
     FEATURE_PATH = INSTALLATION_FOLDER.append("features/SpartanFeature_2.6.4.jar");
-    LIBRARY_PATH_CONTAINER = new IClasspathContainer() {
+      //noinspection SameReturnValue
+      LIBRARY_PATH_CONTAINER = new IClasspathContainer() {
       @Override public IPath getPath() {
         return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(LIBRARY_NAME);
       }

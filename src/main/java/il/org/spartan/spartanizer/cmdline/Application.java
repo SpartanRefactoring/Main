@@ -81,6 +81,7 @@ public final class Application implements IApplication {
   }
 
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+    //noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
@@ -151,7 +152,7 @@ public final class Application implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  private FileStats process(final File f, final ICompilationUnit u) throws IOException, FileNotFoundException, JavaModelException {
+  private FileStats process(final File f, final ICompilationUnit u) throws IOException, JavaModelException {
     final FileStats $ = new FileStats(f);
     final Trimmer t = new Trimmer();
     for (int ¢ = 0; ¢ < optRounds; ++¢)

@@ -54,7 +54,8 @@ public class Augmenter implements Application {
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
     final List<List<Statement>> $ = new ArrayList<>();
-    u.accept(new ASTVisitor(true) {
+      //noinspection SameReturnValue
+      u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Block b) {
         if (discardOptimization(b))
           return false;

@@ -147,7 +147,8 @@ public enum leonidasSays {
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
       final Bool tipped = new Bool();
-      n.accept(new ASTVisitor(true) {
+        //noinspection SameReturnValue
+        n.accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
           if (!tipper.check(¢))
             return true;
