@@ -12,7 +12,7 @@ import il.org.spartan.statistics.*;
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,
  * including aggregation information.
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
   String path;

@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code> provided that this <code>
  * <b>if</b>
  * </code> statement is the last statement in a method.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-09-09 */
 public final class IfLastInMethod extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {

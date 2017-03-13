@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Interface to environment. Holds all the names defined till current PC. In
  * other words the 'names Environment' at every point of the program tree.
- * @author Yossi Gil <yossi.gil@gmail.com>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 25, 2016 */
 public interface Environment {
   /** @return true iff this instance doesn't have an entry with a given name. */

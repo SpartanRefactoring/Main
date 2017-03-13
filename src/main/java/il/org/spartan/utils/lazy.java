@@ -9,7 +9,7 @@ import java.util.function.*;
   ));} use {@code things.get()} to obtain value; it would be computed only on
  * first call, and cached hence after
  * @param <T>
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
 public interface lazy<@JD T> extends Supplier<T> {
   static <T> lazy<T> get(@JD final Supplier<T> ¢) {

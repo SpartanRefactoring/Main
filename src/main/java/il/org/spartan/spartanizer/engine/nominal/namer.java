@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** An empty <code><b>interface</b></code> for fluent programming. The name
  * should say it all: The name, followed by a dot, followed by a method name,
  * should read like a sentence phrase.
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {

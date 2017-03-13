@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
 
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, type of subclass
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {
   public Row() {

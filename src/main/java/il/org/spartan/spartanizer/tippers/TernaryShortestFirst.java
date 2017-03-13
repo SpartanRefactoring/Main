@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * } into {@code
  * a ? c(d, e) : f(g, h)
  * }
- * @author Yossi Gil
+ * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-14 */
 public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.Sorting {
