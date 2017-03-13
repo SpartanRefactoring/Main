@@ -21,7 +21,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -33,7 +32,7 @@ public class FileSystemASTVisitor {
    * <p>
    * @param f
    * @return */
-  public static boolean noTests(final File $) {
+  public static boolean noTests(@JD final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
