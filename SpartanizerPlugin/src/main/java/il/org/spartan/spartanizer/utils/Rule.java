@@ -58,7 +58,7 @@ import il.org.spartan.utils.*;
  * @param <R> type of result of applying this rule
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-10 */
-public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
+public interface Rule<@JD T, @JD R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Should be overridden */
   default String[] akas() {
     return new String[] { technicalName() };
@@ -72,8 +72,8 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Determine whether the parameter is "eligible" for application of this
    * instance. Should be overridden
    * @param n JD
-   * @return whether the argument is eligible for
-   *         the simplification offered by this instance. */
+   * @return whether the argument is eligible for the simplification offered by
+   *         this instance. */
   @Check boolean check(T n);
 
   default String description() {
@@ -159,7 +159,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return listenAkas(inner::akas);
     }
 
-    @Override public final R apply(final T ¢) {
+    @Override @Apply public final R apply(final T ¢) {
       before("apply");
       return listenTip(inner::apply, ¢);
     }
