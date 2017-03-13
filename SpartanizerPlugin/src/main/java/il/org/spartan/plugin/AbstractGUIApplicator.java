@@ -243,8 +243,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** .
-   * @return whether there are tips which can be
-   *         performed on the compilation unit. */
+   * @return whether there are tips which can be performed on the compilation
+   *         unit. */
   public final boolean haveTips() {
     return countTips() > 0;
   }
@@ -326,8 +326,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** Determines if the node is outside of the selected text.
-   * @return whetherthe node is not inside
-   *         selection. If there is no selection at all will return false. */
+   * @return whetherthe node is not inside selection. If there is no selection
+   *         at all will return false. */
   private boolean isNotSelected(final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());
   }

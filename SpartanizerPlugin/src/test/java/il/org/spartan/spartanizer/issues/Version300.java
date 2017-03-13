@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.issues;
+
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.nominal.english.*;
+import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,13 +27,12 @@ public final class Version300 {
   }
 
   @Test public void abcd() {
-     trimmingOf("a = !(b ? c : d)") //
-   .using(PrefixExpression.class,new PrefixNotPushdown()) //
-   .gives("a=b?!c:!d") //
-    .stays() //
+    trimmingOf("a = !(b ? c : d)") //
+        .using(PrefixExpression.class, new PrefixNotPushdown()) //
+        .gives("a=b?!c:!d") //
+        .stays() //
     ;
   }
-
 
   @Test public void a() {
     azzert.that(
@@ -109,12 +109,11 @@ public final class Version300 {
         iz(//
             "A a(A b) throws B { return b; }"));
   }
+
   @Test public void lowerUpperNamer() {
     azzert.that(lowerFirstLetter("Hello"), is("hello"));
     azzert.that(upperFirstLetter("Hello"), is("Hello"));
     azzert.that(lowerFirstLetter("hello"), is("hello"));
     azzert.that(upperFirstLetter("hello"), is("Hello"));
   }
-   
-  
 }

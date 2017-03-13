@@ -54,8 +54,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   /** Compare the length of the left and right arguments of an infix expression
    * @param x JD
-   * @return whether if the left operand of the
-   *         parameter is is longer than the second argument */
+   * @return whether if the left operand of the parameter is is longer than the
+   *         second argument */
   public static boolean longerFirst(final InfixExpression ¢) {
     return isLonger(left(¢), right(¢));
   }
@@ -63,8 +63,8 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /** Compare method invocations by the number of arguments
    * @param e1 JD
    * @param e2 JD
-   * @return whether the first argument is a method
-   *         invocation with more arguments that the second argument */
+   * @return whether the first argument is a method invocation with more
+   *         arguments that the second argument */
   public static boolean moreArguments(final Expression e1, final Expression e2) {
     return argumentsCompare(e1, e2) > 0;
   }

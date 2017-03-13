@@ -33,8 +33,7 @@ public enum property {
   /** Checks node has a property.
    * @param n JD
    * @param key property name
-   * @return whether node contains the key
-   *         property */
+   * @return whether node contains the key property */
   public static boolean has(final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
   }

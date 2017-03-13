@@ -41,8 +41,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    * are empty, or contain final modifier only.
    * @param s
    * @param x
-   * @return whether initializer's and
-   *         declaration's modifiers are mergable. */
+   * @return whether initializer's and declaration's modifiers are mergable. */
   private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
     final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);

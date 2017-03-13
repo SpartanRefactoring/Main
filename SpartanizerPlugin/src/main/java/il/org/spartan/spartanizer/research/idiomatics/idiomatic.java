@@ -184,15 +184,15 @@ public interface idiomatic {
   interface Holder<T> extends Supplier<T> {
     /** Return value when condition is {@code true}
      * @param unless condition on which value is returned
-     * @return {@link #get()} when the parameter is {@code true} ,
-     *         otherwise {@code null. */
+     * @return {@link #get()} when the parameter is {@code true} , otherwise
+     *         {@code null. */
     default T unless(final boolean unless) {
       return when(!unless);
     }
 
     /** Return value when condition is {@code true}
-     * @return {@link #get()} when the parameter is {@code true} ,
-     *         otherwise {@code null.
+     * @return {@link #get()} when the parameter is {@code true} , otherwise
+     *         {@code null.
      * @param when condition on which value is returned */
     default T when(final boolean when) {
       return when ? get() : null;

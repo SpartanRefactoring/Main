@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO: Yossi Gil please add a description
+/** TODO: Niv Shalmon please add a description
  * @author Yossi Gil
  * @author Dor Maayan
  * @author Niv Shalmon
@@ -73,10 +73,9 @@ public interface type {
   }
 
   /** @param x JD
-   * @return {@code true} <i>if</i> the parameter is an expression
-   *         whose type is provably not of type {@link String}, in the sense
-   *         used in applying the {@code +} operator to concatenate strings.
-   *         concatenation. */
+   * @return {@code true} <i>if</i> the parameter is an expression whose type is
+   *         provably not of type {@link String}, in the sense used in applying
+   *         the {@code +} operator to concatenate strings. concatenation. */
   static boolean isNotString(final Expression ¢) {
     return !in(of(¢), STRING, ALPHANUMERIC);
   }
@@ -108,32 +107,30 @@ public interface type {
     return this + "=" + key() + " (" + description() + ")";
   }
 
-  /** @return whetherone of {@link #INT} ,
-   *         {@link #LONG} , {@link #CHAR} , {@link BYTE} , {@link SHORT} ,
-   *         {@link FLOAT} , {@link #DOUBLE} , {@link #INTEGRAL} or
-   *         {@link #NUMERIC} , {@link #STRING} , {@link #ALPHANUMERIC} or false
-   *         otherwise */
+  /** @return whetherone of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
+   *         {@link #ALPHANUMERIC} or false otherwise */
   default boolean isAlphaNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
-  /** @return whethereither a Primitive.Certain,
-   *         Primitive.Odd.NULL or a baptized type */
+  /** @return whethereither a Primitive.Certain, Primitive.Odd.NULL or a
+   *         baptized type */
   default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
 
-  /** @return whetherone of {@link #INT} ,
-   *         {@link #LONG} , {@link #CHAR} , {@link BYTE} , {@link SHORT} ,
-   *         {@link #INTEGRAL} or false otherwise */
+  /** @return whetherone of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
+   *         otherwise */
   default boolean isIntegral() {
     return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
 
-  /** @return whetherone of {@link #INT} ,
-   *         {@link #LONG} , {@link #CHAR} , {@link BYTE} , {@link SHORT} ,
-   *         {@link FLOAT} , {@link #DOUBLE} , {@link #INTEGRAL} ,
-   *         {@link #NUMERIC} or false otherwise */
+  /** @return whetherone of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+   *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
+   *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
   default boolean isNumeric() {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
@@ -387,14 +384,14 @@ public interface type {
 
       /** used to determine whether an integral type behaves as itself under
        * operations or as an INT.
-       * @return whetherone of {@link #CHAR},
-       *         {@link BYTE}, {@link SHORT} or false otherwise. */
+       * @return whetherone of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
+       *         false otherwise. */
       default boolean isIntUnderOperation() {
         return in(this, CHAR, BYTE, SHORT);
       }
 
-      /** @return whetherone of {@link #NOTHING},
-       *         {@link #NULL} or false otherwise */
+      /** @return whetherone of {@link #NOTHING}, {@link #NULL} or false
+       *         otherwise */
       default boolean isNoInfo() {
         return in(this, NOTHING, NULL);
       }
