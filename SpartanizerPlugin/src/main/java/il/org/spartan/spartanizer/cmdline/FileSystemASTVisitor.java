@@ -25,6 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Parse and AST visit all Java files under a given path.
+ * <p>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class FileSystemASTVisitor {
