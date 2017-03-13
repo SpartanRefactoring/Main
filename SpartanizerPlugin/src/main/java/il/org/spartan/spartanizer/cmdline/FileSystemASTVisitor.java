@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.cmdline;
-import static il.org.spartan.lisp.*;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -12,6 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import static il.org.spartan.lisp.*;
+
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
@@ -20,19 +21,18 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Parse and AST visit all Java files under a given path.
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class FileSystemASTVisitor {
   /** Check if a File contains {@link Test} annotations
    * <p>
    * @param f
    * @return */
-  public static boolean noTests(final File $) {
+  public static boolean noTests(@JD final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
@@ -120,6 +120,9 @@ public class FileSystemASTVisitor {
   }
 
   void visit(final File f) {
+//    System.out.println(" -------------- ");
+//    System.out.println(" -------------- > " + f.getName());
+//    System.out.println(" -------------- ");
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
@@ -132,7 +135,10 @@ public class FileSystemASTVisitor {
           dotter.click();
       } catch (final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
-      }
+      } 
+//    catch (final Exception ¢) {
+//        ¢.printStackTrace();
+//      }
   }
 
   private ASTVisitor astVisitor;
@@ -229,7 +235,6 @@ public class FileSystemASTVisitor {
 
         {
           hook(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
-
             @Override public Void fire() {
               return null;
             }
