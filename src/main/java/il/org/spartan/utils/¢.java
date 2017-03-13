@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since 2017-03-13 */
 @Documented
 @Target({ElementType.PARAMETER, ElementType.TYPE_PARAMETER})
-public @interface JD {
+public @interface ¢ {
   /** Add here brief documentation if you like; return type may change though */
   String value() default "J(ohn)|(ane) Doe";
 }
