@@ -203,7 +203,7 @@ public interface system {
   }
 
   static String userName() {
-    return English.upperFirstLetter(System.getProperty("user.name", "Killroy"));
+    return english.upperFirstLetter(System.getProperty("user.name", "Killroy"));
   }
 
   /** This function counts the number of words the given string contains. Words
