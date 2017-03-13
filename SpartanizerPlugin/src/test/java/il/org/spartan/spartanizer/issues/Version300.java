@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.nominal.English.*;
+import static il.org.spartan.spartanizer.engine.nominal.english.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
