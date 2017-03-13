@@ -120,9 +120,6 @@ public class FileSystemASTVisitor {
   }
 
   void visit(final File f) {
-//    System.out.println(" -------------- ");
-//    System.out.println(" -------------- > " + f.getName());
-//    System.out.println(" -------------- ");
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
@@ -135,10 +132,7 @@ public class FileSystemASTVisitor {
           dotter.click();
       } catch (final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
-      } 
-//    catch (final Exception ¢) {
-//        ¢.printStackTrace();
-//      }
+      }
   }
 
   private ASTVisitor astVisitor;
