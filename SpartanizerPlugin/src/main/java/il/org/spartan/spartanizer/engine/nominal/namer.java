@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine.nominal;
-import static il.org.spartan.spartanizer.engine.nominal.English.*;
+import static il.org.spartan.spartanizer.engine.nominal.english.*;
 import static il.org.spartan.Utils.*;
 
 import java.util.*;
@@ -52,7 +52,7 @@ public interface namer {
   }
 
   static String shorten(final ArrayType ¢) {
-    return shorten(¢.getElementType()) + English.repeat(¢.getDimensions(), 's');
+    return shorten(¢.getElementType()) + english.repeat(¢.getDimensions(), 's');
   }
 
   static String shorten(final IntersectionType ¢) {
@@ -124,7 +124,7 @@ public interface namer {
   static String signature(final String code) {
     String $ = code;
     for (final String keyword : wizard.keywords)
-      $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
+      $ = $.replaceAll("\\b" + keyword + "\\b", english.upperFirstLetter(keyword));
     return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
 
