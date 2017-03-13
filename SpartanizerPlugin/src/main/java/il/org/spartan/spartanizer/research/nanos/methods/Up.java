@@ -14,12 +14,13 @@ public class Up {
     private static final long serialVersionUID = -1694223804190471571L;
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
+      final Expression $ = expression(az.returnStatement(onlyStatement(¢)));
       return hazOneParameter(¢)//
           && hazOneStatement(¢)//
           && notConstructor(¢)//
           && returnTypeNotVoid(¢)//
           && !returnTypeSameAsParameter(¢)//
-          && iz.name(expression(az.returnStatement(onlyStatement(¢))))//
+          && (iz.name($) || iz.name(expression($)))//
       ;
     }
   }
