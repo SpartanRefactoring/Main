@@ -53,8 +53,6 @@ public class Table_Summary {
             .col("Iteratives", iterativesCoverage())//
             .col("ConditionalExpressions", conditionalExpressionsCoverage())//
             .col("ConditionalCommands", conditionalStatementsCoverage())//
-            // .col("R-Index", rMethod())//
-            // .col("Nanos adopted", adopted())//
             .col("total Commands", statements())//
             .col("total Methods", methods())//
             .nl();
