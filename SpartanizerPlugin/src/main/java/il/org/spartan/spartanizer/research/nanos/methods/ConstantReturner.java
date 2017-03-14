@@ -10,9 +10,9 @@ import il.org.spartan.utils.*;
  * @since Jan 8, 2017 */
 public class ConstantReturner extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 6491594906301190270L;
-  private static final lazy<JavadocMarkerNanoPattern> rival = lazy.get(() -> new Default());
+  private static final lazy<JavadocMarkerNanoPattern> rival = lazy.get(Default::new);
   private static final lazy<NanoPatternContainer<Statement>> tippers = lazy.get(() -> new NanoPatternContainer<Statement>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
     {
       patternTipper("return $L;", "", "");
       patternTipper("return -$L;", "", "");

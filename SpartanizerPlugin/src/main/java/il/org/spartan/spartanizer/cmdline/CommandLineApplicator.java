@@ -32,13 +32,11 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return {@code this} */
   private CommandLineApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
 
-  /** @return {@code this} */
   private CommandLineApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
@@ -96,13 +94,11 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return {@code this} */
   private CommandLineApplicator defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
 
-  /** @return {@code this} */
   private CommandLineApplicator defaultSelection() {
     // selection(CommandLineSelection.Util.get()); // temporarily disabled
     return this;
@@ -115,7 +111,6 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** @return {@code this} */
   private CommandLineApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction();
   }
