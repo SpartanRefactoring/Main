@@ -17,7 +17,9 @@ public interface lazy<@¢ T> extends Supplier<T> {
       T $;
 
       @Override public T get() {
-        return $ = $ != null ? $ : ¢.get();
+        synchronized ($) {
+          return $ = $ != null ? $ : ¢.get();
+        }
       }
     };
   }
