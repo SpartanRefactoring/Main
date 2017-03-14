@@ -100,7 +100,7 @@ public class Table_Summary2 {
   }
 
   static double methodsCovered() {
-    return getNodeCoverage(ASTNode.METHOD_DECLARATION);
+    return statistics.methodsCoverage();
   }
 
   private static double getNodeCoverage(final int type) {
