@@ -16,11 +16,11 @@ import il.org.spartan.spartanizer.utils.*;
  * @since Oct 28, 2016 */
 public enum measure {
   ;
-  public static int expressions(final ASTNode n) {
-    if (n == null)
+  public static int allExpressions(final CompilationUnit u) {
+    if (u == null)
       return 0;
     final Int $ = new Int();
-    n.accept(new ASTVisitor(true) {
+    u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
           $.step();
@@ -29,7 +29,39 @@ public enum measure {
     return $.inner;
   }
 
+  public static int expressions(final ASTNode n) {
+    if (iz.compilationUnit(n))
+      return allExpressions(az.compilationUnit(n));
+    if (n == null)
+      return 0;
+    final Int $ = new Int();
+    n.accept(new ASTVisitor(true) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (iz.expression(¢) && !excluded(az.expression(¢)))
+          $.step();
+        return !iz.classInstanceCreation(¢);
+      }
+    });
+    return $.inner;
+  }
+
+  public static int allCommands(final CompilationUnit u) {
+    final Int $ = new Int();
+    if (u == null)
+      return 0;
+    u.accept(new ASTVisitor(true) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (iz.statement(¢) && !excluded(az.statement(¢)))
+          $.step();
+        return super.preVisit2(¢);
+      }
+    });
+    return $.inner;
+  }
+
   public static int commands(final ASTNode n) {
+    if (iz.compilationUnit(n))
+      return allCommands(az.compilationUnit(n));
     final Int $ = new Int();
     if (n == null)
       return 0;
