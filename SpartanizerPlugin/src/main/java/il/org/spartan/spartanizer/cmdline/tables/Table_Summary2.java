@@ -69,7 +69,7 @@ public class Table_Summary2 {
         return true;
       }
 
-      void logAfterSpartanization(CompilationUnit ¢) {
+      void logAfterSpartanization(final CompilationUnit ¢) {
         statistics.logAfterSpartanization(¢);
         npDistributionStatistics.logNode(¢);
       }
