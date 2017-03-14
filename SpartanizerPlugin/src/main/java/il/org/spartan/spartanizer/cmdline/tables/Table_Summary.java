@@ -40,7 +40,7 @@ public class Table_Summary {
 
       public void summarize(final String path) {
         if (writer == null)
-          initializeWriter();
+          initializeWriter(outputFolder); // needed to printout on a custom folder using -o 
         writer//
             .col("Project", path)//
             .col("Commands", statementsCoverage())//
@@ -107,6 +107,10 @@ public class Table_Summary {
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
     if (!containedInInstanceCreation(n))
       scope.peek().markNP(n, np);
+  }
+  
+  static void initializeWriter(final String outputFolder) {
+    writer = new Table(Table_Summary.class, outputFolder);
   }
 
   static void initializeWriter() {
