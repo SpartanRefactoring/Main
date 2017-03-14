@@ -40,7 +40,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   private void countSubtree(final ASTNode n, final String np) {
     if (!excludeSubtree(np))
       n.accept(new ASTVisitor() {
-        @Override public boolean preVisit2(ASTNode $) {
+        @Override public boolean preVisit2(final ASTNode $) {
           if ($ == n)
             return true;
           final Integer t = Integer.valueOf(nodeType($));
