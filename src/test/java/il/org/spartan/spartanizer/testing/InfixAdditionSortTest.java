@@ -37,6 +37,25 @@ public final class InfixAdditionSortTest {
         .gives("a*b + 1")//
         .stays();
   }
+  
+  @Test public void test01b() {
+    trimmingOf("c*d + a*b")//
+        .gives("a*b + c*d")//
+        .stays();
+  }
+  
+  @Test public void test01c() {
+    trimmingOf("1 + c*d + a*b")//
+        .gives("a*b + c*d + 1")//
+        .stays();
+  }
+  
+  @Test public void test01d() {
+    trimmingOf("1 + 2 + c*d + a*b")//
+        .gives("a*b + c*d + 1 + 2")//
+        .gives("a*b + c*d + 3")
+        .stays();
+  }
 
   @Test public void test02() {
     assert new InfixAdditionSort().check(INPUT);
@@ -132,8 +151,33 @@ public final class InfixAdditionSortTest {
         .stays();
   }
   
+  @Ignore
   @Test public void test16a1() {
     trimmingOf("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
+        .stays();
+  }
+  
+  @Test public void test16a2() {
+    trimmingOf("365 * a + d / 4 - e / 100 + h / 400 + (b * 306 + 5) / 10 + c - 1")//
+        .gives("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")
+        .stays();
+  }
+  
+  @Test public void test16a3() {
+    trimmingOf("365 * a + d / 4 - e / 100")//
+        .gives("d / 4 + 365 * a - e / 100")
+        .stays();
+  }
+  
+  @Test public void test16a4() {
+    trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
+        .gives("d / 4 + 365 * a + h / 400 - e / 100")
+        .stays();
+  }
+  
+  @Test public void test16a5() {
+    trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
+        .gives("h / 400 + 365 * a + d / 4 - e / 100")
         .stays();
   }
 
@@ -161,6 +205,12 @@ public final class InfixAdditionSortTest {
   @Test public void test16e() {
     trimmingOf("365 * a + a / 4")//
         .gives("4*a + 365*a")
+        .stays();
+  }
+  
+  @Test public void test16f() {
+    trimmingOf("365 * a + b / 4")//
+        .gives("b/4 + 365*a")
         .stays();
   }
 }
