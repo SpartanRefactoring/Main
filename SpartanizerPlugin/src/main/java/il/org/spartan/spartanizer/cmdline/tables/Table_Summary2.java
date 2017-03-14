@@ -60,12 +60,17 @@ public class Table_Summary2 {
         try {
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
-          statistics.logAfterSpartanization(into.cu(spartanzied));
+          logAfterSpartanization(into.cu(spartanzied));
           analyze.apply(spartanzied);
         } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           ___.unused(__);
         }
         return true;
+      }
+
+      void logAfterSpartanization(CompilationUnit ¢) {
+        statistics.logAfterSpartanization(¢);
+        npDistributionStatistics.logNode(¢);
       }
     });
     writer.close();
