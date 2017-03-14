@@ -43,6 +43,7 @@ public class Table_Summary2 {
         .col("Iteratives", iterativesCoverage())//
         .col("ConditionalExpressions", conditionalExpressionsCoverage())//
         .col("ConditionalCommands", conditionalStatementsCoverage())//
+        .col("NodesCovered", statistics.nodesCoverage())//
         .col("total Commands", commands())//
         .col("total Methods", methods())//
         .nl();
