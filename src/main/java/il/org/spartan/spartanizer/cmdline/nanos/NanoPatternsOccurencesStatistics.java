@@ -30,12 +30,30 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
 
   public void logNPInfo(final ASTNode n, final String np) {
     final Integer type = Integer.valueOf(nodeType(n));
-    if (!iz.methodDeclaration(n)) {
+    if (!iz.methodDeclaration(n))
       putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
-      ++typeHistogram(type).inner;
-    }
     nanoHistogram(type).putIfAbsent(np, new Int());
     ++nanoHistogram(type).get(np).inner;
+    countSubtree(n, np);
+  }
+
+  private void countSubtree(final ASTNode n, final String np) {
+    if (!excludeSubtree(np))
+      n.accept(new ASTVisitor() {
+        @Override public boolean preVisit2(ASTNode $) {
+          if ($ == n)
+            return true;
+          final Integer t = Integer.valueOf(nodeType($));
+          nanoHistogram(t).putIfAbsent("other", new Int());
+          ++nanoHistogram(t).get("other").inner;
+          return !iz.classInstanceCreation($);
+        }
+      });
+  }
+
+  private static boolean excludeSubtree(@SuppressWarnings("unused") final String np) {
+    return true;
+    // return np.equals(FactoryMethod.class.getSimpleName());
   }
 
   Int typeHistogram(final Integer type) {
