@@ -106,6 +106,10 @@ class CompilationUnitRecord {
       return count.apply(¢).intValue();
     }
 
+    private int count(final CompilationUnit ¢) {
+      return count.apply(¢).intValue();
+    }
+
     private int np(final LightWeightMethodRecord λ) {
       return np.apply(λ).intValue();
     }
@@ -136,7 +140,6 @@ class CompilationUnitRecord {
     nodes.before(cu);
     commands.before(cu);
     expressions.before(cu);
-    fetchAllmethods(cu);
   }
 
   private void fetchAllmethods(final CompilationUnit u) {
@@ -148,6 +151,7 @@ class CompilationUnitRecord {
     nodes.after(¢);
     commands.after(¢);
     expressions.after(¢);
+    fetchAllmethods(¢);
   }
 
   public int methodsTouched() {
@@ -203,9 +207,9 @@ class LightWeightMethodRecord {
 
   /** makes sure we don't exceed 100% of nodes of a method */
   public void mark(final ASTNode ¢) {
-    nodes.incAndGet(count.nodes(¢));
-    commands.incAndGet(measure.commands(¢));
-    expressions.incAndGet(measure.expressions(¢));
+    nodes.inc(count.nodes(¢));
+    commands.inc(measure.commands(¢));
+    expressions.inc(measure.expressions(¢));
     if (iz.methodDeclaration(¢))
       fullyCovered = true;
   }
@@ -238,7 +242,7 @@ class LightWeightMethodRecord {
       total = num;
     }
 
-    public int incAndGet(final int amount) {
+    public int inc(final int amount) {
       final int $ = Math.min(amount, total - np);
       np += $;
       return $;

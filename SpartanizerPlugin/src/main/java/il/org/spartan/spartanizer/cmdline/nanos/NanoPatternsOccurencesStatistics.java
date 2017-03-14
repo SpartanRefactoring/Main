@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.hamcrest.generator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -34,16 +35,25 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
       putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
     nanoHistogram(type).putIfAbsent(np, new Int());
     ++nanoHistogram(type).get(np).inner;
-    n.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
-        if (¢ == n)
-          return;
-        final Integer t = Integer.valueOf(nodeType(¢));
-        nanoHistogram(t).putIfAbsent("other", new Int());
-        ++nanoHistogram(t).get("other").inner;
-        super.preVisit(¢);
-      }
-    });
+    countSubtree(n, np);
+  }
+
+  private void countSubtree(final ASTNode n, final String np) {
+    if (!excludeSubtree(np))
+      n.accept(new ASTVisitor() {
+        @Override public void preVisit(ASTNode ¢) {
+          if (¢ == n)
+            return;
+          final Integer t = Integer.valueOf(nodeType(¢));
+          nanoHistogram(t).putIfAbsent("other", new Int());
+          ++nanoHistogram(t).get("other").inner;
+          super.preVisit(¢);
+        }
+      });
+  }
+
+  private static boolean excludeSubtree(final String np) {
+    return np.equals(FactoryMethod.class.getSimpleName());
   }
 
   Int typeHistogram(final Integer type) {
