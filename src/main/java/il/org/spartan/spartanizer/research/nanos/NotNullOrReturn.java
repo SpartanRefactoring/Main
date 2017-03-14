@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import il.org.spartan.utils.*;
 
 /** @nano if(X = null) return; <br>
  *       if(X = null) return null;
@@ -22,12 +23,12 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 3915101342508232691L;
   private static final String description = "replace with azzert.notNull(X)";
-  private static final PreconditionNotNull rival = new PreconditionNotNull();
+  private static final lazy<PreconditionNotNull> rival = lazy.get(()->new PreconditionNotNull());
 
   @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
         && returnsDefault(then(¢)) //
-        && rival.cantTip(¢)//
+        && rival.get().cantTip(¢)//
     ;
   }
 
