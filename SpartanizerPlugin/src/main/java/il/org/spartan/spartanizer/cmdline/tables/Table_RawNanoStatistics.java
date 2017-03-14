@@ -29,8 +29,6 @@ public class Table_RawNanoStatistics {
   }
 
   public static void summarize(final String path) {
-    if (writer == null)
-      initializeWriter();
     writer.col("Project", path);
     npStatistics.keySet().stream()//
         .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
@@ -51,6 +49,8 @@ public class Table_RawNanoStatistics {
   public static void main(final String[] args) {
     new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
+        if (writer == null)
+          initializeWriter(outputFolder); // needed to printout on a custom folder using -o 
         summarize(path);
         System.err.println(" " + path + " Done"); // we need to know if the process is finished or hang
       }
@@ -72,6 +72,11 @@ public class Table_RawNanoStatistics {
     });
     writer.close();
   }
+  
+  static void initializeWriter(final String outputFolder) {
+    writer = new Table(Table_RawNanoStatistics.class, outputFolder);
+  }
+
 
   static void initializeWriter() {
     writer = new Table(Table_RawNanoStatistics.class);
