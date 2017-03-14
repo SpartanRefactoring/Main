@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.hamcrest.generator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -52,8 +51,9 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
       });
   }
 
-  private static boolean excludeSubtree(final String np) {
-    return np.equals(FactoryMethod.class.getSimpleName());
+  private static boolean excludeSubtree(@SuppressWarnings("unused") final String np) {
+    return true;
+    // return np.equals(FactoryMethod.class.getSimpleName());
   }
 
   Int typeHistogram(final Integer type) {
