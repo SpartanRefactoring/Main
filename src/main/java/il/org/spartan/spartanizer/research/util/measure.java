@@ -37,7 +37,7 @@ public enum measure {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.statement(¢) && !excluded(az.statement(¢)))
           $.step();
-        return !iz.classInstanceCreation(¢);
+        return super.preVisit2(¢);
       }
     });
     return $.inner;
