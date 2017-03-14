@@ -52,6 +52,7 @@ public class Table_RawNanoStatistics {
     new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         summarize(path);
+        System.err.println(" " + path + " Done"); // we need to know if the process is finished or hang
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
