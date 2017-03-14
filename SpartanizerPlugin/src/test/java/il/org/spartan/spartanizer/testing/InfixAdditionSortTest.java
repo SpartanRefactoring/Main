@@ -52,9 +52,53 @@ public final class InfixAdditionSortTest {
   
   @Test public void test01d() {
     trimmingOf("1 + 2 + c*d + a*b")//
-        .gives("a*b + c*d + 1 + 2")//
-        .gives("a*b + c*d + 3")
+        .gives("3 + c*d + a*b")//
+        .gives("a*b + c*d + 3")//
         .stays();
+  }
+  
+  @Test public void test01e() {
+    trimmingOf("c/d + a*b")//
+        .gives("a*b + c/d")//
+        .stays();
+  }
+  
+  @Test public void test01f() {
+    trimmingOf("1 + c/d + a*b")//
+        .gives("a*b + c/d + 1")//
+        .stays();
+  }
+  
+  @Test public void test01g() {
+    trimmingOf("c*1 + a*b")//
+        .gives("a*b + c*1")//
+        .gives("a*b + c")//
+        .stays();
+  }
+  
+  @Test public void test01h() {
+    trimmingOf("c*2 + a*b")//
+        .gives("a*b + c*2")//
+        .stays();
+  }
+  
+  @Test public void a2bc() {
+    trimmingOf("a * 2 + b * c") //
+  .using(InfixExpression.class, new InfixMultiplicationSort()) //
+  .gives("2*a+b*c") //
+   .stays() //
+   ;
+ }
+  
+  /** Automatically generated on Tue-Mar-14-22:16:24-IST-2017, copied by Matteo */
+  @Test public void abc2() {
+     trimmingOf("a * b + c * 2") //
+   .using(InfixExpression.class, new InfixMultiplicationSort()) //
+   .gives("a*b+2*c") //
+   .using(InfixExpression.class, new InfixAdditionSort()) //
+   .gives("2*c+a*b") //
+    .stays() //
+    ;
   }
 
   @Test public void test02() {
@@ -147,19 +191,6 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16a() {
     trimmingOf("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
-        .gives("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")
-        .stays();
-  }
-  
-  @Ignore
-  @Test public void test16a1() {
-    trimmingOf("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
-        .stays();
-  }
-  
-  @Test public void test16a2() {
-    trimmingOf("365 * a + d / 4 - e / 100 + h / 400 + (b * 306 + 5) / 10 + c - 1")//
-        .gives("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")
         .stays();
   }
   
@@ -171,7 +202,8 @@ public final class InfixAdditionSortTest {
   
   @Test public void test16a4() {
     trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
-        .gives("d / 4 + 365 * a + h / 400 - e / 100")
+        .gives("d / 4 + 365 * a + h / 400 - e / 100")//
+        .gives("h/400 + 365*a + d/4 - e/100")//
         .stays();
   }
   
@@ -181,30 +213,22 @@ public final class InfixAdditionSortTest {
         .stays();
   }
 
-  @Ignore @Test public void test16b() {
+  //@Ignore 
+  @Test public void test16b() {
     trimmingOf("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
-        .gives("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1").stays();
-  }
-
-  @Ignore @Test public void test16c() {
-    trimmingOf("365 * a + a * 4 - a * 100 + a * 400 + b * 306 + 5 * 10 + c - 1")//
-        .gives("365 * a + a * 4 - a * 100 + a * 400 + b * 306 + 5 * 10 + c - 1").stays();
-  }
-
-  @Test public void test16d() {
-    trimmingOf("365 * a + a * 4")//
-        .gives("4*a + 365*a")
         .stays();
   }
-  
+
   @Test public void test16d1() {
-    trimmingOf("365 * a + a * 4")//
+    trimmingOf("365 * a + a * 4")//*
+        .gives("a*4 + 365*a")//
+        .gives("4*a + 365*a")//
         .stays();
   }
 
   @Test public void test16e() {
     trimmingOf("365 * a + a / 4")//
-        .gives("4*a + 365*a")
+        .gives("a/4 + 365*a")
         .stays();
   }
   
@@ -213,4 +237,44 @@ public final class InfixAdditionSortTest {
         .gives("b/4 + 365*a")
         .stays();
   }
+  
+  @Test public void test16g() {
+    trimmingOf("a * 365 + b / 4")//
+        .gives("b/4 + a*365")//
+        .gives("b/4 + 365*a")//
+        .stays();
+  }
+  
+  @Test public void test16h() {
+    trimmingOf("d / 4 + e / 100")//
+        .stays();
+  }
+  
+  @Test public void test16h1() {
+    trimmingOf("d / 400 + e / 100")//
+        .stays();
+  }
+  
+  @Test public void test16i() {
+    trimmingOf("d / 4 + e / 100 + h / 400")//
+        .stays();
+  }
+  
+  @Test public void test16j() {
+    trimmingOf("d / 4 + e * 100")//
+        .gives("d / 4 + 100*e")//
+        .stays();
+  }
+  
+  @Test public void test17() {
+    trimmingOf("y / 100 + l - 365 * y - y / 4 - y / 400")//
+        .stays();
+  }
+  
+  @Test public void test17a() {
+    trimmingOf("y / 100 + l")//
+        .stays();
+  }
+  
+
 }
