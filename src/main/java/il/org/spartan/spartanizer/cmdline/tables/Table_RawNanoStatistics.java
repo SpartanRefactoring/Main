@@ -47,6 +47,10 @@ public class Table_RawNanoStatistics {
   }
 
   public static void main(final String[] args) {
+    Collection<Tipper<? extends ASTNode>> allTippers = spartanizer.toolbox.getAllTippers();
+    System.out.println(allTippers.contains(il.org.spartan.spartanizer.tippers.AssignmentToFromInfixIncludingTo.class));
+    for (Tipper<?> ¢: allTippers)
+      System.out.println(¢.technicalName()+ ": " + ¢.getClass());
     new FileSystemASTVisitor(args) {
       @Override protected void done(final String path) {
         if (writer == null)
