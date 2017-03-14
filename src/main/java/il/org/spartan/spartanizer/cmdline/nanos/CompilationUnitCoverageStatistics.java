@@ -44,6 +44,14 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
     return format.perc(expressionsCovered(), expressions());
   }
 
+  public double touched() {
+    return format.perc(stream().mapToInt(CompilationUnitRecord::methodsTouched).sum(), methods() - methodsCovered());
+  }
+
+  public double methodsCoverage() {
+    return format.perc(methodsCovered(), methods());
+  }
+
   public int nodes() {
     return stream().mapToInt(λ -> λ.nodes.afterSpartanization).sum();
   }
@@ -68,11 +76,7 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
     return stream().mapToInt(λ -> λ.expressions.covered()).sum();
   }
 
-  public int touched() {
-    return stream().mapToInt(CompilationUnitRecord::methodsTouched).sum();
-  }
-
-  public int methodsCovered() {
+  private int methodsCovered() {
     return stream().mapToInt(CompilationUnitRecord::methodsCovered).sum();
   }
 
