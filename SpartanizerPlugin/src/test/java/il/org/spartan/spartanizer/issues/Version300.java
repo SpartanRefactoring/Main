@@ -34,6 +34,14 @@ public final class Version300 {
     ;
   }
 
+  @Test public void ifab() {
+    trimmingOf("if (a++ == b++) { }") //
+        .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
+        .gives("a++;b++;") //
+        .stays() //
+    ;
+  }
+
   @Test public void a() {
     azzert.that(
         theSpartanizer.once(//
