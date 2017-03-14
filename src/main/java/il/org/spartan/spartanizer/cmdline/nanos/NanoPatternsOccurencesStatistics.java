@@ -40,13 +40,13 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   private void countSubtree(final ASTNode n, final String np) {
     if (!excludeSubtree(np))
       n.accept(new ASTVisitor() {
-        @Override public void preVisit(ASTNode ¢) {
-          if (¢ == n)
-            return;
-          final Integer t = Integer.valueOf(nodeType(¢));
+        @Override public boolean preVisit2(ASTNode $) {
+          if ($ == n)
+            return true;
+          final Integer t = Integer.valueOf(nodeType($));
           nanoHistogram(t).putIfAbsent("other", new Int());
           ++nanoHistogram(t).get("other").inner;
-          super.preVisit(¢);
+          return !iz.classInstanceCreation($);
         }
       });
   }
