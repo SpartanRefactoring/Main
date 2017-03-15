@@ -48,6 +48,6 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
   }
 
   public boolean bodyDeclaresElementsOf(final ASTNode n) {
-    return extract.fragments(block).stream().allMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
+    return extract.fragments(block).stream().noneMatch(λ -> collect.usesOf(λ.getName()).in(n).isEmpty());
   }
 }
