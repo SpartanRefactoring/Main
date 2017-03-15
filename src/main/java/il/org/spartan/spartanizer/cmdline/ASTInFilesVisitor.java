@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.io.*;
 import java.lang.invoke.*;
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -155,13 +156,11 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          hook(TypeDeclaration.class, //
-              Rule.on((TypeDeclaration t) -> {
-               return t.isInterface(); 
-              })//
-                  .go(t -> System.out.println(t.getName())//
-          )//
-          );
+          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(t -> System.out.println(t.getName()));
+          final Predicate<TypeDeclaration> p = t->t.isInterface(); 
+          final Predicate<TypeDeclaration> q = t->t.isInterface(); 
+          final Consumer<TypeDeclaration> c = t->System.out.println(t);
+          hook(TypeDeclaration.class,r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
         }
       });
     }
@@ -170,6 +169,7 @@ public class ASTInFilesVisitor {
   static boolean letItBeIn(final List<Statement> ¢) {
     return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
   }
+
   static BufferedWriter out;
 
   public static class BucketMethods {
@@ -209,18 +209,9 @@ public class ASTInFilesVisitor {
       });
     }
 
-    private static String myClass() {
-      return MethodHandles.lookup().lookupClass().getClass().getSimpleName();
-    }
-
-    static Class<?> myEnclosingClass() {
-      return new Object().getClass().getEnclosingClass();
-    }
-
     static boolean letItBeIn(final List<Statement> ¢) {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
-
   }
 
   public static class ExpressionChain {
@@ -254,7 +245,6 @@ public class ASTInFilesVisitor {
         }
       });
     }
-
   }
 
   public static class FieldsOnly {

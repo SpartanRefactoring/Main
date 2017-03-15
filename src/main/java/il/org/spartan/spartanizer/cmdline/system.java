@@ -36,7 +36,7 @@ public interface system {
 
   /** @return the name of the class from which this method was called. */
   public static String callingClassName() {
-    StackTraceElement[] es = new Throwable().getStackTrace();
+    final StackTraceElement[] es = new Throwable().getStackTrace();
     for (int i = 1; i < es.length; i++)
       if (!es[i].getClassName().equals(es[0].getClassName()))
         return es[i].getClassName();
@@ -155,7 +155,7 @@ public interface system {
     return null;
   }
 
-  static boolean isProductionCode(File f) {
+  static boolean isProductionCode(final File f) {
     return !system.isTestSourceFile(f.getName());
   }
 
