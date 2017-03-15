@@ -50,7 +50,7 @@ public class Table_Summary2 {
   }
 
   public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
+    new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
         summarize(path);
         reset();
