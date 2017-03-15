@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 3915101342508232691L;
   private static final String description = "replace with azzert.notNull(X)";
-  private static final lazy<PreconditionNotNull> rival = lazy.get(()->new PreconditionNotNull());
+  private static final lazy<PreconditionNotNull> rival = lazy.get(PreconditionNotNull::new);
 
   @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
