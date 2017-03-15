@@ -18,9 +18,21 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
   }
 
   @Override public Expression replacement(final InfixExpression ¢) {
-    if (TermsCollector.isLeafTerm(¢))
+//    System.out.println("InfixExpression: " + ¢);
+    if (TermsCollector.isLeafTerm(¢)){
+//      System.out.println("LEAF!");
       return null;
+    }
     final Expression $ = TermsExpander.simplify(¢);
-    return !wizard.same($, ¢) ? $ : null;
+//    System.out.println("$: " + $);
+    Expression expression = !wizard.same($, ¢) ? $ : null;
+//    System.out.println("expression: " + expression);
+    return expression;
+  }
+  
+  @Override
+  @SuppressWarnings("unused")
+  protected boolean prerequisite(final InfixExpression __) {
+    return true;
   }
 }
