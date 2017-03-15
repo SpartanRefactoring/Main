@@ -79,12 +79,22 @@ public final class InfixAdditionSortTest {
   @Test public void test01h() {
     trimmingOf("c*2 + a*b")//
         .gives("a*b + c*2")//
+        .gives("a*b + 2*c")//
+        .gives("2*c + a*b")//
         .stays();
   }
   
   @Test public void a2bc() {
     trimmingOf("a * 2 + b * c") //
   .using(InfixExpression.class, new InfixMultiplicationSort()) //
+  .gives("2*a+b*c") //
+   .stays() //
+   ;
+ }
+  
+  @Test public void testa2bc() {
+    trimmingOf("a * 2 + b * c") //
+  //.using(InfixExpression.class, new InfixMultiplicationSort()) //
   .gives("2*a+b*c") //
    .stays() //
    ;
@@ -116,13 +126,34 @@ public final class InfixAdditionSortTest {
   @Test public void test05() {
     assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
-
-  @Test public void test06() {
-    assert !new InfixAdditionSubtractionExpand().check(INPUT);
+  
+  @Ignore
+  @Test public void test05b() {
+    assert new InfixAdditionSubtractionExpand().check(INPUT);
+  }
+  
+  private String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
+  
+  @Test public void test05c() {
+    assert !new InfixAdditionSubtractionExpand().check(into.i(s));
+  }
+  
+  @Test public void test05d() {
+    assert new InfixAdditionSubtractionExpand().check(into.i("a - (b+c)"));
   }
 
+  @Test public void test05e() {
+    trimmingOf("a - (b+c)")//
+    .gives("a - b - c")//
+    .stays();
+  }
+
+
+//  @Test public void test06() {
+//    assert !new InfixAdditionSubtractionExpand().check(INPUT);
+//  }
+
   @Test public void test07() {
-    assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
     assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
   }
 
@@ -145,23 +176,22 @@ public final class InfixAdditionSortTest {
     azzert.that(i.getOperator(), is(wizard.PLUS2));
     assert hop.operands(i) != null;
     azzert.that(hop.operands(i).size(), is(nTERMS));
-    assert wizard.same(i, INPUT);
+    assert wizard.same2(i, INPUT);
   }
 
   @Test public void test10() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
-    assert wizard.same(i, INPUT);
+    assert INPUT != null;
+    assert !wizard.same(i, INPUT);
+    assert wizard.same2(i, INPUT);
   }
-
+  
   @Test public void test11() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert INPUT != null;
-    assert wizard.same(i, INPUT);
-    assert i != null;
-    assert INPUT != null;
-    assert wizard.same(i, INPUT);
+    assert wizard.same(into.i(tide.clean(i + "")), INPUT);
   }
 
   @Test public void test12() {
@@ -191,7 +221,37 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16a() {
     trimmingOf("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a/400+(b*306+5)/10+(365*a+a/4-a/100)-1") //
+        .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
+        .gives("c+a/400+(b*306+5)/10+365*a+a/4-a/100-1") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a/4+365*a+a/400+(b*306+5)/10-a/100-1") //
+        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .gives("c+a/4+365*a+a/400+(306*b+5)/10-a/100-1") //
         .stays();
+  }
+  
+  @Test public void test16a2() {
+    trimmingOf("365 * a + a / 4")//
+        .gives("a / 4 + 365 * a")
+        .stays();
+  }
+  
+  @Test public void test16a2a() {
+    trimmingOf("365 * a + a / 4 - a / 100")//
+        .gives("a / 4 + 365 * a - a / 100")
+        .stays();
+  }
+  
+  @Test public void test_365aa4a100a400() {
+     trimmingOf("365 * a + a / 4 - a / 100 + a / 400") //
+   .using(InfixExpression.class, new InfixAdditionSort()) //
+   .gives("a/400+365*a+a/4-a/100") //
+   .using(InfixExpression.class, new InfixAdditionSort()) //
+   .gives("a/4+365*a+a/400-a/100") //
+    .stays() //
+    ;
   }
   
   @Test public void test16a3() {
@@ -200,23 +260,42 @@ public final class InfixAdditionSortTest {
         .stays();
   }
   
+  
+  
   @Test public void test16a4() {
-    trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
-        .gives("d / 4 + 365 * a + h / 400 - e / 100")//
-        .gives("h/400 + 365*a + d/4 - e/100")//
+    trimmingOf("365 * a + b / 4 - c / 100 + d / 400") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("d/400+365*a+b/4-c/100") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("b/4+365*a+d/400-c/100") //
+     .stays() //
+     ;
+  }
+  
+  @Test public void test16a2b() {
+    trimmingOf("365 * a + a / 4 - a / 100 + a / 400")//
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("a/400+365*a+a/4-a/100") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("a/4+365*a+a/400-a/100") //
         .stays();
   }
   
   @Test public void test16a5() {
-    trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
-        .gives("h / 400 + 365 * a + d / 4 - e / 100")
-        .stays();
+    trimmingOf("365 * a + b / 4 - c / 100 + d / 400") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("d/400+365*a+b/4-c/100") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("b/4+365*a+d/400-c/100") //
+     .stays() //
+     ;
   }
 
-  //@Ignore 
+  @Ignore 
   @Test public void test16b() {
     trimmingOf("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
-        .stays();
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .stays();
   }
 
   @Test public void test16d1() {
@@ -268,13 +347,13 @@ public final class InfixAdditionSortTest {
   
   @Test public void test17() {
     trimmingOf("y / 100 + l - 365 * y - y / 4 - y / 400")//
-        .stays();
+    .gives("l+y/100-365*y-y/4-y/400") //
+    .stays();
   }
   
   @Test public void test17a() {
     trimmingOf("y / 100 + l")//
         .stays();
   }
-  
 
 }
