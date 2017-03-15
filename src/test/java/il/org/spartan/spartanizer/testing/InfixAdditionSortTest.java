@@ -182,15 +182,10 @@ public final class InfixAdditionSortTest {
   @Test public void test10() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
-    assert wizard.same(i, INPUT);
-  }
-  
-  @Test public void test10b() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
-    assert i != null;
+    assert !wizard.same(i, INPUT);
     assert wizard.same2(i, INPUT);
   }
-
+  
   @Test public void test11() {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
