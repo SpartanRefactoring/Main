@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * <p>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
-public class FileSystemASTVisitor {
+public class ASTInFilesVisitor {
   /** Determines whether a file is production code, using the heuristic that
    * production code does not contain {@code @}{@link Test} annotations
    * <p>
@@ -62,25 +62,25 @@ public class FileSystemASTVisitor {
   }
 
   public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
+    new ASTInFilesVisitor(args) {
       /* Override here which ever method you like */
     }.fire(new ASTVisitor(true) {
       /* OVerride here which ever method you like */
     });
   }
 
-  protected static Class<? extends FileSystemASTVisitor> clazz;
+  protected static Class<? extends ASTInFilesVisitor> clazz;
   protected static final String[] defaultArguments = as.array("..");
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
   }
 
-  public FileSystemASTVisitor() {
+  public ASTInFilesVisitor() {
     this(null);
   }
 
-  public FileSystemASTVisitor(final String[] args) {
+  public ASTInFilesVisitor(final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
@@ -100,10 +100,6 @@ public class FileSystemASTVisitor {
 
   @SuppressWarnings("static-method") protected void init(final String path) {
     ___.______unused(path);
-  }
-
-  protected String makeFile(final String fileName) {
-    return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   protected void visitLocation(final String path) {
@@ -153,14 +149,16 @@ public class FileSystemASTVisitor {
       monitor.set(monitor.LOG_TO_FILE);
       out = system.callingClassUniqueWriter();
       MethodHandles.lookup();
-      new FileSystemASTVisitor(args) {
+      new ASTInFilesVisitor(args) {
         {
           silent = true;
         }
       }.fire(new ASTTrotter() {
         {
           hook(TypeDeclaration.class, //
-              Rule.on((TypeDeclaration t) -> t.isInterface())//
+              Rule.on((TypeDeclaration t) -> {
+               return t.isInterface(); 
+              })//
                   .go(t -> System.out.println(t.getName())//
           )//
           );
@@ -177,13 +175,8 @@ public class FileSystemASTVisitor {
   public static class BucketMethods {
     public static void main(final String[] args) {
       monitor.set(monitor.LOG_TO_FILE);
-      try {
-        out = new BufferedWriter(new FileWriter(system.ephemeral(myClass()).dot("txt")));
-      } catch (final IOException ¢) {
-        monitor.infoIOException(¢);
-        return;
-      }
-      new FileSystemASTVisitor(args) {
+      out = system.callingClassUniqueWriter();
+      new ASTInFilesVisitor(args) {
         {
           silent = true;
         }
@@ -233,13 +226,8 @@ public class FileSystemASTVisitor {
   public static class ExpressionChain {
     public static void main(final String[] args) {
       monitor.set(monitor.LOG_TO_FILE);
-      try {
-        out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
-      } catch (final IOException ¢) {
-        monitor.infoIOException(¢);
-        return;
-      }
-      new FileSystemASTVisitor(args) {
+      out = system.callingClassUniqueWriter();
+      new ASTInFilesVisitor(args) {
         {
           silent = true;
         }
@@ -271,7 +259,7 @@ public class FileSystemASTVisitor {
 
   public static class FieldsOnly {
     public static void main(final String[] args) {
-      new FileSystemASTVisitor(args).fire(new ASTVisitor(true) {
+      new ASTInFilesVisitor(args).fire(new ASTVisitor(true) {
         @Override public boolean visit(final FieldDeclaration ¢) {
           System.out.println(¢);
           return true;
