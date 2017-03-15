@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.cmdline.system.*;
 import static java.lang.String.*;
+
+import static il.org.spartan.spartanizer.cmdline.system.*;
 
 import java.lang.annotation.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
-
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
@@ -74,7 +74,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   @Check default Rule<T, R> afterCheck(final boolean b) {
-    return afterCheck((final T t)  -> b);
+    return afterCheck((final T t) -> b);
   }
 
   @Check default Rule<T, R> afterCheck(final Consumer<T> c) {
@@ -87,7 +87,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   @Check default Rule<T, R> afterCheck(final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T t) {
-        return afterCheck(() -> p.test(t));
+        return inner.check(t) && p.test(t);
       }
     };
   }
@@ -103,11 +103,11 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   @Override @Apply R apply(T ¢);
 
   default Rule<T, R> beforeCheck(final boolean b) {
-     return beforeCheck((final T t) -> b);
+    return beforeCheck((final T t) -> b);
   }
 
   default Rule<T, R> beforeCheck(final Consumer<T> c) {
-     return beforeCheck((final T t) -> {
+    return beforeCheck((final T t) -> {
       c.accept(t);
       return true;
     });
@@ -115,10 +115,8 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
 
   default Rule<T, R> beforeCheck(final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
-      @Override public boolean check(@¢ final T t) {
-        if (p.test(t))
-          return super.check(t);
-        return false;
+      @Override public boolean check(final T t) {
+        return p.test(t) && inner.check(t);
       }
     };
   }
@@ -144,14 +142,11 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     return new Example[0];
   }
 
-  default T object() {
-    return null;
-  }
+  T object();
 
   default boolean ready() {
     return object() != null;
   }
-
 
   /** Should not be overridden */
   default String technicalName() {
@@ -195,57 +190,28 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     }
   }
 
-  /** Default implementation of an intercepting {@link Rule}, equipped with a
-   * {@link Listener}
-   * @param <T>
-   * @param <R>
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
-   * @since 2017-03-13 */
-  @SuppressWarnings("static-method")
-  class Interceptor<T, R> implements Rule<T, R>, Listener<T, R> {
+  @Deprecated
+  public class Interceptor<T, R> implements Rule<T, R> {
     public final Rule<T, R> inner;
 
     public Interceptor(final Rule<T, R> inner) {
       this.inner = inner;
     }
 
-    @Override public final String[] akas() {
-      before("akas");
-      return listenAkas(inner::akas);
-    }
-
-    @Override @Apply public final R apply(final T ¢) {
-      before("apply");
-      return listenTip(inner::apply, ¢);
-    }
-
     public Void before(@SuppressWarnings("unused") final String key, @SuppressWarnings("unused") final Object... arguments) {
       return null;
     }
 
-    @Override public boolean check(final T ¢) {
-      return afterCheck(() -> inner.check(¢));
+    @Override public boolean check(final T t) {
+      return false;
     }
 
-    @Override public final String description() {
-      return listenDescription(inner::description);
-    }
-
-    @Override public final Example[] examples() {
-      return listenExamples(inner::examples);
-    }
-
-    @Override public T get() {
+    @Override public T object() {
       return inner.object();
     }
 
-    @Override public final String technicalName() {
-      return listenTechnicalName(inner::technicalName);
-    }
-
-    @Override public final String verb() {
-      before("verb");
-      return listenVerb(inner::verb);
+    @Override public R apply(T ¢) {
+      return inner.apply(¢);
     }
   }
 
@@ -323,9 +289,8 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       );
     }
 
-    @Override public final boolean check(final T n) {
-      object = n;
-      return ok(n);
+    @Override public final boolean check(final T t) {
+      return ok(object = t);
     }
 
     public abstract R fire();
