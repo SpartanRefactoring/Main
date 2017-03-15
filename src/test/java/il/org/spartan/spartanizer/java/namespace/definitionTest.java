@@ -404,12 +404,12 @@ interface DummyInterface {/**/ }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
 @interface lambda {
-  /** lambda parameter */
+  /* lambda parameter */
 }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
 @interface local {
-  /** local variable */
+  /* local variable */
 }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD })

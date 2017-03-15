@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.cmdline.report;
 
 import static il.org.spartan.tide.*;
 
-/** Generates reports
- * @author Matteo Orru'
+/* Generates reports
+  @author Matteo Orru'
  * @since 2016 */
 
 import java.io.*;
