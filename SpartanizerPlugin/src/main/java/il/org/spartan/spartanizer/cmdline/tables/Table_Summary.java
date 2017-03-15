@@ -54,12 +54,13 @@ public class Table_Summary {
       @Override protected void done(final String path) {
         summarize(path);
         reset();
-        System.err.println(" " + path + " Done"); // we need to know if the process is finished or hang
+        System.err.println(" " + path + " Done"); // we need to know if the
+                                                  // process is finished or hang
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
-        ¢.accept(new AnnotationCleanerVisitor());
         try {
+          ¢.accept(new AnnotationCleanerVisitor());
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
           logAfterSpartanization(into.cu(spartanzied));
