@@ -244,13 +244,6 @@ public final class InfixAdditionSortTest {
         .stays();
   }
   
-  @Test public void test16a2b() {
-    trimmingOf("365 * a + a / 4 - a / 100 + a / 400")//
-        .gives("a / 4 + 365 * a - a / 100 + a / 400")
-        .stays();
-  }
-  
-  /** Automatically generated on Wed-Mar-15-17:53:39-IST-2017, copied by Matteo */
   @Test public void test_365aa4a100a400() {
      trimmingOf("365 * a + a / 4 - a / 100 + a / 400") //
    .using(InfixExpression.class, new InfixAdditionSort()) //
@@ -270,22 +263,39 @@ public final class InfixAdditionSortTest {
   
   
   @Test public void test16a4() {
-    trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
-        .gives("d / 4 + 365 * a + h / 400 - e / 100")//
-        .gives("h/400 + 365*a + d/4 - e/100")//
+    trimmingOf("365 * a + b / 4 - c / 100 + d / 400") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("d/400+365*a+b/4-c/100") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("b/4+365*a+d/400-c/100") //
+     .stays() //
+     ;
+  }
+  
+  @Test public void test16a2b() {
+    trimmingOf("365 * a + a / 4 - a / 100 + a / 400")//
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("a/400+365*a+a/4-a/100") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("a/4+365*a+a/400-a/100") //
         .stays();
   }
   
   @Test public void test16a5() {
-    trimmingOf("365 * a + d / 4 - e / 100 + h / 400")//
-        .gives("h / 400 + 365 * a + d / 4 - e / 100")
-        .stays();
+    trimmingOf("365 * a + b / 4 - c / 100 + d / 400") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("d/400+365*a+b/4-c/100") //
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .gives("b/4+365*a+d/400-c/100") //
+     .stays() //
+     ;
   }
 
-  //@Ignore 
+  @Ignore 
   @Test public void test16b() {
     trimmingOf("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
-        .stays();
+    .using(InfixExpression.class, new InfixAdditionSort()) //
+    .stays();
   }
 
   @Test public void test16d1() {
