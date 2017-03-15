@@ -25,7 +25,7 @@ public class Table_Nodes_Coverage {
   protected static Function<String, String> analyze = spartanalyzer::fixedPoint;
 
   public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
+    new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
         summarizeStatistics(path);
         statistics.clear();

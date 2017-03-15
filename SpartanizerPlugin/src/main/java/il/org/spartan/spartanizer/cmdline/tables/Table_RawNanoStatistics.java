@@ -47,7 +47,7 @@ public class Table_RawNanoStatistics {
   }
 
   public static void main(final String[] args) {
-    new FileSystemASTVisitor(args) {
+    new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
         if (writer == null)
           initializeWriter(outputFolder); // needed to printout on a custom folder using -o 
