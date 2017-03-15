@@ -154,7 +154,6 @@ public final class InfixAdditionSortTest {
 
   @Test public void test07() {
     assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
-    assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
   }
 
   @Test public void test08() {
@@ -183,6 +182,12 @@ public final class InfixAdditionSortTest {
     final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert wizard.same(i, INPUT);
+  }
+  
+  @Test public void test10b() {
+    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
+    assert i != null;
+    assert wizard.same2(i, INPUT);
   }
 
   @Test public void test11() {
