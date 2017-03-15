@@ -74,11 +74,11 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   @Check default Rule<T, R> afterCheck(final boolean b) {
-    return afterCheck((T t)  -> b);
+    return afterCheck((final T t)  -> b);
   }
 
   @Check default Rule<T, R> afterCheck(final Consumer<T> c) {
-    return afterCheck((T t) -> {
+    return afterCheck((final T t) -> {
       c.accept(t);
       return true;
     });
@@ -103,11 +103,11 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   @Override @Apply R apply(T ¢);
 
   default Rule<T, R> beforeCheck(final boolean b) {
-     return beforeCheck((T t) -> b);
+     return beforeCheck((final T t) -> b);
   }
 
   default Rule<T, R> beforeCheck(final Consumer<T> c) {
-     return beforeCheck((T t) -> {
+     return beforeCheck((final T t) -> {
       c.accept(t);
       return true;
     });
