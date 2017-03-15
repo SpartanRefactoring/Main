@@ -24,22 +24,23 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   private static final FragmentInitializerInlineIntoNext fragmentInliner = new FragmentInitializerInlineIntoNext();
 
   @Override public boolean canTip(final VariableDeclarationFragment ¢) {
-    return letInliner.tip(¢) != null//
+    return letInliner.canTip(¢)//
         && fragmentInliner.cantTip(¢);
   }
 
   static class LetInliner extends ReplaceToNextStatement<VariableDeclarationFragment> {
     private static final long serialVersionUID = 2390117956692878327L;
 
+    @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+      final Statement nextStatement = extract.nextStatement(f);
+      final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
+      return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && !anyFurtherUsage(parent(nextStatement), name(f))
+          && initializer(f) != null;
+    }
+
     @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-      if (!preDelegation(f, nextStatement))
-        return null;
       final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
-      if (parent == null || fragments(parent).size() != 1 || anyFurtherUsage(parent(nextStatement), name(f)))
-        return null;
       final Expression initializer = initializer(f);
-      if (initializer == null)
-        return null;
       final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)

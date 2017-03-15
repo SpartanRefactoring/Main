@@ -218,7 +218,7 @@ class LightWeightMethodRecord {
 
   private void markLetItBeIn(final ASTNode ¢) {
     mark(extract.nextStatement(¢));
-    mark(extract.containingStatement(¢));
+    mark(¢);
   }
 
   private void mark(final ASTNode ¢) {
