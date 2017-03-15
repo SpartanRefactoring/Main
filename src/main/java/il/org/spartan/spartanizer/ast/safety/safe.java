@@ -1,5 +1,5 @@
-/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
- * @author orimarco <marcovitch.ori@gmail.com>
+/* TODO: orimarco <marcovitch.ori@gmail.com> please add a description
+  @author orimarco <marcovitch.ori@gmail.com>
  * @since Dec 19, 2016 */
 package il.org.spartan.spartanizer.ast.safety;
 
