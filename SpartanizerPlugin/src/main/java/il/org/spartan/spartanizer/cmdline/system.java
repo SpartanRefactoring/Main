@@ -17,6 +17,10 @@ import il.org.spartan.spartanizer.utils.*;
 public interface system {
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
+  static boolean always() {
+    return true;
+  }
+
   static Process bash(final String shellCommand) {
     if (windows())
       return null;
@@ -28,6 +32,25 @@ public interface system {
       monitor.logProbableBug(shellCommand, ¢);
     }
     return null;
+  }
+
+  /** @return the name of the class from which this method was called. */
+  public static String callingClassName() {
+    StackTraceElement[] es = new Throwable().getStackTrace();
+    for (int i = 1; i < es.length; i++)
+      if (!es[i].getClassName().equals(es[0].getClassName()))
+        return es[i].getClassName();
+    return new Object().getClass().getEnclosingClass().getCanonicalName();
+  }
+
+  static String className(final Class<?> c) {
+    if (c.getEnclosingClass() != null)
+      return selfName(c) + "." + className(c.getEnclosingClass());
+    return selfName(c);
+  }
+
+  static String className(final Object ¢) {
+    return className(¢.getClass());
   }
 
   static double d(final double n1, final double n2) {
@@ -123,6 +146,19 @@ public interface system {
     return formatRelative(d1 / d2);
   }
 
+  static BufferedWriter callingClassUniqueWriter() {
+    try {
+      return new BufferedWriter(new FileWriter(ephemeral(callingClassName()).dot("txt")));
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢);
+    }
+    return null;
+  }
+
+  static boolean isProductionCode(File f) {
+    return !system.isTestSourceFile(f.getName());
+  }
+
   static boolean isTestFile(final File ¢) {
     return system.isTestSourceFile(¢.getName());
   }
@@ -134,6 +170,18 @@ public interface system {
 
   static String now() {
     return (new Date() + "").replaceAll(" ", "-");
+  }
+
+  static String nth(final int i, final Collection<?> os) {
+    return system.nth(i, os.size());
+  }
+
+  static String nth(final int i, final int n) {
+    return nth(i + "", n + "");
+  }
+
+  static String nth(final String s, final String n) {
+    return " #" + s + "/" + n;
   }
 
   static String p(final int n1, final int n2) {
@@ -188,8 +236,32 @@ public interface system {
     return runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
 
+  static String selfName(final Class<?> c) {
+    if (c.isAnonymousClass())
+      return "{}";
+    if (c.isAnnotation())
+      return "@" + c.getSimpleName();
+    if (c.getSimpleName().isEmpty())
+      return c.getCanonicalName();
+    return c.getSimpleName();
+  }
+
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
+  }
+
+  /** swaps two elements in an indexed list in given indexes, if they are legal
+   * @param ts the indexed list
+   * @param i1 the index of the first element
+   * @param i2 the index of the second element
+   * @return the list after swapping the elements */
+  static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+    if (i1 < $.size() && i2 < $.size()) {
+      final T t = $.get(i1);
+      lisp.replace($, $.get(i2), i1);
+      lisp.replace($, t, i2);
+    }
+    return $;
   }
 
   static int tokens(final String s) {
@@ -219,57 +291,7 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  /** swaps two elements in an indexed list in given indexes, if they are legal
-   * @param ts the indexed list
-   * @param i1 the index of the first element
-   * @param i2 the index of the second element
-   * @return the list after swapping the elements */
-  static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
-    if (i1 < $.size() && i2 < $.size()) {
-      final T t = $.get(i1);
-      lisp.replace($, $.get(i2), i1);
-      lisp.replace($, t, i2);
-    }
-    return $;
-  }
-
-  static String nth(final int i, final Collection<?> os) {
-    return system.nth(i, os.size());
-  }
-
-  static String nth(final int i, final int n) {
-    return nth(i + "", n + "");
-  }
-
-  static String nth(final String s, final String n) {
-    return " #" + s + "/" + n;
-  }
-
-  static String className(final Class<?> c) {
-    if (c.getEnclosingClass() != null)
-      return selfName(c) + "."  + className(c.getEnclosingClass());
-    return selfName(c); 
-  }
-
-  static String selfName(final Class<?> c) {
-    if (c.isAnonymousClass())
-      return "{}";
-    if (c.isAnnotation())
-      return "@" + c.getSimpleName();
-    if (c.getSimpleName().isEmpty())
-      return c.getCanonicalName(); 
-    return c.getSimpleName();
-  }
-
-  static String className(final Object ¢) {
-    return className(¢.getClass());
-  }
-
   interface Extension {
     File dot(String extentsion);
-  }
-
-  static boolean isProductionCode(File f) {
-    return !system.isTestSourceFile(f.getName());
   }
 }
