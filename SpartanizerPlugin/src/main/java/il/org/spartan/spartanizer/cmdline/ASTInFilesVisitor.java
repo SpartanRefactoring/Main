@@ -156,10 +156,8 @@ public class ASTInFilesVisitor {
       }.fire(new ASTTrotter() {
         {
           hook(TypeDeclaration.class, //
-              Rule.on((TypeDeclaration t) -> {
-               return t.isInterface(); 
-              })//
-                  .go(t -> System.out.println(t.getName())//
+              Rule.on((TypeDeclaration t) -> t.isInterface())//
+                  .go(λ -> System.out.println(λ.getName())//
           )//
           );
         }
@@ -170,6 +168,7 @@ public class ASTInFilesVisitor {
   static boolean letItBeIn(final List<Statement> ¢) {
     return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
   }
+
   static BufferedWriter out;
 
   public static class BucketMethods {
@@ -220,7 +219,6 @@ public class ASTInFilesVisitor {
     static boolean letItBeIn(final List<Statement> ¢) {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
-
   }
 
   public static class ExpressionChain {
@@ -254,7 +252,6 @@ public class ASTInFilesVisitor {
         }
       });
     }
-
   }
 
   public static class FieldsOnly {

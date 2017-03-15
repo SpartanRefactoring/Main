@@ -290,8 +290,8 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
             return null;
           }
 
-          @Override public boolean ok(T t) {
-            return p.test(t);
+          @Override public boolean ok(T ¢) {
+            return p.test(¢);
           }
         };
       }
