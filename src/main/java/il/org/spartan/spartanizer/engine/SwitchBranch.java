@@ -1,5 +1,5 @@
-/** TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
- * @author YuvalSimon <yuvaltechnion@gmail.com>
+/* TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
+  @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */
 package il.org.spartan.spartanizer.engine;
 

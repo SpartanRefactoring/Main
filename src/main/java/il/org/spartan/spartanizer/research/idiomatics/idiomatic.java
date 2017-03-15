@@ -46,7 +46,7 @@ public interface idiomatic {
     return $::get;
   }
 
-  /** @param condition JD
+  /* @param condition JD
    * @return */
   /** {@code incase}
    * @param <T> JD
