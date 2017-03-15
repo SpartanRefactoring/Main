@@ -29,11 +29,11 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class FileSystemASTVisitor {
-  /** Check if a File contains {@link Test} annotations
+  /** Determines whether a file is production code, using the heuristic that
+   * production code does not contain {@code @}{@link Test} annotations
    * <p>
-   * @param f
    * @return */
-  public static boolean noTests(@¢ final File $) {
+  public static boolean productionCode(@¢ final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
@@ -42,7 +42,7 @@ public class FileSystemASTVisitor {
     }
   }
 
-  /** Check if a String contains {@link Test} annotations
+  /** Check if some java contains {@link Test} annotations
    * <p>
    * @param f
    * @return */
@@ -124,7 +124,7 @@ public class FileSystemASTVisitor {
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
-    if (!system.isTestFile(f) && noTests(f))
+    if (system.isProductionCode(f) && productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
@@ -148,7 +148,7 @@ public class FileSystemASTVisitor {
   protected String relativePath;
   @External(alias = "s", value = "silent") protected boolean silent;
 
-  public static class BucketMethods {
+  public static class PrintAllInterfaces {
     public static void main(final String[] args) {
       monitor.set(monitor.LOG_TO_FILE);
       try {
@@ -162,30 +162,12 @@ public class FileSystemASTVisitor {
           silent = true;
         }
       }.fire(new ASTTrotter() {
-        @Override protected void record(final String summary) {
-          try {
-            out.write(summary);
-          } catch (final IOException ¢) {
-            System.err.println("Error: " + ¢.getMessage());
-          }
-          super.record(summary);
-        }
-
-        boolean interesting(final List<Statement> ¢) {
-          return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
-        }
-
-        @Override boolean interesting(final MethodDeclaration ¢) {
-          return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
-        }
-
-        boolean leaking(final ASTNode ¢) {
-          return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
-              SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
-        }
-
-        boolean leaking(final Stream<ASTNode> ¢) {
-          return ¢.noneMatch(this::leaking);
+        {
+          hook(TypeDeclaration.class, //
+              Rule.on((TypeDeclaration t) -> t.isInterface())//
+                  .go(t -> System.out.println(t.getName())//
+          )//
+          );
         }
       });
     }
@@ -203,6 +185,63 @@ public class FileSystemASTVisitor {
     }
 
     static BufferedWriter out;
+
+    public static class BucketMethods {
+      public static void main(final String[] args) {
+        monitor.set(monitor.LOG_TO_FILE);
+        try {
+          out = new BufferedWriter(new FileWriter(system.ephemeral(myClass()).dot("txt")));
+        } catch (final IOException ¢) {
+          monitor.infoIOException(¢);
+          return;
+        }
+        new FileSystemASTVisitor(args) {
+          {
+            silent = true;
+          }
+        }.fire(new ASTTrotter() {
+          @Override protected void record(final String summary) {
+            try {
+              out.write(summary);
+            } catch (final IOException ¢) {
+              System.err.println("Error: " + ¢.getMessage());
+            }
+            super.record(summary);
+          }
+
+          boolean interesting(final List<Statement> ¢) {
+            return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
+          }
+
+          @Override boolean interesting(final MethodDeclaration ¢) {
+            return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
+          }
+
+          boolean leaking(final ASTNode ¢) {
+            return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
+                SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
+          }
+
+          boolean leaking(final Stream<ASTNode> ¢) {
+            return ¢.noneMatch(this::leaking);
+          }
+        });
+      }
+
+      private static String myClass() {
+        return MethodHandles.lookup().lookupClass().getClass().getSimpleName();
+      }
+
+      static Class<?> myEnclosingClass() {
+        return new Object().getClass().getEnclosingClass();
+      }
+
+      static boolean letItBeIn(final List<Statement> ¢) {
+        return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
+      }
+
+      static BufferedWriter out;
+    }
   }
 
   public static class ExpressionChain {

@@ -32,7 +32,7 @@ import il.org.spartan.utils.*;
  * a @{@link Apply} method call. .</li>
  * </ol>
  * <li><b>Aggregation:</b> An instance of this class may be atomic, or compound,
- * i.e., implementing RuleMulti. Method {@link #descendants()} returns a
+ * i.e., implementing {@link Recursive}. Method {@link #descendants()} returns a
  * {@link Stream} of nested instances, which is an singleton of {@code this} if
  * the instance is atomic, or include any number of instances, including
  * <li><b>Descriptive qualities:</b> {@link #examples()}, {@link #akas()},
@@ -126,7 +126,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     String value() default "A boolean method for checking prior to application of this instance";
   }
 
-  abstract class CountingDelegator<T, R> extends Delegator<T, R> {
+  abstract class CountingDelegator<T, R> extends Interceptor<T, R> {
     final Map<String, Integer> count = new LinkedHashMap<>();
 
     public CountingDelegator(final Rule<T, R> inner) {
@@ -140,17 +140,17 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     }
   }
 
-  /** Default implementation of a delegating {@link Rule}, equipped with a
-   * listener.
+  /** Default implementation of an intercepting {@link Rule}, equipped with a
+   * {@link Listener}
    * @param <T>
    * @param <R>
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   @SuppressWarnings("static-method")
-  abstract class Delegator<T, R> extends Stateful<T, R> implements Listener<T, R> {
+  abstract class Interceptor<T, R> implements Rule<T, R>, Listener<T, R> {
     public final Rule<T, R> inner;
 
-    public Delegator(final Rule<T, R> inner) {
+    public Interceptor(final Rule<T, R> inner) {
       this.inner = inner;
     }
 
@@ -168,17 +168,16 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return null;
     }
 
+    @Override public boolean check(final T ¢) {
+      return listenCheck(() -> inner.check(¢));
+    }
+
     @Override public final String description() {
       return listenDescription(inner::description);
     }
 
     @Override public final Example[] examples() {
       return listenExamples(inner::examples);
-    }
-
-    @Override public boolean ok(final T ¢) {
-      before("ok");
-      return listenOk(() -> inner.check(¢));
     }
 
     @Override public final String technicalName() {
@@ -198,16 +197,16 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return $.get();
     }
 
+    default boolean listenCheck(final BooleanSupplier ¢) {
+      return ¢.getAsBoolean();
+    }
+
     default String listenDescription(final Supplier<String> $) {
       return $.get();
     }
 
     default Example[] listenExamples(final Supplier<Example[]> $) {
       return $.get();
-    }
-
-    default boolean listenOk(final BooleanSupplier ¢) {
-      return ¢.getAsBoolean();
     }
 
     default String listenTechnicalName(final Supplier<String> $) {
@@ -276,5 +275,26 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     }
 
     public abstract boolean ok(T n);
+  }
+
+  interface OnApplicator<T> {
+    Rule<T, Void> go(Consumer<T> c);
+  }
+
+  static <T> OnApplicator<T> on(Predicate<T> p) {
+    return new OnApplicator<T>() {
+      @Override public Rule<T, Void> go(Consumer<T> c) {
+        return new Rule.Stateful<T, Void>() {
+          @Override public Void fire() {
+            c.accept(get());
+            return null;
+          }
+
+          @Override public boolean ok(T t) {
+            return p.test(t);
+          }
+        };
+      }
+    };
   }
 }
