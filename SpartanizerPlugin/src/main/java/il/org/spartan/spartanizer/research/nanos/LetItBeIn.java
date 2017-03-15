@@ -6,6 +6,8 @@ import org.eclipse.text.edits.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import java.util.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -24,22 +26,23 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   private static final FragmentInitializerInlineIntoNext fragmentInliner = new FragmentInitializerInlineIntoNext();
 
   @Override public boolean canTip(final VariableDeclarationFragment ¢) {
-    return letInliner.tip(¢) != null//
+    return letInliner.canTip(¢)//
         && fragmentInliner.cantTip(¢);
   }
 
   static class LetInliner extends ReplaceToNextStatement<VariableDeclarationFragment> {
     private static final long serialVersionUID = 2390117956692878327L;
 
+    @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+      final Statement nextStatement = extract.nextStatement(f);
+      final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
+      return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && noFurtherUsage(name(f), nextStatement)
+          && initializer(f) != null;
+    }
+
     @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-      if (!preDelegation(f, nextStatement))
-        return null;
       final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
-      if (parent == null || fragments(parent).size() != 1 || anyFurtherUsage(parent(nextStatement), name(f)))
-        return null;
       final Expression initializer = initializer(f);
-      if (initializer == null)
-        return null;
       final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
@@ -50,8 +53,11 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return $;
     }
 
-    private static boolean anyFurtherUsage(final ASTNode node, final SimpleName n) {
-      return collect.forAllOccurencesExcludingDefinitions(n).in(node).isEmpty();
+    private static boolean noFurtherUsage(final SimpleName n, final Statement nextStatement) {
+      final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
+      $.remove(n);
+      $.removeAll(collect.forAllOccurencesExcludingDefinitions(n).in(nextStatement));
+      return $.isEmpty();
     }
 
     private static boolean preDelegation(final VariableDeclarationFragment f, final Statement nextStatement) {
@@ -69,6 +75,8 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   }
 
   @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
+    // System.out.println("<<" + extract.containingStatement(¢));
+    // System.out.println(">>" + extract.nextStatement(¢));
     return letInliner.tip(¢);
   }
 }

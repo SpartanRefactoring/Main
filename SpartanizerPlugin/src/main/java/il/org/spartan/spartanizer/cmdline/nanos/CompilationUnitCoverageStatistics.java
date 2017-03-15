@@ -12,6 +12,7 @@ import static il.org.spartan.lisp.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
@@ -162,18 +163,18 @@ class CompilationUnitRecord {
     return (int) methods.values().stream().filter(LightWeightMethodRecord::fullyCovered).count();
   }
 
-  public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
+  public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n, final String np) {
     final String mangle = Vocabulary.mangle(¢);
     methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
-    methods.get(mangle).mark(n);
+    methods.get(mangle).mark(n, np);
   }
 
-  public void markNP(final ASTNode n, @SuppressWarnings("unused") final String np) {
+  public void markNP(final ASTNode n, final String np) {
     final MethodDeclaration $ = ancestorMethod(n);
     if ($ == null)
       markRegular(n);
     else
-      markContainedInMethod($, n);
+      markContainedInMethod($, n, np);
   }
 
   private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
@@ -206,12 +207,24 @@ class LightWeightMethodRecord {
   }
 
   /** makes sure we don't exceed 100% of nodes of a method */
-  public void mark(final ASTNode ¢) {
+  public void mark(final ASTNode ¢, final String np) {
+    if (!np.equals(LetItBeIn.class.getSimpleName()))
+      mark(¢);
+    else
+      markLetItBeIn(¢);
+    if (iz.methodDeclaration(¢))
+      fullyCovered = true;
+  }
+
+  private void markLetItBeIn(final ASTNode ¢) {
+    mark(extract.nextStatement(¢));
+    mark(¢);
+  }
+
+  private void mark(final ASTNode ¢) {
     nodes.inc(count.nodes(¢));
     commands.inc(measure.commands(¢));
     expressions.inc(measure.expressions(¢));
-    if (iz.methodDeclaration(¢))
-      fullyCovered = true;
   }
 
   public boolean touched() {
