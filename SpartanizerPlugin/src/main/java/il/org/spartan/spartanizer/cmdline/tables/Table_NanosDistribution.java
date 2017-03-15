@@ -73,7 +73,6 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
   }
 
   public static void summarize(final String path) {
-    npStatistics.fillAbsents();
     for (final Integer boxedType : npStatistics.keySet()) {
       if (!writers.containsKey(boxedType))
         initializeWriter(boxedType.intValue());
