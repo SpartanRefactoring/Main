@@ -176,7 +176,7 @@ public final class InfixAdditionSortTest {
     azzert.that(i.getOperator(), is(wizard.PLUS2));
     assert hop.operands(i) != null;
     azzert.that(hop.operands(i).size(), is(nTERMS));
-    assert wizard.same(i, INPUT);
+    assert wizard.same2(i, INPUT);
   }
 
   @Test public void test10() {
