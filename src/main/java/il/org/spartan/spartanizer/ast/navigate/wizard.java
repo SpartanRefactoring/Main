@@ -858,6 +858,24 @@ public interface wizard {
   static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
+  
+  /** 
+   * Works like same, but it applies {@ link tide.clean} to remove spaces
+   * Determine whether two nodes are the same, in the sense that their textual
+   * representations is identical.
+   * <p>
+   * Each of the parameters may be {@code null; a {@code null is only equal
+   * to{@code null
+   * @param n1 JD
+   * @param n2 JD
+   * @return {@code true} if the parameters are the same. 
+   * @author matteo
+   * @since 15/3/2017
+   * */
+  
+  static boolean same2(final ASTNode n1, final ASTNode n2) {
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && tide.clean(trivia.cleanForm(n1)+"").equals(tide.clean(trivia.cleanForm(n2)+""));
+  }
 
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
