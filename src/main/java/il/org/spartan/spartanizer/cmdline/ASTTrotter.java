@@ -27,8 +27,7 @@ public class ASTTrotter extends ASTVisitor {
     init();
     final Integer nodeType = wizard.classToNodeType.get(c);
     assert nodeType != null : fault.specifically("Unrecongized class", c);
-    get(nodeType.intValue());
-    dispatch[nodeType.intValue()].add(r);
+    get(nodeType.intValue()).add(r);
   }
 
   public boolean isFolding() {

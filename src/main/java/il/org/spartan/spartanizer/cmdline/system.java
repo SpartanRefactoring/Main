@@ -245,9 +245,20 @@ public interface system {
     return " #" + s + "/" + n;
   }
 
-  static String className(final Class<?> ¢) {
-    final String $ = ¢.getCanonicalName();
-    return ¢.getSimpleName() + "[" + ($ == null ? ¢ : $) + "]";
+  static String className(final Class<?> c) {
+    if (c.getEnclosingClass() != null)
+      return selfName(c) + "."  + className(c.getEnclosingClass());
+    return selfName(c); 
+  }
+
+  static String selfName(final Class<?> c) {
+    if (c.isAnonymousClass())
+      return "{}";
+    if (c.isAnnotation())
+      return "@" + c.getSimpleName();
+    if (c.getSimpleName().isEmpty())
+      return c.getCanonicalName(); 
+    return c.getSimpleName();
   }
 
   static String className(final Object ¢) {
@@ -256,5 +267,9 @@ public interface system {
 
   interface Extension {
     File dot(String extentsion);
+  }
+
+  static boolean isProductionCode(File f) {
+    return !system.isTestSourceFile(f.getName());
   }
 }
