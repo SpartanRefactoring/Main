@@ -202,7 +202,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     }
 
     @Override public boolean check(final T t) {
-      return false;
+      return inner.check(t); 
     }
 
     @Override public T object() {
