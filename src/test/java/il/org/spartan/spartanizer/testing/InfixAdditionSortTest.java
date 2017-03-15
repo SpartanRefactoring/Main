@@ -337,16 +337,12 @@ public final class InfixAdditionSortTest {
   
   @Test public void test17() {
     trimmingOf("y / 100 + l - 365 * y - y / 4 - y / 400")//
-        .stays();
+    .gives("l+y/100-365*y-y/4-y/400") //
+    .stays();
   }
   
   @Test public void test17a() {
     trimmingOf("y / 100 + l")//
-        .stays();
-  }
-  
-  @Test public void test18() {
-    trimmingOf(input)//
         .stays();
   }
 
