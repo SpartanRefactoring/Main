@@ -2,16 +2,17 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.io.*;
-import java.lang.invoke.*;
-import java.util.*;
-import java.util.stream.*;
-
-import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.lisp.*;
+import java.io.*;
+import java.lang.invoke.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -23,6 +24,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
  * <p>
@@ -155,11 +157,16 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          hook(TypeDeclaration.class, //
-              Rule.on((TypeDeclaration t) -> t.isInterface())//
-                  .go(λ -> System.out.println(λ.getName())//
-          )//
-          );
+          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface())
+              .go(t -> System.out.println(t.getName()));
+          final Predicate<TypeDeclaration> p = t -> t.isInterface();
+          final Predicate<TypeDeclaration> q = t -> {
+            System.out.println(t);
+            return t.isInterface();
+          };
+          final Consumer<TypeDeclaration> c = t -> System.out.println(t);
+          Rule<TypeDeclaration, Object> r4 = r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p);
+          on(TypeDeclaration.class).hook(r4);
         }
       });
     }
@@ -208,14 +215,6 @@ public class ASTInFilesVisitor {
       });
     }
 
-    private static String myClass() {
-      return MethodHandles.lookup().lookupClass().getClass().getSimpleName();
-    }
-
-    static Class<?> myEnclosingClass() {
-      return new Object().getClass().getEnclosingClass();
-    }
-
     static boolean letItBeIn(final List<Statement> ¢) {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
@@ -240,7 +239,7 @@ public class ASTInFilesVisitor {
         }
 
         {
-          hook(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
+          hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
             @Override public Void fire() {
               return null;
             }

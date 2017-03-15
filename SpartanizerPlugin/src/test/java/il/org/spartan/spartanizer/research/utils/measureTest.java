@@ -9,9 +9,8 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.util.*;
 
-/** TODO: Ori Marcovitch please add a description
- * @author Ori Marcovitch
- * @since 2016 */
+/** Tests {@link measure}
+ * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
 public class measureTest {
   @Test public void a() {
@@ -20,5 +19,9 @@ public class measureTest {
 
   @Test public void b() {
     azzert.that(measure.commands(ast("public void foo(){use();}")), is(1));
+  }
+
+  @Test public void c() {
+    azzert.that(measure.commands(ast("public void foo(){int x;" + "foo(x,x);}")), is(1));
   }
 }
