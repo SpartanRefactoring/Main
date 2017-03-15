@@ -143,7 +143,7 @@ public enum anonymize {
   }
 
   private static String operandClass(final Tipper<?> ¢) {
-    return ¢.get().getClass().getSimpleName();
+    return system.className(¢.object());
   }
 
   private static String tipperClass(final Tipper<?> ¢) {

@@ -90,9 +90,9 @@ public interface Recursive<@¢ T> {
       for (final Recursive<E> ¢ : children())
         $ = Stream.concat($, ¢.descendants());
       return $;
-    }/** A compound recursive structure enumerating {@link #descendants()} in
-      * post-order
-      * @param <E>
+    }/* A compound recurkksive structure enumerating {@link #descendants()} in
+       post-order
+       @param <E>
       * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
       * @since 2017-03-13 */
   }

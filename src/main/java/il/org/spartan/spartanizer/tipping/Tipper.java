@@ -85,7 +85,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public final Tip fire() {
-    return tip(get());
+    return tip(object());
   }
 
   /** @param n an ASTNode
