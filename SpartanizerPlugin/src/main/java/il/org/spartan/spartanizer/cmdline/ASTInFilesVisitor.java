@@ -2,6 +2,10 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.io.*;
 import java.lang.invoke.*;
 import java.util.*;
@@ -9,10 +13,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -24,6 +24,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
  * <p>
@@ -156,11 +157,16 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(t -> System.out.println(t.getName()));
-          final Predicate<TypeDeclaration> p = t->t.isInterface(); 
-          final Predicate<TypeDeclaration> q = t->t.isInterface(); 
-          final Consumer<TypeDeclaration> c = t->System.out.println(t);
-          hook(TypeDeclaration.class,r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
+          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface())
+              .go(t -> System.out.println(t.getName()));
+          final Predicate<TypeDeclaration> p = t -> t.isInterface();
+          final Predicate<TypeDeclaration> q = t -> {
+            System.out.println(t);
+            return t.isInterface();
+          };
+          final Consumer<TypeDeclaration> c = t -> System.out.println(t);
+          Rule<TypeDeclaration, Object> r4 = r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p);
+          on(TypeDeclaration.class).hook(r4);
         }
       });
     }
@@ -233,7 +239,7 @@ public class ASTInFilesVisitor {
         }
 
         {
-          hook(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
+          hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
             @Override public Void fire() {
               return null;
             }
