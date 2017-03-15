@@ -25,7 +25,7 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
     }
     final Expression $ = TermsExpander.simplify(¢);
 //    System.out.println("$: " + $);
-    Expression expression = !wizard.same($, ¢) ? $ : null;
+    Expression expression = !wizard.same2($, ¢) ? $ : null;
 //    System.out.println("expression: " + expression);
     return expression;
   }
