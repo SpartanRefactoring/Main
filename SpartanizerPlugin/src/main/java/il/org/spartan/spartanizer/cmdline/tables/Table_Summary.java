@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * @since 2016-12-25 */
+ * @since 2017-03-13 */
 public class Table_Summary {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
