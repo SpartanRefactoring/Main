@@ -38,12 +38,12 @@ public class Table_Summary {
         .col("Project", path)//
         .col("Commands", statementsCoverage())//
         .col("Expressions", expressionsCoverage())//
-        .col("methodsCovered", methodsCovered())//
-        .col("methodsTouched", touched())//
+        .col("Nodes", statistics.nodesCoverage())//
+        .col("Methods", methodsCovered())//
+        .col("Touched", touched())//
         .col("Iteratives", iterativesCoverage())//
         .col("ConditionalExpressions", conditionalExpressionsCoverage())//
         .col("ConditionalCommands", conditionalStatementsCoverage())//
-        .col("NodesCovered", statistics.nodesCoverage())//
         .col("total Commands", commands())//
         .col("total Methods", methods())//
         .nl();
