@@ -20,7 +20,6 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTippe
     final ASTNode $ = replacement(n);
     return $ == null ? null : new Tip(description(n), n, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        System.out.println("++++++++++++++++");
         r.replace(n, $, g);
       }
     };
