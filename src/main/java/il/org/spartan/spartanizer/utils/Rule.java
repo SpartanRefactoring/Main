@@ -190,7 +190,6 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     }
   }
 
-  @Deprecated
   public class Interceptor<T, R> implements Rule<T, R> {
     public final Rule<T, R> inner;
 
@@ -198,7 +197,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       this.inner = inner;
     }
 
-    public Void before(@SuppressWarnings("unused") final String key, @SuppressWarnings("unused") final Object... arguments) {
+    @SuppressWarnings({ "static-method", "unused" }) public Void before(final String key, final Object... arguments) {
       return null;
     }
 
