@@ -221,7 +221,14 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16a() {
     trimmingOf("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
-        .gives("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a/400+(b*306+5)/10+(365*a+a/4-a/100)-1") //
+        .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
+        .gives("c+a/400+(b*306+5)/10+365*a+a/4-a/100-1") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a/4+365*a+a/400+(b*306+5)/10-a/100-1") //
+        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .gives("c+a/4+365*a+a/400+(306*b+5)/10-a/100-1") //
         .stays();
   }
   
