@@ -3,16 +3,16 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;

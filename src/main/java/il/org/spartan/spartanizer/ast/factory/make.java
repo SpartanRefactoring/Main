@@ -4,6 +4,12 @@ import static il.org.spartan.spartanizer.ast.safety.iz.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -11,12 +17,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jface.text.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

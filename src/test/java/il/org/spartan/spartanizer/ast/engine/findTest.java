@@ -3,10 +3,10 @@ package il.org.spartan.spartanizer.ast.engine;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 

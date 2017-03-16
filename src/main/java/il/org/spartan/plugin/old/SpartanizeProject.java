@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.old;
 
+import static il.org.spartan.lisp.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -8,8 +10,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.cmdline.*;

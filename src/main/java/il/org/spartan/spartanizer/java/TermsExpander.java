@@ -1,17 +1,18 @@
 package il.org.spartan.spartanizer.java;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 /** Expands terms of +/- expressions without reordering, e.g., convert
  * {@code a + (b+c+(d-e))} into {@code a+b+c+d-e}

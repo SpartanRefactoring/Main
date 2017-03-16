@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.research.nanos;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -19,9 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class PercolateException extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = 3602550060640108032L;
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
-    
     private static final long serialVersionUID = -6137340797866308786L;
-
     {
       add(patternTipper("try $B1 catch($T $N1){ throw $N2;}", "try $B1 catch($T $N1){percolate($N2);};", ""));
     }

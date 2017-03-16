@@ -1,5 +1,7 @@
 package il.org.spartan.bloater;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 import java.util.List;
 import java.util.function.*;
@@ -13,8 +15,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;

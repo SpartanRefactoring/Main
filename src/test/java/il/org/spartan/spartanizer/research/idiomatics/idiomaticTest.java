@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.research.idiomatics;
 
 import static il.org.spartan.azzert.*;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.junit.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 

@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;

@@ -3,15 +3,15 @@ package il.org.spartan.spartanizer.ast.factory;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

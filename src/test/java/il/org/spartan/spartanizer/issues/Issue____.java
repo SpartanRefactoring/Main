@@ -35,7 +35,7 @@ import il.org.spartan.*;
  * <li>{@code assert</b> something();</code>
  * <li>{@code assert</b> !something();</code>
  * <li>{@code assert</b> thing() != null;</code>
- * 
+ *
 </ul>
  * The reason is that {@code assert} is short, clear, but does not provide as
  * much information as {@link azzert} . In the above situations, a priori there
