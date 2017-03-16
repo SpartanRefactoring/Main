@@ -19,7 +19,11 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     addAll(Arrays.asList(ts));
   }
 
-  public NanoPatternContainer<N> patternTipper(final String pattern, final String replacement, final String description) {
+  public NanoPatternContainer<N> add(final String pattern) {
+    return add(pattern, "", "");
+  }
+
+  public NanoPatternContainer<N> add(final String pattern, final String replacement, final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
