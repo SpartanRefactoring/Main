@@ -186,7 +186,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
           report //
               .put("Name", λ.name) //
               .put("Type", λ.className) //
-              .put("occurences", λ.occurences) //
+              .put("occurrences", λ.occurences) //
               .put("Statements", λ.numNPStatements) //
               .put("Expressions", λ.numNPExpressions) //
           ;
