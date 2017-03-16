@@ -3,16 +3,16 @@ package il.org.spartan.spartanizer.utils;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import org.junit.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Test class for class {@link iz}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class izTest {

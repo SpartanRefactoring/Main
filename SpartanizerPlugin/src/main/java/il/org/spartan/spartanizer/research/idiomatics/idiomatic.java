@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** An empty <code><b>enum</b></code> with a variety of {@code public
+/** An empty {@code enum} with a variety of {@code public
  * static} utility functions of reasonably wide use.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2013/07/01
@@ -46,7 +46,8 @@ public interface idiomatic {
     return $::get;
   }
 
-  /** @param condition JD
+  /* @param condition JD
+   *
    * @return */
   /** {@code incase}
    * @param <T> JD
@@ -206,7 +207,7 @@ public interface idiomatic {
   /** A class which is just like {@link Supplier} , except that it uses the
    * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
    * be thrown by the getters.
-   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @param <T> JD
    * @since 2016` */
   @FunctionalInterface

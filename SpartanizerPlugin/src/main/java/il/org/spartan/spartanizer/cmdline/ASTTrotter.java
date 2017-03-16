@@ -2,14 +2,15 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** An almost fully compatible, but more sane version of {@link ASTVisitor}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -23,12 +24,12 @@ public class ASTTrotter extends ASTVisitor {
       dispatch = (List<Rule<? extends ASTNode, ?>>[]) new List<?>[nodeTypesCount()];
   }
 
-  public <N extends ASTNode, T> void hook(final Class<N> c, final Rule<N, T> r) {
+  <N extends ASTNode, T> ASTTrotter hookClassOnRule(final Class<N> c, final Rule<N, T> r) {
     init();
     final Integer nodeType = wizard.classToNodeType.get(c);
     assert nodeType != null : fault.specifically("Unrecongized class", c);
-    get(nodeType.intValue());
-    dispatch[nodeType.intValue()].add(r);
+    get(nodeType.intValue()).add(r);
+    return this;
   }
 
   public boolean isFolding() {
@@ -109,4 +110,17 @@ public class ASTTrotter extends ASTVisitor {
 
   private int interesting;
   private int total;
+
+  public <N extends ASTNode> Hookable<N> on(final Class<N> c) {
+    return new Hookable<N>() {
+      @Override public Hookable<N> hook(final Rule<N, Object> ¢) {
+        hookClassOnRule(c, ¢);
+        return this;
+      }
+    };
+  }
+}
+
+interface Hookable<T> {
+  Hookable<T> hook(Rule<T, Object> o);
 }

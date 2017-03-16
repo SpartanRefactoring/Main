@@ -5,66 +5,22 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
+@Ignore("For version 300")
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
         .stays();
   }
-
-  @Test public void forwardDeclaration1() {
-    trimmingOf("/* * This is a comment */ int i = 6; int j = 2; int k = i+2; S.x.f(i-j+k); ")
-        .gives(" /* * This is a comment */ int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
-  }
-
-  @Test public void forwardDeclaration2() {
-    trimmingOf("/* * This is a comment */ int i = 6, h = 7; int j = 2; int k = i+2; S.x.f(i-j+k); ")
-        .gives(" /* * This is a comment */ int h = 7; int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
-  }
-
-  @Test public void forwardDeclaration3() {
-    trimmingOf("/* * This is a comment */ int i = 6; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); y(i); y(i+m); ")
-        .gives(" /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); int i = 6; y(i); y(i+m); ");
-  }
-
-  @Test public void forwardDeclaration4() {
+  @Test public void a2() {
     trimmingOf(
-        " /* * This is a comment */ int i = 6; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); final C bc = new C(i); y(i+m+bc.j); private static class C { public C(int i) { j = 2*i; public final int j; ")
+        " int res = blah.length(); if (blah.contains(0xDEAD)) return res * 2; if (res % 2 ==0) return ++res; if (blah.startsWith(\"y\")) { return y(res); int x = res + 6; if (x>1) return res + x; res -= 1; return res; ")
             .gives(
-                " /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); int i = 6; final C bc = new C(i); y(i+m+bc.j); private static class C { public C(int i) { j = 2*i; public final int j; ");
+                " int $ = blah.length(); if (blah.contains(0xDEAD)) return $ * 2; if ($ % 2 ==0) return ++$; if (blah.startsWith(\"y\")) { return y($); int x = $ + 6; if (x>1) return $ + x; $ -= 1; return $; ");
   }
-
-  @Test public void forwardDeclaration5() {
-    trimmingOf("/* * This is a comment */ int i = y(0); int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
-        .gives(" /* * This is a comment */ int j = 3; int k = j+2; int i = y(0); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
-  }
-
-  @Test public void forwardDeclaration6() {
-    trimmingOf(" /* * This is a comment */ int i = y(0); int h = 8; int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
-        .gives(" /* * This is a comment */ int h = 8; int i = y(0); int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
-  }
-
-  @Test public void forwardDeclaration7() {
-    trimmingOf(
-        " j = 2*i; } public final int j; private C yada6() { final C res = new C(6); final Runnable r = new Runnable() { @Override public void system() { res = new C(8); S.x.f(res.j); doStuff(res); private void doStuff(C res2) { S.x.f(res2.j); private C res; S.x.f(res.j); return res; ")
-            .gives(
-                " j = 2*i; } public final int j; private C yada6() { final Runnable r = new Runnable() { @Override public void system() { res = new C(8); S.x.f(res.j); doStuff(res); private void doStuff(C res2) { S.x.f(res2.j); private C res; final C res = new C(6); S.x.f(res.j); return res; ");
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
-    trimmingOf("if(a) { int i = 3; }")//
-        .stays();
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
-    trimmingOf("if(a) { Object o; }")//
-        .stays();
-  }
-
   @Test public void inlineSingleUse01() {
     trimmingOf("/* * This is a comment */ int i = y(0); int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
         .gives(" /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (y(0))); ");
@@ -100,45 +56,6 @@ public final class IgnoredTrimmerTest {
     trimmingOf(
         " final A a = new A(\"{\nABRA\n{\nCADABRA\n{\"); wizard.assertEquals(5, a.new Context().lineCount()); final PureIterable<Mutant> ms = a.mutantsGenerator(); wizard.assertEquals(2, count(ms)); final PureIterator<Mutant> i = ms.iterator(); assert (i.hasNext()); wizard.assertEquals(\"{\nABRA\nABRA\n{\nCADABRA\n{\n\", i.next().text); assert (i.hasNext()); wizard.assertEquals(\"{\nABRA\n{\nCADABRA\nCADABRA\n{\n\", i.next().text); assert !(i.hasNext());")
             .stays();
-  }
-
-  @Test public void issue120_1() {
-    trimmingOf("\"a\"+\"b\"")//
-        .gives("\"ab\"");
-  }
-
-  @Test public void issue120_2() {
-    trimmingOf("\"abc\"+\"de\"+\"fgh\"")//
-        .gives("\"abcdefgh\"");
-  }
-
-  @Test public void issue120_3() {
-    trimmingOf("\"abc\"+a.toString()+\"de\"+\"fgh\"")//
-        .gives("\"abc\"+a.toString()+\"defgh\"");
-  }
-
-  @Test public void issue120_4() {
-    trimmingOf("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"")//
-        .gives("c.toString()+\"abc\"+a.toString()+\"defgh\"");
-  }
-
-  @Test public void issue54ForPlainUseInCondition() {
-    trimmingOf("int a = f(); for (int i = 0; a <100; ++i) b[i] = 3;")//
-        .stays();
-  }
-
-  @Test public void issue54ForPlainUseInUpdaters() {
-    trimmingOf("int a = f(); for (int i = 0; i <100; i *= a) b[i] = 3;")//
-        .stays();
-  }
-
-  public void issue62b() {
-    trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;i+=1) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;i++) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;++i) if(false) break; return i; }")//
-        .gives("int f(int i) { for(;i<100;++i){} return i; }")//
-        .stays();
   }
 
   @Test public void reanmeReturnVariableToDollar01() {

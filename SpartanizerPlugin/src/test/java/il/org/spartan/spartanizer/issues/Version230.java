@@ -7,12 +7,12 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -24,10 +24,8 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** * Unit tests for the nesting class Unit test for the containing class. Note
- * our naming convention: a)test methods do not use the redundant "test" prefix.
- * b)test methods begin with the name of the method they check.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** Unit tests for version 2.30
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc", "OverlyComplexClass" }) //
@@ -149,11 +147,11 @@ public final class Version230 {
   }
 
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
-    included("a=3;b=3;", Assignment.class).in(new AssignmentAndAssignment());
+    included("a=3;b=3;", Assignment.class).in(new AssignmentAndAssignmentSameValue());
   }
 
   @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
-    included("a=null;b=null;", Assignment.class).notIn(new AssignmentAndAssignment());
+    included("a=null;b=null;", Assignment.class).notIn(new AssignmentAndAssignmentSameValue());
   }
 
   @Test public void assignmentReturn0() {

@@ -3,6 +3,8 @@ package il.org.spartan.plugin.preferences.revision;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
@@ -20,13 +22,11 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Revised global preferences page for the plugin.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

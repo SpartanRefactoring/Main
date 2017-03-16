@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A tipper is so small that it is
@@ -26,7 +26,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return () -> code;
   }
 
-  @Override public boolean equals(Object ¢) {
+  @Override public boolean equals(final Object ¢) {
     return getClass().equals(¢.getClass());
   }
 
@@ -85,7 +85,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public final Tip fire() {
-    return tip(get());
+    return tip(object());
   }
 
   /** @param n an ASTNode

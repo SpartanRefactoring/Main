@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
 
 /** Generates a table for analyzing loops distribution and nano pattern applied
  * to loops.

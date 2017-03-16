@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-7-17 */
 public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>//
     implements TipperCategory.Idiomatic {

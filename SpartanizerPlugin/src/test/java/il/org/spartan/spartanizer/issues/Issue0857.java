@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** Tests dollar renaming even if not only expression but also s + "" for
  * example
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //

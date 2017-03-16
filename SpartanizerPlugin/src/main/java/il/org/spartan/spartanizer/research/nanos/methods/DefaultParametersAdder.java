@@ -2,13 +2,13 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static java.util.stream.Collectors.*;
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 749438291743116142L;
   private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    static final long serialVersionUID = -7706175979497733071L;
     {
       add(patternTipper("$N($A)", "", ""));
       add(patternTipper("$N1.$N2($A)", "", ""));

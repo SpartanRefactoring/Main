@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -15,16 +16,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -8671479380276353771L;
-  private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("return $D;", "", ""));
-    }
-  };
+  private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("return $D;", "", ""));
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return empty(¢)//
-        || anyTips(tippers, onlyStatement(¢));
+    return empty(¢) || anyTips(tippers, onlyStatement(¢));
   }
 
   @Override public Category category() {

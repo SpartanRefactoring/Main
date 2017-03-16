@@ -2,10 +2,10 @@ package il.org.spartan.zoomer.zoomin.expanders;
 
 import static il.org.spartan.azzert.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

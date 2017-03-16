@@ -4,7 +4,7 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Created out of {@link ConfigurableObjectTemplate}
  * @author Ori Marcovitch

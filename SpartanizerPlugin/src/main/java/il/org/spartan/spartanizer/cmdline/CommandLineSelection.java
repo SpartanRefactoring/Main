@@ -1,17 +1,16 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Selection useful to deal with projects using the command line

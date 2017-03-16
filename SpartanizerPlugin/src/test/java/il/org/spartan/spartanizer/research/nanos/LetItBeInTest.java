@@ -49,12 +49,15 @@ public class LetItBeInTest {
         .stays();
   }
 
+  @Test public void i() {
+    trimmingOf("X x = foo(); bar1(x,x); bar2(x);")//
+        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .stays();
+  }
+
   @Test public void f() {
     trimmingOf("{{A x = foo(); bar(x,x); print(x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
-        .gives("{{{let(()->foo()).in(x->bar(x,x));}print(x);}another();}") //
-        .gives("let(()->foo()).in(x->bar(x,x));print(x);another();") //
-        .gives("let(()->foo()).in(λ->bar(λ,λ));print(x);another();") //
         .stays();
   }
 

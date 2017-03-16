@@ -19,7 +19,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
@@ -44,7 +44,7 @@ public final class SingleFlater {
 
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
-   * @return <code><b>this</b></code> flater */
+   * @return {@code this} flater */
   public SingleFlater from(final OperationsProvider ¢) {
     operationsProvider = ¢;
     return this;
@@ -52,7 +52,7 @@ public final class SingleFlater {
 
   /** Sets text selection limits for this flater.
    * @param ¢ JD
-   * @return <code><b>this</b></code> flater */
+   * @return {@code this} flater */
   @Deprecated public SingleFlater limit(final TextSelection ¢) {
     textSelection = ¢;
     return this;
@@ -60,14 +60,14 @@ public final class SingleFlater {
 
   /** Sets text selection limits of window to this flater.
    * @param ¢ JD
-   * @return <code><b>this</b></code> flater */
+   * @return {@code this} flater */
   public SingleFlater limit(final WindowInformation ¢) {
     windowInformation = ¢;
     return this;
   }
 
   /** Set disabling for this flater.
-   * @return <code><b>this</b></code> flater */
+   * @return {@code this} flater */
   public SingleFlater usesDisabling(final boolean ¢) {
     usesDisabling = ¢;
     return this;

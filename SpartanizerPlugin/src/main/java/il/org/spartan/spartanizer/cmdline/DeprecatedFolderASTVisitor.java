@@ -3,16 +3,16 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Parse and visit all Java files under a given path.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   @External(alias = "i", value = "input folder") protected static final String inputFolder = system.windows() ? "" : ".";
@@ -108,7 +108,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   void visit(final File f) {
     if (!silent)
       dotter.click();
-    if (!system.isTestFile(f) && FileSystemASTVisitor.noTests(f))
+    if (!system.isTestFile(f) && ASTInFilesVisitor.productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();

@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
@@ -16,12 +16,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Singleton containing all {@link Tipper}s which are active, allowing
  * selecting and applying the most appropriate such object for a given
  * {@link ASTNode}.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
- *         {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-22 */
 public class Toolbox {
   @SuppressWarnings("unchecked")
@@ -177,7 +177,7 @@ public class Toolbox {
             new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
-            new AssignmentAndAssignment(), //
+            new AssignmentAndAssignmentSameValue(), //
             new AssignmentAndReturn(), //
             new AssignmentToFromInfixIncludingTo(), //
             new AssignmentToPrefixIncrement(), //
@@ -380,7 +380,7 @@ public class Toolbox {
    * {@link ASTNode}.
    * @param c JD
    * @param ts JD
-   * @return <code><b>this</b></code>, for easy chaining. */
+   * @return {@code this}, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
     final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //

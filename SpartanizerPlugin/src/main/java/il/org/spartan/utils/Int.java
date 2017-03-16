@@ -1,10 +1,8 @@
-package il.org.spartan.spartanizer.utils;
-
-import il.org.spartan.utils.*;
+package il.org.spartan.utils;
 
 /** A poor man's approximation of a mutable int, which is so much more
  * convenient than {@link Integer}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 12, 2016 */
 public final class Int {
   public int inner;

@@ -29,7 +29,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Set compilation units for this selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   public Self setCompilationUnits(final List<WrappedCompilationUnit> ¢) {
     inner = ¢ != null ? ¢ : new ArrayList<>();
     return self();
@@ -37,7 +37,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Set text selection for this selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   public Self setTextSelection(final ITextSelection ¢) {
     textSelection = ¢;
     return self();
@@ -49,7 +49,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Set name for this selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   Self setName(final String ¢) {
     name = ¢;
     return self();
@@ -57,7 +57,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Add a compilation unit for this selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   Self add(final WrappedCompilationUnit ¢) {
     if (¢ != null)
       inner.add(¢);
@@ -66,7 +66,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Add compilation units for this selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   public Self add(final Collection<WrappedCompilationUnit> ¢) {
     if (¢ != null)
       inner.addAll(¢);
@@ -75,7 +75,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Add compilation units for this selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   public Self add(final WrappedCompilationUnit... ¢) {
     Collections.addAll(inner, ¢);
     return self();
@@ -83,7 +83,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
 
   /** Extend current selection using compilation units from another selection.
    * @param ¢ JD
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   Self unify(final Self ¢) {
     if (¢ != null && ¢.inner != null) {
       if (inner == null)

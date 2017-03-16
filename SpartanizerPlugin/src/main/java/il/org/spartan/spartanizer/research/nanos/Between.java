@@ -2,13 +2,14 @@ package il.org.spartan.spartanizer.research.nanos;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -20,15 +21,12 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-02 */
 public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   private static final long serialVersionUID = 3728204247529612309L;
-  private static final Collection<UserDefinedTipper<InfixExpression>> inEqualities = new ArrayList<UserDefinedTipper<InfixExpression>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("$X1 < $X2", "", ""));
-      add(patternTipper("$X1 <= $X2", "", ""));
-      add(patternTipper("$X2 > $X1", "", ""));
-      add(patternTipper("$X2 >= $X1", "", ""));
-    }
-  };
+  private static final Collection<UserDefinedTipper<InfixExpression>> inEqualities = as.list(//
+      patternTipper("$X1 < $X2", "", ""), //
+      patternTipper("$X1 <= $X2", "", ""), //
+      patternTipper("$X2 > $X1", "", ""), //
+      patternTipper("$X2 >= $X1", "", "")//
+  );
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Go fluent: Between pattern";
