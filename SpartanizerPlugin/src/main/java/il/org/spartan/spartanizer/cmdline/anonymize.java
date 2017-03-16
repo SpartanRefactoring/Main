@@ -127,8 +127,11 @@ public enum anonymize {
   }
 
   public static String comment() {
-    return format("/** Automatically generated on %s, copied by %s */\n", //
-        system.now(), system.userName());
+    return format("/** Introduced by %s on %s \n(code automatically generated in '%s.java')*/\n", //
+        system.userName(), //
+        system.now(), //
+        system.callingClassName() //
+    );
   }
 
   public static String body(final String input) {
