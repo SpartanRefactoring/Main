@@ -16,17 +16,31 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** convert {@code
- * a = 3;
- * b = 3;
- * } to {@code
- * a = b = 3
- * }
+import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tipping.*;
+
+/** See {@link #examples()} for documentation
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-28 */
-public final class AssignmentAndAssignment extends ReplaceToNextStatement<Assignment>//
+public final class AssignmentAndAssignmentSameValue extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 7624011796441469217L;
+
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("a=3;b=3;").to("a=b=3"), //
+        ignores("a=c;b=c"), //
+    };
+  }
 
   private static Expression extractRight(final Assignment ¢) {
     final Expression $ = from(¢);
