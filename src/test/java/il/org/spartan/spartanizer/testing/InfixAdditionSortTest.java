@@ -132,7 +132,7 @@ public final class InfixAdditionSortTest {
     assert new InfixAdditionSubtractionExpand().check(INPUT);
   }
   
-  private String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
+  private final String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
   
   @Test public void test05c() {
     assert !new InfixAdditionSubtractionExpand().check(into.i(s));
