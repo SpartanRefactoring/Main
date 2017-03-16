@@ -21,7 +21,6 @@ import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-03-09 */
 @RunWith(Parameterized.class)
-@SuppressWarnings("static-method")
 public class ExamplesTests {
   /** Current tipper, loaded dynamically. */
   private final Tipper<? extends ASTNode> tipper;
@@ -37,7 +36,7 @@ public class ExamplesTests {
       }
   }
 
-  private void testConverts(final Converts ¢) {
+  private static void testConverts(final Converts ¢) {
     trimmingOf(¢.from()).gives(¢.to());
   }
 

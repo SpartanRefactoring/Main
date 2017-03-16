@@ -6,42 +6,36 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-/** @nano Appply statement for each element in collection
+/** @nano Apply statement for each element in collection
  * @author Ori Marcovitch */
 public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -4378523020212222986L;
-  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = 8094121673867203405L;
-    {
-      add(patternTipper("for($T $N1 : $N2) $X;", "$N2.forEach($N1 -> $X);", "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($T $N1 : $X1) $X2;", "($X1).forEach($N1 -> $X2);", "ForEachThat pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B", "$N2.forEach($N1 -> {try{ $X; } catch($T2 $N3) $B});",
-          "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B", "($X1).forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B});",
-          "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2",
-          "$N2.forEach($N1 -> {try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2});", "ForEach pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2",
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
+      patternTipper("for($T $N1 : $N2) $X;", "$N2.forEach($N1 -> $X);", "ForEach pattern: conevrt to fluent API"),
+      patternTipper("for($T $N1 : $X1) $X2;", "($X1).forEach($N1 -> $X2);", "ForEachThat pattern: conevrt to fluent API"),
+      patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B", "$N2.forEach($N1 -> {try{ $X; } catch($T2 $N3) $B});",
+          "ForEach pattern: conevrt to fluent API"),
+      patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B", "($X1).forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B});",
+          "ForEach pattern: conevrt to fluent API"),
+      patternTipper("for($T1 $N1 : $N2) try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2",
+          "$N2.forEach($N1 -> {try{ $X; } catch($T2 $N3) $B1 catch($T3 $N4) $B2});", "ForEach pattern: conevrt to fluent API"),
+      patternTipper("for($T1 $N1 : $X1) try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2",
           "($X1).forEach($N1 -> {try{ $X2; } catch($T2 $N2) $B1 catch($T3 $N3) $B2});", "ForEach pattern: conevrt to fluent API"));
-    }
-  };
-  protected static final Collection<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = 5286697303579942652L;
-    {
-      add(new HoldsForAll());
-      add(new HoldsForAny());
-      add(new Aggregate());
-      add(new Collect.defender());
-      add(new Select());
-      add(new CountIf());
-      add(new FlatMap());
-    }
-  };
+  protected static final Collection<NanoPatternTipper<EnhancedForStatement>> rivals = as.list(//
+      new HoldsForAll(), //
+      new HoldsForAny(), //
+      new Aggregate(), //
+      new Collect.defender(), //
+      new Select(), //
+      new CountIf(), //
+      new FlatMap()//
+  );
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢)//

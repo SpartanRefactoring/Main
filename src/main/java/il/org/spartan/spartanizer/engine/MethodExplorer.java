@@ -29,8 +29,8 @@ public final class MethodExplorer {
    * @return a list of {@link SimpleName} from the given method. */
   public List<SimpleName> localVariables() {
     final List<SimpleName> $ = new ArrayList<>();
-      //noinspection SameReturnValue,SameReturnValue,SameReturnValue
-      inner.accept(new IgnoreNestedMethods() {
+    // noinspection SameReturnValue,SameReturnValue,SameReturnValue
+    inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final CatchClause ¢) {
         return add(¢.getException());
       }
@@ -76,8 +76,8 @@ public final class MethodExplorer {
    * @return a list of {@link ReturnStatement} from the given method. */
   public List<ReturnStatement> returnStatements() {
     final List<ReturnStatement> $ = new ArrayList<>();
-      //noinspection SameReturnValue
-      inner.accept(new IgnoreNestedMethods() {
+    // noinspection SameReturnValue
+    inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final ReturnStatement ¢) {
         $.add(¢);
         return true;

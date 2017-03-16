@@ -10,6 +10,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -19,13 +20,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch */
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 749438291743116142L;
-  private static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
-    static final long serialVersionUID = -7706175979497733071L;
-    {
-      add(patternTipper("$N($A)", "", ""));
-      add(patternTipper("$N1.$N2($A)", "", ""));
-    }
-  };
+  private static final Collection<UserDefinedTipper<Expression>> tippers = as.list( //
+      patternTipper("$N($A)", "", ""), //
+      patternTipper("$N1.$N2($A)", "", "")) //
+  ;
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//

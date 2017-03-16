@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,15 +16,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-02-12 */
 public final class Min extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = 6090319353585840250L;
-  private static final Collection<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    static final long serialVersionUID = -733665413958032402L;
-    {
-      add(patternTipper("$X1 > $X2 ? $X2 : $X1", "min($X1,$X2)", "min"));
-      add(patternTipper("$X2 < $X1 ? $X2 : $X1", "min($X1,$X2)", "min"));
-      add(patternTipper("$X1 >= $X2 ? $X2 : $X1", "min($X1,$X2)", "min"));
-      add(patternTipper("$X2 <= $X1 ? $X2 : $X1", "min($X1,$X2)", "min"));
-    }
-  };
+  private static final Collection<UserDefinedTipper<ConditionalExpression>> tippers = as.list(
+      patternTipper("$X1 > $X2 ? $X2 : $X1", "min($X1,$X2)", "min"), patternTipper("$X2 < $X1 ? $X2 : $X1", "min($X1,$X2)", "min"),
+      patternTipper("$X1 >= $X2 ? $X2 : $X1", "min($X1,$X2)", "min"), patternTipper("$X2 <= $X1 ? $X2 : $X1", "min($X1,$X2)", "min"));
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);

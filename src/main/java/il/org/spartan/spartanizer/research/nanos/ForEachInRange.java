@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,12 +16,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-12 */
 public class ForEachInRange extends NanoPatternTipper<ForStatement> {
   private static final long serialVersionUID = 8025191112596638412L;
-  private static final List<UserDefinedTipper<ForStatement>> tippers = new ArrayList<UserDefinedTipper<ForStatement>>() {
-    static final long serialVersionUID = -2664304244521487245L;
-    {
-      add(patternTipper("for(int $N1 = $X1; $N1 < $X2; ++$N1) $X3;", "range.from($X1).to($X2).forEach($N1 -> $X3);", "Go fluent: ForEachInRange"));
-    }
-  };
+  private static final List<UserDefinedTipper<ForStatement>> tippers = as
+      .list(patternTipper("for(int $N1 = $X1; $N1 < $X2; ++$N1) $X3;", "range.from($X1).to($X2).forEach($N1 -> $X3);", "Go fluent: ForEachInRange"));
 
   @Override public boolean canTip(final ForStatement ¢) {
     return anyTips(tippers, ¢);

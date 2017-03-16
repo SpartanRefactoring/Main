@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -18,12 +19,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-08 */
 public final class PercolateException extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = 3602550060640108032L;
-  private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
-    static final long serialVersionUID = -6137340797866308786L;
-    {
-      add(patternTipper("try $B1 catch($T $N1){ throw $N2;}", "try $B1 catch($T $N1){percolate($N2);};", ""));
-    }
-  };
+  private static final List<UserDefinedTipper<TryStatement>> tippers = as
+      .list(patternTipper("try $B1 catch($T $N1){ throw $N2;}", "try $B1 catch($T $N1){percolate($N2);};", ""));
 
   @Override public boolean canTip(final CatchClause ¢) {
     return anyTips(tippers, parentAsTryStatement(¢));

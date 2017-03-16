@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -16,19 +17,15 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-02-12 */
 public class FlatMap extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = 3697154817276899051L;
-  private static final Collection<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = 4953734435544047802L;
-    {
-      add(patternTipper("for($T $N1 : $X1) $N2.addAll($N1);", "$N2.addAll(($X1).stream().flatMap($N1 -> $N1));",
+  private static final Collection<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
+      patternTipper("for($T $N1 : $X1) $N2.addAll($N1);", "$N2.addAll(($X1).stream().flatMap($N1 -> $N1));",
+          "FlatMap pattern: conevrt to fluent API"),
+      patternTipper("for($T $N1 : $X1) $N2.addAll($X2);", "$N2.addAll(($X1).stream().flatMap($N1 -> $X2));",
+          "FlatMap pattern: conevrt to fluent API"),
+      patternTipper("for($T1 $N1 : $X1) for($T2 $N3 : $N1) $N2.add($N3);", "$N2.addAll(($X1).stream().flatMap($N1 -> $N1));",
+          "FlatMap pattern: conevrt to fluent API"),
+      patternTipper("for($T1 $N1 : $X1) for($T2 $N3 : $N1) $N2.add($N3);", "$N2.addAll(($X1).stream().flatMap($N1 -> $X2));",
           "FlatMap pattern: conevrt to fluent API"));
-      add(patternTipper("for($T $N1 : $X1) $N2.addAll($X2);", "$N2.addAll(($X1).stream().flatMap($N1 -> $X2));",
-          "FlatMap pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $X1) for($T2 $N3 : $N1) $N2.add($N3);", "$N2.addAll(($X1).stream().flatMap($N1 -> $N1));",
-          "FlatMap pattern: conevrt to fluent API"));
-      add(patternTipper("for($T1 $N1 : $X1) for($T2 $N3 : $N1) $N2.add($N3);", "$N2.addAll(($X1).stream().flatMap($N1 -> $X2));",
-          "FlatMap pattern: conevrt to fluent API"));
-    }
-  };
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);

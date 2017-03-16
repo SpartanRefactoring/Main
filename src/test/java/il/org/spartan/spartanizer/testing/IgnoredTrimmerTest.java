@@ -15,12 +15,14 @@ public final class IgnoredTrimmerTest {
     trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
         .stays();
   }
+
   @Test public void a2() {
     trimmingOf(
         " int res = blah.length(); if (blah.contains(0xDEAD)) return res * 2; if (res % 2 ==0) return ++res; if (blah.startsWith(\"y\")) { return y(res); int x = res + 6; if (x>1) return res + x; res -= 1; return res; ")
             .gives(
                 " int $ = blah.length(); if (blah.contains(0xDEAD)) return $ * 2; if ($ % 2 ==0) return ++$; if (blah.startsWith(\"y\")) { return y($); int x = $ + 6; if (x>1) return $ + x; $ -= 1; return $; ");
   }
+
   @Test public void inlineSingleUse01() {
     trimmingOf("/* * This is a comment */ int i = y(0); int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
         .gives(" /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (y(0))); ");
