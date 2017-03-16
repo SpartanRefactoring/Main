@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Couples together {@link CompilationUnit} and its {@link ICompilationUnit}.
  * @author Ori Roth

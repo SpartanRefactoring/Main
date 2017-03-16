@@ -46,6 +46,40 @@ public final class Version300 {
     ;
   }
 
+  /** Automatically generated on Thu-Mar-16-08:15:41-IST-2017, copied by
+   * Yossi */
+  @Test public void ifaAb() {
+    trimmingOf("if (a) { A b; }") //
+        .using(IfStatement.class, new IfDeadRemove()) //
+        .gives("{}") //
+        .gives("") //
+        .stays() //
+    ;
+  }
+
+  /** Automatically generated on Thu-Mar-16-08:26:53-IST-2017, copied by
+   * Yossi */
+  @Test public void genererated13() {
+    trimmingOf("{}") //
+        .gives("") //
+        .stays() //
+    ;
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+    trimmingOf("if(a) { int i = 3; }")//
+        .gives("{}") //
+        .gives("") //
+        .stays();
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+    trimmingOf("if(a) { Object o; }")//
+        .gives("{}") //
+        .gives("") //
+        .stays();
+  }
+
   @Test public void a() {
     azzert.that(
         theSpartanizer.once(//

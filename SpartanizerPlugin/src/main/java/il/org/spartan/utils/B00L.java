@@ -17,12 +17,12 @@ import il.org.spartan.*;
  * </ol>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-06 */
-public interface BOOL extends BooleanSupplier {
-  static BOOL AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+public interface B00L extends BooleanSupplier {
+  static B00L AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Conjunction(s1, s2, ss);
   }
 
-  static BOOL condition(final BooleanSupplier ¢) {
+  static B00L condition(final BooleanSupplier ¢) {
     return new Parenthesis(¢);
   }
 
@@ -30,44 +30,44 @@ public interface BOOL extends BooleanSupplier {
     return new Negation(¢);
   }
 
-  static BOOL OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static B00L OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Disjunction(s1, s2, ss);
   }
 
-  static BOOL S(final BooleanSupplier ¢) {
+  static B00L S(final BooleanSupplier ¢) {
     return new Parenthesis(¢);
   }
 
-  BOOL F = new Parenthesis(() -> false);
-  BOOL T = new Parenthesis(() -> true);
-  BOOL X = BOOL.S(() -> {
+  B00L F = new Parenthesis(() -> false);
+  B00L T = new Parenthesis(() -> true);
+  B00L X = B00L.S(() -> {
     throw new AssertionError();
   });
 
-  BOOL and(BooleanSupplier c, BooleanSupplier... cs);
+  B00L and(BooleanSupplier c, BooleanSupplier... cs);
 
   default boolean eval() {
     return getAsBoolean();
   }
 
-  BOOL or(BooleanSupplier c, BooleanSupplier... cs);
+  B00L or(BooleanSupplier c, BooleanSupplier... cs);
 
-  abstract class Compound implements BOOL {
+  abstract class Compound implements B00L {
     protected Stream<BooleanSupplier> stream() {
       return inner.stream();
     }
 
-    final BOOL add(final BooleanSupplier... ¢) {
+    final B00L add(final BooleanSupplier... ¢) {
       inner.addAll(as.list(¢));
       return this;
     }
 
-    final BOOL add(final BooleanSupplier c, final BooleanSupplier... cs) {
+    final B00L add(final BooleanSupplier c, final BooleanSupplier... cs) {
       inner.add(c);
       return add(cs);
     }
 
-    final BOOL add(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier... cs) {
+    final B00L add(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier... cs) {
       inner.add(c1);
       return add(c2, cs);
     }
@@ -84,7 +84,7 @@ public interface BOOL extends BooleanSupplier {
       add(c, cs);
     }
 
-    @Override public BOOL and(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
       return add(this, c, cs);
     }
 
@@ -92,7 +92,7 @@ public interface BOOL extends BooleanSupplier {
       return stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public BOOL or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new Disjunction(this, c, cs);
     }
   }
@@ -106,7 +106,7 @@ public interface BOOL extends BooleanSupplier {
       add(c1, c2, cs);
     }
 
-    @Override public BOOL and(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
       inner.set(inner.size() - 1, AND(S(last(inner)), c, cs));
       return this;
     }
@@ -115,7 +115,7 @@ public interface BOOL extends BooleanSupplier {
       return stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public BOOL or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return add(c, cs);
     }
   }
@@ -130,18 +130,18 @@ public interface BOOL extends BooleanSupplier {
     }
   }
 
-  class Parenthesis implements BOOL {
+  class Parenthesis implements B00L {
     public Parenthesis(final BooleanSupplier inner) {
       if (inner == null)
         throw new IllegalArgumentException();
       this.inner = inner;
     }
 
-    @Override public final BOOL and(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public final B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new Conjunction(this, c, cs);
     }
 
-    @Override public BOOL or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new Disjunction(this, c, cs);
     }
 

@@ -3,9 +3,9 @@
  * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
  * we do not because some of the tests rely on the functions here returning
  * false/true, or for no reason. No one really know...
- * 
+ *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * 
+ *
  * @see ExclusionManager */
 package il.org.spartan.spartanizer.tippers;
 

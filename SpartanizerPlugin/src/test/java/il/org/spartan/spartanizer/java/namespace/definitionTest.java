@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** @formatter:off */
 @Target(ElementType.TYPE) @annotation @interface annotation { /**/ }
