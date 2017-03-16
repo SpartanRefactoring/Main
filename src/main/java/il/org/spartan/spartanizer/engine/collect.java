@@ -2,12 +2,12 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -447,7 +447,7 @@ public enum collect {
   /** An abstract class to carry out the collection process. Should not be
    * instantiated or used directly by clients, other than the use as part of
    * fluent API.
-   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2015-09-06 */
   public abstract static class Collector {
     final SimpleName name;

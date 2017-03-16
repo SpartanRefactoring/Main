@@ -44,7 +44,7 @@ public class AsBitTest {
   @Test public void e() {
     trimmingOf("k == 0 ? 0 : 1")//
         .using(ConditionalExpression.class, new AsBit())//
-        .gives("as.bit(!(k==0))")//
+        .gives("as.bit(! ( k == 0 ) )")//
         .gives("as.bit(k != 0 )")//
         .stays();
   }

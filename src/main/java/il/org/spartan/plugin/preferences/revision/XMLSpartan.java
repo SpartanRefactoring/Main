@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.Map.*;
@@ -15,14 +17,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
  * describes what tippers are enabled for the project.
@@ -104,7 +104,7 @@ public class XMLSpartan {
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
-    $.removeIf(λ -> ets.contains(λ.getSimpleName()));
+    $.removeIf(λ -> !ets.contains(λ.getSimpleName()));
     return $;
   }
 

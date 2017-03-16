@@ -1,15 +1,14 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import static il.org.spartan.lisp.*;
+
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** TODO Matteo Orru': document class {@link }

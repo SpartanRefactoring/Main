@@ -1,15 +1,15 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
+import static il.org.spartan.lisp.*;
+
 import static il.org.spartan.spartanizer.cmdline.system.*;
 
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
@@ -46,11 +46,11 @@ public interface English {
   }
 
   static String upperFirstLetter(final String input) {
-    return input.substring(0, 1).toUpperCase() + input.substring(1);
+    return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toUpperCase() + input.substring(1);
   }
 
   static String lowerFirstLetter(final String input) {
-    return input.substring(0, 1).toLowerCase() + input.substring(1);
+    return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toLowerCase() + input.substring(1);
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.

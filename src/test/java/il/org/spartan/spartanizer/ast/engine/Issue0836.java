@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.ast.engine;
 
 import static il.org.spartan.azzert.*;
 
-import org.junit.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

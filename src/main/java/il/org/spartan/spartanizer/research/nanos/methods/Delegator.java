@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -15,14 +15,14 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Delegator extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -4053526639017810391L;
   private static final NanoPatternContainer<Expression> tippers = new NanoPatternContainer<Expression>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 8652317198195620563L;
     {
-      patternTipper("$N($A)", "", "");
-      patternTipper("$N1.$N($A)", "", "");
-      patternTipper("$N1().$N($A)", "", "");
-      patternTipper("$N1().$N2().$N($A)", "", "");
-      patternTipper("$N1.$N2().$N($A)", "", "");
-      patternTipper("(($T)$N1).$N($A)", "", "");
+      add("$N($A)", "", "");
+      add("$N1.$N($A)", "", "");
+      add("$N1().$N($A)", "", "");
+      add("$N1().$N2().$N($A)", "", "");
+      add("$N1.$N2().$N($A)", "", "");
+      add("(($T)$N1).$N($A)", "", "");
     }
   };
 

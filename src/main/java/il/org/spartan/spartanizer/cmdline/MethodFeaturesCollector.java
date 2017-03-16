@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Collects boolean features of methods
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 20, 2016 */
 public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
   static {

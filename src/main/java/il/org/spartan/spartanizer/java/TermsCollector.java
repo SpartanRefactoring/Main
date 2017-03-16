@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import static il.org.spartan.lisp.*;
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Collects the {@link Term} found in an {@link InfixExpression}, organizing
  * them in three output fields: {@link #plus}, {@link #minus} and {@link #all}.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public final class TermsCollector {
   public static boolean isLeafTerm(final Expression ¢) {

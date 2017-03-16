@@ -1,5 +1,7 @@
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ *
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.java;
 
@@ -12,7 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings("javadoc")
+@SuppressWarnings("ALL")
 public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();
   private final boolean b1 = getClass().equals(getClass());

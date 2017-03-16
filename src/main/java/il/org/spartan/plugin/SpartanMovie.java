@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
@@ -87,7 +87,7 @@ public class SpartanMovie extends AbstractHandler {
    * <p>
    * Ori Roth says: it just looks better this way. Editors do not pile up and
    * create a mess.
-   * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @param ¢ JD */
   // sure this is the right behavior
   public static void mightNotBeSlick(final IWorkbenchPage ¢) {

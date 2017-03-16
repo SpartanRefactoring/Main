@@ -1,5 +1,9 @@
 package il.org.spartan.plugin;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -12,14 +16,10 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection
@@ -96,7 +96,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   /** Extends text selection to include overlapping markers.
-   * @return <code><b>this</b></code> selection */
+   * @return {@code this} selection */
   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;

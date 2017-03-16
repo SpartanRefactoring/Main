@@ -2,31 +2,29 @@ package il.org.spartan.spartanizer.research.nanos.characteristics;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Catches methods which their control flow is not affected by parameters
  * @author Ori Marcovitch */
 public class JDPattern extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 4470044117997306565L;
-  static final Collection<UserDefinedTipper<Expression>> tippers = new HashSet<UserDefinedTipper<Expression>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("$X == null", "", ""));
-      add(patternTipper("$X != null", "", ""));
-      add(patternTipper("null == $X", "", ""));
-      add(patternTipper("null == $X", "", ""));
-    }
-  };
+  static final Collection<UserDefinedTipper<Expression>> tippers = as.list( //
+      patternTipper("$X == null", "", ""), //
+      patternTipper("$X != null", "", ""), //
+      patternTipper("null == $X", "", ""), //
+      patternTipper("null == $X", "", "") //
+  );
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))

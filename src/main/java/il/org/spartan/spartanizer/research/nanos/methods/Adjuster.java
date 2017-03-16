@@ -2,14 +2,15 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static java.util.stream.Collectors.*;
-
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -19,17 +20,14 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016-12-22 */
 public class Adjuster extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -6381093865952528751L;
-  private static final Collection<UserDefinedTipper<Expression>> tippers = new ArrayList<UserDefinedTipper<Expression>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("$N($A)", "", ""));
-      add(patternTipper("$N1.$N($A)", "", ""));
-      add(patternTipper("$N1().$N($A)", "", ""));
-      add(patternTipper("$N1().$N2().$N($A)", "", ""));
-      add(patternTipper("$N1.$N2().$N($A)", "", ""));
-      add(patternTipper("(($T)$N1).$N($A)", "", ""));
-    }
-  };
+  private static final Collection<UserDefinedTipper<Expression>> tippers = as.list(//
+      patternTipper("$N($A)", "", ""), //
+      patternTipper("$N1.$N($A)", "", ""), //
+      patternTipper("$N1().$N($A)", "", ""), //
+      patternTipper("$N1().$N2().$N($A)", "", ""), //
+      patternTipper("$N1.$N2().$N($A)", "", ""), //
+      patternTipper("(($T)$N1).$N($A)", "", "") //
+  );
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//

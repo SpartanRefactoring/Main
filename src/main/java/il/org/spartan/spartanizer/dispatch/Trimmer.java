@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -9,8 +11,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -19,10 +19,10 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;

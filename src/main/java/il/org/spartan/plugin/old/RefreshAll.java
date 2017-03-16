@@ -5,10 +5,10 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** *
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {

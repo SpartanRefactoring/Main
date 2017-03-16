@@ -26,12 +26,58 @@ public final class Version300 {
     ;
   }
 
+  @Test public void myClassName() {
+    azzert.that(system.callingClassName(), is(getClass().getCanonicalName()));
+  }
+
   @Test public void abcd() {
     trimmingOf("a = !(b ? c : d)") //
         .using(PrefixExpression.class, new PrefixNotPushdown()) //
         .gives("a=b?!c:!d") //
         .stays() //
     ;
+  }
+
+  @Ignore @Test public void ifab() {
+    trimmingOf("if (a++ == b++) { }") //
+        .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
+        .gives("a++;b++;") //
+        .stays() //
+    ;
+  }
+
+  /** Automatically generated on Thu-Mar-16-08:15:41-IST-2017, copied by
+   * Yossi */
+  @Test public void ifaAb() {
+    trimmingOf("if (a) { A b; }") //
+        .using(IfStatement.class, new IfDeadRemove()) //
+        .gives("{}") //
+        .gives("") //
+        .stays() //
+    ;
+  }
+
+  /** Automatically generated on Thu-Mar-16-08:26:53-IST-2017, copied by
+   * Yossi */
+  @Test public void genererated13() {
+    trimmingOf("{}") //
+        .gives("") //
+        .stays() //
+    ;
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+    trimmingOf("if(a) { int i = 3; }")//
+        .gives("{}") //
+        .gives("") //
+        .stays();
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+    trimmingOf("if(a) { Object o; }")//
+        .gives("{}") //
+        .gives("") //
+        .stays();
   }
 
   @Test public void a() {
@@ -116,4 +162,31 @@ public final class Version300 {
     azzert.that(lowerFirstLetter("hello"), is("hello"));
     azzert.that(upperFirstLetter("hello"), is("Hello"));
   }
+  @Test public void x() {
+    trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
+        .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)break;return ¢;}") //
+        .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}") //
+        .stays();
+  }
+
+  /** Introduced by Yossi on Thu-Mar-16-12:37:12-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void x1() {
+    trimmingOf("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
+        .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
+        .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
+        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
+        .stays() //
+    ;
+  }
+  @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
+    trimmingOf("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
+  .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
+  .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
+  .using(IfStatement.class, new IfTrueOrFalse()) //
+  .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
+   .stays() //
+   ;
+ }
 }

@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.old;
 
+import static il.org.spartan.lisp.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -9,18 +11,16 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @author Ori Roth
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015/08/01 */
 public final class SpartanizeProject extends BaseHandler {
   static final int MAX_PASSES = 20;

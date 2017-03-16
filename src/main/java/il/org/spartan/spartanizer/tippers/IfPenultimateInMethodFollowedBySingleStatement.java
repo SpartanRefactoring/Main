@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -13,9 +13,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
- * f(); } provided that this <code><b>if</b></code> statement is the last
- * statement in a method.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * f(); } provided that this {@code if} statement is the last statement in a
+ * method.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {

@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreation> {
   private static final long serialVersionUID = 5603169704272959211L;
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    static final long serialVersionUID = -1021679461625787883L;
     {
       statementsPattern("$T1 $N = new $T2();  $N.addAll($X);", "$T1 $N = Create.from($X);", "CreateFrom pattern");
     }

@@ -1,11 +1,9 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.utils;
 
 import java.util.*;
 import java.util.stream.*;
 
-import il.org.spartan.utils.*;
-
-/** An abstract reducer 
+/** An abstract reducer
  * @param <R>
  * @since 2017-01-29 */
 public abstract class Reducer<@¢ R> {
