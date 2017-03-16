@@ -1,14 +1,14 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

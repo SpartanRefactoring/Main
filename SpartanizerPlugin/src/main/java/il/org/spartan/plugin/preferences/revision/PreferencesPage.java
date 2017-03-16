@@ -3,6 +3,8 @@ package il.org.spartan.plugin.preferences.revision;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
@@ -19,8 +21,6 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;

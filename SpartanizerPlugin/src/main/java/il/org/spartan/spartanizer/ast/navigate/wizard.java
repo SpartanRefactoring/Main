@@ -7,6 +7,17 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
@@ -20,17 +31,6 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
-import static il.org.spartan.spartanizer.ast.navigate.step.name;
-import static il.org.spartan.spartanizer.ast.navigate.step.statements;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -858,9 +858,8 @@ public interface wizard {
   static boolean same(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
-  
-  /** 
-   * Works like same, but it applies {@ link tide.clean} to remove spaces
+
+  /** Works like same, but it applies {@ link tide.clean} to remove spaces
    * Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
@@ -868,13 +867,12 @@ public interface wizard {
    * to{@code null
    * @param n1 JD
    * @param n2 JD
-   * @return {@code true} if the parameters are the same. 
+   * @return {@code true} if the parameters are the same.
    * @author matteo
-   * @since 15/3/2017
-   * */
-  
+   * @since 15/3/2017 */
   static boolean same2(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && tide.clean(trivia.cleanForm(n1)+"").equals(tide.clean(trivia.cleanForm(n2)+""));
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
+        && tide.clean(trivia.cleanForm(n1) + "").equals(tide.clean(trivia.cleanForm(n2) + ""));
   }
 
   /** String wise comparison of all the given SimpleNames

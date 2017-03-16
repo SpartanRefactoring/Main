@@ -47,6 +47,7 @@ public interface idiomatic {
   }
 
   /* @param condition JD
+   * 
    * @return */
   /** {@code incase}
    * @param <T> JD

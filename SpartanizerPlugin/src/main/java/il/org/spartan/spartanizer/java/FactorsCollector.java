@@ -1,15 +1,17 @@
 /* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
-  @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.java;
+
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

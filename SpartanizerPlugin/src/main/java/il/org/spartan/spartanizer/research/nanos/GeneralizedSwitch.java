@@ -2,19 +2,19 @@ package il.org.spartan.spartanizer.research.nanos;
 
 import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.first;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.first;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

@@ -2,6 +2,8 @@ package il.org.spartan.plugin.old;
 
 import static il.org.spartan.Utils.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.awt.*;
 import java.net.*;
 import java.util.*;
@@ -20,8 +22,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;

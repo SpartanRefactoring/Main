@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static java.util.stream.Collectors.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
@@ -24,8 +26,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.dialogs.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;

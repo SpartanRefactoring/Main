@@ -2,10 +2,10 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

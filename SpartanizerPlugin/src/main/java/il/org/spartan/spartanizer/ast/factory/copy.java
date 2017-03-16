@@ -2,14 +2,14 @@ package il.org.spartan.spartanizer.ast.factory;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 

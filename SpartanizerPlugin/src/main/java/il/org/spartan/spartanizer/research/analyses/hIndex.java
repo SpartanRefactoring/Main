@@ -2,14 +2,14 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import static il.org.spartan.spartanizer.research.analyses.util.Files.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

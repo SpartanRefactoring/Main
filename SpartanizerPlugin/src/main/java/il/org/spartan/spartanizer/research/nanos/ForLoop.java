@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.research.nanos;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,9 +21,7 @@ public final class ForLoop {
     private static final long serialVersionUID = 480026321244898966L;
     private static final String description = "Go Fluent : FindFirst";
     private static final List<UserDefinedTipper<Block>> tippers = new ArrayList<UserDefinedTipper<Block>>() {
-      
       private static final long serialVersionUID = 5778545890668488215L;
-
       {
         add(statementsPattern("for ($T $N = $X1; $X2; $X3) if ($X4) return $N; return $L;", //
             "return from($X1).step(($N)->$X2).to(($N)->$X3).findFirst($N -> $X4).orElse($L);", description));

@@ -2,16 +2,16 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

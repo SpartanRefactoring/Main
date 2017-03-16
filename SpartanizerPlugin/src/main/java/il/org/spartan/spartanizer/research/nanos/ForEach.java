@@ -16,9 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -4378523020212222986L;
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    
     private static final long serialVersionUID = 8094121673867203405L;
-
     {
       add(patternTipper("for($T $N1 : $N2) $X;", "$N2.forEach($N1 -> $X);", "ForEach pattern: conevrt to fluent API"));
       add(patternTipper("for($T $N1 : $X1) $X2;", "($X1).forEach($N1 -> $X2);", "ForEachThat pattern: conevrt to fluent API"));
@@ -33,9 +31,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   protected static final Collection<NanoPatternTipper<EnhancedForStatement>> rivals = new ArrayList<NanoPatternTipper<EnhancedForStatement>>() {
-    
     private static final long serialVersionUID = 5286697303579942652L;
-
     {
       add(new HoldsForAll());
       add(new HoldsForAny());

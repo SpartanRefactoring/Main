@@ -19,9 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 9115876794591250052L;
   private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
-    
     private static final long serialVersionUID = 7148625164233169553L;
-
     {
       add(patternTipper("if (!$X1.containsKey($X2)) $X1.put($X2, $X3);", "$X1.putIfAbsent($X2, $X3);", "use putIfAbsent"));
       add(patternTipper("if (!containsKey($X2)) put($X2, $X3);", "putIfAbsent($X2, $X3);", "use putIfAbsent"));
