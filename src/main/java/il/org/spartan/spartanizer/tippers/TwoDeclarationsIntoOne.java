@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+
 /** Test case is {@link Issue1012} Issue #1012 Convert: {@code
  * int a = 0;
  * int b = 1;
@@ -42,6 +44,18 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
 
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Unify two variable declarations of the same type into one";
+  }
+
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("int a; int b; int c; f(a, b, c);") //
+            .to("int a, b; int c; f(a, b, c);"), //
+        convert("int a, b; int c; f(a, b, c);") //
+            .to("int a, b, c; f(a, b, c);"), //
+        convert("final int a = 1; final int b = 2; f(a, b);") //
+            .to("final int a = 1, b = 2; f(a, b);"), //
+        ignores("int a = 1; final int b = 2; f(a, b);") //
+    };
   }
 
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
