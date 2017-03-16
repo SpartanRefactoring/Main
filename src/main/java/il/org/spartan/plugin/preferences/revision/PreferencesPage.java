@@ -26,7 +26,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Revised global preferences page for the plugin.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

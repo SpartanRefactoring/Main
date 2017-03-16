@@ -14,7 +14,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Helper functions for the inflater
  * @author Raviv Rachmiel

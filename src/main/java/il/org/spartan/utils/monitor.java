@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.utils;
 
 import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
@@ -15,6 +15,7 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.

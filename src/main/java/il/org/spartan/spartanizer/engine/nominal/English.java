@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.function.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
@@ -46,10 +46,14 @@ public interface English {
   }
 
   static String upperFirstLetter(final String input) {
+    if (input.isEmpty())
+      return "genererated" + new Random().nextInt(100);
     return input.substring(0, 1).toUpperCase() + input.substring(1);
   }
 
   static String lowerFirstLetter(final String input) {
+    if (input.isEmpty())
+      return "genererated" + new Random().nextInt(100);
     return input.substring(0, 1).toLowerCase() + input.substring(1);
   }
 

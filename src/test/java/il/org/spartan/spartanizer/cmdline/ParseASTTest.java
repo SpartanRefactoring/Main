@@ -1,7 +1,7 @@
 /* TODO: please add a description
- * 
+ *
  * @author
- * 
+ *
  * @since */
 package il.org.spartan.spartanizer.cmdline;
 

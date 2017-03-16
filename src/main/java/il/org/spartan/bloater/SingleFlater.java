@@ -19,7 +19,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

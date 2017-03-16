@@ -9,7 +9,7 @@ import java.util.*;
 import il.org.spartan.*;
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

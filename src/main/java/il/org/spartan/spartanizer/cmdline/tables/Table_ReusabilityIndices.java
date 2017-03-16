@@ -10,8 +10,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
 
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

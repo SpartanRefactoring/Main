@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 public class OperandBloating extends TrimmingOperand {
   ASTNode ast;

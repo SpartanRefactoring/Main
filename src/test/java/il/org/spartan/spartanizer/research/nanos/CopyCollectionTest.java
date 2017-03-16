@@ -8,9 +8,9 @@ import org.junit.runners.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /* Tests {@link CopyCollection}
- * 
+ *
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * 
+ *
  * @since 2017-01-03 */
 @SuppressWarnings("static-method")
 public class CopyCollectionTest {

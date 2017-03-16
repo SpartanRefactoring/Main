@@ -1,9 +1,8 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.utils;
 
 import java.util.stream.*;
 
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.utils.*;
 import junit.framework.*;
 
 /** Organizes objects of the type parameter in a tree, supplying a
@@ -92,11 +91,11 @@ public interface Recursive<@¢ T> {
       return $;
     }/* A compound recurkksive structure enumerating {@link #descendants()} in
       * post-order
-      * 
+      *
       * @param <E>
-      * 
+      *
       * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
-      * 
+      *
       * @since 2017-03-13 */
   }
 }

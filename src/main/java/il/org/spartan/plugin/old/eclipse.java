@@ -28,7 +28,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Fluent API services for the plugin
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
