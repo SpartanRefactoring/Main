@@ -1,9 +1,12 @@
 package il.org.spartan.spartanizer.research.classifier.patterns;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -13,12 +16,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016 */
 public class InitArray extends NanoPatternTipper<ForStatement> {
   private static final long serialVersionUID = -6565220361424484292L;
-  final Collection<UserDefinedTipper<ForStatement>> tippers = new HashSet<UserDefinedTipper<ForStatement>>() {
-    static final long serialVersionUID = 4758905239921231928L;
-    {
-      add(TipperFactory.patternTipper("for (int $N0 = 0; $N0 < $N1; ++$N0)  $N2[$N0] = null;", "init();", "Init array: conevrt to fluent API"));
-    }
-  };
+  final Collection<UserDefinedTipper<ForStatement>> tippers = as
+      .list(patternTipper("for (int $N0 = 0; $N0 < $N1; ++$N0)  $N2[$N0] = null;", "init();", "Init array: conevrt to fluent API"));
 
   @Override public boolean canTip(final ForStatement ¢) {
     return anyTips(tippers, ¢);

@@ -54,10 +54,8 @@ public enum SentenceTestTemplate {
       return new Object[] { changes.getName() + "", changes };
     }
 
-    @Parameter(1)
-    @SuppressWarnings("CanBeFinal") public MethodDeclaration changes;
-    @Parameter(0)
-    @SuppressWarnings("CanBeFinal") public String name;
+    @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration changes;
+    @Parameter(0) @SuppressWarnings("CanBeFinal") public String name;
 
     @Test public void changes() {
       final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
@@ -88,11 +86,9 @@ public enum SentenceTestTemplate {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
 
-    @Parameter(1)
-    @SuppressWarnings("CanBeFinal") public MethodDeclaration first;
+    @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration first;
     @Parameter(0) public String name;
-    @Parameter(2)
-    @SuppressWarnings("CanBeFinal") public MethodDeclaration second;
+    @Parameter(2) @SuppressWarnings("CanBeFinal") public MethodDeclaration second;
 
     @Test public void chagesTo() {
       final String peeled = Wrap.Method.off(trim.apply(trimmer, Wrap.Method.on(firstBody()))), to = secondBody();
@@ -135,8 +131,7 @@ public enum SentenceTestTemplate {
     }
 
     @Parameter(0) public String name;
-    @Parameter(1)
-    @SuppressWarnings("CanBeFinal") public MethodDeclaration stays;
+    @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration stays;
 
     @Test public void stays() {
       final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);

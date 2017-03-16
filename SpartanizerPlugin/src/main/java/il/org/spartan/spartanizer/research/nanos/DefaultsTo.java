@@ -11,10 +11,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -7580396559433880409L;
   private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>()
-      .add("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent")
-      .add("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent")
-      .add("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", "dfault pattern: Go fluent")
-      .add("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", "dfault pattern: Go fluent");
+      .add("$X1 != null ? $X1 : $X2", "default¢($X1).to($X2)", "default pattern: Go fluent")
+      .add("$X1 == null ? $X2 : $X1", "default¢($X1).to($X2)", "default pattern: Go fluent")
+      .add("null != $X1 ? $X1 : $X2", "default¢($X1).to($X2)", "default pattern: Go fluent")
+      .add("null == $X1 ? $X2 : $X1", "default¢($X1).to($X2)", "default pattern: Go fluent");
   private static final BlockNanoPatternContainer tippers2 = new BlockNanoPatternContainer() {
     @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
     {

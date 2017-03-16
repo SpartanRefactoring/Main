@@ -29,8 +29,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-02 */
 public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
-  @SuppressWarnings({"unused", "FieldCanBeLocal"})
-  private Type type;
+  @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
 
   @Override public boolean prerequisite(final VariableDeclarationFragment f) {
     final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
@@ -138,7 +137,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
 
   private static boolean leftSide(final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    //noinspection SameReturnValue
+    // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
         if (iz.simpleName(left(¢))//

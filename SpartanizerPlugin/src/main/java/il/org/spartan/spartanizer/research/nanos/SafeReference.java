@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,25 +16,19 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-03 */
 public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -4108306692245103780L;
-  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    static final long serialVersionUID = -6719081685829594018L;
-    {
-      add(patternTipper("$N == null ? $D : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"));
-      add(patternTipper("$N != null ? $N.$N2 : $D", "safe($N).get(()->$N.$N2)", "safe reference"));
-      add(patternTipper("null == $N ? $D : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"));
-      add(patternTipper("null != $N ? $N.$N2 : $D", "safe($N).get(()->$N.$N2)", "safe reference"));
-      //
-      add(patternTipper("$SN1 == null ? $D : $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
-      add(patternTipper("$SN1 != null ? $SN1.$SN2.$SN3() : $D", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
-      add(patternTipper("null == $SN1 ? $D : $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
-      add(patternTipper("null != $SN1? $SN1.$SN2.$SN3() : $D", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"));
-      //
-      add(patternTipper("$N == null ? $D : $N.$SN()", "safe($N).invoke(()->$N.$SN())", "safe reference"));
-      add(patternTipper("$N != null ? $N.$SN() : $D", "safe($N).invoke(()->$N.$SN())", "safe reference"));
-      add(patternTipper("null == $N ? $D : $N.$SN()", "safe($N).invoke(()->$N.$SN())", "safe reference"));
-      add(patternTipper("null != $N ? $N.$SN() : $D", "safe($N).invoke(()->$N.$SN())", "safe reference"));
-    }
-  };
+  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = as.list(
+      patternTipper("$N == null ? $D : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"),
+      patternTipper("$N != null ? $N.$N2 : $D", "safe($N).get(()->$N.$N2)", "safe reference"),
+      patternTipper("null == $N ? $D : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"),
+      patternTipper("null != $N ? $N.$N2 : $D", "safe($N).get(()->$N.$N2)", "safe reference"),
+      patternTipper("$SN1 == null ? $D : $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"),
+      patternTipper("$SN1 != null ? $SN1.$SN2.$SN3() : $D", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"),
+      patternTipper("null == $SN1 ? $D : $SN1.$SN2.$SN3()", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"),
+      patternTipper("null != $SN1? $SN1.$SN2.$SN3() : $D", "safe($SN1).invoke(()->$SN1.$SN2.$SN3())", "safe reference"),
+      patternTipper("$N == null ? $D : $N.$SN()", "safe($N).invoke(()->$N.$SN())", "safe reference"),
+      patternTipper("$N != null ? $N.$SN() : $D", "safe($N).invoke(()->$N.$SN())", "safe reference"),
+      patternTipper("null == $N ? $D : $N.$SN()", "safe($N).invoke(()->$N.$SN())", "safe reference"),
+      patternTipper("null != $N ? $N.$SN() : $D", "safe($N).invoke(()->$N.$SN())", "safe reference"));
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);

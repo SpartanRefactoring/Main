@@ -530,8 +530,8 @@ public interface wizard {
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
     final Collection<MethodDeclaration> $ = new ArrayList<>();
-      //noinspection SameReturnValue
-      n.accept(new ASTVisitor(true) {
+    // noinspection SameReturnValue
+    n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
         return false;

@@ -13,24 +13,16 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Jan 22, 2017 */
 public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -419909996243222517L;
-  private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
-    static final long serialVersionUID = 8728310718086035960L;
-    {
-      statementsPattern("for($T $N1 : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N1 -> !($X2));",
-          "All matches pattern. Consolidate into one statement");
-      statementsPattern("for($T $N1 : $X1) if($X2) $N2 = false;", "$N2 = $X1.stream().allMatch($N1 -> !($X2));",
+  private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer()
+      .statementsPattern("for($T $N1 : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N1 -> !($X2));",
+          "All matches pattern. Consolidate into one statement")
+      .statementsPattern("for($T $N1 : $X1) if($X2) $N2 = false;", "$N2 = $X1.stream().allMatch($N1 -> !($X2));",
           "All matches pattern.  Consolidate into one statement");
-    }
-  };
-  private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>() {
-    static final long serialVersionUID = -2389216880185908036L;
-    {
-      add("for($T $N1 : $X1) if($X2) return false;", //
-          "returnIf($X1.stream().allMatch($N1 -> !($X2)));", "All matches pattern. Consolidate into one statement");
-      add("for($T $N1 : $X1) if($X2) $N2 = false;", //
+  private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>()
+      .add("for($T $N1 : $X1) if($X2) return false;", //
+          "returnIf($X1.stream().allMatch($N1 -> !($X2)));", "All matches pattern. Consolidate into one statement")
+      .add("for($T $N1 : $X1) if($X2) $N2 = false;", //
           "$N2 = $X1.stream().allMatch($N1 -> !($X2));", "All matches pattern. Consolidate into one statement");
-    }
-  };
 
   @Override public boolean canTip(final EnhancedForStatement x) {
     return tippers.canTip(az.block(parent(x)))//

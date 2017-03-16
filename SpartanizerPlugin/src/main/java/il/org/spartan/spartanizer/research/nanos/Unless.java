@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,20 +16,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Dec 13, 2016 */
 public final class Unless extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -3872855694179875392L;
-  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    static final long serialVersionUID = -588910496941919276L;
-    {
-      add(patternTipper("$X1 ? $D : $X2", "unless($X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"));
-      add(patternTipper("$X1  ? $X2 : $D", "unless(!$X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"));
-    }
-  };
-  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = new ArrayList<NanoPatternTipper<ConditionalExpression>>() {
-    static final long serialVersionUID = -5926314283020389795L;
-    {
-      add(new DefaultsTo());
-      add(new SafeReference());
-    }
-  };
+  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = as.list(
+      patternTipper("$X1 ? $D : $X2", "unless($X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"),
+      patternTipper("$X1  ? $X2 : $D", "unless(!$X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"));
+  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = as.list(new DefaultsTo(), new SafeReference());
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);

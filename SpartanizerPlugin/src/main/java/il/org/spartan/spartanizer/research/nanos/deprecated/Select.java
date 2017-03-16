@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -14,18 +15,16 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Dec 17, 2016 */
 public class Select extends NanoPatternTipper<EnhancedForStatement> {
+  private static final String DESCRIPTION = "Go Fluent: filter pattern";
   private static final long serialVersionUID = 3386684152020169902L;
-  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = -4519010481713452802L;
-    {
-      add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($N3);", //
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
+      patternTipper("for($T $N1 : $X1) if($X2) $N2.add($N3);", //
           "$N2.addAll($X1.stream().filter($N1 -> $X2).collect(toList()));", //
-          "Go Fluent: filter pattern"));
-      add(patternTipper("for($T $N1 : $X1) if($X2) $N2.add($X3);", //
+          DESCRIPTION), //
+      patternTipper("for($T $N1 : $X1) if($X2) $N2.add($X3);", //
           "$N2.addAll($X1.stream().filter($N1 -> $X2).map($N1 -> $X3).collect(toList()));", //
-          "Go Fluent: filter pattern"));
-    }
-  };
+          DESCRIPTION)//
+  );
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);

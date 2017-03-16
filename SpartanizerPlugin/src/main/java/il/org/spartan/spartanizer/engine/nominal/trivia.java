@@ -68,8 +68,8 @@ public interface trivia {
   }
 
   static <N extends ASTNode> N removeComments(final N n) {
-      //noinspection SameReturnValue
-      n.accept(new ASTVisitor(true) {
+    // noinspection SameReturnValue
+    n.accept(new ASTVisitor(true) {
       boolean delete(final ASTNode ¢) {
         ¢.delete();
         return true;

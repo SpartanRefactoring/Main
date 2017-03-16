@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -13,12 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch */
 public class Thrower extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -7774411294835596768L;
-  private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
-    static final long serialVersionUID = 4155236780202032019L;
-    {
-      add(patternTipper("throw $X;", "", ""));
-    }
-  };
+  private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("throw $X;", "", ""));
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//

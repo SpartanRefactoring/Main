@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,12 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016-12-20 */
 public final class First extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 7012364337198315285L;
-  private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
-    static final long serialVersionUID = 2026600556196283360L;
-    {
-      add(patternTipper("$X.get(0)", "first($X)", "lisp: first"));
-    }
-  };
+  private static final List<UserDefinedTipper<MethodInvocation>> tippers = as.list(patternTipper("$X.get(0)", "first($X)", "lisp: first"));
 
   @Override public boolean canTip(final MethodInvocation ¢) {
     return anyTips(tippers, ¢);

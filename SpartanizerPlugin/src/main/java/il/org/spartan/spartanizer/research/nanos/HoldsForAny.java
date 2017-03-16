@@ -14,24 +14,16 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = 3787670358656343399L;
   private static final String description = "Any matches pattern. Consolidate into one statement";
-  private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
-    static final long serialVersionUID = -456918388812840714L;
-    {
-      statementsPattern("for($T $N1 : $X1) if($X2) return true; return false;", //
-          "return $X1.stream().anyMatch($N1 -> $X2);", description);
-      statementsPattern("for($T $N1 : $X1) if($X2) $N2 = true;", //
+  private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer()
+      .statementsPattern("for($T $N1 : $X1) if($X2) return true; return false;", //
+          "return $X1.stream().anyMatch($N1 -> $X2);", description)
+      .statementsPattern("for($T $N1 : $X1) if($X2) $N2 = true;", //
           "$N2 = $X1.stream().anyMatch($N1 -> $X2);", description);
-    }
-  };
-  private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>() {
-    static final long serialVersionUID = -713086331927766418L;
-    {
-      add("for($T $N1 : $X1) if($X2) return true;", //
-          "returnIf($X1.stream().anyMatch($N1 -> $X2));", "All matches pattern. Consolidate into one statement");
-      add("for($T $N1 : $X1) if($X2) $N2 = true;", //
+  private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>()
+      .add("for($T $N1 : $X1) if($X2) return true;", //
+          "returnIf($X1.stream().anyMatch($N1 -> $X2));", "All matches pattern. Consolidate into one statement")
+      .add("for($T $N1 : $X1) if($X2) $N2 = true;", //
           "$N2 = $X1.stream().anyMatch($N1 -> $X2);", "All matches pattern. Consolidate into one statement");
-    }
-  };
 
   @Override public boolean canTip(final EnhancedForStatement x) {
     return tippers.canTip(az.block(parent(x)))//
