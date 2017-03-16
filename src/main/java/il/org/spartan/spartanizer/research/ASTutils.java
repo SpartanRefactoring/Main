@@ -6,6 +6,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch */
@@ -50,9 +51,10 @@ public enum ASTutils {
       case METHOD_LOOK_ALIKE:
         return "class X{" + ¢ + "}";
       case STATEMENTS_LOOK_ALIKE:
+      case BLOCK_LOOK_ALIKE:
         return "class X{int f(){" + ¢ + "}}";
       default:
-        assert false : ¢ + " does not like anything I know...";
+        assert fault.unreachable() : fault.specifically("does not like anything I know...", ¢);
         return null;
     }
   }

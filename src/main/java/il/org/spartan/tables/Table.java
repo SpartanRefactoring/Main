@@ -6,8 +6,8 @@ import java.util.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.statistics.*;
+import il.org.spartan.utils.*;
 
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,

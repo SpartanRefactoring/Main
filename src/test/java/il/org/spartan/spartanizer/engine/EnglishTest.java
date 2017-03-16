@@ -8,7 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Test class for {@link English}
  * @author yonzarecki

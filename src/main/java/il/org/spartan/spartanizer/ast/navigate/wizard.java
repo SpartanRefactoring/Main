@@ -40,7 +40,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
@@ -888,7 +888,7 @@ public interface wizard {
    * @param ns1 first list to compare
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
-  @SuppressWarnings("boxing") static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
+  @SuppressWarnings("boxing") static <N extends ASTNode> boolean same(final List<N> ns1, final List<N> ns2) {
     return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(λ -> same(ns1.get(λ), ns2.get(λ)));
   }
 

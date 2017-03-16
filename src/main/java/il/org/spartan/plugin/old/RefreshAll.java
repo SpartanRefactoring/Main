@@ -5,7 +5,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

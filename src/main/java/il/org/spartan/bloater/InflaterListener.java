@@ -19,7 +19,7 @@ import org.eclipse.ui.texteditor.*;
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

@@ -18,7 +18,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add

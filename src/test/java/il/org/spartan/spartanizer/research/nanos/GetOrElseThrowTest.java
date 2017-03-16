@@ -7,10 +7,8 @@ import org.junit.*;
 import org.junit.runners.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-/* Tests @link GetOrElseThrow
- * 
+/** Tests @link GetOrElseThrow
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
- * 
  * @since 2017-01-29 */
 @SuppressWarnings("static-method")
 public class GetOrElseThrowTest {

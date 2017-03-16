@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Specific applicator
  * @author Matteo Orru'
