@@ -147,11 +147,11 @@ public final class Version230 {
   }
 
   @Test public void assignmentAssignmentVanillaScopeIncludes() {
-    included("a=3;b=3;", Assignment.class).in(new AssignmentAndAssignment());
+    included("a=3;b=3;", Assignment.class).in(new AssignmentAndAssignmentSameValue());
   }
 
   @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
-    included("a=null;b=null;", Assignment.class).notIn(new AssignmentAndAssignment());
+    included("a=null;b=null;", Assignment.class).notIn(new AssignmentAndAssignmentSameValue());
   }
 
   @Test public void assignmentReturn0() {
