@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** See {@link #examples()} for documentation
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-28 */
-public final class AssignmentAndAssignmentSameValue extends ReplaceToNextStatement<Assignment>//
+public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 7624011796441469217L;
 
