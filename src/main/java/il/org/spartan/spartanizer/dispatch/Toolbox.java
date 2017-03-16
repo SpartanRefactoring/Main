@@ -179,6 +179,7 @@ public class Toolbox {
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignmentOfSameValue(), //
+            new AssignmentAndAssignmentToSame(), //
             new AssignmentAndReturn(), //
             new AssignmentToFromInfixIncludingTo(), //
             new AssignmentToPrefixIncrement(), //

@@ -6,17 +6,20 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-/** Tests @link GetOrElseThrow
+/** Tests {@link GetOrElseThrow}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-29 */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class GetOrElseThrowTest {
   @Test public void a() {
+    String s = "Hello";
     trimmingOf("if(x == null) throw new Error(); return x;")//
         .using(IfStatement.class, new GetOrElseThrow())//
         .gives("notNull(x).get(x);")//
         .stays();
+    s = "Hello";
+    s = s.replaceAll("","");
   }
 
   @Test public void b() {
