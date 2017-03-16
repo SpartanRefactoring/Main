@@ -19,7 +19,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class SuppressException extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = -8859938289108985941L;
   private static final List<UserDefinedTipper<TryStatement>> tippers = new ArrayList<UserDefinedTipper<TryStatement>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = -9018706510367059136L;
+
     {
       add(patternTipper("try $B1 catch($T $N){}", "try $B1 catch($T $N){ignore();};", ""));
     }
