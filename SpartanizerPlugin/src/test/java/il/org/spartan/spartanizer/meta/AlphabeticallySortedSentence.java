@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.meta;
 
 import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

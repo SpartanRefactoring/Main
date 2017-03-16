@@ -8,7 +8,9 @@ import org.junit.runners.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /* Tests {@link FindFirst} and {@link ForLoop.FindFirst}
-  @author Ori Marcovitch
+ * 
+ * @author Ori Marcovitch
+ * 
  * @since Jan 18, 2017 */
 @SuppressWarnings("static-method")
 public class FindFirstTest {

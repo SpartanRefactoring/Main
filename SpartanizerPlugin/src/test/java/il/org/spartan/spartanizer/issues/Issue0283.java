@@ -11,7 +11,9 @@ import il.org.spartan.spartanizer.tippers.*;
 
 @SuppressWarnings("static-method")
 /* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
-  @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
  * @since Jan 6, 2017 */
 public class Issue0283 {
   @Test public void aBclassCAD3ED3Fpublicvoida() {

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.research.classifier;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.patterns.*;

@@ -2,12 +2,12 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
 
-import org.junit.*;
-import org.junit.runners.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import org.junit.*;
+import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;

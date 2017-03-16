@@ -23,5 +23,5 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTippe
         r.replace(n, $, g);
       }
     };
-  }  
+  }
 }

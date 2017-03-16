@@ -1,5 +1,7 @@
 /* TODO: please add a description
-  @author
+ * 
+ * @author
+ * 
  * @since */
 package il.org.spartan.spartanizer.java.namespace;
 

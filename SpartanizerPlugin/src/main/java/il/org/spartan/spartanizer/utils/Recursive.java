@@ -91,9 +91,12 @@ public interface Recursive<@¢ T> {
         $ = Stream.concat($, ¢.descendants());
       return $;
     }/* A compound recurkksive structure enumerating {@link #descendants()} in
-       post-order
-       @param <E>
+      * post-order
+      * 
+      * @param <E>
+      * 
       * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+      * 
       * @since 2017-03-13 */
   }
 }

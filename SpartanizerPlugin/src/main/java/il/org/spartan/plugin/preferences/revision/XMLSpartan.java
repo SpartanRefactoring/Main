@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.Map.*;
@@ -14,8 +16,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;

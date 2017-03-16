@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.meta;
 
 import static il.org.spartan.azzert.*;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -10,8 +12,6 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

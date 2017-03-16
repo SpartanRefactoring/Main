@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static java.util.stream.Collectors.*;
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.utils.*;

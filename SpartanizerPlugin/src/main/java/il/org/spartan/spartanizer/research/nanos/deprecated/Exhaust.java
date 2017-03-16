@@ -16,9 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Exhaust extends NanoPatternTipper<WhileStatement> {
   private static final long serialVersionUID = -4404219080361481179L;
   private static final Collection<UserDefinedTipper<WhileStatement>> tippers = new ArrayList<UserDefinedTipper<WhileStatement>>() {
-    
     private static final long serialVersionUID = -7484229996912392686L;
-
     {
       add(patternTipper("while ($X) {}", "exhaust(()->$X);", "Exhaust pattern: conevrt to fluent API"));
     }

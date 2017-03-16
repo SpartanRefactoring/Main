@@ -3,14 +3,14 @@ package il.org.spartan.spartanizer.testing;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;

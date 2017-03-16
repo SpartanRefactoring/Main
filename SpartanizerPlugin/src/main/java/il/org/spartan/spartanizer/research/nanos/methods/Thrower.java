@@ -14,9 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class Thrower extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -7774411294835596768L;
   private static final Collection<UserDefinedTipper<Statement>> tippers = new HashSet<UserDefinedTipper<Statement>>() {
-    
     private static final long serialVersionUID = 4155236780202032019L;
-
     {
       add(patternTipper("throw $X;", "", ""));
     }

@@ -2,12 +2,12 @@ package il.org.spartan.spartanizer.java;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
+import static il.org.spartan.lisp.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 

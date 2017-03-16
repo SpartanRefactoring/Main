@@ -1,19 +1,21 @@
 /* A visitor hack converting the type specific visit functions, into a single
-  call to {@link #main(ASTNode)}. Needless to say, this is foolish! You can use
-  {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
-  we do not because some of the tests rely on the functions here returning
-  false/true, or for no reason. No one really know...
-  @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * call to {@link #main(ASTNode)}. Needless to say, this is foolish! You can use
+ * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
+ * we do not because some of the tests rely on the functions here returning
+ * false/true, or for no reason. No one really know...
+ * 
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
  * @see ExclusionManager */
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

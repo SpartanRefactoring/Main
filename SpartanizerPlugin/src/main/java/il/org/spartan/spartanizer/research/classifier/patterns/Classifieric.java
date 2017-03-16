@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.classifier.patterns;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

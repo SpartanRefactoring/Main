@@ -1,7 +1,11 @@
 /* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
-  @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
  * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tippers;
+
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -9,8 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
