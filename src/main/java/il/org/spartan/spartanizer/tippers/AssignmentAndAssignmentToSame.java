@@ -7,6 +7,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -15,8 +17,10 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** See {@link #examples()} for documentation
@@ -44,11 +48,21 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a2) != ASSIGN)
       return null;
-    final Expression to = to(a1);
+    final SimpleName to = az.simpleName(to(a1));
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
-    $.replace(from(a1), subject.operands(from(a1), from(a2)).to(assign2infix(a2.getOperator())), g);
-    $.remove(nextStatement, g);
+    final Expression from1 = from(a1), from2 = from(a2);
+    List<SimpleName> uses = collect.usesOf(to).in(from2);
+    return uses.size() > 1 ? !sideEffects.free(from1) || !iz.deterministic(from1) ? null : go($, a1, g, to, from1, from2)
+        : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;
+  }
+
+  private static ASTRewrite go(final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,
+      final Expression from2) {
+    $.remove(a1, g);
+    Expression newFrom = copy.of(from2);
+    new Inliner(to, $, g).byValue(from1).inlineInto(newFrom);
+    $.replace(from2, newFrom, g);
     return $;
   }
 }
