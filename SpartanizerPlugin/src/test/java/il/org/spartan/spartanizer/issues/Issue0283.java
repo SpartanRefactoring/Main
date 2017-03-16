@@ -9,12 +9,10 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-@SuppressWarnings("static-method")
-/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
- *
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- *
  * @since Jan 6, 2017 */
+@SuppressWarnings("static-method")
 public class Issue0283 {
   @Test public void aBclassCAD3ED3Fpublicvoida() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
