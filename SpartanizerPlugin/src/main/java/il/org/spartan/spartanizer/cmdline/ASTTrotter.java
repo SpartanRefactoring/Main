@@ -109,9 +109,9 @@ public class ASTTrotter extends ASTVisitor {
   private int interesting;
   private int total;
 
-  public <N extends ASTNode> Hookable<N > on(Class<N> c) {
+  public <N extends ASTNode> Hookable<N > on(final Class<N> c) {
     return new Hookable<N>() {
-      @Override public Hookable<N> hook(Rule<N, Object> r) {
+      @Override public Hookable<N> hook(final Rule<N, Object> r) {
         hookClassOnRule(c, r);
         return this;
       }};

@@ -209,7 +209,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return inner.object();
     }
 
-    @Override public R apply(T ¢) {
+    @Override public R apply(final T ¢) {
       return inner.apply(¢);
     }
   }
