@@ -135,10 +135,10 @@ public interface MethodPatternUtilitiesTrait {
   NanoPatternContainer<Expression> setterTippers = new NanoPatternContainer<Expression>() {
     static final long serialVersionUID = 1L;
     {
-      patternTipper("this.$N1 = $N2", "", "");
-      patternTipper("this.$N1 = $L", "", "");
-      patternTipper("$N1 = $N2", "", "");
-      patternTipper("$N1 = $L", "", "");
+      add("this.$N1 = $N2", "", "");
+      add("this.$N1 = $L", "", "");
+      add("$N1 = $N2", "", "");
+      add("$N1 = $L", "", "");
     }
   };
 
@@ -162,13 +162,6 @@ public interface MethodPatternUtilitiesTrait {
     return getterTippers.canTip(onlyStatement(¢));
   }
 
-  NanoPatternContainer<Statement> getterTippers = new NanoPatternContainer<Statement>() {
-    static final long serialVersionUID = 1L;
-    {
-      patternTipper("return $N;", "", "");
-      patternTipper("return this.$N;", "", "");
-      patternTipper("return ($T)$N;", "", "");
-      patternTipper("return ($T)this.$N;", "", "");
-    }
-  };
+  NanoPatternContainer<Statement> getterTippers = //
+      new NanoPatternContainer<Statement>().add("return $N;").add("return this.$N;").add("return ($T)$N;").add("return ($T)this.$N;");
 }
