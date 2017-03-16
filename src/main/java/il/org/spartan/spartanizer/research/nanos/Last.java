@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,12 +16,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016-12-20 */
 public final class Last extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = -3498399643413388965L;
-  private static final List<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
-    private static final long serialVersionUID = -9178037878440024216L;
-    {
-      add(patternTipper("$X.get($X.size()-1) ", "last($X)", "lisp: last"));
-    }
-  };
+  private static final List<UserDefinedTipper<MethodInvocation>> tippers = as.list(//
+      patternTipper("$X.get($X.size()-1) ", "last($X)", "lisp: last"));
 
   @Override public boolean canTip(final MethodInvocation ¢) {
     return anyTips(tippers, ¢);
