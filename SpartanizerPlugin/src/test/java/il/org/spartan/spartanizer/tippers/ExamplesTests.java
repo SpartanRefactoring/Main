@@ -11,6 +11,7 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
@@ -26,30 +27,35 @@ public class ExamplesTests {
   private final Tipper<? extends ASTNode> tipper;
 
   /** Redirects examples to tests according to type */
-  @Test public void testExamples() {
-    for (final Example e : tipper.examples())
-      try {
-        if (e instanceof Converts)
-          testConverts((Converts) e);
-      } catch (final AssertionError x) {
-        throw wrapFailure(x);
-      }
+  @Test public void vonerts() {
+    for (final Example ¢ : tipper.examples())
+      if (¢ instanceof Converts)
+        testConverts((Converts) ¢);
+  }
+
+  /** Redirects examples to tests according to type */
+  @Test public void ignores() {
+    for (final Example ¢ : tipper.examples())
+      if (¢ instanceof Ignores)
+        ignores((Ignores) ¢);
+  }
+
+  private static void ignores(Ignores ¢) {
+    trimmingOf(¢.code()).stays();
   }
 
   private static void testConverts(final Converts ¢) {
-    trimmingOf(¢.from()).gives(¢.to());
+    trimmingOf(¢.from()).
+    gives(¢.to());
   }
 
-  public ExamplesTests(final Tipper<? extends ASTNode> tipper) {
+  public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") String name) {
     this.tipper = tipper;
   }
 
-  private AssertionError wrapFailure(final AssertionError x) {
-    return new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
-  }
-
-  @Parameters public static Collection<Object[]> data() {
-    return allTippers().stream().map(λ -> new Object[] { λ }).collect(Collectors.toList());
+  @Parameters(name = "{index}. {1}") //
+  public static Collection<Object[]> data() {
+    return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
   }
 
   /** Get all tippers from {@link Toolbox} and
