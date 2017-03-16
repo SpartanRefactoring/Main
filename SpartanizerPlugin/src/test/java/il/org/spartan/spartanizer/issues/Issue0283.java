@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public class Issue0283 {
-  @Test public void aBclassCAD3ED3Fpublicvoida() {
-    trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
-        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
-        .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
-        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
-        .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
-        .stays() //
-    ;
+  @Test public void a() {
+    trimmingOf(
+        "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings({ 3 }) @Inherited @NonNull @Deprecated public void test0() { }}")
+            .gives(
+                "@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(3) @WebFault @SuppressWarnings({3}) @NonNull public void test0(){}}") //
+            .gives(
+                "@Ignore class Test123{@Deprecated @Inherited @Test @WebFault @SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
+            .stays();
   }
 
   /** Automatically generated */
@@ -33,9 +33,19 @@ public class Issue0283 {
     ;
   }
 
+  @Test public void err2() {
+    trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
+        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
+        .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+        .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
+        .stays() //
+    ;
+  }
+
   /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
    * Yossi */
-  @Test public void aBClassCAD3ED3FPublicVoida() {
+  @Test public void err1() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
         .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
         .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
@@ -90,16 +100,6 @@ public class Issue0283 {
         .gives("@Ignore class Test123{@Deprecated @SuppressWarnings(3)@Test @SuppressWarnings({3})@NonNull public void test0(){}}") //
         .gives("@Ignore class Test123{@Deprecated @Test@SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
         .stays();
-  }
-
-  @Test public void test4() {
-    trimmingOf(
-        "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings({ 3 }) @Inherited @NonNull @Deprecated public void test0() { }}")
-            .gives(
-                "@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(3) @WebFault @SuppressWarnings({3}) @NonNull public void test0(){}}") //
-            .gives(
-                "@Ignore class Test123{@Deprecated @Inherited @Test @WebFault @SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
-            .stays();
   }
 
   @Test public void test5() {
