@@ -94,7 +94,6 @@ public final class InfixAdditionSortTest {
 
   @Test public void testa2bc() {
     trimmingOf("a * 2 + b * c") //
-        // .using(InfixExpression.class, new InfixMultiplicationSort()) //
         .gives("2*a+b*c") //
         .stays() //
     ;
@@ -148,9 +147,6 @@ public final class InfixAdditionSortTest {
         .stays();
   }
 
-  // @Test public void test06() {
-  // assert !new InfixAdditionSubtractionExpand().check(INPUT);
-  // }
   @Test public void test07() {
     assert new InfixAdditionSubtractionExpand().replacement(INPUT) == null;
   }
