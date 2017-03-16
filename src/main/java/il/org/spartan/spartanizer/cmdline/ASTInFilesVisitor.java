@@ -32,15 +32,13 @@ import junit.framework.*;
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
   protected static Class<? extends ASTInFilesVisitor> clazz;
-
   protected static final String[] defaultArguments = as.array("..");
-
   static BufferedWriter out;
-
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
   }
+
   /** Check if some java contains {@link Test} annotations
    * <p>
    * @param f
@@ -59,6 +57,7 @@ public class ASTInFilesVisitor {
     });
     return $.get();
   }
+
   static boolean letItBeIn(final List<Statement> ¢) {
     return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
   }
@@ -85,43 +84,43 @@ public class ASTInFilesVisitor {
   }
 
   protected String absolutePath;
-
   private ASTVisitor astVisitor;
-
   protected Dotter dotter;
-
   @External(alias = "i", value = "input folder") protected final String inputFolder = system.windows() ? "" : ".";
-
   private final List<String> locations;
-
   @External(alias = "o", value = "output folder") protected final String outputFolder = system.tmp;
-
   protected File presentFile;
-
   protected String presentSourceName;
   protected String presentSourcePath;
   protected String relativePath;
   @External(alias = "s", value = "silent") protected boolean silent;
+
   public ASTInFilesVisitor() {
     this(null);
   }
+
   public ASTInFilesVisitor(final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
+
   private void collect(final CompilationUnit ¢) {
     if (¢ != null)
       ¢.accept(astVisitor);
   }
+
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
+
   @SuppressWarnings("static-method") protected void done(final String path) {
     ___.______unused(path);
   }
+
   public void fire(final ASTVisitor ¢) {
     astVisitor = ¢;
     locations.forEach(this::visitLocation);
   }
+
   @SuppressWarnings("static-method") protected void init(final String path) {
     ___.______unused(path);
   }
@@ -249,8 +248,7 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface())
-              .go(t -> System.out.println(t.getName()));
+          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(t -> System.out.println(t.getName()));
           final Predicate<TypeDeclaration> p = t -> t.isInterface();
           final Predicate<TypeDeclaration> q = t -> {
             System.out.println(t);

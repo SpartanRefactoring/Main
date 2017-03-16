@@ -1,5 +1,7 @@
 /* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
-  @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * 
  * @since Sep 8, 2016 */
 package il.org.spartan.spartanizer.engine;
 

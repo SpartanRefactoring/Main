@@ -1,16 +1,17 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.cmdline.system.*;
 import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
 import static java.lang.String.*;
+
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.spartanizer.cmdline.system.*;
 
 import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.stream.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;

@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;

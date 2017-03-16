@@ -1,14 +1,16 @@
 /* TODO: Ori Roth <ori.rothh@gmail.com> please add a description
-  @author Ori Roth <ori.rothh@gmail.com>
+ * 
+ * @author Ori Roth <ori.rothh@gmail.com>
+ * 
  * @since Oct 16, 2016 */
 package il.org.spartan.plugin;
+
+import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 

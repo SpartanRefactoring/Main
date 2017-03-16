@@ -8,17 +8,17 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
-import java.util.*;
+import static java.util.stream.Collectors.*;
 
-import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
-import static java.util.stream.Collectors.*;
+import java.util.*;
 
-import static il.org.spartan.lisp.*;
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;

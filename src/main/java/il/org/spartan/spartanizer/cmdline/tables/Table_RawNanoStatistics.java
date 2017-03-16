@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -50,9 +50,11 @@ public class Table_RawNanoStatistics {
     new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
         if (writer == null)
-          initializeWriter(outputFolder); // needed to printout on a custom folder using -o 
+          initializeWriter(outputFolder); // needed to printout on a custom
+                                          // folder using -o
         summarize(path);
-        System.err.println(" " + path + " Done"); // we need to know if the process is finished or hang
+        System.err.println(" " + path + " Done"); // we need to know if the
+                                                  // process is finished or hang
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
@@ -72,11 +74,10 @@ public class Table_RawNanoStatistics {
     });
     writer.close();
   }
-  
+
   static void initializeWriter(final String outputFolder) {
     writer = new Table(Table_RawNanoStatistics.class, outputFolder);
   }
-
 
   static void initializeWriter() {
     writer = new Table(Table_RawNanoStatistics.class);

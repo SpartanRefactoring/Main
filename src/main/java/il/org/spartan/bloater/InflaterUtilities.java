@@ -1,5 +1,7 @@
 package il.org.spartan.bloater;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -8,8 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.plugin.*;

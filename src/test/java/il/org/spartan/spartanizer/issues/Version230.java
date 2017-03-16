@@ -7,12 +7,12 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
