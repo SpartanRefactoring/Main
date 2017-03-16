@@ -9,6 +9,7 @@ import org.junit.runners.*;
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
+@Ignore("For version 300")
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
     trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//

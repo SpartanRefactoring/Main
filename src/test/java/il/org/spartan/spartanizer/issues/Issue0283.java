@@ -25,7 +25,7 @@ public class Issue0283 {
   }
 
   /** Automatically generated */
-  @Test public void abclasscad3ed3fpublicvoida() {
+  @Test public void err3() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
         .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
         .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
