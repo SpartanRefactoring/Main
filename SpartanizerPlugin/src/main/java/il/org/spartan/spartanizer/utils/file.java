@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.utils;
 import java.io.*;
 import java.nio.file.*;
 
+import il.org.spartan.utils.*;
+
 /** File utils
  * @author Ori Marcovitch
  * @since Dec 4, 2016 */

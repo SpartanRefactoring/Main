@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Converts {@code int a=3;return a;} into {@code return 3;}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnAssignment extends $FragementAndStatement//
     implements TipperCategory.Inlining {

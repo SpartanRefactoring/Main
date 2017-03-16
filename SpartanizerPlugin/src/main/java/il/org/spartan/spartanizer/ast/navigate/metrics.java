@@ -1,19 +1,19 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Use {@link Recurser} to measure things over an AST
  * @author Dor Ma'ayan

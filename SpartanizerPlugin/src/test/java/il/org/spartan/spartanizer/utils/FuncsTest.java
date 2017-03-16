@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.mockito.Mockito.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** A test suite for class {@link step}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-18
  * @see step */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

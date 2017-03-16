@@ -2,6 +2,10 @@ package il.org.spartan.bloater.bloaters;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -9,10 +13,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;

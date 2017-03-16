@@ -1,5 +1,7 @@
 package il.org.spartan.bloater;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -9,12 +11,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Helper functions for the inflater
  * @author Raviv Rachmiel

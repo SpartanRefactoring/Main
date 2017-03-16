@@ -2,6 +2,10 @@ package il.org.spartan.spartanizer.leonidas;
 
 import static il.org.spartan.azzert.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,17 +13,13 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>

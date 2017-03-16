@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.GUIBatchLaconizer.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.function.*;
 
 import org.eclipse.core.resources.*;
@@ -11,12 +13,10 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.

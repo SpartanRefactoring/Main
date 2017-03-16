@@ -2,13 +2,13 @@ package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2014-08-25 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")

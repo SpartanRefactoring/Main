@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TDD: Unit tests for {@link Tipper#myActualOperandsClass()}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
@@ -82,7 +82,7 @@ public final class Issue0214 {
   }
 
   @Test public void A13_TipperReturnsCorrectConcreteValueAssignmentAssignment() {
-    azzert.that(new AssignmentAndAssignment().myActualOperandsClass(), is(Assignment.class));
+    azzert.that(new AssignmentAndAssignmentSameValue().myActualOperandsClass(), is(Assignment.class));
   }
 
   @Test public void A14_TipperReturnsCorrectConcreteValueIfStatement() {

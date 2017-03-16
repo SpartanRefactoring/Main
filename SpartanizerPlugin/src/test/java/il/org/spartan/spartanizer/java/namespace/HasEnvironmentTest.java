@@ -1,7 +1,11 @@
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ *
  * @since Jan 1, 2017 */
 package il.org.spartan.spartanizer.java.namespace;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 
@@ -10,8 +14,6 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

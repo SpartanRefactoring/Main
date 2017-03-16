@@ -71,14 +71,16 @@ public enum anonymize {
     return $;
   }
 
-  public static String shortenIdentifiers(final String s) {
+  public static String shortenIdentifiers(final String javaFragment) {
     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    final IDocument $ = new Document(ASTutils.wrapCode(s));
+    final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-    final ASTNode n = ASTutils.extractASTNode(s, cu);
+    final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
+    if (n == null)
+      return javaFragment;
     final ASTRewrite r = ASTRewrite.create(ast);
     final Map<String, String> renaming = new HashMap<>();
     n.accept(new ASTVisitor(true) {
@@ -98,7 +100,7 @@ public enum anonymize {
       }
     });
     applyChanges($, r);
-    return ASTutils.extractCode(s, $);
+    return ASTutils.extractCode(javaFragment, $);
   }
 
   private static void applyChanges(final IDocument d, final ASTRewrite r) {
@@ -121,12 +123,15 @@ public enum anonymize {
 
   public static String makeUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return format("%s@Test public void %s() {\n %s\n}\n", comment(), signature($), body($));
+    return comment() + format("@Test public void %s() {\n %s\n}\n", signature($), body($));
   }
 
   public static String comment() {
-    return format("/** Automatically generated on %s, copied by %s */\n", //
-        system.now(), system.userName());
+    return format("/** Introduced by %s on %s \n(code automatically generated in '%s.java')*/\n", //
+        system.userName(), //
+        system.now(), //
+        system.callingClassName() //
+    );
   }
 
   public static String body(final String input) {
@@ -143,7 +148,7 @@ public enum anonymize {
   }
 
   private static String operandClass(final Tipper<?> ¢) {
-    return ¢.get().getClass().getSimpleName();
+    return system.className(¢.object());
   }
 
   private static String tipperClass(final Tipper<?> ¢) {

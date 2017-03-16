@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;

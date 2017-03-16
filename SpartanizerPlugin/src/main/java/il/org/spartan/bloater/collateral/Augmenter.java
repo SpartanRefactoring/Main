@@ -1,5 +1,11 @@
 package il.org.spartan.bloater.collateral;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
@@ -10,15 +16,9 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;

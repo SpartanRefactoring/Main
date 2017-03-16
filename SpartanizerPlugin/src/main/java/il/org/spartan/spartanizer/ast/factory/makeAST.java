@@ -10,12 +10,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** An empty {@code enum} for fluent programming. The name should say it all:
+ * The name, followed by a dot, followed by a method name, should read like a
+ * sentence phrase.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum makeAST {
   /** Converts file, string or marker to compilation unit. */

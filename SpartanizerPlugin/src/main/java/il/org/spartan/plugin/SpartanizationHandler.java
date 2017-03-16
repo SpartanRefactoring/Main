@@ -17,7 +17,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link GUIBatchLaconizer} as its applicator.

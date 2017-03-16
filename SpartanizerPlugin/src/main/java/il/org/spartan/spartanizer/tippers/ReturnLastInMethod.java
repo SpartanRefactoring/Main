@@ -2,16 +2,16 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** removes empty return, provided that it is last in method.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-7-17 */
 public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     implements TipperCategory.SyntacticBaggage {

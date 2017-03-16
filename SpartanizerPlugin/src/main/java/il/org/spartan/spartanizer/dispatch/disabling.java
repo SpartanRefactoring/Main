@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** TODO: Yossi Gil please add a description
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface disabling {
   /** A recursive scan for disabled nodes. Adds disabled property to disabled

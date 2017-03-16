@@ -1,14 +1,14 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch

@@ -1,17 +1,18 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
@@ -44,6 +45,14 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
     return format.perc(expressionsCovered(), expressions());
   }
 
+  public double touched() {
+    return format.perc(stream().mapToInt(CompilationUnitRecord::methodsTouched).sum(), methods() - methodsCovered());
+  }
+
+  public double methodsCoverage() {
+    return format.perc(methodsCovered(), methods());
+  }
+
   public int nodes() {
     return stream().mapToInt(λ -> λ.nodes.afterSpartanization).sum();
   }
@@ -68,8 +77,12 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
     return stream().mapToInt(λ -> λ.expressions.covered()).sum();
   }
 
-  public int touched() {
-    return stream().mapToInt(CompilationUnitRecord::touched).sum();
+  private int methodsCovered() {
+    return stream().mapToInt(CompilationUnitRecord::methodsCovered).sum();
+  }
+
+  public int methods() {
+    return stream().mapToInt(λ -> λ.methods.size()).sum();
   }
 }
 
@@ -78,10 +91,10 @@ class CompilationUnitRecord {
     @SuppressWarnings("unused") private int beforeSpartanization;
     public int afterSpartanization;
     private int coveredByNonMethods;
-    private Function<ASTNode, Integer> count;
-    private Function<LightWeightMethodRecord, Integer> np;
+    private final Function<ASTNode, Integer> count;
+    private final Function<LightWeightMethodRecord, Integer> np;
 
-    public ElementCounter(final Function<ASTNode, Integer> count, Function<LightWeightMethodRecord, Integer> np) {
+    public ElementCounter(final Function<ASTNode, Integer> count, final Function<LightWeightMethodRecord, Integer> np) {
       this.count = count;
       this.np = np;
     }
@@ -94,6 +107,10 @@ class CompilationUnitRecord {
       return count.apply(¢).intValue();
     }
 
+    private int count(final CompilationUnit ¢) {
+      return count.apply(¢).intValue();
+    }
+
     private int np(final LightWeightMethodRecord λ) {
       return np.apply(λ).intValue();
     }
@@ -103,7 +120,7 @@ class CompilationUnitRecord {
     }
 
     private int coveredByMethods() {
-      return methods.values().stream().mapToInt(λ -> np(λ)).sum();
+      return methods.values().stream().mapToInt(this::np).sum();
     }
 
     public int covered() {
@@ -124,7 +141,6 @@ class CompilationUnitRecord {
     nodes.before(cu);
     commands.before(cu);
     expressions.before(cu);
-    fetchAllmethods(cu);
   }
 
   private void fetchAllmethods(final CompilationUnit u) {
@@ -136,24 +152,29 @@ class CompilationUnitRecord {
     nodes.after(¢);
     commands.after(¢);
     expressions.after(¢);
+    fetchAllmethods(¢);
   }
 
-  public int touched() {
+  public int methodsTouched() {
     return (int) methods.values().stream().filter(LightWeightMethodRecord::touched).count();
   }
 
-  public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n) {
-    final String mangle = Vocabulary.mangle(¢);
-    methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
-    methods.get(mangle).logAndGet(n);
+  public int methodsCovered() {
+    return (int) methods.values().stream().filter(LightWeightMethodRecord::fullyCovered).count();
   }
 
-  public void markNP(final ASTNode n, @SuppressWarnings("unused") final String np) {
+  public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n, final String np) {
+    final String mangle = Vocabulary.mangle(¢);
+    methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
+    methods.get(mangle).mark(n, np);
+  }
+
+  public void markNP(final ASTNode n, final String np) {
     final MethodDeclaration $ = ancestorMethod(n);
     if ($ == null)
       markRegular(n);
     else
-      markContainedInMethod($, n);
+      markContainedInMethod($, n, np);
   }
 
   private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
@@ -177,6 +198,7 @@ class LightWeightMethodRecord {
   final NanoPatternCounter nodes;
   final NanoPatternCounter commands;
   final NanoPatternCounter expressions;
+  private boolean fullyCovered;
 
   public LightWeightMethodRecord(final MethodDeclaration ¢) {
     nodes = NanoPatternCounter.init(count.nodes(¢));
@@ -185,21 +207,39 @@ class LightWeightMethodRecord {
   }
 
   /** makes sure we don't exceed 100% of nodes of a method */
-  public void logAndGet(final ASTNode ¢) {
-    nodes.incAndGet(count.nodes(¢));
-    commands.incAndGet(measure.commands(¢));
-    expressions.incAndGet(measure.expressions(¢));
+  public void mark(final ASTNode ¢, final String np) {
+    if (!np.equals(LetItBeIn.class.getSimpleName()))
+      mark(¢);
+    else
+      markLetItBeIn(¢);
+    if (iz.methodDeclaration(¢))
+      fullyCovered = true;
+  }
+
+  private void markLetItBeIn(final ASTNode ¢) {
+    mark(extract.nextStatement(¢));
+    mark(¢);
+  }
+
+  private void mark(final ASTNode ¢) {
+    nodes.inc(count.nodes(¢));
+    commands.inc(measure.commands(¢));
+    expressions.inc(measure.expressions(¢));
   }
 
   public boolean touched() {
-    return nodes.np().intValue() > 0;
+    return nodes.np().intValue() > 0 && !fullyCovered;
+  }
+
+  public boolean fullyCovered() {
+    return fullyCovered;
   }
 
   static class NanoPatternCounter {
     private final int total;
     private int np;
 
-    static NanoPatternCounter init(int ¢) {
+    static NanoPatternCounter init(final int ¢) {
       return new NanoPatternCounter(¢);
     }
 
@@ -211,11 +251,11 @@ class LightWeightMethodRecord {
       return Integer.valueOf(np);
     }
 
-    private NanoPatternCounter(int num) {
-      this.total = num;
+    private NanoPatternCounter(final int num) {
+      total = num;
     }
 
-    public int incAndGet(int amount) {
+    public int inc(final int amount) {
       final int $ = Math.min(amount, total - np);
       np += $;
       return $;

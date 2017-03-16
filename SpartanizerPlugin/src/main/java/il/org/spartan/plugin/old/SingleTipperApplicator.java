@@ -1,5 +1,7 @@
-/** TODO: Ori Roth <ori.rothh@gmail.com> please add a description
+/* TODO: Ori Roth <ori.rothh@gmail.com> please add a description
+ *
  * @author Ori Roth <ori.rothh@gmail.com>
+ *
  * @since Oct 16, 2016 */
 package il.org.spartan.plugin.old;
 
@@ -24,7 +26,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 public final class SingleTipperApplicator {
   private static ASTRewrite createRewrite(//

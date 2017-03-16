@@ -2,13 +2,13 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
+import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.lisp.*;
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Tested by {@link Issue1115}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09 */
 public final class LambdaRenameSingleParameterToLambda extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {

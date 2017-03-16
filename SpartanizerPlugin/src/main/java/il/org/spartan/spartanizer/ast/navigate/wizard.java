@@ -7,6 +7,17 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
+import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
+import static il.org.spartan.spartanizer.ast.navigate.step.name;
+import static il.org.spartan.spartanizer.ast.navigate.step.statements;
+
+import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
@@ -21,17 +32,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
-import static il.org.spartan.spartanizer.ast.navigate.step.name;
-import static il.org.spartan.spartanizer.ast.navigate.step.statements;
-
-import static il.org.spartan.spartanizer.ast.navigate.extract.*;
-
-import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -40,11 +40,11 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
@@ -860,6 +860,22 @@ public interface wizard {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
 
+  /** Works like same, but it applies {@ link tide.clean} to remove spaces
+   * Determine whether two nodes are the same, in the sense that their textual
+   * representations is identical.
+   * <p>
+   * Each of the parameters may be {@code null; a {@code null is only equal
+   * to{@code null
+   * @param n1 JD
+   * @param n2 JD
+   * @return {@code true} if the parameters are the same.
+   * @author matteo
+   * @since 15/3/2017 */
+  static boolean same2(final ASTNode n1, final ASTNode n2) {
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
+        && tide.clean(trivia.cleanForm(n1) + "").equals(tide.clean(trivia.cleanForm(n2) + ""));
+  }
+
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
@@ -873,7 +889,7 @@ public interface wizard {
    * @param ns1 first list to compare
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
-  @SuppressWarnings("boxing") static <¢ extends ASTNode> boolean same(final List<¢> ns1, final List<¢> ns2) {
+  @SuppressWarnings("boxing") static <N extends ASTNode> boolean same(final List<N> ns1, final List<N> ns2) {
     return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(λ -> same(ns1.get(λ), ns2.get(λ)));
   }
 

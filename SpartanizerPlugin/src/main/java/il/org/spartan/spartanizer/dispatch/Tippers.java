@@ -2,15 +2,15 @@ package il.org.spartan.spartanizer.dispatch;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static il.org.spartan.lisp.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.lisp.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** A number of utility functions common to all tippers.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 public enum Tippers {
   ;

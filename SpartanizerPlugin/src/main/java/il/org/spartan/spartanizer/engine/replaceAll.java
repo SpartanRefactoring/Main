@@ -2,25 +2,25 @@ package il.org.spartan.spartanizer.engine;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Replace an occurrence of a {@link SimpleName} with an {@link Expression} in
  * an array of
  * @year 2015
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 13, 2016 */
 public interface replaceAll {
   static ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {

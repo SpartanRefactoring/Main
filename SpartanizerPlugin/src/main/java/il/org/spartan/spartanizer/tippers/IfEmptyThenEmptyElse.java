@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * else
  *   ;
  * }
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-26 */
 public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
     implements TipperCategory.NOP {
