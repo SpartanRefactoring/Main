@@ -1,7 +1,7 @@
 /* TODO: Ori Roth <ori.rothh@gmail.com> please add a description
- * 
+ *
  * @author Ori Roth <ori.rothh@gmail.com>
- * 
+ *
  * @since Dec 14, 2016 */
 package il.org.spartan.spartanizer.utils;
 
@@ -16,6 +16,7 @@ import java.util.stream.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.utils.*;
 
 public enum LogToTest {
   ;

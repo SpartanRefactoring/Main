@@ -1,6 +1,4 @@
-package il.org.spartan.spartanizer.utils;
-
-import il.org.spartan.utils.*;
+package il.org.spartan.utils;
 
 /** A poor man's approximation of a mutable int, which is so much more
  * convenient than {@link Integer}

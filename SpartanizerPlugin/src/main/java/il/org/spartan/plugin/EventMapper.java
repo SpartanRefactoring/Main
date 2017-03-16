@@ -3,7 +3,7 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.function.*;
 
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A {@link Listener} that listen to {@link event}s. Maps both the recorders
  * and the results to the events. The recorders can be {@link Function}s,

@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link AbstractGUIApplicator}. This class must eventually die.

@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Utility class to measure number of statemetns\expressions in an ASTNode's
  * subtree, skipping some ASTNode objects
