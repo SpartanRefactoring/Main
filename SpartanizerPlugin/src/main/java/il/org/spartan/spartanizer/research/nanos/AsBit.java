@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -16,13 +17,10 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Dec 7, 2016 */
 public class AsBit extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -5988111426167317498L;
-  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("$X ? 1 : 0", "as.bit($X)", ""));
-      add(patternTipper("$X ? 0 : 1", "as.bit(!($X))", ""));
-    }
-  };
+  private static final List<UserDefinedTipper<ConditionalExpression>> tippers = as.list(//
+      patternTipper("$X ? 1 : 0", "as.bit($X)", ""), //
+      patternTipper("$X ? 0 : 1", "as.bit(!($X)", "")//
+  );
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);

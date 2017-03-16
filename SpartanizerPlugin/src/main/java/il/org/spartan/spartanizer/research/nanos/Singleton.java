@@ -16,7 +16,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Singleton extends NanoPatternTipper<InfixExpression> {
   private static final long serialVersionUID = 6833387526348076529L;
   private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = -363291118402632760L;
+
     {
       add(patternTipper("$X.size() == 1", "singleton($X)", "is singleton"));
       add(patternTipper("1 == $X.size()", "singleton($X)", "is singleton"));

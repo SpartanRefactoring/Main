@@ -15,7 +15,9 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = 3787670358656343399L;
   private static final String description = "Any matches pattern. Consolidate into one statement";
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = -456918388812840714L;
+
     {
       statementsPattern("for($T $N1 : $X1) if($X2) return true; return false;", //
           "return $X1.stream().anyMatch($N1 -> $X2);", description);
@@ -24,11 +26,13 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = -713086331927766418L;
+
     {
-      patternTipper("for($T $N1 : $X1) if($X2) return true;", //
+      add("for($T $N1 : $X1) if($X2) return true;", //
           "returnIf($X1.stream().anyMatch($N1 -> $X2));", "All matches pattern. Consolidate into one statement");
-      patternTipper("for($T $N1 : $X1) if($X2) $N2 = true;", //
+      add("for($T $N1 : $X1) if($X2) $N2 = true;", //
           "$N2 = $X1.stream().anyMatch($N1 -> $X2);", "All matches pattern. Consolidate into one statement");
     }
   };

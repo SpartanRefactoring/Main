@@ -17,40 +17,32 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
  * @since 2017-01-18 */
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -2812051728758407982L;
-  private static final BlockNanoPatternContainer blockTippers = new BlockNanoPatternContainer() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
+  private static final BlockNanoPatternContainer blockTippers = new BlockNanoPatternContainer()//
+      .statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).collect(toList());", //
-          "Go Fluent: filter pattern");
-      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($X3);", //
+          "Go Fluent: filter pattern")
+      .statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($X3);", //
           "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).map($N2 -> $X3).collect(toList());", //
-          "Go Fluent: filter pattern");
-      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($N2);", //
+          "Go Fluent: filter pattern")
+      .statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($N2);", //
           "$T1 $N1 = ($X1).stream().collect(toList());", //
-          "Go Fluent: filter pattern");
-      statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($X3);", //
+          "Go Fluent: filter pattern")
+      .statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) $N1.add($X3);", //
           "$T1 $N1 = ($X1).stream().map($N2 -> $X3).collect(toList());", //
           "Go Fluent: filter pattern");
-    }
-  };
-  static final NanoPatternContainer<EnhancedForStatement> tippers = new NanoPatternContainer<EnhancedForStatement>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
-    {
-      patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
+  static final NanoPatternContainer<EnhancedForStatement> tippers = new NanoPatternContainer<EnhancedForStatement>()
+      .add("for($T1 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$N1.addAll(($X1).stream().filter($N2 -> $X2).collect(toList()));", //
-          "Go Fluent: filter pattern");
-      patternTipper("for($T1 $N2 : $X1) if($X2) $N1.add($X3);", //
+          "Go Fluent: filter pattern")
+      .add("for($T1 $N2 : $X1) if($X2) $N1.add($X3);", //
           "$N1.addAll(($X1).stream().filter($N2 -> $X2).map($N2->$X3).collect(toList()));", //
-          "Go Fluent: filter pattern");
-      patternTipper("for($T1 $N2 : $X1) $N1.add($N2);", //
+          "Go Fluent: filter pattern")
+      .add("for($T1 $N2 : $X1) $N1.add($N2);", //
           "$N1.addAll(($X1).stream().collect(toList()));", //
-          "Go Fluent: filter pattern");
-      patternTipper("for($T1 $N2 : $X1) $N1.add($X3);", //
+          "Go Fluent: filter pattern")
+      .add("for($T1 $N2 : $X1) $N1.add($X3);", //
           "$N1.addAll(($X1).stream().map($N2->$X3).collect(toList()));", //
           "Go Fluent: filter pattern");
-    }
-  };
 
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
     private static final long serialVersionUID = -1531336007723130062L;
