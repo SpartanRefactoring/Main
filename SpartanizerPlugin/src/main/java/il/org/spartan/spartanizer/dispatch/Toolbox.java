@@ -177,7 +177,7 @@ public class Toolbox {
             new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
-            new AssignmentAndAssignmentSameValue(), //
+            new AssignmentAndAssignmentOfSameValue(), //
             new AssignmentAndReturn(), //
             new AssignmentToFromInfixIncludingTo(), //
             new AssignmentToPrefixIncrement(), //
