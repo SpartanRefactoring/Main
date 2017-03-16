@@ -26,7 +26,7 @@ public final class AssignmentAndAssignmentSameValue extends ReplaceToNextStateme
 
   @Override public Example[] examples() {
     return new Example[] { //
-        convert("a=3;b=3;").to("a=b=3"), //
+        convert("a=3;b=3;").to("b=a=3"), //
         ignores("a=c;b=c"), //
     };
   }

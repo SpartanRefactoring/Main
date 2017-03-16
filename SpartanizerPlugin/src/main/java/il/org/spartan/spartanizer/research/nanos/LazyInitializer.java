@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,12 +16,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Jan 8, 2017 */
 public final class LazyInitializer extends NanoPatternTipper<Assignment> {
   private static final long serialVersionUID = -884964742974022736L;
-  private static final List<UserDefinedTipper<Assignment>> tippers = new ArrayList<UserDefinedTipper<Assignment>>() {
-    static final long serialVersionUID = -7908352228363251529L;
-    {
-      add(patternTipper("$X1 = default¢($X1).to($X2)", "lazyInitialize($X1).with(()->$X2)", "lazy evaluation"));
-    }
-  };
+  private static final List<UserDefinedTipper<Assignment>> tippers = as
+      .list(patternTipper("$X1 = default¢($X1).to($X2)", "lazyInitialize($X1).with(()->$X2)", "lazy evaluation"));
 
   @Override public boolean canTip(final Assignment x) {
     return anyTips(tippers, x);

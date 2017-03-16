@@ -162,6 +162,7 @@ public final class Version300 {
     azzert.that(lowerFirstLetter("hello"), is("hello"));
     azzert.that(upperFirstLetter("hello"), is("Hello"));
   }
+
   @Test public void x() {
     trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
         .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)break;return ¢;}") //
@@ -180,13 +181,14 @@ public final class Version300 {
         .stays() //
     ;
   }
+
   @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
     trimmingOf("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
-  .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
-  .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
-  .using(IfStatement.class, new IfTrueOrFalse()) //
-  .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
-   .stays() //
-   ;
- }
+        .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
+        .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
+        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
+        .stays() //
+    ;
+  }
 }

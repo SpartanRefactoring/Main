@@ -1,9 +1,12 @@
 package il.org.spartan.spartanizer.research.nanos.deprecated;
 
+import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -13,13 +16,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Jan 8, 2017 */
 public final class StatementsThroughStep extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 5272312890235656837L;
-  final Collection<UserDefinedTipper<MethodInvocation>> tippers = new ArrayList<UserDefinedTipper<MethodInvocation>>() {
-    static final long serialVersionUID = 6254377268949425872L;
-    {
-      add(TipperFactory.patternTipper("$X.statements()", "statements($X)", "step: statements"));
-      add(TipperFactory.patternTipper("$X.types()", "types($X)", "step: types"));
-    }
-  };
+  final Collection<UserDefinedTipper<MethodInvocation>> tippers = as.list(patternTipper("$X.statements()", "statements($X)", "step: statements"), //
+      patternTipper("$X.types()", "types($X)", "step: types") //
+  );
 
   @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "lisp: first";

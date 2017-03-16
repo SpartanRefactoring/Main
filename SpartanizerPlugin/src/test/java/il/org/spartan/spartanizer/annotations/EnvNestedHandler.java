@@ -68,8 +68,8 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
     if (a == null || !"OutOfOrderflatENV".equals(a.getTypeName() + ""))
       return;
     foundTestedAnnotation = true;
-      //noinspection SameReturnValue
-      a.accept(new ASTVisitor(true) {
+    // noinspection SameReturnValue
+    a.accept(new ASTVisitor(true) {
       @SuppressWarnings("unchecked") List<MemberValuePair> values(final NormalAnnotation ¢) {
         return ¢.values();
       }

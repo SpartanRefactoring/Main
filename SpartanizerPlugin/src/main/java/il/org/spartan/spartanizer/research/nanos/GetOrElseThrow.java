@@ -14,11 +14,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** <code>
- *  if(X) <br>
+/** {@code
+ *  if(X)
  *    throw Y
  *  return Z;
- * </code>
+ * }
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-29 */
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {

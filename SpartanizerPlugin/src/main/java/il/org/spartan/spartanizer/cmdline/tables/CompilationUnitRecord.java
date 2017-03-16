@@ -54,8 +54,8 @@ public class CompilationUnitRecord {
   static boolean hasTestAnnotation;
 
   @SuppressWarnings("hiding") public void countTestAnnotation(final CompilationUnit inner) {
-      //noinspection SameReturnValue
-      inner.accept(new ASTVisitor(true) {
+    // noinspection SameReturnValue
+    inner.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
           ++testCount;
@@ -82,8 +82,8 @@ public class CompilationUnitRecord {
 
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-      //noinspection SameReturnValue
-      cu.accept(new ASTVisitor(true) {
+    // noinspection SameReturnValue
+    cu.accept(new ASTVisitor(true) {
       @Override public boolean visit(final AnnotationTypeDeclaration node) {
         if (node.getName().getFullyQualifiedName() == "Test") {
           System.out.println(node.getName().getFullyQualifiedName());

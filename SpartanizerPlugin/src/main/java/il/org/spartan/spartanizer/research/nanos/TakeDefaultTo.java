@@ -10,15 +10,12 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-01 */
 public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -2244844927280034691L;
-  private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>() {
-    static final long serialVersionUID = -3378635767150564917L;
-    {
-      add("$X1 != null ? $X2 : $X3", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent");
-      add("$X1 == null ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent");
-      add("null != $X1 ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent");
-      add("null == $X1 ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent");
-    }
-  };
+  private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>()
+      .add("$X1 != null ? $X2 : $X3", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent") //
+      .add("$X1 == null ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent") //
+      .add("null != $X1 ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent") //
+      .add("null == $X1 ? $X3 : $X2", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent") //
+  ;
   static final DefaultsTo rival = new DefaultsTo();
 
   @Override public boolean canTip(final ConditionalExpression ¢) {

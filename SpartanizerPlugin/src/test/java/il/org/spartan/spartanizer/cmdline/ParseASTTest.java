@@ -20,8 +20,8 @@ public class ParseASTTest {
         + "import  static il.org.spartan.azzert.*; import org.junit.*;\npublic class Test {\n"
         + " @Ignore(\"comment\") @Test public void testMethod(){\n    int i = 1;\n   assert (i>0);\n }\n}");
     assert u != null;
-      //noinspection SameReturnValue
-      u.accept(new ASTVisitor(true) {
+    // noinspection SameReturnValue
+    u.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         return extendedModifiers(d).stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }

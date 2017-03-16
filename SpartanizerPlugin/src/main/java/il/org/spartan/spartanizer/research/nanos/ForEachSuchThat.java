@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -15,17 +16,13 @@ import il.org.spartan.spartanizer.research.*;
 public class ForEachSuchThat extends ForEach {
   private static final long serialVersionUID = -1275196391208545377L;
   private static final String description = "ForEachSuchThat pattern: conevrt to fluent API";
-  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = new ArrayList<UserDefinedTipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = -1138697077090807078L;
-    {
-      add(patternTipper("for($T $N1 : $N2) if($X1) $X2;", "$N2.stream().filter($N1 -> $X1).forEach($N1 -> $X2);", description));
-      add(patternTipper("for($T $N1 : $X1) if($X2) $X3;", "($X1).stream().filter($N1 -> $X2).forEach($N1 -> $X3);", description));
-      add(patternTipper("for($T $N1 : $N2) if($X1) try{ $X2; } catch($T2 $N3) $B",
-          "$N2.stream().filter($N1 -> $X1).forEach($N1 -> { try{$X2;} catch($T2 $N3) $B});", description));
-      add(patternTipper("for($T $N1 : $X1) if($X2) try{ $X3; } catch($T2 $N3) $B ",
+  private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
+      patternTipper("for($T $N1 : $N2) if($X1) $X2;", "$N2.stream().filter($N1 -> $X1).forEach($N1 -> $X2);", description),
+      patternTipper("for($T $N1 : $X1) if($X2) $X3;", "($X1).stream().filter($N1 -> $X2).forEach($N1 -> $X3);", description),
+      patternTipper("for($T $N1 : $N2) if($X1) try{ $X2; } catch($T2 $N3) $B",
+          "$N2.stream().filter($N1 -> $X1).forEach($N1 -> { try{$X2;} catch($T2 $N3) $B});", description),
+      patternTipper("for($T $N1 : $X1) if($X2) try{ $X3; } catch($T2 $N3) $B ",
           "($X1).stream().filter($N1 -> $X2).forEach($N1 -> {try{ $X3; } catch($T2 $N3) $B});", description));
-    }
-  };
 
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢)//

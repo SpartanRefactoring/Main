@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -18,13 +19,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Jan 8, 2017 */
 public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 9115876794591250052L;
-  private static final List<UserDefinedTipper<IfStatement>> tippers = new ArrayList<UserDefinedTipper<IfStatement>>() {
-    static final long serialVersionUID = 7148625164233169553L;
-    {
-      add(patternTipper("if (!$X1.containsKey($X2)) $X1.put($X2, $X3);", "$X1.putIfAbsent($X2, $X3);", "use putIfAbsent"));
-      add(patternTipper("if (!containsKey($X2)) put($X2, $X3);", "putIfAbsent($X2, $X3);", "use putIfAbsent"));
-    }
-  };
+  private static final List<UserDefinedTipper<IfStatement>> tippers = as.list(
+      patternTipper("if (!$X1.containsKey($X2)) $X1.put($X2, $X3);", "$X1.putIfAbsent($X2, $X3);", "use putIfAbsent"),
+      patternTipper("if (!containsKey($X2)) put($X2, $X3);", "putIfAbsent($X2, $X3);", "use putIfAbsent"));
 
   @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢);
