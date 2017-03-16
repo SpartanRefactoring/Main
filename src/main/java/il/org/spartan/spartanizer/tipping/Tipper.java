@@ -125,7 +125,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   public interface Example {
-    static Converter convert(final String from) {
+    public static Converter convert(final String from) {
       return to -> new Tipper.Example.Converts() {
         @Override public String from() {
           return from;
