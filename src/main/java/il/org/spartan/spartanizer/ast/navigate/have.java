@@ -7,10 +7,10 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** An empty <code><b>enum</b></code> for fluent programming. The name should
- * say it all: The name, followed by a dot, followed by a method name, should
- * read like a sentence phrase.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** An empty {@code enum} for fluent programming. The name should say it all:
+ * The name, followed by a dot, followed by a method name, should read like a
+ * sentence phrase.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum have {
   ;
@@ -32,10 +32,10 @@ public enum have {
     return ¢.anyMatch(iz::booleanLiteral);
   }
 
-  /** Determine whether the boolean literal <code><b>false</b></code> is present
+  /** Determine whether the boolean literal {@code false} is present
    * @param ¢ JD
    * @return whether one or more of the elements is the boolean literal
-   *         <code><b>false</b></code> */
+   *         {@code false} */
   public static boolean falseLiteral(final Iterable<Expression> ¢) {
     return az.stream(¢).anyMatch(iz.literal::false¢);
   }

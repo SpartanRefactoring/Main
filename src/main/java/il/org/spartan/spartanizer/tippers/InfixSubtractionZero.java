@@ -2,17 +2,17 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import java.util.*;
+import static java.util.stream.Collectors.*;
 
-import org.eclipse.jdt.core.dom.*;
+import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.hop.*;
 
-import static java.util.stream.Collectors.*;
+import java.util.*;
 
-import static il.org.spartan.lisp.*;
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;

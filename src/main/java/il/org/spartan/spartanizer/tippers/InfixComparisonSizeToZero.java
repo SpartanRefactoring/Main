@@ -3,11 +3,11 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,9 +19,9 @@ import il.org.spartan.spartanizer.utils.*;
 
 /** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to
- * <code><b>false</b></code>, and {@code x.size()>=0} to {@code true}.
+ * {@code false}, and {@code x.size()>=0} to {@code true}.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>

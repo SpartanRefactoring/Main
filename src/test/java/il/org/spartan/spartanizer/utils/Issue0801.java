@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.*;
 
 /** TODO: David Cohen please add a description
  * @author David Cohen

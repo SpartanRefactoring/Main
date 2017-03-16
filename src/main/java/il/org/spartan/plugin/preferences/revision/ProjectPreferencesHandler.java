@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static java.util.stream.Collectors.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
@@ -25,14 +27,12 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.dialogs.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** An handler for project configuration. User configuration is saved in a
  * designated XML file, see {@link XMLSpartan}.

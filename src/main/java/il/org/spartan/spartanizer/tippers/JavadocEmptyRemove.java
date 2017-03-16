@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-14 */
 public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
     implements TipperCategory.SyntacticBaggage {

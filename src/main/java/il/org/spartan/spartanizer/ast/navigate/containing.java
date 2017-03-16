@@ -2,16 +2,16 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** An empty <code><b>interface</b></code> for fluent programming. The name
- * should say it all: The name, followed by a dot, followed by a method name,
- * should read like a sentence phrase.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+/** An empty {@code interface} for fluent programming. The name should say it
+ * all: The name, followed by a dot, followed by a method name, should read like
+ * a sentence phrase.
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface containing {
   static CompilationUnit compilationUnit(final ASTNode ¢) {

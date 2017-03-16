@@ -1,9 +1,8 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.utils;
 
 import java.util.stream.*;
 
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.utils.*;
 import junit.framework.*;
 
 /** Organizes objects of the type parameter in a tree, supplying a
@@ -11,8 +10,8 @@ import junit.framework.*;
  * type parameter may present on all nodes on of this tree, including inner
  * nodes.
  * <p>
- * TODO Dor Maayan & Oran Gilboa: first assignment
- * TODO Oren Afek & Ori Roth & Matan Peled: first assignments 
+ * TODO Dor Maayan & Oran Gilboa: first assignment TODO Oren Afek & Ori Roth &
+ * Matan Peled: first assignments
  * <ol>
  * <li>Implement interface {@link Nested} for the same concept, except that
  * stream return ancestors.
@@ -90,10 +89,13 @@ public interface Recursive<@¢ T> {
       for (final Recursive<E> ¢ : children())
         $ = Stream.concat($, ¢.descendants());
       return $;
-    }/** A compound recursive structure enumerating {@link #descendants()} in
+    }/* A compound recurkksive structure enumerating {@link #descendants()} in
       * post-order
+      *
       * @param <E>
+      *
       * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+      *
       * @since 2017-03-13 */
   }
 }

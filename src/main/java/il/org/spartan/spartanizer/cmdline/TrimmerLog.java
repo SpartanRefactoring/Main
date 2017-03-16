@@ -1,20 +1,19 @@
 package il.org.spartan.spartanizer.cmdline;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Logging stuff
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
- *         {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since Sep 20, 2016 */
 public enum TrimmerLog {
   ;

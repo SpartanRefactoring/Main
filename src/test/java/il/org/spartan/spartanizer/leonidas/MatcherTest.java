@@ -3,10 +3,10 @@ package il.org.spartan.spartanizer.leonidas;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.research.Matcher.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

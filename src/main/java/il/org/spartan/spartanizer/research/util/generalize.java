@@ -9,7 +9,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** TODO: Ori Marcovitch please add a description

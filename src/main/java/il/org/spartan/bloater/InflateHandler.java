@@ -1,5 +1,7 @@
 package il.org.spartan.bloater;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 import java.util.List;
 import java.util.function.*;
@@ -17,14 +19,12 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
 
-import static java.util.stream.Collectors.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an

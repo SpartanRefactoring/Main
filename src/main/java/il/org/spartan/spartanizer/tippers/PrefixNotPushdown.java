@@ -4,12 +4,12 @@ import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.operand;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** pushes down "{@code !}", the negation operator as much as possible, using
  * the de-Morgan and other simplification rules.
- * @author Yossi Gil  {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-7-17 */
 public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Idiomatic {

@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.azzert.*;
 
+import static il.org.spartan.lisp.*;
+
 import java.io.*;
 import java.lang.annotation.*;
 import java.util.*;
@@ -11,8 +13,6 @@ import org.eclipse.jdt.core.dom.Annotation;
 import org.junit.*;
 import org.junit.runners.*;
 
-import static il.org.spartan.lisp.*;
-
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerEnum.*;
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** @formatter:off */
 @Target(ElementType.TYPE) @annotation @interface annotation { /**/ }
@@ -404,12 +405,12 @@ interface DummyInterface {/**/ }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
 @interface lambda {
-  /** lambda parameter */
+  /* lambda parameter */
 }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
 @interface local {
-  /** local variable */
+  /* local variable */
 }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD })

@@ -1,14 +1,13 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Collects statistics about nano occurrences
@@ -30,12 +29,30 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
 
   public void logNPInfo(final ASTNode n, final String np) {
     final Integer type = Integer.valueOf(nodeType(n));
-    if (!iz.methodDeclaration(n)) {
+    if (!iz.methodDeclaration(n))
       putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
-      ++typeHistogram(type).inner;
-    }
     nanoHistogram(type).putIfAbsent(np, new Int());
     ++nanoHistogram(type).get(np).inner;
+    countSubtree(n, np);
+  }
+
+  private void countSubtree(final ASTNode n, final String np) {
+    if (!excludeSubtree(np))
+      n.accept(new ASTVisitor() {
+        @Override public boolean preVisit2(final ASTNode $) {
+          if ($ == n)
+            return true;
+          final Integer t = Integer.valueOf(nodeType($));
+          nanoHistogram(t).putIfAbsent("other", new Int());
+          ++nanoHistogram(t).get("other").inner;
+          return !iz.classInstanceCreation($);
+        }
+      });
+  }
+
+  private static boolean excludeSubtree(@SuppressWarnings("unused") final String np) {
+    return true;
+    // return np.equals(FactoryMethod.class.getSimpleName());
   }
 
   Int typeHistogram(final Integer type) {
@@ -55,15 +72,11 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     return typeHistogram(Box.it(type)).inner;
   }
 
-  @SuppressWarnings("boxing") public int covered(final int type) {
-    return nanoHistogram(type).values().stream().map(λ -> λ.inner).reduce(0, (x, y) -> x + y).intValue();
+  public int covered(final int type) {
+    return nanoHistogram(Box.it(type)).values().stream().mapToInt(λ -> λ.inner).sum();
   }
 
   public double coverage(final int type) {
     return format.perc(covered(type), total(type));
-  }
-
-  public void fillAbsents() {
-    //
   }
 }

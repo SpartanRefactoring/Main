@@ -2,13 +2,13 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.java.IExtendedModifiersRank.*;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static java.util.stream.Collectors.*;
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;

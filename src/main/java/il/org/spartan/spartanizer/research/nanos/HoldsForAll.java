@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos;
 
-import org.eclipse.jdt.core.dom.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -419909996243222517L;
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 8728310718086035960L;
     {
       statementsPattern("for($T $N1 : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N1 -> !($X2));",
           "All matches pattern. Consolidate into one statement");
@@ -23,11 +23,11 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
     }
   };
   private static final NanoPatternContainer<EnhancedForStatement> tippers2 = new NanoPatternContainer<EnhancedForStatement>() {
-    @SuppressWarnings("hiding") static final long serialVersionUID = 1L;
+    static final long serialVersionUID = -2389216880185908036L;
     {
-      patternTipper("for($T $N1 : $X1) if($X2) return false;", //
+      add("for($T $N1 : $X1) if($X2) return false;", //
           "returnIf($X1.stream().allMatch($N1 -> !($X2)));", "All matches pattern. Consolidate into one statement");
-      patternTipper("for($T $N1 : $X1) if($X2) $N2 = false;", //
+      add("for($T $N1 : $X1) if($X2) $N2 = false;", //
           "$N2 = $X1.stream().allMatch($N1 -> !($X2));", "All matches pattern. Consolidate into one statement");
     }
   };

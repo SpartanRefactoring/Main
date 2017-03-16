@@ -1,17 +1,17 @@
 package il.org.spartan.spartanizer.research.classifier;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import static java.util.stream.Collectors.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.patterns.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** NOT ACTIVE RIGHT NOW. <br>
  * NEED TO ADD CATEGORIES.
