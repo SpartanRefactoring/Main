@@ -25,12 +25,9 @@ public enum SpartanizationComparator {
   @External(alias = "i", value = "input folder") static String inputFolder = system.windows() ? "" : ".";
   @External(alias = "o", value = "output folder") static final String outputFolder = "/tmp";
   static String presentSourcePath;
-  @SuppressWarnings("CanBeFinal")
-  static String presentSourceName;
-  @SuppressWarnings("CanBeFinal")
-  static int methodNesting;
-  @SuppressWarnings("CanBeFinal")
-  static MethodDeclaration lastNode;
+  @SuppressWarnings("CanBeFinal") static String presentSourceName;
+  @SuppressWarnings("CanBeFinal") static int methodNesting;
+  @SuppressWarnings("CanBeFinal") static MethodDeclaration lastNode;
   static Dotter dotter = new Dotter();
   private static final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
@@ -68,7 +65,7 @@ public enum SpartanizationComparator {
 
   private static void collect(final CompilationUnit u, final String id) {
     // dotter.click();
-    //noinspection SameReturnValue
+    // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         consider(¢, id);

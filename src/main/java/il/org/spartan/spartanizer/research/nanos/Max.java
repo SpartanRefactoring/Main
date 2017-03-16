@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,15 +16,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-02-12 */
 public final class Max extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -5168213016271470822L;
-  private static final Collection<UserDefinedTipper<ConditionalExpression>> tippers = new ArrayList<UserDefinedTipper<ConditionalExpression>>() {
-    static final long serialVersionUID = 118935813632028183L;
-    {
-      add(patternTipper("$X1 > $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
-      add(patternTipper("$X2 < $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
-      add(patternTipper("$X1 >= $X2 ? $X1 : $X2", "max($X1,$X2)", "max"));
-      add(patternTipper("$X2 <= $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
-    }
-  };
+  private static final Collection<UserDefinedTipper<ConditionalExpression>> tippers = as.list(
+      patternTipper("$X1 > $X2 ? $X1 : $X2", "max($X1,$X2)", "max"), patternTipper("$X2 < $X1 ? $X1 : $X2", "max($X1,$X2)", "max"),
+      patternTipper("$X1 >= $X2 ? $X1 : $X2", "max($X1,$X2)", "max"), patternTipper("$X2 <= $X1 ? $X1 : $X2", "max($X1,$X2)", "max"));
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);

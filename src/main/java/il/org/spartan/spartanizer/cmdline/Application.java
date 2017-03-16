@@ -80,7 +80,7 @@ public final class Application implements IApplication {
   }
 
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
-    //noinspection SameReturnValue
+    // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");

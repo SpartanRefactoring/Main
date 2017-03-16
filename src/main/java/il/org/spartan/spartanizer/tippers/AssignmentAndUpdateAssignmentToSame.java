@@ -32,6 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class AssignmentAndUpdateAssignmentToSame extends ReplaceToNextStatement<Assignment>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
+
   @Override public Example[] examples() {
     return new Example[] { //
         convert("a+=3;b=6;").to("a+=3+6"), //

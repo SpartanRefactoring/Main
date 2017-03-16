@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -18,12 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016-12-20 */
 public final class LastIndex extends NanoPatternTipper<InfixExpression> {
   private static final long serialVersionUID = -5764445432502726533L;
-  private static final List<UserDefinedTipper<InfixExpression>> tippers = new ArrayList<UserDefinedTipper<InfixExpression>>() {
-    static final long serialVersionUID = 25489487450339580L;
-    {
-      add(patternTipper("$X.size()-1", "lastIndex($X)", "lisp: lastIndex"));
-    }
-  };
+  private static final List<UserDefinedTipper<InfixExpression>> tippers = as.list(patternTipper("$X.size()-1", "lastIndex($X)", "lisp: lastIndex"));
   static final Last rival = new Last();
 
   @Override public boolean canTip(final InfixExpression ¢) {

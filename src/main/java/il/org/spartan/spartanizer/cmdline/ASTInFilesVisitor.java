@@ -253,8 +253,7 @@ public class ASTInFilesVisitor {
             return λ.isInterface();
           };
           final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
-          final Rule<TypeDeclaration, Object> r4 = r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p);
-          on(TypeDeclaration.class).hook(r4);
+          on(TypeDeclaration.class).hook(r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
         }
       });
     }

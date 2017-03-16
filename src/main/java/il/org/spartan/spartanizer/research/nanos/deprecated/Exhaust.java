@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,12 +16,9 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-01 */
 public class Exhaust extends NanoPatternTipper<WhileStatement> {
   private static final long serialVersionUID = -4404219080361481179L;
-  private static final Collection<UserDefinedTipper<WhileStatement>> tippers = new ArrayList<UserDefinedTipper<WhileStatement>>() {
-    static final long serialVersionUID = -7484229996912392686L;
-    {
-      add(patternTipper("while ($X) {}", "exhaust(()->$X);", "Exhaust pattern: conevrt to fluent API"));
-    }
-  };
+  private static final Collection<UserDefinedTipper<WhileStatement>> tippers = as.list( //
+      patternTipper("while ($X) {}", "exhaust(()->$X);", "Exhaust pattern: conevrt to fluent API")) //
+  ;
 
   @Override public boolean canTip(final WhileStatement ¢) {
     return anyTips(tippers, ¢);
