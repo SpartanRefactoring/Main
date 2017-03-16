@@ -82,7 +82,7 @@ public final class Issue0214 {
   }
 
   @Test public void A13_TipperReturnsCorrectConcreteValueAssignmentAssignment() {
-    azzert.that(new AssignmentAndAssignment().myActualOperandsClass(), is(Assignment.class));
+    azzert.that(new AssignmentAndAssignmentSameValue().myActualOperandsClass(), is(Assignment.class));
   }
 
   @Test public void A14_TipperReturnsCorrectConcreteValueIfStatement() {
