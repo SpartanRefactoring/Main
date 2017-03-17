@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
@@ -49,8 +48,6 @@ public class Table_RawNanoStatistics {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @External(alias = "c", value = "corpus") final String corpus = "";
-
       @Override protected void done(final String path) {
         if (writer == null)
           initializeWriter(); // needed to printout on a custom
@@ -61,7 +58,7 @@ public class Table_RawNanoStatistics {
       }
 
       void initializeWriter() {
-        writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + ":" + corpus, outputFolder);
+        writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
