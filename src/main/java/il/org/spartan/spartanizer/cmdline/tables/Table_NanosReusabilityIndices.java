@@ -30,7 +30,7 @@ import il.org.spartan.tables.*;
 class Table_NanosReusabilityIndices extends Table_ReusabilityIndices {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
-  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+  private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   private static final Collection<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
     static final long serialVersionUID = 1L;
     {
