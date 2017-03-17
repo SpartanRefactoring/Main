@@ -19,9 +19,9 @@ public abstract class NanoTable {
   static Table writer;
   static String tableName;
 
-  static void initializeWriter() {
-    writer = new Table(tableName);
-  }
+//  static void initializeWriter() {
+//    writer = new Table(tableName);
+//  }
 
   static void reset() {
     statistics.clear();
