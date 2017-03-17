@@ -67,11 +67,6 @@ public class Table_Summary extends NanoTable {
     writer.close();
   }
 
-  static void reset() {
-    statistics.clear();
-    npDistributionStatistics.clear();
-  }
-
   static void initializeWriter() {
     writer = new Table(Table_Summary.class);
   }
