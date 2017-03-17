@@ -6,8 +6,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics for a nano.
- * @author Ori Marcovitch
- * @since 2016 */
+ * @author Ori Marcovitch */
 public class NanoPatternRecord {
   public final String name;
   public int occurences;
