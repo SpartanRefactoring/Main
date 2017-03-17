@@ -29,8 +29,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") protected static final String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") protected static final String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor;
