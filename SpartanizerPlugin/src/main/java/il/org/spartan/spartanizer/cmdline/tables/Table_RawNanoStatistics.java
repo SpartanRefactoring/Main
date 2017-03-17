@@ -43,15 +43,15 @@ public class Table_RawNanoStatistics extends NanoTable {
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
-        if (writer == null)
-          initializeWriter();
+        initializeWriter();
         summarize(path);
         System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
       }
 
       void initializeWriter() {
-        writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
