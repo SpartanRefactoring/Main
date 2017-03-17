@@ -1,17 +1,13 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.function.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
@@ -19,13 +15,7 @@ import il.org.spartan.utils.*;
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-13 */
-public class Table_Summary {
-  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
-  static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  protected static Function<String, String> analyze = spartanalyzer::fixedPoint;
-  static Table writer;
+public class Table_Summary extends NanoTable {
   static {
     Logger.subscribe(statistics::markNP);
     Logger.subscribe(npDistributionStatistics::logNPInfo);
