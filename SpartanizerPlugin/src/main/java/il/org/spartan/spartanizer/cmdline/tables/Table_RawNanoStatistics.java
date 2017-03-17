@@ -30,7 +30,7 @@ public class Table_RawNanoStatistics extends NanoTable {
         .forEach(λ -> writer.col(λ.name, λ.occurences));
     fillAbsents();
     writer.nl();
-    npStatistics.clear();
+    reset();
   }
 
   static void fillAbsents() {
