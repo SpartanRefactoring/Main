@@ -19,24 +19,6 @@ public class Table_Summary extends NanoTable {
     Logger.subscribe(npDistributionStatistics::logNPInfo);
   }
 
-  public static void summarize(final String path) {
-    if (writer == null)
-      initializeWriter();
-    writer//
-        .col("Project", path)//
-        .col("Commands", statementsCoverage())//
-        .col("Expressions", expressionsCoverage())//
-        .col("Nodes", statistics.nodesCoverage())//
-        .col("Methods", methodsCovered())//
-        .col("Touched", touched())//
-        .col("Iteratives", iterativesCoverage())//
-        .col("ConditionalExpressions", conditionalExpressionsCoverage())//
-        .col("ConditionalCommands", conditionalStatementsCoverage())//
-        .col("total Commands", commands())//
-        .col("total Methods", methods())//
-        .nl();
-  }
-
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
@@ -44,6 +26,28 @@ public class Table_Summary extends NanoTable {
         reset();
         System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
+      }
+
+      public void summarize(final String path) {
+        initializeWriter();
+        writer//
+            .col("Project", path)//
+            .col("Commands", statementsCoverage())//
+            .col("Expressions", expressionsCoverage())//
+            .col("Nodes", statistics.nodesCoverage())//
+            .col("Methods", methodsCovered())//
+            .col("Touched", touched())//
+            .col("Iteratives", iterativesCoverage())//
+            .col("ConditionalExpressions", conditionalExpressionsCoverage())//
+            .col("ConditionalCommands", conditionalStatementsCoverage())//
+            .col("total Commands", commands())//
+            .col("total Methods", methods())//
+            .nl();
+      }
+
+      void initializeWriter() {
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
@@ -65,10 +69,6 @@ public class Table_Summary extends NanoTable {
       }
     });
     writer.close();
-  }
-
-  static void initializeWriter() {
-    writer = new Table(Table_Summary.class);
   }
 
   static int commands() {
