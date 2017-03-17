@@ -86,6 +86,7 @@ public class ASTInFilesVisitor {
   private ASTVisitor astVisitor;
   protected Dotter dotter;
   @External(alias = "i", value = "input folder") protected final String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "c", value = "corpus name") protected String corpus = "";
   private final List<String> locations;
   @External(alias = "o", value = "output folder") protected final String outputFolder = system.tmp;
   protected File presentFile;
