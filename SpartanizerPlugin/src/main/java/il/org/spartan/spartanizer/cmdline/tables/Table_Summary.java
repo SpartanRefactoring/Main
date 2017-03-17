@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -72,12 +70,6 @@ public class Table_Summary extends NanoTable {
   static void reset() {
     statistics.clear();
     npDistributionStatistics.clear();
-  }
-
-  static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢)//
-        || step.body(¢) == null//
-        || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
   static void initializeWriter() {
