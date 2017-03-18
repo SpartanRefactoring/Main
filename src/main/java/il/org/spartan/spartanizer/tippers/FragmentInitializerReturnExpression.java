@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.engine.DefunctInliner.*;
 
 /** convert {@code int a = 3;return a;} into {@code return a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -31,7 +31,7 @@ public final class FragmentInitializerReturnExpression extends $FragementAndStat
     final Expression newReturnValue = s.getExpression();
     if (newReturnValue == null)
       return null;
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new DefunctInliner(n, $, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;

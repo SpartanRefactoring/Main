@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Box.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.java.*;
@@ -282,6 +283,10 @@ public interface system {
 
   static boolean windows() {
     return System.getProperty("os.name").contains("indows");
+  }
+
+  static <N> Stream<N> stream(final Iterable<N> ¢) {
+    return StreamSupport.stream(¢.spliterator(), false);
   }
 
   interface Extension {

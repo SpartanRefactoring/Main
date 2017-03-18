@@ -41,7 +41,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return fragments(vds).stream()
-        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
+        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && wizard.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
   private static Expression Initializers(final VariableDeclarationFragment ¢) {

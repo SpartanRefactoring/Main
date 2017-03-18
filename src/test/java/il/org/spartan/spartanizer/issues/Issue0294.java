@@ -48,7 +48,7 @@ public class Issue0294 {
   }
 
   @Test public void e() {
-    assert !Coupling.unknownNumberOfEvaluations(truex, s);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(truex, s);
   }
 
   @Test public void f() {

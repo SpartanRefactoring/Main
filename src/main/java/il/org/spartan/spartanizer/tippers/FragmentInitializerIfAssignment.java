@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.engine.DefunctInliner.*;
 
 /** convert {@code
  * int a = 2;
@@ -44,8 +44,8 @@ public final class FragmentInitializerIfAssignment extends $FragementAndStatemen
     final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(condition, from(a)))
+    final InlinerWithValue i = new DefunctInliner(n, $, g).byValue(initializer);
+    if (!i.canInlineInto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer).toCondition(condition);
     if (i.replacedSize(newInitializer) > metrics.size(nextStatement, initializer))

@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -26,7 +27,7 @@ public interface containing {
    * @return ASTNode of the type if one of ¢'s parent ancestors is a container
    *         type and null otherwise */
   static ASTNode typeDeclaration(final ASTNode ¢) {
-    return az.stream(hop.ancestors(parent(¢)))
+    return system.stream(hop.ancestors(parent(¢)))
         .filter(λ -> iz.nodeTypeIn(λ, ANONYMOUS_CLASS_DECLARATION //
             , ANNOTATION_TYPE_DECLARATION //
             , ENUM_DECLARATION //

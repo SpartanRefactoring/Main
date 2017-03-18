@@ -1320,7 +1320,7 @@ public interface iz {
     }
 
     /** @param ¢ JD
-     * @return whetherthe given node is a literal false or false otherwise */
+     * @return whether the given node is a literal false or false otherwise */
     static boolean false¢(final ASTNode ¢) {
       return iz.literal(¢, false);
     }
@@ -1332,7 +1332,7 @@ public interface iz {
     }
 
     /** @param ¢ JD
-     * @return whetherthe given node is a literal true or false otherwise */
+     * @return whether the given node is a literal true or false otherwise */
     static boolean true¢(final ASTNode ¢) {
       return iz.literal(¢, true);
     }
@@ -1344,5 +1344,10 @@ public interface iz {
 
   static boolean superConstructorInvocation(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, SUPER_CONSTRUCTOR_INVOCATION);
+  }
+
+  static boolean sink(final Expression value) {
+    return descendants.streamOf(value).noneMatch(x -> iz.nodeTypeIn(x, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, ANONYMOUS_CLASS_DECLARATION,
+        CONSTRUCTOR_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION));
   }
 }

@@ -50,7 +50,7 @@ public class Issue0295 {
   }
 
   @Test public void A$e() {
-    assert !Coupling.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
   }
 
   @Test public void B08() {
@@ -68,25 +68,25 @@ public class Issue0295 {
   }
 
   @Test public void B10() {
-    assert !Coupling.unknownNumberOfEvaluations(one, forr);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(one, forr);
   }
 
   @Test public void B11() {
     final ASTNode parent = one.getParent();
     assert parent != null;
-    assert !Coupling.unknownNumberOfEvaluations(parent, forr);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
   }
 
   @Test public void B12() {
     final ASTNode parent = one.getParent().getParent();
     assert parent != null;
-    assert !Coupling.unknownNumberOfEvaluations(parent, forr);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
   }
 
   @Test public void B13() {
     final ASTNode parent = one.getParent().getParent().getParent();
     assert parent != null;
-    assert !Coupling.unknownNumberOfEvaluations(parent, forr);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
   }
 
   @Test public void B14() {
@@ -96,7 +96,7 @@ public class Issue0295 {
   @Test public void B15() {
     final Expression es = expression(forr);
     assert es != null;
-    assert !Coupling.unknownNumberOfEvaluations(es, forr);
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(es, forr);
   }
 
   @Test public void B16() {

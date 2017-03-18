@@ -483,7 +483,7 @@ public enum collect {
    * the value we search for; it represents the function that, given a location
    * for the search, will carry out the search for the captured value in its
    * location parameter.
-   * @see collect#of
+   * @see collect#what
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2013/14/07 */
   public abstract static class Of {

@@ -12,7 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -418,10 +417,6 @@ public enum az {
    *         {@code null if no such down-casting is possible. */
   public static Statement statement(final ASTNode $) {
     return !iz.statement($) ? null : (Statement) $;
-  }
-
-  public static <N> Stream<N> stream(final Iterable<N> ¢) {
-    return StreamSupport.stream(¢.spliterator(), false);
   }
 
   /** Down-cast, if possible, to {@link StringLiteral}

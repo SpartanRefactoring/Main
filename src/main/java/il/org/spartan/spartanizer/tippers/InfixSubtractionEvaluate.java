@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.utils.*;
@@ -30,7 +31,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
     try {
-      $ = az.throwing.double¢(first(xs)) - az.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
+      $ = az.throwing.double¢(first(xs)) - system.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }

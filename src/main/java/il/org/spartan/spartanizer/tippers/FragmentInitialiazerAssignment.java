@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.engine.DefunctInliner.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** convert {@code
@@ -41,8 +41,8 @@ public final class FragmentInitialiazerAssignment extends $FragementAndStatement
     final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
+    final InlinerWithValue i = new DefunctInliner(n, $, g).byValue(initializer);
+    if (!i.canInlineInto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);

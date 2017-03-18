@@ -101,7 +101,7 @@ public enum Tippers {
   }
 
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
-    new Inliner(oldName, r, g).byValue(newName)//
+    new DefunctInliner(oldName, r, g).byValue(newName)//
         .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[0]));
   }
 

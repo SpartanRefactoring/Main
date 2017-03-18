@@ -6,6 +6,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -25,7 +26,7 @@ public enum have {
    * @param ¢ JD
    * @return whether one or more of the elements that is a boolean literal. */
   public static boolean booleanLiteral(final Iterable<Expression> ¢) {
-    return booleanLiteral(az.stream(¢));
+    return booleanLiteral(system.stream(¢));
   }
 
   public static boolean booleanLiteral(final Stream<Expression> ¢) {
@@ -37,7 +38,7 @@ public enum have {
    * @return whether one or more of the elements is the boolean literal
    *         {@code false} */
   public static boolean falseLiteral(final Iterable<Expression> ¢) {
-    return az.stream(¢).anyMatch(iz.literal::false¢);
+    return system.stream(¢).anyMatch(iz.literal::false¢);
   }
 
   /** Determine whether a literal is present
@@ -65,7 +66,7 @@ public enum have {
    * @param ¢ JD
    * @return whether one or more of the elements that is a numeric literal. */
   public static boolean numericLiteral(final Iterable<Expression> ¢) {
-    return az.stream(¢).anyMatch(iz::numericLiteral);
+    return system.stream(¢).anyMatch(iz::numericLiteral);
   }
 
   /** Determine whether the boolean literal {@code true} is present

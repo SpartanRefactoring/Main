@@ -64,7 +64,7 @@ public final class TippersTest {
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     assert !sideEffects.free(initializer);
     azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
-    assert !new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer);
+    assert !new DefunctInliner(n).byValue(initializer).canInlineInto(alternateInitializer);
   }
 
   @Test public void mixedLiteralKindEmptyList() {

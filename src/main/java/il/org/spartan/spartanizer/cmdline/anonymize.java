@@ -117,7 +117,7 @@ public enum anonymize {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
-      System.out.println(anonymize.testcase(namer.signature(s), s));
+      System.out.println(testcase(namer.signature(s), s));
     }
   }
 
@@ -141,8 +141,7 @@ public enum anonymize {
         return $ + "  .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t));
-      $ += format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t)) + format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
   }

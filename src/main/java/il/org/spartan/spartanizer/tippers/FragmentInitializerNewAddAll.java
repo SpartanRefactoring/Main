@@ -80,7 +80,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
-      e = Inliner.protect(e, pp);
+      e = wizard.protect(e, pp);
     if (pp == null//
         || fragments(pp).size() <= 1)
       $.remove(parent, g);

@@ -40,7 +40,9 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import junit.framework.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
@@ -929,5 +931,77 @@ public interface wizard {
       return "???";
     final Int $ = new Int();
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
+  }
+
+  static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
+    if (!(f.getParent() instanceof VariableDeclarationStatement))
+      return false;
+    final String $ = hop.getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
+    if (!(f.getInitializer() instanceof ArrayCreation))
+      return false;
+    final String initializerElementTypeName = hop.getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
+    return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
+  }
+
+  static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
+    return system.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeEquals(λ, ANONYMOUS_CLASS_DECLARATION));
+  }
+
+  static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+    if (!iz.arrayInitializer(initializer))
+      return initializer;
+    final ArrayCreation $ = initializer.getAST().newArrayCreation();
+    $.setType(az.arrayType(copy.of(type(currentStatement))));
+    // TODO: Marco causes IllegalArgumentException
+    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
+    return $;
+  }
+
+  static boolean variableNotUsedAfterStatement(final Statement s, final SimpleName n) {
+    final Block b = az.block(s.getParent());
+    assert b != null : "For loop's parent is not a block";
+    final List<Statement> statements = statements(b);
+    boolean passedFor = false;
+    for (final Statement ¢ : statements) {
+      if (passedFor && !collect.usesOf(n).in(¢).isEmpty())
+        return false;
+      if (¢.equals(s))
+        passedFor = true;
+    }
+    return true;
+  }
+
+  /** Check if some java contains {@link Test} annotations
+   * <p>
+   * @param f
+   * @return */
+  static boolean containsTestAnnotation(final String javaCode) {
+    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    final Bool $ = new Bool();
+    cu.accept(new ASTTrotter() {
+      @Override public boolean visit(final MethodDeclaration node) {
+        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+          $.set();
+        return true;
+      }
+    });
+    return $.get();
+  }
+
+  public static boolean isLetItBeIn(final List<Statement> ¢) {
+    return ¢.size() == 2 && initializer(first(fragments(az.variableDeclarationStatement(first(¢))))) != null;
+  }
+
+  /** Determines whether a file is production code, using the heuristic that
+   * production code does not contain {@code @}{@link Test} annotations
+   * <p>
+   * @return */
+  static boolean isProductionCode(@¢ final File $) {
+    try {
+      return !containsTestAnnotation(FileUtils.read($));
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "File = " + $);
+      return false;
+    }
   }
 }

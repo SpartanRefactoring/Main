@@ -21,6 +21,7 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
@@ -153,7 +154,7 @@ public enum make {
   static List<Expression> minus(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>();
     $.add(first(¢));
-    $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
+    $.addAll(system.stream(rest(¢)).map(make::minusOf).collect(toList()));
     return $;
   }
 

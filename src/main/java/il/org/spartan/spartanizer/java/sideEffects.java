@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
 
 /** TODO: Yossi Gil please add a description
@@ -143,7 +144,7 @@ public enum sideEffects {
   }
 
   public static boolean free(final Iterable<? extends Expression> xs) {
-    return xs == null || az.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
+    return xs == null || system.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
   }
 
   public static boolean free(final MethodDeclaration ¢) {

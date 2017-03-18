@@ -85,7 +85,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
      * @return */
     @SuppressWarnings("synthetic-access") public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(
         final String path) {
-      return new CommandLineSelection(az.stream(new FilesGenerator(".java").from(path)).filter(λ -> !system.isTestFile(λ))
+      return new CommandLineSelection(system.stream(new FilesGenerator(".java").from(path)).filter(λ -> !system.isTestFile(λ))
           .map(λ -> WrappedCompilationUnit.of((CompilationUnit) makeAST.COMPILATION_UNIT.from(λ), λ.getName(), λ.getAbsolutePath()))
           .collect(toList()), "selection");
     }
@@ -114,7 +114,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   public void createSelectionFromProjectDir(final String presentSourcePath) {
     System.err.println("Loading selection ...");
     // compilationUnits = cuList;
-    inner = new ArrayList<>(az.stream(new FilesGenerator(".java").from(presentSourcePath))
+    inner = new ArrayList<>(system.stream(new FilesGenerator(".java").from(presentSourcePath))
         .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(toList()));
     System.err.println("Loading selection: done!");
   }

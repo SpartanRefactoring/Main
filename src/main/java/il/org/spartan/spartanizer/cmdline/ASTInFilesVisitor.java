@@ -22,44 +22,18 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
  * <p>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  protected static Class<? extends ASTInFilesVisitor> clazz;
   protected static final String[] defaultArguments = as.array("..");
-  static BufferedWriter out;
-  static {
-    TrimmerLog.off();
-    Trimmer.silent = true;
-  }
-
-  /** Check if some java contains {@link Test} annotations
-   * <p>
-   * @param f
-   * @return */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    final Bool $ = new Bool();
-    cu.accept(new ASTTrotter() {
-      @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + ""))) {
-          startFolding();
-          $.set();
-        }
-        return true;
-      }
-    });
-    return $.get();
-  }
-
-  static boolean letItBeIn(final List<Statement> ¢) {
-    return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
-  }
+  @External(alias = "s", value = "silent") protected boolean silent;
+  @External(alias = "i", value = "input folder") protected final String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected final String outputFolder = system.tmp;
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
@@ -69,30 +43,19 @@ public class ASTInFilesVisitor {
     });
   }
 
-  /** Determines whether a file is production code, using the heuristic that
-   * production code does not contain {@code @}{@link Test} annotations
-   * <p>
-   * @return */
-  public static boolean productionCode(@¢ final File $) {
-    try {
-      return !containsTestAnnotation(FileUtils.read($));
-    } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "File = " + $);
-      return false;
-    }
+  static BufferedWriter out;
+  static {
+    TrimmerLog.off();
+    Trimmer.silent = true;
   }
-
   protected String absolutePath;
   private ASTVisitor astVisitor;
   protected Dotter dotter;
-  @External(alias = "i", value = "input folder") protected final String inputFolder = system.windows() ? "" : ".";
   private final List<String> locations;
-  @External(alias = "o", value = "output folder") protected final String outputFolder = system.tmp;
   protected File presentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
   protected String relativePath;
-  @External(alias = "s", value = "silent") protected boolean silent;
 
   public ASTInFilesVisitor() {
     this(null);
@@ -128,7 +91,7 @@ public class ASTInFilesVisitor {
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
-    if (system.isProductionCode(f) && productionCode(f))
+    if (system.isProductionCode(f) && wizard.isProductionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
@@ -167,7 +130,9 @@ public class ASTInFilesVisitor {
           return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
         }
 
-        @Override boolean interesting(final MethodDeclaration ¢) {
+        @Override
+        protected
+        boolean interesting(final MethodDeclaration ¢) {
           return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
         }
 
@@ -202,11 +167,11 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
+          hookRuleOnClass(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
             @Override public Void fire() {
               return null;
             }
-
+          
             @Override public boolean ok(final ExpressionStatement ¢) {
               return extract.usedNames(¢.getExpression()).size() == 1;
             }

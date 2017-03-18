@@ -127,4 +127,14 @@ public interface hop {
   static SimpleName simpleName(final Type ¢) {
     return lastComponent(hop.name(¢));
   }
+
+  static String getElTypeNameFromArrayType(final Type t) {
+    if (!(t instanceof ArrayType))
+      return null;
+    final Type et = ((ArrayType) t).getElementType();
+    if (!(et instanceof SimpleType))
+      return null;
+    final Name $ = ((SimpleType) et).getName();
+    return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
+  }
 }

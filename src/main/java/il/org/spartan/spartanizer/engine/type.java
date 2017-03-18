@@ -24,6 +24,7 @@ import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** TODO: Niv Shalmon please add a description
@@ -595,7 +596,7 @@ public interface type {
 
       Uncertain(final String description, final Primitive... ps) {
         this.description = description;
-        as.list(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(λ -> !options.contains(λ)).collect(toList())));
+        as.list(ps).forEach(p -> options.addAll(system.stream(p.options()).filter(λ -> !options.contains(λ)).collect(toList())));
       }
 
       @Override public boolean canB(final Certain ¢) {

@@ -27,29 +27,21 @@ public class ExamplesTests {
   private final Tipper<? extends ASTNode> tipper;
 
   /** Redirects examples to tests according to type */
-  @Test public void vonerts() {
+  @Test public void converts() {
     for (final Example ¢ : tipper.examples())
       if (¢ instanceof Converts)
-        testConverts((Converts) ¢);
+        trimmingOf(((Converts) ¢).from()).gives(((Converts) ¢).to());
   }
 
   /** Redirects examples to tests according to type */
   @Test public void ignores() {
     for (final Example ¢ : tipper.examples())
       if (¢ instanceof Ignores)
-        ignores((Ignores) ¢);
+        trimmingOf(((Ignores) ¢).code()).stays();
   }
 
-  private static void ignores(Ignores ¢) {
-    trimmingOf(¢.code()).stays();
-  }
 
-  private static void testConverts(final Converts ¢) {
-    trimmingOf(¢.from()).
-    gives(¢.to());
-  }
-
-  public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") String name) {
+  public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") final String name) {
     this.tipper = tipper;
   }
 
