@@ -118,7 +118,7 @@ public class ASTTrotter extends ASTVisitor {
 
   /** FAPI of {@link ASTTrotter#on(Class)}
    * @param <T> JD
-   * @author Yossi Gil {@code yossi.gil@gmail.com}
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-18 */
   @FunctionalInterface
   public interface Hookable<T> {

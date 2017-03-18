@@ -30,7 +30,7 @@ public final class Inliner {
   public final Collection<? extends SimpleName> spots;
 
   /** Factory method: FAPI factory chain
-   * @author Yossi Gil {@code yossi.gil@gmail.com}
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 [[SuppressWarningsSpartan]] */
   public static Of of(final SimpleName of) {
     return by -> location -> new Inliner(of, by, location);
@@ -125,14 +125,14 @@ public final class Inliner {
   }
 
   /** FAPI factory chain
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-16 */
   public interface Of {
     By by(Expression by);
   }
 
   /** FAPI factory chain
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-16 */
   public interface By {
     Inliner in(List<? extends ASTNode> ns);
