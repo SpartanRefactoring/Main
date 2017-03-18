@@ -49,13 +49,13 @@ public final class Inliner {
     }
   }
 
-  private static boolean isLeftValue(SimpleName ¢) {
+  private static boolean isLeftValue(final SimpleName ¢) {
     final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
 
   public ASTRewrite fire(final ASTRewrite $, final TextEditGroup g) {
-    for (SimpleName ¢ : spots)
+    for (final SimpleName ¢ : spots)
       $.replace(¢, copy.of(replacement), g);
     return $;
   }

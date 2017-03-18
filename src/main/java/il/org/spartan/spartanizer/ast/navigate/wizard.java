@@ -1003,7 +1003,7 @@ public interface wizard {
     }
   }
 
-  static boolean isLinear(MethodDeclaration d) {
+  static boolean isLinear(final MethodDeclaration d) {
     return descendants.streamOf(d).noneMatch(λ -> iz.nodeTypeIn(λ, nonLinearTypes));
   }
 }
