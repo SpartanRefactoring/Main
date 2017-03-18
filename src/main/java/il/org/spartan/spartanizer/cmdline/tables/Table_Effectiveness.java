@@ -47,7 +47,13 @@ class Table_Effectiveness extends NanoTable {
     new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
         initializeWriter();
+        summarize(path);
+        clear();
+      }
+
+      void summarize(final String path) {
         final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
+        System.out.println(rMethod + ":" + rInternal + ":" + rExternal);
         writer.put("Project", path);
         npStatistics.keySet().stream()//
             .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
@@ -55,7 +61,6 @@ class Table_Effectiveness extends NanoTable {
             .forEach(λ -> writer.put(λ.name, λ.occurences > rMethod ? "M" : λ.occurences > rInternal ? "I" : λ.occurences > rExternal ? "X" : "-"));
         fillAbsents();
         writer.nl();
-        clear();
       }
 
       void initializeWriter() {
