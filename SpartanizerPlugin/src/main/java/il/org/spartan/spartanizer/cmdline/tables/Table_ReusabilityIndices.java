@@ -26,8 +26,7 @@ public class Table_ReusabilityIndices {
       @Override protected void done(final String path) {
         dotter.end();
         addMissingKeys();
-        if (writer == null)
-          writer = new Table(Table.classToNormalizedFileName(Table_ReusabilityIndices.class) + "-" + corpus, outputFolder);
+        initializeWriter();
         writer.col("Project", presentSourceName);
         try (Table t = new Table("rindices")) {
           for (final String category : usage.keySet()) {
@@ -46,43 +45,54 @@ public class Table_ReusabilityIndices {
           addLineToGlobalStatistcs(path);
           writer.nl();
         }
-        clear();
-      }
-    }.fire(new ASTVisitor(true) {
-      @Override public void preVisit(final ASTNode ¢) {
-        increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
+        RIndicesVisitor.clear();
       }
 
-      @Override public boolean visit(final Assignment ¢) {
-        return increment("ASSIGNMENT", Vocabulary.mangle(¢));
+      void initializeWriter() {
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_ReusabilityIndices.class) + "-" + corpus, outputFolder);
       }
-
-      @Override public boolean visit(final InfixExpression ¢) {
-        return increment("INFIX", key(¢));
-      }
-
-      @Override public boolean visit(final MethodDeclaration ¢) {
-        return defined.add(Vocabulary.mangle(¢));
-      }
-
-      @Override public boolean visit(final MethodInvocation ¢) {
-        return increment("METHOD", Vocabulary.mangle(¢));
-      }
-
-      @Override public boolean visit(final PostfixExpression ¢) {
-        return increment("POSTFIX", Vocabulary.mangle(¢));
-      }
-
-      @Override public boolean visit(final PrefixExpression ¢) {
-        return increment("PREFIX", Vocabulary.mangle(¢));
-      }
-    });
+    }.fire(new RIndicesVisitor());
     writer.close();
   }
 
-  static void clear() {
-    usage.clear();
-    defined.clear();
+  public static class RIndicesVisitor extends ASTVisitor {
+    public RIndicesVisitor() {
+      super(true);
+    }
+
+    @Override public void preVisit(final ASTNode ¢) {
+      increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
+    }
+
+    @Override public boolean visit(final Assignment ¢) {
+      return increment("ASSIGNMENT", Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final InfixExpression ¢) {
+      return increment("INFIX", key(¢));
+    }
+
+    @Override public boolean visit(final MethodDeclaration ¢) {
+      return defined.add(Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final MethodInvocation ¢) {
+      return increment("METHOD", Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final PostfixExpression ¢) {
+      return increment("POSTFIX", Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final PrefixExpression ¢) {
+      return increment("PREFIX", Vocabulary.mangle(¢));
+    }
+
+    static void clear() {
+      usage.clear();
+      defined.clear();
+    }
   }
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
