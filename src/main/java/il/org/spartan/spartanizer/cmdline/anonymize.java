@@ -123,7 +123,7 @@ public enum anonymize {
 
   public static String makeUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("@Test public void %s() {\n %s\n}\n", signature($), body($));
+    return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), body($));
   }
 
   public static String comment() {

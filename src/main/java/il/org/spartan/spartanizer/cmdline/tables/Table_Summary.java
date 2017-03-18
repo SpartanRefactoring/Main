@@ -1,17 +1,11 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.util.function.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
@@ -19,34 +13,10 @@ import il.org.spartan.utils.*;
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-13 */
-public class Table_Summary {
-  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
-  static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  protected static Function<String, String> analyze = spartanalyzer::fixedPoint;
-  static Table writer;
+public class Table_Summary extends NanoTable {
   static {
     Logger.subscribe(statistics::markNP);
     Logger.subscribe(npDistributionStatistics::logNPInfo);
-  }
-
-  public static void summarize(final String path) {
-    if (writer == null)
-      initializeWriter();
-    writer//
-        .col("Project", path)//
-        .col("Commands", statementsCoverage())//
-        .col("Expressions", expressionsCoverage())//
-        .col("Nodes", statistics.nodesCoverage())//
-        .col("Methods", methodsCovered())//
-        .col("Touched", touched())//
-        .col("Iteratives", iterativesCoverage())//
-        .col("ConditionalExpressions", conditionalExpressionsCoverage())//
-        .col("ConditionalCommands", conditionalStatementsCoverage())//
-        .col("total Commands", commands())//
-        .col("total Methods", methods())//
-        .nl();
   }
 
   public static void main(final String[] args) {
@@ -56,6 +26,28 @@ public class Table_Summary {
         reset();
         System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
+      }
+
+      public void summarize(final String path) {
+        initializeWriter();
+        writer//
+            .col("Project", path)//
+            .col("Commands", statementsCoverage())//
+            .col("Expressions", expressionsCoverage())//
+            .col("Nodes", statistics.nodesCoverage())//
+            .col("Methods", methodsCovered())//
+            .col("Touched", touched())//
+            .col("Iteratives", iterativesCoverage())//
+            .col("ConditionalExpressions", conditionalExpressionsCoverage())//
+            .col("ConditionalCommands", conditionalStatementsCoverage())//
+            .col("total Commands", commands())//
+            .col("total Methods", methods())//
+            .nl();
+      }
+
+      void initializeWriter() {
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
@@ -77,21 +69,6 @@ public class Table_Summary {
       }
     });
     writer.close();
-  }
-
-  static void reset() {
-    statistics.clear();
-    npDistributionStatistics.clear();
-  }
-
-  static boolean excludeMethod(final MethodDeclaration ¢) {
-    return iz.constructor(¢)//
-        || step.body(¢) == null//
-        || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
-  }
-
-  static void initializeWriter() {
-    writer = new Table(Table_Summary.class);
   }
 
   static int commands() {
