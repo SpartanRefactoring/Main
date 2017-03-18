@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.external.*;
+import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.utils.*;
 
