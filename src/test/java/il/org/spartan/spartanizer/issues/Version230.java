@@ -3589,8 +3589,8 @@ public final class Version230 {
   }
 
   @Test public void ternarize54() {
-    trimmingOf("int$=1,xi=0,xj=0,yi=0,yj=0;if(xi>xj==yi>yj)++$;else--$;")//
-        .gives("int$=1,xj=0,yi=0,yj=0;if(0>xj==yi>yj)++$;else--$;");
+    trimmingOf("int $=1,xi=0,xj=0,yi=0,yj=0;if(xi>xj==yi>yj)++$;else--$;")//
+        .gives("int $=1,xj=0,yi=0,yj=0;if(0>xj==yi>yj)++$;else--$;");
   }
 
   @Test public void ternarize55() {

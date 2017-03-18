@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -47,12 +46,28 @@ public class PossiblyMultipleExecution {
         case WHILE_STATEMENT:
           return false;
         case FOR_STATEMENT:
-          return !initializers((ForStatement) $).stream().anyMatch(λ -> descendants.of(λ).contains(what));
+          if (multiple((ForStatement) $))
+            return false;
+          continue;
         case ENHANCED_FOR_STATEMENT:
-          return !descendants.of(((EnhancedForStatement) $).getExpression()).contains(what);
+          if (multiple((EnhancedForStatement) $))
+            return false;
+          continue;
       }
     }
     assert fault.unreachable() : fault.specifically("Context does not contain current node", what, where);
     return false;
+  }
+
+  private boolean multiple(EnhancedForStatement $) {
+    return touched(body($)); 
+  }
+
+  private boolean multiple(ForStatement $) {
+    return touched(expression($)) || updaters($).stream().anyMatch(λ -> touched(λ));
+  }
+
+  private boolean touched(final ASTNode n) {
+    return descendants.streamOf(n).anyMatch(λ -> λ == what);
   }
 }

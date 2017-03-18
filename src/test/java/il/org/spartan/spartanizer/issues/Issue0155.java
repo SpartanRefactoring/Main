@@ -19,12 +19,13 @@ public final class Issue0155 {
   }
 
   @Test public void inlineNonFinalIntoClassInstanceCreation() {
-    trimmingOf("void h(int x){++x;final int y=x;new Object(){@Override public int hashCode(){return y;}};}")//
+    trimmingOf("void h(int x){++x;int y=x;new Object(){@Override public int hashCode(){return y;}};}")//
         .stays();
   }
 
   @Test public void issue64a() {
-    trimmingOf("void f(){final int a=f();new Object(){@Override public int hashCode(){return a;}};}").stays();
+    trimmingOf("void f(){final int a=f();new Object(){@Override public int hashCode(){return a;}};}")//
+        .stays();
   }
 
   @Test public void issue64b1() {
@@ -33,11 +34,14 @@ public final class Issue0155 {
   }
 
   @Test public void issue64b2() {
-    trimmingOf("void f(){final int a=3;new Object(){@Override public int hashCode(){return a;}};}").stays();
+    trimmingOf("void f(){final int a=3;new Object(){@Override public int hashCode(){return a;}};}")//
+        .gives("void f(){new Object(){@Override public int hashCode(){return 3;}};}") //
+        .stays();
   }
 
   @Test public void issue64c() {
     trimmingOf("void f(int x){++x;final int a=x;new Object(){@Override public int hashCode(){return a;}};}")//
+        .gives("void f(int x){++x;new Object(){@Override public int hashCode(){return x;}};}") //
         .stays();
   }
 }

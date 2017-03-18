@@ -42,10 +42,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static final boolean REFRESH_OPENS_DIALOG = false;
   private static CodeFormatter formatter;
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
-   * ExecutionEvent) */
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     return execute(Selection.Util.project());
   }
@@ -95,7 +91,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
 
   /** @param ¢ dialog
    * @return dialog's result: either enabled tippers, or null if the operation
-   *         has been cancled by the user */
+   *         has been canceled by the user */
   public static Set<String> getPreferencesChanges(final SpartanPreferencesDialog ¢) {
     ¢.open();
     final Object[] $ = ¢.getResult();
@@ -340,8 +336,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   }
 
   static String prettify(final String code) {
-    if (formatter == null)
-      formatter = ToolFactory.createCodeFormatter(null);
+    synchronized (formatter) {
+      if (formatter == null)
+        formatter = ToolFactory.createCodeFormatter(null);
+    }
     final TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;

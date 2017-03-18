@@ -12,19 +12,20 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1012 {
   @Test public void a() {
-    trimmingOf("int a = 0;int b = 1;int c = 2;f();g();")//
-        .gives("int a = 0, b = 1;int c = 2;f();g();").gives("int a = 0, b = 1, c = 2;f();g();");
+    trimmingOf("int a = q();int b = z();int c =rs();f();g(); return a + b +c;")//
+        .gives("int a = q(), b = z();int c =rs();f();g(); return a + b +c;")//
+        .gives("int a = q(), b = z(), c =rs();f();g(); return a + b +c;");
   }
 
   @Test public void b() {
-    trimmingOf("int a;int b;f(a, b);")//
-        .gives("int a, b;f(a, b);");
+    trimmingOf("int a;int b;f(a, b); return a + b +c;")//
+        .gives("int a, b;f(a, b); return a + b +c;");
   }
 
   @Test public void c() {
-    trimmingOf("int a;int b = 1;int c;f(a,b);g(d,c);")//
-        .gives("int a, b = 1;int c;f(a,b);g(d,c);")//
-        .gives("int a, b = 1, c;f(a,b);g(d,c);");
+    trimmingOf("int a;int b = z();int c;f(a,b);g(d,c);")//
+        .gives("int a, b = z();int c;f(a,b);g(d,c);")//
+        .gives("int a, b = z(), c;f(a,b);g(d,c);");
   }
 
   @Test public void d() {
@@ -34,16 +35,18 @@ public class Issue1012 {
   }
 
   @Test public void e() {
-    trimmingOf("final int a[] = P.r(10000);int c = 0;").stays();
+    trimmingOf("final int a[] = P.r(10000);int c = q();") //
+        .stays();
   }
 
   @Test public void f() {
-    trimmingOf("final int a = 0;int b = 8;f();g();").stays();
+    trimmingOf("final int a = q();int b = e();f();g(); return a+b;")//
+        .stays();
   }
 
   @Test public void g() {
-    trimmingOf("final int a = 0;final int b = 8;f();g();")//
-        .gives(" final int a = 0, b = 8;f();g();")//
+    trimmingOf("final int a = q();final int b = e();f();g(); return a+b;")//
+        .gives(" final int a = q(), b = e();f();g(); return a+b;")//
         .stays();
   }
 }

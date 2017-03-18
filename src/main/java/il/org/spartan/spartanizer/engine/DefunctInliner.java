@@ -34,12 +34,12 @@ public final class DefunctInliner {
             $ instanceof EnhancedForStatement && canInlineInto((EnhancedForStatement) $));
   }
 
-  public boolean canInlineInto(final EnhancedForStatement s) {
-    return descendants.of(s.getExpression()).contains(name);
+  public boolean canInlineInto(final EnhancedForStatement ¢) {
+    return descendants.of(¢.getExpression()).contains(name);
   }
 
   public boolean canInlineInto(final ForStatement s) {
-    return updaters(s).stream().noneMatch(a -> descendants.of(a).contains(name));
+    return updaters(s).stream().noneMatch(λ -> descendants.of(λ).contains(name));
   }
 
   public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {

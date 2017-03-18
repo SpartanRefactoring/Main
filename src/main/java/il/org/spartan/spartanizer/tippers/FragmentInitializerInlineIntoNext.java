@@ -31,8 +31,10 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
   private static final long serialVersionUID = -228096256168103399L;
 
   @Override public Tipper.Example[] examples() {
-    return new Example[] { Example.convert("a=b;whatever(a);").to("whatever(b);"),
-        Example.convert("a=(int)c;whatever(a);").to("whatever(((int)c));"), };
+    return new Example[] { //
+        Example.convert("a=b;whatever(a);").to("whatever(b);"), //
+        Example.convert("a=(int)c;whatever(a);").to("whatever(((int)c));"), //
+    };
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
