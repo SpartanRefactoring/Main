@@ -34,7 +34,9 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
-  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  protected static final MetaFixture[] fixtures = {//
+      new FixtureBlock(), //
+      new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //

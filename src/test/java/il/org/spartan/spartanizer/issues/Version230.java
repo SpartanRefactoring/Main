@@ -1786,6 +1786,16 @@ public final class Version230 {
     trimmingOf("void f(){ final int a=f();new Object(){ @Override public int hashCode(){ return a;} };}").stays();
   }
 
+  /** Introduced by Yossi on Sat-Mar-18-16:26:14-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.comment') */
+  @Test public void voaFiInbaNeABPuIncReb() {
+    trimmingOf("void a(){final int b=a();new A(){@B public int c(){return b;}};}") //
+        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope()) //
+        .gives("void a(){new A(){@B public int c(){return a();}};}") //
+        .stays() //
+    ;
+  }
+
   @Test public void issue73a() {
     trimmingOf("void foo(StringBuilder sb){}")//
         .gives("void foo(StringBuilder b){}");

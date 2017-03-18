@@ -54,7 +54,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
-    return fragments(vds).stream().allMatch(λ -> PotentialMultipleExecution.variableUsedInFor(s, name(λ)) && wizard.variableNotUsedAfterStatement(s, name(λ)));
+    return fragments(vds).stream().map(x->name(x)).allMatch(n -> !collect.usesOf(n).in(s).isEmpty() && wizard.variableNotUsedAfterStatement(s, n));
   }
 
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {

@@ -8,6 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link haz}
@@ -42,7 +43,7 @@ public class Issue0810 {
   }
 
   @Test public void test4() {
-    assert !haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x){}"));
+    assert !PotentialMultipleExecution.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x){}"));
   }
 
   @Test public void test5() {

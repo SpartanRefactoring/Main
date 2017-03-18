@@ -166,11 +166,6 @@ public enum haz {
     return !sideEffects.free(¢);
   }
 
-  public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
-    final Block $ = body(d);
-    return $ != null && statements($).stream().anyMatch(λ -> PotentialMultipleExecution.unknownNumberOfEvaluations(d, λ));
-  }
-
   public static boolean variableDefinition(final ASTNode n) {
     final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor(true) {

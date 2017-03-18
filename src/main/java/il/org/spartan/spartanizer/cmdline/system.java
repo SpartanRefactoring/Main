@@ -43,6 +43,13 @@ public interface system {
         return $[¢].getClassName();
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
+  static String callingMethodName() {
+    final StackTraceElement[] $ = new Throwable().getStackTrace();
+    for (int ¢ = 1; ¢ < $.length; ++¢)
+      if (!$[¢].getClassName().equals($[0].getClassName()))
+        return $[¢].getMethodName();
+    return new Object().getClass().getEnclosingClass().getCanonicalName();
+  }
 
   static String className(final Class<?> ¢) {
     return ¢.getEnclosingClass() == null ? selfName(¢) : selfName(¢) + "." + className(¢.getEnclosingClass());

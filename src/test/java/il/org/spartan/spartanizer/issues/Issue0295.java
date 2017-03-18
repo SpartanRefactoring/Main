@@ -35,83 +35,83 @@ public class Issue0295 {
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
 
   /** Correct way of trimming does not change */
-  @Test public void A$a() {
+  @Test public void a$a() {
     trimmingOf("A a = new A();for (A b: g.f(a,true))sum+=b;") //
         .gives("for (A b: g.f((new A()),true))sum+=b;") //
         .gives("for (A b: g.f(new A(),true))sum+=b;") //
         .stays();
   }
 
-  @Test public void A$b() {
+  @Test public void a$b() {
     assert seriesA$step1 != null;
     assert seriesA$step2 != null;
     assert iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step2);
     assert !iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step1);
   }
 
-  @Test public void A$e() {
+  @Test public void a$e() {
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
   }
 
-  @Test public void B08() {
+  @Test public void b08() {
     assert one != null : fault.dump() + //
         "\n input1 = " + input1 + //
         "\n AST = " + input1.getAST() + //
         fault.done();
   }
 
-  @Test public void B09() {
+  @Test public void b09() {
     assert forr != null : fault.dump() + //
         "\n input1 = " + input1 + //
         "\n AST = " + input1.getAST() + //
         fault.done();
   }
 
-  @Test public void B10() {
+  @Test public void b10() {
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(one, forr);
   }
 
-  @Test public void B11() {
+  @Test public void b11() {
     final ASTNode parent = one.getParent();
     assert parent != null;
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
   }
 
-  @Test public void B12() {
+  @Test public void b12() {
     final ASTNode parent = one.getParent().getParent();
     assert parent != null;
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
   }
 
-  @Test public void B13() {
+  @Test public void b13() {
     final ASTNode parent = one.getParent().getParent().getParent();
     assert parent != null;
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
   }
 
-  @Test public void B14() {
+  @Test public void b14() {
     azzert.that(expression(forr), iz("var"));
   }
 
-  @Test public void B15() {
+  @Test public void b15() {
     final Expression es = expression(forr);
     assert es != null;
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(es, forr);
   }
 
-  @Test public void B16() {
+  @Test public void b16() {
     assert variableDeclarationFragment != null;
     azzert.that(variableDeclarationFragment, iz("var=f(1)"));
   }
 
-  @Test public void B18() {
+  @Test public void b18() {
     assert tipper.tip(variableDeclarationFragment) != null : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
         fault.done();
   }
 
-  @Test public void B19() {
+  @Test public void b19() {
     assert tipper.tip(variableDeclarationFragment, null) != null : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //

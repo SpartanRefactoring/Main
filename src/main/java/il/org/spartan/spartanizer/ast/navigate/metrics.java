@@ -146,8 +146,8 @@ public interface metrics {
     return ss.stream().map(metrics::nodes).reduce((x, y) -> x + y).get();
   }
 
-  @SuppressWarnings("boxing") static int size(final ASTNode... ns) {
-    return Stream.of(ns).map(count::nodes).reduce((x, y) -> x + y).get();
+  static int size(final ASTNode... ns) {
+    return Stream.of(ns).mapToInt(count::nodes).reduce((x, y) -> x + y).getAsInt();
   }
 
   static int tokens(final String s) {

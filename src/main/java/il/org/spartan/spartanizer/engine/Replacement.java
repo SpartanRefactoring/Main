@@ -1,23 +1,17 @@
 package il.org.spartan.spartanizer.engine;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
 
 /** Encapsulates the operation of replacing a variable with an expression in a
  * certain location.

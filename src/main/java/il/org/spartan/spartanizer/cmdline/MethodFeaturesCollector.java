@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.Type;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -54,7 +55,7 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
         .put("double", extract.statements(¢).size() == 1) //
         // .put("side-effects-free", sideEffects.free(¢)) // TODO Matteo (for
         // himself): temporarily commented. It throws a NullPointerException
-        .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
+        .put("linear", !PotentialMultipleExecution.unknownNumberOfEvaluations(¢)) //
         .put("array", type != null && type.isArrayType()) //
         .put("parameterized", type != null && type.isParameterizedType()) //
         .put("primitive", type != null && type.isPrimitiveType()) //

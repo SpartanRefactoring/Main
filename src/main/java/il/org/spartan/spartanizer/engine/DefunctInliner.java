@@ -39,10 +39,10 @@ public final class DefunctInliner {
   }
 
   public boolean canInlineInto(final ForStatement s) {
-    return !updaters(s).stream().anyMatch(a -> descendants.of(a).contains(name));
+    return updaters(s).stream().noneMatch(a -> descendants.of(a).contains(name));
   }
 
-  public Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();

@@ -13,8 +13,8 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
 /** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
@@ -129,7 +129,7 @@ public enum SpartanizationComparator {
         .put("double", extract.statements(¢).size() == 1) //
         // .put("side-effects-free", sideEffects.free(¢)) // TODO Matteo (for
         // himself): temporarily commented. It throws a NullPointerException
-        .put("linear", !haz.unknownNumberOfEvaluations(¢)) //
+        .put("linear", !PotentialMultipleExecution.unknownNumberOfEvaluations(¢)) //
         .put("array", type != null && type.isArrayType()) //
         .put("parameterized", type != null && type.isParameterizedType()) //
         .put("primitive", type != null && type.isPrimitiveType()) //

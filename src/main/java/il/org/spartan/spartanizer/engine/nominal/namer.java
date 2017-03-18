@@ -125,8 +125,8 @@ public interface namer {
   static String signature(final String code) {
     String $ = code;
     for (final String keyword : wizard.keywords)
-      $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
-    return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+      $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword).substring(0,2));
+    return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", "")).replaceAll("^[0-9]", "");
   }
 
   static boolean usefulTypeName(final String typeName) {

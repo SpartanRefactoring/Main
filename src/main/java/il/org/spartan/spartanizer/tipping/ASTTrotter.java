@@ -96,6 +96,7 @@ public class ASTTrotter extends ASTVisitor {
     return true;
   }
 
+  @SuppressWarnings("static-method")
   private boolean interesting(final ExpressionStatement ¢) {
     return false;
   }

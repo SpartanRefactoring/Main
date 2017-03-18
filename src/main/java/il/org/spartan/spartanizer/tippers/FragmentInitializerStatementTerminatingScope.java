@@ -33,10 +33,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
-        || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
-            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
-            && !iz.literal(initializer)
+    if (haz.annotation(f) || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
         || wizard.frobiddenOpOnPrimitive(f, nextStatement) || wizard.isArrayInitWithUnmatchingTypes(f))
       return null;
     final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
@@ -59,7 +56,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
         return null;
     }
     for (final SimpleName use : uses)
-      if (PotentialMultipleExecution.never(use, nextStatement) || wizard.isPresentOnAnonymous(use, nextStatement))
+      if (PotentialMultipleExecution.of(use).inContext(nextStatement) )
         return null;
     final Expression v = wizard.protect(initializer, currentStatement);
     final InlinerWithValue i = new DefunctInliner(n, $, g).byValue(v);

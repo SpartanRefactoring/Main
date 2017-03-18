@@ -127,6 +127,7 @@ public final class typeTest {
       azzert.that(Axiom.type(true), is(BOOLEAN));
     }
 
+    @SuppressWarnings("PointlessBooleanExpression")
     @Test public void axiomBoolean2() {
       azzert.that(Axiom.type(true || b1 && b2), is(BOOLEAN));
     }

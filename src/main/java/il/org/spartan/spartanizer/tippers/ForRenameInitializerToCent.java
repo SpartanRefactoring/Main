@@ -33,7 +33,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
   private static final long serialVersionUID = -3634676628162924936L;
 
   @Override public String description(final VariableDeclarationExpression ¢) {
-    return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
+    return "Centify iteration variable '" + extract.onlyName(¢) + "' of 'for'"; 
   }
 
   @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
@@ -44,7 +44,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     if (n == null || in(n.getIdentifier(), namer.specials) || !JohnDoe.property(x.getType(), n))
       return null;
     final Statement body = $.getBody();
-    if (body == null || haz.variableDefinition(body) || haz.cent(body) || !PotentialMultipleExecution.variableUsedInFor($, n))
+    if (haz.variableDefinition(body) || haz.cent(body)) 
       return null;
     if (m != null) {
       m.exclude(body);

@@ -7,71 +7,55 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.utils.*;
 
-/**
- * TODO Yossi Gil: document class 
+/** Determines whether a node might be executed more than once in a given
+ * context
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2017-03-18
- */
+ * @since 2017-03-18 */
 public class PotentialMultipleExecution {
-  public final ASTNode what;
+  /** Instantiates this class */
   public static PotentialMultipleExecution of(final ASTNode what) {
     return new PotentialMultipleExecution(what);
-    
-  }
-
-  private PotentialMultipleExecution(final ASTNode what) {
-    this.what = what;
-  }
-
-  public boolean inParent(final ASTNode parent) {
-    return !iz.nodeTypeIn(parent, ANONYMOUS_CLASS_DECLARATION, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION, WHILE_STATEMENT, DO_STATEMENT)
-        && (parent instanceof ForStatement ? inParent((ForStatement) parent) : //
-            parent instanceof EnhancedForStatement && inParent( (EnhancedForStatement) parent));
-  }
-
-  public boolean inParent(final EnhancedForStatement s) {
-    return descendants.of(s.getExpression()).contains(what);
-  }
-
-  public boolean inParent(final ForStatement s) {
-    return initializers(s).stream().anyMatch(a -> descendants.of(a).contains(what));
-  }
-
-
-  public boolean never(final Statement s) {
-    return system.stream(yieldAncestors.until(s).ancestors(what)).anyMatch(λ -> !inParent( λ));
-  }
-
-  /** Determines whether a specific SimpleName was used in a
-   * {@link ForStatement}.
-   * @param s JD
-   * @param n JD
-   * @return whether the SimpleName is used in a ForStatement's condition,
-   *         updaters, or body. */
-  public boolean variableUsedInFor(final ForStatement s) {
-    return !collect.usesOf((SimpleName)what).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }
 
   public static boolean unknownNumberOfEvaluations(final ASTNode what, final ASTNode context) {
     return of(what).inContext(context);
   }
+
+  public final ASTNode what;
+
+  private PotentialMultipleExecution(final ASTNode what) {
+    this.what = what;
+  }
+
   public boolean inContext(final ASTNode context) {
-    for (ASTNode current = what.getParent(); current != null; current =current.getParent())  {
+    for (ASTNode current = what.getParent(); current != null; current = current.getParent()) {
       if (current == context)
         return false;
-      if (iz.nodeTypeIn(current, WHILE_STATEMENT, DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION, LAMBDA_EXPRESSION))
-        return true;
-      if (iz.expressionOfEnhancedFor(what, ancestor))
-        continue;
-      if (iz.nodeTypeEquals(ancestor, FOR_STATEMENT) && (yieldAncestors.untilOneOf(updaters((ForStatement) ancestor)).inclusiveFrom(child) != null
-          || yieldAncestors.untilNode(condition((ForStatement) ancestor)).inclusiveFrom(child) != null))
-        return true;
-      child = ancestor;
+      switch (current.getNodeType()) {
+        default:
+          continue;
+        case METHOD_DECLARATION:
+        case ANONYMOUS_CLASS_DECLARATION:
+        case DO_STATEMENT:
+        case LAMBDA_EXPRESSION:
+        case SYNCHRONIZED_STATEMENT: 
+        case TRY_STATEMENT:
+        case WHILE_STATEMENT:
+          return false;
+        case FOR_STATEMENT:
+          return !initializers((ForStatement) current).stream().anyMatch(a -> descendants.of(a).contains(what));
+        case ENHANCED_FOR_STATEMENT:
+          return !descendants.of(((EnhancedForStatement) current).getExpression()).contains(what);
+      }
     }
+    assert fault.unreachable() : fault.specifically("Context does not contain current node", what, context);
     return false;
   }
-   
+
+  public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
+    final Block $ = body(d);
+    return $ != null && statements($).stream().anyMatch(λ -> unknownNumberOfEvaluations(d, λ));
+  }
 }

@@ -106,7 +106,6 @@ public class Issue0239 {
     final SimpleName use = onlyOne(uses);
     assert use != null;
     assert !PotentialMultipleExecution.unknownNumberOfEvaluations(use, nextStatement);
-    assert !PotentialMultipleExecution.never(name, nextStatement);
     assert $FragementAndStatement.removalSaving(f) > 0;
   }
 }

@@ -943,9 +943,6 @@ public interface wizard {
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  static boolean isPresentOnAnonymous(final SimpleName n, final Statement s) {
-    return system.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeEquals(λ, ANONYMOUS_CLASS_DECLARATION));
-  }
 
   static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
@@ -988,7 +985,7 @@ public interface wizard {
     return $.get();
   }
 
-  public static boolean isLetItBeIn(final List<Statement> ¢) {
+  static boolean isLetItBeIn(final List<Statement> ¢) {
     return ¢.size() == 2 && initializer(first(fragments(az.variableDeclarationStatement(first(¢))))) != null;
   }
 
