@@ -1,108 +1,75 @@
-//package il.org.spartan.spartanizer.cmdline.tables;
-//
-//import static il.org.spartan.spartanizer.ast.navigate.step.*;
-//
-//import java.util.*;
-//
-//import org.eclipse.jdt.core.dom.*;
-//
-//import il.org.spartan.spartanizer.ast.safety.*;
-//import il.org.spartan.spartanizer.cmdline.nanos.*;
-//import il.org.spartan.spartanizer.research.*;
-//import il.org.spartan.spartanizer.research.analyses.*;
-//import il.org.spartan.spartanizer.research.nanos.common.*;
-//import il.org.spartan.spartanizer.research.nanos.methods.*;
-//import il.org.spartan.spartanizer.research.util.*;
-//import il.org.spartan.spartanizer.tipping.*;
-//import il.org.spartan.spartanizer.utils.*;
-//import il.org.spartan.tables.*;
-//
-///** Generates a table representing effectiveness of nanos. <br>
-// * For each nano, the level of reusability is measured: <br>
-// * 'M' - more occurrences than Method r-index.<br>
-// * 'X' - more than External.<br>
-// * 'I' - more than Internal. <br>
-// * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
-// * @since 2016-12-25 */
-//class Table_Effectiveness extends Table_ReusabilityIndices {
-//  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-//  private static Table pWriter;
-//  private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
-//  private static final Collection<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
-//    static final long serialVersionUID = 1L;
-//    {
-//      add(new HashCodeMethod());
-//      add(new ToStringMethod());
-//    }
-//  };
-//  static {
-//    clazz = Table_Effectiveness.class;
-//    Logger.subscribe(npStatistics::logNPInfo);
-//  }
-//
-//  @SuppressWarnings("hiding") private static void initializeWriter(final String outputFolder) {
-//    pWriter = new Table(outputFileName(), outputFolder);
-//  }
-//
-//  private static String outputFileName() {
-//    return Table_Effectiveness.class.getSimpleName();
-//  }
-//  //
-//  // public static void main(final String[] args)
-//  // throws InstantiationException, IllegalAccessException,
-//  // IllegalArgumentException, InvocationTargetException {
-//  // Table_ReusabilityIndices.main(args);
-//  // pWriter.close();
-//  // System.err.println("Your output is in: " + system.tmp + outputFileName());
-//  // }
-//
-//  @Override public boolean visit(final MethodDeclaration $) {
-//    if (!excludeMethod($))
-//      try {
-//        spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-//      } catch (@SuppressWarnings("unused") final AssertionError __) {
-//        System.err.print("X");
-//      }
-//    return super.visit($);
-//  }
-//
-//  @Override public boolean visit(final CompilationUnit ¢) {
-//    ¢.accept(new CleanerVisitor());
-//    return true;
-//  }
-//
-//  @Override protected void done(final String path) {
-//    summarizeNPStatistics(path);
-//    System.err.println("Your output is in: " + outputFolder);
-//  }
-//
-//  private static boolean excludeMethod(final MethodDeclaration ¢) {
-//    return iz.constructor(¢) || body(¢) == null || anyTips(excluded, ¢);
-//  }
-//
-//  public static void summarizeNPStatistics(final String path) {
-//    if (pWriter == null)
-//      initializeWriter(outputFolder);
-//    // initializeWriter();
-//    final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
-//    pWriter.put("Project", path);
-//    npStatistics.keySet().stream()//
-//        .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
-//        .map(npStatistics::get)//
-//        .forEach(λ -> pWriter.put(λ.name, λ.occurences > rMethod ? "M" : λ.occurences > rInternal ? "I" : λ.occurences > rExternal ? "X" : "-"));
-//    fillAbsents();
-//    pWriter.nl();
-//    npStatistics.clear();
-//  }
-//
-//  private static void fillAbsents() {
-//    spartanalyzer.getAllPatterns().stream()//
-//        .map(Tipper::className)//
-//        .filter(λ -> !npStatistics.keySet().contains(λ))//
-//        .forEach(λ -> pWriter.put(λ, "-"));
-//  }
-//
-//  private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
-//    return d != null && ps.stream().anyMatch(λ -> λ.check(d));
-//  }
-//}
+package il.org.spartan.spartanizer.cmdline.tables;
+
+import static il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+import org.eclipse.text.edits.*;
+
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
+
+/** Generates a table representing effectiveness of nanos. <br>
+ * For each nano, the level of reusability is measured: <br>
+ * 'M' - more occurrences than Method r-index.<br>
+ * 'X' - more than External.<br>
+ * 'I' - more than Internal. <br>
+ * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @since 2016-12-25 */
+class Table_Effectiveness extends NanoTable {
+  static {
+    Logger.subscribe(npStatistics::logNPInfo);
+  }
+  static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
+    @Override public boolean visit(final CompilationUnit $) {
+      try {
+        $.accept(new AnnotationCleanerVisitor());
+        statistics.logCompilationUnit($);
+        analyze.apply(spartanizer.fixedPoint($));
+      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+        ___.unused(__);
+      }
+      return super.visit($);
+    }
+  };
+
+  static void clear() {
+    npStatistics.clear();
+    RIndicesVisitor.clear();
+  }
+
+  public static void main(final String[] args) {
+    new ASTInFilesVisitor(args) {
+      @Override protected void done(final String path) {
+        initializeWriter();
+        final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
+        writer.put("Project", path);
+        npStatistics.keySet().stream()//
+            .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
+            .map(npStatistics::get)//
+            .forEach(λ -> writer.put(λ.name, λ.occurences > rMethod ? "M" : λ.occurences > rInternal ? "I" : λ.occurences > rExternal ? "X" : "-"));
+        fillAbsents();
+        writer.nl();
+        clear();
+      }
+
+      void initializeWriter() {
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + corpus, outputFolder);
+      }
+    }.fire(visitor);
+    writer.close();
+  }
+
+  static void fillAbsents() {
+    spartanalyzer.allNanoPatterns().stream()//
+        .map(Tipper::className)//
+        .filter(λ -> !npStatistics.keySet().contains(λ))//
+        .forEach(λ -> writer.put(λ, "-"));
+  }
+}
