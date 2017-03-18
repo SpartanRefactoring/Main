@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** TODO:Yossi Gil please add a description
+ * @author Yossi Gil{@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" }) //
@@ -21,46 +21,45 @@ public class Issue0312 {
   }
 
   @Test public void bugInLastIfInMethod1() {
-    trimmingOf("        @Override public void f() {\n          if (!isMessageSuppressed(message)) {\n"
-        + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n            messages.add(message);\n"
-        + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
-        + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n            if (listener != null)\n"
-        + "              listener.listLocalMessagesAddMessages(account, null, messages);\n          }\n        }")//
+    trimmingOf("@Override public void f(){\n     if(!isMessageSuppressed(message)){\n"
+        + "final List<LocalMessage>messages=new ArrayList<LocalMessage>();\n      messages.add(message);\n"
+        + "stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;\n"
+        + "stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;\n      if(listener!=null)\n"
+        + "listener.listLocalMessagesAddMessages(account,null,messages);\n}\n}")//
             .gives(
                 "@Override public void f(){if(isMessageSuppressed(message))return;final List<LocalMessage>messages=new ArrayList<LocalMessage>();messages.add(message);stats.unreadMessageCount+=message.isSet(Flag.SEEN)?0:1;stats.flaggedMessageCount+=message.isSet(Flag.FLAGGED)?1:0;if(listener!=null)listener.listLocalMessagesAddMessages(account,null,messages);}");
   }
 
   @Test public void chocolate1() {
-    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;")//
+    trimmingOf("for(int$=0;$<a.length;++$)sum+=$;")//
         .stays();
   }
 
   @Test public void chocolate2() {
-    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
-        .gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;")//
+    trimmingOf("for(int i=0,j=0;i<a.length;++j)sum+=i+j;")//
+        .gives("for(int ¢=0,j=0;¢<a.length;++j)sum+=¢+j;")//
         .stays();
   }
 
   @Test public void issue54ForPlain() {
-    trimmingOf("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
-        .gives("for (int i = 0; i <100;  ++i) b[i] = f();")//
-        .gives("for (int ¢ = 0; ¢ <100;  ++¢) b[¢] = f();")//
+    trimmingOf("int a=f();for(int i=0;i<100;++i)b[i]=a;")//
+        .gives("for(int a=f(), i=0;i<100;++i)b[i]=a;")//
         .stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i <10; ++s) sum+=s;")//
-        .gives("for (int ¢ = i++; i <10; ++¢) sum+=¢;")//
+    trimmingOf("for(int s=i++;i<10;++s)sum+=s;")//
+        .gives("for(int ¢=i++;i<10;++¢)sum+=¢;")//
         .stays();
   }
 
   @Test public void refactorUtilBug() {
-    trimmingOf("for (; i.length() <s.length();)i = \" \" + i;")//
+    trimmingOf("for(;i.length()<s.length();)i=\"\"+i;")//
         .stays();
   }
 
   @Test public void t18() {
-    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}")//
+    trimmingOf("while(b==q){int i;double tipper;x=tipper+i;}")//
         .stays();
   }
 }

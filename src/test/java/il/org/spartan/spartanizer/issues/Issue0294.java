@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -48,7 +49,7 @@ public class Issue0294 {
   }
 
   @Test public void e() {
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(truex, s);
+    assert !IllegalInlining.of(truex).inContext(as.list(s));
   }
 
   @Test public void f() {

@@ -13,7 +13,6 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
@@ -129,7 +128,7 @@ public enum SpartanizationComparator {
         .put("double", extract.statements(¢).size() == 1) //
         // .put("side-effects-free", sideEffects.free(¢)) // TODO Matteo (for
         // himself): temporarily commented. It throws a NullPointerException
-        .put("linear", !PotentialMultipleExecution.unknownNumberOfEvaluations(¢)) //
+        .put("linear", wizard.isLinear(¢)) //
         .put("array", type != null && type.isArrayType()) //
         .put("parameterized", type != null && type.isParameterizedType()) //
         .put("primitive", type != null && type.isPrimitiveType()) //

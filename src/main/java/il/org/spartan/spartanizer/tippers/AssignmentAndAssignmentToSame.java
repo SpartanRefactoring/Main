@@ -9,13 +9,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** See {@link #examples()} for documentation
@@ -45,10 +45,10 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     if (operator(a2) != ASSIGN)
       return null;
     final SimpleName to = az.simpleName(to(a1));
-    if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
+    if (!wizard.same(to, to(a2)))
       return null;
-    final Replacement r = Replacement.of(to).by(from(a1)).in(from(a2));
-    return r.fire($,g);
+    final Inliner r = Inliner.of(to).by(from(a1)).in(as.list(from(a2)));
+    return !r.ok() ? null : r.fire($, g);
   }
 
   private static ASTRewrite go(final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,

@@ -12,6 +12,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -105,7 +106,7 @@ public class Issue0239 {
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);
     assert use != null;
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(use, nextStatement);
+    assert !IllegalInlining.of(use).inContext(as.list(nextStatement));
     assert $FragementAndStatement.removalSaving(f) > 0;
   }
 }

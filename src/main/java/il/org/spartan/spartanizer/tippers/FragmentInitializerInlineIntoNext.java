@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -28,6 +29,11 @@ import il.org.spartan.utils.*;
 public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -228096256168103399L;
+
+  @Override public Tipper.Example[] examples() {
+    return new Example[] { Example.convert("a=b;whatever(a);").to("whatever(b);"),
+        Example.convert("a=(int)c;whatever(a);").to("whatever(((int)c));"), };
+  }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable " + name(¢) + " into next statement";
@@ -56,21 +62,18 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     if (initializer == null)
       return null;
     final Statement parent = az.statement(parent(f));
-    if (parent == null//
-        || iz.forStatement(parent))
+    if (parent == null || iz.forStatement(parent))
       return null;
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
-        || leftSide(nextStatement, identifier(n))//
-        || preOrPostfix(n))
+        || Inliner.leftSide(nextStatement, identifier(n)))//
       return null;
-    Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
+    Expression e = Inliner.protect(initializer);
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
       e = wizard.protect(e, pp);
-    if (pp == null//
-        || fragments(pp).size() <= 1)
+    if (pp == null || fragments(pp).size() <= 1)
       $.remove(parent, g);
     else {
       if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
@@ -95,12 +98,6 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     return !descendants.whoseClassIs(LambdaExpression.class).from(nextStatement).isEmpty();
   }
 
-  private static boolean preOrPostfix(final SimpleName id) {
-    final ASTNode $ = parent(id);
-    return iz.prefixExpression($)//
-        || iz.postfixExpression($);
-  }
-
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
     return !descendants.whoseClassIs(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }
@@ -118,20 +115,6 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
             && !occurencesOf(az.statement(¢), id).isEmpty())
           $.inner = true;
         return false;
-      }
-    });
-    return $.inner;
-  }
-
-  private static boolean leftSide(final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
-    // noinspection SameReturnValue
-    nextStatement.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢))//
-            && identifier(az.simpleName(left(¢))).equals(id))
-          $.inner = true;
-        return true;
       }
     });
     return $.inner;

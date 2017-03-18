@@ -16,105 +16,105 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Unit test for {@link FragmentInitializerStatementTerminatingScope} for the
- * case of inlining into the expression of an enhanced for
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since 2016 */
+/**Unit test for{@link FragmentInitializerStatementTerminatingScope}for the
+*case of inlining into the expression of an enhanced for
+*@author Yossi Gil{@code Yossi.Gil@GMail.COM}
+*@since 2016*/
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" })
-public class Issue0295 {
-  private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";
-  final MethodDeclaration input1 = into.d(INPUT1);
-  final EnhancedForStatement forr = findFirst.instanceOf(EnhancedForStatement.class).in(input1);
-  final NumberLiteral one = findFirst.instanceOf(NumberLiteral.class).in(input1);
-  final Statement seriesA$step1 = into.s("A a = new A();for (A b: g.f(a,true))sum+=b;");
-  final EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
-  final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class).in(seriesA$step1);
-  EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
-  final FragmentInitializerStatementTerminatingScope tipper = new FragmentInitializerStatementTerminatingScope();
-  final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
+@SuppressWarnings({"static-method","javadoc"})
+public class Issue0295{
+ private static final String INPUT1="boolean f(){A var=f(1);for(A b:var)if(b.a)return true;return false;}";
+ final MethodDeclaration input1=into.d(INPUT1);
+ final EnhancedForStatement forr=findFirst.instanceOf(EnhancedForStatement.class).in(input1);
+ final NumberLiteral one=findFirst.instanceOf(NumberLiteral.class).in(input1);
+ final Statement seriesA$step1=into.s("A a=new A();for(A b:g.f(a,true))sum+=b;");
+ final EnhancedForStatement seriesA$step2=findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
+ final BooleanLiteral seriesA$step3=findFirst.instanceOf(BooleanLiteral.class).in(seriesA$step1);
+ EnhancedForStatement seriesB$step2=findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
+ final FragmentInitializerStatementTerminatingScope tipper=new FragmentInitializerStatementTerminatingScope();
+ final VariableDeclarationFragment variableDeclarationFragment=findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
 
-  /** Correct way of trimming does not change */
-  @Test public void a$a() {
-    trimmingOf("A a = new A();for (A b: g.f(a,true))sum+=b;") //
-        .gives("for (A b: g.f((new A()),true))sum+=b;") //
-        .gives("for (A b: g.f(new A(),true))sum+=b;") //
-        .stays();
-  }
+/**Correct way of trimming does not change*/
+@Test public void a$a(){
+  trimmingOf("A a=new A();for(A b:g.f(a,true))sum+=b;")//
+.gives("for(A b:g.f((new A()),true))sum+=b;")//
+.gives("for(A b:g.f(new A(),true))sum+=b;")//
+.stays();
+}
 
-  @Test public void a$b() {
-    assert seriesA$step1 != null;
-    assert seriesA$step2 != null;
-    assert iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step2);
-    assert !iz.expressionOfEnhancedFor(seriesA$step2.getExpression(), seriesA$step1);
-  }
+@Test public void a$b(){
+  assert seriesA$step1!=null;
+  assert seriesA$step2!=null;
+  assert iz.expressionOfEnhancedFor(seriesA$step2.getExpression(),seriesA$step2);
+  assert!iz.expressionOfEnhancedFor(seriesA$step2.getExpression(),seriesA$step1);
+}
 
-  @Test public void a$e() {
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
-  }
+@Test public void a$e(){
+  assert!IllegalInlining.unknownNumberOfEvaluations(seriesA$step3,seriesA$step1);
+}
 
-  @Test public void b08() {
-    assert one != null : fault.dump() + //
-        "\n input1 = " + input1 + //
-        "\n AST = " + input1.getAST() + //
-        fault.done();
-  }
+@Test public void b08(){
+  assert one!=null:fault.dump()+//
+"\n input1="+input1+//
+"\n AST="+input1.getAST()+//
+    fault.done();
+}
 
-  @Test public void b09() {
-    assert forr != null : fault.dump() + //
-        "\n input1 = " + input1 + //
-        "\n AST = " + input1.getAST() + //
-        fault.done();
-  }
+@Test public void b09(){
+  assert forr!=null:fault.dump()+//
+"\n input1="+input1+//
+"\n AST="+input1.getAST()+//
+    fault.done();
+}
 
-  @Test public void b10() {
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(one, forr);
-  }
+@Test public void b10(){
+  assert!IllegalInlining.unknownNumberOfEvaluations(one,forr);
+}
 
-  @Test public void b11() {
-    final ASTNode parent = one.getParent();
-    assert parent != null;
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
-  }
+@Test public void b11(){
+  final ASTNode parent=one.getParent();
+  assert parent!=null;
+  assert!IllegalInlining.unknownNumberOfEvaluations(parent,forr);
+}
 
-  @Test public void b12() {
-    final ASTNode parent = one.getParent().getParent();
-    assert parent != null;
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
-  }
+@Test public void b12(){
+  final ASTNode parent=one.getParent().getParent();
+  assert parent!=null;
+  assert!IllegalInlining.unknownNumberOfEvaluations(parent,forr);
+}
 
-  @Test public void b13() {
-    final ASTNode parent = one.getParent().getParent().getParent();
-    assert parent != null;
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(parent, forr);
-  }
+@Test public void b13(){
+  final ASTNode parent=one.getParent().getParent().getParent();
+  assert parent!=null;
+  assert!IllegalInlining.unknownNumberOfEvaluations(parent,forr);
+}
 
-  @Test public void b14() {
-    azzert.that(expression(forr), iz("var"));
-  }
+@Test public void b14(){
+  azzert.that(expression(forr),iz("var"));
+}
 
-  @Test public void b15() {
-    final Expression es = expression(forr);
-    assert es != null;
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations(es, forr);
-  }
+@Test public void b15(){
+  final Expression es=expression(forr);
+  assert es!=null;
+  assert!IllegalInlining.unknownNumberOfEvaluations(es,forr);
+}
 
-  @Test public void b16() {
-    assert variableDeclarationFragment != null;
-    azzert.that(variableDeclarationFragment, iz("var=f(1)"));
-  }
+@Test public void b16(){
+  assert variableDeclarationFragment!=null;
+  azzert.that(variableDeclarationFragment,iz("var=f(1)"));
+}
 
-  @Test public void b18() {
-    assert tipper.tip(variableDeclarationFragment) != null : fault.dump() + //
-        "\n variableDeclarationFragment = " + variableDeclarationFragment + //
-        "\n for = " + forr + //
-        fault.done();
-  }
+@Test public void b18(){
+  assert tipper.tip(variableDeclarationFragment)!=null:fault.dump()+//
+"\n variableDeclarationFragment="+variableDeclarationFragment+//
+"\n for="+forr+//
+    fault.done();
+}
 
-  @Test public void b19() {
-    assert tipper.tip(variableDeclarationFragment, null) != null : fault.dump() + //
-        "\n variableDeclarationFragment = " + variableDeclarationFragment + //
-        "\n for = " + forr + //
-        fault.done();
-  }
+@Test public void b19(){
+  assert tipper.tip(variableDeclarationFragment,null)!=null:fault.dump()+//
+"\n variableDeclarationFragment="+variableDeclarationFragment+//
+"\n for="+forr+//
+    fault.done();
+}
 }

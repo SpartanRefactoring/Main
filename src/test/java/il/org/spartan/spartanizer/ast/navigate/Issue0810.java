@@ -8,7 +8,6 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** Tests of {@link haz}
@@ -27,11 +26,11 @@ public class Issue0810 {
   }
 
   @Test public void test1() {
-    final Collection<SimpleName> lst = new ArrayList<>();
-    lst.add(az.simpleName(wizard.ast("abc")));
-    assert !haz.dollar(lst);
-    lst.add(az.simpleName(wizard.ast("$")));
-    assert haz.dollar(lst);
+    final Collection<SimpleName> ns = new ArrayList<>();
+    ns.add(az.simpleName(wizard.ast("abc")));
+    assert !haz.dollar(ns);
+    ns.add(az.simpleName(wizard.ast("$")));
+    assert haz.dollar(ns);
   }
 
   @Test public void test2() {
@@ -43,7 +42,7 @@ public class Issue0810 {
   }
 
   @Test public void test4() {
-    assert !PotentialMultipleExecution.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x){}"));
+    assert wizard.isLinear((MethodDeclaration) wizard.ast("public int foo(int x){}"));
   }
 
   @Test public void test5() {

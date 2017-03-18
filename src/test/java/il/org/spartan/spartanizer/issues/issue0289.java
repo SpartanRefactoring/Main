@@ -2,7 +2,10 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO: Tomer Dragucki please add a description
  * @author Tomer Dragucki
@@ -20,9 +23,14 @@ public class issue0289 {
 
   @Test public void c() {
     trimmingOf("void f() {  final Object[] os = new Object[1];  os[0] = new Object(); }")//
-        .gives("void f() {" + //
-            "  (new Object[1])[0] = new Object();" + //
-            "     }")
-        .stays();
+        .gives("void f() { (new Object[1])[0] = new Object(); }").stays();
+  }
+
+  @Test public void voaFiAbNeA1b0NeA() {
+    trimmingOf("void a() { final A[] b = new A[1]; b[0] = new A(); }") //
+        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope()) //
+        .gives("void a(){(new A[1])[0]=new A();}") //
+        .stays() //
+    ;
   }
 }

@@ -50,6 +50,8 @@ import junit.framework.*;
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
+  int[] loopTypes = { FOR_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, ENHANCED_FOR_STATEMENT };
+  int[] nonLinearTypes = { FOR_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, ENHANCED_FOR_STATEMENT, CATCH_CLAUSE };
   PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
   PrefixExpression.Operator DECREMENT_PRE = PrefixExpression.Operator.DECREMENT;
   PostfixExpression.Operator INCREMENT_POST = PostfixExpression.Operator.INCREMENT;
@@ -379,7 +381,7 @@ public interface wizard {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return whetherone of the nodes is an Expression Statement of type Post or
+   * @return whether one of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
@@ -943,7 +945,6 @@ public interface wizard {
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-
   static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
@@ -1000,5 +1001,9 @@ public interface wizard {
       monitor.infoIOException(¢, "File = " + $);
       return false;
     }
+  }
+
+  static boolean isLinear(MethodDeclaration d) {
+    return descendants.streamOf(d).noneMatch(λ -> iz.nodeTypeIn(λ, nonLinearTypes));
   }
 }

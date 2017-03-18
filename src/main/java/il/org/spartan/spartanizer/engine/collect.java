@@ -463,7 +463,7 @@ public enum collect {
       return new ArrayList<>();
     }
 
-    public final Collection<SimpleName> in(final List<? extends ASTNode> ¢) {
+    public final Collection<SimpleName> in(final Collection<? extends ASTNode> ¢) {
       return in(¢.toArray(new ASTNode[¢.size()]));
     }
 

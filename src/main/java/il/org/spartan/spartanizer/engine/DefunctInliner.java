@@ -68,12 +68,12 @@ public final class DefunctInliner {
 
   /** Determines whether a specific SimpleName was used in a
    * {@link ForStatement}.
-   * @param s JD
+   * @param ¢ JD
    * @param n JD
    * @return whether the SimpleName is used in a ForStatement's condition,
    *         updaters, or body. */
-  public boolean variableUsedInFor(final ForStatement s) {
-    return !collect.usesOf(name).in(condition(s), body(s)).isEmpty() || !collect.usesOf(name).in(updaters(s)).isEmpty();
+  public boolean variableUsedInFor(final ForStatement ¢) {
+    return !collect.usesOf(name).in(condition(¢), body(¢)).isEmpty() || !collect.usesOf(name).in(updaters(¢)).isEmpty();
   }
 
   static Wrapper<ASTNode>[] wrap(final ASTNode... ns) {
@@ -125,7 +125,7 @@ public final class DefunctInliner {
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      Arrays.asList(ns).forEach(λ -> inlineIntoSingleton(get(), λ));
+      as.list(ns).forEach(λ -> inlineIntoSingleton(get(), λ));
     }
 
     @SafeVarargs public final void inlineInto(final ASTNode... ¢) {
