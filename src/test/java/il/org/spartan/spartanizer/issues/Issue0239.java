@@ -106,7 +106,7 @@ public class Issue0239 {
     assert uses.size() == 1;
     final SimpleName use = onlyOne(uses);
     assert use != null;
-    assert !IllegalInlining.of(use).inContext(as.list(nextStatement));
+    assert !PossiblyMultipleExecution.of(use).inContext(as.list(nextStatement));
     assert $FragementAndStatement.removalSaving(f) > 0;
   }
 }

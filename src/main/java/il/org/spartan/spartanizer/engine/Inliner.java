@@ -78,7 +78,7 @@ public final class Inliner {
   private boolean multipleInlineOK() {
     if (iz.deterministic(replacement))
       return true;
-    if (IllegalInlining.of(what).inContext(where))
+    if (PossiblyMultipleExecution.of(what).inContext(where))
       return false;
     return true;
   }

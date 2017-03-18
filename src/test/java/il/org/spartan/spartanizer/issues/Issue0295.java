@@ -50,7 +50,7 @@ public class Issue0295 {
   }
 
   @Test public void a$e() {
-    assert !IllegalInlining.unknownNumberOfEvaluations(seriesA$step3, seriesA$step1);
+    assert !PossiblyMultipleExecution.of(seriesA$step3).inContext(seriesA$step1);
   }
 
   @Test public void b08() {
@@ -68,25 +68,25 @@ public class Issue0295 {
   }
 
   @Test public void b10() {
-    assert !IllegalInlining.unknownNumberOfEvaluations(one, forr);
+    assert !PossiblyMultipleExecution.of(one).inContext(forr);
   }
 
   @Test public void b11() {
     final ASTNode parent = one.getParent();
     assert parent != null;
-    assert !IllegalInlining.unknownNumberOfEvaluations(parent, forr);
+    assert !PossiblyMultipleExecution.of(parent).inContext(forr);
   }
 
   @Test public void b12() {
     final ASTNode parent = one.getParent().getParent();
     assert parent != null;
-    assert !IllegalInlining.unknownNumberOfEvaluations(parent, forr);
+    assert !PossiblyMultipleExecution.of(parent).inContext(forr);
   }
 
   @Test public void b13() {
     final ASTNode parent = one.getParent().getParent().getParent();
     assert parent != null;
-    assert !IllegalInlining.unknownNumberOfEvaluations(parent, forr);
+    assert !PossiblyMultipleExecution.of(parent).inContext(forr);
   }
 
   @Test public void b14() {
@@ -96,7 +96,7 @@ public class Issue0295 {
   @Test public void b15() {
     final Expression es = expression(forr);
     assert es != null;
-    assert !IllegalInlining.unknownNumberOfEvaluations(es, forr);
+    assert !PossiblyMultipleExecution.of(es).inContext(forr);
   }
 
   @Test public void b16() {

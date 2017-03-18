@@ -10,22 +10,21 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** Determines whether an inlining spot is valid. Invalid sports are left hand
- * side of assignments
+/** Determines whether a node can be executed multiple times within a given
+ * context side of assignments
  * @author Yossi Gil {@code Yossi.Gil@GMail.com}
  * @since 2017-03-18 */
-public class IllegalInlining {
+public class PossiblyMultipleExecution {
   /** Instantiates this class */
-  public static IllegalInlining of(final ASTNode what) {
-    return new IllegalInlining(what);
+  public static PossiblyMultipleExecution of(final ASTNode what) {
+    return new PossiblyMultipleExecution(what);
   }
 
   public final ASTNode what;
 
-  private IllegalInlining(final ASTNode what) {
+  private PossiblyMultipleExecution(final ASTNode what) {
     this.what = what;
   }
 
@@ -45,7 +44,6 @@ public class IllegalInlining {
         case LAMBDA_EXPRESSION:
         case METHOD_DECLARATION:
         case SYNCHRONIZED_STATEMENT:
-        case TRY_STATEMENT:
         case WHILE_STATEMENT:
           return false;
         case FOR_STATEMENT:
@@ -56,11 +54,5 @@ public class IllegalInlining {
     }
     assert fault.unreachable() : fault.specifically("Context does not contain current node", what, where);
     return false;
-  }
-
-
-
-  public static boolean unknownNumberOfEvaluations(ASTNode parent, ASTNode context) {
-    return of(parent).inContext(context);
   }
 }

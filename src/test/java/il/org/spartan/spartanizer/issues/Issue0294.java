@@ -49,7 +49,7 @@ public class Issue0294 {
   }
 
   @Test public void e() {
-    assert !IllegalInlining.of(truex).inContext(as.list(s));
+    assert !PossiblyMultipleExecution.of(truex).inContext(as.list(s));
   }
 
   @Test public void f() {
