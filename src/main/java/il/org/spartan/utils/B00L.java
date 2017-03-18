@@ -1,6 +1,5 @@
 package il.org.spartan.utils;
 
-
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -19,27 +18,30 @@ import il.org.spartan.*;
  * @since 2017-03-06 */
 public interface B00L extends BooleanSupplier {
   static B00L AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
-    return new Conjunction(s1, s2, ss);
+    return new AND(s1, s2, ss);
   }
 
   static B00L condition(final BooleanSupplier ¢) {
-    return new Parenthesis(¢);
+    return new P(¢);
   }
 
-  static Negation NOT(final BooleanSupplier ¢) {
-    return new Negation(¢);
+  static NOT NOT(final BooleanSupplier ¢) {
+    return new NOT(¢);
   }
 
   static B00L OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
-    return new Disjunction(s1, s2, ss);
+    return new OR(s1, s2, ss);
   }
 
   static B00L S(final BooleanSupplier ¢) {
-    return new Parenthesis(¢);
+    return new P(¢);
   }
 
-  B00L F = new Parenthesis(() -> false);
-  B00L T = new Parenthesis(() -> true);
+  /** a {@link B00L} which is {@code false} */
+  B00L F = new P(() -> false);
+  /** a {@link B00L} which is {@code true} */
+  B00L T = new P(() -> true);
+  /** a {@link B00L} whose evaluation fails with {@link AssertionError} */
   B00L X = B00L.S(() -> {
     throw new AssertionError();
   });
@@ -52,7 +54,10 @@ public interface B00L extends BooleanSupplier {
 
   B00L or(BooleanSupplier c, BooleanSupplier... cs);
 
-  abstract class Compound implements B00L {
+  /** A compound {@link B00L}
+   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @since 2017-03-19 */
+  abstract class C implements B00L {
     protected Stream<BooleanSupplier> stream() {
       return inner.stream();
     }
@@ -75,12 +80,12 @@ public interface B00L extends BooleanSupplier {
     final List<BooleanSupplier> inner = new ArrayList<>();
   }
 
-  class Conjunction extends Compound {
-    public Conjunction(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
+  class AND extends C {
+    public AND(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
       add(c1, c2, cs);
     }
 
-    Conjunction(final BooleanSupplier c, final BooleanSupplier[] cs) {
+    AND(final BooleanSupplier c, final BooleanSupplier[] cs) {
       add(c, cs);
     }
 
@@ -93,16 +98,16 @@ public interface B00L extends BooleanSupplier {
     }
 
     @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return new Disjunction(this, c, cs);
+      return new OR(this, c, cs);
     }
   }
 
-  final class Disjunction extends Compound {
-    public Disjunction(final BooleanSupplier c, final BooleanSupplier... cs) {
+  final class OR extends C {
+    public OR(final BooleanSupplier c, final BooleanSupplier... cs) {
       add(c, cs);
     }
 
-    public Disjunction(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
+    public OR(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
       add(c1, c2, cs);
     }
 
@@ -120,8 +125,8 @@ public interface B00L extends BooleanSupplier {
     }
   }
 
-  class Negation extends Parenthesis {
-    public Negation(final BooleanSupplier s) {
+  class NOT extends P {
+    public NOT(final BooleanSupplier s) {
       super(s);
     }
 
@@ -130,19 +135,22 @@ public interface B00L extends BooleanSupplier {
     }
   }
 
-  class Parenthesis implements B00L {
-    public Parenthesis(final BooleanSupplier inner) {
+  /** A parenthesized {@link B00L}
+   * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
+   * @since 2017-03-19 */
+  class P implements B00L, Recursive.Atomic<B00L> {
+    public P(final BooleanSupplier inner) {
       if (inner == null)
         throw new IllegalArgumentException();
       this.inner = inner;
     }
 
     @Override public final B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return new Conjunction(this, c, cs);
+      return new AND(this, c, cs);
     }
 
     @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return new Disjunction(this, c, cs);
+      return new OR(this, c, cs);
     }
 
     public final BooleanSupplier inner;
