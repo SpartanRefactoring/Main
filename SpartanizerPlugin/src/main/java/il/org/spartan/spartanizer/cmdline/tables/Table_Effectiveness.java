@@ -17,8 +17,8 @@ import il.org.spartan.utils.*;
 /** Generates a table representing effectiveness of nanos. <br>
  * For each nano, the level of reusability is measured: <br>
  * 'M' - more occurrences than Method r-index.<br>
- * 'X' - more than External.<br>
  * 'I' - more than Internal. <br>
+ * 'X' - more than External.<br>
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-25 */
 class Table_Effectiveness extends NanoTable {
@@ -53,7 +53,6 @@ class Table_Effectiveness extends NanoTable {
 
       void summarize(final String path) {
         final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
-        System.out.println(rMethod + ":" + rInternal + ":" + rExternal);
         writer.put("Project", path);
         npStatistics.keySet().stream()//
             .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
