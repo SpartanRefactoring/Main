@@ -10,7 +10,7 @@ import org.junit.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @SuppressWarnings("static-method")
-public class SymbolicPredicateTest {
+public class B00LTest {
   Object object;
   BooleanSupplier supplier;
   B00L condition;
