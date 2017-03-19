@@ -248,6 +248,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     }
 
+    @SuppressWarnings({"CloneDoesntCallSuperClone", "CloneDoesntDeclareCloneNotSupportedException"})
     @Override protected Object clone() {
       final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
