@@ -27,7 +27,7 @@ public class ExamplesTests {
   private final Tipper<? extends ASTNode> tipper;
 
   /** Redirects examples to tests according to type */
-  @Test public void vonerts() {
+  @Test public void converts() {
     for (final Example ¢ : tipper.examples())
       if (¢ instanceof Converts)
         testConverts((Converts) ¢);
