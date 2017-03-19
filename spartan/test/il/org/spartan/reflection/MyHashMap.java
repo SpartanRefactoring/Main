@@ -217,7 +217,8 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   @Override public V put(@Nullable final K key, final V value) {
     if (key == null)
       return putForNullKey(value);
-    final int hash = hash(key.hashCode()), i = indexFor(hash, table.length);
+    final int hash = hash(key.hashCode());
+    final int i = indexFor(hash, table.length);
     for (Entry<K, V> e = table[i]; e != null; e = e.next) {
       Object k;
       if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
@@ -365,8 +366,10 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** Removes and returns the entry associated with the specified key in the
    * HashMap. Returns null if the HashMap contains no mapping for this key. */
   Entry<K, V> removeEntryForKey(@Nullable final Object key) {
-    final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
-    Entry<K, V> prev = table[i], $ = prev;
+    final int hash = key == null ? 0 : hash(key.hashCode());
+    final int i = indexFor(hash, table.length);
+    Entry<K, V> prev = table[i];
+    Entry<K, V> $ = prev;
     while ($ != null) {
       final Entry<K, V> next = $.next;
       Object k;
@@ -392,8 +395,10 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return null;
     @NotNull final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
     final Object key = entry.getKey();
-    final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
-    Entry<K, V> prev = table[i], $ = prev;
+    final int hash = key == null ? 0 : hash(key.hashCode());
+    final int i = indexFor(hash, table.length);
+    Entry<K, V> prev = table[i];
+    Entry<K, V> $ = prev;
     while ($ != null) {
       final Entry<K, V> next = $.next;
       if ($.hash == hash && $.equals(entry)) {
@@ -483,7 +488,8 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * (clone, readObject). It does not resize the table, check for
    * comodification, etc. It calls createEntry rather than addEntry. */
   private void putForCreate(@Nullable final K key, final V value) {
-    final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
+    final int hash = key == null ? 0 : hash(key.hashCode());
+    final int i = indexFor(hash, table.length);
     /** Look for preexisting entry for key. This will never happen for clone or
      * deserialize. It will only happen for construction if the input Map is a
      * sorted map whose ordering is inconsistent w/ equals. */
