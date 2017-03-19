@@ -166,7 +166,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return super.fixedPoint(¢);
   }
 
-  public Collection<NanoPatternTipper<? extends ASTNode>> getAllPatterns() {
+  public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;

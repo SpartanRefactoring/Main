@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** See {@link #examples()} for documentation
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -27,7 +28,7 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
   @Override public Example[] examples() {
     return new Example[] { //
         convert("a=3;b=3;").to("b=a=3;"), //
-        ignores("a=c;b=c;"), //
+        convert("a=c;b=c;").to("b=a=c;"), //
     };
   }
 

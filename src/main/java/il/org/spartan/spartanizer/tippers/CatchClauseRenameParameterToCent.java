@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+import static il.org.spartan.utils.Example.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** Use {@link #examples()} for documentation
  * @author Dor Ma'ayan

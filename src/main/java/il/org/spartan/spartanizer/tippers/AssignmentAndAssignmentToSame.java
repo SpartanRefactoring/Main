@@ -1,11 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.util.*;
 
@@ -20,8 +18,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** See {@link #examples()} for documentation
  * <p>
@@ -52,7 +50,7 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     final Expression from1 = from(a1), from2 = from(a2);
-    List<SimpleName> uses = collect.usesOf(to).in(from2);
+    final List<SimpleName> uses = collect.usesOf(to).in(from2);
     return uses.size() > 1 ? !sideEffects.free(from1) || !iz.deterministic(from1) ? null : go($, a1, g, to, from1, from2)
         : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;
   }
@@ -60,7 +58,7 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
   private static ASTRewrite go(final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,
       final Expression from2) {
     $.remove(a1, g);
-    Expression newFrom = copy.of(from2);
+    final Expression newFrom = copy.of(from2);
     new Inliner(to, $, g).byValue(from1).inlineInto(newFrom);
     $.replace(from2, newFrom, g);
     return $;
