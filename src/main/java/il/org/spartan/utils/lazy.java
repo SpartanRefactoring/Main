@@ -4,8 +4,8 @@ import java.util.function.*;
 
 /** lazy initialization as in {@code
     static final lazy<Collection<Thing>> things = lazy.get(() -> as.list(//
-      new Thing("one"); //
-      new Thing("two"); //
+      new Thing("one"), //
+      new Thing("two") //
   ));} use {@code things.get()} to obtain value; it would be computed only on
  * first call, and cached hence after
  * <p>
