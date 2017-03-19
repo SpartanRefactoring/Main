@@ -108,7 +108,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   void visit(final File f) {
     if (!silent)
       dotter.click();
-    if (!system.isTestFile(f) && ASTInFilesVisitor.productionCode(f))
+    if (!Utils.isTestFile(f) && ASTInFilesVisitor.productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
@@ -154,7 +154,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       ++total;
       if (interesting(d)) {
         ++interesting;
-        final String summary = squeeze(theSpartanizer.fixedPoint(removeComments(anonymize.code(d + "")))) + "\n";
+        final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
         System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
         try {
           out.write(summary);
