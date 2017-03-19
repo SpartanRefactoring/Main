@@ -179,7 +179,7 @@ public interface ConfigurableReport {
           write(getInputList().get(i), getOutputList().get(i), "Δ ", (n1, n2) -> (n1 - n2));
           // write
           // listeners().tick("writing delta");
-          write(getInputList().get(i), getOutputList().get(i), "δ ", system::Utils.d);
+          write(getInputList().get(i), getOutputList().get(i), "δ ", Utils::d);
           // write
           // listeners().tick("writing perc");
           writePerc(getInputList().get(i), getOutputList().get(i), "δ ");
