@@ -1,6 +1,6 @@
 package il.org.spartan.plugin;
 
-import static il.org.spartan.spartanizer.engine.nominal.English.*;
+import static il.org.spartan.utils.English.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -15,7 +15,6 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations

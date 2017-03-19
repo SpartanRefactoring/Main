@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine.nominal;
+package il.org.spartan.utils;
 
 import static il.org.spartan.utils.system.*;
 
@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.function.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth

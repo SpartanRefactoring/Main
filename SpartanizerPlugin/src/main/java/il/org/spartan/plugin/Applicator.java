@@ -3,7 +3,7 @@ package il.org.spartan.plugin;
 import java.util.function.*;
 
 import il.org.spartan.spartanizer.cmdline.applicator.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.*;
 
 /** Configurable applicator.
  * @author Ori Roth
