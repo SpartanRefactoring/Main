@@ -12,7 +12,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 

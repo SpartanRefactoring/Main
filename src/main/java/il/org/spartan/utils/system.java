@@ -1,16 +1,12 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.Box.*;
-
 import java.io.*;
 import java.text.*;
 import java.util.*;
 
-import il.org.spartan.*;
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
