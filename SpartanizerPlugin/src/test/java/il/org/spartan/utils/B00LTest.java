@@ -1,20 +1,32 @@
 package il.org.spartan.utils;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.B00L.*;
 
 import java.util.function.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
+
 /** Tests class {@link B00L}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @SuppressWarnings("static-method")
 public class B00LTest {
+  private static final B00L FIXTURE = B00L.OR(T, F, X);
   Object object;
   BooleanSupplier supplier;
   B00L condition;
   B00L inner;
+
+  @Test public void b() {
+    azzert.that(FIXTURE.reduce(new ReducingGear<String>(new ReduceStringConcatenate()) {
+      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+        return "";
+      }
+    }), is(""));
+  }
 
   @Test(expected = AssertionError.class) public void a() {
     X.getAsBoolean();
@@ -134,7 +146,7 @@ public class B00LTest {
     // Force or() short circuit
     assert B00L.OR(F, T, X).getAsBoolean();
     assert B00L.OR(T, X, X).getAsBoolean();
-    assert B00L.OR(T, F, X).getAsBoolean();
+    assert FIXTURE.getAsBoolean();
     assert B00L.OR(T, X, X).getAsBoolean();
     // Demonstrate not
     assert B00L.not(F).getAsBoolean();
