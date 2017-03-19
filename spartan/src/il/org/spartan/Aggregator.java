@@ -57,10 +57,10 @@ public class Aggregator {
     record(key, value, toMap(ss));
   }
 
-  public void record(final String key, final double value, @NotNull final Map<Aggregation, String> a) {
+  public void record(final String key, final double value, @NotNull final Map<Aggregation, String> m) {
     ensure(realStatistics, key, new RealStatistics());
-    force(columnSpecificAggregation, key, a);
-    merge(a);
+    force(columnSpecificAggregation, key, m);
+    merge(m);
     realStatistics.get(key).record(value);
   }
 
@@ -68,9 +68,9 @@ public class Aggregator {
     return allAggregations.size();
   }
 
-  protected void merge(@NotNull final Map<Aggregation, String> as) {
+  protected void merge(@NotNull final Map<Aggregation, String> m) {
     int lastFound = -1;
-    for (final Aggregation a : as.keySet()) {
+    for (final Aggregation a : m.keySet()) {
       final int j = allAggregations.indexOf(a);
       if (j < 0) {
         allAggregations.add(a);

@@ -1,6 +1,6 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.utils.Permutation.*;
 
 import java.util.*;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class PermutationTest {

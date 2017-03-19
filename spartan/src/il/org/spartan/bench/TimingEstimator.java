@@ -10,6 +10,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.operations.*;
+import il.org.spartan.fapi.*;
 
 /** Manages estimates on the runtime of {@link Operation}s. Duties include:
  * <ol>

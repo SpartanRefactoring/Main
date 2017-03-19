@@ -8,6 +8,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.external.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
@@ -67,14 +68,12 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
-      for (int j = i + 1; j < xs.length; ++j) {
-        final double xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
-        if (xi != xj && yi != yj)
-          if (xi > xj == yi > yj)
+      for (int j = i + 1; j < xs.length; ++j)
+        if (xs[i] != xs[j] && ys[i] != ys[j])
+          if (xs[i] > xs[j] == ys[i] > ys[j])
             ++$;
           else
             --$;
-      }
     return $;
   }
 
@@ -83,14 +82,12 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
-      for (int j = i + 1; j < xs.length; ++j) {
-        final int xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
-        if (xi != xj && yi != yj)
-          if (xi > xj == yi > yj)
+      for (int j = i + 1; j < xs.length; ++j)
+        if (xs[i] != xs[j] && ys[i] != ys[j])
+          if (xs[i] > xs[j] == ys[i] > ys[j])
             ++$;
           else
             --$;
-      }
     return $;
   }
 

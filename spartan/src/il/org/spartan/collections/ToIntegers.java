@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.utils.___.*;
 
 /** An unsorted map of any entry to integers.

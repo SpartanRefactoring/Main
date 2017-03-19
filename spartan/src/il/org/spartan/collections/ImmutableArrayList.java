@@ -207,8 +207,8 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   /* (non-Javadoc)
    *
    * @see java.util.List#containsAll(java.util.Collection) */
-  @Override public boolean containsAll(final Collection<?> c) {
-    for (final Object ¢ : c)
+  @Override public boolean containsAll(final Collection<?> os) {
+    for (final Object ¢ : os)
       if (!contains(¢))
         return false;
     return true;

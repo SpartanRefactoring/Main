@@ -156,13 +156,13 @@ public abstract class AbstractGraph<E> {
    * a source of a Vertex<E> <i>v</i> if <i>v</i>can be reached from <i>r</i>,
    * and if there is another Vertex<E> <i>r'</i> from which <i>r</i> can be
    * reached, then there is also a path from <i>r</i> to <i>r'</i>.<i>r</i>
-   * @param e an arbitrary Vertex<E> of this graph
+   * @param v an arbitrary Vertex<E> of this graph
    * @return a source of the parameter */
-  public final Vertex<E> source(final Vertex<E> e) {
+  public final Vertex<E> source(final Vertex<E> v) {
     @NotNull final Queue<Vertex<E>> q = new ArrayBlockingQueue<>(size() + 1);
-    q.add(e);
+    q.add(v);
     @NotNull final Set<Vertex<E>> seen = new HashSet<>();
-    seen.add(e);
+    seen.add(v);
     for (;;) {
       final Vertex<E> $ = q.poll();
       if (inDegree($) == 0)

@@ -1,10 +1,11 @@
 package il.org.spartan;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
+import il.org.spartan.fapi.*;
 import il.org.spartan.statistics.*;
 
 @SuppressWarnings("static-method") public class RealStatisticsTest {

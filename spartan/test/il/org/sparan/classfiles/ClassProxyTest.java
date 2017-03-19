@@ -1,6 +1,6 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.io.*;
 import java.util.*;
@@ -11,8 +11,9 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.*;
+import il.org.spartan.fapi.*;
 
-@SuppressWarnings({ "static-method" }) //
+@SuppressWarnings("static-method")
 public class ClassProxyTest {
   private static final long serialVersionUID = 8455039288585824990L;
   private final String stringSignature = "My String Signature";

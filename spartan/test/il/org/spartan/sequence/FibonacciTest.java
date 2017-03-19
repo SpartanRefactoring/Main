@@ -1,10 +1,11 @@
 package il.org.spartan.sequence;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method") public class FibonacciTest {
   @Test public void testCreate() {

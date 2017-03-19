@@ -150,7 +150,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
       assert supplier != null;
     }
 
-    @Override @Nullable @SuppressWarnings({}) public Cell<T> clone() {
+    @Override @SuppressWarnings({}) @Nullable public Cell<T> clone() {
       return super.clone();
     }
 

@@ -1,8 +1,8 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
@@ -15,6 +15,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Accumulator.Counter;
@@ -47,8 +48,6 @@ public abstract class LogBook implements Serializable {
    * use the values of <code>1L</code> to maintain upward compatibility. */
   public static final long serialVersionUID = 1L;
 
-  /** @param es
-   * @param exclude */
   public static void removeKeys(@NotNull final Iterable<Entry> es, @NotNull final Keys exclude) {
     for (@NotNull final Entry ¢ : es)
       removeKeys(¢, exclude);
@@ -56,7 +55,7 @@ public abstract class LogBook implements Serializable {
 
   @NotNull public static Setting removeKeys(@NotNull final Setting s, @NotNull final Keys k) {
     @NotNull final Setting $ = new Setting();
-    s.keySet().stream().filter(key -> !k.contains(key)).forEach(key -> $.put(key, s.get(key)));
+    s.keySet().stream().filter(λ -> !k.contains(λ)).forEach(λ -> $.put(λ, s.get(λ)));
     return $;
   }
 
@@ -134,17 +133,12 @@ public abstract class LogBook implements Serializable {
     return true;
   }
 
-  /** @param f
-   * @throws IOException
-   * @throws ClassNotFoundException
-   * @throws FileNotFoundException */
   public void merge(@NotNull final File f) throws IOException, ClassNotFoundException {
     @NotNull final ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
     merge((LogBook) in.readObject());
     in.close();
   }
 
-  /** @param other */
   public void merge(@NotNull final LogBook other) {
     book.addAll(other.book);
   }

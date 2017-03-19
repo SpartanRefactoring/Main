@@ -1,8 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.is;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import static org.hamcrest.Matchers.*;
@@ -16,6 +15,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.reap.Cookbook.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
@@ -56,7 +56,7 @@ import il.org.spartan.reap.Cookbook.*;
  * apply
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-@SuppressWarnings("javadoc") public interface Environment {
+  public interface Environment {
   @NotNull static <@Nullable T, @Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> ¢) {
     return new Property<T>().bind(¢);
   }
@@ -366,7 +366,7 @@ import il.org.spartan.reap.Cookbook.*;
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      * @param <A> argument's type
-     * @param t a one argument function that returns a new value for this
+     * @param f a one argument function that returns a new value for this
      *        instance
      * @return a function with one argument named {@link Binder#to(Object)}
      *         which when applied
@@ -375,21 +375,21 @@ import il.org.spartan.reap.Cookbook.*;
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    @NotNull public <@Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> t) {
-      return ¢ -> ϑ(() -> t.ϑ(¢.¢()), ¢);
+    @NotNull public <@Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> f) {
+      return ¢ -> ϑ(() -> f.ϑ(¢.¢()), ¢);
     }
 
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking two arguments
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
-     * @param t a two argument function that returns a new value for this
+     * @param a a two argument function that returns a new value for this
      *        instance
      * @return a function with two arguments named {@link Binder2#to} which when
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
-    @NotNull public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(@NotNull final Function2<T, A1, A2> t) {
-      return (¢1, ¢2) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
+    @NotNull public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(@NotNull final Function2<T, A1, A2> a) {
+      return (¢1, ¢2) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
     }
 
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -397,13 +397,13 @@ import il.org.spartan.reap.Cookbook.*;
      * @param <A1> 1st argument's type
      * @param <A2> 2nd argument's type
      * @param <A3> 3rd argument's type
-     * @param t a one argument function that returns a new value for this
+     * @param a a one argument function that returns a new value for this
      *        instance
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
-    @NotNull public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(@NotNull final Function3<T, A1, A2, A3> t) {
-      return (¢1, ¢2, ¢3) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
+    @NotNull public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(@NotNull final Function3<T, A1, A2, A3> a) {
+      return (¢1, ¢2, ¢3) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
     }
 
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -412,14 +412,14 @@ import il.org.spartan.reap.Cookbook.*;
      * @param <A2> 2nd argument's type
      * @param <A3> 3rd argument's type
      * @param <A4> 4th argument's type
-     * @param t a one argument function that returns a new value for this
+     * @param a a one argument function that returns a new value for this
      *        instance
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
     @NotNull public <@Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(
-        @NotNull final Function4<T, A1, A2, A3, A4> t) {
-      return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> t.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
+        @NotNull final Function4<T, A1, A2, A3, A4> a) {
+      return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
 
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -545,7 +545,7 @@ import il.org.spartan.reap.Cookbook.*;
       version = latestPrequisiteVersion() + 1;
       assert ϑ != null;
       try {
-        azzert.notNull(set(ϑ.¢()));
+        assert set(ϑ.¢()) != null;
       } catch (@NotNull final Exception ¢) {
         ¢.printStackTrace();
         undefine();

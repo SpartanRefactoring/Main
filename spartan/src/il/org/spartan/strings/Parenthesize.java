@@ -6,6 +6,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 
@@ -91,10 +92,10 @@ import il.org.spartan.utils.*;
   }
 
   private static <T> Collection<T> prune(@NotNull final Collection<T> ¢) {
-    return Prune.nulls(¢);
+    return prune.nulls(¢);
   }
 
   private static <T> T[] prune(@NotNull final T[] ¢) {
-    return Prune.nulls(¢);
+    return prune.nulls(¢);
   }
 }

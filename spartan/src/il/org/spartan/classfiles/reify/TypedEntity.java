@@ -11,8 +11,6 @@ public class TypedEntity extends ConstantPoolEntity {
     return decodeSingleType(Iterables.make(descriptor.toCharArray()).iterator());
   }
 
-  /** @param rest
-   * @return */
   static TypeInfo[] decodeArguments(@NotNull final CharIterator rest) {
     @NotNull final List<TypeInfo> $ = new ArrayList<>();
     for (char first;;)

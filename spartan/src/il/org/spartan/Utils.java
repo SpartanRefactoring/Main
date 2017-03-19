@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static org.junit.Assert.*;
 
@@ -15,6 +15,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.Utils.FoundHandleForT.*;
+import il.org.spartan.fapi.*;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -479,7 +480,7 @@ public interface Utils {
       this.function = function;
     }
 
-    @SafeVarargs @NotNull final Iterable<T> to(@NotNull final F... fs) {
+    @SafeVarargs @NotNull public final Iterable<T> to(@NotNull final F... fs) {
       final List<T> $ = new ArrayList<>();
       for (final F ¢ : fs)
         if (¢ != null)
@@ -549,7 +550,7 @@ public interface Utils {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method" }) class TEST {
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") class TEST {
     @NotNull public static Integer[] intToIntegers(@NotNull final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
@@ -588,7 +589,7 @@ public interface Utils {
     }
 
     @Test public void cantBeNullTypical() {
-      notNull(cantBeNull(new Object()));
+      assert cantBeNull(new Object()) != null;
     }
 
     @Test public void isNullTypical() {

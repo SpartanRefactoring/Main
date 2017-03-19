@@ -7,6 +7,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
