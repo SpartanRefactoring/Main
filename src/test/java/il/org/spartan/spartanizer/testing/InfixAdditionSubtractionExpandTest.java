@@ -74,7 +74,7 @@ public class InfixAdditionSubtractionExpandTest {
   @SuppressWarnings("static-method") 
   public void test09() {
     trimmingOf("1 - (a+c)")//
-      .gives("1 - a - b")
+      .gives("1 - a - c")
       .stays();
   }
 }
