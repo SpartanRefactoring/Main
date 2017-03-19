@@ -6,7 +6,7 @@ import java.util.stream.*;
 /** An abstract reducer
  * @param <R>
  * @since 2017-01-29 */
-public abstract class Reducer<@¢ R> {
+public abstract class Reduce<@¢ R> {
   public R reduce() {
     return null;
   }
