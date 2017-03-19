@@ -14,8 +14,8 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.Tipper.*;
-import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+import il.org.spartan.utils.*;
+import il.org.spartan.utils.Example.*;
 
 /** A test generator for {@link Tipper}s, creating tests from their declared
  * examples (see {@link Tipper#examples}).
@@ -27,7 +27,7 @@ public class ExamplesTests {
   private final Tipper<? extends ASTNode> tipper;
 
   /** Redirects examples to tests according to type */
-  @Test public void vonerts() {
+  @Test public void converts() {
     for (final Example ¢ : tipper.examples())
       if (¢ instanceof Converts)
         testConverts((Converts) ¢);
@@ -40,16 +40,15 @@ public class ExamplesTests {
         ignores((Ignores) ¢);
   }
 
-  private static void ignores(Ignores ¢) {
-    trimmingOf(¢.code()).stays();
+  private static void ignores(final Ignores ¢) {
+    trimmingOf(¢.get()).stays();
   }
 
   private static void testConverts(final Converts ¢) {
-    trimmingOf(¢.from()).
-    gives(¢.to());
+    trimmingOf(¢.from()).gives(¢.to());
   }
 
-  public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") String name) {
+  public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") final String name) {
     this.tipper = tipper;
   }
 

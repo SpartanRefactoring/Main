@@ -29,10 +29,8 @@ import org.eclipse.ui.dialogs.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
-import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.Tipper.*;
-import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.Example.*;
 
 /** An handler for project configuration. User configuration is saved in a
  * designated XML file, see {@link XMLSpartan}.
@@ -329,7 +327,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param filter examples filter
    * @param converter Example --> String converter
    * @return unified examples string */
-  static String getPreviewString(final Tipper.Example[] preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
+  static String getPreviewString(final Example[] preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
     if (preview == null)
       return null;
     final StringBuilder $ = new StringBuilder();

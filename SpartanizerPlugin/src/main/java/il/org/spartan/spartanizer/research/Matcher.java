@@ -409,17 +409,17 @@ public final class Matcher {
     final Wrapper<String> $ = new Wrapper<>();
     $.set(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
-    try {
-      ast(replacement).accept(new ASTVisitor(true) {
-        @Override public boolean preVisit2(final ASTNode ¢) {
-          if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-            $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
-          return true;
-        }
-      });
-    } catch (@SuppressWarnings("unused") final NullPointerException __) {
-      throw new RuntimeException("Cannot parse [" + replacement + "]");
-    }
+    assert replacement != null;
+    final ASTNode ast = ast(replacement);
+    assert ast != null : "Cannot parse [[ " + replacement + " ]]";
+    ast.accept(new ASTVisitor(true) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        assert ¢ != null;
+        if (iz.name(¢) && enviroment.containsKey(¢ + ""))
+          $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
+        return true;
+      }
+    });
     return extractStatementIfOne(ast($.get()));
   }
 

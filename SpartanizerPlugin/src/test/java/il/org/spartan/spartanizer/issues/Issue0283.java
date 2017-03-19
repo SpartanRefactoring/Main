@@ -24,10 +24,13 @@ public class Issue0283 {
             .stays();
   }
 
-  /** Automatically generated */
-  @Test public void err4() {
+  /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
+   * Yossi */
+  @Test public void err1() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
+        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
         .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
+        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
         .stays() //
     ;
@@ -43,13 +46,10 @@ public class Issue0283 {
     ;
   }
 
-  /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
-   * Yossi */
-  @Test public void err1() {
+  /** Automatically generated */
+  @Test public void err4() {
     trimmingOf("@A @B class C{@A @D(3)@E @D({3})@F public void a(){}}") //
-        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
         .gives("@A @B class C{@A @D(3)@D({3})@E@F public void a(){}}") //
-        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .gives("@A @B class C{@A @D(3)@D(3)@E@F public void a(){}}") //
         .stays() //
     ;
