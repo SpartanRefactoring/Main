@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
