@@ -89,7 +89,7 @@ public final class Inliner2 {
   }
 
   private boolean nullaryInlineOK() {
-    return iz.sink(replacement);
+    return sideEffects.sink(replacement);
   }
 
   public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
