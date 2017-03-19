@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.io.*;
 
@@ -8,6 +8,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** @author Yossi Gil
  * @since 27 November 2011 */

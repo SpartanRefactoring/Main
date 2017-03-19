@@ -11,17 +11,13 @@ public class TypedEntity extends ConstantPoolEntity {
     return decodeSingleType(Iterables.make(descriptor.toCharArray()).iterator());
   }
 
-  /** @param rest
-   * @return */
   static TypeInfo[] decodeArguments(@NotNull final CharIterator rest) {
     @NotNull final List<TypeInfo> $ = new ArrayList<>();
-    for (char first;;)
-      switch (first = rest.next()) {
-        case ')':
-          return $.toArray(new TypeInfo[$.size()]);
-        default:
-          $.add(decodeSingleType(first, rest));
-      }
+    for (char first;;) {
+      if ((first = rest.next()) == ')')
+        return $.toArray(new TypeInfo[$.size()]);
+      $.add(decodeSingleType(first, rest));
+    }
   }
 
   private static String decodeReferenceType(@NotNull final CharIterator i) {

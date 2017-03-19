@@ -1,6 +1,6 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** A class to compute statistics, e.g., the minimal and maximal value, the mean
  * and the standard deviation, of a sequence of real numbers.
@@ -72,7 +73,7 @@ public class RealStatistics extends ImmutableStatistics {
     return this;
   }
 
-  @SuppressWarnings({ "static-method" }) public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     final RealStatistics s11_20_5 = new RealStatistics().record(11).record(20).record(5);
     final RealStatistics s15 = new RealStatistics().record(5).record(3).record(1).record(2).record(4);
     final RealStatistics s07 = new RealStatistics().record(0).record(5).record(6).record(3).record(1).record(2).record(4).record(7);

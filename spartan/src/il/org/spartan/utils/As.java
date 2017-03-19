@@ -3,6 +3,7 @@ package il.org.spartan.utils;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 
 /** A utility encapsulating conversion function.

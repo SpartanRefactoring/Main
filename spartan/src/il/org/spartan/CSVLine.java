@@ -55,7 +55,7 @@ import il.org.spartan.utils.Separate.*;
   }
 
   @NotNull public final String asKeyValuePairs() {
-    return Separate.by((F<@NonNull Entry<@NonNull String, @NonNull String>>) e -> e.getKey() + "=" + e.getValue(), entries(), ", ");
+    return Separate.by((F<@NonNull Entry<@NonNull String, @NonNull String>>) λ -> λ.getKey() + "=" + λ.getValue(), entries(), ", ");
   }
 
   public final Iterable<? extends Map.Entry<String, String>> entries() {

@@ -245,11 +245,11 @@ import il.org.spartan.utils.*;
     }
   }
 
-  @NotNull public static String pretty(final String singular, final Collection<? extends Object> a) {
+  @NotNull public static String pretty(final String singular, final Collection<?> a) {
     return pretty(singular, singular + "s", a);
   }
 
-  @NotNull public static String pretty(final String singular, final String plural, @Nullable final Collection<? extends Object> a) {
+  @NotNull public static String pretty(final String singular, final String plural, @Nullable final Collection<?> a) {
     if (a == null || a.isEmpty())
       return "";
     if (a.size() == 1)

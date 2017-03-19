@@ -1,7 +1,6 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertEquals;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.graph.GraphsSamplesGenerator.*;
 import static org.junit.Assert.assertEquals;
 
@@ -12,9 +11,10 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.fapi.*;
 import il.org.spatan.iteration.*;
 
-@SuppressWarnings({ "static-method", "javadoc" }) //
+@SuppressWarnings("static-method")
 public class GraphTest {
   static void verifyEdge(@NotNull final Graph<String> s, final int from, final int to) {
     assert s.vertices().get(from) != null;
@@ -52,7 +52,7 @@ public class GraphTest {
   }
 
   static void verifyPreorder(@NotNull final Graph<String> s) {
-    verifyCollection(s, s.preOrder(), s.vertices().size(), sink -> verifyVertex(s, sink.e()));
+    verifyCollection(s, s.preOrder(), s.vertices().size(), λ -> verifyVertex(s, λ.e()));
   }
 
   static void verifySink(@NotNull final Graph<String> s, final String sink) {
@@ -64,7 +64,7 @@ public class GraphTest {
   }
 
   static void verifySinks(@NotNull final Graph<String> s) {
-    verifyCollection(s, s.sinks(), s.sinksCount(), sink -> verifySink(s, sink));
+    verifyCollection(s, s.sinks(), s.sinksCount(), λ -> verifySink(s, λ));
   }
 
   static void verifySource(@NotNull final Graph<String> s, final String source) {
@@ -77,7 +77,7 @@ public class GraphTest {
   }
 
   static void verifySources(@NotNull final Graph<String> s) {
-    verifyCollection(s, s.sources(), s.sourcesCount(), source -> verifySource(s, source));
+    verifyCollection(s, s.sources(), s.sourcesCount(), λ -> verifySource(s, λ));
   }
 
   static void verifyVertex(@NotNull final Graph<String> s, @NotNull final String... vertices) {
@@ -95,7 +95,7 @@ public class GraphTest {
   }
 
   static void verifyVertices(@NotNull final Graph<String> s) {
-    verifyCollection(s, s.vertices(), s.size(), v -> verifyVertex(s, v));
+    verifyCollection(s, s.vertices(), s.size(), λ -> verifyVertex(s, λ));
   }
 
   private static boolean among(@NotNull final String what, @NotNull final String... where) {

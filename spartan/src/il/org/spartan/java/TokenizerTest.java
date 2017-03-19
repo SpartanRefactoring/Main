@@ -1,6 +1,6 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.java.Token.*;
 
 import java.io.*;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method")
 //

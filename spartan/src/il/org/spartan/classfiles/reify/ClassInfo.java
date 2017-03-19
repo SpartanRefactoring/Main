@@ -312,8 +312,7 @@ public final class ClassInfo extends ConstantPoolEntity {
   }
 
   @Attribute public int lackOfCohesion() {
-    int $ = 0;
-    int nonEmptyIntersect = 0;
+    int $ = 0, nonEmptyIntersect = 0;
     for (@NotNull final MethodInfo m1 : methods)
       for (@NotNull final MethodInfo m2 : methods) {
         if (m1.hashCode() >= m2.hashCode())

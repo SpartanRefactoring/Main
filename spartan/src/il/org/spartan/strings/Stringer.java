@@ -112,15 +112,15 @@ import il.org.spartan.utils.*;
    *        used to compute obtain each item string represntation.
    * @param sep a string so separate these items
    * @param end a string terminating the string representation
-   * @param t class to customize conversions.
+   * @param c class to customize conversions.
    * @return the string equivalent of the <code>ts</code> in the following
    *         structure: <code> begin item1 sep item2 sep ... item2 end</code> */
   @NotNull public static <T> String sequence(@NotNull final String begin, @NotNull final T[] ts, final String sep, final String end,
-      @NotNull final Converter<T> t) {
+      @NotNull final Converter<T> c) {
     @NotNull final StringBuilder $ = new StringBuilder(begin);
     @NotNull final Separator s = new Separator(sep);
     for (final T ¢ : ts)
-      $.append(s).append(t.convert(¢));
+      $.append(s).append(c.convert(¢));
     $.append(end);
     return $ + "";
   }

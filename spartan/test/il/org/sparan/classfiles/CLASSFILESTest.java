@@ -7,6 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class CLASSFILESTest {

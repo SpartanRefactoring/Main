@@ -2,7 +2,7 @@
 package il.org.spartan.text;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
@@ -11,6 +11,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** A trivial utility module with functions to scatter a text into an array of
  * lines, and, conversely, gather an array of lines into text. Scattering and
@@ -62,7 +63,7 @@ public enum Lines {
    * @author Yossi Gil
    * @since 2014-05-31 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc" }) //
+  @SuppressWarnings("static-method")
   public static class TEST {
     @Test public void countEmpty() {
       azzert.that(count(""), is(0));

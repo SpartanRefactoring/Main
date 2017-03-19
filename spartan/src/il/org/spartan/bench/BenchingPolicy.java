@@ -33,9 +33,7 @@ public enum BenchingPolicy {
    *         number) */
   public static double approximateSteadyStateTime(@NotNull final Operation o) {
     for (int $ = 1;; $ <<= 1) {
-      // JVM.gc();
-      @NotNull final Stopwatch grossTime = new Stopwatch().start();
-      @NotNull final Stopwatch netTime = o.netTime($);
+      @NotNull final Stopwatch grossTime = new Stopwatch().start(), netTime = o.netTime($);
       grossTime.stop();
       ___.nonnegative(netTime.time());
       if (new RunRecord($, netTime, grossTime).ok())
@@ -119,9 +117,7 @@ public enum BenchingPolicy {
   public static int warmup(@NotNull final TimingEstimator e, final int initialApproximation) {
     Log.ln("Time approximation at warmup begin:", Unit.formatNanoseconds(e.estimate()));
     Log.beginCompoundStage("Warmup", "[" + thousands(initialApproximation), "runs/iteration]");
-    int $ = initialApproximation;
-    int failures = 0;
-    int iteration = 0;
+    int $ = initialApproximation, failures = 0, iteration = 0;
     double totalTime = 0;
     while (totalTime < minWarmup) {
       Log.ln("Warming up with " + thousands($) + " runs", "iteration #" + ++iteration);

@@ -1,13 +1,15 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.util.function.*;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
+
+import il.org.spartan.fapi.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -185,9 +187,9 @@ public interface idiomatic {
     }
   }
 
-  @SuppressWarnings({ "javadoc", "static-method" }) class TEST {
+  @SuppressWarnings("static-method") class TEST {
     @Test public void use0() {
-      azzert.notNull(new Storer<>(this));
+      assert new Storer<>(this) != null;
     }
 
     @Test public void use08() {
@@ -195,16 +197,16 @@ public interface idiomatic {
     }
 
     @Test public void use09() {
-      azzert.notNull(unless(false).eval(() -> new Object()));
+      assert unless(false).eval(() -> new Object()) != null;
     }
 
     @Test public void use1() {
-      azzert.notNull(new Storer<>(this));
+      assert new Storer<>(this) != null;
       new Storer<>(this).when(true);
     }
 
     @Test public void use10() {
-      azzert.notNull(when(true).eval(() -> new Object()));
+      assert when(true).eval(() -> new Object()) != null;
     }
 
     @Test public void use11() {
@@ -212,7 +214,7 @@ public interface idiomatic {
     }
 
     @Test public void use2() {
-      azzert.notNull(take(this));
+      assert take(this) != null;
       azzert.isNull(take(this).when(false));
     }
 

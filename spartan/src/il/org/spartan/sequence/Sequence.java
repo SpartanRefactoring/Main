@@ -70,8 +70,6 @@ public abstract class Sequence implements Cloneable {
     }
   }
 
-  /** @param $
-   * @return */
   private int[] fill(final int[] $) {
     for (int ¢ = 0; more(); ++¢, advance())
       $[¢] = current();

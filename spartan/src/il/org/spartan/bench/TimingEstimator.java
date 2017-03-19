@@ -10,6 +10,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.operations.*;
+import il.org.spartan.fapi.*;
 
 /** Manages estimates on the runtime of {@link Operation}s. Duties include:
  * <ol>
@@ -83,8 +84,7 @@ public class TimingEstimator {
     for (;;) {
       Log.print("Running " + thousands(runs) + " times...");
       @NotNull final JVM before = new JVM();
-      @NotNull final Stopwatch grossTime = new Stopwatch().start();
-      @NotNull final Stopwatch netTime = o.netTime(runs);
+      @NotNull final Stopwatch grossTime = new Stopwatch().start(), netTime = o.netTime(runs);
       grossTime.stop();
       @NotNull final JVM after = new JVM();
       nonnegative(netTime.time());

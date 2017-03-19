@@ -1,4 +1,4 @@
-package il.org.spartan;
+package il.org.spartan.fapi;
 
 import static il.org.spartan.Utils.*;
 

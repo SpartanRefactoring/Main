@@ -1,4 +1,4 @@
-package il.org.spartan;
+package il.org.spartan.fapi;
 
 import static il.org.spartan.Utils.*;
 
@@ -10,9 +10,11 @@ import org.hamcrest.number.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import il.org.spartan.*;
+
 /** @author Yossi Gil
  * @since 2015-07-18 */
-@SuppressWarnings({ "javadoc", "null" }) //
+@SuppressWarnings("null") //
 public class azzert extends org.junit.Assert {
   public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> ¢) {
     return AllOf.allOf(¢);
@@ -163,8 +165,8 @@ public class azzert extends org.junit.Assert {
     return StringContains.containsString(substring);
   }
 
-  public static <T> Matcher<T> describedAs(final String description, final Matcher<T> t, final Object... values) {
-    return DescribedAs.describedAs(description, t, values);
+  public static <T> Matcher<T> describedAs(final String description, final Matcher<T> m, final Object... values) {
+    return DescribedAs.describedAs(description, m, values);
   }
 
   public static <LHS> CombinableMatcher.@Nullable CombinableEitherMatcher<LHS> either(final Matcher<? super LHS> ¢) {
@@ -418,10 +420,10 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void nonNulls(@NotNull final @Nullable Iterable<@Nullable Object> os) {
-    azzert.notNull(os);
+    assert os != null;
     assert os != null;
     for (final @Nullable Object ¢ : os)
-      azzert.notNull(os + "", ¢);
+      assert ¢ != null : os + "";
   }
 
   @NotNull public static Matcher<Boolean> not(final boolean ¢) {
@@ -482,9 +484,9 @@ public class azzert extends org.junit.Assert {
 
   public static void notNullz(@NotNull final @Nullable Object @Nullable... os) {
     assert os != null;
-    notNull(os);
+    assert os != null;
     for (final @Nullable Object ¢ : os)
-      notNull(os + "", ¢);
+      assert ¢ != null : os + "";
   }
 
   @Contract(pure = true) @NotNull public static Matcher<@Nullable Object> nullValue() {

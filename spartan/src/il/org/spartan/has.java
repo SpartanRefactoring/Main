@@ -9,6 +9,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import il.org.spartan.fapi.*;
+
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
  * @author Yossi Gil
@@ -49,7 +51,7 @@ public enum has {
     return false;
   }
 
-  @SuppressWarnings("javadoc") public static class TEST {
+    public static class TEST {
     private final @Nullable String nul = null;
 
     @Test public void seriesA01() {

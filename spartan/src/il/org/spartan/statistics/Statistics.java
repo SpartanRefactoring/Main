@@ -31,8 +31,7 @@ public abstract class Statistics {
 
   @NotNull public static double[] prune(@NotNull final double[] ds) {
     @NotNull final List<Double> $ = new ArrayList<>();
-    final double median = median(ds);
-    final double mad = mad(ds);
+    final double median = median(ds), mad = mad(ds);
     for (final double ¢ : ds)
       if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)
         $.add(box(¢));
@@ -52,8 +51,7 @@ public abstract class Statistics {
    * @param ds the sample
    * @return the sample variance of the parameter */
   public static double sampleVariance(@NotNull final double[] ds) {
-    double $ = 0;
-    double sum2 = 0;
+    double $ = 0, sum2 = 0;
     for (final double ¢ : ds) {
       $ += ¢;
       sum2 += ¢ * ¢;
