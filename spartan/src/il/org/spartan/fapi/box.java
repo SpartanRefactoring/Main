@@ -1,5 +1,5 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package il.org.spartan.fapi;
 
 import static il.org.spartan.Utils.*;
 

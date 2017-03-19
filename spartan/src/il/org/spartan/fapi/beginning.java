@@ -1,15 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package il.org.spartan.fapi;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 
-@SuppressWarnings("javadoc") public interface beginning {
+  public interface beginning {
   String COMMA = ",";
   String DOT = ".";
   String NL = "\n";
@@ -36,14 +37,14 @@ import il.org.spartan.iterables.*;
     return new with(¢);
   }
 
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "static-method" }) class TEST {
+  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") class TEST {
     @Test public void with() {
       azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
 
     @Test public void withType() {
       @NotNull final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
-      azzert.notNull(endingWith);
+      assert endingWith != null;
       azzert.that(endingWith + "", is("ax,yc"));
     }
   }

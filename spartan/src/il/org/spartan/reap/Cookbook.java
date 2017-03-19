@@ -2,7 +2,7 @@
 package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.max;
 
@@ -14,6 +14,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
 
@@ -181,7 +182,7 @@ public interface Cookbook {
         return wrap.get();
       }
 
-      @SuppressWarnings({ "synthetic-access" }) public static class TEST extends A {
+      @SuppressWarnings("synthetic-access") public static class TEST extends A {
         @Test public void sessionA00() {
           azzert.that(wrap(), is("<p>"));
         }
@@ -290,7 +291,7 @@ public interface Cookbook {
      * <p>
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016 */
-    @SuppressWarnings({ "boxing" }) public static class Z implements Cookbook {
+    @SuppressWarnings("boxing") public static class Z implements Cookbook {
       /** Must not be private; used for testing of proper lazy evaluation */
       int __aPower02Calls;
       /** Must not be private; used for testing of proper lazy evaluation */
@@ -377,31 +378,31 @@ public interface Cookbook {
 
       /** @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016 */
-      @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings({ "null" }) public static class TEST extends Z {
+      @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("null") public static class TEST extends Z {
         @Test public void sessionA01() {
           azzert.isNull(a());
         }
 
         @Test public void sessionA05() {
           a.set(2);
-          azzert.notNull(a());
+          assert a() != null;
         }
 
         @Test public void sessionA06() {
           a.set(2);
-          azzert.notNull(aPower02());
+          assert aPower02() != null;
           azzert.that(aPower02(), is(4));
         }
 
         @Test public void sessionA07() {
           a.set(2);
-          azzert.notNull(aPower03());
+          assert aPower03() != null;
           azzert.that(aPower03(), is(8));
         }
 
         @Test public void sessionA08() {
           a.set(2);
-          azzert.notNull(aPower02());
+          assert aPower02() != null;
         }
 
         @Test public void sessionA09() {
@@ -428,13 +429,13 @@ public interface Cookbook {
           a.set(null);
           azzert.isNull(aPower17NullSafe());
           a.set(2);
-          azzert.notNull(aPower17NullSafe());
+          assert aPower17NullSafe() != null;
           azzert.that(a(), is(2));
         }
 
         @Test public void sessionA14() {
           a.set(2);
-          azzert.notNull(aPower17NullSafe());
+          assert aPower17NullSafe() != null;
           azzert.that(a(), is(2));
           azzert.that(aPower17NullSafe(), is(1 << 17));
         }
@@ -485,7 +486,7 @@ public interface Cookbook {
 
         @Test public void sessionB01() {
           a.set(2);
-          azzert.notNull(a());
+          assert a() != null;
           azzert.that(a(), is(2));
           a.set(3);
           azzert.that(a(), is(3));
@@ -499,25 +500,25 @@ public interface Cookbook {
 
         @Test public void sessionB02() {
           a.set(2);
-          azzert.notNull(aPower02());
+          assert aPower02() != null;
           azzert.that(aPower02(), is(4));
           a.set(3);
-          azzert.notNull(aPower02());
+          assert aPower02() != null;
           azzert.that(aPower02(), is(9));
         }
 
         @Test public void sessionB03() {
           a.set(2);
-          azzert.notNull(aPower03());
+          assert aPower03() != null;
           azzert.that(aPower03(), is(8));
           a.set(3);
-          azzert.notNull(aPower03());
+          assert aPower03() != null;
           azzert.that(aPower03(), is(27));
         }
 
         @Test public void sessionB04() {
           a.set(2);
-          azzert.notNull(aPower02());
+          assert aPower02() != null;
         }
 
         @Test public void sessionC00() {
@@ -587,19 +588,19 @@ public interface Cookbook {
 
         @Test public void sessionD04() {
           a.set(14);
-          azzert.notNull(a.get());
+          assert a.get() != null;
         }
 
         @Test public void sessionD05() {
           a.set(14);
-          azzert.notNull(a.get());
+          assert a.get() != null;
           azzert.that(a.get(), is(14));
           azzert.that(aPower02.get(), is(196));
         }
 
         @Test public void sessionD06() {
           a.set(14);
-          azzert.notNull(a.get());
+          assert a.get() != null;
           a.get();
           azzert.that(aPower02.version(), is(0L));
           a.get();
@@ -608,7 +609,7 @@ public interface Cookbook {
 
         @Test public void sessionD07() {
           a.set(14);
-          azzert.notNull(a.get());
+          assert a.get() != null;
           a.get();
           azzert.not(aPower02.updated());
         }
@@ -626,7 +627,7 @@ public interface Cookbook {
           azzert.that(a.get(), is(14));
           azzert.that(a.version(), is(1L));
           azzert.that(aPower02.version, is(0L));
-          azzert.notNull(a.dependents);
+          assert a.dependents != null;
         }
 
         @Test public void sessionD10() {
@@ -875,7 +876,7 @@ public interface Cookbook {
 
         @Test @SuppressWarnings("synthetic-access") public void sessionG02() {
           aPower02.set(0xDADA);
-          azzert.notNull(aPower02.cache);
+          assert aPower02.cache != null;
           azzert.that(aPower02.cache, is(0xDADA));
           azzert.isNull(((Recipe<?>) aPower02).supplier);
         }
@@ -937,7 +938,7 @@ public interface Cookbook {
      *         stored in this node is updated. */
     public abstract boolean updated();
 
-    @Override @Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
+    @Override @SuppressWarnings("unchecked") @Nullable protected Cell<T> clone() {
       try {
         return (Cell<T>) super.clone();
       } catch (@org.jetbrains.annotations.NotNull final CloneNotSupportedException e) {
@@ -1150,7 +1151,7 @@ public interface Cookbook {
         cache(cantBeNull(supplier).get());
       }
 
-      @Override @Nullable @SuppressWarnings({}) public NotNull<T> clone() {
+      @Override @SuppressWarnings({}) @Nullable public NotNull<T> clone() {
         return (NotNull<T>) super.clone();
       }
 

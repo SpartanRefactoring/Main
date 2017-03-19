@@ -1,6 +1,6 @@
 package il.org.spartan.xy;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.misc.LinearAlgebra.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Math.log;
@@ -12,6 +12,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 /** An interface for processing a sequence of X-Y points
@@ -146,7 +147,7 @@ public interface XYProcessor {
       return isReal(x) && isReal(y) && isReal(dy);
     }
 
-    @SuppressWarnings({ "static-method" }) public static class TEST {
+    @SuppressWarnings("static-method") public static class TEST {
       @Test public void feed() {
         @NotNull final RealsOnly p = new RealsOnly();
         p.feed(doubles(Double.NaN, 1, 4, 3), doubles(0, Double.NEGATIVE_INFINITY, 5, 3), doubles(0, 1, 6, Double.NEGATIVE_INFINITY));

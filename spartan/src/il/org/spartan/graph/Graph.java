@@ -13,17 +13,17 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil
  * @since 2011-11-11 */
 public class Graph<E> extends AbstractGraph<E> {
-  private static <E> ImmutableArrayList<Vertex<E>> makeSinks(@NotNull final ImmutableArrayList<Vertex<E>> e) {
+  private static <E> ImmutableArrayList<Vertex<E>> makeSinks(@NotNull final ImmutableArrayList<Vertex<E>> v) {
     @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (@NotNull final Vertex<E> ¢ : e)
+    for (@NotNull final Vertex<E> ¢ : v)
       if (¢.outgoing().isEmpty())
         $.add(¢);
     return ImmutableArrayList.make($);
   }
 
-  @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> e) {
+  @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> v) {
     @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (@NotNull final Vertex<E> ¢ : e)
+    for (@NotNull final Vertex<E> ¢ : v)
       if (¢.incoming().isEmpty())
         $.add(¢);
     return new ImmutableArrayList<>($);
@@ -109,10 +109,10 @@ public class Graph<E> extends AbstractGraph<E> {
       return new HashSet<>();
     }
 
-    private static <E> void fill(@NotNull final Map<E, Vertex<E>> e, final Vertex<E>[] vs, @NotNull final HashSet<E> es) {
+    private static <E> void fill(@NotNull final Map<E, Vertex<E>> m, final Vertex<E>[] vs, @NotNull final HashSet<E> es) {
       int i = 0;
       for (final E ¢ : es)
-        vs[i++] = e.get(¢);
+        vs[i++] = m.get(¢);
     }
 
     @NotNull @SuppressWarnings("unchecked") //
@@ -155,14 +155,14 @@ public class Graph<E> extends AbstractGraph<E> {
 
     /** Merges into the currently built graph all edges and vertices in the
      * supplied graph.
-     * @param e an arbitrary graph
+     * @param g an arbitrary graph
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> addGraph(@NotNull final Graph<E> e) {
-      for (@NotNull final Vertex<E> v : e.vertices())
-        if (e.outDegree(v) == 0)
+    @NotNull public Builder<E> addGraph(@NotNull final Graph<E> g) {
+      for (@NotNull final Vertex<E> v : g.vertices())
+        if (g.outDegree(v) == 0)
           newVertex(v.e());
         else
-          for (@NotNull final Vertex<E> u : e.outgoing(v))
+          for (@NotNull final Vertex<E> u : g.outgoing(v))
             newEdge(v.e(), u.e());
       return this;
     }

@@ -66,7 +66,7 @@ public class RE {
   }
 
   @NotNull public static String or(@NotNull final String... alternatives) {
-    return parenthesis(Separate.by(s -> parenthesis(s), alternatives, "|"));
+    return parenthesis(Separate.by(λ -> parenthesis(λ), alternatives, "|"));
   }
 
   @NotNull public static String padded(final String regularExpression) {

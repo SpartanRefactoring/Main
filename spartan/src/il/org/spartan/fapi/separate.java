@@ -1,8 +1,8 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package il.org.spartan.fapi;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -12,7 +12,9 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.Utils.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.iterables.*;
 
 /** A utility class providing library functions that take an array or a
@@ -140,14 +142,14 @@ public enum separate {
   /** A simple minded separation of members of a {@link Map} data type.
    * @param <Key> type of elements serving as keys of the map.
    * @param <Value> type of elements serving as values of the map.
-   * @param k a non-<code><b>null</b></code> {@link Map} objects whose entries
+   * @param m a non-<code><b>null</b></code> {@link Map} objects whose entries
    *        are to be separated.
    * @return a concatenation of all map entries, separated by
    *         <code>separator</code>, and where the key of each entry is
    *         separated from the value by <code>arrow</code>. */
-  @NotNull public static <Key, Value> SeparationSubject these(@NotNull final Map<Key, Value> k) {
-    cantBeNull(k);
-    @NotNull final List<Object> $ = k.keySet().stream().map(¢ -> ¢ + "->" + k.get(¢)).collect(Collectors.toList());
+  @NotNull public static <Key, Value> SeparationSubject these(@NotNull final Map<Key, Value> ¢) {
+    cantBeNull(¢);
+    @NotNull final List<Object> $ = ¢.keySet().stream().map(λ -> λ + "->" + ¢.get(λ)).collect(Collectors.toList());
     return new SeparationSubject($);
   }
 
@@ -317,9 +319,9 @@ public enum separate {
   }
 
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
+  @SuppressWarnings({ "static-method",  "synthetic-access" }) //
   public static class TEST {
-    private static final Function<Object, String> quote = t -> "'" + t + "'";
+    private static final Function<Object, String> quote = λ -> "'" + λ + "'";
 
     static <T> void assertEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
@@ -382,7 +384,7 @@ public enum separate {
     }
 
     @Test public final void byFOfTIterableOfTChar() {
-      azzert.that(separate.these(apply(a -> "<" + a + ">").to("A", "B")).by(' '), is("<A> <B>"));
+      azzert.that(separate.these(apply(λ -> "<" + λ + ">").to("A", "B")).by(' '), is("<A> <B>"));
     }
 
     @Test public final void byFOfTIterableOfTString() {
@@ -390,8 +392,8 @@ public enum separate {
     }
 
     @Test public final void byFOfTTArrayChar() {
-      @NotNull final Applicator<Object, String> f = new Applicator<>(a -> "'" + a + "'");
-      azzert.notNull("Function literals should never by null.", f);
+      @NotNull final Applicator<Object, String> f = new Applicator<>(λ -> "'" + λ + "'");
+      assert f != null : "Function literals should never by null.";
       @NotNull final Collection<String> c = as.list("Hello", "World");
       azzert.that(c.size(), is(2));
       @NotNull final Iterable<String> ts = f.to(c);
@@ -474,12 +476,12 @@ public enum separate {
 
     @Test public final void separateByNoItemslPruneWhitesSpaceSeparated() {
       @NotNull final SeparationSubject these = separate.these();
-      azzert.notNull(null, these);
+      assert these != null : null;
       final Iterable<?> os = these.os;
-      azzert.notNull(null, os);
+      assert os != null : null;
       azzert.aye(iterables.isEmpty(os));
       @NotNull final String[] ss = as.strings(os);
-      azzert.notNull(null, ss);
+      assert ss != null : null;
       azzert.zero(ss.length);
       @NotNull final String[] noWhites = prune.whites(ss);
       azzert.zero(noWhites.length);

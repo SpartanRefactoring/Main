@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package il.org.spartan.fapi;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -12,6 +12,8 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.iterables.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
@@ -272,7 +274,7 @@ public enum as {
    * @author Yossi Gil
    * @since 2014-05-31 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc" }) //
+  @SuppressWarnings("static-method")
   public static class TEST {
     @Test public void asBitOfFalse() {
       azzert.that(as.bit(false), is(0));

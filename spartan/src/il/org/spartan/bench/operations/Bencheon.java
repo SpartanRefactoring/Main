@@ -54,7 +54,6 @@ public abstract class Bencheon extends NamedOperation {
     return netTime.setTime($).setRuns(runs);
   }
 
-  /** @param runs */
   public final void run(final int runs) {
     for (int ¢ = 0; ¢ < runs; ++¢) {
       beforeEachRun();

@@ -2,7 +2,7 @@
 package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** A kind of {@link Iterator} which does not support the rarely used
  * {@link #remove} operation and saves the user, i.e., who ever chooses to
@@ -58,7 +59,7 @@ public abstract class PureIterator<T> implements Iterator<T> {
     }
   }
 
-  @SuppressWarnings({ "javadoc" }) //
+   
   public static class TEST extends PureIterator.Staged<String> {
     public static <T> void assertEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));

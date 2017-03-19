@@ -10,6 +10,7 @@ import java.util.Map.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.utils.*;
 
@@ -26,10 +27,10 @@ public class Iterables {
     return $;
   }
 
-  @NotNull public static <F, T> Iterable<T> apply(@NotNull final Iterable<? extends F> fs, @NotNull final Converter<F, T> f) {
+  @NotNull public static <F, T> Iterable<T> apply(@NotNull final Iterable<? extends F> fs, @NotNull final Converter<F, T> c) {
     @NotNull final ArrayList<T> $ = new ArrayList<>();
     for (final F ¢ : fs)
-      $.add(f.__(¢));
+      $.add(c.__(¢));
     return $;
   }
 
@@ -85,17 +86,17 @@ public class Iterables {
     return $;
   }
 
-  public static <T> int count(@NotNull final Iterable<T> ts, @NotNull final Condition<T> t) {
+  public static <T> int count(@NotNull final Iterable<T> ts, @NotNull final Condition<T> c) {
     int $ = 0;
     for (final T ¢ : ts)
-      $ += as.bit(t.holds(¢));
+      $ += as.bit(c.holds(¢));
     return $;
   }
 
-  public static <T> int count(@NotNull final T[] ts, @NotNull final Condition<T> t) {
+  public static <T> int count(@NotNull final T[] ts, @NotNull final Condition<T> c) {
     int $ = 0;
     for (final T ¢ : ts)
-      $ += as.bit(t.holds(¢));
+      $ += as.bit(c.holds(¢));
     return $;
   }
 
@@ -125,8 +126,8 @@ public class Iterables {
     return ¢.iterator().next();
   }
 
-  @Nullable public static <T> T first(@NotNull final Iterable<T> ts, @NotNull final Condition<T> t) {
-    return first(ts.iterator(), t);
+  @Nullable public static <T> T first(@NotNull final Iterable<T> ts, @NotNull final Condition<T> c) {
+    return first(ts.iterator(), c);
   }
 
   /** Retrieves a prefix of a specified size of a stream
@@ -202,11 +203,11 @@ public class Iterables {
     return -1;
   }
 
-  public static <T> int[] indices(@NotNull final Collection<? extends T> ts, @NotNull final Condition<T> t) {
+  public static <T> int[] indices(@NotNull final Collection<? extends T> ts, @NotNull final Condition<T> c) {
     @NotNull final int[] $ = new int[ts.size()];
     int i = 0, position = 0;
     for (final T ¢ : ts) {
-      if (t.holds(¢))
+      if (c.holds(¢))
         $[i++] = position;
       ++position;
     }
@@ -250,7 +251,7 @@ public class Iterables {
     };
   }
 
-  public static <F, T> Iterable<T> make(@NotNull final F[] fs, @NotNull final Converter<F, T> f) {
+  public static <F, T> Iterable<T> make(@NotNull final F[] fs, @NotNull final Converter<F, T> c) {
     return () -> new ReadonlyIterator<T>() {
       int current;
 
@@ -259,7 +260,7 @@ public class Iterables {
       }
 
       @Override public T next() {
-        return f.__(fs[current++]);
+        return c.__(fs[current++]);
       }
     };
   }
@@ -282,7 +283,7 @@ public class Iterables {
     };
   }
 
-  public static <F, T> Iterable<T> make(@NotNull final Iterable<F> fs, @NotNull final Converter<F, T> f) {
+  public static <F, T> Iterable<T> make(@NotNull final Iterable<F> fs, @NotNull final Converter<F, T> c) {
     return () -> new ReadonlyIterator<T>() {
       final Iterator<F> inner = fs.iterator();
 
@@ -291,7 +292,7 @@ public class Iterables {
       }
 
       @Override public T next() {
-        return f.__(inner.next());
+        return c.__(inner.next());
       }
     };
   }
@@ -327,16 +328,16 @@ public class Iterables {
     return !$.hasNext();
   }
 
-  @NotNull public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, @NotNull final Condition<T> t) {
+  @NotNull public static <T> Iterable<? extends T> select(final Iterable<? extends T> ts, @NotNull final Condition<T> c) {
     return new FilteredIterable<T>(ts) {
       @Override public boolean holds(final T ¢) {
-        return t.holds(¢);
+        return c.holds(¢);
       }
     };
   }
 
-  @NotNull public static <T> Iterable<? extends T> select(final T[] ts, @NotNull final Condition<T> t) {
-    return select(make(ts), t);
+  @NotNull public static <T> Iterable<? extends T> select(final T[] ts, @NotNull final Condition<T> c) {
+    return select(make(ts), c);
   }
 
   @NotNull public static double[] seq(@NotNull final double ¢[]) {
@@ -362,8 +363,8 @@ public class Iterables {
     return addAll(new TreeSet<T>(), os);
   }
 
-  @NotNull public static <T> Iterable<T> sort(@NotNull final Iterable<T> os, final Comparator<T> t) {
-    return addAll(new TreeSet<>(t), os);
+  @NotNull public static <T> Iterable<T> sort(@NotNull final Iterable<T> os, final Comparator<T> c) {
+    return addAll(new TreeSet<>(c), os);
   }
 
   @NotNull public static String[] toArray(@NotNull final Collection<String> ss) {

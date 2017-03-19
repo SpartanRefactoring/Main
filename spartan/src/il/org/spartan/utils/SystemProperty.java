@@ -40,8 +40,8 @@ public enum SystemProperty {
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
 
-  @NotNull private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> os) {
-    @NotNull final TreeSet<String> $ = os.stream().map(¢ -> (String) ¢).collect(Collectors.toCollection(TreeSet::new));
+  @NotNull private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> ¢) {
+    @NotNull final TreeSet<String> $ = ¢.stream().map(λ -> (String) λ).collect(Collectors.toCollection(TreeSet::new));
       return $;
   }
 

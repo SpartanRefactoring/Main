@@ -1,6 +1,6 @@
 package il.org.spartan.csv;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.util.*;
 
@@ -8,6 +8,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 
 @TestCase @SuppressWarnings("static-method") public class CSVTest {
@@ -69,7 +70,7 @@ import il.org.spartan.streotypes.*;
     azzert.that(CSV.combine(cs), is(s));
   }
 
-  @Test @SuppressWarnings("javadoc") public void testSplitCombineEnum() {
+  @Test   public void testSplitCombineEnum() {
     azzert.that(CSV.combine(CSV.split(Rgb.class, "GREEN,RED,BLUE,\\0,RED")), is("GREEN,RED,BLUE,\\0,RED"));
   }
 

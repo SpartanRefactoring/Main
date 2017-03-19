@@ -2,7 +2,7 @@
 package il.org.spartan.misc;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.text.*;
 
 /** Utility functions for computing the "Longest Common Subsequence" for two
@@ -45,7 +46,6 @@ public class LCS {
     return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
   }
 
-  /** @param ¢ */
   private static int hash(@NotNull final String ¢) {
     return ¢.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
@@ -113,7 +113,7 @@ public class LCS {
   }
 
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
+  @SuppressWarnings({ "static-method",  "synthetic-access" }) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
     private static String[] chars2Lines(@NotNull final String s) {
@@ -199,7 +199,7 @@ public class LCS {
     @Test public void lengthStringSimpleA() {
       // Common string is: "A"
       @NotNull final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
-      azzert.notNull(lcs);
+      assert lcs != null;
       azzert.that(lcs.A_s.length, is(1));
       azzert.that(lcs.B_s.length, is(1));
       azzert.that(lcs.length(), is(1));

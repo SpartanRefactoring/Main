@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.utils.___.*;
 
 import java.util.*;
@@ -10,8 +10,11 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
+import il.org.spartan.fapi.prune;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.Separate.*;
+import il.org.spatan.iteration.*;
 
 /** A <b>Utility Class</b> providing services of converting a collection or an
  * array into a {@link String}, with means for omitting <code><b>null</b></code>
@@ -47,10 +50,10 @@ import il.org.spartan.utils.Separate.*;
  * @since 28/08/2008 */
 @Utility public enum Stringify {
   ; // No values in this namespace.
-  @NotNull public static <T> ArrayList<String> apply(@NotNull final F<T> t, @NotNull final Iterable<? extends T> ts) {
+  @NotNull public static <T> ArrayList<String> apply(@NotNull final F<T> f, @NotNull final Iterable<? extends T> ts) {
     @NotNull final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
-      $.add(t.__(¢));
+      $.add(f.__(¢));
     return $;
   }
 
@@ -90,13 +93,13 @@ import il.org.spartan.utils.Separate.*;
    * objects using a supplied formatting style, after applying a user supplied
    * conversion to each object.
    * @param ts an array of objects of type <code>T</code>.
-   * @param t a function to apply on each object prior to conversion.
+   * @param f a function to apply on each object prior to conversion.
    * @param o formatting style for this list.
    * @param <T> type of arguments to be converted.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-  @NotNull public static <T> String it(@NotNull final Iterable<? extends T> ts, @NotNull final F<T> t, @NotNull final Option o) {
-    return it(apply(t, ts), o);
+  @NotNull public static <T> String it(@NotNull final Iterable<? extends T> ts, @NotNull final F<T> f, @NotNull final Option o) {
+    return it(apply(f, ts), o);
   }
 
   /** Convert an {@link Iterable} collection of objects to a {@link String}
@@ -190,11 +193,11 @@ import il.org.spartan.utils.Separate.*;
   }
 
   @NotNull private static <T> Iterable<T> prune(@NotNull final Iterable<T> ts, @NotNull final Option o) {
-    return o.notOmittingNulls() ? ts : Prune.nulls(ts);
+    return o.notOmittingNulls() ? ts : prune.nulls(ts);
   }
 
   @NotNull private static <T> T[] prune(@NotNull final T[] ts, @NotNull final Option o) {
-    return o.notOmittingNulls() ? ts : Prune.nulls(ts);
+    return o.notOmittingNulls() ? ts : prune.nulls(ts);
   }
 
   /** An options object for the containing class.

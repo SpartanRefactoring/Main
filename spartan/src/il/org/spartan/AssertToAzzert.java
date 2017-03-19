@@ -1,14 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import org.jetbrains.annotations.*;
+
+import il.org.spartan.fapi.*;
 
 /** Fluent API
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-10-15 */
-@SuppressWarnings("javadoc") //
+  //
 public interface AssertToAzzert {
   static <T> void assertEquals(final String reason, final T t1, final T t2) {
     azzert.that(reason, t2, is(t1));

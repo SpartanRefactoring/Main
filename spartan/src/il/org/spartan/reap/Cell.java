@@ -64,7 +64,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    *         stored in this node is updated. */
   public abstract boolean updated();
 
-  @Override @Nullable @SuppressWarnings("unchecked") protected Cell<T> clone() {
+  @Override @SuppressWarnings("unchecked") @Nullable protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
     } catch (@NotNull final CloneNotSupportedException e) {

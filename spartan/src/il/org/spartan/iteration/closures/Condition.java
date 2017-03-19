@@ -22,14 +22,14 @@ public interface Condition<Argument> {
      * @param <T> type of elements in the iterable
      * @return the passed argument */
     public static <T> Condition<T> all() {
-      return ¢ -> {
-        unused(¢);
+      return λ -> {
+        unused(λ);
         return true;
       };
     }
 
     public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {
-      return t -> c1.holds(t) && c2.holds(t);
+      return λ -> c1.holds(λ) && c2.holds(λ);
     }
 
     public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3) {
@@ -47,8 +47,8 @@ public interface Condition<Argument> {
      * @param <T> type of elements in the iterable
      * @return an empty iterable */
     public static <T> Condition<T> none() {
-      return ¢ -> {
-        unused(¢);
+      return λ -> {
+        unused(λ);
         return false;
       };
     }
@@ -60,15 +60,15 @@ public interface Condition<Argument> {
      * @return an iterable which is identical to the arugment, except that all
      *         null elements are removed. */
     public static <T> Condition<T> nonnull() {
-      return t -> t != null;
+      return λ -> λ != null;
     }
 
-    public static <T> Condition<T> not(@NotNull final Condition<T> t) {
-      return ¢ -> !t.holds(¢);
+    public static <T> Condition<T> not(@NotNull final Condition<T> c) {
+      return λ -> !c.holds(λ);
     }
 
     public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {
-      return t -> c1.holds(t) || c2.holds(t);
+      return λ -> c1.holds(λ) || c2.holds(λ);
     }
 
     public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3) {

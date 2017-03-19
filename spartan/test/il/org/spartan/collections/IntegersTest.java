@@ -1,6 +1,6 @@
 package il.org.spartan.collections;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.util.*;
 
@@ -8,10 +8,11 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") //
-public final class IntegersTest extends integers {
+public final class IntegersTest extends Integers {
   private final INVARIANT invariant = new INVARIANT();
 
   @Test public void __rehash() {

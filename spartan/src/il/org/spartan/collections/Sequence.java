@@ -16,8 +16,8 @@ import il.org.spatan.iteration.*;
 public class Sequence<E> implements Iterable<E>, Serializable {
   private static final long serialVersionUID = 8259437798546027307L;
 
-  @NotNull public static <T> Sequence<T> make(@NotNull final Sequence<T> ts, final int begin) {
-    return make(ts.es, begin, ts.end);
+  @NotNull public static <T> Sequence<T> make(@NotNull final Sequence<T> s, final int begin) {
+    return make(s.es, begin, s.end);
   }
 
   @NotNull public static <T> Sequence<T> make(final T[] ts, final int begin, final int end) {

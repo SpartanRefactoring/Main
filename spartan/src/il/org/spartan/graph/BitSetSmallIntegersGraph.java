@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
@@ -10,6 +10,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** An immutable undirected graph whose nodes are short integers in the range
  * 0..N where N is small, with the compact representation of an array of size N
