@@ -43,14 +43,14 @@ import il.org.spartan.streotypes.*;
         return "&nbsp;";
       case '\t':
         return "&09;";
-      case LESS_THAN:
-        return "&lt;";
-      case GREATER_THAN:
-        return "&gt;";
-      case QUOTE:
-        return "&quot;";
       case AMPERSAND:
         return "&amp;";
+      case GREATER_THAN:
+        return "&gt;";
+      case LESS_THAN:
+        return "&lt;";
+      case QUOTE:
+        return "&quot;";
       default:
         return ¢ + "";
     }

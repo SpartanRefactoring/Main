@@ -1,8 +1,8 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
@@ -15,6 +15,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Accumulator.Counter;
@@ -47,8 +48,6 @@ public abstract class LogBook implements Serializable {
    * use the values of <code>1L</code> to maintain upward compatibility. */
   public static final long serialVersionUID = 1L;
 
-  /** @param es
-   * @param exclude */
   public static void removeKeys(@NotNull final Iterable<Entry> es, @NotNull final Keys exclude) {
     for (@NotNull final Entry ¢ : es)
       removeKeys(¢, exclude);
@@ -56,7 +55,7 @@ public abstract class LogBook implements Serializable {
 
   @NotNull public static Setting removeKeys(@NotNull final Setting s, @NotNull final Keys k) {
     @NotNull final Setting $ = new Setting();
-    s.keySet().stream().filter(key -> !k.contains(key)).forEach(key -> $.put(key, s.get(key)));
+    s.keySet().stream().filter(λ -> !k.contains(λ)).forEach(λ -> $.put(λ, s.get(λ)));
     return $;
   }
 
@@ -134,17 +133,12 @@ public abstract class LogBook implements Serializable {
     return true;
   }
 
-  /** @param f
-   * @throws IOException
-   * @throws ClassNotFoundException
-   * @throws FileNotFoundException */
   public void merge(@NotNull final File f) throws IOException, ClassNotFoundException {
     @NotNull final ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
     merge((LogBook) in.readObject());
     in.close();
   }
 
-  /** @param other */
   public void merge(@NotNull final LogBook other) {
     book.addAll(other.book);
   }
@@ -152,8 +146,7 @@ public abstract class LogBook implements Serializable {
   @NotNull public LogBook printBy(final Consolidation m, @NotNull final String... keys) {
     close();
     sortBy(keys);
-    @NotNull final Keys $ = commonKeys();
-    @NotNull final Keys distinctKeys = new Keys();
+    @NotNull final Keys $ = commonKeys(), distinctKeys = new Keys();
     for (final String key : keys)
       if (!$.contains(key))
         distinctKeys.add(key);
@@ -696,8 +689,7 @@ public abstract class LogBook implements Serializable {
       if (mode == SUMMARY || mode == BOTH || mode == ENDS && $.size() > 1)
         summary($);
       if (mode == ENDS || $.size() > 1) {
-        final Entry min = min($);
-        final Entry max = max($);
+        final Entry min = min($), max = max($);
         System.out.println(shortForm(min) + compare(min, max) + ratio(min, max) + shortForm(max));
       }
       return LogBook.this;
@@ -771,8 +763,7 @@ public abstract class LogBook implements Serializable {
       @NotNull final StringBuilder s = new StringBuilder();
       for (int i = 0; i < es.length; ++i) {
         if (i > 0) {
-          @NotNull final ImmutableStatistics s1 = es[i - 1].records;
-          @NotNull final ImmutableStatistics s2 = es[i].records;
+          @NotNull final ImmutableStatistics s1 = es[i - 1].records, s2 = es[i].records;
           s.append(" ");
           final double p = new WelchT(s1, s2).p;
           if (p < 0.001)

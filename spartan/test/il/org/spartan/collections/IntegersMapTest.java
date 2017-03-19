@@ -1,11 +1,12 @@
 package il.org.spartan.collections;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 public final class IntegersMapTest {
   final IntegersMap m = new IntegersMap();
@@ -103,8 +104,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 10000; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 10000; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 10000; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -112,8 +113,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 10; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.keys();
-    for (int i = 0; i < 10; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 10; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -121,8 +122,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 100; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 100; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 100; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -130,8 +131,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 15; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.keys();
-    for (int i = 0; i < 15; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 15; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -140,8 +141,8 @@ public final class IntegersMapTest {
       m.put(¢, IntegersMap.hash(¢));
     m.rehash();
     @NotNull final int[] keys = m.keys();
-    for (int i = 0; i < 15; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 15; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -149,8 +150,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 17; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.keys();
-    for (int i = 0; i < 17; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 17; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -158,8 +159,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 18; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 18; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 18; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -167,8 +168,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 18; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.sortedKeys();
-    for (int i = 17; i >= 0; --i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 17; ¢ >= 0; --¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -176,8 +177,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 20; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.sortedKeys();
-    for (int i = 19; i >= 0; --i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 19; ¢ >= 0; --¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
@@ -194,8 +195,8 @@ public final class IntegersMapTest {
     for (int ¢ = 0; ¢ < 30; ++¢)
       m.put(¢, IntegersMap.hash(¢));
     @NotNull final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 30; ++i)
-      azzert.that(keys[i], is(i));
+    for (int ¢ = 0; ¢ < 30; ++¢)
+      azzert.that(keys[¢], is(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */

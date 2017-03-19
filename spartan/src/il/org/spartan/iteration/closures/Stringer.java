@@ -13,10 +13,6 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil.
  * @param <T> type of values that the function takes */
 public interface Stringer<T> extends Converter<T, String> {
-  /**
-   * {@inheritDoc}
-   * @see Converter#__  
-   */
   @Override @NotNull String __(T t);
 
   class Default<T> implements Stringer<T> {

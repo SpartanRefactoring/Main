@@ -1,6 +1,6 @@
 package il.org.spartan.misc;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.statistics.*;
 
 /** Offers a number of operations on two dimensional matrices and vectors. A
@@ -79,8 +80,7 @@ public enum LinearAlgebra {
   }
 
   @NotNull public static double[][] adjust(@NotNull final double[][] x) {
-    final int rows = x.length;
-    final int longestColumn = longestColumn(x);
+    final int rows = x.length, longestColumn = longestColumn(x);
     @NotNull final double[][] $ = new double[rows][];
     for (int ¢ = 0; ¢ < rows; ++¢)
       $[¢] = Arrays.copyOf(x[¢], longestColumn);
@@ -95,8 +95,7 @@ public enum LinearAlgebra {
   }
 
   @NotNull public static short[][] adjust(@NotNull final short[][] x) {
-    final int rows = x.length;
-    final int longestColumn = longestColumn(x);
+    final int rows = x.length, longestColumn = longestColumn(x);
     @NotNull final short[][] $ = new short[rows][];
     for (int ¢ = 0; ¢ < rows; ++¢)
       $[¢] = Arrays.copyOf(x[¢], longestColumn);
@@ -542,8 +541,7 @@ public enum LinearAlgebra {
   }
 
   @NotNull public static double[][] transpose(@NotNull final double[][] x) {
-    final int rows = x.length;
-    final int columns = x[0].length;
+    final int rows = x.length, columns = x[0].length;
     @NotNull final double[][] $ = make(columns, rows);
     for (int i = 0; i < rows; ++i)
       for (int j = 0; j < columns; ++j)
@@ -552,8 +550,7 @@ public enum LinearAlgebra {
   }
 
   @NotNull public static int[][] transpose(@NotNull final int[][] x) {
-    final int rows = x.length;
-    final int columns = x[0].length;
+    final int rows = x.length, columns = x[0].length;
     @NotNull final int[][] $ = new int[columns][rows];
     for (int i = 0; i < rows; ++i)
       for (int j = 0; j < columns; ++j)
@@ -562,8 +559,7 @@ public enum LinearAlgebra {
   }
 
   @NotNull public static short[][] transpose(@NotNull final short[][] x) {
-    final int rows = x.length;
-    final int columns = x[0].length;
+    final int rows = x.length, columns = x[0].length;
     @NotNull final short[][] $ = new short[columns][rows];
     for (int i = 0; i < rows; ++i)
       for (int j = 0; j < columns; ++j)
@@ -621,8 +617,7 @@ public enum LinearAlgebra {
     }
 
     @Test public void make() {
-      final int rows = 10;
-      final int columns = 20;
+      final int rows = 10, columns = 20;
       @NotNull final double[][] __ = LinearAlgebra.make(rows, columns);
       assertEquals(rows, __.length);
       for (int ¢ = 0; ¢ < rows; ++¢)
@@ -638,8 +633,7 @@ public enum LinearAlgebra {
     }
 
     @Test public void transpose() {
-      final int rows = 10;
-      final int columns = 20;
+      final int rows = 10, columns = 20;
       @NotNull final double[][] __ = LinearAlgebra.transpose(LinearAlgebra.make(rows, columns));
       assertEquals(columns, __.length);
       for (int ¢ = 0; ¢ < rows; ++¢)

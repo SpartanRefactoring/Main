@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.io.*;
 
@@ -8,6 +8,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
@@ -187,9 +188,7 @@ public enum OpCode {
     @Override @NotNull Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
-        final int $ = s.readInt();
-        final int low = s.readInt();
-        final int high = s.readInt();
+        final int $ = s.readInt(), low = s.readInt(), high = s.readInt();
         ___.sure(low <= high);
         @NotNull final int offsets[] = new int[high - low + 1];
         for (int k = 0; k <= high - low; ++k)
@@ -204,8 +203,7 @@ public enum OpCode {
     @Override @NotNull Instruction readContent(@NotNull final BufferDataInputStream s) {
       s.align4();
       try {
-        final int $ = s.readInt();
-        final int nPairs = s.readInt();
+        final int $ = s.readInt(), nPairs = s.readInt();
         @NotNull final int offsets[] = new int[nPairs];
         for (int k = 0; k < nPairs; ++k) {
           s.skip(4);

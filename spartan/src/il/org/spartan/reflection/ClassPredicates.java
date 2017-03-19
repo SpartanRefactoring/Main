@@ -5,6 +5,7 @@ import java.lang.reflect.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 public class ClassPredicates {
   public static boolean hasMutableFields(@NotNull final Class<?> c) {

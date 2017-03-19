@@ -37,8 +37,7 @@ import il.org.spatan.iteration.*;
 
   @NotNull public static double[] prune(@NotNull final double... ds) {
     @NotNull final List<Double> $ = new ArrayList<>();
-    final double median = destructiveMedian(ds);
-    final double mad = mad(ds);
+    final double median = destructiveMedian(ds), mad = mad(ds);
     for (final double ¢ : ds)
       if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)
         $.add(box(¢));

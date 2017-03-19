@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.io.*;
 import java.lang.reflect.*;
@@ -14,6 +14,7 @@ import il.org.spartan.bench.*;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ClassInfo.*;
 import il.org.spartan.external.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
@@ -862,13 +863,11 @@ import il.org.spartan.utils.*;
     @NotNull final Stopper s = new Stopper();
 
     /** [[SuppressWarningsSpartan]] */
-    @NotNull @Override public String toString() {
-      final long stop = s.time();
+    @Override @NotNull public String toString() {
       return String.format(
-          "Processed %s files, consisting of %s methods with %s code blocks\n" + //
-              "comprising a total of %s bytecode instructions in %s.",
+          "Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
           Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
-          Unit.NANOSECONDS.format(stop)) + "";
+          Unit.NANOSECONDS.format(s.time())) + "";
     }
 
     void parse(@NotNull final ClassInfo ¢) {

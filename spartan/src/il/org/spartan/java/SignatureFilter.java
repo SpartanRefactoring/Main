@@ -9,12 +9,12 @@ public class SignatureFilter extends CodeOnlyFilter {
     switch (¢) {
       default:
         return false;
-      case __class:
-      case __interface:
-      case __enum:
-      case __new:
-      case __abstract:
       case AT_INTERFACE:
+      case __abstract:
+      case __class:
+      case __enum:
+      case __interface:
+      case __new:
         return true;
     }
   }
@@ -24,14 +24,14 @@ public class SignatureFilter extends CodeOnlyFilter {
     switch (¢) {
       default:
         return false;
-      case SEMICOLON:
-      case LBRACK:
-      case RBRACK:
-      case LBRACE:
-      case RBRACE:
-      case LPAREN:
-      case RPAREN:
       case EQ:
+      case LBRACE:
+      case LBRACK:
+      case LPAREN:
+      case RBRACE:
+      case RBRACK:
+      case RPAREN:
+      case SEMICOLON:
         return true;
     }
   }

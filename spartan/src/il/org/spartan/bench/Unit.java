@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.utils.Box.*;
 import static org.junit.Assert.assertEquals;
 
@@ -10,6 +10,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2010 */
@@ -29,12 +30,12 @@ public enum Unit {
     }
   },
   BYTES() {
-    public static final long Kb = 1L << 10;
-    public static final long Mb = 1L << 20;
-    public static final long Gb = 1L << 30;
-    public static final long Tb = 1L << 40;
-    public static final long Pb = 1L << 50;
-    public static final long Eb = 1L << 60;
+    static final long Kb = 1L << 10;
+    static final long Mb = 1L << 20;
+    static final long Gb = 1L << 30;
+    static final long Tb = 1L << 40;
+    static final long Pb = 1L << 50;
+    static final long Eb = 1L << 60;
 
     @Override @NotNull public String format(final double m) {
       return Double.isNaN(m) ? "NaN"

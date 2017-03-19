@@ -1,9 +1,8 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package il.org.spartan.fapi;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.azzert.assertEquals;
+import static il.org.spartan.fapi.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;
@@ -12,6 +11,8 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** A <b>Utility class</b> providing functions to remove
  * <code><b>null</b></code> elements from arrays and iterable collections. For
@@ -28,7 +29,17 @@ import org.junit.*;
  * @since 27/08/2008 */
 public enum prune {
   ;
-  /** @param <T> JD
+  private static void addNonEmpty(@NotNull final Collection<String> ss, @NotNull final String s) {
+    if (s.length() > 0)
+      ss.add(s);
+  }
+
+  @NotNull private static String[] asArrray(@NotNull final List<String> $) {
+    return cantBeNull($.toArray(new String @NonNull [0]));
+  }
+
+  /** Prune <code><b>null</b></code> elements from a given collection.
+   * @param <T> JD
    * @param <C> JD
    * @param ts JD */
   @NotNull public static <T, C extends Collection<T>> C nulls(@NotNull final C $) {
@@ -68,35 +79,29 @@ public enum prune {
     return cantBeNull($.toArray(shrink(ts)));
   }
 
-  /**
-   * @param ss  JD 
-   */
-  @SafeVarargs @NotNull public static String[] whites(@NotNull final String... ss) {
-    @NotNull final List<String> $ = new ArrayList<>();
-    for (@Nullable final String ¢ : ss)
-      if (¢ != null)
-        accumulate.to($).add(¢.trim());
-    return asArrray($);
-  }
-
-  /** @param $ */
-  @NotNull private static String[] asArrray(@NotNull final List<String> $) {
-    return cantBeNull($.toArray(new String @NonNull [0]));
-  }
-
   /** Shrink an array size to zero.
    * @param <T> type of elements in the input array.
    * @param ¢ an array of values.
    * @return an array of size 0 of elements of type <code>T</code>. */
-  @NotNull private static <T> T[] shrink(@NotNull final T @Nullable [] ¢) {
-    return cantBeNull(Arrays.copyOf(¢, 0));
+  private static <T> T[] shrink(@NotNull final T[] ¢) {
+    return Arrays.copyOf(¢, 0);
+  }
+
+  public static <T> String[] whites(@NotNull final T... ts) {
+    @NotNull final List<String> $ = new ArrayList<>();
+    for (@Nullable final T ¢ : ts)
+      if (¢ != null)
+        accumulate.to($).add((¢ + "").trim());
+    return asArrray($);
   }
 
   /** A JUnit test class for the enclosing class.
    * @author Yossi Gil, the Technion.
    * @since 27/08/2008 */
-  @SuppressWarnings({ "static-method", "javadoc", "synthetic-access" }) //
-  public static class TEST {
+  @SuppressWarnings({ "static-method", "synthetic-access" }) //
+  public static class TEST1 {
+    @Nullable final String[] alternatingArray = new String @Nullable [] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String[] nonNullArray = { "1", "2", "4" };
     private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
       @Override @NotNull protected List<@Nullable String> ____() {
         @NotNull final List<@Nullable String> $ = new ArrayList<>();
@@ -119,9 +124,6 @@ public enum prune {
         return $;
       }
     };
-    @Nullable final String[] alternatingArray = new String @NonNull [] { null, "A", null, null, "B", null, null, null, "C",
-        null };
-    final String[] nonNullArray = { "1", "2", "4" };
 
     @Test public void nullsNonNullArrayLength() {
       assertEquals(nonNullArray.length, nulls(nonNullArray).length);
@@ -156,7 +158,7 @@ public enum prune {
     }
 
     @Test public void nullsPrunNotNull() {
-      notNull(nulls(sparseCollection.value()));
+      assert nulls(sparseCollection.value()) != null;
     }
 
     @Test public void shrinkArray() {
@@ -173,6 +175,75 @@ public enum prune {
 
     @Test public void whitesEmptyList() {
       assertEquals(0, prune.whites().length);
+    }
+  }
+
+  /** A JUnit test class for the enclosing class.
+   * @author Yossi Gil, the Technion.
+   * @since 27/08/2008 */
+  @SuppressWarnings({ "static-method", "synthetic-access" }) public static class TEST2 {
+    @Nullable final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String[] nonNullArray = { "1", "2", "4" };
+    private ArrayList<String> sparseCollection;
+
+    @Before public void initSparseCollection() {
+      sparseCollection = new ArrayList<>();
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add("A");
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add("B");
+      sparseCollection.add(null);
+      sparseCollection.add("C");
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+      sparseCollection.add(null);
+    }
+
+    @Test public void testNonNullArrayItems() {
+      azzert.that(nulls(nonNullArray)[0], is("1"));
+      azzert.that(nulls(nonNullArray)[1], is("2"));
+      azzert.that(nulls(nonNullArray)[2], is("4"));
+    }
+
+    @Test public void testNonNullArrayLength() {
+      azzert.that(nulls(nonNullArray).length, is(nonNullArray.length));
+    }
+
+    @Test public void testPruneArrayAltenatingItems() {
+      azzert.that(nulls(alternatingArray)[0], is("A"));
+      azzert.that(nulls(alternatingArray)[1], is("B"));
+      azzert.that(nulls(alternatingArray)[2], is("C"));
+    }
+
+    @Test public void testPruneArrayAltenatingLength() {
+      azzert.that(nulls(alternatingArray).length, is(3));
+    }
+
+    @Test public void testPruneSparseCollectionContents() {
+      @NotNull final String[] a = nulls(sparseCollection).toArray(new String[3]);
+      azzert.that(a[0], is("A"));
+      azzert.that(a[1], is("B"));
+      azzert.that(a[2], is("C"));
+      azzert.that(a.length, is(3));
+    }
+
+    @Test public void testPruneSparseCollectionLength() {
+      azzert.that(nulls(sparseCollection).size(), is(3));
+    }
+
+    @Test public void testPrunNotNull() {
+      assert nulls(sparseCollection) != null;
+    }
+
+    @Test public void testShrink() {
+      azzert.that(shrink(new Object[10]).length, is(0));
     }
   }
 }

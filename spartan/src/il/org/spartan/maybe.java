@@ -4,6 +4,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import il.org.spartan.fapi.*;
+
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD
  * @since @{year}-@{month}-@{day} */
@@ -51,7 +53,7 @@ public class maybe<@Nullable T> {
     return this;
   }
 
-  @SuppressWarnings({ "javadoc", "static-method" }) public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void usecase0() {
       azzert.isNull(maybe.no().get());
     }
@@ -61,7 +63,7 @@ public class maybe<@Nullable T> {
     }
 
     @Test public void usecase2() {
-      azzert.notNull(maybe.yes(new Object()).get());
+      assert maybe.yes(new Object()).get() != null;
     }
   }
 }

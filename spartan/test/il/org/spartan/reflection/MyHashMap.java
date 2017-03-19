@@ -8,7 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
-@SuppressWarnings({ "unchecked", "static-method", "javadoc" }) //
+@SuppressWarnings({ "unchecked", "static-method" }) //
 public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** The default initial capacity - MUST be a power of two. */
   static final int DEFAULT_INITIAL_CAPACITY = 16;// ProbesTest.HASH_MAP_SIZE;
@@ -217,8 +217,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   @Override public V put(@Nullable final K key, final V value) {
     if (key == null)
       return putForNullKey(value);
-    final int hash = hash(key.hashCode());
-    final int i = indexFor(hash, table.length);
+    final int hash = hash(key.hashCode()), i = indexFor(hash, table.length);
     for (Entry<K, V> e = table[i]; e != null; e = e.next) {
       Object k;
       if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
@@ -236,10 +235,10 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** Copies all of the mappings from the specified map to this map. These
    * mappings will replace any mappings that this map had for any of the keys
    * currently in the specified map.
-   * @param k mappings to be stored in this map
+   * @param m mappings to be stored in this map
    * @throws NullPointerException if the specified map is null */
-  @Override public void putAll(final Map<? extends K, ? extends V> k) {
-    final int numKeysToBeAdded = k.size();
+  @Override public void putAll(final Map<? extends K, ? extends V> m) {
+    final int numKeysToBeAdded = m.size();
     if (numKeysToBeAdded == 0)
       return;
     /* Expand the map if the map if the number of mappings to be added is
@@ -259,7 +258,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       if (newCapacity > table.length)
         resize(newCapacity);
     }
-    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
+    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
       put(¢.getKey(), ¢.getValue());
   }
 
@@ -366,10 +365,8 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** Removes and returns the entry associated with the specified key in the
    * HashMap. Returns null if the HashMap contains no mapping for this key. */
   Entry<K, V> removeEntryForKey(@Nullable final Object key) {
-    final int hash = key == null ? 0 : hash(key.hashCode());
-    final int i = indexFor(hash, table.length);
-    Entry<K, V> prev = table[i];
-    Entry<K, V> $ = prev;
+    final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
+    Entry<K, V> prev = table[i], $ = prev;
     while ($ != null) {
       final Entry<K, V> next = $.next;
       Object k;
@@ -395,10 +392,8 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
       return null;
     @NotNull final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
     final Object key = entry.getKey();
-    final int hash = key == null ? 0 : hash(key.hashCode());
-    final int i = indexFor(hash, table.length);
-    Entry<K, V> prev = table[i];
-    Entry<K, V> $ = prev;
+    final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
+    Entry<K, V> prev = table[i], $ = prev;
     while ($ != null) {
       final Entry<K, V> next = $.next;
       if ($.hash == hash && $.equals(entry)) {
@@ -479,8 +474,8 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return null;
   }
 
-  private void putAllForCreate(@NotNull final Map<? extends K, ? extends V> k) {
-    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : k.entrySet())
+  private void putAllForCreate(@NotNull final Map<? extends K, ? extends V> m) {
+    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
       putForCreate(¢.getKey(), ¢.getValue());
   }
 
@@ -488,8 +483,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
    * (clone, readObject). It does not resize the table, check for
    * comodification, etc. It calls createEntry rather than addEntry. */
   private void putForCreate(@Nullable final K key, final V value) {
-    final int hash = key == null ? 0 : hash(key.hashCode());
-    final int i = indexFor(hash, table.length);
+    final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
     /** Look for preexisting entry for key. This will never happen for clone or
      * deserialize. It will only happen for construction if the input Map is a
      * sorted map whose ordering is inconsistent w/ equals. */

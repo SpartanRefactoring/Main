@@ -176,10 +176,10 @@ public class ExecutableEntity extends TypedEntity {
           case PUTFIELD:
             component = LinkComponents.FieldAccess.ordinal();
             break;
-          case INVOKEVIRTUAL:
-          case INVOKESPECIAL:
-          case INVOKEINTERFACE:
           case INVOKEDYNAMIC:
+          case INVOKEINTERFACE:
+          case INVOKESPECIAL:
+          case INVOKEVIRTUAL:
             component = LinkComponents.MethodInvocation.ordinal();
             break;
           case INVOKESTATIC:

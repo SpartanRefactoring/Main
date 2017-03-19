@@ -8,6 +8,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.external.*;
+import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
@@ -52,8 +53,7 @@ import il.org.spatan.iteration.*;
 
   public static double tauB(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
-    @NotNull final List<Double> $ = new ArrayList<>();
-    @NotNull final List<Double> Ys = new ArrayList<>();
+    @NotNull final List<Double> $ = new ArrayList<>(), Ys = new ArrayList<>();
     for (int ¢ = 0; ¢ < xs.length; ++¢)
       if (!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢])) {
         $.add(Box.it(xs[¢]));
@@ -67,14 +67,12 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
-      for (int j = i + 1; j < xs.length; ++j) {
-        final double xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
-        if (xi != xj && yi != yj)
-          if (xi > xj == yi > yj)
+      for (int j = i + 1; j < xs.length; ++j)
+        if (xs[i] != xs[j] && ys[i] != ys[j])
+          if (xs[i] > xs[j] == ys[i] > ys[j])
             ++$;
           else
             --$;
-      }
     return $;
   }
 
@@ -83,14 +81,12 @@ import il.org.spatan.iteration.*;
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
-      for (int j = i + 1; j < xs.length; ++j) {
-        final int xi = xs[i], xj = xs[j], yi = ys[i], yj = ys[j];
-        if (xi != xj && yi != yj)
-          if (xi > xj == yi > yj)
+      for (int j = i + 1; j < xs.length; ++j)
+        if (xs[i] != xs[j] && ys[i] != ys[j])
+          if (xs[i] > xs[j] == ys[i] > ys[j])
             ++$;
           else
             --$;
-      }
     return $;
   }
 
@@ -122,8 +118,7 @@ import il.org.spatan.iteration.*;
   }
 
   private static int computeS(final double[] xs, final double[] ys, final int n) {
-    int $ = 0;
-    int nd = 0;
+    int $ = 0, nd = 0;
     for (int i = 0; i < n; ++i)
       for (int j = i + 1; j < n; ++j)
         if (xs[i] > xs[j] && ys[i] > ys[j] || xs[i] < xs[j] && ys[i] < ys[j])
@@ -135,8 +130,7 @@ import il.org.spatan.iteration.*;
 
   private static double tauB_pruned(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
-    final int $ = xs.length;
-    final int pairs = pairs($);
+    final int $ = xs.length, pairs = pairs($);
     return computeS(xs, ys, $) / Math.sqrt(1. * (pairs - sigma(xs)) * (pairs - sigma(ys)));
   }
 

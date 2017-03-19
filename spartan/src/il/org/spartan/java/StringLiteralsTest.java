@@ -1,6 +1,6 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.fapi.azzert.*;
 
 import java.io.*;
 
@@ -8,6 +8,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method") public class StringLiteralsTest {
   @Nullable static Token toToken(@NotNull final String s) {

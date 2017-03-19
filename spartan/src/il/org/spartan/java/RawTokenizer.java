@@ -125,16 +125,12 @@ public class RawTokenizer {
 
   @NotNull private static int[] zzUnpackAction() {
     @NotNull final int[] $ = new int[115];
-    int offset = 0;
-    offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, $);
     return $;
   }
 
   private static int zzUnpackAction(@NotNull final String packed, final int offset, final int[] result) {
-    int i = 0; /* index in packed string */
-    int $ = offset; /* index in unpacked array */
-    final int l = packed.length();
-    while (i < l) {
+    int i = 0, $ = offset;
+    for (final int l = packed.length(); i < l;) {
       int count = packed.charAt(i++);
       final int value = packed.charAt(i++);
       do
@@ -146,16 +142,12 @@ public class RawTokenizer {
 
   @NotNull private static int[] zzUnpackAttribute() {
     @NotNull final int[] $ = new int[115];
-    int offset = 0;
-    offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, $);
     return $;
   }
 
   private static int zzUnpackAttribute(@NotNull final String packed, final int offset, final int[] result) {
-    int i = 0; /* index in packed string */
-    int $ = offset; /* index in unpacked array */
-    final int l = packed.length();
-    while (i < l) {
+    int i = 0, $ = offset;
+    for (final int l = packed.length(); i < l;) {
       int count = packed.charAt(i++);
       final int value = packed.charAt(i++);
       do
@@ -170,9 +162,7 @@ public class RawTokenizer {
    * @return the unpacked character translation table */
   @NotNull private static char[] zzUnpackCMap(@NotNull final String packed) {
     @NotNull final char[] $ = new char[0x10000];
-    int i = 0; /* index in packed string */
-    int j = 0; /* index in unpacked array */
-    while (i < 1764) {
+    for (int i = 0, j = 0; i < 1764;) {
       int count = packed.charAt(i++);
       final char value = packed.charAt(i++);
       do
@@ -184,37 +174,26 @@ public class RawTokenizer {
 
   @NotNull private static int[] zzUnpackRowMap() {
     @NotNull final int[] $ = new int[115];
-    int offset = 0;
-    offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, $);
     return $;
   }
 
   private static int zzUnpackRowMap(@NotNull final String packed, final int offset, final int[] result) {
-    int i = 0; /* index in packed string */
-    int $ = offset; /* index in unpacked array */
-    final int l = packed.length();
-    while (i < l) {
-      final int high = packed.charAt(i++) << 16;
-      result[$++] = high | packed.charAt(i++);
-    }
+    int i = 0, $ = offset;
+    for (final int l = packed.length(); i < l;)
+      result[$++] = packed.charAt(i++) | packed.charAt(i++) << 16;
     return $;
   }
 
   @NotNull private static int[] zzUnpackTrans() {
     @NotNull final int[] $ = new int[3162];
-    int offset = 0;
-    offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, $);
     return $;
   }
 
   private static int zzUnpackTrans(@NotNull final String packed, final int offset, final int[] result) {
-    int i = 0; /* index in packed string */
-    int $ = offset; /* index in unpacked array */
-    final int l = packed.length();
-    while (i < l) {
-      int count = packed.charAt(i++);
-      int value = packed.charAt(i++);
-      value--;
+    int i = 0, $ = offset;
+    for (final int l = packed.length(); i < l;) {
+      int count = packed.charAt(i++), value = packed.charAt(i++);
+      --value;
       do
         result[$++] = value;
       while (--count > 0);
@@ -292,32 +271,26 @@ public class RawTokenizer {
    * @return the next token
    * @exception java.io.IOException if any I/O-Error occurs */
   @Nullable public Token next() throws java.io.IOException {
-    int zzInput;
-    int zzAction;
-    // cached fields:
-    int zzCurrentPosL;
-    int zzMarkedPosL;
-    int zzEndReadL = zzEndRead;
+    int zzInput, zzAction, zzCurrentPosL, zzMarkedPosL, zzEndReadL = zzEndRead;
     @NotNull char[] zzBufferL = zzBuffer;
     @NotNull final char[] zzCMapL = ZZ_CMAP;
-    @NotNull final int[] zzTransL = ZZ_TRANS;
-    while (true) {
+    for (@NotNull final int[] zzTransL = ZZ_TRANS; true;) {
       zzMarkedPosL = zzMarkedPos;
       yychar += zzMarkedPosL - zzStartRead;
       boolean zzR = false;
-      for (zzCurrentPosL = zzStartRead; zzCurrentPosL < zzMarkedPosL; zzCurrentPosL++)
+      for (zzCurrentPosL = zzStartRead; zzCurrentPosL < zzMarkedPosL; ++zzCurrentPosL)
         switch (zzBufferL[zzCurrentPosL]) {
           case '\u000B':
           case '\u000C':
           case '\u0085':
           case '\u2028':
           case '\u2029':
-            yyline++;
+            ++yyline;
             yycolumn = 0;
             zzR = false;
             break;
           case '\r':
-            yyline++;
+            ++yyline;
             yycolumn = 0;
             zzR = true;
             break;
@@ -325,13 +298,13 @@ public class RawTokenizer {
             if (zzR)
               zzR = false;
             else {
-              yyline++;
+              ++yyline;
               yycolumn = 0;
             }
             break;
           default:
             zzR = false;
-            yycolumn++;
+            ++yycolumn;
         }
       if (zzR) {
         boolean zzPeek;
@@ -344,61 +317,50 @@ public class RawTokenizer {
           zzEndReadL = zzEndRead;
           zzMarkedPosL = zzMarkedPos;
           zzBufferL = zzBuffer;
-          if (eof)
-            zzPeek = false;
-          else
-            zzPeek = zzBufferL[zzMarkedPosL] == '\n';
+          zzPeek = !eof && zzBufferL[zzMarkedPosL] == '\n';
         }
         if (zzPeek)
-          yyline--;
+          --yyline;
       }
       zzAction = -1;
       zzCurrentPosL = zzCurrentPos = zzStartRead = zzMarkedPosL;
       zzState = ZZ_LEXSTATE[zzLexicalState];
-      zzForAction: {
-        while (true) {
-          if (zzCurrentPosL < zzEndReadL)
-            zzInput = zzBufferL[zzCurrentPosL++];
-          else if (zzAtEOF) {
+      zzForAction: while (true) {
+        if (zzCurrentPosL >= zzEndReadL) {
+          if (zzAtEOF) {
             zzInput = YYEOF;
             break zzForAction;
-          } else {
-            zzCurrentPos = zzCurrentPosL;
-            zzMarkedPos = zzMarkedPosL;
-            final boolean eof = zzRefill();
-            zzCurrentPosL = zzCurrentPos;
-            zzMarkedPosL = zzMarkedPos;
-            zzBufferL = zzBuffer;
-            zzEndReadL = zzEndRead;
-            if (eof) {
-              zzInput = YYEOF;
-              break zzForAction;
-            } else
-              zzInput = zzBufferL[zzCurrentPosL++];
           }
-          final int zzNext = zzTransL[ZZ_ROWMAP[zzState] + zzCMapL[zzInput]];
-          if (zzNext == -1)
+          zzCurrentPos = zzCurrentPosL;
+          zzMarkedPos = zzMarkedPosL;
+          final boolean eof = zzRefill();
+          zzCurrentPosL = zzCurrentPos;
+          zzMarkedPosL = zzMarkedPos;
+          zzBufferL = zzBuffer;
+          zzEndReadL = zzEndRead;
+          if (eof) {
+            zzInput = YYEOF;
             break zzForAction;
-          zzState = zzNext;
-          final int zzAttributes = ZZ_ATTRIBUTE[zzState];
-          if ((zzAttributes & 1) == 1) {
-            zzAction = zzState;
-            zzMarkedPosL = zzCurrentPosL;
-            if ((zzAttributes & 8) == 8)
-              break zzForAction;
           }
+        }
+        zzInput = zzBufferL[zzCurrentPosL++];
+        final int zzNext = zzTransL[zzCMapL[zzInput] + ZZ_ROWMAP[zzState]];
+        if (zzNext == -1)
+          break zzForAction;
+        zzState = zzNext;
+        if ((ZZ_ATTRIBUTE[zzState] & 1) == 1) {
+          zzAction = zzState;
+          zzMarkedPosL = zzCurrentPosL;
+          if ((ZZ_ATTRIBUTE[zzState] & 8) == 8)
+            break zzForAction;
         }
       }
       zzMarkedPos = zzMarkedPosL;
       switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
-        case 4: {
-          return SPACE;
-        }
+        case 4: return SPACE;
         case 75:
           break;
-        case 74: {
-          return AT_INTERFACE;
-        }
+        case 74: return AT_INTERFACE;
         case 76:
           break;
         case 38: {
@@ -407,34 +369,22 @@ public class RawTokenizer {
         }
         case 77:
           break;
-        case 73: {
-          return URSHIFTEQ;
-        }
+        case 73: return URSHIFTEQ;
         case 78:
           break;
-        case 13: {
-          return LPAREN;
-        }
+        case 13: return LPAREN;
         case 79:
           break;
-        case 26: {
-          return QUESTION;
-        }
+        case 26: return QUESTION;
         case 80:
           break;
-        case 28: {
-          return AND;
-        }
+        case 28: return AND;
         case 81:
           break;
-        case 50: {
-          return MULTEQ;
-        }
+        case 50: return MULTEQ;
         case 82:
           break;
-        case 61: {
-          return OROR;
-        }
+        case 61: return OROR;
         case 83:
           break;
         case 37: {
@@ -443,39 +393,25 @@ public class RawTokenizer {
         }
         case 84:
           break;
-        case 27: {
-          return COLON;
-        }
+        case 27: return COLON;
         case 85:
           break;
-        case 46: {
-          return MINUSEQ;
-        }
+        case 46: return MINUSEQ;
         case 86:
           break;
-        case 53: {
-          return GTEQ;
-        }
+        case 53: return GTEQ;
         case 87:
           break;
-        case 21: {
-          return EQ;
-        }
+        case 21: return EQ;
         case 88:
           break;
-        case 44: {
-          return FLOAT_LITERAL;
-        }
+        case 44: return FLOAT_LITERAL;
         case 89:
           break;
-        case 55: {
-          return LTEQ;
-        }
+        case 55: return LTEQ;
         case 90:
           break;
-        case 69: {
-          return RSHIFTEQ;
-        }
+        case 69: return RSHIFTEQ;
         case 91:
           break;
         case 1: {
@@ -497,14 +433,10 @@ public class RawTokenizer {
         }
         case 94:
           break;
-        case 63: {
-          return PLUSPLUS;
-        }
+        case 63: return PLUSPLUS;
         case 95:
           break;
-        case 51: {
-          return ANNOTATION;
-        }
+        case 51: return ANNOTATION;
         case 96:
           break;
         case 42: {
@@ -514,33 +446,23 @@ public class RawTokenizer {
         }
         case 97:
           break;
-        case 19: {
-          return SEMICOLON;
-        }
+        case 19: return SEMICOLON;
         case 98:
           break;
-        case 5: {
-          try {
+        case 5: try {
             return Token.valueOf("__" + yytext());
           } catch (@NotNull final IllegalArgumentException e) {
             return IDENTIFIER;
           }
-        }
         case 99:
           break;
-        case 65: {
-          return MODEQ;
-        }
+        case 65: return MODEQ;
         case 100:
           break;
-        case 20: {
-          return COMMA;
-        }
+        case 20: return COMMA;
         case 101:
           break;
-        case 10: {
-          return MULT;
-        }
+        case 10: return MULT;
         case 102:
           break;
         case 41: {
@@ -550,24 +472,16 @@ public class RawTokenizer {
         }
         case 103:
           break;
-        case 32: {
-          return MOD;
-        }
+        case 32: return MOD;
         case 104:
           break;
-        case 43: {
-          return DOUBLE_LITERAL;
-        }
+        case 43: return DOUBLE_LITERAL;
         case 105:
           break;
-        case 31: {
-          return XOR;
-        }
+        case 31: return XOR;
         case 106:
           break;
-        case 9: {
-          return DIV;
-        }
+        case 9: return DIV;
         case 107:
           break;
         case 36: {
@@ -576,9 +490,7 @@ public class RawTokenizer {
         }
         case 108:
           break;
-        case 71: {
-          return LSHIFTEQ;
-        }
+        case 71: return LSHIFTEQ;
         case 109:
           break;
         case 40: {
@@ -587,24 +499,16 @@ public class RawTokenizer {
         }
         case 110:
           break;
-        case 30: {
-          return PLUS;
-        }
+        case 30: return PLUS;
         case 111:
           break;
-        case 45: {
-          return MINUSMINUS;
-        }
+        case 45: return MINUSMINUS;
         case 112:
           break;
-        case 64: {
-          return XOREQ;
-        }
+        case 64: return XOREQ;
         case 113:
           break;
-        case 62: {
-          return PLUSEQ;
-        }
+        case 62: return PLUSEQ;
         case 114:
           break;
         case 34: {
@@ -613,9 +517,7 @@ public class RawTokenizer {
         }
         case 115:
           break;
-        case 52: {
-          return EQEQ;
-        }
+        case 52: return EQEQ;
         case 116:
           break;
         case 68: {
@@ -624,9 +526,7 @@ public class RawTokenizer {
         }
         case 117:
           break;
-        case 23: {
-          return LT;
-        }
+        case 23: return LT;
         case 118:
           break;
         case 12: {
@@ -635,44 +535,28 @@ public class RawTokenizer {
         }
         case 119:
           break;
-        case 49: {
-          return DIVEQ;
-        }
+        case 49: return DIVEQ;
         case 120:
           break;
-        case 7: {
-          return DOT;
-        }
+        case 7: return DOT;
         case 121:
           break;
-        case 2: {
-          return UNKNOWN_CHARACTER;
-        }
+        case 2: return UNKNOWN_CHARACTER;
         case 122:
           break;
-        case 60: {
-          return OREQ;
-        }
+        case 60: return OREQ;
         case 123:
           break;
-        case 16: {
-          return RBRACE;
-        }
+        case 16: return RBRACE;
         case 124:
           break;
-        case 22: {
-          return GT;
-        }
+        case 22: return GT;
         case 125:
           break;
-        case 18: {
-          return RBRACK;
-        }
+        case 18: return RBRACK;
         case 126:
           break;
-        case 58: {
-          return ANDEQ;
-        }
+        case 58: return ANDEQ;
         case 127:
           break;
         case 11: {
@@ -681,9 +565,7 @@ public class RawTokenizer {
         }
         case 128:
           break;
-        case 70: {
-          return URSHIFT;
-        }
+        case 70: return URSHIFT;
         case 129:
           break;
         case 67: {
@@ -692,24 +574,16 @@ public class RawTokenizer {
         }
         case 130:
           break;
-        case 25: {
-          return COMP;
-        }
+        case 25: return COMP;
         case 131:
           break;
-        case 29: {
-          return OR;
-        }
+        case 29: return OR;
         case 132:
           break;
-        case 3: {
-          return NL;
-        }
+        case 3: return NL;
         case 133:
           break;
-        case 6: {
-          return INTEGER_LITERAL;
-        }
+        case 6: return INTEGER_LITERAL;
         case 134:
           break;
         case 66: {
@@ -718,9 +592,7 @@ public class RawTokenizer {
         }
         case 135:
           break;
-        case 15: {
-          return LBRACE;
-        }
+        case 15: return LBRACE;
         case 136:
           break;
         case 35: {
@@ -729,14 +601,10 @@ public class RawTokenizer {
         }
         case 137:
           break;
-        case 17: {
-          return LBRACK;
-        }
+        case 17: return LBRACK;
         case 138:
           break;
-        case 24: {
-          return NOT;
-        }
+        case 24: return NOT;
         case 139:
           break;
         case 33: {
@@ -745,14 +613,10 @@ public class RawTokenizer {
         }
         case 140:
           break;
-        case 72: {
-          return EMPTY_BLOCK_COMMENT;
-        }
+        case 72: return EMPTY_BLOCK_COMMENT;
         case 141:
           break;
-        case 54: {
-          return RSHIFT;
-        }
+        case 54: return RSHIFT;
         case 142:
           break;
         case 47: {
@@ -761,33 +625,25 @@ public class RawTokenizer {
         }
         case 143:
           break;
-        case 8: {
-          return MINUS;
-        }
+        case 8: return MINUS;
         case 144:
           break;
-        case 57: {
-          return NOTEQ;
-        }
+        case 57: return NOTEQ;
         case 145:
           break;
-        case 14: {
-          return RPAREN;
-        }
+        case 14: return RPAREN;
         case 146:
           break;
-        case 56: {
-          return LSHIFT;
-        }
+        case 56: return LSHIFT;
         case 147:
           break;
-        case 59: {
-          return ANDAND;
-        }
+        case 59: return ANDAND;
         case 148:
           break;
         default:
-          if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
+          if (zzInput != YYEOF || zzStartRead != zzCurrentPos)
+            zzScanError(ZZ_NO_MATCH);
+          else {
             zzAtEOF = true;
             switch (zzLexicalState) {
               case SCAN_LINE_COMMENT: {
@@ -796,9 +652,8 @@ public class RawTokenizer {
               }
               case 116:
                 break;
-              case RESET: {
+              case RESET:
                 return EOF;
-              }
               case 117:
                 break;
               case SCAN_STRING_LITERAL: {
@@ -814,9 +669,8 @@ public class RawTokenizer {
               }
               case 119:
                 break;
-              case YYINITIAL: {
+              case YYINITIAL:
                 return EOF;
-              }
               case 120:
                 break;
               case SCAN_DOC_COMMENT: {
@@ -831,16 +685,14 @@ public class RawTokenizer {
               }
               case 122:
                 break;
-              case SCAN_CODE: {
+              case SCAN_CODE:
                 return EOF;
-              }
               case 123:
                 break;
               default:
                 return null;
             }
-          } else
-            zzScanError(ZZ_NO_MATCH);
+          }
       }
     }
   }
@@ -875,7 +727,7 @@ public class RawTokenizer {
    *        toyylength()-1.
    * @return the character at position pos */
   public final char yycharat(final int pos) {
-    return zzBuffer[zzStartRead + pos];
+    return zzBuffer[pos + zzStartRead];
   }
 
   /** Closes the input stream. */
@@ -909,9 +761,7 @@ public class RawTokenizer {
   public final void yyreset(final java.io.Reader ¢) {
     zzReader = ¢;
     zzAtEOF = false;
-    zzEndRead = zzStartRead = 0;
-    zzCurrentPos = zzMarkedPos = 0;
-    yyline = yychar = yycolumn = 0;
+    yyline = yychar = yycolumn = zzCurrentPos = zzMarkedPos = zzEndRead = zzStartRead = 0;
     zzLexicalState = YYINITIAL;
   }
 
@@ -982,7 +832,7 @@ public class RawTokenizer {
     /* is the buffer big enough? */
     if (zzCurrentPos >= zzBuffer.length) {
       /* if not: blow it up */
-      @NotNull final char newBuffer[] = new char[zzCurrentPos * 2];
+      @NotNull final char newBuffer[] = new char[2 * zzCurrentPos];
       System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
       zzBuffer = newBuffer;
     }
@@ -992,18 +842,13 @@ public class RawTokenizer {
       zzEndRead += numRead;
       return false;
     }
-    // unlikely but not impossible: read 0 characters, but not at end of stream
-    if (numRead == 0) {
-      final int c = zzReader.read();
-      if (c == -1)
-        return true;
-      else {
-        zzBuffer[zzEndRead++] = (char) c;
-        return false;
-      }
-    }
-    // numRead <0
-    return true;
+    if (numRead != 0)
+      return true;
+    final int c = zzReader.read();
+    if (c == -1)
+      return true;
+    zzBuffer[zzEndRead++] = (char) c;
+    return false;
   }
 
   /** Reports an error that occured while scanning. In a wellformed scanner (no
