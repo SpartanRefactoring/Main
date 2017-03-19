@@ -167,7 +167,7 @@ public class GUIBatchLaconizer extends Applicator {
     run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
     run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
     visit_cu(6,
-        inp -> system.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " "
+        inp -> lisp2.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
     run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));

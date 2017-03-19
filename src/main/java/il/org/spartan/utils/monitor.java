@@ -2,11 +2,10 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.utils.fault.*;
+import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
 
 import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.spartanizer.cmdline.system.*;
 
 import java.io.*;
 import java.text.*;

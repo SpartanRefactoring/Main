@@ -30,7 +30,10 @@ import junit.framework.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  protected static Class<? extends ASTInFilesVisitor> clazz;
+  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp;
+  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "c", value = "corpus name") protected String corpus = "";
+  @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
   static BufferedWriter out;
   static {
@@ -38,7 +41,7 @@ public class ASTInFilesVisitor {
     Trimmer.silent = true;
   }
 
-  /** Check if some java contains {@link Test} annotations
+  /** Check whether given string containing Jave code contains {@link Test} annotations
    * <p>
    * @param f
    * @return */
@@ -85,15 +88,11 @@ public class ASTInFilesVisitor {
   protected String absolutePath;
   private ASTVisitor astVisitor;
   protected Dotter dotter;
-  @External(alias = "i", value = "input folder") protected final String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "c", value = "corpus name") protected String corpus = "";
   private final List<String> locations;
-  @External(alias = "o", value = "output folder") protected final String outputFolder = system.tmp;
   protected File presentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
   protected String relativePath;
-  @External(alias = "s", value = "silent") protected boolean silent;
 
   public ASTInFilesVisitor() {
     this(null);
@@ -129,7 +128,7 @@ public class ASTInFilesVisitor {
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
-    if (system.isProductionCode(f) && productionCode(f))
+    if (Utils.isProductionCode(f) && productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();

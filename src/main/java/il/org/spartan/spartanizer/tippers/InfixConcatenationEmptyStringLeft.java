@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** Convert {@code ""+x} to {@code x+""}
  * @author Dan Greenstein
@@ -23,12 +24,10 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
 
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
-    system.swap($, 0, 1);
+    lisp2.swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
   }
 
-  // TODO: Yossi Gil: this should probably be in lisp, but I can't access its
-  // source anymore
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }

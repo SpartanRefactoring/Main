@@ -4,6 +4,7 @@ import java.lang.reflect.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>

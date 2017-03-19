@@ -13,6 +13,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -93,7 +94,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
     ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    ReportGenerator.write(input, output, "δ ", system::d);
+    ReportGenerator.write(input, output, "δ ", system::Utils.d);
     ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");

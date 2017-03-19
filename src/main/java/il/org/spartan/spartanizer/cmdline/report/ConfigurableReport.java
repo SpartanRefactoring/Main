@@ -12,6 +12,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 import il.org.spartan.utils.*;
 
@@ -178,7 +179,7 @@ public interface ConfigurableReport {
           write(getInputList().get(i), getOutputList().get(i), "Δ ", (n1, n2) -> (n1 - n2));
           // write
           // listeners().tick("writing delta");
-          write(getInputList().get(i), getOutputList().get(i), "δ ", system::d);
+          write(getInputList().get(i), getOutputList().get(i), "δ ", system::Utils.d);
           // write
           // listeners().tick("writing perc");
           writePerc(getInputList().get(i), getOutputList().get(i), "δ ");
@@ -230,7 +231,7 @@ public interface ConfigurableReport {
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
         String a; // TODO Matteo: to be converted to double or float? -- Matteo
         for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
-          a = system.p(¢.function().run(n1), ¢.function().run(n2));
+          a = Utils.p(¢.function().run(n1), ¢.function().run(n2));
           report().put(id + ¢.name() + " %", a);
         }
       }
