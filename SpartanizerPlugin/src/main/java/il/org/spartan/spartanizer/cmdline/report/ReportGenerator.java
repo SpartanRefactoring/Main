@@ -19,6 +19,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
@@ -134,7 +135,7 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
     for (final NamedFunction ¢ : Util.functions(""))
-      Util.report("metrics").put(id + ¢.name() + " %", system.p(¢.function().run(n1), ¢.function().run(n2)));
+      Util.report("metrics").put(id + ¢.name() + " %", Utils.p(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
@@ -203,35 +204,35 @@ public class ReportGenerator implements ConfigurableReport {
   public static void reportDifferences(final ASTNodeMetrics nm1, final ASTNodeMetrics nm2, final String key) {
     report(key) //
         .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
-        .put("δ Nodes", system.d(nm1.nodes(), nm2.nodes()))//
-        .put("δ Nodes %", system.p(nm1.nodes(), nm2.nodes()))//
+        .put("δ Nodes", Utils.d(nm1.nodes(), nm2.nodes()))//
+        .put("δ Nodes %", Utils.p(nm1.nodes(), nm2.nodes()))//
         .put("Δ Body", nm1.body() - nm2.body())//
-        .put("δ Body", system.d(nm1.body(), nm2.body()))//
-        .put("% Body", system.p(nm1.body(), nm2.body()))//
+        .put("δ Body", Utils.d(nm1.body(), nm2.body()))//
+        .put("% Body", Utils.p(nm1.body(), nm2.body()))//
         .put("Δ Tokens", nm1.tokens() - nm2.tokens())//
-        .put("δ Tokens", system.d(nm1.tokens(), nm2.tokens()))//
-        .put("% Tokens", system.p(nm1.tokens(), nm2.tokens()))//
+        .put("δ Tokens", Utils.d(nm1.tokens(), nm2.tokens()))//
+        .put("% Tokens", Utils.p(nm1.tokens(), nm2.tokens()))//
         .put("Δ Length", nm1.length() - nm2.length())//
-        .put("δ Length", system.d(nm1.length(), nm2.length()))//
-        .put("% Length", system.p(nm1.length(), nm2.length()))//
+        .put("δ Length", Utils.d(nm1.length(), nm2.length()))//
+        .put("% Length", Utils.p(nm1.length(), nm2.length()))//
         .put("Δ Tide2", nm1.tide() - nm2.tide())//
-        .put("δ Tide2", system.d(nm1.tide(), nm2.tide()))//
-        .put("δ Tide2", system.p(nm1.tide(), nm2.tide()))//
+        .put("δ Tide2", Utils.d(nm1.tide(), nm2.tide()))//
+        .put("δ Tide2", Utils.p(nm1.tide(), nm2.tide()))//
         .put("Δ Essence", nm1.essence() - nm2.essence())//
-        .put("δ Essence", system.d(nm1.essence(), nm2.essence()))//
-        .put("% Essence", system.p(nm1.essence(), nm2.essence()))//
+        .put("δ Essence", Utils.d(nm1.essence(), nm2.essence()))//
+        .put("% Essence", Utils.p(nm1.essence(), nm2.essence()))//
         .put("Δ Statement", nm1.statements() - nm2.statements())//
-        .put("δ Statement", system.d(nm1.statements(), nm2.statements()))//
-        .put("% Statement", system.p(nm1.statements(), nm2.statements()));//
+        .put("δ Statement", Utils.d(nm1.statements(), nm2.statements()))//
+        .put("% Statement", Utils.p(nm1.statements(), nm2.statements()));//
   }
 
   public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key) {
     report(key) //
         // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
         // //
-        .put("R(E/L)" + id, system.ratio(nm.length(), nm.essence())) //
-        .put("R(E/T)" + id, system.ratio(nm.tide(), nm.essence())) //
-        .put("R(B/S)" + id, system.ratio(nm.nodes(), nm.body())); //
+        .put("R(E/L)" + id, Utils.ratio(nm.length(), nm.essence())) //
+        .put("R(E/T)" + id, Utils.ratio(nm.tide(), nm.essence())) //
+        .put("R(B/S)" + id, Utils.ratio(nm.nodes(), nm.body())); //
   }
 
   public static void close(final String key) {

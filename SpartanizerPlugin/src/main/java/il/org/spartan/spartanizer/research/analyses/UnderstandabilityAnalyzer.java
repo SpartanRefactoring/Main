@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.utils.*;
 
 /** Class to measure Understandability metrics in a method
  * @author Ori Marcovitch

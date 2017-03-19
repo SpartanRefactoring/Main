@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
-import static il.org.spartan.lisp.*;
+import static il.org.spartan.utils.system.*;
 
-import static il.org.spartan.spartanizer.cmdline.system.*;
+import static il.org.spartan.lisp.*;
 
 import java.text.*;
 import java.util.*;

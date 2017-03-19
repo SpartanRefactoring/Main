@@ -1,8 +1,7 @@
 package il.org.spartan.utils;
 
+import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
-
-import static il.org.spartan.spartanizer.cmdline.system.*;
 
 import java.lang.annotation.*;
 import java.util.*;
