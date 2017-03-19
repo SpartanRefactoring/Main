@@ -15,18 +15,14 @@ import il.org.spartan.*;
 @SuppressWarnings("static-method")
 public class B00LTest {
   private static final B00L FIXTURE = B00L.OR(T, F, X);
-  Object object;
-  BooleanSupplier supplier;
+  private static boolean ignoreNext() {
+    return true;
+  }
   B00L condition;
   B00L inner;
+  Object object;
 
-  @Test public void b() {
-    azzert.that(FIXTURE.reduce(new ReducingGear<String>(new ReduceStringConcatenate()) {
-      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
-        return "";
-      }
-    }), is(""));
-  }
+  BooleanSupplier supplier;
 
   @Test(expected = AssertionError.class) public void a() {
     X.getAsBoolean();
@@ -173,7 +169,11 @@ public class B00LTest {
     assert !OR(F, T).and(T).and(F).eval();
   }
 
-  private static boolean ignoreNext() {
-    return true;
+  @Test public void b() {
+    azzert.that(FIXTURE.reduce(new ReducingGear<String>(new ReduceStringConcatenate()) {
+      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+        return "";
+      }
+    }), is(""));
   }
 }
