@@ -106,8 +106,8 @@ public interface metrics {
     return nodes(¢) - internals(¢);
   }
 
-  @SuppressWarnings("boxing") static int length(final ASTNode... ns) {
-    return Stream.of(ns).map(λ -> (λ + "").length()).reduce((x, y) -> x + y).get();
+  static int length(final ASTNode... ns) {
+    return Arrays.stream(ns).mapToInt(λ -> (λ + "").length()).reduce((x, y) -> x + y).orElse(0);
   }
 
   static int literacy(final ASTNode ¢) {
