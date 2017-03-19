@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 import java.util.*;
 import java.util.function.*;
 
-import il.org.spartan.utils.B00L.*;
+import il.org.spartan.utils.Trivalent.*;
 
 public abstract class ReducingGear<R> extends Reduce<R> {
   @Override public R reduce() {
@@ -50,7 +50,7 @@ public abstract class ReducingGear<R> extends Reduce<R> {
 
   protected abstract R map(BooleanSupplier ¢);
 
-  protected R before(@SuppressWarnings("unused") final B00L.NOT ¢) {
+  protected R before(@SuppressWarnings("unused") final Trivalent.NOT ¢) {
     return reduce();
   }
 
@@ -58,11 +58,11 @@ public abstract class ReducingGear<R> extends Reduce<R> {
     return reduce(before(¢), reduce(¢.inner), after(¢));
   }
 
-  private R after(@SuppressWarnings("unused") final B00L.P ¢) {
+  private R after(@SuppressWarnings("unused") final Trivalent.P ¢) {
     return reduce();
   }
 
-  private R before(@SuppressWarnings("unused") final B00L.P ¢) {
+  private R before(@SuppressWarnings("unused") final Trivalent.P ¢) {
     return reduce();
   }
 
