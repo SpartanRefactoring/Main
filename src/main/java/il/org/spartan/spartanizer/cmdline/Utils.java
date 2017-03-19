@@ -4,13 +4,10 @@ import static il.org.spartan.utils.Box.*;
 
 import java.io.*;
 
-/**
- * TODO Yossi Gil: document class 
+/** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
- * @since 2017-03-19
- */
+ * @since 2017-03-19 */
 public interface Utils {
-
   static boolean always() {
     return true;
   }
@@ -90,4 +87,5 @@ public interface Utils {
       default:
         return ¢;
     }
-  }}
+  }
+}

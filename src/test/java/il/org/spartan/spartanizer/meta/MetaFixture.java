@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 /** An abstract class that allows a class to apply testing on its own code. To

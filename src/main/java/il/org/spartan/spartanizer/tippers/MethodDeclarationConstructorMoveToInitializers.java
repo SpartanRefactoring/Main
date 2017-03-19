@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** As per {@link Issue1008}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

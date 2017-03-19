@@ -41,7 +41,8 @@ public class ASTInFilesVisitor {
     Trimmer.silent = true;
   }
 
-  /** Check whether given string containing Jave code contains {@link Test} annotations
+  /** Check whether given string containing Jave code contains {@link Test}
+   * annotations
    * <p>
    * @param f
    * @return */

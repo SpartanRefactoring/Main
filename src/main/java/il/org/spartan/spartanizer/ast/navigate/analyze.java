@@ -9,7 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** A class to find all sort all things about a node, generally some small
  * analyses.
