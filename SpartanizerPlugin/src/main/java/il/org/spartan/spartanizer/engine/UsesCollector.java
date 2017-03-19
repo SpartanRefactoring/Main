@@ -179,6 +179,7 @@ class UsesCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(¢.getInitializer());
   }
 
+  @SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException", "CloneDoesntCallSuperClone"})
   @Override protected UsesCollector clone() {
     return new UsesCollector(result, focus);
   }
@@ -343,6 +344,7 @@ class StringCollector extends HidingDepth {
     return !declaredIn(¢) && recurse(¢.getInitializer());
   }
 
+  @SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException", "CloneDoesntCallSuperClone"})
   @Override protected StringCollector clone() {
     return new StringCollector(result, focus);
   }
@@ -475,6 +477,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
     return false;
   }
 
+  @SuppressWarnings("CloneDoesntCallSuperClone")
   @Override protected UsesCollectorIgnoreDefinitions clone() {
     return new UsesCollectorIgnoreDefinitions(this);
   }
