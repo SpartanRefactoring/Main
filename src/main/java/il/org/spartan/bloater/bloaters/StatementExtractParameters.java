@@ -166,10 +166,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if (r.getAddedStaticImports() != null)
       idns.addAll(as.list(r.getAddedStaticImports()));
     outer: for (final String idn : idns) {
-      // TODO Ori Roth: do it better
-      for (final ImportDeclaration oid : imports(u)) // Tough
-        if (idn.equals(oid.getName().getFullyQualifiedName()))
-          continue outer;
+      if (imports(u).stream().anyMatch(oid -> idn.equals(oid.getName().getFullyQualifiedName())))
+        continue outer;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
       id.setName(s.getAST().newName(idn));
       ilr.insertLast(id, g);
