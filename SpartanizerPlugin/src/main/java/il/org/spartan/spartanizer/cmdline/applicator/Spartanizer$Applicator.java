@@ -94,7 +94,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     ReportGenerator.name(input);
     ReportGenerator.writeMetrics(input, output, null);
     ReportGenerator.write(input, output, "Δ ", (n1, n2) -> (n1 - n2));
-    ReportGenerator.write(input, output, "δ ", system::Utils.d);
+    ReportGenerator.write(input, output, "δ ", Utils::d);
     ReportGenerator.writePerc(input, output, "δ ");
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");

@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;

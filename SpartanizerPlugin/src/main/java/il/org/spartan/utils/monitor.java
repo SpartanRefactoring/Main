@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
