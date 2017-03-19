@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+import static il.org.spartan.utils.Example.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -30,7 +30,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return "Inline the prefix expression after the access to the array";
   }
 
-  @Override public Tipper.Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("array[i] = 1; ++i;") //
             .to("array[i++] = 1;"), //

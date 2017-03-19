@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.Tipper.Example.*;
 import il.org.spartan.utils.*;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation
@@ -22,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
-  public static Tipper.Example.Ignores ignores(final String code) {
+  public static Example.Ignores ignores(final String code) {
     return () -> code;
   }
 
@@ -116,36 +115,4 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   private Class<N> myOperandsClass;
-
-  /** Auxiliary class for FAPI
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
-   * @since 2017-03-07 */
-  public interface Converter {
-    Converts to(String to);
-  }
-
-  public interface Example {
-    static Converter convert(final String from) {
-      return to -> new Tipper.Example.Converts() {
-        @Override public String from() {
-          return from;
-        }
-
-        @Override public String to() {
-          return to;
-        }
-      };
-    }
-
-    interface Converts extends Example {
-      String from();
-
-      String to();
-    }
-
-    @FunctionalInterface
-    interface Ignores extends Example {
-      String code();
-    }
-  }
 }

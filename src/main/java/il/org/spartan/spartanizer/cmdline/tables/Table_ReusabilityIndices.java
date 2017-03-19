@@ -123,7 +123,7 @@ public class Table_ReusabilityIndices {
     return $;
   }
 
-  static void addLineToGlobalStatistcs(String path) {
+  static void addLineToGlobalStatistcs(final String path) {
     writer.col("Project", getProjectName(path));
     if (usage.get("METHOD") == null)
       return;
