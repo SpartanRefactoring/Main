@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.Map.*;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -85,8 +84,7 @@ public class XMLSpartan {
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }
-    for (final Entry<TipperGroup, List<SpartanTipper>> ¢ : tgs.entrySet())
-      $.put(tcs.get(¢.getKey()), ¢.getValue().toArray(new SpartanTipper[¢.getValue().size()]));
+    tgs.entrySet().forEach(x -> $.put(tcs.get(x.getKey()), x.getValue().toArray(new SpartanTipper[x.getValue().size()])));
     return $;
   }
 

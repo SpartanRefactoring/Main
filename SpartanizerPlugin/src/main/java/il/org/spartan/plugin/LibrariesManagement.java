@@ -1,6 +1,7 @@
 package il.org.spartan.plugin;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -64,9 +65,8 @@ public enum LibrariesManagement {
     if (p == null)
       return false;
     try {
-      for (final IClasspathEntry ¢ : p.getRawClasspath()) // NANO?
-        if (LIBRARY_PATH_CONTAINER.getPath().equals(¢.getPath()))
-          return true;
+      if (Stream.of(p.getRawClasspath()).anyMatch(x -> LIBRARY_PATH_CONTAINER.getPath().equals(x.getPath())))
+        return true;
     } catch (final JavaModelException ¢) {
       monitor.log(¢);
     }
