@@ -1,7 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.collections;
 
+import static org.hamcrest.Matchers.*;
+
 import org.eclipse.jdt.annotation.*;
+import org.jetbrains.annotations.*;
+
+import il.org.spartan.fapi.*;
+import il.org.spartan.utils.___.*;
 
 /** An unsorted set of integers supporting the basic set operations:
  * {@link #add} , {@link #contains} and {@link #remove}.
@@ -208,6 +214,31 @@ public class Integers {
     //
   }
 
+  @SuppressWarnings({ "synthetic-access", "boxing" }) //
+  public final class INVARIANT implements Invariantable {
+    @Override public void check() {
+      azzert.that(size, lessThanOrEqualTo(capacity()));
+      azzert.that(capacity(), greaterThanOrEqualTo(MIN_CAPACITY));
+      azzert.that(placeholder.length, lessThanOrEqualTo(capacity()));
+      azzert.that(occupied.length, lessThanOrEqualTo(capacity()));
+      azzert.that(data.length, lessThanOrEqualTo(capacity()));
+      azzert.that(size, lessThanOrEqualTo((int) (MAX_LOAD * capacity())));
+      azzert.that(size, greaterThanOrEqualTo((int) (MIN_LOAD * capacity())));
+      azzert.that(removed, lessThanOrEqualTo((int) (REMOVE_LOAD * capacity())));
+      azzert.that(removed, comparesEqualTo(count(placeholder)));
+      azzert.that(size, comparesEqualTo(count(occupied) - removed));
+      for (int ¢ = 0; ¢ < capacity(); ++¢)
+        if (placeholder[¢])
+          assert occupied[¢];
+    }
+
+    private int count(@NotNull final boolean bs[]) {
+      int $ = 0;
+      for (final boolean ¢ : bs)
+        $ += as.bit(¢);
+      return $;
+    }
+  }
   /** Find the index in the hash table of the parameter
    * @param i some integer
    * @return index of the element if the parameter is in the table, otherwise,

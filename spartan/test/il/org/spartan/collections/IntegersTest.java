@@ -1,5 +1,7 @@
 package il.org.spartan.collections;
 
+import il.org.spartan.collections.IntegersMap.INVARIANT;
+
 import static il.org.spartan.fapi.azzert.*;
 
 import java.util.*;
