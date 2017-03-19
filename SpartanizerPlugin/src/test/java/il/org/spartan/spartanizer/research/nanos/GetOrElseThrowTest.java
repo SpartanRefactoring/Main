@@ -19,7 +19,7 @@ public class GetOrElseThrowTest {
         .gives("notNull(x).get(x);")//
         .stays();
     s = "Hello";
-    s = s.replaceAll("","");
+    s = s.replaceAll("", "");
   }
 
   @Test public void b() {

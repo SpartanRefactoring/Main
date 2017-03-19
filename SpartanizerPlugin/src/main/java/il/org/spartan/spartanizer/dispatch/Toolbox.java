@@ -29,7 +29,7 @@ public class Toolbox {
     public static final Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
     public static final Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
-    public static final Map<Class<? extends Tipper<?>>, Tipper.Example[]> TipperExamplesCache = new HashMap<>();
+    public static final Map<Class<? extends Tipper<?>>, Example[]> TipperExamplesCache = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
@@ -116,8 +116,7 @@ public class Toolbox {
         .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()) //
         .add(CatchClause.class, new CatchClauseRenameParameterToCent()) //
         .add(Javadoc.class, new JavadocEmptyRemove()) //
-        .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne())
-        .add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
+        .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //

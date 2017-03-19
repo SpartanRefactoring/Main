@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.utils.Example.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -16,8 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
-
-import static il.org.spartan.spartanizer.tipping.Tipper.Example.*;
+import il.org.spartan.utils.*;
 
 /** Test case is {@link Issue1012} Issue #1012 Convert: {@code
  * int a = 0;

@@ -48,7 +48,7 @@ public interface B00L extends BooleanSupplier {
     return getAsBoolean();
   }
 
-  default <R> R reduce(Red<R> ¢) {
+  default <R> R reduce(final Red<R> ¢) {
     return ¢.reduce(this);
   }
 
