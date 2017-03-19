@@ -21,7 +21,6 @@ import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.tipping.Tipper.*;
 import il.org.spartan.utils.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
