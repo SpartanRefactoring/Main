@@ -6,22 +6,20 @@ import java.util.stream.*;
 /** An abstract reducer
  * @param <R>
  * @since 2017-01-29 */
-public abstract class Reducer<@¢ R> {
-  public R reduce() {
-    return null;
-  }
+public abstract class Reduce<@¢ R> {
+  public abstract R reduce();
 
   public final R reduce(final R ¢) {
     return ¢;
   }
 
-  public abstract R reduce(R t1, R t2);
+  public abstract R reduce(R r1, R r2);
 
   public final R reduce(final R[] $) {
     return $ == null ? reduce() : Stream.of($).filter(Objects::nonNull).reduce(this::reduce).orElse(reduce());
   }
 
-  @SafeVarargs public final R reduce(final R t1, final R t2, final R... rs) {
-    return reduce(t1, reduce(t2, reduce(rs)));
+  @SafeVarargs public final R reduce(final R r1, final R r2, final R... rs) {
+    return reduce(r1, reduce(r2, reduce(rs)));
   }
 }

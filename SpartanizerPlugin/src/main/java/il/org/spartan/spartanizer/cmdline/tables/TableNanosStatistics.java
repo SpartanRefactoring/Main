@@ -25,7 +25,7 @@ import il.org.spartan.tables.*;
 public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
-  private static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+  private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   private static final Collection<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
     static final long serialVersionUID = 1L;
     {
@@ -89,7 +89,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   }
 
   private static void fillAbsents() {
-    spartanalyzer.getAllPatterns().stream()//
+    spartanalyzer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.col(λ, 0));
