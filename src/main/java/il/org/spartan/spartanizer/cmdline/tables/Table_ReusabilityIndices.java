@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -16,22 +15,89 @@ import il.org.spartan.utils.*;
 /** Collects various reusability indices for a given folder(s)
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
-public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
-  static {
-    clazz = Table_ReusabilityIndices.class;
+public class Table_ReusabilityIndices {
+  static Table writer;
+  private static int maxArity;
+  static final Map<String, Map<String, Integer>> usage = new LinkedHashMap<>();
+  static final Collection<String> defined = new LinkedHashSet<>();
+
+  public static void main(final String[] args) {
+    new ASTInFilesVisitor(args) {
+      @Override protected void done(final String path) {
+        dotter.end();
+        addMissingKeys();
+        initializeWriter();
+        writer.col("Project", presentSourceName);
+        try (Table t = new Table("rindices")) {
+          for (final String category : usage.keySet()) {
+            final Map<String, Integer> map = usage.get(category);
+            final Int n = new Int(), m = new Int();
+            map.keySet()
+                .forEach(λ -> t//
+                    .col("N", ++n.inner)//
+                    .col("M", ++m.inner)//
+                    .col("Category", category)//
+                    .col("Key", '"' + λ + '"')//
+                    .col("Count", map.get(λ))//
+                    .nl());
+            writer.col(category, rindex(ranks(map)));
+          }
+          addLineToGlobalStatistcs(path);
+          writer.nl();
+        }
+        RIndicesVisitor.clear();
+      }
+
+      void initializeWriter() {
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_ReusabilityIndices.class) + "-" + corpus, outputFolder);
+      }
+    }.fire(new RIndicesVisitor());
+    writer.close();
   }
-  private static Table writer;
+
+  public static class RIndicesVisitor extends ASTVisitor {
+    public RIndicesVisitor() {
+      super(true);
+    }
+
+    @Override public void preVisit(final ASTNode ¢) {
+      increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
+    }
+
+    @Override public boolean visit(final Assignment ¢) {
+      return increment("ASSIGNMENT", Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final InfixExpression ¢) {
+      return increment("INFIX", key(¢));
+    }
+
+    @Override public boolean visit(final MethodDeclaration ¢) {
+      return defined.add(Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final MethodInvocation ¢) {
+      return increment("METHOD", Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final PostfixExpression ¢) {
+      return increment("POSTFIX", Vocabulary.mangle(¢));
+    }
+
+    @Override public boolean visit(final PrefixExpression ¢) {
+      return increment("PREFIX", Vocabulary.mangle(¢));
+    }
+
+    static void clear() {
+      usage.clear();
+      defined.clear();
+    }
+  }
 
   public static boolean increment(final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
     return true;
-  }
-
-  public static void main(final String[] args)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-    DeprecatedFolderASTVisitor.main(args);
-    System.out.println("Your output is in " + writer.description());
-    writer.close();
   }
 
   static int[] ranks(final Map<?, Integer> m) {
@@ -49,11 +115,7 @@ public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
     return $;
   }
 
-  private int maxArity;
-  private final Map<String, Map<String, Integer>> usage = new LinkedHashMap<>();
-  private final Collection<String> defined = new LinkedHashSet<>();
-
-  public Map<String, Integer> addIfNecessary(final String category, final String key) {
+  public static Map<String, Integer> addIfNecessary(final String category, final String key) {
     usage.putIfAbsent(category, new LinkedHashMap<>());
     final Map<String, Integer> $ = usage.get(category);
     assert $ != null;
@@ -61,8 +123,8 @@ public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
     return $;
   }
 
-  private void addLineToGlobalStatistcs() {
-    writer.col("Project", getProjectName(presentSourceName));
+  static void addLineToGlobalStatistcs(final String path) {
+    writer.col("Project", getProjectName(path));
     if (usage.get("METHOD") == null)
       return;
     final int rExternal = rExternal(), rIntrernal = rInternal();
@@ -77,7 +139,7 @@ public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
     return ¢.substring(¢.lastIndexOf('-') + 1);
   }
 
-  void addMissingKeys() {
+  static void addMissingKeys() {
     wizard.classToNodeType.keySet().forEach(λ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(λ)));
     as.list(wizard.assignmentOperators).forEach(λ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(λ)));
     as.list(wizard.prefixOperators).forEach(λ -> addIfNecessary("PREFIX", Vocabulary.mangle(λ)));
@@ -87,86 +149,32 @@ public class Table_ReusabilityIndices extends DeprecatedFolderASTVisitor {
         addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));
   }
 
-  @Override protected void done(@SuppressWarnings("unused") final String path) {
-    dotter.end();
-    addMissingKeys();
-    if (writer == null)
-      writer = new Table(this);
-    writer.col("Project", presentSourceName);
-    try (Table t = new Table("rindices")) {
-      for (final String category : usage.keySet()) {
-        final Map<String, Integer> map = usage.get(category);
-        final Int n = new Int(), m = new Int();
-        map.keySet()
-            .forEach(λ -> t//
-                .col("N", ++n.inner)//
-                .col("M", ++m.inner)//
-                .col("Category", category)//
-                .col("Key", '"' + λ + '"')//
-                .col("Count", map.get(λ))//
-                .nl());
-        writer.col(category, rindex(ranks(map)));
-        System.err.println("Your output is in: " + t.description());
-      }
-      addLineToGlobalStatistcs();
-      writer.nl();
-    }
-  }
-
-  boolean increment(final String category, final String key) {
+  static boolean increment(final String category, final String key) {
     return increment(addIfNecessary(category, key), key);
   }
 
-  private String key(final InfixExpression ¢) {
+  static String key(final InfixExpression ¢) {
     return key(¢, extract.arity(¢));
   }
 
-  private String key(final InfixExpression ¢, final int arity) {
+  private static String key(final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return Vocabulary.mangle(¢.getOperator(), arity);
   }
 
-  protected int rExternal() {
+  protected static int rExternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     defined.forEach($::remove);
     return rindex(ranks($));
   }
 
-  protected int rInternal() {
+  protected static int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     new ArrayList<>($.keySet()).stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
     return rindex(ranks($));
   }
 
-  protected int rMethod() {
+  protected static int rMethod() {
     return rindex(ranks(usage.get("METHOD")));
-  }
-
-  @Override public void preVisit(final ASTNode ¢) {
-    increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
-  }
-
-  @Override public boolean visit(final Assignment ¢) {
-    return increment("ASSIGNMENT", Vocabulary.mangle(¢));
-  }
-
-  @Override public boolean visit(final InfixExpression ¢) {
-    return increment("INFIX", key(¢));
-  }
-
-  @Override public boolean visit(final MethodDeclaration ¢) {
-    return defined.add(Vocabulary.mangle(¢));
-  }
-
-  @Override public boolean visit(final MethodInvocation ¢) {
-    return increment("METHOD", Vocabulary.mangle(¢));
-  }
-
-  @Override public boolean visit(final PostfixExpression ¢) {
-    return increment("POSTFIX", Vocabulary.mangle(¢));
-  }
-
-  @Override public boolean visit(final PrefixExpression ¢) {
-    return increment("PREFIX", Vocabulary.mangle(¢));
   }
 }

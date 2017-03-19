@@ -7,9 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
@@ -19,11 +17,7 @@ import il.org.spartan.utils.*;
  * project
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
-public class Table_RawNanoStatistics {
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
-  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static Table writer;
-  static final NanoPatternsStatistics npStatistics = new NanoPatternsStatistics();
+public class Table_RawNanoStatistics extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
@@ -36,11 +30,11 @@ public class Table_RawNanoStatistics {
         .forEach(λ -> writer.col(λ.name, λ.occurences));
     fillAbsents();
     writer.nl();
-    npStatistics.clear();
+    reset();
   }
 
   static void fillAbsents() {
-    spartanalyzer.getAllPatterns().stream()//
+    spartanalyzer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> writer.col(λ, 0));
@@ -49,12 +43,15 @@ public class Table_RawNanoStatistics {
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       @Override protected void done(final String path) {
-        if (writer == null)
-          initializeWriter(outputFolder); // needed to printout on a custom
-                                          // folder using -o
+        initializeWriter();
         summarize(path);
         System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
+      }
+
+      void initializeWriter() {
+        if (writer == null)
+          writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
@@ -73,13 +70,5 @@ public class Table_RawNanoStatistics {
       }
     });
     writer.close();
-  }
-
-  static void initializeWriter(final String outputFolder) {
-    writer = new Table(Table_RawNanoStatistics.class, outputFolder);
-  }
-
-  static void initializeWriter() {
-    writer = new Table(Table_RawNanoStatistics.class);
   }
 }
