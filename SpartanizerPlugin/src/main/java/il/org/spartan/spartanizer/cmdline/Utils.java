@@ -4,8 +4,6 @@ import static il.org.spartan.utils.Box.*;
 
 import java.io.*;
 
-import il.org.spartan.utils.*;
-
 /**
  * TODO Yossi Gil: document class 
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
