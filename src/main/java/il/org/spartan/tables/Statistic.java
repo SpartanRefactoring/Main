@@ -1,5 +1,7 @@
 package il.org.spartan.tables;
 
+import java.util.*;
+
 import il.org.spartan.statistics.*;
 
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
@@ -59,10 +61,26 @@ public enum Statistic {
       return ¢.max() - ¢.min();
     }
   },
+  Q1 {
+    @Override public double of(final RealStatistics ¢) {
+      return quartile(25, ¢.all());
+    }
+  },
+  Q3 {
+    @Override public double of(final RealStatistics ¢) {
+      return quartile(75, ¢.all());
+    }
+  },
   Σ {
     @Override public double of(final RealStatistics ¢) {
       return ¢.sum();
     }
   };
   public abstract double of(RealStatistics s);
+
+  /** @param p percents of quartile (for q1 - 25, q3 - 75, median - 50) */
+  static double quartile(int p, double[] ds) {
+    Arrays.sort(ds);
+    return ds[Math.round(p * ds.length / 100)];
+  }
 }
