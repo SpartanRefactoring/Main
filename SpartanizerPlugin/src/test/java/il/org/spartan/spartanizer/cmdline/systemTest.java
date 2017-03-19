@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.*;
 
 /** TODO: Sharon Kuninin please add a description
  * @author Sharon Kuninin

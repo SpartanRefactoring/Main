@@ -138,7 +138,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
           d.getProgressMonitor()
-              .subTask(English.trim(system.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
+              .subTask(English.trim(lisp2.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
