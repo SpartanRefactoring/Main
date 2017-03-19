@@ -16,17 +16,17 @@ import il.org.spartan.*;
  * </ol>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-06 */
-public interface B00L extends BooleanSupplier {
-  /** a {@link B00L} which is {@code false} */
-  B00L F = new P(() -> false);
-  /** a {@link B00L} which is {@code true} */
-  B00L T = new P(() -> true);
-  /** a {@link B00L} whose evaluation fails with {@link AssertionError} */
-  B00L X = B00L.of("T", () -> {
+public interface Trivalent extends BooleanSupplier {
+  /** a {@link Trivalent} which is {@code false} */
+  Trivalent F = new P(() -> false);
+  /** a {@link Trivalent} which is {@code true} */
+  Trivalent T = new P(() -> true);
+  /** a {@link Trivalent} whose evaluation fails with {@link AssertionError} */
+  Trivalent X = Trivalent.of("T", () -> {
     throw new AssertionError();
   });
 
-  static B00L AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Trivalent AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new AND(s1, s2, ss);
   }
 
@@ -34,7 +34,7 @@ public interface B00L extends BooleanSupplier {
     return new NOT(¢);
   }
 
-  static B00L of(final String toString, final BooleanSupplier ¢) {
+  static Trivalent of(final String toString, final BooleanSupplier ¢) {
     return new P(¢) {
       @Override public String toString() {
         return toString;
@@ -42,21 +42,21 @@ public interface B00L extends BooleanSupplier {
     };
   }
 
-  static B00L of(final BooleanSupplier ¢) {
+  static Trivalent of(final BooleanSupplier ¢) {
     return new P(¢);
   }
 
-  static B00L OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Trivalent OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new OR(s1, s2, ss);
   }
 
-  B00L and(BooleanSupplier c, BooleanSupplier... cs);
+  Trivalent and(BooleanSupplier c, BooleanSupplier... cs);
 
   default boolean eval() {
     return getAsBoolean();
   }
 
-  B00L or(BooleanSupplier c, BooleanSupplier... cs);
+  Trivalent or(BooleanSupplier c, BooleanSupplier... cs);
 
   default <R> R reduce(final ReducingGear<R> ¢) {
     return ¢.reduce(this);
@@ -71,7 +71,7 @@ public interface B00L extends BooleanSupplier {
       add(c, cs);
     }
 
-    @Override public B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Trivalent and(final BooleanSupplier c, final BooleanSupplier... cs) {
       return add(this, c, cs);
     }
 
@@ -79,28 +79,28 @@ public interface B00L extends BooleanSupplier {
       return stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Trivalent or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new OR(this, c, cs);
     }
   }
 
-  /** A compound {@link B00L}
+  /** A compound {@link Trivalent}
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-03-19 */
-  abstract class C implements B00L {
+  abstract class C implements Trivalent {
     final List<BooleanSupplier> inner = new ArrayList<>();
 
-    final B00L add(final BooleanSupplier... ¢) {
+    final Trivalent add(final BooleanSupplier... ¢) {
       inner.addAll(as.list(¢));
       return this;
     }
 
-    final B00L add(final BooleanSupplier c, final BooleanSupplier... cs) {
+    final Trivalent add(final BooleanSupplier c, final BooleanSupplier... cs) {
       inner.add(c);
       return add(cs);
     }
 
-    final B00L add(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier... cs) {
+    final Trivalent add(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier... cs) {
       inner.add(c1);
       return add(c2, cs);
     }
@@ -129,7 +129,7 @@ public interface B00L extends BooleanSupplier {
       add(c1, c2, cs);
     }
 
-    @Override public B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Trivalent and(final BooleanSupplier c, final BooleanSupplier... cs) {
       inner.set(inner.size() - 1, AND(of(last(inner)), c, cs));
       return this;
     }
@@ -138,15 +138,15 @@ public interface B00L extends BooleanSupplier {
       return stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Trivalent or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return add(c, cs);
     }
   }
 
-  /** A parenthesized {@link B00L}
+  /** A parenthesized {@link Trivalent}
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-19 */
-  class P implements B00L, Recursive.Atomic<B00L> {
+  class P implements Trivalent, Recursive.Atomic<Trivalent> {
     public final BooleanSupplier inner;
 
     public P(final BooleanSupplier inner) {
@@ -155,7 +155,7 @@ public interface B00L extends BooleanSupplier {
       this.inner = inner;
     }
 
-    @Override public final B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public final Trivalent and(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new AND(this, c, cs);
     }
 
@@ -163,7 +163,7 @@ public interface B00L extends BooleanSupplier {
       return inner.getAsBoolean();
     }
 
-    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
+    @Override public Trivalent or(final BooleanSupplier c, final BooleanSupplier... cs) {
       return new OR(this, c, cs);
     }
   }
