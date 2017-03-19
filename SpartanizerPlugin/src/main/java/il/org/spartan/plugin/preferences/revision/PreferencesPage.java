@@ -230,22 +230,22 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   static class Changes implements Cloneable {
     private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
     private final Map<IProject, Set<String>> preferences2;
-    private final Map<IProject, Boolean> ables;
+    private final Map<IProject, Boolean> enabled;
 
     private Changes() {
       preferences1 = new HashMap<>();
       preferences2 = new HashMap<>();
-      ables = new HashMap<>();
+      enabled = new HashMap<>();
     }
 
     public Changes(final Iterable<Object> projects) {
       preferences1 = new HashMap<>();
       preferences2 = new HashMap<>();
-      ables = new HashMap<>();
+      enabled = new HashMap<>();
       for (final Object p : projects) {
         preferences1.put((IProject) p, null);
         preferences2.put((IProject) p, null);
-        ables.put((IProject) p, null);
+        enabled.put((IProject) p, null);
       }
     }
 
@@ -253,7 +253,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
       $.preferences2.putAll(preferences2);
-      $.ables.putAll(ables);
+      $.enabled.putAll(enabled);
       return $;
     }
 
@@ -262,7 +262,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public Boolean getAble(final IProject p) {
-      final Boolean $ = ables.get(p);
+      final Boolean $ = enabled.get(p);
       if ($ == null)
         try {
           return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
@@ -274,7 +274,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public void update(final IProject p, final Boolean able) {
-      ables.put(p, able);
+      enabled.put(p, able);
     }
 
     public Void update(final IProject p, final Set<String> preference) {
@@ -290,7 +290,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       for (final IProject ¢ : preferences1.keySet()) {
         preferences1.put(¢, null);
         preferences2.put(¢, null);
-        ables.put(¢, null);
+        enabled.put(¢, null);
       }
     }
 
@@ -301,9 +301,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
           for (final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)
               ProjectPreferencesHandler.commit(p, preferences2.get(p));
-            if (ables.get(p) != null)
+            if (enabled.get(p) != null)
               try {
-                TipsOnOffToggle.toggleNature(p, ables.get(p).booleanValue());
+                TipsOnOffToggle.toggleNature(p, enabled.get(p).booleanValue());
               } catch (final CoreException ¢) {
                 monitor.log(¢);
               }

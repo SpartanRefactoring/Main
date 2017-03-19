@@ -4,6 +4,7 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
@@ -12,8 +13,7 @@ import il.org.spartan.utils.*;
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {
-    for (final IProject ¢ : ResourcesPlugin.getWorkspace().getRoot().getProjects())
-      go(¢);
+    as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(x -> go(x));
   }
 
   public static void go(final IProject p) {
