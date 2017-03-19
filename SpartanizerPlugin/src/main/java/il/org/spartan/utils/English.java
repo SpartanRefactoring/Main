@@ -7,6 +7,7 @@ import static il.org.spartan.lisp.*;
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.IntStream;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -173,8 +174,7 @@ public interface English {
    * @return cut string */
   static String trim(final String s) {
     final String[] $ = s.split("\n");
-    for (int ¢ = 0; ¢ < $.length; ++¢)
-      $[¢] = trimAbsolute($[¢], TRIM_THRESHOLD, TRIM_SUFFIX);
+    IntStream.range(0, $.length).forEach(λ -> $[λ] = trimAbsolute($[λ], TRIM_THRESHOLD, TRIM_SUFFIX));
     return String.join("\n", $);
   }
 
