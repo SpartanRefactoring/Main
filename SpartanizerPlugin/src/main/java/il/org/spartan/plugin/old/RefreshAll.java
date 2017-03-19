@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {
-    as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(x -> go(x));
+    as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(λ -> go(λ));
   }
 
   public static void go(final IProject p) {

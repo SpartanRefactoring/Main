@@ -27,16 +27,12 @@ public class ExamplesTests {
 
   /** Redirects examples to tests according to type */
   @Test public void converts() {
-    for (final Example ¢ : tipper.examples())
-      if (¢ instanceof Converts)
-        testConverts((Converts) ¢);
+    Arrays.stream(tipper.examples()).filter(Converts.class::isInstance).forEachOrdered(λ -> testConverts((Converts) λ));
   }
 
   /** Redirects examples to tests according to type */
   @Test public void ignores() {
-    for (final Example ¢ : tipper.examples())
-      if (¢ instanceof Ignores)
-        ignores((Ignores) ¢);
+    Arrays.stream(tipper.examples()).filter(Ignores.class::isInstance).forEachOrdered(λ -> ignores((Ignores) λ));
   }
 
   private static void ignores(final Ignores ¢) {
