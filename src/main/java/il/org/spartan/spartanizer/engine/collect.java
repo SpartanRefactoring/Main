@@ -463,8 +463,8 @@ public enum collect {
       return new ArrayList<>();
     }
 
-    public final Collection<SimpleName> in(final Collection<? extends ASTNode> ns) {
-      return in(ns.toArray(new ASTNode[ns.size()]));
+    public final Collection<SimpleName> in(final Collection<? extends ASTNode> ¢) {
+      return in(¢.toArray(new ASTNode[¢.size()]));
     }
 
     Collector(final String name) {

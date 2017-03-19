@@ -188,11 +188,9 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static Iterable<ITextEditor> getOpenedEditors() {
-    final IWorkbenchPage p = getPage();
-    if (p != null)
-      return Stream.of(p.getEditorReferences()).map(r -> r.getEditor(false)).filter(x -> x instanceof ITextEditor).map(x -> (ITextEditor) x)
-          .collect(toList());
-    final Collection<ITextEditor> $ = new ArrayList<>();
-    return $;
+    final IWorkbenchPage $ = getPage();
+    return $ == null ? new ArrayList<>()
+        : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
+            .collect(toList());
   }
 }
