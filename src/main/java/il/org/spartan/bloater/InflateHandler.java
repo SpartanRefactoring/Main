@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.List;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -187,14 +188,11 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static Iterable<ITextEditor> getOpenedEditors() {
-    final Collection<ITextEditor> $ = new ArrayList<>();
     final IWorkbenchPage p = getPage();
     if (p != null)
-      for (final IEditorReference r : p.getEditorReferences()) {
-        final IEditorPart ep = r.getEditor(false);
-        if (ep instanceof ITextEditor)
-          $.add((ITextEditor) ep);
-      }
+      return Stream.of(p.getEditorReferences()).map(r -> r.getEditor(false)).filter(x -> x instanceof ITextEditor).map(x -> (ITextEditor) x)
+          .collect(toList());
+    final Collection<ITextEditor> $ = new ArrayList<>();
     return $;
   }
 }
