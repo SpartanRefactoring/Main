@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.java;
-
 import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -105,6 +104,14 @@ public enum sideEffects {
   private static boolean free(final ConditionalExpression ¢) {
     return free(expression(¢), then(¢), elze(¢));
   }
+  public static boolean sink(Expression e) {
+    descendants.of(e).stream().mapToInt(n->n.getNodeType()).noneMatch(n->intIsIn(n, STRICT_SIDE_EFFECT));
+    return true;
+  }
+  static 
+  int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,
+       ASSIGNMENT,  POSTFIX_EXPRESSION};
+  
 
   public static boolean free(final Expression ¢) {
     if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))
