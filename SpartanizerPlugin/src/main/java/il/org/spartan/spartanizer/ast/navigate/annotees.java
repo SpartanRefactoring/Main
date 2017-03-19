@@ -9,7 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Extract items to which a given annotation applies
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

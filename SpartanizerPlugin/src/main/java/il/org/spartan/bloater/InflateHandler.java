@@ -23,7 +23,6 @@ import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses

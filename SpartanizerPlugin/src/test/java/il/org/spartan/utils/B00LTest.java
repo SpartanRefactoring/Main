@@ -2,6 +2,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.B00L.*;
+import static il.org.spartan.utils.B00L.not;
 
 import java.util.function.*;
 
@@ -15,13 +16,14 @@ import il.org.spartan.*;
 @SuppressWarnings("static-method")
 public class B00LTest {
   private static final B00L FIXTURE = B00L.OR(T, F, X);
+
   private static boolean ignoreNext() {
     return true;
   }
+
   B00L condition;
   B00L inner;
   Object object;
-
   BooleanSupplier supplier;
 
   @Test(expected = AssertionError.class) public void a() {
