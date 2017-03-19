@@ -4,13 +4,10 @@ import java.util.*;
 
 import il.org.spartan.*;
 
-/**
- * TODO Yossi Gil: document class 
+/** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
- * @since 2017-03-19
- */
-public interface lisp2 extends lisp{
-
+ * @since 2017-03-19 */
+public interface lisp2 extends lisp {
   static String nth(final int i, final Collection<?> os) {
     return lisp2.nth(i, os.size());
   }
@@ -35,4 +32,5 @@ public interface lisp2 extends lisp{
       lisp.replace($, t, i2);
     }
     return $;
-  }}
+  }
+}
