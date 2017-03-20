@@ -12,7 +12,7 @@ import il.org.spartan.*;
 /** Tests class {@link B00L}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
-@SuppressWarnings("static-method")
+@SuppressWarnings({ "static-method", "unused" })
 public class B00LTest {
   private B00L B1, T_OR_F_OR_X;
   private B00L B2, T_AND_F_AND_X;
@@ -191,7 +191,7 @@ public class B00LTest {
 
   @Test public void b() {
     azzert.that(T_OR_F_OR_X.reduce(new B00LReducingGear<String>(new ReduceStringConcatenate()) {
-      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+      @Override protected String map(final BooleanSupplier __) {
         return "";
       }
     }), is(""));
