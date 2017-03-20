@@ -19,7 +19,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:

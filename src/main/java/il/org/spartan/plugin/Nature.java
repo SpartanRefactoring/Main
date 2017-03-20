@@ -5,7 +5,6 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
 /** TODO: Artium Nihamkin please add a description
