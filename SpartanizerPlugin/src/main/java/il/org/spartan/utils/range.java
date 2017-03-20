@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.java;
+package il.org.spartan.utils;
 
 import java.util.*;
 import java.util.stream.*;
