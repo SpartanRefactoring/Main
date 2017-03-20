@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 // TODO Ori Roth: choose more suitable category
 // TODO Ori Roth: add tests for tipper

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** converttoList {@code polite?"Eat your meal.":"Eat your meal, please"},
  * {@code polite?"thanks for the meal":"I hated the meal"} toList into toList
