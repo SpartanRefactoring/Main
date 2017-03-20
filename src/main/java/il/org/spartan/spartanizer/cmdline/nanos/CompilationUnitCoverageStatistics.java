@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.nanos.*;
+import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
@@ -208,12 +209,17 @@ class LightWeightMethodRecord {
 
   /** makes sure we don't exceed 100% of nodes of a method */
   public void mark(final ASTNode ¢, final String np) {
-    if (!np.equals(LetItBeIn.class.getSimpleName()))
-      mark(¢);
-    else
+    if (np.equals(LetItBeIn.class.getSimpleName()))
       markLetItBeIn(¢);
-    if (iz.methodDeclaration(¢))
+    else if (np.equals(ArgumentsTuple.class.getSimpleName()))
+      markArgumentsTuple();
+    else if (iz.methodDeclaration(¢))
       fullyCovered = true;
+  }
+
+  private void markArgumentsTuple() {
+    nodes.inc(4);
+    expressions.inc(4);
   }
 
   private void markLetItBeIn(final ASTNode ¢) {

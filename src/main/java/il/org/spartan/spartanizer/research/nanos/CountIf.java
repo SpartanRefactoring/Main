@@ -44,4 +44,8 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
+
+  @Override public String className() {
+    return Aggregate.class.getSimpleName();
+  }
 }
