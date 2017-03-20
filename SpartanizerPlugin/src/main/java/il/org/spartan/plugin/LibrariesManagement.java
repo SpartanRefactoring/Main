@@ -65,7 +65,7 @@ public enum LibrariesManagement {
     if (p == null)
       return false;
     try {
-      if (Stream.of(p.getRawClasspath()).anyMatch(x -> LIBRARY_PATH_CONTAINER.getPath().equals(x.getPath())))
+      if (Stream.of(p.getRawClasspath()).anyMatch(λ -> LIBRARY_PATH_CONTAINER.getPath().equals(λ.getPath())))
         return true;
     } catch (final JavaModelException ¢) {
       monitor.log(¢);
