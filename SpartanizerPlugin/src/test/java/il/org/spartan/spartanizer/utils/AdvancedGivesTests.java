@@ -20,7 +20,6 @@ public class AdvancedGivesTests {
         .givesEither("a+3", "3+a");
   }
 
-  @Ignore
   private static class NotWorking {
     @Test public void test2() {
       trimmingOf("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢; continue;}")//
