@@ -5,7 +5,7 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** TODO: Artium Nihamkin please add a description
  * @author Artium Nihamkin

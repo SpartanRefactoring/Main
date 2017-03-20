@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of type String
  * @author Stav Namir
