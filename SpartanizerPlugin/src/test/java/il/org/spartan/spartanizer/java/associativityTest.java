@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: Dor Ma'yan please add a description
+/** Checking the associativity function
  * @author Dor Ma'yan
  * @author Sapir Bismot
  * @since 16-11-9 * */

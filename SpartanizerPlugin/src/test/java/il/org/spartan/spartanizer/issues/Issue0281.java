@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** Checking that a bug when converting while to for was fixed
  * @author Dor Ma'ayan
  * @since 30-11-2016 */
 @SuppressWarnings("static-method")

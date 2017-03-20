@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** Checking that the tipper of inlining of infix and 
+ * postfix expressions is working well
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
 @SuppressWarnings("static-method")

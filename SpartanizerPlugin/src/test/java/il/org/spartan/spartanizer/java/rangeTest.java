@@ -8,7 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** Test cases for the fluent API of Range
  * @author Dor Ma'ayan
  * @since 25-11-2016 */
 @SuppressWarnings({ "boxing", "static-method" })

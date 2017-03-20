@@ -7,7 +7,8 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** Test Cases for Checking the Recurder Mechanism 
+ * for Passing Recursively Over the AST
  * @author Dor Ma'ayan
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" })

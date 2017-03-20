@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** Checking that the arithmetic simplification tipper is 
+ * working properly
  * @author Dor Ma'ayan
  * @since 05-12-2016 */
 @SuppressWarnings("static-method")
