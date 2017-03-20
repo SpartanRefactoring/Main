@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** MultipleReplaceCurrentNode replaces multiple nodes in current statement with
  * multiple nodes (or a single node).

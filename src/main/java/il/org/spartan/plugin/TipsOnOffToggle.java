@@ -7,6 +7,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** A command handler which toggles the spartanization nature
  * @see IHandler

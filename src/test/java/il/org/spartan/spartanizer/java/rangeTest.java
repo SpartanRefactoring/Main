@@ -6,6 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** TODO: Dor Ma'ayan please add a description
  * @author Dor Ma'ayan

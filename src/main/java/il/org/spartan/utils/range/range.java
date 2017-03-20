@@ -1,4 +1,4 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.range;
 
 import java.util.*;
 import java.util.stream.*;

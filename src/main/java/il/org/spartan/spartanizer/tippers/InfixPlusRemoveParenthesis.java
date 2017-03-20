@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating {@code x+\"\"+(4) } goes to {@code x+\"\"+4 }
