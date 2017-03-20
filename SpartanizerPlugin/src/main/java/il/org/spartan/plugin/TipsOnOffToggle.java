@@ -6,7 +6,6 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
 /** A command handler which toggles the spartanization nature

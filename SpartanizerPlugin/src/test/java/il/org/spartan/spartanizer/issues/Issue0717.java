@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
 
