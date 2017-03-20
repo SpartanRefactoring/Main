@@ -63,8 +63,11 @@ public class MethodRecord {
   }
 
   public void markNP(final ASTNode n, final String np) {
-    if (excluded(np))
+    if (excluded(np)) {
+      numNPExpressions += 1;
+      numNPNodes += 1;
       return;
+    }
     numNPStatements += measure.commands(n);
     numNPExpressions += measure.expressions(n);
     numNPNodes += count.nodes(n);

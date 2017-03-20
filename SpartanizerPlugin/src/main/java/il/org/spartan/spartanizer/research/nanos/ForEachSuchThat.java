@@ -48,4 +48,8 @@ public class ForEachSuchThat extends ForEach {
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
+
+  @Override public String className() {
+    return ForEach.class.getSimpleName();
+  }
 }
