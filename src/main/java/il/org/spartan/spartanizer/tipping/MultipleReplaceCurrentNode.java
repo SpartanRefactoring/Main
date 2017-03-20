@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.utils.*;
 
 /** MultipleReplaceCurrentNode replaces multiple nodes in current statement with
  * multiple nodes (or a single node).
