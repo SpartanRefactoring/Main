@@ -19,6 +19,8 @@ import il.org.spartan.utils.*;
  * @since 2015/09/06 (Updated - auto initialization of the plugin)
  * @since 2.6 (Updated - apply nature to newly opened projects) */
 public final class Plugin extends AbstractUIPlugin implements IStartup {
+  private static final String NEW_PROJECT = "new_project";
+  @SuppressWarnings("unused") private static final String OPENED_PROJECT = "opened_project";
   private static Plugin plugin;
   private static boolean listening;
   private static final int SAFETY_DELAY = 100;
@@ -100,11 +102,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           final IProject p = (IProject) d.getResource();
           if (d.getKind() == IResourceDelta.ADDED) {
             mp.p = p;
-            mp.type = Type.new_project;
+            mp.type = NEW_PROJECT;
           }
           // else if (d.getKind() == IResourceDelta.CHANGED && p.isOpen()) {
           // mp.p = p;
-          // mp.type = Type.opened_project;
+          // mp.type = OPENED_PROJECT;
           // }
           return true;
         });
@@ -112,7 +114,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
         if (mp.p != null)
           Job.createSystem(pm -> {
             try {
-              if (mp.type == Type.new_project) {
+              if (mp.type.equals(NEW_PROJECT)) {
                 eclipse.addNature(mp.p);
                 mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
               }
@@ -127,15 +129,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     listening = true;
   }
 
-  /* TODO Ori Roth: don't use enums, prefer strings, which require less
-   * overhead, and are easier to debug; --yg */
-  enum Type {
-    new_project, opened_project
-  }
-
   /** TODO Ori Roth: not convinced it is required. --yg */
   static class MProject {
     public IProject p;
-    public Type type;
+    public String type;
   }
 }
