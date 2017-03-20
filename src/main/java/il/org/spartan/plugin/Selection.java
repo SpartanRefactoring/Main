@@ -210,21 +210,14 @@ public class Selection extends AbstractSelection<Selection> {
       final ISelection s = getSelection();
       if (s == null || s instanceof ITextSelection || !(s instanceof ITreeSelection))
         return getProject();
-      // TODO Ori Roth is there a better way of dealing with these many types
-      final Object o = ((IStructuredSelection) s).getFirstElement();
-      if (o == null)
-        return getProject();
-      if (o instanceof MarkerItem) {
-        final IMarker m = ((MarkerItem) o).getMarker();
-        if (m == null)
-          return null;
-        final IResource $ = m.getResource();
-        return $ == null ? getProject() : $.getProject();
-      }
-      if (!(o instanceof IJavaElement))
-        return getProject();
-      final IJavaProject p = ((IJavaElement) o).getJavaProject();
-      return p == null ? getProject() : p.getProject();
+      final Object $ = ((IStructuredSelection) s).getFirstElement();
+      return ($ instanceof MarkerItem
+          ? Optional.of((MarkerItem) $) //
+              .map(λ -> λ.getMarker()).map(λ -> λ.getResource()).map(λ -> λ.getProject())
+          : $ instanceof IJavaElement
+              ? Optional.of((IJavaElement) $) //
+                  .map(λ -> λ.getJavaProject()).map(λ -> λ.getProject()) //
+              : Optional.<IProject> empty()).orElse(getProject());
     }
 
     /** @param ¢ JD

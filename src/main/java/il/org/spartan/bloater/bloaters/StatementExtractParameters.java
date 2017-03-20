@@ -139,10 +139,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       }
 
       void consider(final Collection<Expression> $, final Expression x) {
-        if (!excludedParents.contains(x.getParent()) // TODO Ori Roth: check
-                                                     // whether
-                                                     // legitimate
-            && isComplicated(x))
+        // TODO Ori Roth: check whether legitimate
+        if (!excludedParents.contains(x.getParent()) && isComplicated(x))
           $.add(x);
       }
 
