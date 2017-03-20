@@ -35,12 +35,20 @@ public class ExamplesTests {
     Arrays.stream(tipper.examples()).filter(Ignores.class::isInstance).forEachOrdered(λ -> ignores((Ignores) λ));
   }
 
-  private static void ignores(final Ignores ¢) {
-    trimmingOf(¢.get()).stays();
+  private void ignores(final Ignores ¢) {
+    wrap(() -> trimmingOf(¢.get()).stays());
   }
 
-  private static void testConverts(final Converts ¢) {
-    trimmingOf(¢.from()).gives(¢.to());
+  private void testConverts(final Converts ¢) {
+    wrap(() -> trimmingOf(¢.from()).gives(¢.to()));
+  }
+
+  private void wrap(final Runnable test) {
+    try {
+      test.run();
+    } catch (final AssertionError x) {
+      throw new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
+    }
   }
 
   public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") final String name) {
@@ -52,10 +60,11 @@ public class ExamplesTests {
     return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
   }
 
-  /** Get all tippers from {@link Toolbox} and
-   * {@link ADDITIONAL_TIPPERS_FOR_TESTING}
+  /** Get all tippers from {@link Toolbox}. Removes duplicated tippers (same
+   * class, different templates).
    * @return all tippers to be tested */
-  private static Collection<Tipper<? extends ASTNode>> allTippers() {
-    return Toolbox.freshCopyOfAllTippers().getAllTippers();
+  private static Collection<?> allTippers() {
+    return Toolbox.freshCopyOfAllTippers().getAllTippers() //
+        .stream().collect(Collectors.toMap(λ -> λ.getClass(), λ -> λ, (t1, t2) -> t1)).values();
   }
 }
