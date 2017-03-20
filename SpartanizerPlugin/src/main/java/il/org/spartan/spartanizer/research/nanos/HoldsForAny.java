@@ -49,4 +49,8 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
   @Override public String symbolycReplacement() {
     return tippers.firstReplacement();
   }
+
+  @Override public String className() {
+    return Aggregate.class.getSimpleName();
+  }
 }
