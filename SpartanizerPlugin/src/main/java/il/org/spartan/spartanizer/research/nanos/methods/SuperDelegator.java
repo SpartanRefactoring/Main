@@ -34,4 +34,8 @@ public class SuperDelegator extends Delegator {
     return anyTips(tippers, expression(s))//
         && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.instanceOf(SuperMethodInvocation.class).in(s))));
   }
+
+  @Override public String className() {
+    return Delegator.class.getSimpleName();
+  }
 }
