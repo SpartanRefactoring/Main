@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
-
+import il.org.spartan.spartanizer.ast.navigate.descendants;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -1332,7 +1332,7 @@ public interface iz {
     }
 
     /** @param ¢ JD
-     * @return whetherthe given node is a literal true or false otherwise */
+     * @return whether the given node is a literal true or false otherwise */
     static boolean true¢(final ASTNode ¢) {
       return iz.literal(¢, true);
     }

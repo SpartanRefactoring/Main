@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.*;
 
 /** Tests of {@link Str}
  * @author Shimon Azulay

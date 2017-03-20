@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -18,69 +19,87 @@ import il.org.spartan.*;
  * @since 2017-03-06 */
 public interface B00L extends BooleanSupplier {
   /** a {@link B00L} which is {@code false} */
-  B00L F = new P(() -> false);
+  B00L F = new P("F", () -> false);
+  /** a {@link B00L} whose evaluation fails with {@link NullPointerException} */
+  B00L N = B00L.of("N", () -> {
+    throw new NullPointerException();
+  });
   /** a {@link B00L} which is {@code true} */
-  B00L T = new P(() -> true);
+  B00L T = new P("T", () -> true);
   /** a {@link B00L} whose evaluation fails with {@link AssertionError} */
-  B00L X = B00L.of("T", () -> {
+  B00L X = B00L.of("X", () -> {
     throw new AssertionError();
   });
 
   static B00L AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
-    return new AND(s1, s2, ss);
+    return new And(s1, s2, ss);
   }
 
-  static NOT not(final BooleanSupplier ¢) {
-    return new NOT(¢);
+  static B00L AND(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+    return new And(toString, s1, s2, ss);
   }
 
-  static B00L of(final String toString, final BooleanSupplier ¢) {
-    return new P(¢) {
-      @Override public String toString() {
-        return toString;
-      }
-    };
+
+  static Not NOT(final BooleanSupplier ¢) {
+    return new Not(¢);
   }
 
   static B00L of(final BooleanSupplier ¢) {
     return new P(¢);
   }
 
-  static B00L OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
-    return new OR(s1, s2, ss);
+  static B00L of(final String toString, final BooleanSupplier s) {
+    return new P(toString, s);
   }
 
-  B00L and(BooleanSupplier c, BooleanSupplier... cs);
+  static B00L OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+    return new Or(s1, s2, ss);
+  }
+  static B00L OR(String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+    return new Or(toString, s1, s2, ss);
+  }
+
+
+  /** Name must be distinct from but similar to
+   * {@link #AND(BooleanSupplier, BooleanSupplier, BooleanSupplier...)} */
+  B00L and(BooleanSupplier s, BooleanSupplier... ss);
 
   default boolean eval() {
     return getAsBoolean();
   }
 
-  B00L or(BooleanSupplier c, BooleanSupplier... cs);
+  B00L or(BooleanSupplier s, BooleanSupplier... ss);
 
-  default <R> R reduce(final ReducingGear<R> ¢) {
+  default <R> R reduce(final B00LReducingGear<R> ¢) {
     return ¢.reduce(this);
   }
 
-  class AND extends C {
-    public AND(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
-      add(c1, c2, cs);
+  class And extends C {
+    And(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
+      super(null);
+      add(s1, s2, ss);
     }
 
-    AND(final BooleanSupplier c, final BooleanSupplier[] cs) {
-      add(c, cs);
+    And(final BooleanSupplier s, final BooleanSupplier[] ss) {
+      super(null);
+      add(s, ss);
     }
 
-    @Override public B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return add(this, c, cs);
+    And(String toString, BooleanSupplier s1, BooleanSupplier s2, BooleanSupplier[] ss) {
+      super(toString);
+      add(s1, s2, ss);
+    }
+
+    @Override public B00L and(final BooleanSupplier s, final BooleanSupplier... ss) {
+      return add(this, s, ss);
     }
 
     @Override public boolean getAsBoolean() {
       return stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return new OR(this, c, cs);
+    @Override public B00L or(final BooleanSupplier s, final BooleanSupplier... ss) {
+      return new Or(this, s, ss);
     }
   }
 
@@ -89,20 +108,28 @@ public interface B00L extends BooleanSupplier {
    * @since 2017-03-19 */
   abstract class C implements B00L {
     final List<BooleanSupplier> inner = new ArrayList<>();
+    private final String toString;
+
+    @Override public String toString() {
+      return toString != null ? toString : super.toString();
+    }
+    public C(String toString) {
+     this.toString = toString; 
+    }
 
     final B00L add(final BooleanSupplier... ¢) {
       inner.addAll(as.list(¢));
       return this;
     }
 
-    final B00L add(final BooleanSupplier c, final BooleanSupplier... cs) {
-      inner.add(c);
+    final B00L add(final BooleanSupplier s, final BooleanSupplier... cs) {
+      inner.add(s);
       return add(cs);
     }
 
-    final B00L add(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier... cs) {
-      inner.add(c1);
-      return add(c2, cs);
+    final B00L add(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... cs) {
+      inner.add(s1);
+      return add(s2, cs);
     }
 
     protected Stream<BooleanSupplier> stream() {
@@ -110,8 +137,8 @@ public interface B00L extends BooleanSupplier {
     }
   }
 
-  final class NOT extends P {
-    public NOT(final BooleanSupplier s) {
+  final class Not extends P {
+    public Not(final BooleanSupplier s) {
       super(s);
     }
 
@@ -120,17 +147,24 @@ public interface B00L extends BooleanSupplier {
     }
   }
 
-  final class OR extends C {
-    public OR(final BooleanSupplier c, final BooleanSupplier... cs) {
-      add(c, cs);
+  final class Or extends C {
+    public Or(final BooleanSupplier s, final BooleanSupplier... cs) {
+     super(null);
+      add(s, cs);
     }
 
-    public OR(final BooleanSupplier c1, final BooleanSupplier c2, final BooleanSupplier[] cs) {
-      add(c1, c2, cs);
+    public Or(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] cs) {
+      super(null);
+      add(s1, s2, cs);
     }
 
-    @Override public B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
-      inner.set(inner.size() - 1, AND(of(last(inner)), c, cs));
+    public Or(String toString, BooleanSupplier s1, BooleanSupplier s2, BooleanSupplier[] ss) {
+      super(toString);
+      add(s1, s2, ss);
+    }
+
+    @Override public B00L and(final BooleanSupplier s, final BooleanSupplier... cs) {
+      inner.set(inner.size() - 1, AND(of(last(inner)), s, cs));
       return this;
     }
 
@@ -138,8 +172,8 @@ public interface B00L extends BooleanSupplier {
       return stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return add(c, cs);
+    @Override public B00L or(final BooleanSupplier s, final BooleanSupplier... cs) {
+      return add(s, cs);
     }
   }
 
@@ -155,16 +189,31 @@ public interface B00L extends BooleanSupplier {
       this.inner = inner;
     }
 
-    @Override public final B00L and(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return new AND(this, c, cs);
+    public P(String toString, final BooleanSupplier inner) {
+      if (inner == null)
+        throw new IllegalArgumentException();
+      this.inner = new BooleanSupplier() {
+        @Override public boolean getAsBoolean() {
+          return inner.getAsBoolean();
+        }
+
+        @Override public String toString() {
+          return toString;
+        }
+      };
+    }
+
+    @Override public final B00L and(final BooleanSupplier s, final BooleanSupplier... cs) {
+      return new And(this, s, cs);
     }
 
     @Override public boolean getAsBoolean() {
       return inner.getAsBoolean();
     }
 
-    @Override public B00L or(final BooleanSupplier c, final BooleanSupplier... cs) {
-      return new OR(this, c, cs);
+    @Override public B00L or(final BooleanSupplier s, final BooleanSupplier... cs) {
+      return new Or(this, s, cs);
     }
   }
+
 }

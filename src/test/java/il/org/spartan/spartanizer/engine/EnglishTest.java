@@ -3,11 +3,11 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import java.text.*;
+import java.util.stream.IntStream;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** Test class for {@link English}
@@ -65,8 +65,7 @@ public class EnglishTest {
 
   @Test public void testTrimAbsoluteTrimsOnLongStrings() {
     final StringBuilder sb = new StringBuilder();
-    for (int ¢ = 0; ¢ <= English.TRIM_THRESHOLD; ++¢)
-      sb.append("a");
+    IntStream.rangeClosed(0, English.TRIM_THRESHOLD).forEach(λ -> sb.append("a"));
     azzert.that(English.trimAbsolute(sb + "", English.TRIM_THRESHOLD, English.TRIM_SUFFIX),
         is((sb + "").substring(0, (sb + "").length() - 4) + English.TRIM_SUFFIX));
   }

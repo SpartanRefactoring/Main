@@ -14,21 +14,30 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a
- * spartanizer once.
+ * {@link Toolbox} {@link #once(String)}, {@link #twice(String)},
+ * {@link #thrice(String)}, and {@link #repetitively(String)}.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 public interface theSpartanizer {
-  static String fixedPoint(final String from) {
-    int n = 0;
-    for (String $ = from, next;; $ = next) {
-      next = once($);
-      if (same($, next) || ++n > 20)
-        return $;
-    }
-  }
+  static Tipper<?> firstTipper(final String from) {
+    final Wrapper<Tipper<?>> $ = new Wrapper<>();
+    final ASTNode n = wizard.ast(from);
+    if (n != null)
+      n.accept(new DispatchingVisitor() {
+        @Override protected <N extends ASTNode> boolean go(final N ¢) {
+          return searching && go(toolbox.firstTipper(¢));
+        }
 
-  static boolean same(final String s1, final String s2) {
-    return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
+        <N extends ASTNode> boolean go(final Tipper<N> ¢) {
+          if (¢ == null)
+            return true;
+          $.set(¢);
+          return searching = false;
+        }
+
+        boolean searching = true;
+      });
+    return $.get();
   }
 
   /** Apply trimming once
@@ -70,12 +79,25 @@ public interface theSpartanizer {
     return $.get();
   }
 
+  static String repetitively(final String from) {
+    int n = 0;
+    for (String $ = from, next;; $ = next) {
+      next = once($);
+      if (same($, next) || ++n > 20)
+        return $;
+    }
+  }
+
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
     } catch (final Exception ¢) {
       return monitor.logProbableBug(¢);
     }
+  }
+
+  static boolean same(final String s1, final String s2) {
+    return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 
   static String thrice(final String javaCode) {
@@ -87,25 +109,4 @@ public interface theSpartanizer {
   }
 
   Toolbox toolbox = Toolbox.defaultInstance();
-
-  static Tipper<?> firstTipper(final String from) {
-    final Wrapper<Tipper<?>> $ = new Wrapper<>();
-    final ASTNode n = wizard.ast(from);
-    if (n != null)
-      n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(final N ¢) {
-          return searching && go(toolbox.firstTipper(¢));
-        }
-
-        <N extends ASTNode> boolean go(final Tipper<N> ¢) {
-          if (¢ == null)
-            return true;
-          $.set(¢);
-          return searching = false;
-        }
-
-        boolean searching = true;
-      });
-    return $.get();
-  }
 }

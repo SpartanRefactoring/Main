@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.engine.nominal.English.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+import static il.org.spartan.utils.English.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -11,6 +11,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.utils.*;
 
 /** Misc unit tests with no better other place for version 3.00
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -109,7 +110,7 @@ public final class Version300 {
 
   @Test public void d() {
     azzert.that(
-        theSpartanizer.fixedPoint(//
+        theSpartanizer.repetitively(//
             "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
         iz(//
             "boolean a(int[] b, int c){ return d == c; }") //
@@ -127,7 +128,7 @@ public final class Version300 {
 
   @Test public void stA() {
     azzert.that(
-        theSpartanizer.fixedPoint(//
+        theSpartanizer.repetitively(//
             "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
         iz(//
             "boolean a(int[] b, int c){ return d == c; }") //
@@ -136,21 +137,21 @@ public final class Version300 {
 
   @Test public void stB() {
     azzert.that(
-        theSpartanizer.fixedPoint(//
+        theSpartanizer.repetitively(//
             "A a(A b) throws B { A $; $ = b; return $; }"), //
         iz("A a(A b) throws B { return b; }"));
   }
 
   @Test public void stC() {
     azzert.that(
-        theSpartanizer.fixedPoint(//
+        theSpartanizer.repetitively(//
             "A a(A b) throws B { A $ = b; return $; }"), //
         iz("A a(A b) throws B { return b; }"));
   }
 
   @Test public void stZ() {
     azzert.that(
-        theSpartanizer.fixedPoint(//
+        theSpartanizer.repetitively(//
             "A a(A b)throws B{ A c; c = b; return c; }"), //
         iz(//
             "A a(A b) throws B { return b; }"));

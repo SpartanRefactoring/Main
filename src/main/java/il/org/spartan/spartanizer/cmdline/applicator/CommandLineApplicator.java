@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** An {@link Applicator} suitable for the command line.
@@ -158,7 +156,7 @@ public class CommandLineApplicator extends Applicator {
     run_start(1, λ -> "Spartanizing " + printableAt(λ, 0)), //
     run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
     run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
-    visit_cu(3, λ -> system.nth(printableAt(λ, 0), printableAt(λ, 1)) + "\tSpartanizing " + printableAt(λ, 2)), //
+    visit_cu(3, λ -> lisp2.nth(printableAt(λ, 0), printableAt(λ, 1)) + "\tSpartanizing " + printableAt(λ, 2)), //
     run_finish(2, λ -> "Done spartanizing " + printableAt(λ, 0) + "\nTips accepted: " + printableAt(λ, 1)),
     // report
     report_start(1, λ -> "Start reporting " + printableAt(λ, 0)), //

@@ -12,7 +12,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
@@ -101,7 +100,7 @@ public final class SpartanizeProject extends BaseHandler {
             break;
           }
           pm.worked(1);
-          pm.subTask("Compilation unit " + system.nth(++n, todo) + " (" + ¢.getElementName() + ")");
+          pm.subTask("Compilation unit " + lisp2.nth(++n, todo) + " (" + ¢.getElementName() + ")");
           if (!t.apply(¢))
             done.add(¢);
         }
