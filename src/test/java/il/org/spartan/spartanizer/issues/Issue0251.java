@@ -7,7 +7,8 @@ import org.junit.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** Checking that the tipper of removing 
+ * unmeaningful statements from blocks is working properly
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 @SuppressWarnings({ "static-method", "javadoc" })

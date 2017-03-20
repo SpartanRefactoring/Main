@@ -10,7 +10,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO: Dor Ma'ayan please add a description
+/** The Recurser gives programmer the option to scan 
+ * the AST while doing operations over the nodes.
+ * the recurser currently offers pre-visit and post-visit options.
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class Recurser<T> {
