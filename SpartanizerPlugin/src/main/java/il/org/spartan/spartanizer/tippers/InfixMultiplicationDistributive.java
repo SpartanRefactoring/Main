@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** Apply the distributive rule to multiplication: {@code
 * a*b + a*c

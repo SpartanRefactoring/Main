@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** see Issue0 #717 for more details
  * @author Lidia Piatigorski
