@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -154,8 +155,7 @@ public final class Application implements IApplication {
   private FileStats process(final File f, final ICompilationUnit u) throws IOException, JavaModelException {
     final FileStats $ = new FileStats(f);
     final Trimmer t = new Trimmer();
-    for (int ¢ = 0; ¢ < optRounds; ++¢)
-      t.apply(u);
+      IntStream.range(0, optRounds).forEach(λ -> t.apply(u));
     FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
     if (optVerbose)
       System.out.println("Spartanized file " + f.getAbsolutePath());
