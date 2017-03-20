@@ -117,6 +117,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     ;
     add(MethodDeclaration.class, //
         new DoNothingReturnParam(), // R.I.P
+        new DoNothingReturnThis(), //
         new Down.Caster(), // rare
         new ForEachApplier(), // rare + we have ForEach
         new SelfCaster(), // rare
@@ -136,7 +137,6 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
-        new DoNothingReturnThis(), //
         new Empty(), //
         new Examiner(), //
         new Getter(), //
