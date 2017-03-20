@@ -28,7 +28,6 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
   @Override public ASTNode replacement(final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
-    // TODO: Dor Ma'ayan please rename to xs --yg
     int i = 0;
     boolean found = false;
     final CastExpression $ = x.getAST().newCastExpression();
