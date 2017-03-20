@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.range.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
  * plug-in from the command line.

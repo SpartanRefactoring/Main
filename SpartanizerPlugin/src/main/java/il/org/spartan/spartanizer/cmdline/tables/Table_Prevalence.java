@@ -65,6 +65,7 @@ class Table_Prevalence extends NanoTable {
     for (String ¢ : prevalence.keySet()) {
       writer.put("Nano", ¢);
       writer.put("Prevalence", Double.valueOf(format.decimal(prevalence.get(¢).inner / 6.0)));
+      writer.nl();
     }
     writer.close();
   }

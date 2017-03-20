@@ -214,8 +214,11 @@ class LightWeightMethodRecord {
       markLetItBeIn(¢);
     else if (np.equals(ArgumentsTuple.class.getSimpleName()))
       markArgumentsTuple();
-    else if (iz.methodDeclaration(¢))
-      fullyCovered = true;
+    else {
+      mark(¢);
+      if (iz.methodDeclaration(¢))
+        fullyCovered = true;
+    }
   }
 
   private void markArgumentsTuple() {
