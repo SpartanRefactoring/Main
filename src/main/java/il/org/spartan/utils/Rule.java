@@ -1,15 +1,12 @@
 package il.org.spartan.utils;
 
+import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
-
-import static il.org.spartan.spartanizer.cmdline.system.*;
 
 import java.lang.annotation.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
-
-import il.org.spartan.spartanizer.cmdline.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
  * search, logging, computing statistics, etc.

@@ -14,14 +14,33 @@ import il.org.spartan.*;
  * @since 2017-03-08 */
 @SuppressWarnings("static-method")
 public class B00LTest {
-  private static final B00L FIXTURE = B00L.OR(T, F, X);
+  private B00L B1, T_OR_F_OR_X;
+  private B00L B2, T_AND_F_AND_X;
+  private B00L B3, FNF_OR_X_OR_N_OR_T;
+  private B00L B4, T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T;
+  private B00L B5, B1_AND_B2;
+  private B00L B6, B2_AND_B1;
+  private B00L B7, B1_OR_B2;
+  private B00L B8, B2_OR_B1;
+
+  @Before public void setUp() {
+    B1 = T_OR_F_OR_X = B00L.OR("T OR F OR X", T, F, X);
+    B2 = T_AND_F_AND_X = B00L.AND("T AND F AND X", T, F, X);
+    B3 = FNF_OR_X_OR_N_OR_T = NOT(F).and(NOT(F)).or(X).or(N, T);
+    B4 = T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T = B00L.OR(T_OR_F_OR_X, FNF_OR_X_OR_N_OR_T);
+    B5 = B1_AND_B2 = B1.and(B2);
+    B6 = B2_AND_B1 = B2.and(B1);
+    B7 = B1_OR_B2 = B1.or(B2);
+    B8 = B2_OR_B1 = B2.or(B1);
+  }
+
   private static boolean ignoreNext() {
     return true;
   }
+
   B00L condition;
   B00L inner;
   Object object;
-
   BooleanSupplier supplier;
 
   @Test(expected = AssertionError.class) public void a() {
@@ -142,25 +161,26 @@ public class B00LTest {
     // Force or() short circuit
     assert B00L.OR(F, T, X).getAsBoolean();
     assert B00L.OR(T, X, X).getAsBoolean();
-    assert FIXTURE.getAsBoolean();
+    assert T_OR_F_OR_X.getAsBoolean();
     assert B00L.OR(T, X, X).getAsBoolean();
     // Demonstrate not
-    assert B00L.not(F).getAsBoolean();
-    assert !B00L.not(T).getAsBoolean();
+    assert B00L.NOT(F).getAsBoolean();
+    assert !B00L.NOT(T).getAsBoolean();
     // Now some more complex expressions
-    assert B00L.not(F).and(not(F)).getAsBoolean();
-    assert !B00L.not(F).and(not(T)).getAsBoolean();
-    assert B00L.not(F).and(not(F)).or(T).getAsBoolean();
-    assert B00L.not(F).and(not(F)).or(T).eval();
-    assert B00L.not(F).and(not(F)).or(T).or(X).eval();
-    assert B00L.not(F).and(not(F)).or(T).or(X, X).eval();
+    assert B00L.NOT(F).and(NOT(F)).getAsBoolean();
+    assert !B00L.NOT(F).and(NOT(T)).getAsBoolean();
+    assert B00L.NOT(F).and(NOT(F)).or(T).getAsBoolean();
+    assert B00L.NOT(F).and(NOT(F)).or(T).eval();
+    assert B00L.NOT(F).and(NOT(F)).or(T).or(X).eval();
+    assert B00L.NOT(F).and(NOT(F)).or(T).or(X, X).eval();
     // More fancy syntax.
-    assert not(F).and(not(F)).getAsBoolean();
-    assert !not(F).and(not(T)).getAsBoolean();
-    assert not(F).and(not(F)).or(T).getAsBoolean();
-    assert not(F).and(not(F)).or(T).eval();
-    assert not(F).and(not(F)).or(T).or(X).eval();
-    assert not(F).and(not(F)).or(T).or(X, X).eval();
+    assert NOT(F).and(NOT(F)).getAsBoolean();
+    assert !NOT(F).and(NOT(T)).getAsBoolean();
+    assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
+    assert NOT(F).and(NOT(F)).or(T).eval();
+    assert NOT(F).and(NOT(F)).or(T).or(X).eval();
+    final B00L or = NOT(F).and(NOT(F)).or(T).or(X, X);
+    assert or.eval();
     // Check precedence: A || B && C
     assert B00L.of(F).or(T).and(T).eval();
     // Check precedence: (A || B) && C
@@ -170,10 +190,34 @@ public class B00LTest {
   }
 
   @Test public void b() {
-    azzert.that(FIXTURE.reduce(new ReducingGear<String>(new ReduceStringConcatenate()) {
+    azzert.that(T_OR_F_OR_X.reduce(new B00LReducingGear<String>(new ReduceStringConcatenate()) {
       @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
         return "";
       }
     }), is(""));
+  }
+
+  @Test public void c() {
+    azzert.that(T_OR_F_OR_X.reduce(new B00LReducingGear<String>(new ReduceStringConcatenate()) {
+      @Override protected String map(final BooleanSupplier ¢) {
+        return ¢ + "";
+      }
+    }), is("T_OR_F_OR_X"));
+  }
+
+  @Test public void d() {
+    azzert.that(T_OR_F_OR_X.reduce(new B00LJavaNotation()), is("T || F || X"));
+  }
+
+  @Test public void e() {
+    azzert.that(T_AND_F_AND_X.reduce(new B00LJavaNotation()), is("T || F || X"));
+  }
+
+  @Test public void f() {
+    azzert.that(FNF_OR_X_OR_N_OR_T.reduce(new B00LJavaNotation()), is("!F && !F || X || N || T"));
+  }
+
+  @Test public void g() {
+    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(new B00LJavaNotation()), is("T && F && X && (!F && !F || X || N || T)"));
   }
 }

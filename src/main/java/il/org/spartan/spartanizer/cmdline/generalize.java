@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.util;
+package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.utils.*;
 

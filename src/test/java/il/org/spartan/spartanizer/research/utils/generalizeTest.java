@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.cmdline.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch

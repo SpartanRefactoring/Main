@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.*;
 import java.util.List;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -23,7 +24,6 @@ import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
@@ -188,14 +188,9 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static Iterable<ITextEditor> getOpenedEditors() {
-    final Collection<ITextEditor> $ = new ArrayList<>();
-    final IWorkbenchPage p = getPage();
-    if (p != null)
-      for (final IEditorReference r : p.getEditorReferences()) {
-        final IEditorPart ep = r.getEditor(false);
-        if (ep instanceof ITextEditor)
-          $.add((ITextEditor) ep);
-      }
-    return $;
+    final IWorkbenchPage $ = getPage();
+    return $ == null ? new ArrayList<>()
+        : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
+            .collect(toList());
   }
 }

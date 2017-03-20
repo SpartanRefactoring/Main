@@ -6,7 +6,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

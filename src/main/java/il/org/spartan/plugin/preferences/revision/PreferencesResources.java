@@ -6,7 +6,6 @@ import org.eclipse.jface.preference.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
