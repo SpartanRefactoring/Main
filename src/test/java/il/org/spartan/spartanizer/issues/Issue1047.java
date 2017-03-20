@@ -11,9 +11,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-01-08 */
 @SuppressWarnings("static-method")
 public class Issue1047 {
-  // TODO Doron Meshulam: unignore this test in {@link Issue0147} and in {@link
-  // AdvancedGivesTests}
-  // TODO: Yossi Gil - raise this up in staff meeting with Doron.
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
@@ -35,5 +32,27 @@ public class Issue1047 {
     trimmingOf("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢; continue;}")//
         .givesEither("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢;}", //
             "for (int ¢ = 0 ; ¢ < 5 ; ++¢) ++¢;");
+  }
+  
+  @Test public void test3() {
+    trimmingOf("for (int i = 0; i < length; ++i) {" +  
+        "char c1 = s1.charAt(i);"+
+        "char c2 = s2.charAt(i);"+
+        "if (c1 == c2)"+
+        "continue;"+
+        "int alphaIndex = getAlphaIndex(c1);"+
+        "if (alphaIndex >= 26 || alphaIndex != getAlphaIndex(c2))"+
+        "return false;"+
+        "continue;"+
+        "}")
+    .gives("for (int i = 0; i < length; ++i) {" +  
+            "char c1 = s1.charAt(i);"+
+            "char c2 = s2.charAt(i);"+
+            "if (c1 == c2)"+
+            "continue;"+
+            "int alphaIndex = getAlphaIndex(c1);"+
+            "if (alphaIndex >= 26 || alphaIndex != getAlphaIndex(c2))"+
+            "return false;"+
+            "}");
   }
 }
