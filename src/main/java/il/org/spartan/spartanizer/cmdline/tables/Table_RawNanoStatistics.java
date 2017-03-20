@@ -20,6 +20,7 @@ import il.org.spartan.utils.*;
 public class Table_RawNanoStatistics extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
+    spartanalyzer.addRejected();
   }
 
   public static void summarize(final String path) {

@@ -45,5 +45,9 @@ public class While {
     @Override public String symbolycReplacement() {
       return firstReplacement(tippers);
     }
+
+    @Override public String className() {
+      return Aggregate.class.getSimpleName();
+    }
   }
 }

@@ -41,7 +41,6 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new Collect(), //
                 new CountIf(), //
                 new FindFirst(), //
-                new FlatMap(), //
                 new ForEach(), //
                 new ForEachSuchThat(), //
                 new HoldsForAll(), //
@@ -91,6 +90,9 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new AsBit(), // functional
                 new Max(), // functional
                 new Min(), // functional
+                null) //
+            .add(EnhancedForStatement.class, //
+                new FlatMap(), // rare
                 null) //
             .add(IfStatement.class, //
                 // new GetOrElseThrow(), //R.I.P
