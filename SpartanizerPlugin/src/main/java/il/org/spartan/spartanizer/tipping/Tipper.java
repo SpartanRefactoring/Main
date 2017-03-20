@@ -21,6 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
+  // TODO Yossi: decide whether to move this to {@link Example} --or
   public static Example.Ignores ignores(final String code) {
     return () -> code;
   }
