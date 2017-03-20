@@ -1,9 +1,7 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.utils;
 
 import java.io.*;
 import java.nio.file.*;
-
-import il.org.spartan.utils.*;
 
 /** File utils
  * @author Ori Marcovitch

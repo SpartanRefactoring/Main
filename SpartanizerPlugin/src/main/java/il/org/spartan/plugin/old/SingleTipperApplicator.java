@@ -21,7 +21,6 @@ import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -131,7 +130,7 @@ public final class SingleTipperApplicator {
                 monitor.logEvaluationError(this, ¢);
               }
             px.worked(1);
-            px.subTask(u.getElementName() + system.nth(++n, todo.size()));
+            px.subTask(u.getElementName() + lisp2.nth(++n, todo.size()));
           }
           todo.removeAll(exhausted);
           px.done();

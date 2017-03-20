@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
+import il.org.spartan.utils.*;
 
 /** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to

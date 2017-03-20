@@ -5,7 +5,7 @@ import java.util.stream.*;
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.utils.*;
 
 /** Classification of Expanders
  * @author Raviv Rachmiel

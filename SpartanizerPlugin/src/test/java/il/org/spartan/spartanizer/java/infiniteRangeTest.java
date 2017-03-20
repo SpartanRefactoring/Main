@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.java;
 
 import org.junit.*;
 
+import il.org.spartan.utils.*;
+
 /** TODO: Sapir Bismot please add a description
  * @author Sapir Bismot
  * @since 04-12-2016 */

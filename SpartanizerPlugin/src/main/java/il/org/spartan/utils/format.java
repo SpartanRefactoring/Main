@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.research.util;
+package il.org.spartan.utils;
 
 import java.text.*;
 

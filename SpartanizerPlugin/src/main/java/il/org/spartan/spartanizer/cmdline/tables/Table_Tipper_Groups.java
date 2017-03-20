@@ -5,9 +5,9 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.tables.*;
+import il.org.spartan.utils.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.

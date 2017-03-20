@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 
 /** Collects statistics of loops, including hits by nano patterns.

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.utils;
+package il.org.spartan.utils;
 
 /** A poor man's approximation of a mutable String.
  * @author Ori Marcovitch

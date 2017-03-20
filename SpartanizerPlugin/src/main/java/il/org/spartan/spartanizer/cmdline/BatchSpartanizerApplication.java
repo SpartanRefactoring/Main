@@ -234,38 +234,38 @@ final class BatchSpartanizerApplication implements IApplication {
         .put("Nodes1", nodes)//
         .put("Nodes2", nodes2)//
         .put("Δ Nodes", nodes - nodes2)//
-        .put("δ Nodes", system.d(nodes, nodes2))//
-        .put("δ Nodes %", system.p(nodes, nodes2))//
+        .put("δ Nodes", Utils.d(nodes, nodes2))//
+        .put("δ Nodes %", Utils.p(nodes, nodes2))//
         .put("Body", body)//
         .put("Body2", body2)//
         .put("Δ Body", body - body2)//
-        .put("δ Body", system.d(body, body2))//
-        .put("% Body", system.p(body, body2))//
+        .put("δ Body", Utils.d(body, body2))//
+        .put("% Body", Utils.p(body, body2))//
         .put("Length1", length)//
         .put("Tokens1", tokens)//
         .put("Tokens2", tokens2)//
         .put("Δ Tokens", tokens - tokens2)//
-        .put("δ Tokens", system.d(tokens, tokens2))//
-        .put("% Tokens", system.p(tokens, tokens2))//
+        .put("δ Tokens", Utils.d(tokens, tokens2))//
+        .put("% Tokens", Utils.p(tokens, tokens2))//
         .put("Length1", length)//
         .put("Length2", length2)//
         .put("Δ Length", length - length2)//
-        .put("δ Length", system.d(length, length2))//
-        .put("% Length", system.p(length, length2))//
+        .put("δ Length", Utils.d(length, length2))//
+        .put("% Length", Utils.p(length, length2))//
         .put("Tide1", tide)//
         .put("Tide2", tide2)//
         .put("Δ Tide2", tide - tide2)//
-        .put("δ Tide2", system.d(tide, tide2))//
-        .put("δ Tide2", system.p(tide, tide2))//
+        .put("δ Tide2", Utils.d(tide, tide2))//
+        .put("δ Tide2", Utils.p(tide, tide2))//
         .put("Essence1", essence)//
         .put("Essence2", essence2)//
         .put("Δ Essence", essence - essence2)//
-        .put("δ Essence", system.d(essence, essence2))//
-        .put("% Essence", system.p(essence, essence2))//
-        .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide)) //
-        .put("R(E/L)", system.ratio(length, essence)) //
-        .put("R(E/T)", system.ratio(tide, essence)) //
-        .put("R(B/S)", system.ratio(nodes, body)) //
+        .put("δ Essence", Utils.d(essence, essence2))//
+        .put("% Essence", Utils.p(essence, essence2))//
+        .put("Words)", wordCount).put("R(T/L)", Utils.ratio(length, tide)) //
+        .put("R(E/L)", Utils.ratio(length, essence)) //
+        .put("R(E/T)", Utils.ratio(tide, essence)) //
+        .put("R(B/S)", Utils.ratio(nodes, body)) //
     ;
     report.nl();
     return false;
