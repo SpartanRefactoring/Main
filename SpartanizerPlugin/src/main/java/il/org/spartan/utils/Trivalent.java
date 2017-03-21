@@ -1,5 +1,7 @@
 package il.org.spartan.utils;
 
+import static il.org.spartan.utils.Trivalent.*;
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;

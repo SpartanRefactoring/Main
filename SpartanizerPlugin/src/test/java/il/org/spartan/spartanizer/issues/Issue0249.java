@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** See GitHub issue thus numbered 
+/** See GitHub issue thus numbered
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @Ignore

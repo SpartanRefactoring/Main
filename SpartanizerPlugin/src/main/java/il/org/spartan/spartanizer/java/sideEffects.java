@@ -106,7 +106,7 @@ public enum sideEffects {
     return free(expression(¢), then(¢), elze(¢));
   }
 
-  public static boolean sink(Expression x) {
+  public static boolean sink(final Expression x) {
     return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> intIsIn(λ, STRICT_SIDE_EFFECT));
   }
 

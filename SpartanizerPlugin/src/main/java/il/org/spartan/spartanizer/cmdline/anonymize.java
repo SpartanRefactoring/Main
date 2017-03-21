@@ -141,8 +141,8 @@ public enum anonymize {
         return $ + "  .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t));
-      $ += format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
+          + format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
   }
