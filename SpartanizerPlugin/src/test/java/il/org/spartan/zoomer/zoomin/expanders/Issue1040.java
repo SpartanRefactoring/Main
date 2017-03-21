@@ -66,7 +66,6 @@ public class Issue1040 {
     }
 
     @SuppressWarnings("boxing") void toTest() {
-      total = 0;
       total = Stream.of(arr).map(λ -> total(1)).reduce((x, y) -> x + y).get().intValue();
     }
 

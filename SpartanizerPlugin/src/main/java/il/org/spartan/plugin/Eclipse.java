@@ -21,7 +21,7 @@ public class Eclipse {
   // TODO Roth: switch from system date to eclipse template date
   /** @param format date format
    * @return current date */
-  public static String date(String format) {
-    return (new SimpleDateFormat(format)).format(new Date());
+  public static String date(final String format) {
+    return new SimpleDateFormat(format).format(new Date());
   }
 }
