@@ -66,10 +66,6 @@ public abstract class ReducingGear<R> extends Reduce<R> {
     return reduce();
   }
 
-  protected R map(@SuppressWarnings("unused") final List<BooleanSupplier> __) {
-    return reduce();
-  }
-
   protected R after(@SuppressWarnings("unused") final C __) {
     return reduce();
   }
