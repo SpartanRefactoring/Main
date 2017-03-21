@@ -90,14 +90,14 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         statements(b).add(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug);
         r.replace(s, b, g);
       }
-    };
-  }
 
-  static void goBlockParent(final Block b, final VariableDeclarationStatement s, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
-    final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
-    lr.insertBefore(s, s, g);
-    lr.insertBefore(ns, s, g);
-    lr.remove(s, g);
+      void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final Statement ns, final ASTRewrite r, final TextEditGroup g) {
+        final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+        lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
+        lr.insertBefore(ns, s, g);
+        lr.remove(s, g);
+      }
+    };
   }
 
   // TODO Ori Roth: extend (?)
