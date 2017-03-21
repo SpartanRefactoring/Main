@@ -1,6 +1,5 @@
 package il.org.spartan.utils;
 
-
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -20,25 +19,26 @@ import il.org.spartan.*;
 public interface Proposition extends BooleanSupplier {
   /** a {@link Proposition} which is {@code false} */
   Proposition F = new P("F", () -> false);
-  /** a {@link Proposition} whose evaluation fails with {@link NullPointerException} */
+  /** a {@link Proposition} whose evaluation fails with
+   * {@link NullPointerException} */
   Proposition N = Proposition.of("N", () -> {
     throw new NullPointerException();
   });
   /** a {@link Proposition} which is {@code true} */
   Proposition T = new P("T", () -> true);
-  /** a {@link Proposition} whose evaluation fails with {@link AssertionError} */
+  /** a {@link Proposition} whose evaluation fails with
+   * {@link AssertionError} */
   Proposition X = Proposition.of("X", () -> {
     throw new AssertionError();
   });
 
   static Proposition AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
-    return AND(null,s1, s2, ss);
+    return AND(null, s1, s2, ss);
   }
 
   static Proposition AND(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new And(toString, s1, s2, ss);
   }
-
 
   static Proposition NOT(final BooleanSupplier ¢) {
     return new Not(¢);
@@ -55,10 +55,10 @@ public interface Proposition extends BooleanSupplier {
   static Proposition OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(s1, s2, ss);
   }
+
   static Proposition OR(String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(toString, s1, s2, ss);
   }
-
 
   /** Name must be distinct from but similar to
    * {@link #AND(BooleanSupplier, BooleanSupplier, BooleanSupplier...)} */
@@ -102,9 +102,8 @@ public interface Proposition extends BooleanSupplier {
       return new Or(this, s, ss);
     }
   }
-  
-  abstract class Implementation<Inner> extends Outer<Inner> implements Proposition {
 
+  abstract class Implementation<Inner> extends Outer<Inner> implements Proposition {
     protected final String toString;
 
     public Implementation(String toString, Inner inner) {
@@ -115,7 +114,6 @@ public interface Proposition extends BooleanSupplier {
     @Override public String toString() {
       return inner instanceof Implementation ? inner + "" : toString != null ? toString : super.toString();
     }
-   
   }
 
   /** A compound {@link Proposition}
@@ -158,7 +156,7 @@ public interface Proposition extends BooleanSupplier {
 
   final class Or extends C {
     public Or(final BooleanSupplier s, final BooleanSupplier... cs) {
-     super(null);
+      super(null);
       add(s, cs);
     }
 
@@ -190,13 +188,12 @@ public interface Proposition extends BooleanSupplier {
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-19 */
   class P extends Implementation<BooleanSupplier> implements Recursive.Atomic<Proposition> {
-
     public P(final BooleanSupplier inner) {
-      this(null,inner);
+      this(null, inner);
     }
 
     public P(String toString, final BooleanSupplier inner) {
-      super(toString,inner);
+      super(toString, inner);
     }
 
     @Override public final Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
@@ -211,5 +208,4 @@ public interface Proposition extends BooleanSupplier {
       return new Or(this, s, cs);
     }
   }
-
 }
