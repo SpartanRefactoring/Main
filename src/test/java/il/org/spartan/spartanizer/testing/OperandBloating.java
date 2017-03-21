@@ -17,6 +17,7 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -49,10 +50,16 @@ public class OperandBloating extends TrimmingOperand {
         azzert.fail("Nothing done on " + get());
       final String peeled1 = w.off(unpeeled1);
       if (peeled1.equals(get()))
-        azzert.that("No trimming of " + get(), peeled1, is(not(get())));
+        azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
       if (tide.clean(peeled1).equals(tide.clean(get())))
-        azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
-      assertSimilar($1, peeled1);
+        azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
+      if (!$1.equals(peeled1) && !trivia.essence(peeled1).equals(trivia.essence($1))) {
+        copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
+            trivia.escapeQuotes(trivia.essence(peeled1)), //
+            trivia.escapeQuotes(trivia.essence($1)));
+        azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
+      }
+      // assertSimilar($1,peeled1);
       return new OperandBloating($1);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
@@ -75,7 +82,13 @@ public class OperandBloating extends TrimmingOperand {
         azzert.fail("Nothing done on " + get());
       if (unpeeled.equals(get()))
         azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
-      assertSimilar($1, unpeeled);
+      if (!$1.equals(unpeeled) && !trivia.essence(unpeeled).equals(trivia.essence($1))) {
+        copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
+            trivia.escapeQuotes(trivia.essence(unpeeled)), //
+            trivia.escapeQuotes(trivia.essence($1)));
+        azzert.that(trivia.essence(unpeeled), is(trivia.essence($1)));
+      }
+      // assertSimilar($1,unpeeled);
       return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(¢);
@@ -102,7 +115,14 @@ public class OperandBloating extends TrimmingOperand {
       if (unpeeled.equals(get()))
         azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
       m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
-      assertSimilar($, m + "");
+      String s = m + "";
+      if (!$.equals(s) && !trivia.essence(s).equals(trivia.essence($))) {
+        copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
+            trivia.escapeQuotes(trivia.essence(s)), //
+            trivia.escapeQuotes(trivia.essence($)));
+        azzert.that(trivia.essence(s), is(trivia.essence($)));
+      }
+      // assertSimilar($, m + "");
       final ASTParser p = make.COMPILATION_UNIT.parser(unpeeled);
       p.setResolveBindings(true);
       return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
@@ -159,11 +179,18 @@ public class OperandBloating extends TrimmingOperand {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
-      if (wrap.equals(unpeeled))
-        return;
+      // if (wrap.equals(unpeeled))
+      // return;
       final String peeled = w.off(unpeeled);
-      if (!peeled.equals(get()) && !tide.clean(peeled).equals(tide.clean(get())))
-        assertSimilar(get(), peeled);
+      // if (!peeled.equals(get()) &&
+      // !tide.clean(peeled).equals(tide.clean(get())))
+      // assertSimilar(get(), peeled);
+      if (wrap.equals(peeled) || trivia.essence(get()).equals(trivia.essence(peeled)))
+        return;
+      copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
+          trivia.escapeQuotes(trivia.essence(peeled)), //
+          trivia.escapeQuotes(trivia.essence(get())));
+      azzert.that(trivia.essence(peeled), is(trivia.essence(get())));
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
@@ -178,10 +205,16 @@ public class OperandBloating extends TrimmingOperand {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
-      if (wrap.equals(unpeeled))
+      // if (wrap.equals(unpeeled))
+      // return;
+      // if (!unpeeled.equals(get()) && unpeeled.equals(get()))
+      // assertSimilar(get(), unpeeled);
+      if (wrap.equals(unpeeled) || trivia.essence(get()).equals(trivia.essence(unpeeled)))
         return;
-      if (!unpeeled.equals(get()) && unpeeled.equals(get()))
-        assertSimilar(get(), unpeeled);
+      copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
+          trivia.escapeQuotes(trivia.essence(unpeeled)), //
+          trivia.escapeQuotes(trivia.essence(get())));
+      azzert.that(trivia.essence(unpeeled), is(trivia.essence(get())));
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
