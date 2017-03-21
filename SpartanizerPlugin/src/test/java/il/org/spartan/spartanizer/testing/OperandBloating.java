@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
 import static il.org.spartan.lisp.*;
 
@@ -59,7 +58,6 @@ public class OperandBloating extends TrimmingOperand {
             trivia.escapeQuotes(trivia.essence($1)));
         azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       }
-      // assertSimilar($1,peeled1);
       return new OperandBloating($1);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
@@ -88,7 +86,6 @@ public class OperandBloating extends TrimmingOperand {
             trivia.escapeQuotes(trivia.essence($1)));
         azzert.that(trivia.essence(unpeeled), is(trivia.essence($1)));
       }
-      // assertSimilar($1,unpeeled);
       return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(¢);
@@ -122,7 +119,6 @@ public class OperandBloating extends TrimmingOperand {
             trivia.escapeQuotes(trivia.essence($)));
         azzert.that(trivia.essence(s), is(trivia.essence($)));
       }
-      // assertSimilar($, m + "");
       final ASTParser p = make.COMPILATION_UNIT.parser(unpeeled);
       p.setResolveBindings(true);
       return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
@@ -179,12 +175,7 @@ public class OperandBloating extends TrimmingOperand {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
-      // if (wrap.equals(unpeeled))
-      // return;
       final String peeled = w.off(unpeeled);
-      // if (!peeled.equals(get()) &&
-      // !tide.clean(peeled).equals(tide.clean(get())))
-      // assertSimilar(get(), peeled);
       if (wrap.equals(peeled) || trivia.essence(get()).equals(trivia.essence(peeled)))
         return;
       copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
@@ -205,10 +196,6 @@ public class OperandBloating extends TrimmingOperand {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
-      // if (wrap.equals(unpeeled))
-      // return;
-      // if (!unpeeled.equals(get()) && unpeeled.equals(get()))
-      // assertSimilar(get(), unpeeled);
       if (wrap.equals(unpeeled) || trivia.essence(get()).equals(trivia.essence(unpeeled)))
         return;
       copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
