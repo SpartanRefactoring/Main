@@ -4,7 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Fluent method characteristic
  * @author Ori Marcovitch
  * @since 2016 */
 public class Fluenter extends JavadocMarkerNanoPattern {
