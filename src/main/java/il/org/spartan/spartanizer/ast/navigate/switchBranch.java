@@ -13,7 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
+/** TODO YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
  * please add a description
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */

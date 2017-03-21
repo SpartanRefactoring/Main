@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** TODO: Alex Kopzon please add a description
+/** TODO Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

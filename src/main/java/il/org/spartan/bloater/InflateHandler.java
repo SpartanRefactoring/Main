@@ -182,7 +182,7 @@ public class InflateHandler extends AbstractHandler {
     final List<Listener> ls = getListeners(text);
     ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).findFirst()
         .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
-    // TODO: Ori Roth seems to be a bug --yg
+    // TODO Ori Roth seems to be a bug --yg
     removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
