@@ -2,6 +2,7 @@ package il.org.spartan.bloater;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.swt.*;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
@@ -69,19 +70,67 @@ public class SpartanWidgetHandler extends AbstractHandler {
     shell.addListener(SWT.MouseUp, l);
     shell.addListener(SWT.MouseMove, l);
     // add ability to close shell
-    final Button b = new Button(shell, SWT.PUSH);
+    Button b = new Button(shell, SWT.PUSH);
     b.setBackground(shell.getBackground());
     b.setText("close");
     b.pack();
     // b.setLocation(10, 68);
     b.setLocation(0, 0);
-    b.addListener(SWT.Selection, __ -> shell.close());
-    shell.addListener(SWT.MouseEnter, __ -> shell.setAlpha(255));
-    shell.addListener(SWT.MouseExit, __ -> shell.setAlpha(100));
+    b.addListener(SWT.Selection, new Listener() {
+      @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+        shell.close();
+      }
+    });
+    shell.addListener(SWT.MouseEnter, new Listener() {
+      @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+        shell.setAlpha(255);
+      }
+    });
+    shell.addListener(SWT.MouseExit, new Listener() {
+      @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+        shell.setAlpha(100);
+      }
+    });
+    b.addListener(SWT.MouseEnter, new Listener() {
+      @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+        shell.setAlpha(255);
+      }
+    });
+    b.addListener(SWT.MouseExit, new Listener() {
+      @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
+        shell.setAlpha(100);
+      }
+    });
     shell.setAlpha(100);
     // define the shape of the shell using setRegion
     region.add(b.getBounds());
     shell.setRegion(region);
     shell.open();
+    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().addShellListener(new ShellListener() {
+      @Override public void shellIconified(@SuppressWarnings("unused") ShellEvent __) {
+        //
+      }
+
+      @Override public void shellDeiconified(@SuppressWarnings("unused") ShellEvent __) {
+        //
+      }
+
+      @Override public void shellDeactivated(@SuppressWarnings("unused") ShellEvent __) {
+        if (!shell.isDisposed())
+          shell.setVisible(false);
+      }
+
+      @Override public void shellClosed(@SuppressWarnings("unused") ShellEvent __) {
+        if (shell.isDisposed())
+          return;
+        shell.setVisible(false);
+        shell.dispose();
+      }
+
+      @Override public void shellActivated(@SuppressWarnings("unused") ShellEvent __) {
+        if (!shell.isDisposed())
+          shell.setVisible(true);
+      }
+    });
   }
 }
