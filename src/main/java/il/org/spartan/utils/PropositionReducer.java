@@ -1,21 +1,27 @@
 package il.org.spartan.utils;
 
-import java.util.*;
 import java.util.function.*;
 
-import il.org.spartan.utils.B00L.*;
+import il.org.spartan.utils.Proposition.*;
 
-public abstract class B00LReducingGear<R> extends Reduce<R> {
+/**
+ * TODO Yossi Gil: document class 
+ * @param <R>
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-03-19
+ */
+public abstract class PropositionReducer<R> extends Reduce<R> {
   public final Reduce<R> inner;
 
-  public B00LReducingGear(final Reduce<R> inner) {
+  public PropositionReducer(final Reduce<R> inner) {
     this.inner = inner;
+    assert inner != this;
   }
 
-  protected R post(@SuppressWarnings("unused") final B00L.P __) {
+  protected R post(@SuppressWarnings("unused") final Proposition.P __) {
     return reduce();
   }
-  protected R post(@SuppressWarnings("unused") final B00L.Not __) {
+  protected R post(@SuppressWarnings("unused") final Proposition.Not __) {
     return reduce();
   }
 
@@ -23,11 +29,11 @@ public abstract class B00LReducingGear<R> extends Reduce<R> {
     return reduce();
   }
 
-  protected R ante(@SuppressWarnings("unused") final B00L.Not __) {
+  protected R ante(@SuppressWarnings("unused") final Proposition.Not __) {
     return reduce();
   }
 
-  protected R ante(@SuppressWarnings("unused") final B00L.P __) {
+  protected R ante(@SuppressWarnings("unused") final Proposition.P __) {
     return reduce();
   }
 
@@ -44,10 +50,6 @@ public abstract class B00LReducingGear<R> extends Reduce<R> {
   }
 
   protected abstract R map(BooleanSupplier ¢);
-
-  protected R map(@SuppressWarnings("unused") final List<BooleanSupplier> __) {
-    return reduce();
-  }
 
   @Override public R reduce() {
     return inner.reduce();
