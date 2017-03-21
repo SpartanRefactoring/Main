@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** See GitHub issue thus numbered 
+/** See GitHub issue thus numbered
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
