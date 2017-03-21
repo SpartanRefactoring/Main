@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -11,6 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface disabling {
+  String disabledPropertyId = "Trimmer_disabled_id";
+
   /** A recursive scan for disabled nodes. Adds disabled property to disabled
    * nodes and their sub trees.
    * <p>
@@ -44,23 +47,13 @@ public interface disabling {
     });
   }
 
-  String disabledPropertyId = "Trimmer_disabled_id";
-  /** Disable spartanization tips, used to indicate that no spartanization
-   * should be made to node */
-  String[] disablers = { "[[SuppressWarningsSpartan]]", //
-  };
-  /** Enable spartanization identifier, overriding a disabler */
-  String[] enablers = { "[[EnableWarningsSpartan]]", //
-  };
-  String disabler = disablers[0];
-
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
    * @param d disabled {@link BodyDeclaration} */
   static void disable(final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        if (¢ instanceof BodyDeclaration && disabling.isEnabledByIdentifier((BodyDeclaration) ¢)) {
+        if (¢ instanceof BodyDeclaration && disabling.specificallyEnabled((BodyDeclaration) ¢)) {
           scan(¢);
           return false;
         }
@@ -76,18 +69,60 @@ public interface disabling {
   }
 
   static boolean specificallyDisabled(final BodyDeclaration ¢) {
-    return disabling.hasJavaDocIdentifier(¢, disablers);
+    return disabling.ByComment.specificallyDisabled(¢);
   }
 
-  static boolean isEnabledByIdentifier(final BodyDeclaration ¢) {
-    return !disabling.hasJavaDocIdentifier(¢, disablers) && disabling.hasJavaDocIdentifier(¢, enablers);
+  static boolean specificallyEnabled(final BodyDeclaration ¢) {
+    return !disabling.ByComment.specificallyDisabled(¢) && disabling.ByComment.specificallyDisabled(¢);
   }
 
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String... ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 
+  @SuppressWarnings("unchecked") static boolean hasAnnotation(final BodyDeclaration d, final String... as) {
+    return Optional.ofNullable(d).map(λ -> λ.modifiers()) //
+        .map(ms -> Boolean.valueOf(ms.stream() //
+            .filter(λ -> λ instanceof Annotation && //
+                contains(extract.name(((Annotation) λ).getTypeName()), as))
+            .count() > 0)) //
+        .orElse(Boolean.FALSE).booleanValue();
+  }
+
   static boolean contains(final String s, final String... ids) {
     return Stream.of(ids).anyMatch(s::contains);
+  }
+
+  interface ByComment extends disabling {
+    /** Disable spartanization tips, used to indicate that no spartanization
+     * should be made to node */
+    String[] disablers = { "[[SuppressWarningsSpartan]]", //
+    };
+    /** Enable spartanization identifier, overriding a disabler */
+    String[] enablers = { "[[EnableWarningsSpartan]]", //
+    };
+    String disabler = disablers[0];
+
+    static boolean specificallyDisabled(final BodyDeclaration ¢) {
+      return disabling.hasJavaDocIdentifier(¢, disablers);
+    }
+
+    static boolean specificallyEnabled(final BodyDeclaration ¢) {
+      return !disabling.hasJavaDocIdentifier(¢, disablers) && disabling.hasJavaDocIdentifier(¢, enablers);
+    }
+  }
+
+  interface ByAnnotation extends disabling {
+    String[] disablers = { "UnderConstruction", //
+    };
+    String disabler = disablers[0];
+
+    static boolean specificallyDisabled(final BodyDeclaration ¢) {
+      return disabling.hasAnnotation(¢, disablers);
+    }
+
+    static boolean specificallyEnabled(@SuppressWarnings("unused") final BodyDeclaration ¢) {
+      return false;
+    }
   }
 }
