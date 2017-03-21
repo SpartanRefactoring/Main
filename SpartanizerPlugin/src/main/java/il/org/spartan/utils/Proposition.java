@@ -17,60 +17,60 @@ import il.org.spartan.*;
  * </ol>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-06 */
-public interface B00L extends BooleanSupplier {
-  /** a {@link B00L} which is {@code false} */
-  B00L F = new P("F", () -> false);
-  /** a {@link B00L} whose evaluation fails with {@link NullPointerException} */
-  B00L N = B00L.of("N", () -> {
+public interface Proposition extends BooleanSupplier {
+  /** a {@link Proposition} which is {@code false} */
+  Proposition F = new P("F", () -> false);
+  /** a {@link Proposition} whose evaluation fails with {@link NullPointerException} */
+  Proposition N = Proposition.of("N", () -> {
     throw new NullPointerException();
   });
-  /** a {@link B00L} which is {@code true} */
-  B00L T = new P("T", () -> true);
-  /** a {@link B00L} whose evaluation fails with {@link AssertionError} */
-  B00L X = B00L.of("X", () -> {
+  /** a {@link Proposition} which is {@code true} */
+  Proposition T = new P("T", () -> true);
+  /** a {@link Proposition} whose evaluation fails with {@link AssertionError} */
+  Proposition X = Proposition.of("X", () -> {
     throw new AssertionError();
   });
 
-  static B00L AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
-    return new And(s1, s2, ss);
+  static Proposition AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+    return AND(null,s1, s2, ss);
   }
 
-  static B00L AND(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Proposition AND(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new And(toString, s1, s2, ss);
   }
 
 
-  static Not NOT(final BooleanSupplier ¢) {
+  static Proposition NOT(final BooleanSupplier ¢) {
     return new Not(¢);
   }
 
-  static B00L of(final BooleanSupplier ¢) {
+  static Proposition of(final BooleanSupplier ¢) {
     return new P(¢);
   }
 
-  static B00L of(final String toString, final BooleanSupplier s) {
+  static Proposition of(final String toString, final BooleanSupplier s) {
     return new P(toString, s);
   }
 
-  static B00L OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Proposition OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(s1, s2, ss);
   }
-  static B00L OR(String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Proposition OR(String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(toString, s1, s2, ss);
   }
 
 
   /** Name must be distinct from but similar to
    * {@link #AND(BooleanSupplier, BooleanSupplier, BooleanSupplier...)} */
-  B00L and(BooleanSupplier s, BooleanSupplier... ss);
+  Proposition and(BooleanSupplier s, BooleanSupplier... ss);
 
   default boolean eval() {
     return getAsBoolean();
   }
 
-  B00L or(BooleanSupplier s, BooleanSupplier... ss);
+  Proposition or(BooleanSupplier s, BooleanSupplier... ss);
 
-  default <R> R reduce(final B00LReducingGear<R> ¢) {
+  default <R> R reduce(final PropositionReducer<R> ¢) {
     return ¢.reduce(this);
   }
 
@@ -90,7 +90,7 @@ public interface B00L extends BooleanSupplier {
       add(s1, s2, ss);
     }
 
-    @Override public B00L and(final BooleanSupplier s, final BooleanSupplier... ss) {
+    @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... ss) {
       return add(this, s, ss);
     }
 
@@ -98,36 +98,45 @@ public interface B00L extends BooleanSupplier {
       return stream().allMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public B00L or(final BooleanSupplier s, final BooleanSupplier... ss) {
+    @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... ss) {
       return new Or(this, s, ss);
     }
   }
+  
+  abstract class Implementation<Inner> extends Outer<Inner> implements Proposition {
 
-  /** A compound {@link B00L}
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
-   * @since 2017-03-19 */
-  abstract class C implements B00L {
-    final List<BooleanSupplier> inner = new ArrayList<>();
-    private final String toString;
+    protected final String toString;
+
+    public Implementation(String toString, Inner inner) {
+      super(inner);
+      this.toString = toString;
+    }
 
     @Override public String toString() {
-      return toString != null ? toString : super.toString();
+      return inner instanceof Implementation ? inner + "" : toString != null ? toString : super.toString();
     }
+   
+  }
+
+  /** A compound {@link Proposition}
+   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @since 2017-03-19 */
+  abstract class C extends Implementation<List<BooleanSupplier>> {
     public C(String toString) {
-     this.toString = toString; 
+      super(toString, new ArrayList<>());
     }
 
-    final B00L add(final BooleanSupplier... ¢) {
+    final Proposition add(final BooleanSupplier... ¢) {
       inner.addAll(as.list(¢));
       return this;
     }
 
-    final B00L add(final BooleanSupplier s, final BooleanSupplier... cs) {
+    final Proposition add(final BooleanSupplier s, final BooleanSupplier... cs) {
       inner.add(s);
       return add(cs);
     }
 
-    final B00L add(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... cs) {
+    final Proposition add(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... cs) {
       inner.add(s1);
       return add(s2, cs);
     }
@@ -163,7 +172,7 @@ public interface B00L extends BooleanSupplier {
       add(s1, s2, ss);
     }
 
-    @Override public B00L and(final BooleanSupplier s, final BooleanSupplier... cs) {
+    @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
       inner.set(inner.size() - 1, AND(of(last(inner)), s, cs));
       return this;
     }
@@ -172,38 +181,25 @@ public interface B00L extends BooleanSupplier {
       return stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
 
-    @Override public B00L or(final BooleanSupplier s, final BooleanSupplier... cs) {
+    @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... cs) {
       return add(s, cs);
     }
   }
 
-  /** A parenthesized {@link B00L}
+  /** A parenthesized {@link Proposition}
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-19 */
-  class P implements B00L, Recursive.Atomic<B00L> {
-    public final BooleanSupplier inner;
+  class P extends Implementation<BooleanSupplier> implements Recursive.Atomic<Proposition> {
 
     public P(final BooleanSupplier inner) {
-      if (inner == null)
-        throw new IllegalArgumentException();
-      this.inner = inner;
+      this(null,inner);
     }
 
     public P(String toString, final BooleanSupplier inner) {
-      if (inner == null)
-        throw new IllegalArgumentException();
-      this.inner = new BooleanSupplier() {
-        @Override public boolean getAsBoolean() {
-          return inner.getAsBoolean();
-        }
-
-        @Override public String toString() {
-          return toString;
-        }
-      };
+      super(toString,inner);
     }
 
-    @Override public final B00L and(final BooleanSupplier s, final BooleanSupplier... cs) {
+    @Override public final Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new And(this, s, cs);
     }
 
@@ -211,7 +207,7 @@ public interface B00L extends BooleanSupplier {
       return inner.getAsBoolean();
     }
 
-    @Override public B00L or(final BooleanSupplier s, final BooleanSupplier... cs) {
+    @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new Or(this, s, cs);
     }
   }
