@@ -97,7 +97,7 @@ public enum SentenceTestTemplate {
     }
 
     String firstBody() {
-      return (first + "").replace(disabling.disabler, "");
+      return (first + "").replace(disabling.ByComment.disabler, "");
     }
 
     CharSequence firstName() {
@@ -105,7 +105,7 @@ public enum SentenceTestTemplate {
     }
 
     String secondBody() {
-      return (second + "").replace(secondName(), firstName()).replace(disabling.disabler, "");
+      return (second + "").replace(secondName(), firstName()).replace(disabling.ByComment.disabler, "");
     }
 
     CharSequence secondName() {
