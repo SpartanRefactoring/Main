@@ -77,4 +77,8 @@ public class ArgumentsTupleTest extends JavadocerTest {
   @Test public void p() {
     assert not("boolean foo(int a, int b){this.a = a; this.b = b;}");
   }
+
+  @Test public void q() {
+    assert not("boolean foo(int a, int b){foo();}");
+  }
 }
