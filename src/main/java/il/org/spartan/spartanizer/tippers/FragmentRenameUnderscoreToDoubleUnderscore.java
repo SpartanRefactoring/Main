@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016/05/08 */
 public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends AbstractVariableDeclarationChangeName<N>//
-    implements TipperCategory.Annonimization {
+     implements TipperCategory.Anonymization {
   private static final long serialVersionUID = 2942670719772764228L;
 
   @Override public String description(final N ¢) {
