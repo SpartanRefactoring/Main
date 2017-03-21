@@ -39,7 +39,7 @@ public enum PreferencesResources {
   public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
     Arithmetic(TipperCategory.Arithmetic.class), //
-    Annonimaization(TipperCategory.Annonimization.class), //
+    Anonymization(TipperCategory.Anonymization.class), //
     Canonicalization(TipperCategory.Unite.class), //
     CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
