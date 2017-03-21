@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Analyzer base class
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 abstract class Analyzer<T> {
