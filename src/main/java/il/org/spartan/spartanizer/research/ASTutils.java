@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** ASTNode trees utils
  * @author Ori Marcovitch */
 public enum ASTutils {
   ;
