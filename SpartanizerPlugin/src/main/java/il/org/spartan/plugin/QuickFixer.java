@@ -38,7 +38,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         singleTipperProject, //
         disableFunction, //
         disableClass, //
-        // disableFile //
+        // disableFile, //
+        disableClassByAnnotation //
     };
   }
 
@@ -84,6 +85,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution disableClass = fixers.disableClassFix();
   /** Disable spartanization in file. */
   private final IMarkerResolution disableFile = fixers.disableFileFix();
+  /** Disable spartanization in class by annotation. */
+  private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
 
   /** Factory method for {@link IMarkerResolution}s.
    * @param name resolution's name
@@ -193,6 +196,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
     static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
+    }
+
+    static IMarkerResolution disableClassAnnotationFix() {
+      return toggle(SuppressWarningsLaconicOnOff.ByAnnotation, SuppressWarningsLaconicOnOff.Type.CLASS, "Class under construction");
     }
 
     static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff disabler, final SuppressWarningsLaconicOnOff.Type t, final String label) {
