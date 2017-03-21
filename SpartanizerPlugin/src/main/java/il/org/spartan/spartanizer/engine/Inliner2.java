@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.engine;
+
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -97,7 +98,7 @@ public final class Inliner2 {
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
     $.setType(az.arrayType(copy.of(type(currentStatement))));
-    // TODO: Marco causes IllegalArgumentException
+    // TODO: causes IllsegalArgumentException (--om)
     $.setInitializer(copy.of(az.arrayInitializer(initializer)));
     return $;
   }

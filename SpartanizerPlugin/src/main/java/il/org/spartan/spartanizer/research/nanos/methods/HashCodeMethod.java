@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** HashCode method
  * @author Ori Marcovitch
  * @since 2016 */
 public class HashCodeMethod extends JavadocMarkerNanoPattern {

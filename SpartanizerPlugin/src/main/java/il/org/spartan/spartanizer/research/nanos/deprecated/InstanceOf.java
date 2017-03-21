@@ -12,10 +12,12 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Catches instanceOf occurrences and replaces them with iz.X Even creates a
+ * suitable method
  * @author Ori Marcovitch
  * @since 2016 */
-public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
+@Deprecated
+class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   private static final long serialVersionUID = 8818334037409089691L;
   static final TypeChecker c = new TypeChecker();
 
@@ -59,7 +61,7 @@ public class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
-    // TODO: Marco maybe in the future change to iz.java in package which will
+    // smaybe in the future change to iz.java in package which will
     // be created automatically...
     return yieldAncestors.untilContainingType().from(¢);
   }

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Array initialization examples
  * @author Ori Marcovitch
  * @since 2016 */
 public class InitArray extends NanoPatternTipper<ForStatement> {

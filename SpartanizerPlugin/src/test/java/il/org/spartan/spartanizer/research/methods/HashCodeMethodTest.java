@@ -4,7 +4,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** Tests {@link HashCodeMethod}
  * @author Ori Marcovitch
  * @since 2016 */
 @SuppressWarnings("static-method")
