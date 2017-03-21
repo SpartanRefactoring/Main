@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Or Troyaner
  * @author Tom Nof
  * @since 16-11-04 */
-// TODO: Or/Tom/Inbal: use only one @SuppressWarnings("static-method")
+// TODO Or/Tom/Inbal: use only one @SuppressWarnings("static-method")
 public class Issue0690 {
   @Test @SuppressWarnings("static-method") public void test0() {
     azzert.isNull(getAll.casts(null));

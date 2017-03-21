@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO: Dan Abramovich please add a description
+/** TODO Dan Abramovich please add a description
  * @author Dan Abramovich
  * @since 28-11-2016 */
 @SuppressWarnings("static-method")

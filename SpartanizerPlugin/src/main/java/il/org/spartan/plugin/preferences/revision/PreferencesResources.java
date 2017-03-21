@@ -9,7 +9,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Daniel Mittelman please add a description
+/** TODO Daniel Mittelman please add a description
  * @author Daniel Mittelman
  * @since Jan 11, 2017 */
 public enum PreferencesResources {

@@ -11,7 +11,7 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Artium Nihamkin please add a description
+/** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin
  * @author Ofir Elmakias
  * @author Ori Roth

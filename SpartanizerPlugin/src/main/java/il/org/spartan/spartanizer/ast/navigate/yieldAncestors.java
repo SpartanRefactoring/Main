@@ -172,7 +172,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
   /** @param n JD
    * @return furtherest ancestor whose type matches the given type. */
   public ASTNode lastFrom(final ASTNode n) {
-    // TODO: Alex: Polish this loop manually and add a test case for future
+    // TODO Alex: Polish this loop manually and add a test case for future
     // generations
     ASTNode $ = from(n);
     for (ASTNode p = $; p != null; p = from(p))

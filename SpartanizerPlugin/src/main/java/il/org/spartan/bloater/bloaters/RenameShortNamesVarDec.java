@@ -27,7 +27,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * {@code int f(int ret) { int i1 = 5; x(i1); ret = i1; return ret; } }
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-// TODO: Raviv Rachmiel take care of single var decleration, tests
+// TODO Raviv Rachmiel take care of single var decleration, tests
 public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 7211961334502931214L;
