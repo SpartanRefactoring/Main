@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
+
 import il.org.spartan.spartanizer.ast.navigate.descendants;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
@@ -1345,5 +1346,9 @@ public interface iz {
 
   static boolean superConstructorInvocation(final ASTNode ¢) {
     return ¢ != null && iz.nodeTypeEquals(¢, SUPER_CONSTRUCTOR_INVOCATION);
+  }
+
+  static boolean constructorInvocation(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, CONSTRUCTOR_INVOCATION);
   }
 }

@@ -146,6 +146,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new Setter(), //
         new SuperConstructor(), //
         new SuperDelegator(), //
+        new ThisConstructor(), //
         new Thrower(), //
         null);
     return this;
