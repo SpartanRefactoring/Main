@@ -1,4 +1,4 @@
-/* TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
+/* TODO YuvalSimon <yuvaltechnion@gmail.com> please add a description
  *
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  *
