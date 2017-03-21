@@ -91,11 +91,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         r.replace(s, b, g);
       }
 
-      void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final Statement s,
-          final ASTRewrite r, final TextEditGroup g) {
+      void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug,
+          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
         lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
-        lr.insertBefore(s, s, g);
+        lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, s, g);
         lr.remove(s, g);
       }
     };
