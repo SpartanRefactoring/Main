@@ -2,7 +2,7 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-/** TODO  
+/** TODO
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-19 */
 public abstract class PropositionInfixNotation extends PropositionReducer<String> {

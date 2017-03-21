@@ -11,8 +11,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** Check that the functions which returns all the
- * methods invoked in a scope is working well
+/** Check that the functions which returns all the methods invoked in a scope is
+ * working well
  * @author Dor Ma'ayan
  * @author Omri Ben- Shmuel
  * @since 01-11-2016 */
