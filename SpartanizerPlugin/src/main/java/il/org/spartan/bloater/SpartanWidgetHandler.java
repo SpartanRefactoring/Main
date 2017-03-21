@@ -75,9 +75,9 @@ public class SpartanWidgetHandler extends AbstractHandler {
     b.pack();
     // b.setLocation(10, 68);
     b.setLocation(0, 0);
-    b.addListener(SWT.Selection, (@SuppressWarnings("unused") final Event __) -> shell.close());
-    shell.addListener(SWT.MouseEnter, (@SuppressWarnings("unused") final Event __) -> shell.setAlpha(255));
-    shell.addListener(SWT.MouseExit, (@SuppressWarnings("unused") final Event __) -> shell.setAlpha(100));
+    b.addListener(SWT.Selection, __ -> shell.close());
+    shell.addListener(SWT.MouseEnter, __ -> shell.setAlpha(255));
+    shell.addListener(SWT.MouseExit, __ -> shell.setAlpha(100));
     shell.setAlpha(100);
     // define the shape of the shell using setRegion
     region.add(b.getBounds());
