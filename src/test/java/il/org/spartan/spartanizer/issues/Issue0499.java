@@ -4,8 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** Checking that a bug with centification in Lambda Expression
- * was fixed
+/** Checking that a bug with centification in Lambda Expression was fixed
  * @author Dor Ma'ayan
  * @since 17-11-2016 */
 @Ignore // TODO: Dor M'ayan
