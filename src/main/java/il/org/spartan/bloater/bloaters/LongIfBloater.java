@@ -30,9 +30,9 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
         $ = subject.pair(newThen, null).toIf(az.infixExpression(¢.getExpression()).getLeftOperand());
     final Statement oldElse = ¢.getElseStatement();
     if (oldElse != null) {
-      newThen.setElseStatement(oldElse);
+      newThen.setElseStatement(copy.of(oldElse));
       $.setThenStatement(newThen);
-      $.setElseStatement(oldElse);
+      $.setElseStatement(copy.of(oldElse));
     }
     return $;
   }
