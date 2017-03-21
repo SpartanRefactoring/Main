@@ -88,7 +88,7 @@ public class Table_Summary extends NanoTable {
   }
 
   static double iterativesCoverage() {
-    return getNodeCoverage(ASTNode.ENHANCED_FOR_STATEMENT);
+    return npDistributionStatistics.coverage(ASTNode.ENHANCED_FOR_STATEMENT, ASTNode.FOR_STATEMENT, ASTNode.WHILE_STATEMENT, ASTNode.DO_STATEMENT);
   }
 
   static double conditionalExpressionsCoverage() {
