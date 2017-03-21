@@ -46,7 +46,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
       assert stencil.containsKey(mangle) //
       : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
           , md, stencil);
-      final String javaDoc = " have JavaDoc /** " + disabling.disabler + "*/, just like the overrriden version in " + model;
+      final String javaDoc = " have JavaDoc /** " + disabling.ByComment.disabler + "*/, just like the overrriden version in " + model;
       if (disabling.specificallyDisabled(stencil.get(mangle)))
         assert disabling.specificallyDisabled(md) //
         : fault.specifically("Method " + mangle + " must " + javaDoc, md, stencil);
