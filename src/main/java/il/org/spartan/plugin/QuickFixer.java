@@ -184,18 +184,18 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     }
 
     static IMarkerResolution disableClassFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress spartanization tips on class");
+      return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress spartanization tips on class");
     }
 
     static IMarkerResolution disableFileFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.FILE, "Suppress spartanization tips on out most class");
+      return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FILE, "Suppress spartanization tips on out most class");
     }
 
     static IMarkerResolution disableFunctionFix() {
-      return toggle(SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
+      return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
     }
 
-    static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff.Type t, final String label) {
+    static IMarkerResolution toggle(final SuppressWarningsLaconicOnOff disabler, final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
@@ -203,7 +203,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
         @Override public void run(final IMarker m) {
           try {
-            SuppressWarningsLaconicOnOff.deactivate(nullProgressMonitor, m, t);
+            disabler.deactivate(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
             monitor.logEvaluationError(this, ¢);
           }
