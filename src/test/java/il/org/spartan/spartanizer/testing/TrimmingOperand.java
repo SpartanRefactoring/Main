@@ -82,7 +82,7 @@ public class TrimmingOperand extends Wrapper<String> {
     return new TrimmingOperand($);
   }
 
-  private void copyPasteReformat(final String format, final Object... os) {
+  protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
     System.err.println(NEW_UNIT_TEST + anonymize.makeUnitTest(get()));
