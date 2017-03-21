@@ -37,6 +37,13 @@ public enum SuppressWarningsLaconicOnOff {
       r.replace(j, r.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else
       r.replace(d, r.createGroupNode(new ASTNode[] { r.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), r.createCopyTarget(d) }), null);
+  }), ByAnnotation((r, d) -> {
+    StringLiteral s = d.getAST().newStringLiteral();
+    s.setLiteralValue(Eclipse.user() + " -- " + Eclipse.date());
+    SingleMemberAnnotation a = d.getAST().newSingleMemberAnnotation();
+    a.setTypeName(d.getAST().newName(disabling.ByAnnotation.disabler));
+    a.setValue(s);
+    r.getListRewrite(d, d.getModifiersProperty()).insertFirst(a, null);
   });
   /** Textually disable a {@link BodyDeclaration}, while recursively removing
    * enablers from sub tree.
@@ -59,8 +66,7 @@ public enum SuppressWarningsLaconicOnOff {
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
-      textChange.perform(pm);
+    textChange.perform(pm);
     pm.done();
   }
 
