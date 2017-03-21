@@ -364,6 +364,10 @@ public enum extract {
     }
   }
 
+  public static String name(final Name ¢) {
+    return iz.simpleName(¢) ? az.simpleName(¢).getIdentifier() : iz.qualifiedName(¢) ? az.qualifiedName(¢).getName().getIdentifier() : null;
+  }
+
   /** Find the {@link Assignment} that follows a given node.
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or

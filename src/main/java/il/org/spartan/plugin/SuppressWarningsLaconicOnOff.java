@@ -51,7 +51,7 @@ public enum SuppressWarningsLaconicOnOff {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
-      s = s.replaceFirst("\\*/$", (s.matches("(?s).*\n\\s*\\*/$") ? "" : "\n ") + "* " + disabling.disabler + "\n */");
+      s = s.replaceFirst("\\*/$", (s.matches("(?s).*\n\\s*\\*/$") ? "" : "\n ") + "* " + disabling.ByComment.disabler + "\n */");
     if (j != null)
       $.replace(j, $.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else
@@ -69,10 +69,10 @@ public enum SuppressWarningsLaconicOnOff {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (p instanceof BodyDeclaration && ((BodyDeclaration) p).getJavadoc() != null) {
         final String s = ((BodyDeclaration) p).getJavadoc() + "";
-        for (final String e : disabling.enablers) // NANO
+        for (final String e : disabling.ByComment.enablers) // NANO
           if (s.contains(e))
             return false;
-        for (final String d : disabling.disablers) // NANO
+        for (final String d : disabling.ByComment.disablers) // NANO
           if (s.contains(d))
             return true;
       }
@@ -91,11 +91,11 @@ public enum SuppressWarningsLaconicOnOff {
   }
 
   static Collection<String> getDisablers(final String ¢) {
-    return getKeywords(¢, disabling.disablers);
+    return getKeywords(¢, disabling.ByComment.disablers);
   }
 
   static Iterable<String> getEnablers(final String ¢) {
-    return getKeywords(¢, disabling.enablers);
+    return getKeywords(¢, disabling.ByComment.enablers);
   }
 
   static Collection<String> getKeywords(final String c, final String[] kws) {
