@@ -79,8 +79,8 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     return format.perc(covered(type), total(type));
   }
 
-  public double coverage(final int type0, final int... types) {
-    int $ = total(type0), covered = covered(type0);
+  public double coverage(final int type0, final int type1, final int... types) {
+    int $ = total(type0) + total(type1), covered = covered(type0) + covered(type1);
     for (int ¢ : types) {
       $ += total(¢);
       covered += covered(¢);
