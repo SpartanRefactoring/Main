@@ -29,7 +29,7 @@ public class ExamplesTests {
 
   /** Redirects examples to tests according to type */
   @Test public void converts() {
-    Stream.of(tipper.examples()).filter(Converts.class::isInstance).forEachOrdered(λ -> testConverts((Converts) λ));
+    Stream.of(tipper.examples()).filter(Converts.class::isInstance).map(Converts.class::cast).forEachOrdered(this::converts);
   }
 
   /** Redirects examples to tests according to type */
@@ -41,7 +41,7 @@ public class ExamplesTests {
     wrap(() -> trimmingOf(¢.get()).stays());
   }
 
-  private void testConverts(@NotNull final Converts ¢) {
+  private void converts(@NotNull final Converts ¢) {
     wrap(() -> trimmingOf(¢.from()).gives(¢.to()));
   }
 
