@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerIfUpdateAssignment extends $FragementAndStatement//
+public final class FragmentInitializerIfUpdateAssignment extends $FragementInitializerStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 3617599837633261268L;
 
@@ -30,25 +30,24 @@ public final class FragmentInitializerIfUpdateAssignment extends $FragementAndSt
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null)
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    if (initializer() == null)
       return null;
-    final IfStatement s = az.ifStatement(nextStatement);
+    final IfStatement s = az.ifStatement(nextStatement());
     if (s == null || !iz.vacuousElse(s))
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
+    if (a == null || !wizard.same(to(a), name()) || doesUseForbiddenSiblings(fragment(), condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
-    final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer).toCondition(condition);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
+    final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer()).toCondition(condition);
+    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement(), initializer()) > 0)
       return null;
-    $.replace(initializer, newInitializer, g);
+    $.replace(initializer(), newInitializer, g);
     i.inlineInto(then(newInitializer), newInitializer.getExpression());
-    $.remove(nextStatement, g);
+    $.remove(nextStatement(), g);
     return $;
   }
 }
