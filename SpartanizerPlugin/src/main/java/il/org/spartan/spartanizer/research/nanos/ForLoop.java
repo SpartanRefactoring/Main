@@ -46,18 +46,15 @@ public final class ForLoop {
       ;
     }
 
-    @Nullable
-    @Override public Tip pattern(final ForStatement $) {
+    @Nullable @Override public Tip pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @NotNull
-    @Override public String nanoName() {
+    @NotNull @Override public String nanoName() {
       return "FirstSuchThat";
     }
 
-    @NotNull
-    @Override public String description() {
+    @NotNull @Override public String description() {
       return "Iterate a collection for the first element matching some predicate";
     }
   }

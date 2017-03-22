@@ -29,12 +29,12 @@ public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -7169963565517331905L;
 
-  @NotNull
-  @Override public String description(final PrefixExpression ¢) {
+  @NotNull @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement,
+      final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
     @Nullable final Statement parent = az.statement(x.getParent());

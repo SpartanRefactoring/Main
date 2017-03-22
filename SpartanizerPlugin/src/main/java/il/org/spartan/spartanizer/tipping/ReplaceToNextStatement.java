@@ -23,8 +23,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;
   }
 
-  @Nullable
-  @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
+  @Nullable @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
     @Nullable final Statement $ = extract.nextStatement(n);
     if ($ == null || exclude != null && exclude.isExcluded($))
       return null;
@@ -37,6 +36,5 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
     };
   }
 
-  @Nullable
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
+  @Nullable protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

@@ -26,18 +26,15 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final WhileStatement ¢) {
+  @Nullable @Override public Tip pattern(final WhileStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Iterative;
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return "Move an Iterable to its end using getNext() != null";
   }
 }

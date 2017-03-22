@@ -17,8 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0741 {
-  @NotNull
-  static TypeDeclaration getTypeDeclaration(@NotNull final String td) {
+  @NotNull static TypeDeclaration getTypeDeclaration(@NotNull final String td) {
     return findFirst.typeDeclaration(wizard.ast(td));
   }
 

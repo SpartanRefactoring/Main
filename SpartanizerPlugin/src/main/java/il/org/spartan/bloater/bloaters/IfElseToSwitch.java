@@ -23,8 +23,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 7117505785157896738L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final IfStatement ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final IfStatement ¢) {
     @NotNull final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
       return null;
@@ -73,16 +72,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return true;
   }
 
-  @NotNull
-  private static List<Expression> getAllExpressions(final IfStatement s) {
+  @NotNull private static List<Expression> getAllExpressions(final IfStatement s) {
     @NotNull final List<Expression> $ = new ArrayList<>();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
 
-  @NotNull
-  private static List<Block> getAllBlocks(@NotNull final IfStatement s) {
+  @NotNull private static List<Block> getAllBlocks(@NotNull final IfStatement s) {
     @NotNull final List<Block> $ = new ArrayList<>();
     final Statement p = addAllBlocks(s, $);
     if (p == null)
@@ -112,8 +109,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(final IfStatement __) {
+  @NotNull @Override public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";
   }
 }

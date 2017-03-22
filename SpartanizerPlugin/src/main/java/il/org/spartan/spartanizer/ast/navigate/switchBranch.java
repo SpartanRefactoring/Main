@@ -113,8 +113,7 @@ public class switchBranch {
     return $;
   }
 
-  @NotNull
-  @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
+  @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
     @NotNull final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
     @Nullable List<SwitchCase> c = null;
@@ -164,8 +163,7 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
 
-  @Nullable
-  public static Statement removeBreakSequencer(@NotNull final Statement s) {
+  @Nullable public static Statement removeBreakSequencer(@NotNull final Statement s) {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST $ = s.getAST();
@@ -183,8 +181,7 @@ public class switchBranch {
     return b;
   }
 
-  @NotNull
-  public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
+  @NotNull public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
     @NotNull final Collection<Statement> $ = new ArrayList<>();
     for (@NotNull final Statement ¢ : ss) {
       @Nullable final Statement s = removeBreakSequencer(¢);

@@ -18,9 +18,8 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractVariableDeclarationChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
   private static final long serialVersionUID = 4679082575406204375L;
 
-  @Nullable
-  @Override public ASTRewrite go(final ASTRewrite r, @NotNull final N n, @SuppressWarnings("unused") final TextEditGroup __, @NotNull final List<ASTNode> uses,
-                                 @NotNull final List<ASTNode> replacement) {
+  @Nullable @Override public ASTRewrite go(final ASTRewrite r, @NotNull final N n, @SuppressWarnings("unused") final TextEditGroup __,
+      @NotNull final List<ASTNode> uses, @NotNull final List<ASTNode> replacement) {
     if (!change(n))
       return null;
     uses.addAll(collect.usesOf(n.getName()).in(containing.typeDeclaration(n)));

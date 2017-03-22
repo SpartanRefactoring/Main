@@ -29,8 +29,7 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  @Nullable
-  public static Set<String> invocations(@Nullable final MethodInvocation ¢) {
+  @Nullable public static Set<String> invocations(@Nullable final MethodInvocation ¢) {
     if (¢ == null)
       return null;
     @NotNull final Set<String> $ = new TreeSet<>();
@@ -50,8 +49,7 @@ public enum getAll {
    * @author Dor Ma'ayan
    * @param d JD
    * @return List of the names of the methods */
-  @Nullable
-  public static Set<String> invocations(@Nullable final MethodDeclaration ¢) {
+  @Nullable public static Set<String> invocations(@Nullable final MethodDeclaration ¢) {
     if (¢ == null)
       return null;
     @NotNull final Set<String> $ = new TreeSet<>();
@@ -72,8 +70,7 @@ public enum getAll {
    * @author Kfir Marx
    * @param ¢ Block
    * @return List of the names in the block */
-  @Nullable
-  public static List<Name> names(@Nullable final Block b) {
+  @Nullable public static List<Name> names(@Nullable final Block b) {
     if (b == null)
       return null;
     @NotNull final List<Name> $ = new ArrayList<>();
@@ -91,8 +88,7 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  @Nullable
-  public static List<InstanceofExpression> instanceofs(@Nullable final MethodDeclaration d) {
+  @Nullable public static List<InstanceofExpression> instanceofs(@Nullable final MethodDeclaration d) {
     if (d == null)
       return null;
     @NotNull final List<InstanceofExpression> $ = new ArrayList<>();
@@ -112,8 +108,7 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  @Nullable
-  public static Collection<CastExpression> casts(@Nullable final MethodDeclaration d) {
+  @Nullable public static Collection<CastExpression> casts(@Nullable final MethodDeclaration d) {
     if (d == null)
       return null;
     @NotNull final Collection<CastExpression> $ = new ArrayList<>();
@@ -132,8 +127,7 @@ public enum getAll {
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
-  @Nullable
-  public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration d) {
+  @Nullable public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration d) {
     if (d == null)
       return null;
     @NotNull final List<VariableDeclaration> $ = new ArrayList<>();
@@ -152,8 +146,7 @@ public enum getAll {
    * @param ¢ TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  @Nullable
-  public static List<String> publicFields(@Nullable final TypeDeclaration ¢) {
+  @Nullable public static List<String> publicFields(@Nullable final TypeDeclaration ¢) {
     if (¢ == null)
       return null;
     @NotNull final List<String> $ = new ArrayList<>();
@@ -161,8 +154,7 @@ public enum getAll {
     return $;
   }
 
-  @NotNull
-  private static ASTVisitor publicFieldsCollector(@NotNull final Collection<String> $) {
+  @NotNull private static ASTVisitor publicFieldsCollector(@NotNull final Collection<String> $) {
     // noinspection SameReturnValue
     return new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final FieldDeclaration d) {
@@ -178,8 +170,7 @@ public enum getAll {
    * @param CompilationUnit
    * @author RoeiRaz
    * @author RoeyMaor */
-  @Nullable
-  public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
+  @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     @NotNull final List<MethodDeclaration> $ = new ArrayList<>();
@@ -198,8 +189,7 @@ public enum getAll {
    * @author yonzarecki
    * @author rodedzats
    * @author zivizhar */
-  @NotNull
-  public static List<String> privateFields(@Nullable final TypeDeclaration d) {
+  @NotNull public static List<String> privateFields(@Nullable final TypeDeclaration d) {
     @NotNull final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;

@@ -27,8 +27,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -2446197092801176661L;
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final MethodInvocation n) {
+  @Nullable @Override public ASTNode replacement(@Nullable final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;
     @NotNull final List<Expression> l = arguments(n);
@@ -53,8 +52,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "";
   }
 }

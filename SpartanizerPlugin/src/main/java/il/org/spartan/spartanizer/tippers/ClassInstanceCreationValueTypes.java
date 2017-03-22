@@ -22,8 +22,7 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 6308185220779727829L;
 
-  @NotNull
-  @Override public String description(@NotNull final ClassInstanceCreation ¢) {
+  @NotNull @Override public String description(@NotNull final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
 

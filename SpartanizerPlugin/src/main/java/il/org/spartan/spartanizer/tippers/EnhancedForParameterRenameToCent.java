@@ -28,8 +28,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3945693304397811549L;
 
-  @NotNull
-  @Override public String description(@NotNull final EnhancedForStatement ¢) {
+  @NotNull @Override public String description(@NotNull final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 

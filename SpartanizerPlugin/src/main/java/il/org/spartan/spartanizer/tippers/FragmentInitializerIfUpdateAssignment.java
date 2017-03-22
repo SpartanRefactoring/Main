@@ -28,8 +28,7 @@ public final class FragmentInitializerIfUpdateAssignment extends $FragementIniti
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 3617599837633261268L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 

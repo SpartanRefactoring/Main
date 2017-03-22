@@ -29,8 +29,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     return subject.operands($).to(wizard.PLUS2);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }
 

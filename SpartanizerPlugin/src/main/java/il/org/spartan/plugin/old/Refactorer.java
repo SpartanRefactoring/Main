@@ -45,41 +45,35 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   /** @param e JD
    * @return the applicator used by this refactorer */
-  @Nullable
-  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
     return null;
   }
 
   /** @param m JD
    * @return the applicator used by this refactorer */
-  @Nullable
-  public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker __) {
+  @Nullable public AbstractGUIApplicator getApplicator(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
   /** @return the compilation units designated for refactorer */
-  @Nullable
-  public Selection getSelection() {
+  @Nullable public Selection getSelection() {
     return null;
   }
 
   /** @return the compilation units designated for refactorer */
-  @Nullable
-  public Selection getSelection(@SuppressWarnings("unused") final IMarker __) {
+  @Nullable public Selection getSelection(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
   /** Return null for canceled message.
    * @return opening message for given attributes */
-  @Nullable
-  public String getOpeningMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
+  @Nullable public String getOpeningMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
     return null;
   }
 
   /** Return null for canceled message.
    * @return ending message for given attributes */
-  @Nullable
-  public String getEndingMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
+  @Nullable public String getEndingMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
     return null;
   }
 
@@ -97,9 +91,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   /** @param inner
    * @param currentCompilationUnit
    * @return sub message to be displayed by a {@link IProgressMonitor} */
-  @Nullable
-  @SuppressWarnings("unused") public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
-                                                                         final ICompilationUnit currentCompilationUnit) {
+  @Nullable @SuppressWarnings("unused") public String getProgressMonitorSubMessage(final List<ICompilationUnit> currentCompilationUnits,
+      final ICompilationUnit currentCompilationUnit) {
     return null;
   }
 
@@ -118,9 +111,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
    * @param targetCompilationUnits JD
    * @param a JD
    * @return work to be done before running the refactorer main loop */
-  @Nullable
-  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final AbstractGUIApplicator __,
-                                                                       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
+  @Nullable @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final AbstractGUIApplicator __,
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
     return null;
   }
 
@@ -128,14 +120,12 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
    * @param targetCompilationUnits JD
    * @param a JD
    * @return work to be done after running the refactorer main loop */
-  @Nullable
-  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final AbstractGUIApplicator __,
-                                                                     final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
+  @Nullable @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final AbstractGUIApplicator __,
+      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
     return null;
   }
 
-  @Nullable
-  @Override public Void execute(final ExecutionEvent ¢) {
+  @Nullable @Override public Void execute(final ExecutionEvent ¢) {
     return !isHandler() ? null : go(¢, null);
   }
 
@@ -172,8 +162,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return null;
   }
 
-  @NotNull
-  private Map<attribute, Object> unknowns() {
+  @NotNull private Map<attribute, Object> unknowns() {
     @NotNull final Map<attribute, Object> $ = new HashMap<>();
     Stream.of(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
@@ -193,7 +182,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return true;
   }
 
-  private IRunnableWithProgress runnable(@NotNull final Selection s, @NotNull final AbstractGUIApplicator a, @NotNull final Map<attribute, Object> m) {
+  private IRunnableWithProgress runnable(@NotNull final Selection s, @NotNull final AbstractGUIApplicator a,
+      @NotNull final Map<attribute, Object> m) {
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
@@ -222,8 +212,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     };
   }
 
-  @Nullable
-  private static <T> T either(@Nullable final T t1, final T t2) {
+  @Nullable private static <T> T either(@Nullable final T t1, final T t2) {
     return t1 != null ? t1 : t2;
   }
 
@@ -232,8 +221,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       m.put(a, o);
   }
 
-  @Nullable
-  private static MessageDialog show(@Nullable final String ¢) {
+  @Nullable private static MessageDialog show(@Nullable final String ¢) {
     if (¢ == null)
       return null;
     @NotNull final MessageDialog $ = eclipse.announceNonBusy(¢);
@@ -252,8 +240,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return $;
   }
 
-  @NotNull
-  private static List<ICompilationUnit> currentCompilationUnits(@NotNull final Collection<ICompilationUnit> us, @NotNull final Collection<ICompilationUnit> ds) {
+  @NotNull private static List<ICompilationUnit> currentCompilationUnits(@NotNull final Collection<ICompilationUnit> us,
+      @NotNull final Collection<ICompilationUnit> ds) {
     @NotNull final List<ICompilationUnit> $ = new ArrayList<>(us);
     $.removeAll(ds);
     return $;

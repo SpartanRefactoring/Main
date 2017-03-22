@@ -24,8 +24,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -5815591308727978558L;
 
-  @NotNull
-  private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
+  @NotNull private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
     return $;
@@ -84,8 +83,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return copy.of(expression(az.expressionStatement(lastStatement(¢))));
   }
 
-  @NotNull
-  @Override public String description(final ForStatement ¢) {
+  @NotNull @Override public String description(final ForStatement ¢) {
     return "Convert loop: 'for(?;" + expression(¢) + ";?)' to something else (buggy)";
   }
 
@@ -93,8 +91,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return ¢ != null && fitting(¢);
   }
 
-  @Nullable
-  @Override public ASTNode replacement(final ForStatement ¢) {
+  @Nullable @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
   }
 }

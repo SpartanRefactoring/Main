@@ -13,13 +13,11 @@ public enum TestUtilsBloating {
   static final TextEditGroup textEditGroup = new TextEditGroup("");
   static int counter; // a counter for the renaming function
 
-  @NotNull
-  public static OperandBloating bloatingOf(final String from) {
+  @NotNull public static OperandBloating bloatingOf(final String from) {
     return new OperandBloating(from);
   }
 
-  @NotNull
-  public static OperandBloating bloatingOf(@NotNull final MetaFixture ¢) {
+  @NotNull public static OperandBloating bloatingOf(@NotNull final MetaFixture ¢) {
     return new OperandBloating(¢.reflectedCompilationUnit(), ¢.reflectedCompilationUnitText());
   }
 }

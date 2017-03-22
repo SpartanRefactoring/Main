@@ -13,13 +13,11 @@ import org.jetbrains.annotations.Nullable;
 public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTipper<N> {
   private static final long serialVersionUID = -7953784585309364300L;
 
-  @Nullable
-  @Override public String technicalName() {
+  @Nullable @Override public String technicalName() {
     return null;
   }
 
-  @Nullable
-  @Override protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
+  @Nullable @Override protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
     return null;
   }
 

@@ -83,14 +83,12 @@ public class Toolbox {
     return $;
   }
 
-  @Nullable
-  public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+  @Nullable public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @NotNull @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
-  @Nullable
-  public static Tip extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
+  @Nullable public static Tip extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
     return t.tip(n);
   }
 
@@ -102,8 +100,7 @@ public class Toolbox {
     return freshCopyOfAllTippers();
   }
 
-  @NotNull
-  private static Toolbox emptyToolboox() {
+  @NotNull private static Toolbox emptyToolboox() {
     return new Toolbox();
   }
 
@@ -374,7 +371,8 @@ public class Toolbox {
     }
   }
 
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N n, @NotNull final Collection<Tipper<?>> ts) {
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N n,
+      @NotNull final Collection<Tipper<?>> ts) {
     return ts.stream().filter(x -> x != null).filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
@@ -398,8 +396,7 @@ public class Toolbox {
     return add($, ts);
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(@NotNull final Integer nodeType, @NotNull final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> Toolbox add(@NotNull final Integer nodeType, @NotNull final Tipper<N>... ts) {
     for (@Nullable final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
@@ -415,16 +412,14 @@ public class Toolbox {
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, @NotNull final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, @NotNull final Tipper<N>... ts) {
     final Integer nodeType = wizard.classToNodeType.get(c);
     for (final Tipper<N> ¢ : ts)
       get(nodeType.intValue()).remove(¢);
     return this;
   }
 
-  @NotNull
-  public Collection<Tipper<? extends ASTNode>> getAllTippers() {
+  @NotNull public Collection<Tipper<? extends ASTNode>> getAllTippers() {
     @NotNull final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
@@ -443,8 +438,7 @@ public class Toolbox {
     return firstTipper(¢, get(¢));
   }
 
-  @NotNull
-  public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
+  @NotNull public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
   }
 
@@ -484,8 +478,7 @@ public class Toolbox {
     return ¢.getSimpleName();
   }
 
-  @NotNull
-  public static List<String> get(@Nullable final TipperGroup ¢) {
+  @NotNull public static List<String> get(@Nullable final TipperGroup ¢) {
     @NotNull final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;

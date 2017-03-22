@@ -25,8 +25,7 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 4972402353938739657L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use simple assignment with binary operation";
   }
 
@@ -34,8 +33,7 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.convertToInfix(¢.getOperator()) != null;
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final Assignment ¢) {
+  @NotNull @Override public Tip tip(@NotNull final Assignment ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         // TODO Ori Roth: use class subject

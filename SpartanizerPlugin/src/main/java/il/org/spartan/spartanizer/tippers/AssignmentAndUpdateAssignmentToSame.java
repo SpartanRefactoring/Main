@@ -36,15 +36,13 @@ public final class AssignmentAndUpdateAssignmentToSame extends ReplaceToNextStat
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("a+=3;b=6;").to("a+=3+6"), //
     };
   }
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @NotNull @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
 

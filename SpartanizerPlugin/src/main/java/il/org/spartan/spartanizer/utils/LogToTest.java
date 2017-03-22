@@ -76,7 +76,8 @@ public enum LogToTest {
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
   }
 
-  private static void analyze(@NotNull final Collection<String> xs, @NotNull final Collection<String> ts, @NotNull final Map<String, Integer> nu, @NotNull final List<String> ss) {
+  private static void analyze(@NotNull final Collection<String> xs, @NotNull final Collection<String> ts, @NotNull final Map<String, Integer> nu,
+      @NotNull final List<String> ss) {
     final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
         errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))
@@ -95,14 +96,13 @@ public enum LogToTest {
   }
 
   private static void buildTest(@NotNull final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
-                                final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
+      final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, anonymize.unwarpedTestcase(rawCode),
         errorLocationFileUnclean));
   }
 
-  @NotNull
-  private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
-                             @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
+  @NotNull private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName,
+      final String fileName, @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
         + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {\ntrimmingOf(" + code
         + ").doesNotCrash();\n}";

@@ -17,14 +17,12 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
   protected ASTRewrite rewrite;
   protected TextEditGroup editGroup;
 
-  @NotNull
-  @Override public abstract String description(VariableDeclarationFragment f);
+  @NotNull @Override public abstract String description(VariableDeclarationFragment f);
 
-  @NotNull
-  abstract ASTRewrite go();
+  @NotNull abstract ASTRewrite go();
 
-  @NotNull
-  @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement s, final TextEditGroup g) {
+  @NotNull @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement s,
+      final TextEditGroup g) {
     nextStatement = s;
     fragment = f;
     rewrite = r;

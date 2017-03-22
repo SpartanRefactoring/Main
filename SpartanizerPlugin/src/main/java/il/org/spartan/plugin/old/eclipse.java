@@ -38,11 +38,9 @@ import org.jetbrains.annotations.Nullable;
 public enum eclipse {
   facade;
   static ImageIcon icon;
-  @Nullable
-  static org.eclipse.swt.graphics.Image iconNonBusy;
+  @Nullable static org.eclipse.swt.graphics.Image iconNonBusy;
   static final String NAME = "Laconic";
-  @Nullable
-  static final Shell parent = null;
+  @Nullable static final Shell parent = null;
   static final boolean persistLocation = false;
   static final boolean persistSize = false;
   static final int shellStyle = SWT.TOOL;
@@ -87,8 +85,8 @@ public enum eclipse {
     return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
 
-  private static int compilationUnits(@NotNull final IProgressMonitor m, @NotNull final Collection<ICompilationUnit> us, @NotNull final IPackageFragmentRoot r)
-      throws JavaModelException {
+  private static int compilationUnits(@NotNull final IProgressMonitor m, @NotNull final Collection<ICompilationUnit> us,
+      @NotNull final IPackageFragmentRoot r) throws JavaModelException {
     m.worked(1);
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
       m.worked(1);
@@ -115,8 +113,7 @@ public enum eclipse {
     return $;
   }
 
-  @NotNull
-  @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+  @NotNull @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
@@ -125,8 +122,7 @@ public enum eclipse {
     return null;
   }
 
-  @NotNull
-  static MessageDialog announceNonBusy(final String message) {
+  @NotNull static MessageDialog announceNonBusy(final String message) {
     return new MessageDialog(null, NAME, iconNonBusy(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
@@ -134,8 +130,7 @@ public enum eclipse {
     };
   }
 
-  @Nullable
-  static ICompilationUnit compilationUnit(@Nullable final IEditorPart ep) {
+  @Nullable static ICompilationUnit compilationUnit(@Nullable final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
 
@@ -189,8 +184,7 @@ public enum eclipse {
     return icon;
   }
 
-  @Nullable
-  static org.eclipse.swt.graphics.Image iconNonBusy() {
+  @Nullable static org.eclipse.swt.graphics.Image iconNonBusy() {
     if (iconNotBusyInvalid) {
       iconNotBusyInvalid = false;
       try {
@@ -203,8 +197,7 @@ public enum eclipse {
     return iconNonBusy;
   }
 
-  @NotNull
-  static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
+  @NotNull static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
     @NotNull final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);

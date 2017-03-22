@@ -199,12 +199,9 @@ class CompilationUnitRecord {
 }
 
 class LightWeightMethodRecord {
-  @NotNull
-  final NanoPatternCounter nodes;
-  @NotNull
-  final NanoPatternCounter commands;
-  @NotNull
-  final NanoPatternCounter expressions;
+  @NotNull final NanoPatternCounter nodes;
+  @NotNull final NanoPatternCounter commands;
+  @NotNull final NanoPatternCounter expressions;
   private boolean fullyCovered;
 
   public LightWeightMethodRecord(@NotNull final MethodDeclaration ¢) {
@@ -254,8 +251,7 @@ class LightWeightMethodRecord {
     private final int total;
     private int np;
 
-    @NotNull
-    static NanoPatternCounter init(final int ¢) {
+    @NotNull static NanoPatternCounter init(final int ¢) {
       return new NanoPatternCounter(¢);
     }
 

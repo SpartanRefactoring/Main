@@ -24,8 +24,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -4185849867633961690L;
 
-  @NotNull
-  @Override public Tip tip(@NotNull final ReturnStatement x) {
+  @NotNull @Override public Tip tip(@NotNull final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @NotNull final Expression ee = expression(x);
@@ -55,8 +54,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
         && (iz.conditionalExpression(e) || iz.parenthesizedExpression(e) && iz.conditionalExpression(expression(az.parenthesizedExpression(e))));
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
 }

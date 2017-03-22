@@ -31,8 +31,7 @@ public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private int numColumns;
   private final Collection<FieldEditor> members = new ArrayList<>();
-  @NotNull
-  private final Group group;
+  @NotNull private final Group group;
   private final Composite parent;
   private boolean initialized;
 
@@ -60,8 +59,7 @@ public final class GroupFieldEditor extends FieldEditor {
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
    * @return parent {@link Composite} object */
-  @NotNull
-  public Composite getFieldEditor() {
+  @NotNull public Composite getFieldEditor() {
     return group;
   }
 

@@ -20,8 +20,7 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
         && cantTip.remvoeRedundantIf(¢);
   }
 
-  @NotNull
-  @Override public String description(@NotNull final ForStatement ¢) {
+  @NotNull @Override public String description(@NotNull final ForStatement ¢) {
     return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 

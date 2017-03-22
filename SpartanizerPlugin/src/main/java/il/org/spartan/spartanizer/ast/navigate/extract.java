@@ -35,32 +35,27 @@ public enum extract {
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
-  @Nullable
-  public static List<Expression> allOperands(@NotNull final InfixExpression ¢) {
+  @Nullable public static List<Expression> allOperands(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     return hop.operands(flatten.of(¢));
   }
 
-  @NotNull
-  public static Collection<InfixExpression.Operator> allOperators(@NotNull final InfixExpression ¢) {
+  @NotNull public static Collection<InfixExpression.Operator> allOperators(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     @NotNull final List<InfixExpression.Operator> $ = new ArrayList<>();
     extract.findOperators(¢, $);
     return $;
   }
 
-  @NotNull
-  public static List<Annotation> annotations(final BodyDeclaration ¢) {
+  @NotNull public static List<Annotation> annotations(final BodyDeclaration ¢) {
     return annotations(extendedModifiers(¢));
   }
 
-  @NotNull
-  public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
+  @NotNull public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(extendedModifiers(¢));
   }
 
-  @NotNull
-  public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
+  @NotNull public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
     return annotations(extendedModifiers(¢));
   }
 
@@ -69,8 +64,7 @@ public enum extract {
    * @param ¢ The node from which to return statement.
    * @return single return statement contained in the parameter, or
    *         {@code null if no such value exists. */
-  @Nullable
-  public static ReturnStatement asReturn(final ASTNode ¢) {
+  @Nullable public static ReturnStatement asReturn(final ASTNode ¢) {
     return asReturn(singleStatement(¢));
   }
 
@@ -82,8 +76,7 @@ public enum extract {
     return $ == null ? null : az.assignment($.getExpression());
   }
 
-  @Nullable
-  public static Collection<ConditionalExpression> branches(@Nullable final ConditionalExpression ¢) {
+  @Nullable public static Collection<ConditionalExpression> branches(@Nullable final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     @Nullable ConditionalExpression s = ¢;
@@ -107,8 +100,7 @@ public enum extract {
    * Retreives all If branches
    * @param ¢ JD
    * @return */
-  @Nullable
-  public static Collection<IfStatement> branches(@Nullable final IfStatement ¢) {
+  @Nullable public static Collection<IfStatement> branches(@Nullable final IfStatement ¢) {
     if (¢ == null)
       return null;
     @Nullable IfStatement s = ¢;
@@ -119,16 +111,13 @@ public enum extract {
     return $;
   }
 
-  @Nullable
-  public static List<String> usedNames(final Expression x) {
+  @Nullable public static List<String> usedNames(final Expression x) {
     return new ExpressionBottomUp<List<String>>() {
-      @NotNull
-      @Override public List<String> reduce() {
+      @NotNull @Override public List<String> reduce() {
         return new ArrayList<>();
       }
 
-      @Nullable
-      @Override public List<String> reduce(@Nullable final List<String> ss1, @Nullable final List<String> ss2) {
+      @Nullable @Override public List<String> reduce(@Nullable final List<String> ss1, @Nullable final List<String> ss2) {
         if (ss1 == null && ss2 == null)
           return new ArrayList<>();
         if (ss1 == null)
@@ -139,14 +128,12 @@ public enum extract {
         return ss1;
       }
 
-      @NotNull
-      @Override protected List<String> map(@NotNull final SimpleName ¢) {
+      @NotNull @Override protected List<String> map(@NotNull final SimpleName ¢) {
         final String $ = ¢.getIdentifier();
         return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list($);
       }
 
-      @NotNull
-      @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
+      @NotNull @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
         return reduce();
       }
     }.map(x);
@@ -166,8 +153,7 @@ public enum extract {
     return $;
   }
 
-  @NotNull
-  public static String category(@NotNull final ASTNode $) {
+  @NotNull public static String category(@NotNull final ASTNode $) {
     switch ($.getNodeType()) {
       case ANNOTATION_TYPE_DECLARATION:
         return "@interface";
@@ -217,16 +203,14 @@ public enum extract {
    * @param $ JD
    * @return the parameter if not parenthesized, or the unparenthesized this
    *         version of it */
-  @Nullable
-  public static Expression core(@Nullable final Expression $) {
+  @Nullable public static Expression core(@Nullable final Expression $) {
     return $ == null ? null //
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? core(az.parenthesizedExpression($).getExpression()) //
             : iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? core(az.prefixExpression($)) //
                 : $;
   }
 
-  @NotNull
-  public static Expression core(@NotNull final PrefixExpression $) {
+  @NotNull public static Expression core(@NotNull final PrefixExpression $) {
     return $.getOperator() != wizard.PLUS1 ? $ : core($.getOperand());
   }
 
@@ -257,16 +241,14 @@ public enum extract {
    * @return expression statement if n is a block or an expression statement or
    *         null if it not an expression statement or if the block contains
    *         more than one statement */
-  @Nullable
-  public static ExpressionStatement expressionStatement(@Nullable final ASTNode ¢) {
+  @Nullable public static ExpressionStatement expressionStatement(@Nullable final ASTNode ¢) {
     return ¢ == null ? null : az.expressionStatement(extract.singleStatement(¢));
   }
 
   /** extract list of fragments in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @NotNull
-  public static List<VariableDeclarationFragment> fragments(@NotNull final Statement ¢) {
+  @NotNull public static List<VariableDeclarationFragment> fragments(@NotNull final Statement ¢) {
     @NotNull final List<VariableDeclarationFragment> $ = new ArrayList<>();
     switch (¢.getNodeType()) {
       case BLOCK:
@@ -283,16 +265,14 @@ public enum extract {
    * @param pattern JD
    * @return single {@link IfStatement} embedded in the parameter or
    *         {@code null if not such sideEffects exists. */
-  @Nullable
-  public static IfStatement ifStatement(final ASTNode ¢) {
+  @Nullable public static IfStatement ifStatement(final ASTNode ¢) {
     return az.ifStatement(extract.singleStatement(¢));
   }
 
   /** extract list of {@link IfStatement}s in a {@link Statement}.
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @NotNull
-  public static Collection<IfStatement> ifStatements(@NotNull final Statement ¢) {
+  @NotNull public static Collection<IfStatement> ifStatements(@NotNull final Statement ¢) {
     @NotNull final List<IfStatement> $ = new ArrayList<>();
     switch (¢.getNodeType()) {
       case BLOCK:
@@ -310,8 +290,7 @@ public enum extract {
     return ¢ == null || $ == null ? null : az.infixExpression($.getExpression());
   }
 
-  @Nullable
-  public static Expression lastElse(@Nullable final ConditionalExpression ¢) {
+  @Nullable public static Expression lastElse(@Nullable final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     @Nullable ConditionalExpression $ = ¢;
@@ -324,8 +303,7 @@ public enum extract {
    * sequence
    * @param ¢
    * @return */
-  @Nullable
-  public static Statement lastElse(@Nullable final IfStatement ¢) {
+  @Nullable public static Statement lastElse(@Nullable final IfStatement ¢) {
     if (¢ == null)
       return null;
     @Nullable IfStatement $ = ¢;
@@ -349,8 +327,7 @@ public enum extract {
   /** @param pattern JD
    * @return method invocation if it exists or null if it doesn't or if the
    *         block contains more than one statement */
-  @Nullable
-  public static MethodInvocation methodInvocation(final ASTNode ¢) {
+  @Nullable public static MethodInvocation methodInvocation(final ASTNode ¢) {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
 
@@ -397,8 +374,7 @@ public enum extract {
    * @param pattern JD
    * @return {@link Assignment} that follows the parameter, or
    *         {@code null if not such value exists. */
-  @Nullable
-  public static Assignment nextAssignment(final ASTNode ¢) {
+  @Nullable public static Assignment nextAssignment(final ASTNode ¢) {
     return assignment(extract.nextStatement(¢));
   }
 
@@ -412,8 +388,7 @@ public enum extract {
    * @param pattern JD
    * @return {@link IfStatement} that immediately follows the parameter, or
    *         {@code null, if no such statement exists. */
-  @Nullable
-  public static IfStatement nextIfStatement(final ASTNode ¢) {
+  @Nullable public static IfStatement nextIfStatement(final ASTNode ¢) {
     return az.ifStatement(extract.nextStatement(¢));
   }
 
@@ -429,8 +404,7 @@ public enum extract {
    * @param pattern JD
    * @return {@link ReturnStatement} that immediately follows the parameter, or
    *         {@code null, if no such statement exists. */
-  @Nullable
-  public static ReturnStatement nextReturn(final ASTNode ¢) {
+  @Nullable public static ReturnStatement nextReturn(final ASTNode ¢) {
     return az.returnStatement(extract.nextStatement(¢));
   }
 
@@ -438,8 +412,7 @@ public enum extract {
    * @param pattern JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         {@code null, if no such statement exists. */
-  @Nullable
-  public static Statement nextStatement(final ASTNode ¢) {
+  @Nullable public static Statement nextStatement(final ASTNode ¢) {
     return nextStatement(containingStatement(¢));
   }
 
@@ -448,8 +421,7 @@ public enum extract {
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         {@code null, if no such statement exists. */
-  @Nullable
-  public static Statement nextStatementInside(@Nullable final SwitchCase ¢) {
+  @Nullable public static Statement nextStatementInside(@Nullable final SwitchCase ¢) {
     if (¢ == null)
       return null;
     @Nullable final SwitchStatement $ = az.switchStatement(¢.getParent());
@@ -482,8 +454,7 @@ public enum extract {
    * @return single {@link ReturnStatement} embedded in the parameter, and
    *         return it; {@code null if not such sideEffects
    *         exists. */
-  @Nullable
-  public static ReturnStatement returnStatement(final ASTNode ¢) {
+  @Nullable public static ReturnStatement returnStatement(final ASTNode ¢) {
     return az.returnStatement(extract.singleStatement(¢));
   }
 
@@ -524,8 +495,7 @@ public enum extract {
    * control structure such as {@code if} are not removed.)
    * @param pattern JD
    * @return list of such sideEffects. */
-  @NotNull
-  public static List<Statement> statements(final ASTNode ¢) {
+  @NotNull public static List<Statement> statements(final ASTNode ¢) {
     @NotNull final List<Statement> $ = new ArrayList<>();
     return !(¢ instanceof Statement) ? $ : //
         extract.statementsInto((Statement) ¢, $);
@@ -547,21 +517,17 @@ public enum extract {
    * @param n JD
    * @return single {@link ThrowStatement} embedded in the parameter, and return
    *         it; {@code null if not such sideEffects exists. */
-  @Nullable
-  public static ThrowStatement throwStatement(final ASTNode ¢) {
+  @Nullable public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
 
-  @NotNull
-  public static List<ASTNode> updatedVariables(final Expression x) {
+  @NotNull public static List<ASTNode> updatedVariables(final Expression x) {
     @Nullable final List<ASTNode> $ = new ExpressionBottomUp<List<ASTNode>>() {
-      @NotNull
-      @Override public List<ASTNode> reduce() {
+      @NotNull @Override public List<ASTNode> reduce() {
         return new LinkedList<>();
       }
 
-      @Nullable
-      @Override public List<ASTNode> reduce(@Nullable final List<ASTNode> l1, @Nullable final List<ASTNode> l2) {
+      @Nullable @Override public List<ASTNode> reduce(@Nullable final List<ASTNode> l1, @Nullable final List<ASTNode> l2) {
         if (l1 == null)
           return l2;
         if (l2 == null)
@@ -570,8 +536,7 @@ public enum extract {
         return l1;
       }
 
-      @Nullable
-      @Override protected List<ASTNode> map(final Assignment ¢) {
+      @Nullable @Override protected List<ASTNode> map(final Assignment ¢) {
         return reduce(list(¢), super.map(¢));
       }
 
@@ -579,8 +544,7 @@ public enum extract {
         return reduce(Collections.singletonList(step.expression(¢)), super.map(¢));
       }
 
-      @Nullable
-      @Override protected List<ASTNode> map(@NotNull final PrefixExpression ¢) {
+      @Nullable @Override protected List<ASTNode> map(@NotNull final PrefixExpression ¢) {
         return reduce(!updating(¢) ? reduce() : atomic(¢.getOperand()), super.map(¢));
       }
 
@@ -599,8 +563,7 @@ public enum extract {
     return $ != null ? $ : new ArrayList<>();
   }
 
-  @NotNull
-  private static List<Annotation> annotations(@NotNull final Iterable<IExtendedModifier> ms) {
+  @NotNull private static List<Annotation> annotations(@NotNull final Iterable<IExtendedModifier> ms) {
     @NotNull final List<Annotation> $ = new ArrayList<>();
     for (final IExtendedModifier ¢ : ms) {
       @Nullable final Annotation a = az.annotation(¢);
@@ -610,13 +573,11 @@ public enum extract {
     return $;
   }
 
-  @Nullable
-  private static ReturnStatement asReturn(final Statement ¢) {
+  @Nullable private static ReturnStatement asReturn(final Statement ¢) {
     return az.returnStatement(¢);
   }
 
-  @NotNull
-  private static String category(@NotNull final TypeDeclaration ¢) {
+  @NotNull private static String category(@NotNull final TypeDeclaration ¢) {
     @NotNull final StringBuilder $ = new StringBuilder();
     $.append(!¢.isPackageMemberTypeDeclaration() ? "internal " //
         : ¢.isMemberTypeDeclaration() ? "member " //
@@ -633,26 +594,23 @@ public enum extract {
     findOperators(az.infixExpression(x.getRightOperand()), $);
   }
 
-  @NotNull
-  private static List<VariableDeclarationFragment> fragmentsInto(final Block b, @NotNull final List<VariableDeclarationFragment> $) {
+  @NotNull private static List<VariableDeclarationFragment> fragmentsInto(final Block b, @NotNull final List<VariableDeclarationFragment> $) {
     step.statements(b).stream().filter(iz::variableDeclarationStatement).forEach(λ -> extract.fragmentsInto(az.variableDeclrationStatement(λ), $));
     return $;
   }
 
-  @NotNull
-  private static List<VariableDeclarationFragment> fragmentsInto(@NotNull final VariableDeclarationStatement s, @NotNull final List<VariableDeclarationFragment> $) {
+  @NotNull private static List<VariableDeclarationFragment> fragmentsInto(@NotNull final VariableDeclarationStatement s,
+      @NotNull final List<VariableDeclarationFragment> $) {
     $.addAll(fragments(s));
     return $;
   }
 
-  @NotNull
-  private static List<IfStatement> ifsInto(final Block b, @NotNull final List<IfStatement> $) {
+  @NotNull private static List<IfStatement> ifsInto(final Block b, @NotNull final List<IfStatement> $) {
     step.statements(b).forEach(λ -> ifsInto(λ, $));
     return $;
   }
 
-  @NotNull
-  private static List<IfStatement> ifsInto(@NotNull final Statement ¢, @NotNull final List<IfStatement> $) {
+  @NotNull private static List<IfStatement> ifsInto(@NotNull final Statement ¢, @NotNull final List<IfStatement> $) {
     switch (¢.getNodeType()) {
       case BLOCK:
         return ifsInto((Block) ¢, $);
@@ -682,8 +640,7 @@ public enum extract {
    * @param ¢ JD
    * @return {@link Statement} that immediately follows the parameter, or
    *         {@code null, if no such statement exists. */
-  @Nullable
-  private static Statement nextStatement(@Nullable final Statement ¢) {
+  @Nullable private static Statement nextStatement(@Nullable final Statement ¢) {
     if (¢ == null)
       return null;
     @Nullable final Block $ = az.block(¢.getParent());
@@ -694,14 +651,12 @@ public enum extract {
     return core(onlyOne($));
   }
 
-  @NotNull
-  private static List<Statement> statementsInto(final Block b, @NotNull final List<Statement> $) {
+  @NotNull private static List<Statement> statementsInto(final Block b, @NotNull final List<Statement> $) {
     step.statements(b).forEach(λ -> statementsInto(λ, $));
     return $;
   }
 
-  @NotNull
-  private static List<Statement> statementsInto(@NotNull final Statement ¢, @NotNull final List<Statement> $) {
+  @NotNull private static List<Statement> statementsInto(@NotNull final Statement ¢, @NotNull final List<Statement> $) {
     switch (¢.getNodeType()) {
       case EMPTY_STATEMENT:
         return $;

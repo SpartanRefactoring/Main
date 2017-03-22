@@ -20,8 +20,7 @@ public final class AnnotationDiscardValueName extends ReplaceCurrentNode<NormalA
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 8644185174325773037L;
 
-  @NotNull
-  @Override public String description(@NotNull final NormalAnnotation ¢) {
+  @NotNull @Override public String description(@NotNull final NormalAnnotation ¢) {
     return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 

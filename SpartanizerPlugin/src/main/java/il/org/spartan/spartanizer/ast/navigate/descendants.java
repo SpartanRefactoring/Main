@@ -16,25 +16,21 @@ public abstract class descendants<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
    * @param pattern JD
    * @return a newly created instance */
-  @NotNull
-  public static <N extends ASTNode> descendants<N> whoseClassIs(final Class<N> ¢) {
+  @NotNull public static <N extends ASTNode> descendants<N> whoseClassIs(final Class<N> ¢) {
     return new whoseClassIs<>(¢);
   }
 
   /** @param n JD
    * @return descendants whose type matches the given type. */
-  @NotNull
-  public abstract List<N> from(ASTNode n);
+  @NotNull public abstract List<N> from(ASTNode n);
 
   /** @param n JD
    * @return descendants whose type matches the given type. */
-  @NotNull
-  public abstract List<N> inclusiveFrom(ASTNode n);
+  @NotNull public abstract List<N> inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD
    * @return add predicate to filter elements */
-  @NotNull
-  public abstract descendants<N> suchThat(Predicate<N> ¢);
+  @NotNull public abstract descendants<N> suchThat(Predicate<N> ¢);
 
   static class whoseClassIs<N extends ASTNode> extends descendants<N> {
     final Class<N> clazz;
@@ -44,14 +40,12 @@ public abstract class descendants<N extends ASTNode> {
       this.clazz = clazz;
     }
 
-    @NotNull
-    @Override public whoseClassIs<N> suchThat(final Predicate<N> ¢) {
+    @NotNull @Override public whoseClassIs<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }
 
-    @NotNull
-    @Override public List<N> from(@NotNull final ASTNode n) {
+    @NotNull @Override public List<N> from(@NotNull final ASTNode n) {
       @NotNull final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(@NotNull final ASTNode ¢) {
@@ -62,8 +56,7 @@ public abstract class descendants<N extends ASTNode> {
       return $;
     }
 
-    @NotNull
-    @Override public List<N> inclusiveFrom(@Nullable final ASTNode n) {
+    @NotNull @Override public List<N> inclusiveFrom(@Nullable final ASTNode n) {
       @NotNull final List<N> $ = new ArrayList<>();
       if (n == null)
         return $;
@@ -77,8 +70,7 @@ public abstract class descendants<N extends ASTNode> {
     }
   }
 
-  @NotNull
-  public static List<ASTNode> of(@NotNull final ASTNode n) {
+  @NotNull public static List<ASTNode> of(@NotNull final ASTNode n) {
     @NotNull final List<ASTNode> $ = new ArrayList<>();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {

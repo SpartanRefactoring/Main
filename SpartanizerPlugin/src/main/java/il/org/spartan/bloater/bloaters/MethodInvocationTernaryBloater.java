@@ -21,8 +21,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -373710981362225466L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final ExpressionStatement s) {
+  @Nullable @Override public ASTNode replacement(@NotNull final ExpressionStatement s) {
     @Nullable final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)
       return null;
@@ -38,8 +37,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of($.getExpression()));
   }
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
+  @NotNull @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }
 }

@@ -22,13 +22,11 @@ import il.org.spartan.utils.*;
  * @since 2.6 (Updated - apply nature to newly opened projects) */
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static final String NEW_PROJECT = "new_project";
-  @Nullable
-  private static Plugin plugin;
+  @Nullable private static Plugin plugin;
   private static boolean listening;
   private static final int SAFETY_DELAY = 100;
 
-  @Nullable
-  public static AbstractUIPlugin plugin() {
+  @Nullable public static AbstractUIPlugin plugin() {
     return plugin;
   }
 

@@ -61,8 +61,7 @@ public interface trivia {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
-  @NotNull
-  static String gist(@Nullable final Object ¢) {
+  @NotNull static String gist(@Nullable final Object ¢) {
     return ¢ == null ? "null" : gist(¢ + "");
   }
 
@@ -70,8 +69,7 @@ public interface trivia {
     return (¢.length() < 35 ? ¢ : ¢.substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
-  @NotNull
-  static <N extends ASTNode> N removeComments(@NotNull final N n) {
+  @NotNull static <N extends ASTNode> N removeComments(@NotNull final N n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       boolean delete(@NotNull final ASTNode ¢) {

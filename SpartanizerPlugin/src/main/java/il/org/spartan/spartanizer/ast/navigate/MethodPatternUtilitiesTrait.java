@@ -46,8 +46,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
-  @NotNull
-  default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
+  @NotNull default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return descendants.whoseClassIs(ReturnStatement.class).from(¢);
   }
 

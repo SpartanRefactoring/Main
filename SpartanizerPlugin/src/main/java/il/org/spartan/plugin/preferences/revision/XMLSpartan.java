@@ -59,8 +59,7 @@ public class XMLSpartan {
    * occur (such as a corrupted XML file), an empty map is returned.
    * @param p JD
    * @return enabled tippers for the project */
-  @NotNull
-  public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
+  @NotNull public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
     @NotNull final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
     @Nullable final Document d = getFile(p);
     if (d == null)
@@ -147,8 +146,8 @@ public class XMLSpartan {
    * @throws IOException
    * @throws CoreException
    * @return XML file for project */
-  @Nullable
-  private static Document getFileInner(@Nullable final IProject p) throws CoreException, ParserConfigurationException, SAXException, IOException {
+  @Nullable private static Document getFileInner(@Nullable final IProject p)
+      throws CoreException, ParserConfigurationException, SAXException, IOException {
     if (p == null || !p.exists() || !p.isOpen())
       return null;
     final IFile fl = p.getFile(FILE_NAME);
@@ -187,8 +186,7 @@ public class XMLSpartan {
    * tippers.
    * @param d JD
    * @return given document */
-  @Nullable
-  private static Document initialize(@Nullable final Document $) {
+  @Nullable private static Document initialize(@Nullable final Document $) {
     if ($ == null)
       return null;
     if ($.getElementById(BASE) != null)
@@ -208,7 +206,8 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
-  private static void createEnabledNodeChild(@Nullable final Document d, @Nullable final Tipper<?> t, @Nullable final Collection<String> seen, @Nullable final Node e) {
+  private static void createEnabledNodeChild(@Nullable final Document d, @Nullable final Tipper<?> t, @Nullable final Collection<String> seen,
+      @Nullable final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
     final String n = t.nanoName();
@@ -296,8 +295,7 @@ public class XMLSpartan {
       return false;
     }
 
-    @NotNull
-    @SuppressWarnings("static-method") public SpartanElement[] getChildren() {
+    @NotNull @SuppressWarnings("static-method") public SpartanElement[] getChildren() {
       return EMPTY;
     }
   }
@@ -336,8 +334,7 @@ public class XMLSpartan {
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-25 */
   public static class SpartanCategory extends SpartanElement {
-    @NotNull
-    private final List<SpartanElement> children;
+    @NotNull private final List<SpartanElement> children;
 
     public SpartanCategory(final String name, final boolean enabled) {
       super(name, enabled);
@@ -362,8 +359,7 @@ public class XMLSpartan {
      * @see
      * il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler.
      * SpartanElement#getChildren() */
-    @NotNull
-    @Override public SpartanElement[] getChildren() {
+    @NotNull @Override public SpartanElement[] getChildren() {
       return children.toArray(new SpartanElement[children.size()]);
     }
   }

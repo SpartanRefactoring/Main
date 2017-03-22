@@ -112,9 +112,8 @@ public enum sideEffects {
     return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> intIsIn(λ, STRICT_SIDE_EFFECT));
   }
 
-  @NotNull
-  static int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION, ASSIGNMENT,
-      POSTFIX_EXPRESSION };
+  @NotNull static int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,
+      ASSIGNMENT, POSTFIX_EXPRESSION };
 
   public static boolean free(@Nullable final Expression ¢) {
     if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))

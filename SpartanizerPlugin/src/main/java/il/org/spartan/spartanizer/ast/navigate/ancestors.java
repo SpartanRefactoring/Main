@@ -11,8 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-23 */
 public interface ancestors {
-  @NotNull
-  static List<ASTNode> path(@NotNull final ASTNode n) {
+  @NotNull static List<ASTNode> path(@NotNull final ASTNode n) {
     @NotNull final List<ASTNode> $ = new ArrayList<>();
     for (ASTNode parent = n; parent != null; parent = n.getParent())
       $.add(parent);

@@ -50,8 +50,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     return true;
   }
 
-  @NotNull
-  private CompilationUnitRecord foo(@NotNull final CompilationUnit ¢) {
+  @NotNull private CompilationUnitRecord foo(@NotNull final CompilationUnit ¢) {
     @NotNull final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
     $.setPath(absolutePath);
     $.setRelativePath(relativePath);

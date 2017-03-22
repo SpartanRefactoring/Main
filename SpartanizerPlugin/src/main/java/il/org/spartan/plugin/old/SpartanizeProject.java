@@ -57,8 +57,7 @@ public final class SpartanizeProject extends BaseHandler {
     return $.get();
   }
 
-  @Nullable
-  @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
     done.clear();
@@ -66,8 +65,7 @@ public final class SpartanizeProject extends BaseHandler {
     return go();
   }
 
-  @Nullable
-  public Void go() {
+  @Nullable public Void go() {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");

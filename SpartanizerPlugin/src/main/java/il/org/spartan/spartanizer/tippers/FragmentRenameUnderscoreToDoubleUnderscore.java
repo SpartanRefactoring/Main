@@ -16,8 +16,7 @@ public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends Variable
     implements TipperCategory.Anonymization {
   private static final long serialVersionUID = 2942670719772764228L;
 
-  @NotNull
-  @Override public String description(final N ¢) {
+  @NotNull @Override public String description(final N ¢) {
     return "Use double underscore instead of " + trivia.gist(¢);
   }
 

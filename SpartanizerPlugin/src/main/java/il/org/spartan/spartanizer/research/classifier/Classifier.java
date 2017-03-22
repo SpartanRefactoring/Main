@@ -82,8 +82,7 @@ public class Classifier extends ASTVisitor {
     System.out.println("Lets classify them together!");
   }
 
-  @NotNull
-  private Map<String, Int> filterAllIntrestingPatterns() {
+  @NotNull private Map<String, Int> filterAllIntrestingPatterns() {
     @NotNull final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
@@ -125,8 +124,7 @@ public class Classifier extends ASTVisitor {
     return true;
   }
 
-  @NotNull
-  private static String tipperize(@NotNull final String code, final String classification) {
+  @NotNull private static String tipperize(@NotNull final String code, final String classification) {
     return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
         + "();\", \"" + classification + "\"));";
   }

@@ -30,8 +30,7 @@ public final class IfLastInMethod extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = 7913539614277563670L;
 
-  @NotNull
-  @Override public String description(final IfStatement ¢) {
+  @NotNull @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + expression(¢) + " for early return";
   }
 

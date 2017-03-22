@@ -29,8 +29,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -221763355000543721L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 

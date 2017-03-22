@@ -37,8 +37,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-  @NotNull
-  private static List<Expression> removeFirstElement(@NotNull final List<Expression> ¢) {
+  @NotNull private static List<Expression> removeFirstElement(@NotNull final List<Expression> ¢) {
     @NotNull final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first
     return $;
@@ -48,8 +47,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "a*b + a*c => a * (b + c)";
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Apply the distributive rule to " + ¢;
   }
 

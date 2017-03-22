@@ -154,8 +154,7 @@ public final class Application implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  @NotNull
-  private FileStats process(@NotNull final File f, @NotNull final ICompilationUnit u) throws IOException, JavaModelException {
+  @NotNull private FileStats process(@NotNull final File f, @NotNull final ICompilationUnit u) throws IOException, JavaModelException {
     @NotNull final FileStats $ = new FileStats(f);
     @NotNull final Trimmer t = new Trimmer();
     IntStream.range(0, optRounds).forEach(λ -> t.apply(u));
@@ -300,8 +299,7 @@ public final class Application implements IApplication {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
 
-    @NotNull
-    public String fileName() {
+    @NotNull public String fileName() {
       return file.getName();
     }
 

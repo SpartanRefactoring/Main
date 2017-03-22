@@ -42,8 +42,7 @@ public enum Count {
         + " ratio: [" + safe.div(ternaries.second.inner, ternaries.first.inner) + "]");
   }
 
-  @NotNull
-  private static Pair<Int, Int> newPair() {
+  @NotNull private static Pair<Int, Int> newPair() {
     return new Pair<>(new Int(), new Int());
   }
 }

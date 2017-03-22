@@ -132,7 +132,8 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(final int statementsTotal, @NotNull final Integer numStatements, @NotNull final Collection<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal, @NotNull final Integer numStatements,
+      @NotNull final Collection<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 

@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-08 */
 enum FactorsExpander {
   ;
-  @NotNull
-  public static Expression simplify(final InfixExpression ¢) {
+  @NotNull public static Expression simplify(final InfixExpression ¢) {
     return base(new FactorsCollector(¢));
   }
 
@@ -48,13 +47,11 @@ enum FactorsExpander {
     ).to(DIVIDE);
   }
 
-  @NotNull
-  private static Expression base(@NotNull final FactorsCollector ¢) {
+  @NotNull private static Expression base(@NotNull final FactorsCollector ¢) {
     return base(¢.all());
   }
 
-  @NotNull
-  private static Expression base(@NotNull final List<Factor> fs) {
+  @NotNull private static Expression base(@NotNull final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
     final Factor first = first(fs);
@@ -71,8 +68,7 @@ enum FactorsExpander {
    * @param fs a list
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-  @NotNull
-  private static Expression recurse(@NotNull final Expression $, @Nullable final List<Factor> fs) {
+  @NotNull private static Expression recurse(@NotNull final Expression $, @Nullable final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -80,8 +76,7 @@ enum FactorsExpander {
     return recurse((InfixExpression) $, fs);
   }
 
-  @NotNull
-  private static Expression recurse(@NotNull final InfixExpression $, @Nullable final List<Factor> fs) {
+  @NotNull private static Expression recurse(@NotNull final InfixExpression $, @Nullable final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -95,8 +90,7 @@ enum FactorsExpander {
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }
 
-  @NotNull
-  private static Expression step(@NotNull final Expression $, @NotNull final List<Factor> ¢) {
+  @NotNull private static Expression step(@NotNull final Expression $, @NotNull final List<Factor> ¢) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse($, ¢);
   }

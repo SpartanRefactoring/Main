@@ -16,15 +16,13 @@ import org.jetbrains.annotations.NotNull;
  * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
  * @since 2017-02-10 */
 public class CompilationUnitRecord {
-  @NotNull
-  public final CompilationUnit inner;
+  @NotNull public final CompilationUnit inner;
   final int linesOfCode;
   public final int numClasses;
   public final int numExpressions;
   final int numMethods;
   public final int numStatements;
-  @NotNull
-  public final String pakcage;
+  @NotNull public final String pakcage;
   int testCount;
   String path;
   String relativePath;

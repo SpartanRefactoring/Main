@@ -40,8 +40,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = -8635256643058136983L;
 
-  @Nullable
-  @Override @SuppressWarnings("boxing") public ASTNode replacement(@NotNull final InfixExpression x) {
+  @Nullable @Override @SuppressWarnings("boxing") public ASTNode replacement(@NotNull final InfixExpression x) {
     gather(x, new ArrayList<>());
     x.getOperator();
     allOperands(x);
@@ -62,8 +61,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return allOperators(x).stream().anyMatch(λ -> λ == Operator.PLUS);
   }
 
-  @Nullable
-  @SuppressWarnings("boxing") public static ASTNode replacement2(@NotNull final InfixExpression x) {
+  @Nullable @SuppressWarnings("boxing") public static ASTNode replacement2(@NotNull final InfixExpression x) {
     @Nullable final List<Expression> ops = allOperands(x),
         ops2 = range.from(0).to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
     @Nullable InfixExpression $ = null;
@@ -76,16 +74,14 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return $ != null && iz.infixPlus($) && containsZeroOperand($) && containsPlusOperator($);
   }
 
-  @NotNull
-  private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
 
-  @NotNull
-  private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(x.getOperator(), PLUS, MINUS)) {
@@ -99,8 +95,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return $;
   }
 
-  @NotNull
-  private static List<Expression> gather(@NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(@NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
@@ -109,8 +104,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return "Remove 0+ in expressions like ";
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return description() + ¢;
   }
 }

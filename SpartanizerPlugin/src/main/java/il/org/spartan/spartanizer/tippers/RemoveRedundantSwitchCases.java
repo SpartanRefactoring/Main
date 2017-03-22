@@ -24,8 +24,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -1674967177889976551L;
 
-  @NotNull
-  @Override public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
+  @NotNull @Override public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
     @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
@@ -41,8 +40,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     return $ != null && ($.isDefault() || n.isDefault());
   }
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @NotNull @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "remove redundant switch case";
   }
 }

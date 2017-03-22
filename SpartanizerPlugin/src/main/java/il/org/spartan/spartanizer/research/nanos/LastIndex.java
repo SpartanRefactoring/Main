@@ -28,13 +28,11 @@ public final class LastIndex extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 
-  @Nullable
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Nullable @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Functional;
   }
 

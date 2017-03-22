@@ -26,8 +26,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @NotNull
-  @Override public String description(@NotNull final IfStatement ¢) {
+  @NotNull @Override public String description(@NotNull final IfStatement ¢) {
     return "Remove vacuous 'else' branch of 'if(" + trivia.gist(¢.getExpression() + "") + ")...'";
   }
 

@@ -19,8 +19,7 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 7490692444066432956L;
 
-  @NotNull
-  private static String description(final Operator ¢) {
+  @NotNull private static String description(final Operator ¢) {
     return (¢ == PostfixExpression.Operator.DECREMENT ? "de" : "in") + "crement";
   }
 
@@ -28,8 +27,7 @@ public final class PostfixToPrefix extends ReplaceCurrentNode<PostfixExpression>
     return ¢ == PostfixExpression.Operator.DECREMENT ? PrefixExpression.Operator.DECREMENT : PrefixExpression.Operator.INCREMENT;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final PostfixExpression ¢) {
+  @NotNull @Override public String description(@NotNull final PostfixExpression ¢) {
     return "Convert post-" + description(¢.getOperator()) + " of " + operand(¢) + " to pre-" + description(¢.getOperator());
   }
 

@@ -15,8 +15,7 @@ public enum Statistic {
     }
   },
   NA {
-    @NotNull
-    @Override public String toString() {
+    @NotNull @Override public String toString() {
       return "N/A";
     }
 
@@ -44,8 +43,7 @@ public enum Statistic {
       return ¢.mad();
     }
 
-    @NotNull
-    @Override public String toString() {
+    @NotNull @Override public String toString() {
       return "M.A.D";
     }
   },

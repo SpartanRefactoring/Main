@@ -25,8 +25,7 @@ public final class FragmentInitializerReturnVariable extends $FragementInitializ
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -7344214948464934471L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }
 

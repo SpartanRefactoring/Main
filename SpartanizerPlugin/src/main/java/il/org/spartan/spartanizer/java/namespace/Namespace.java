@@ -46,8 +46,7 @@ public final class Namespace implements Environment {
     return this;
   }
 
-  @NotNull
-  protected Namespace addAllReources(@NotNull final Iterable<VariableDeclarationExpression> ¢) {
+  @NotNull protected Namespace addAllReources(@NotNull final Iterable<VariableDeclarationExpression> ¢) {
     ¢.forEach(this::put);
     return this;
   }
@@ -61,8 +60,7 @@ public final class Namespace implements Environment {
     return children.get(¢);
   }
 
-  @NotNull
-  protected Namespace addConstants(@NotNull final EnumDeclaration d, @NotNull final Iterable<EnumConstantDeclaration> ds) {
+  @NotNull protected Namespace addConstants(@NotNull final EnumDeclaration d, @NotNull final Iterable<EnumConstantDeclaration> ds) {
     @knows("¢") final type t = type.bring(d.getName() + "");
     ds.forEach(λ -> put(step.name(λ) + "", new Binding(t)));
     return this;
@@ -76,8 +74,7 @@ public final class Namespace implements Environment {
         return next != null;
       }
 
-      @Nullable
-      @Override public Environment next() {
+      @Nullable @Override public Environment next() {
         @Nullable final Environment $ = next;
         next = next.nest();
         return $;
@@ -89,13 +86,11 @@ public final class Namespace implements Environment {
     return separate.these(ancestors()).by("\n\t * ");
   }
 
-  @NotNull
-  public String description() {
+  @NotNull public String description() {
     return description("");
   }
 
-  @NotNull
-  public String description(final String indent) {
+  @NotNull public String description(final String indent) {
     return indent + name + "" + flat + (children.isEmpty() ? ""
         : ":\n" + separate.these(children.stream().map(λ -> λ.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
   }
@@ -106,8 +101,7 @@ public final class Namespace implements Environment {
   }
 
   /** @return Map entries used in the current scope. */
-  @NotNull
-  @Override public List<Map.Entry<String, Binding>> entries() {
+  @NotNull @Override public List<Map.Entry<String, Binding>> entries() {
     return new ArrayList<>(flat.entrySet());
   }
 
@@ -122,14 +116,12 @@ public final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  @NotNull
-  static Namespace spawnFor(@NotNull final Namespace $, @Nullable final ForStatement s) {
+  @NotNull static Namespace spawnFor(@NotNull final Namespace $, @Nullable final ForStatement s) {
     final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
     return s == null || x == null ? $ : $.spawn(for¢).put(x);
   }
 
-  @NotNull
-  static Namespace spawnEnhancedFor(@NotNull final Namespace n, @Nullable final EnhancedForStatement s) {
+  @NotNull static Namespace spawnEnhancedFor(@NotNull final Namespace n, @Nullable final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());
   }
 
@@ -248,8 +240,7 @@ public final class Namespace implements Environment {
   }
 
   /** @return names used the {@link Environment} . */
-  @NotNull
-  @Override public LinkedHashSet<String> keys() {
+  @NotNull @Override public LinkedHashSet<String> keys() {
     return new LinkedHashSet<>(flat.keySet());
   }
 
@@ -287,14 +278,12 @@ public final class Namespace implements Environment {
     return put("type " + step.name(¢), step.name(¢));
   }
 
-  @NotNull
-  private Namespace put(@NotNull final FieldDeclaration d) {
+  @NotNull private Namespace put(@NotNull final FieldDeclaration d) {
     fragments(d).forEach(λ -> put(step.name(λ), d.getType()));
     return this;
   }
 
-  @NotNull
-  protected Namespace put(@NotNull final Iterable<? extends BodyDeclaration> ¢) {
+  @NotNull protected Namespace put(@NotNull final Iterable<? extends BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;
   }
@@ -311,35 +300,30 @@ public final class Namespace implements Environment {
     return put(step.name(¢), ¢.getType());
   }
 
-  @NotNull
-  private Namespace put(final String key, final ASTNode n) {
+  @NotNull private Namespace put(final String key, final ASTNode n) {
     put(key, new Binding(key, n));
     return this;
   }
 
   /** Add name to the current scope in the {@link Environment} . */
-  @Nullable
-  @Override public Binding put(final String identifier, final Binding value) {
+  @Nullable @Override public Binding put(final String identifier, final Binding value) {
     flat.put(identifier, value);
     assert !flat.isEmpty();
     return hiding(identifier);
   }
 
-  @NotNull
-  private Namespace put(final String key, final Type t) {
+  @NotNull private Namespace put(final String key, final Type t) {
     put(key, new Binding(key, type.baptize(trivia.condense(t))));
     return this;
   }
 
-  @NotNull
-  protected Namespace put(@NotNull final TypeDeclaration ¢) {
+  @NotNull protected Namespace put(@NotNull final TypeDeclaration ¢) {
     @NotNull @knows("¢") final String key = "type " + step.name(¢);
     put(key, new Binding(key, type.baptize(step.name(¢) + "", !iz.interface¢(¢) ? "class" : "interface")));
     return this;
   }
 
-  @NotNull
-  protected Namespace put(final VariableDeclarationExpression x) {
+  @NotNull protected Namespace put(final VariableDeclarationExpression x) {
     fragments(x).forEach(λ -> put(step.name(λ), type(x)));
     return this;
   }
@@ -364,8 +348,7 @@ public final class Namespace implements Environment {
     return addChild(new Namespace(this, childName));
   }
 
-  @NotNull
-  @Override public String toString() {
+  @NotNull @Override public String toString() {
     return name + "" + flat;
   }
 
@@ -383,8 +366,7 @@ public final class Namespace implements Environment {
       final String base = namer.variableName(t);
       int n = -1;
 
-      @NotNull
-      @Override public String next() {
+      @NotNull @Override public String next() {
         return ++n == 0 ? base : base + n;
       }
 
@@ -394,13 +376,11 @@ public final class Namespace implements Environment {
     };
   }
 
-  @NotNull
-  public String generateName(final Type ¢) {
+  @NotNull public String generateName(final Type ¢) {
     return generateName(namer.shorten(¢));
   }
 
-  @NotNull
-  public String generateName(final String ¢) {
+  @NotNull public String generateName(final String ¢) {
     int postface = 0;
     @NotNull String $ = ¢ + "" + ++postface;
     while (has($))
@@ -408,8 +388,7 @@ public final class Namespace implements Environment {
     return $;
   }
 
-  @NotNull
-  public Namespace addNewName(final String s, final Type t) {
+  @NotNull public Namespace addNewName(final String s, final Type t) {
     return put(s, t);
   }
 

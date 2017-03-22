@@ -15,8 +15,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 5806282917111501608L;
 
-  @Nullable
-  public abstract ASTNode replacement(N n);
+  @Nullable public abstract ASTNode replacement(N n);
 
   @Override public final Tip tip(@NotNull final N n) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + fault.done();

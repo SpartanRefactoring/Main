@@ -127,8 +127,7 @@ public final class Issue0086 extends Issue____ {
         .stays();
   }
 
-  @NotNull
-  private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
+  @NotNull private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
     return new SequencerNotLastInBlock<>();
   }
 

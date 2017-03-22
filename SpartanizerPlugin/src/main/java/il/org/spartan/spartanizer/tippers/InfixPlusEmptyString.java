@@ -33,8 +33,7 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
     return "[\"\"+foo]->foo";
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 

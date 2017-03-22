@@ -27,14 +27,14 @@ public final class MyName extends NanoPatternTipper<MethodInvocation> {
     return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
 
-  private static boolean sameSize(@Nullable final Collection<SingleVariableDeclaration> parameters, @Nullable final Collection<Expression> arguments) {
+  private static boolean sameSize(@Nullable final Collection<SingleVariableDeclaration> parameters,
+      @Nullable final Collection<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();
   }
 
-  @NotNull
-  @Override public Tip pattern(@NotNull final MethodInvocation ¢) {
+  @NotNull @Override public Tip pattern(@NotNull final MethodInvocation ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final MethodInvocation $ = copy.of(¢);

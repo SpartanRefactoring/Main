@@ -53,8 +53,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(MINUS2);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;
   }
 

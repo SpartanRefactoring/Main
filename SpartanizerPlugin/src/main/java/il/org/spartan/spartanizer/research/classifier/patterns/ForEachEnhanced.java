@@ -21,13 +21,11 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "ForEach: conevrt to fluent API";
   }
 
-  @Nullable
-  @Override public Tip pattern(final ForStatement ¢) {
+  @Nullable @Override public Tip pattern(final ForStatement ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }
 }

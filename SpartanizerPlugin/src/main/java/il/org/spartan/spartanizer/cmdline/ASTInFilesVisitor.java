@@ -32,16 +32,12 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  @NotNull
-  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp;
-  @NotNull
-  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
-  @NotNull
-  @External(alias = "c", value = "corpus name") protected String corpus = "";
+  @NotNull @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp;
+  @NotNull @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
+  @NotNull @External(alias = "c", value = "corpus name") protected String corpus = "";
   @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
-  @Nullable
-  static BufferedWriter out;
+  @Nullable static BufferedWriter out;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
@@ -210,8 +206,7 @@ public class ASTInFilesVisitor {
       }.fire(new ASTTrotter() {
         {
           hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
-            @Nullable
-            @Override public Void fire() {
+            @Nullable @Override public Void fire() {
               return null;
             }
 
@@ -255,7 +250,8 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          @NotNull final Rule<TypeDeclaration, Object> r = Rule.on((@NotNull final TypeDeclaration t) -> t.isInterface()).go(λ -> System.out.println(λ.getName()));
+          @NotNull final Rule<TypeDeclaration, Object> r = Rule.on((@NotNull final TypeDeclaration t) -> t.isInterface())
+              .go(λ -> System.out.println(λ.getName()));
           @NotNull final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
             System.out.println(λ);
             return λ.isInterface();

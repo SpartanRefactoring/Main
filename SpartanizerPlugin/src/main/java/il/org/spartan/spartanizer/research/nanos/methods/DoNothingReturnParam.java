@@ -17,8 +17,7 @@ public class DoNothingReturnParam extends JavadocMarkerNanoPattern {
         && returnTypeSameAsParameter(¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Default;
   }
 }

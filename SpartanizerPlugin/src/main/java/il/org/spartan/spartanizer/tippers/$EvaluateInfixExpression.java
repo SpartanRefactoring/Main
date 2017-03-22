@@ -45,13 +45,11 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     return -1;
   }
 
-  @NotNull
-  @Override public final String description() {
+  @NotNull @Override public final String description() {
     return "Evaluate " + operation();
   }
 
-  @NotNull
-  @Override public final String description(final InfixExpression ¢) {
+  @NotNull @Override public final String description(final InfixExpression ¢) {
     return description() + ":" + ¢;
   }
 
@@ -112,8 +110,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
 
   abstract long evaluateLong(List<Expression> xs) throws IllegalArgumentException;
 
-  @NotNull
-  abstract String operation();
+  @NotNull abstract String operation();
 
   abstract Operator operator();
 

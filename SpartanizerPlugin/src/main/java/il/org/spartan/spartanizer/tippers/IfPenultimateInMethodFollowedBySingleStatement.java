@@ -23,8 +23,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = -9215176071220857924L;
 
-  @NotNull
-  @Override public String description(@NotNull final IfStatement ¢) {
+  @NotNull @Override public String description(@NotNull final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 

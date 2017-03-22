@@ -40,8 +40,7 @@ public class Trimmer extends AbstractGUIApplicator {
   private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
   public Toolbox toolbox;
 
-  @NotNull
-  public Trimmer useProjectPreferences() {
+  @NotNull public Trimmer useProjectPreferences() {
     useProjectPreferences = true;
     toolboxes.clear();
     return this;
@@ -129,8 +128,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return e;
   }
 
-  @Nullable
-  @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
+  @Nullable @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
       @Nullable Toolbox t;
@@ -167,8 +165,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   public abstract class With {
-    @NotNull
-    public Trimmer trimmer() {
+    @NotNull public Trimmer trimmer() {
       return Trimmer.this;
     }
   }
@@ -183,8 +180,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   boolean firstAddition = true;
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       toolbox = new Toolbox();
@@ -193,8 +189,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> Trimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> Trimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       toolbox = new Toolbox();

@@ -21,8 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNode<S> {
   private static final long serialVersionUID = 648254692142989542L;
   protected Statement body;
-  @Nullable
-  protected Block block;
+  @Nullable protected Block block;
   protected List<Statement> statements;
   protected Statement lastStatement;
   protected Expression updater;

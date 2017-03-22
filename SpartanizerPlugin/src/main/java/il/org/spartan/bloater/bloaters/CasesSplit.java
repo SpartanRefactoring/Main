@@ -29,13 +29,11 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 5172128174751851623L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final SwitchStatement s) {
+  @NotNull @Override public Tip tip(@NotNull final SwitchStatement s) {
     @NotNull final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
     @NotNull final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
     return new Tip(description(s), s, getClass()) {
@@ -65,8 +63,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return null;
   }
 
-  @NotNull
-  private static List<Statement> getAdditionalStatements(@NotNull final List<Statement> ss, final SwitchCase c) {
+  @NotNull private static List<Statement> getAdditionalStatements(@NotNull final List<Statement> ss, final SwitchCase c) {
     @NotNull final List<Statement> $ = new ArrayList<>();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c) + 1, ss.size())) {

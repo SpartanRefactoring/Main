@@ -30,15 +30,11 @@ public class TableWriter implements Closeable {
     }
   }
 
-  @NotNull
-  public final File file;
+  @NotNull public final File file;
   /** The name of the file into which records are written. */
-  @NotNull
-  public final String fileName;
-  @NotNull
-  public final OutputStreamWriter writer;
-  @NotNull
-  public final TableRenderer renderer;
+  @NotNull public final String fileName;
+  @NotNull public final OutputStreamWriter writer;
+  @NotNull public final TableRenderer renderer;
   private boolean shouldPrintHeader = true;
   private boolean footerPrinted;
 
@@ -80,8 +76,7 @@ public class TableWriter implements Closeable {
         renderer.afterHeader());
   }
 
-  @NotNull
-  private String writeHeaderInner(@NotNull final Map<String, Object> m) {
+  @NotNull private String writeHeaderInner(@NotNull final Map<String, Object> m) {
     @NotNull final Separator s = new Separator(renderer.headerSeparator());
     @NotNull final StringBuilder $ = new StringBuilder();
     m.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));

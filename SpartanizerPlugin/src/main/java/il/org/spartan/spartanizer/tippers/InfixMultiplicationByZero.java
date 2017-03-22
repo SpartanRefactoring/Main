@@ -29,13 +29,11 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     return extract.allOperands(x).stream().anyMatch(λ -> !sideEffects.free(λ));
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();

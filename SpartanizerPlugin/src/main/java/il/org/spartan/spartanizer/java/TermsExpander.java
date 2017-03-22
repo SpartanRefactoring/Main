@@ -24,8 +24,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016-08 */
 public enum TermsExpander {
   ;
-  @NotNull
-  public static Expression simplify(@NotNull final InfixExpression ¢) {
+  @NotNull public static Expression simplify(@NotNull final InfixExpression ¢) {
     return !type.isNotString(¢) ? ¢ : base(new TermsCollector(¢));
   }
 
@@ -37,8 +36,7 @@ public enum TermsExpander {
     return t.positive() ? subject.append($, t.expression) : subject.pair($, t.expression).to(MINUS2);
   }
 
-  @NotNull
-  private static Expression base(@NotNull final List<Term> ts) {
+  @NotNull private static Expression base(@NotNull final List<Term> ts) {
     assert ts != null;
     assert !ts.isEmpty();
     final Term first = first(ts);
@@ -60,8 +58,7 @@ public enum TermsExpander {
     ).to(MINUS2);
   }
 
-  @NotNull
-  private static Expression base(@NotNull final TermsCollector ¢) {
+  @NotNull private static Expression base(@NotNull final TermsCollector ¢) {
     return base(¢.all());
   }
 
@@ -70,8 +67,7 @@ public enum TermsExpander {
    *        optimally
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-  @NotNull
-  private static Expression recurse(@Nullable final List<Term> ts, @NotNull final Expression $) {
+  @NotNull private static Expression recurse(@Nullable final List<Term> ts, @NotNull final Expression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())
       return $;
@@ -79,8 +75,7 @@ public enum TermsExpander {
     return recurse(ts, (InfixExpression) $);
   }
 
-  @NotNull
-  private static Expression recurse(@Nullable final List<Term> ts, @NotNull final InfixExpression $) {
+  @NotNull private static Expression recurse(@Nullable final List<Term> ts, @NotNull final InfixExpression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())
       return $;
@@ -94,8 +89,7 @@ public enum TermsExpander {
     return recurse(chop(ts), o == PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }
 
-  @NotNull
-  private static Expression step(@NotNull final List<Term> ¢, @NotNull final Expression $) {
+  @NotNull private static Expression step(@NotNull final List<Term> ¢, @NotNull final Expression $) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse(¢, $);
   }

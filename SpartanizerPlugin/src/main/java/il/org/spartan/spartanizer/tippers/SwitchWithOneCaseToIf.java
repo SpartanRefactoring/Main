@@ -30,16 +30,14 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 5853683693900339864L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
 
   // TODO Yuval Simon: this is one of the worst bits of code I have seen.
   // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
   // transformation --yg
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
+  @Nullable @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
     @NotNull final List<switchBranch> bs = switchBranch.intoBranches(s);
     if (bs.size() != 2)
       return null;
@@ -61,8 +59,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return $;
   }
 
-  @Nullable
-  private static InfixExpression makeFrom(final SwitchStatement s, @NotNull final Iterable<SwitchCase> cs) {
+  @Nullable private static InfixExpression makeFrom(final SwitchStatement s, @NotNull final Iterable<SwitchCase> cs) {
     @Nullable InfixExpression $ = null;
     for (@NotNull final SwitchCase c : cs) {
       if (c.isDefault())

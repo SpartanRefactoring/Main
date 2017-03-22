@@ -40,8 +40,7 @@ final class EnvironmentVisitor extends ASTVisitor {
 
   /** As of JSL3, AnonymousClassDeclaration's parent can be either
    * ClassInstanceCreation or EnumConstantDeclaration */
-  @NotNull
-  static String anonymousClassDeclarationParentName(@NotNull final AnonymousClassDeclaration ¢) {
+  @NotNull static String anonymousClassDeclarationParentName(@NotNull final AnonymousClassDeclaration ¢) {
     final ASTNode $ = ¢.getParent();
     if ($ instanceof ClassInstanceCreation)
       return az.classInstanceCreation($).getType() + "";
@@ -53,8 +52,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @NotNull
-  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final FieldDeclaration d) {
+  @NotNull @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final FieldDeclaration d) {
     @NotNull final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     @NotNull final type t = type.baptize(trivia.condense(d.getType()));
     $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
@@ -65,16 +63,14 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
 
-  @NotNull
-  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final VariableDeclarationExpression x) {
+  @NotNull @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final VariableDeclarationExpression x) {
     @NotNull final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     @NotNull final type t = type.baptize(trivia.condense(x.getType()));
     $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
-  @NotNull
-  @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final VariableDeclarationStatement s) {
+  @NotNull @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final VariableDeclarationStatement s) {
     @NotNull final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     @NotNull final type t = type.baptize(trivia.condense(s.getType()));
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
@@ -160,8 +156,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     restoreScopeName();
   }
 
-  @NotNull
-  @SuppressWarnings("hiding") String fullName(final SimpleName $) {
+  @NotNull @SuppressWarnings("hiding") String fullName(final SimpleName $) {
     return scopePath + "." + $;
   }
 
@@ -208,8 +203,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return $;
   }
 
-  @NotNull
-  static String parentNameScope(@Nullable final String ¢) {
+  @NotNull static String parentNameScope(@Nullable final String ¢) {
     return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 

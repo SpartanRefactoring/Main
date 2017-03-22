@@ -31,8 +31,7 @@ public enum PreferencesResources {
                                                                         // SAFE
   public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
 
-  @NotNull
-  public static String getLabel(@NotNull final Class<? extends ExpanderCategory> $) {
+  @NotNull public static String getLabel(@NotNull final Class<? extends ExpanderCategory> $) {
     return system.className($);
   }
 
@@ -75,11 +74,9 @@ public enum PreferencesResources {
       return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-    @NotNull
-    private final Class<? extends TipperCategory> clazz;
+    @NotNull private final Class<? extends TipperCategory> clazz;
     public final String id;
-    @NotNull
-    public final String label;
+    @NotNull public final String label;
 
     TipperGroup(@NotNull final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;

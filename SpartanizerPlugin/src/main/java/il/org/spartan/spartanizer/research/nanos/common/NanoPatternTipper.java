@@ -22,8 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
   private static final long serialVersionUID = 8068722088108674947L;
-  @Nullable
-  public final N nodeTypeHolder = null;
+  @Nullable public final N nodeTypeHolder = null;
 
   protected static <N extends ASTNode> boolean anyTips(@NotNull final Collection<UserDefinedTipper<N>> ts, @Nullable final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
@@ -37,8 +36,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return ts.stream().filter(λ -> λ.check(n)).findFirst().get();
   }
 
-  @Nullable
-  public static <N extends ASTNode> Tip firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+  @Nullable public static <N extends ASTNode> Tip firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
     return firstTipper(ts, n).tip(n);
   }
 
@@ -54,13 +52,11 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return first(¢);
   }
 
-  @Nullable
-  protected static Block containingBlock(final ASTNode ¢) {
+  @Nullable protected static Block containingBlock(final ASTNode ¢) {
     return yieldAncestors.untilContainingBlock().from(¢);
   }
 
-  @NotNull
-  @Override public final Tip tip(@NotNull final N ¢) {
+  @NotNull @Override public final Tip tip(@NotNull final N ¢) {
     @Nullable final Tip $ = pattern(¢);
     @NotNull @SuppressWarnings("unchecked") final Class<? extends NanoPatternTipper<N>> c = (Class<? extends NanoPatternTipper<N>>) getClass();
     return new Tip($.description, ¢, c) {
@@ -71,18 +67,15 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     };
   }
 
-  @Nullable
-  @Override public String description(@SuppressWarnings("unused") final N __) {
+  @Nullable @Override public String description(@SuppressWarnings("unused") final N __) {
     return "";
   }
 
-  @Nullable
-  @Override public String technicalName() {
+  @Nullable @Override public String technicalName() {
     return nanoName();
   }
 
-  @Nullable
-  @SuppressWarnings("static-method") public String example() {
+  @Nullable @SuppressWarnings("static-method") public String example() {
     return null;
   }
 
@@ -90,23 +83,19 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return "";
   }
 
-  @NotNull
-  @Override public String[] akas() {
+  @NotNull @Override public String[] akas() {
     return new String[] { nanoName() };
   }
 
-  @Nullable
-  protected abstract Tip pattern(N ¢);
+  @Nullable protected abstract Tip pattern(N ¢);
 
-  @Nullable
-  @SuppressWarnings("static-method") public Category category() {
+  @Nullable @SuppressWarnings("static-method") public Category category() {
     return null;
   }
 
   public enum Category {
     Iterative, Field, Conditional, Exception, Safety, MethodBody {
-      @NotNull
-      @Override public String toString() {
+      @NotNull @Override public String toString() {
         return "Method Body";
       }
     },

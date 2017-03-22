@@ -21,8 +21,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 7233894972736348329L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
+  @Nullable @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
     @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
@@ -36,8 +35,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merge branches with same code";
   }
 }

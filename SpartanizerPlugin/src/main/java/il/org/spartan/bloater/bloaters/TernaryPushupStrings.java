@@ -68,8 +68,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     return iz.stringLiteral(then($)) && iz.stringLiteral(elze($));
   }
 
-  @Nullable
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Nullable @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }
 }
