@@ -16,7 +16,6 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.type.*;
 
 /** unit tests for {@link type} , as well as tests for the types of certain
  * expression using {@link Axiom} .
@@ -24,7 +23,7 @@ import il.org.spartan.spartanizer.engine.type.*;
  * @author Niv Shalmon
  * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings("ALL")
+@SuppressWarnings({ "ALL", "static-method" })
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
    * @author Yossi Gil */
@@ -128,7 +127,7 @@ public final class typeTest {
       azzert.that(Axiom.type(true), is(BOOLEAN));
     }
 
-    @Test public void axiomBoolean2() {
+    @SuppressWarnings("unused") @Test public void axiomBoolean2() {
       azzert.that(Axiom.type(true || b1 && b2), is(BOOLEAN));
     }
 
