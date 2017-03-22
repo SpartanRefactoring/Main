@@ -19,6 +19,7 @@ public abstract class Tip extends Range {
    * @param n arbitrary
    * @param ns */
   static Range range(@NotNull final ASTNode n, final ASTNode... ns) {
+    assert n != null;
     return range(singleNodeRange(n), ns);
   }
 
@@ -30,6 +31,7 @@ public abstract class Tip extends Range {
   }
 
   @NotNull static Range singleNodeRange(final @NotNull ASTNode ¢) {
+    assert ¢ != null;
     final int $ = ¢.getStartPosition();
     return new Range($, $ + ¢.getLength());
   }
@@ -51,8 +53,9 @@ public abstract class Tip extends Range {
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
   }
 
-  Tip(final String description, @NotNull final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
+  Tip(final String description, @NotNull final Range other, final Class<? extends Tipper<?>> tipperClass) {
     super(other);
+    assert other != null;
     this.description = description;
     this.tipperClass = tipperClass;
   }
