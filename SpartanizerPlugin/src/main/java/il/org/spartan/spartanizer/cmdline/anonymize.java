@@ -118,6 +118,11 @@ public enum anonymize {
       String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
+      System.out.println("1s tipper: " + theSpartanizer.firstTipper(s));
+      System.out.println("once: " + theSpartanizer.once(s));
+      System.out.println("twice: " + theSpartanizer.twice(s));
+      System.out.println("thrice: " + theSpartanizer.thrice(s));
+      System.out.println("fixed: " + theSpartanizer.repetitively(s));
       System.out.println(anonymize.testcase(namer.signature(s), s));
     }
   }
