@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -65,6 +66,6 @@ public class ExamplesTests {
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
-        .stream().collect(Collectors.toMap(λ -> λ.getClass(), λ -> λ, (t1, t2) -> t1)).values();
+        .stream().collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
   }
 }
