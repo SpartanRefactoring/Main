@@ -1,8 +1,3 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
- *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- *
- * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tipping;
 
 import org.eclipse.jdt.core.dom.*;
@@ -14,6 +9,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
+/** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @since Sep 25, 2016 */
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 5265347217554350758L;
 
