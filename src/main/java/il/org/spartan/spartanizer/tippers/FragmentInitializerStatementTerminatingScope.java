@@ -33,8 +33,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (object() == null || extract.core(object().getInitializer()) instanceof LambdaExpression || initializer() == null
-        || haz.annotation(object())
+    if (object() == null || extract.core(object().getInitializer()) instanceof LambdaExpression || initializer() == null || haz.annotation(object())
         || iz.enhancedFor(nextStatement()) && iz.simpleName(az.enhancedFor(nextStatement()).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement()).getExpression()) + "").equals(name() + "") && !iz.simpleName(initializer())
             && !iz.literal(initializer())

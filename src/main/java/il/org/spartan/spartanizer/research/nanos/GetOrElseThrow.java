@@ -27,7 +27,7 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
   private static final String description = "replace with azzert.notNull(X)";
   private static final ThrowOnNull assertNotNull = new ThrowOnNull();
 
-  @Override public boolean canTip(final IfStatement ¢) {
+  @Override public boolean canTip(@NotNull final IfStatement ¢) {
     return assertNotNull.check(¢)//
         && iz.returnStatement(next(¢))//
     ;

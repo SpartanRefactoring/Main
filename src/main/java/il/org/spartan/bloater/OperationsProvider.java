@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public abstract class OperationsProvider {
   /** @param n JD
    * @return matching {@link Tipper} */
-  public abstract <N extends ASTNode> Tipper<N> getTipper(N n);
+  @NotNull public abstract <N extends ASTNode> Tipper<N> getTipper(N n);
 
   /** @return a function from list<Op<?> to <Op<?>> which should mean to help us
    *         choose which tipper we would like to use */

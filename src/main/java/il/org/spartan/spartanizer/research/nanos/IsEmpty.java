@@ -18,7 +18,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
     return tippers.canTip(¢);
   }
 
-  @Nullable @Override public Fragment pattern(final InfixExpression ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final InfixExpression ¢) {
     return tippers.firstTip(¢);
   }
 

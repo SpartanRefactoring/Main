@@ -25,7 +25,7 @@ public final class Min extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(final ConditionalExpression ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
