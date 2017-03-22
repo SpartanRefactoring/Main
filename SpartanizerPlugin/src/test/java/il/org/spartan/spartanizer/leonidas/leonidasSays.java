@@ -150,7 +150,7 @@ public enum leonidasSays {
       @NotNull final Bool tipped = new Bool();
       // noinspection SameReturnValue
       n.accept(new ASTVisitor(true) {
-        @Override public boolean visit(final Block ¢) {
+        @Override public boolean visit(@NotNull final Block ¢) {
           if (!tipper.check(¢))
             return true;
           tipped.inner = true;
@@ -263,7 +263,7 @@ public enum leonidasSays {
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
       @NotNull final Bool tipped = new Bool();
       n.accept(new ASTVisitor(true) {
-        @Override public void preVisit(final ASTNode ¢) {
+        @Override public void preVisit(@NotNull final ASTNode ¢) {
           if (!tipper.check(¢))
             return;
           tipped.inner = true;

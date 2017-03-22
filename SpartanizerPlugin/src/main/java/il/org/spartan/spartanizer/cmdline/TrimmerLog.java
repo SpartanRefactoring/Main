@@ -91,7 +91,7 @@ public enum TrimmerLog {
     TrimmerLog.outputDir = $;
   }
 
-  public static <N extends ASTNode> void tip(@NotNull final Tipper<N> w, final N n) {
+  public static <N extends ASTNode> void tip(@NotNull final Tipper<N> w, @NotNull final N n) {
     if (--maxTips <= 0) {
       if (maxTips == 0)
         System.out.println("Stopped logging tips");

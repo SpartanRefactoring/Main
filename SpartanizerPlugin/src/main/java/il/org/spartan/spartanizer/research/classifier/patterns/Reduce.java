@@ -32,7 +32,7 @@ public class Reduce extends NanoPatternTipper<ForStatement> {
     return "Reduce: conevrt to fluent API";
   }
 
-  @Nullable @Override public Fragment pattern(final ForStatement ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }

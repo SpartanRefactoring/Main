@@ -222,7 +222,7 @@ public final class SingleTipperApplicator {
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
-      final Tipper<N> t = Toolbox.defaultInstance().firstTipper(n);
+      @NotNull final Tipper<N> t = Toolbox.defaultInstance().firstTipper(n);
       if (t != null)
         apply(t, n);
       doneTraversing = true;

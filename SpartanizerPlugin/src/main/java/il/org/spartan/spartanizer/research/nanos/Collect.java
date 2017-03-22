@@ -48,7 +48,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
     private static final long serialVersionUID = -1531336007723130062L;
 
-    @Nullable @Override protected Fragment pattern(final EnhancedForStatement ¢) {
+    @Nullable @Override protected Fragment pattern(@NotNull final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
@@ -62,7 +62,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
         || anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(final EnhancedForStatement $) {
+  @Nullable @Override public Fragment pattern(@NotNull final EnhancedForStatement $) {
     try {
       return firstTip(blockTippers, az.block(parent($)));
     } catch (@NotNull @SuppressWarnings("unused") final NoSuchElementException __) {

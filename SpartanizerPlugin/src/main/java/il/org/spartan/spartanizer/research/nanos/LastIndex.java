@@ -27,7 +27,7 @@ public final class LastIndex extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 
-  @Nullable @Override public Fragment pattern(final InfixExpression ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 

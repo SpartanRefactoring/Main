@@ -28,7 +28,7 @@ public class Min extends NanoPatternTipper<ForStatement> {
     return "ForEach: conevrt to fluent API";
   }
 
-  @Nullable @Override public Fragment pattern(final ForStatement ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }

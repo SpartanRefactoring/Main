@@ -27,7 +27,7 @@ public class While {
       return anyTips(tippers, ¢);
     }
 
-    @Nullable @Override public Fragment pattern(final WhileStatement ¢) {
+    @Nullable @Override public Fragment pattern(@NotNull final WhileStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
