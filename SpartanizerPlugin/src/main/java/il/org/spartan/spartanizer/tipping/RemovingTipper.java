@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1791362595323626807L;
 
-  @NotNull @Override public final Tip tip(@NotNull final N n) {
-    return new Tip(description(n), n, myClass()) {
+  @NotNull @Override public final Fragment tip(@NotNull final N n) {
+    return new Fragment(description(n), n, myClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.remove(n, g);
       }

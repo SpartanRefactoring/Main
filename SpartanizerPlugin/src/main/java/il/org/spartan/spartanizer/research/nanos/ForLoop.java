@@ -45,7 +45,7 @@ public final class ForLoop {
       ;
     }
 
-    @Nullable @Override public Tip pattern(final ForStatement $) {
+    @Nullable @Override public Fragment pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
 

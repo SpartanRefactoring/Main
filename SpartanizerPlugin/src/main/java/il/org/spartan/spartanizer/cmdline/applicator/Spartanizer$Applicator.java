@@ -151,7 +151,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+        @Nullable Fragment s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
@@ -203,7 +203,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+        @Nullable Fragment s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);

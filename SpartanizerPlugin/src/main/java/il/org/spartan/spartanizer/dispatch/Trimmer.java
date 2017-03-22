@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
 
-  public static boolean prune(@Nullable final Tip r, @NotNull final List<Tip> rs) {
+  public static boolean prune(@Nullable final Fragment r, @NotNull final List<Fragment> rs) {
     if (r != null) {
       r.pruneIncluders(rs);
       rs.add(r);
@@ -72,7 +72,7 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (w == null)
           return true;
-        @Nullable Tip s = null;
+        @Nullable Fragment s = null;
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
@@ -127,7 +127,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return e;
   }
 
-  @Nullable @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
+  @Nullable @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Fragment> $) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
       @Nullable Toolbox t;

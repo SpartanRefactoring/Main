@@ -35,7 +35,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
         ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
   }
 
-  @Override public Tip tip(@NotNull final CatchClause c, @Nullable final ExclusionManager m) {
+  @Override public Fragment tip(@NotNull final CatchClause c, @Nullable final ExclusionManager m) {
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))
       return null;
@@ -48,7 +48,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     if (m != null)
       m.exclude(c);
     final SimpleName ¢ = namer.newCurrent(c);
-    return new Tip(description(c), c.getException().getName(), getClass()) {
+    return new Fragment(description(c), c.getException().getName(), getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, c, r, g);
       }

@@ -28,8 +28,8 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
     return "Prune redundant continue";
   }
 
-  @NotNull @Override public Tip tip(@NotNull final EnhancedForStatement ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final EnhancedForStatement ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         remove(r, extract.lastStatement(¢), g);
       }

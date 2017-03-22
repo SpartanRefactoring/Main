@@ -30,7 +30,7 @@ public final class Infix {
       return anyTips(tippers, ¢);
     }
 
-    @Nullable @Override public Tip pattern(final InfixExpression ¢) {
+    @Nullable @Override public Fragment pattern(final InfixExpression ¢) {
       return firstTip(tippers, ¢);
     }
 

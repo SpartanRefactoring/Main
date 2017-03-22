@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * {@link ASTRewrite} object.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-28 */
-public abstract class Tip extends Range {
+public abstract class Fragment extends Range {
   /** A factory function that converts a sequence of ASTNodes into a
    * {@link Range}
    * @param n arbitrary
@@ -48,12 +48,12 @@ public abstract class Tip extends Range {
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, @NotNull final ASTNode n, final Class<? extends Tipper<?>> tipperClass, final ASTNode... ns) {
+  public Fragment(final String description, @NotNull final ASTNode n, final Class<? extends Tipper<?>> tipperClass, final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
   }
 
-  Tip(final String description, @NotNull final Range other, final Class<? extends Tipper<?>> tipperClass) {
+  Fragment(final String description, @NotNull final Range other, final Class<? extends Tipper<?>> tipperClass) {
     super(other);
     assert other != null;
     this.description = description;
@@ -61,7 +61,7 @@ public abstract class Tip extends Range {
     assert tipperClass != null;
   }
 
-  public <N extends ASTNode> Tip(final String description, @NotNull final N n, @NotNull final Class<? extends Tipper<?>> c) {
+  public <N extends ASTNode> Fragment(final String description, @NotNull final N n, @NotNull final Class<? extends Tipper<?>> c) {
     this(description, range(n), c);
   }
 

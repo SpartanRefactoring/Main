@@ -63,7 +63,7 @@ public final class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final AbstractGUIApplicator a, @NotNull final Tip r, @NotNull final IMarker m) throws CoreException {
+  private static void addMarker(final AbstractGUIApplicator a, @NotNull final Fragment r, @NotNull final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(SPARTANIZATION_TIPPER_KEY, r.tipperClass);
@@ -88,7 +88,7 @@ public final class Builder extends IncrementalProjectBuilder {
     for (final AbstractGUIApplicator s : Tips.all()) {
       if (s instanceof Trimmer)
         ((Trimmer) s).useProjectPreferences();
-      for (@Nullable final Tip ¢ : s.collectSuggestions(u)) // NANO
+      for (@Nullable final Fragment ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {
           @Nullable final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));

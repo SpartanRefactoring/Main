@@ -31,7 +31,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
+  @Override public Fragment tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
     @Nullable final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
@@ -48,7 +48,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     final SimpleName ¢ = newCurrent(s);
     if (m != null)
       m.exclude(s);
-    return new Tip(description(s), s, getClass(), body) {
+    return new Fragment(description(s), s, getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, s, r, g);
       }

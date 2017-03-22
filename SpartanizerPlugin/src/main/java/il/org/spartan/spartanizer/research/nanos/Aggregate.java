@@ -36,7 +36,7 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
         && rival.cantTip(x);
   }
 
-  @Nullable @Override public Tip pattern(final EnhancedForStatement x) {
+  @Nullable @Override public Fragment pattern(final EnhancedForStatement x) {
     return firstTip(tippers, x);
   }
 

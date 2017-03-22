@@ -41,7 +41,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   @Nullable private IMarker marker;
   @Nullable protected String name;
   private ITextSelection selection;
-  private final List<Tip> tips = new ArrayList<>();
+  private final List<Fragment> tips = new ArrayList<>();
   private int totalChanges;
 
   /*** Instantiates this class, with message identical to name
@@ -82,10 +82,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
    * @param u what to check
-   * @return a collection of {@link Tip} objects each containing a
+   * @return a collection of {@link Fragment} objects each containing a
    *         spartanization tip */
-  @NotNull public final Collection<Tip> collectSuggestions(@NotNull final CompilationUnit ¢) {
-    @NotNull final List<Tip> $ = new ArrayList<>();
+  @NotNull public final Collection<Fragment> collectSuggestions(@NotNull final CompilationUnit ¢) {
+    @NotNull final List<Fragment> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
   }
@@ -136,7 +136,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   public boolean follow() throws CoreException {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    for (@NotNull final Tip ¢ : tips) {
+    for (@NotNull final Fragment ¢ : tips) {
       progressMonitor.worked(1);
       ¢.go(astRewrite, new TextEditGroup("spartanization: textEditGroup"));
     }
@@ -331,7 +331,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  @Nullable protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
+  @Nullable protected abstract ASTVisitor makeTipsCollector(List<Fragment> $);
 
   public void parse() {
     compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);

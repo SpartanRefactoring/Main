@@ -197,7 +197,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+        @Nullable Fragment s = null;
         try {
           s = tipper.tip(n, exclude);
         } catch (@NotNull final Exception ¢) {
@@ -248,7 +248,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+        @Nullable Fragment s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);

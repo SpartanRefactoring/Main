@@ -27,7 +27,7 @@ public final class IgnoringExceptions extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parentAsTryStatement(¢));
   }
 
-  @Nullable @Override public Tip pattern(final CatchClause ¢) {
+  @Nullable @Override public Fragment pattern(final CatchClause ¢) {
     return firstTip(tippers, parentAsTryStatement(¢));
   }
 

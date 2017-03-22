@@ -24,8 +24,8 @@ public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TrySta
     return $ != null && statements($).isEmpty();
   }
 
-  @NotNull @Override public Tip tip(@NotNull final TryStatement s) {
-    return new Tip(description(s), s, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final TryStatement s) {
+    return new Fragment(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final Block finallyBlock = s.getFinally();
         if (finallyBlock == null || statements(finallyBlock).isEmpty())

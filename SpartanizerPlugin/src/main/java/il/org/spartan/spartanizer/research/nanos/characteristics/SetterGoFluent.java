@@ -37,8 +37,8 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     return (iz.name(left($)) || tipper.check(left($))) && wizard.same(right($), first(parameters(¢)).getName());
   }
 
-  @Nullable @Override public Tip pattern(@NotNull final MethodDeclaration d) {
-    return new Tip(description(d), d, getClass()) {
+  @Nullable @Override public Fragment pattern(@NotNull final MethodDeclaration d) {
+    return new Fragment(description(d), d, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(returnType(d)))
           return;

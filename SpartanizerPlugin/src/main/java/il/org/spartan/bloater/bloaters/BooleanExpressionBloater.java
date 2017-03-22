@@ -30,9 +30,9 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
         || ¢.getOperator() == Operator.CONDITIONAL_OR;
   }
 
-  @NotNull @Override public Tip tip(@NotNull final InfixExpression ¢) {
+  @NotNull @Override public Fragment tip(@NotNull final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override @SuppressWarnings("unused") public void go(final ASTRewrite __, final TextEditGroup g) {
         // final ListRewrite l = r.getListRewrite(¢, Expression.);
         // l.insertAfter(¢, x1, g);

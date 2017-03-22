@@ -68,13 +68,13 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     return ¢.stream().sorted(comp).collect(toList());
   }
 
-  @Nullable @Override public Tip tip(@NotNull final N n) {
+  @Nullable @Override public Fragment tip(@NotNull final N n) {
     final List<Annotation> $ = extract.annotations(n);
     if ($ == null || $.isEmpty())
       return null;
     @NotNull final List<Annotation> myCopy = new ArrayList<>($);
     myCopy.sort(comp);
-    return myCopy.equals($) ? null : new Tip(description(n), n, myClass()) {
+    return myCopy.equals($) ? null : new Fragment(description(n), n, myClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < $.size(); ++i) {

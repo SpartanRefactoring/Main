@@ -28,7 +28,7 @@ public class CopyArray extends NanoPatternTipper<ForStatement> {
     return "Init array: conevrt to fluent API";
   }
 
-  @Nullable @Override public Tip pattern(final ForStatement ¢) {
+  @Nullable @Override public Fragment pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }

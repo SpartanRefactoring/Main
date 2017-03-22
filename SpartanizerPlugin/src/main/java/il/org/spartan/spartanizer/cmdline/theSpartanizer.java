@@ -58,14 +58,14 @@ public interface theSpartanizer {
           @Nullable final Tipper<N> t = safeFirstTipper(n);
           if (t == null)
             return true;
-          @Nullable final Tip $ = t.tip(n);
+          @Nullable final Fragment $ = t.tip(n);
           if ($ == null)
             return true;
           apply($, n);
           return searching = false;
         }
 
-        <N extends ASTNode> void apply(@NotNull final Tip t, @NotNull final N n) {
+        <N extends ASTNode> void apply(@NotNull final Fragment t, @NotNull final N n) {
           final ASTRewrite r = ASTRewrite.create(n.getAST());
           t.go(r, null);
           final TextEdit e = r.rewriteAST($, null);

@@ -44,8 +44,8 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return branchesWrapper(¢).stream().map(step::expression).collect(toList());
   }
 
-  @NotNull @Override public Tip pattern(@NotNull final N ¢) {
-    return new Tip(description(¢), ¢, myClass()) {
+  @NotNull @Override public Fragment pattern(@NotNull final N ¢) {
+    return new Fragment(description(¢), ¢, myClass()) {
       @Override @SuppressWarnings("unchecked") public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,

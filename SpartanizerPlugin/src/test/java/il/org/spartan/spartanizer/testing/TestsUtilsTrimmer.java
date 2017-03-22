@@ -31,7 +31,7 @@ public enum TestsUtilsTrimmer {
       this.clazz = clazz;
     }
 
-    private N findNode(@NotNull final Rule<N, Tip> t) {
+    private N findNode(@NotNull final Rule<N, Fragment> t) {
       assert t != null;
       @NotNull final Wrap wrap = Wrap.find(get());
       assert wrap != null;
@@ -65,12 +65,12 @@ public enum TestsUtilsTrimmer {
       return $.get();
     }
 
-    @NotNull public OperandToTipper<N> in(@NotNull final Rule<N, Tip> ¢) {
+    @NotNull public OperandToTipper<N> in(@NotNull final Rule<N, Fragment> ¢) {
       assert ¢.check(findNode(¢));
       return this;
     }
 
-    @NotNull public OperandToTipper<N> notIn(@NotNull final Rule<N, Tip> ¢) {
+    @NotNull public OperandToTipper<N> notIn(@NotNull final Rule<N, Fragment> ¢) {
       assert !¢.check(findNode(¢));
       return this;
     }

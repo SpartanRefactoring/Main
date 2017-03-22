@@ -48,7 +48,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     ;
   }
 
-  @Nullable @Override public Tip pattern(final EnhancedForStatement $) {
+  @Nullable @Override public Fragment pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
