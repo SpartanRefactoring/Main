@@ -49,7 +49,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
-    final List<Entry<String, Object>> ps = getProjects();
+    @NotNull final List<Entry<String, Object>> ps = getProjects();
     changes = new Changes(ps.stream().map(Entry::getValue).collect(toList()));
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     addField(new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), ps,
@@ -61,9 +61,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** @return open projects in workspace */
   @NotNull private static List<Entry<String, Object>> getProjects() {
-    final List<Entry<String, Object>> $ = new ArrayList<>();
+    @NotNull final List<Entry<String, Object>> $ = new ArrayList<>();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-    for (final IProject p : workspaceRoot.getProjects())
+    for (@NotNull final IProject p : workspaceRoot.getProjects())
       try {
         if (p.isOpen() && p.hasNature(JavaCore.NATURE_ID))
           $.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
@@ -121,8 +121,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @NotNull final Function<Object, Boolean> isAble, @NotNull final Consumer<Object> onAble) {
       super(name, labelText, parent);
       this.elements = new ArrayList<>(elements);
-      final Composite buttonBox = new Composite(parent, SWT.NULL);
-      final GridLayout layout = new GridLayout();
+      @NotNull final Composite buttonBox = new Composite(parent, SWT.NULL);
+      @NotNull final GridLayout layout = new GridLayout();
       layout.marginWidth = 0;
       buttonBox.setLayout(layout);
       buttonBox.addDisposeListener(λ -> {
@@ -251,7 +251,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     @Override @NotNull protected Object clone() {
-      final Changes $ = new Changes();
+      @NotNull final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
       $.preferences2.putAll(preferences2);
       $.enabled.putAll(enabled);
@@ -280,8 +280,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
     @Nullable public Void update(final IProject p, @NotNull final Set<String> preference) {
       preferences2.put(p, preference);
-      for (final SpartanTipper[] ts : preferences1.get(p).values())
-        for (final SpartanTipper ¢ : ts)
+      for (@NotNull final SpartanTipper[] ts : preferences1.get(p).values())
+        for (@NotNull final SpartanTipper ¢ : ts)
           ¢.enable(preference.contains(¢.name()));
       return null;
     }
@@ -299,7 +299,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       new Job("Applying preferences changes") {
         @Override @SuppressWarnings("synthetic-access") protected IStatus run(@NotNull final IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
-          for (final IProject p : preferences2.keySet()) {
+          for (@NotNull final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)
               ProjectPreferencesHandler.commit(p, preferences2.get(p));
             if (enabled.get(p) != null)
