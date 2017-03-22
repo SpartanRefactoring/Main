@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Removes redundant assignment- an assignment with same variable subsequent
  * assignment.
@@ -24,14 +26,17 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -2175075259560385549L;
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();
   }
 
+  @NotNull
   @Override public String description() {
     return "eliminate redundant assignment";
   }
 
+  @NotNull
   @Override public Example[] examples() {
     return new Example[] { //
         convert("x = 1; x = 2;") //
@@ -43,17 +48,18 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     };
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Nullable
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a, @NotNull final Statement nextStatement, final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(λ -> az.expressionStatement(λ)) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
     if (nextAssignment == null || nextAssignment.getOperator() != Operator.ASSIGN)
       return null;
-    final Name left1 = az.name(a.getLeftHandSide());
+    @Nullable final Name left1 = az.name(a.getLeftHandSide());
     final Expression right1 = a.getRightHandSide();
     if (left1 == null || right1 == null)
       return null;
-    final Name left2 = az.name(nextAssignment.getLeftHandSide());
+    @Nullable final Name left2 = az.name(nextAssignment.getLeftHandSide());
     if (left2 == null //
         || !left1.getFullyQualifiedName().equals(left2.getFullyQualifiedName()) //
         || !sideEffects.sink(right1))

@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Expand Boolean Expressions : toList Expand : {@code
  * x && y()
@@ -24,12 +26,13 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 7319428629798046058L;
 
-  @Override protected boolean prerequisite(final InfixExpression ¢) {
+  @Override protected boolean prerequisite(@NotNull final InfixExpression ¢) {
     return ¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
         || ¢.getOperator() == Operator.CONDITIONAL_OR;
   }
 
-  @Override public Tip tip(final InfixExpression ¢) {
+  @NotNull
+  @Override public Tip tip(@NotNull final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), ¢, getClass()) {
       @Override @SuppressWarnings("unused") public void go(final ASTRewrite __, final TextEditGroup g) {
@@ -42,7 +45,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     };
   }
 
-  private static SingleVariableDeclaration getSeperate(final Expression x) {
+  private static SingleVariableDeclaration getSeperate(@NotNull final Expression x) {
     final SingleVariableDeclaration $ = x.getAST().newSingleVariableDeclaration();
     $.setInitializer(copy.of(x));
     final PrimitiveType t = x.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);
@@ -51,6 +54,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return $;
   }
 
+  @Nullable
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }

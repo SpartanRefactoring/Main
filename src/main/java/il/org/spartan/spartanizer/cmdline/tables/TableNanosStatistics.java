@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -54,15 +56,15 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
+      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException __) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -96,7 +98,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
         .forEach(λ -> pWriter.col(λ, 0));
   }
 
-  private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
+  private static boolean anyTips(@NotNull final Collection<JavadocMarkerNanoPattern> ps, @Nullable final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 }

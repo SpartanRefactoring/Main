@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
 
 /** sequence of parameters which occur few times together in a method
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -19,8 +20,8 @@ public class MyArguments extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (!hazAtLeastTwoParameters(d))
       return false;
-    final String $ = stringify(d);
-    final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
+    @NotNull final String $ = stringify(d);
+    @NotNull final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
     return invocations.stream()//
         .map(MyArguments::stringify)
         .allMatch(λ -> λ != null//
@@ -28,10 +29,12 @@ public class MyArguments extends JavadocMarkerNanoPattern {
         && !invocations.isEmpty();
   }
 
+  @NotNull
   private static String stringify(final MethodDeclaration ¢) {
     return "," + separate.these(parametersNames(¢)).by(",") + ",";
   }
 
+  @NotNull
   private static String stringify(final MethodInvocation ¢) {
     return "," + separate.these(arguments(¢)).by(",") + ",";
   }

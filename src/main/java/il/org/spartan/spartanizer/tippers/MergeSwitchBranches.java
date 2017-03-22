@@ -8,6 +8,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Removing redundant case branches in switch statement such as
  * {@code switch(x) { case a: x=1; break; case b: x=2; break; default: x=1;
@@ -19,8 +21,9 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 7233894972736348329L;
 
-  @Override public ASTNode replacement(final SwitchStatement s) {
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
+    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
     for (int i = 0; i < $.size(); ++i)
@@ -33,6 +36,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merge branches with same code";
   }

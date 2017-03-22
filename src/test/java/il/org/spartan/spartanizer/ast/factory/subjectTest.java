@@ -16,6 +16,8 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -32,13 +34,13 @@ public final class subjectTest {
   }
 
   @Test public void conditionalExtract() {
-    final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
+    @NotNull final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
     assert pair != null;
     azzert.that(pair.toCondition(e("(x)")), iz("x ? a-B : c-d"));
   }
 
   @Test public void conditionalSimple() {
-    final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
+    @NotNull final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
     assert pair != null;
     azzert.that(pair.toCondition(e("x")), iz("x ? a-B : c-d"));
   }
@@ -56,13 +58,13 @@ public final class subjectTest {
   }
 
   @Test public void makeIfNotStatement() {
-    final Statement s = s("s();");
+    @NotNull final Statement s = s("s();");
     azzert.that(s, iz("{s();}"));
     azzert.that(subject.pair(s, s("f();")).toNot(e("a")), iz("if(!a)s(); else f();"));
   }
 
   @Test public void makeIfStatement() {
-    final Statement s = s("s();");
+    @NotNull final Statement s = s("s();");
     azzert.that(s, iz("{s();}"));
     azzert.that(subject.pair(s, s("f();")).toIf(e("a")), iz("if(a)s(); else f();"));
   }
@@ -114,8 +116,8 @@ public final class subjectTest {
   }
 
   @Test public void refitPreservesOrder() {
-    final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = new ArrayList<>();
+    @NotNull final InfixExpression e = i("1 + 2 * 3");
+    @NotNull final List<Expression> operands = new ArrayList<>();
     operands.add(copy.of(e("3*4")));
     operands.add(copy.of(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
@@ -124,8 +126,8 @@ public final class subjectTest {
   }
 
   @Test public void refitWithSort() {
-    final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = hop.operands(flatten.of(e));
+    @NotNull final InfixExpression e = i("1 + 2 * 3");
+    @Nullable final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
     azzert.that(first(operands) + "", is("1"));
     azzert.that(second(operands) + "", is("2 * 3"));
@@ -142,18 +144,18 @@ public final class subjectTest {
   }
 
   @Test public void subjectOperands() {
-    final Expression e = into.e("2 + a <b");
+    @NotNull final Expression e = into.e("2 + a <b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);
-    final List<Expression> operands = hop.operands(flatten.of(plus));
+    @Nullable final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     assert ExpressionComparator.ADDITION.sort(operands);
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    final List<Expression> operands = hop.operands(copy.of(i("a*b")));
+    @Nullable final List<Expression> operands = hop.operands(copy.of(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression refit = subject.operands(operands).to(i("1+2").getOperator());
     assert !refit.hasExtendedOperands();
@@ -169,11 +171,11 @@ public final class subjectTest {
   }
 
   @Test public void subjectOperandsWithParenthesis() {
-    final Expression e = into.e("(2 + a) * b");
+    @NotNull final Expression e = into.e("(2 + a) * b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);
-    final List<Expression> operands = hop.operands(flatten.of(plus));
+    @Nullable final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     assert ExpressionComparator.ADDITION.sort(operands);
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));

@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code
  * a ? (f,g,h) : c(d,e)
@@ -22,7 +23,7 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
 
-  @Override public Statement replacement(final IfStatement ¢) {
+  @Override public Statement replacement(@NotNull final IfStatement ¢) {
     return thenIsShorter(¢) ? null : invert(¢);
   }
 }

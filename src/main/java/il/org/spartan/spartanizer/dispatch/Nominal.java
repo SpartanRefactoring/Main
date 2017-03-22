@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.Nullable;
 
 /** The {@link TipperCategory} of renaming, and renaming related
  * {@link Tipper}s.
@@ -9,6 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public interface Nominal extends TipperCategory {
   String ____ = "Spartanizing code by using more spartan names";
 
+  @Nullable
   @Override default String description() {
     return ____;
   }

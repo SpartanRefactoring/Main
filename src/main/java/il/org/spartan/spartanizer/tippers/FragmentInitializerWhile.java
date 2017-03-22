@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code int a = 3; while(Panic) { ++OS.is.in.danger; } } to
  * {@code for(int a = 3; Panic;) { ++OS.is.in.danger; } }
@@ -21,7 +23,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 8867383151468342949L;
 
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
@@ -44,14 +46,17 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
+  @Nullable
   private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
+  @Nullable
   private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
+  @NotNull
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     // TODO Dor: use extract.core
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
@@ -70,18 +75,20 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
+  @NotNull
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
-      final ExclusionManager exclude) {
+  @Nullable
+  @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f, @Nullable final Statement nextStatement, final TextEditGroup g,
+                                    @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    final VariableDeclarationStatement vds = parent(f);
+    @Nullable final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
       return null;
-    final WhileStatement s = az.whileStatement(nextStatement);
+    @Nullable final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null || !fitting(vds, s))
       return null;
     exclude.excludeAll(fragments(vds));

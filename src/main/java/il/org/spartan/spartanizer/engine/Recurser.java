@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** The Recurser gives programmer the option to scan the AST while doing
  * operations over the nodes. the recurser currently offers pre-visit and
@@ -19,15 +21,16 @@ public final class Recurser<T> {
   /** Get a list of some of the direct children of a ASTNode
    * @param n an ASTNode
    * @return a list of n's children */
-  public static List<? extends ASTNode> children(final ASTNode n) {
+  @Nullable
+  public static List<? extends ASTNode> children(@Nullable final ASTNode n) {
     if (n == null)
       return new ArrayList<>();
     if (iz.block(n))
       return statements(az.block(n));
-    final InfixExpression ¢ = az.infixExpression(n);
+    @Nullable final InfixExpression ¢ = az.infixExpression(n);
     if (¢ == null)
       return march(n);
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     $.add(left(¢));
     $.add(right(¢));
     $.addAll(extendedOperands(¢));
@@ -37,8 +40,9 @@ public final class Recurser<T> {
   /** Operators cannot be retrieved because they are not nodes...
    * @param ¢
    * @return */
+  @Nullable
   @SuppressWarnings("unchecked") public static List<ASTNode> allChildren(final ASTNode ¢) {
-    final List<ASTNode> $ = (List<ASTNode>) children(¢);
+    @Nullable final List<ASTNode> $ = (List<ASTNode>) children(¢);
     if (iz.methodInvocation(¢)) {
       $.addAll(arguments(az.methodInvocation(¢)));
       if (haz.expression(az.methodInvocation(¢)))
@@ -56,10 +60,10 @@ public final class Recurser<T> {
     return $;
   }
 
-  private static List<? extends ASTNode> march(final ASTNode $) {
+  private static List<? extends ASTNode> march(@NotNull final ASTNode $) {
     try {
       return marchingList($);
-    } catch (final NullPointerException ¢) {
+    } catch (@NotNull final NullPointerException ¢) {
       assert ¢ != null;
       return null;
     }
@@ -78,6 +82,7 @@ public final class Recurser<T> {
     this.current = current;
   }
 
+  @NotNull
   public Recurser<T> from(final T value) {
     current = value;
     return this;
@@ -91,16 +96,16 @@ public final class Recurser<T> {
     return root;
   }
 
-  public void postVisit(final Consumer<Recurser<T>> f) {
-    final List<? extends ASTNode> children = children(root);
+  public void postVisit(@NotNull final Consumer<Recurser<T>> f) {
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty()) {
       f.accept(this);
       return;
     }
-    final List<Recurser<T>> rs = new ArrayList<>();
+    @NotNull final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : rs) {
+    for (@NotNull final Recurser<T> ¢ : rs) {
       ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
@@ -108,14 +113,14 @@ public final class Recurser<T> {
     f.accept(this);
   }
 
-  public T postVisit(final Function<Recurser<T>, T> $) {
-    final List<? extends ASTNode> children = children(root);
+  public T postVisit(@NotNull final Function<Recurser<T>, T> $) {
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current = $.apply(this);
-    final List<Recurser<T>> rs = new ArrayList<>();
+    @NotNull final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : rs) {
+    for (@NotNull final Recurser<T> ¢ : rs) {
       current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
       ++index;
     }
@@ -123,25 +128,25 @@ public final class Recurser<T> {
     return current = $.apply(this);
   }
 
-  public void preVisit(final Consumer<Recurser<T>> f) {
+  public void preVisit(@NotNull final Consumer<Recurser<T>> f) {
     f.accept(this);
-    final List<? extends ASTNode> children = children(root);
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return;
-    final List<Recurser<T>> rs = new ArrayList<>();
+    @NotNull final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     rs.forEach(λ -> λ.preVisit(f));
   }
 
-  public T preVisit(final Function<Recurser<T>, T> f) {
+  public T preVisit(@NotNull final Function<Recurser<T>, T> f) {
     current = f.apply(this);
-    final List<? extends ASTNode> children = children(root);
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current;
-    final List<Recurser<T>> $ = new ArrayList<>();
+    @NotNull final List<Recurser<T>> $ = new ArrayList<>();
     children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : $) {
+    for (@NotNull final Recurser<T> ¢ : $) {
       current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -24,7 +25,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class FuncsTest {
   @Test public void arrayOfInts() {
-    final Type t = t("int[][] __;");
+    @NotNull final Type t = t("int[][] __;");
     assert t != null;
     azzert.that(namer.shorten(t), equalTo("iss"));
   }
@@ -93,7 +94,8 @@ public final class FuncsTest {
     assert iz.deMorgan(CONDITIONAL_OR);
   }
 
-  private Type t(final String codeFragment) {
+  @NotNull
+  private Type t(@NotNull final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 }

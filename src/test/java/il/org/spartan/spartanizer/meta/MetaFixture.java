@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An abstract class that allows a class to apply testing on its own code. To
  * use, extend it. See examples of current extenders to see how.
@@ -33,6 +35,7 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
+  @Nullable
   protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
@@ -43,32 +46,33 @@ public abstract class MetaFixture {
   };
 
   public static String ancestry(final ASTNode n) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
 
-  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
-    for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
+  @NotNull
+  protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
+    @NotNull @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
+    for (@Nullable @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
-        for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
+        for (@NotNull @knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))
             for (@knows({ "t", "a", "s" }) final String s : values(a))
-              for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
+              for (@NotNull @knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
                 $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
     return $;
   }
 
-  private static IPath getSrcPath(final File ¢) {
+  private static IPath getSrcPath(@NotNull final File ¢) {
     IPath $ = new Path(¢.getAbsolutePath());
     while (!$.isEmpty() && !"src".equals($.lastSegment()))
       $ = $.removeLastSegments(1);
     return $;
   }
 
-  private static CompilationUnit loadAST(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
+  private static CompilationUnit loadAST(@NotNull final String fileName) {
+    for (@NotNull final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);
@@ -79,14 +83,14 @@ public abstract class MetaFixture {
     return null;
   }
 
-  private static String loadText(final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
+  private static String loadText(@NotNull final String fileName) {
+    for (@NotNull final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;
   }
 
-  public static int value(final SingleMemberAnnotation ¢) {
+  public static int value(@NotNull final SingleMemberAnnotation ¢) {
     return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
 
@@ -94,30 +98,33 @@ public abstract class MetaFixture {
     return values(step.expressions(¢));
   }
 
-  private static String[] values(final Collection<Expression> xs) {
+  private static String[] values(@NotNull final Collection<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
-  private static String[] values(final Expression $) {
+  @NotNull
+  private static String[] values(@Nullable final Expression $) {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
 
-  protected static String[] values(final SingleMemberAnnotation ¢) {
+  protected static String[] values(@NotNull final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
 
-  private static String[] values(final StringLiteral ¢) {
+  private static String[] values(@NotNull final StringLiteral ¢) {
     return as.array(¢.getLiteralValue());
   }
 
+  @NotNull
   public Iterable<Annotation> annotations() {
     return descendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
 
+  @NotNull
   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
-    final Vocabulary $ = new Vocabulary();
+    @NotNull final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
       assert ¢ instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(¢), ¢);
       $.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
@@ -151,6 +158,7 @@ public abstract class MetaFixture {
     return classToText.get(c);
   }
 
+  @NotNull
   public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return descendants.whoseClassIs(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }

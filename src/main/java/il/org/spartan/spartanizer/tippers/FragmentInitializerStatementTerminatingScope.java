@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -27,11 +29,12 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -221763355000543721L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull
+  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
     if (fragment() == null || extract.core(fragment().getInitializer()) instanceof LambdaExpression || initializer() == null
         || haz.annotation(fragment())
         || iz.enhancedFor(nextStatement()) && iz.simpleName(az.enhancedFor(nextStatement()).getExpression())
@@ -39,17 +42,17 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
             && !iz.literal(initializer())
         || wizard.frobiddenOpOnPrimitive(fragment(), nextStatement()) || Inliner.isArrayInitWithUnmatchingTypes(fragment()))
       return null;
-    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(fragment().getParent());
+    @Nullable final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(fragment().getParent());
     boolean searching = true;
-    for (final VariableDeclarationFragment ff : fragments(currentStatement))
+    for (@NotNull final VariableDeclarationFragment ff : fragments(currentStatement))
       if (searching)
         searching = ff != fragment();
       else if (!collect.usesOf(name()).in(ff.getInitializer()).isEmpty())
         return null;
-    final Block parent = az.block(currentStatement.getParent());
+    @Nullable final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
-    final List<Statement> ss = statements(parent);
+    @NotNull final List<Statement> ss = statements(parent);
     if (!lastIn(nextStatement(), ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(name()).in(nextStatement()).isEmpty())
       return null;
     final List<SimpleName> uses = collect.usesOf(name()).in(nextStatement());
@@ -62,7 +65,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
       if (Inliner.never(use, nextStatement()) || Inliner.isPresentOnAnonymous(use, nextStatement()))
         return null;
     final Expression v = Inliner.protect(initializer(), currentStatement);
-    final InlinerWithValue i = new Inliner(name(), $, g).byValue(v);
+    @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement());
     if (i.addedSize(newStatement) - Inliner2.removalSaving(fragment()) > 0)
       return null;

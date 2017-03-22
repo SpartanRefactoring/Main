@@ -4,6 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -13,8 +15,8 @@ public abstract class $FragementInitializerStatement extends $Fragment {
 
   @Override public abstract String description(VariableDeclarationFragment f);
 
-  @Override public final Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Tip $ = super.tip(f, exclude);
+  @Override public final Tip tip(@NotNull final VariableDeclarationFragment f, @Nullable final ExclusionManager exclude) {
+    @Nullable final Tip $ = super.tip(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

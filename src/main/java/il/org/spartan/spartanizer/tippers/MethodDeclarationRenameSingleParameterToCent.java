@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -24,11 +26,12 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 6162035659739185152L;
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @NotNull
+  @Override public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Tip tip(@NotNull final MethodDeclaration d, @Nullable final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -39,14 +42,14 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     assert $ != null;
     if (in($.getIdentifier(), namer.specials))
       return null;
-    final Block b = body(d);
+    @NotNull final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = namer.newCurrent(d);
     return new Tip("Rename paraemter " + $ + " to ¢ ", d, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);
       }

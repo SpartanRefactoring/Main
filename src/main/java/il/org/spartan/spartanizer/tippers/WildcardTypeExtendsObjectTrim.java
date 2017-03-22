@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Convert {@code ? extends Object} to {@code ?}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -15,11 +16,12 @@ public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<Wild
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 6954094761117949540L;
 
+  @NotNull
   @Override public String description(final WildcardType ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 
-  @Override public WildcardType replacement(final WildcardType ¢) {
+  @Override public WildcardType replacement(@NotNull final WildcardType ¢) {
     if (!¢.isUpperBound() || !wizard.isObject(¢.getBound()))
       return null;
     final WildcardType $ = copy.of(¢);

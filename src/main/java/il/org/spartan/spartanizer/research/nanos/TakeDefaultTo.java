@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** X == null ? Y : Z
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -23,6 +24,7 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
         && rival.cantTip(¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return tippers.firstTip(¢);
   }

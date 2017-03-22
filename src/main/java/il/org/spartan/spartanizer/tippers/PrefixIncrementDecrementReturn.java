@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * a = 3;
@@ -27,17 +29,18 @@ public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -7169963565517331905L;
 
+  @NotNull
   @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
-    final Statement parent = az.statement(x.getParent());
+    @Nullable final Statement parent = az.statement(x.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(operand(x), expression(s)))
       return null;
     $.remove(parent, g);

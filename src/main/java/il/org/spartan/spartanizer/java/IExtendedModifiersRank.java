@@ -5,6 +5,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Maintain a canonical order of modifiers.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -24,11 +25,11 @@ public enum IExtendedModifiersRank {
   STRICTFP, //
   $USER_DEFINED_ANNOTATION$, //
   ;
-  public static int compare(final IExtendedModifiersRank m1, final IExtendedModifiersRank m2) {
+  public static int compare(@NotNull final IExtendedModifiersRank m1, @NotNull final IExtendedModifiersRank m2) {
     return m1.ordinal() - m2.ordinal();
   }
 
-  public static int compare(final String modifier1, final String modifier2) {
+  public static int compare(@NotNull final String modifier1, @NotNull final String modifier2) {
     return compare(find(modifier1), find(modifier2));
   }
 
@@ -56,12 +57,12 @@ public enum IExtendedModifiersRank {
     return IExtendedModifiersRank.$USER_DEFINED_ANNOTATION$.ordinal();
   }
 
-  static IExtendedModifiersRank find(final String modifier) {
+  static IExtendedModifiersRank find(@NotNull final String modifier) {
     return Stream.of(IExtendedModifiersRank.values()).filter(λ -> modifier.equals((λ + "").toLowerCase()) || modifier.equals("@" + λ)).findFirst()
         .orElse($USER_DEFINED_ANNOTATION$);
   }
 
-  static int ordinal(final String modifier) {
+  static int ordinal(@NotNull final String modifier) {
     return find(modifier).ordinal();
   }
 }

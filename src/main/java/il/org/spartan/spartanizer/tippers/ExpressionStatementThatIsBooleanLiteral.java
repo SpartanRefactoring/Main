@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Replace {@code ?.that(M?, X, is(boolean)); } by {@code assert x == M?; }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -23,9 +25,11 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   private List<Expression> arguments;
   private MethodInvocation methodInvocation;
   private Expression first;
+  @Nullable
   private BooleanLiteral booleanLiteral;
   private ExpressionStatement expressionStatement;
 
+  @NotNull
   @Override public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
@@ -60,7 +64,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
 
   boolean setSecond(final Expression ¢) {
-    final MethodInvocation $ = az.methodInvocation(¢);
+    @Nullable final MethodInvocation $ = az.methodInvocation(¢);
     return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(first(arguments($)))) != null;
   }
 }

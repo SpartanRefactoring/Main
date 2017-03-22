@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.util.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
@@ -13,7 +14,7 @@ public class ClassRecord {
   public static int numStatements;
   public static int numExpressions;
 
-  public ClassRecord(final TypeDeclaration t) {
+  public ClassRecord(@NotNull final TypeDeclaration t) {
     before = t;
     className = t.getName() + "";
     numStatements = measure.commands(t);

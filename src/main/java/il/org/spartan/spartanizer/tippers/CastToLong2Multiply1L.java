@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Replace {@code (long)X} by {@code 1L*X}
  * @author Alex Kopzon
@@ -21,16 +22,17 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
     implements TipperCategory.NOP {
   private static final long serialVersionUID = -7695643321354565364L;
 
-  private static NumberLiteral literal(final Expression ¢) {
+  private static NumberLiteral literal(@NotNull final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1L");
     return $;
   }
 
-  private static InfixExpression replacement(final Expression $) {
+  private static InfixExpression replacement(@NotNull final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
 
+  @NotNull
   @Override public String description(final CastExpression ¢) {
     return "Use 1L*" + expression(¢) + " instead of (long)" + expression(¢);
   }

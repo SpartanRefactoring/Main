@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
@@ -23,6 +25,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final String IMAGE_ID = "widget";
   static final AtomicBoolean active = new AtomicBoolean(false);
 
+  @Nullable
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     if (!active.get()) {
       active.set(true);
@@ -31,7 +34,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return null;
   }
 
-  public static void launchWidget(final Function<Point, Point> startLocation) {
+  public static void launchWidget(@NotNull final Function<Point, Point> startLocation) {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return;
@@ -41,8 +44,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Shell originalShell = display.getActiveShell();
     if (originalShell == null || originalShell.isDisposed())
       return;
-    final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
-    final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
+    @NotNull final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
+    @NotNull final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
     closeButton.setLocation(R / 2, 2 * R - closeButton.getSize().y / 2);
@@ -50,8 +53,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
       shell.close();
       active.set(false);
     });
-    final AtomicBoolean widgetFocus = new AtomicBoolean(true);
-    final Listener setTransparent = λ -> {
+    @NotNull final AtomicBoolean widgetFocus = new AtomicBoolean(true);
+    @NotNull final Listener setTransparent = λ -> {
       shell.setAlpha(TRANSPERACY);
       widgetFocus.set(false);
       originalShell.forceFocus();
@@ -62,10 +65,10 @@ public class SpartanWidgetHandler extends AbstractHandler {
     setControl(shell, setSolid, setTransparent);
     setMovable(display, shell, shell);
     setControl(closeButton, setSolid, setTransparent);
-    final Canvas canvas = createImage(shell);
+    @NotNull final Canvas canvas = createImage(shell);
     setControl(canvas, setSolid, setTransparent);
     setMovable(display, canvas, shell);
-    final Region region = new Region();
+    @NotNull final Region region = new Region();
     region.add(circle(R));
     region.add(closeButton.getBounds());
     final Rectangle size = region.getBounds();
@@ -106,16 +109,16 @@ public class SpartanWidgetHandler extends AbstractHandler {
     });
   }
 
-  private static void setControl(final Control c, final Listener onEnter, final Listener onExit) {
+  private static void setControl(@NotNull final Control c, final Listener onEnter, final Listener onExit) {
     c.addListener(SWT.MouseEnter, onEnter);
     c.addListener(SWT.MouseExit, onExit);
   }
 
-  static void setMovable(final Display d, final Control source, final Shell target) {
-    final Listener l = new Listener() {
-      Point origin;
+  static void setMovable(@NotNull final Display d, @NotNull final Control source, @NotNull final Shell target) {
+    @NotNull final Listener l = new Listener() {
+      @Nullable Point origin;
 
-      @Override public void handleEvent(final Event e) {
+      @Override public void handleEvent(@NotNull final Event e) {
         switch (e.type) {
           case SWT.MouseUp:
             origin = null;
@@ -139,8 +142,9 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseMove, l);
   }
 
+  @NotNull
   static int[] circle(final int r) {
-    final int[] $ = new int[8 * r + 4];
+    @NotNull final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
       $[2 * i] = r + x;
@@ -151,17 +155,18 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return $;
   }
 
-  static void expandControl(final Control c, final Point minimalButtonSize) {
+  static void expandControl(@Nullable final Control c, @NotNull final Point minimalButtonSize) {
     if (c == null)
       return;
     final Point s = c.getSize();
     c.setSize(s == null ? minimalButtonSize : new Point(Math.max(s.x, minimalButtonSize.x), Math.max(s.y, minimalButtonSize.y)));
   }
 
+  @NotNull
   static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
     final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
-    final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
+    @NotNull final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     $.addPaintListener(¢ -> {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);

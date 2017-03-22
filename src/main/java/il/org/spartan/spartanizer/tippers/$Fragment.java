@@ -16,12 +16,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-22 */
 public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
-  protected static boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
+  protected static boolean forbidden(@NotNull final VariableDeclarationFragment f, @Nullable final Expression initializer) {
     return initializer == null || haz.annotation(f);
   }
 
@@ -38,7 +40,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return $ - metrics.size(newParent);
   }
 
-  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+  @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
     if (haz.annotation(f))
       return false;
     if (f == null)
@@ -51,6 +53,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return true;
   }
 
+  @Nullable
   @Override public Tip tip(final VariableDeclarationFragment ¢) {
     assert ¢ == object();
     return new Tip(description(), null, null) {
@@ -69,7 +72,8 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
    * containing node is eliminated as well.
    * @return */
-  protected final ASTRewrite eliminateFragment(final ASTRewrite r, final TextEditGroup g) {
+  @NotNull
+  protected final ASTRewrite eliminateFragment(@NotNull final ASTRewrite r, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = otherSiblings();
     if (live.isEmpty()) {
       r.remove(parent(), g);
@@ -86,6 +90,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return fragment;
   }
 
+  @Nullable
   protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
   protected final Expression initializer() {
@@ -96,6 +101,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return name;
   }
 
+  @Nullable
   protected final Statement nextStatement() {
     return nextStatement;
   }
@@ -104,13 +110,14 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return fragments(parent()).stream().filter(λ -> λ != fragment()).collect(toList());
   }
 
+  @Nullable
   protected VariableDeclarationStatement parent() {
     return parent;
   }
 
   protected boolean usedInSubsequentInitializers() {
     boolean searching = true;
-    for (final VariableDeclarationFragment f : fragments(parent()))
+    for (@NotNull final VariableDeclarationFragment f : fragments(parent()))
       if (searching)
         searching = f != fragment();
       else if (!collect.usesOf(name()).in(f.getInitializer()).isEmpty())
@@ -118,8 +125,9 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return false;
   }
 
+  @NotNull
   protected final Collection<VariableDeclarationFragment> youngerSiblings() {
-    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
+    @NotNull final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment f : fragments(parent()))
       if (f == fragment())
@@ -135,13 +143,15 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
    * @param f
    * @param r
    * @param g */
-  void remove(final ASTRewrite r, final TextEditGroup g) {
+  void remove(@NotNull final ASTRewrite r, final TextEditGroup g) {
     r.remove(parent().fragments().size() > 1 ? fragment() : parent(), g);
   }
 
   private VariableDeclarationFragment fragment;
   private Expression initializer;
   private SimpleName name;
+  @Nullable
   private Statement nextStatement;
+  @Nullable
   private VariableDeclarationStatement parent;
 }

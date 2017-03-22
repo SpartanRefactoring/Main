@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Issue #970 Expand : {@code catch(Type1 | Type2 e){block} } To:
  * {@code catch(Type1 e){block}catch(Type2 e){block} } Tested in
@@ -20,9 +22,10 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1007971487834999855L;
 
-  @Override public ASTNode replacement(final TryStatement s) {
-    final List<CatchClause> catches = step.catchClauses(s);
-    CatchClause multiTypeCatch = null;
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final TryStatement s) {
+    @NotNull final List<CatchClause> catches = step.catchClauses(s);
+    @Nullable CatchClause multiTypeCatch = null;
     int i = 0;
     // TODO Ori Roth, this is a perfect example for extract method, which would
     // simpify the code
@@ -33,7 +36,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
       }
     if (multiTypeCatch == null)
       return null;
-    final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
+    @NotNull final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
     final Block commonBody = step.catchClauses(s).get(i).getBody();
     final SimpleName commonName = multiTypeCatch.getException().getName();
     final TryStatement $ = copy.of(s);
@@ -51,6 +54,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     return $;
   }
 
+  @Nullable
   @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;
   }

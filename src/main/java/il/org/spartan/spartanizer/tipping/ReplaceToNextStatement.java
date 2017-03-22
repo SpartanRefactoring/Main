@@ -12,17 +12,20 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 5265347217554350758L;
 
-  @Override public boolean prerequisite(final N current) {
-    final Statement $ = extract.nextStatement(current);
+  @Override public boolean prerequisite(@NotNull final N current) {
+    @Nullable final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;
   }
 
-  @Override public Tip tip(final N n, final ExclusionManager exclude) {
-    final Statement $ = extract.nextStatement(n);
+  @Nullable
+  @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
+    @Nullable final Statement $ = extract.nextStatement(n);
     if ($ == null || exclude != null && exclude.isExcluded($))
       return null;
     if (exclude != null)
@@ -34,5 +37,6 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
     };
   }
 
+  @Nullable
   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

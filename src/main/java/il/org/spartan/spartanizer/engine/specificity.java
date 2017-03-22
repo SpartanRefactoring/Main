@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -48,12 +49,12 @@ public final class specificity implements Comparator<Expression> {
       }
     },
     CONSTANT {
-      @Override boolean includes(final ASTNode ¢) {
+      @Override boolean includes(@NotNull final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
-      @Override boolean includes(final ASTNode ¢) {
+      @Override boolean includes(@NotNull final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
@@ -106,7 +107,7 @@ public final class specificity implements Comparator<Expression> {
     }
 
     private static int ofCore(final Expression ¢) {
-      for (final Level $ : values())
+      for (@NotNull final Level $ : values())
         if ($.includes(¢))
           return $.ordinal();
       return values().length;

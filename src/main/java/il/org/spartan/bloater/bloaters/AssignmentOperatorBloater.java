@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Expands {@code a += 3} to {@code a = a + 3}. Capable of dealing with
  * inclusion and all operator types: {@code a |= b &= c} ->
@@ -24,17 +25,19 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 4972402353938739657L;
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use simple assignment with binary operation";
   }
 
-  @Override protected boolean prerequisite(final Assignment ¢) {
+  @Override protected boolean prerequisite(@NotNull final Assignment ¢) {
     return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.convertToInfix(¢.getOperator()) != null;
   }
 
-  @Override public Tip tip(final Assignment ¢) {
+  @NotNull
+  @Override public Tip tip(@NotNull final Assignment ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         // TODO Ori Roth: use class subject
         final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(copy.of(left(¢)));

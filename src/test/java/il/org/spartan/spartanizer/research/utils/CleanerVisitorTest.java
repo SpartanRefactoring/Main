@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,7 +18,8 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author michalcohen
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
-  private static ASTNode createAST(final String ¢) {
+  @Nullable
+  private static ASTNode createAST(@NotNull final String ¢) {
     return wizard.ast(¢);
   }
 
@@ -28,8 +31,9 @@ public class CleanerVisitorTest {
     return Javadoc.class::isInstance;
   }
 
-  @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
-    final ASTNodeWrapper $ = new ASTNodeWrapper();
+  @NotNull
+  @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(@NotNull final Predicate<ASTNode> p, @NotNull final ASTNode n) {
+    @NotNull final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (p.test(¢))
@@ -48,6 +52,7 @@ public class CleanerVisitorTest {
   }
 
   private static class ASTNodeWrapper {
+    @NotNull
     public final ArrayList<ASTNode> inner;
 
     ASTNodeWrapper() {

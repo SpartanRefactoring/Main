@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** Down Caster
  * @author Ori Marcovitch */
@@ -16,7 +17,7 @@ public class Down {
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
       if (!hazOneStatement(¢))
         return false;
-      final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
+      @Nullable final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
       return returnTypeSameAs(¢, type($))//
           && same(name(onlyParameter(¢)), expression($));
     }

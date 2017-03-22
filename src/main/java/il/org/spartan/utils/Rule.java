@@ -1,5 +1,8 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
 
@@ -55,8 +58,9 @@ import java.util.stream.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
 public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>> {
-  static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
+  static <T, R> OnApplicator<T, R> on(@NotNull final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
+      @Nullable
       @Override public R fire() {
         c.accept(object());
         return null;
@@ -68,18 +72,21 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     };
   }
 
+  @NotNull
   @Check default Rule<T, R> afterCheck(final boolean b) {
-    return afterCheck((final T t) -> b);
+    return afterCheck((@NotNull final T t) -> b);
   }
 
-  @Check default Rule<T, R> afterCheck(final Consumer<T> c) {
-    return afterCheck((final T t) -> {
+  @NotNull
+  @Check default Rule<T, R> afterCheck(@NotNull final Consumer<T> c) {
+    return afterCheck((@NotNull final T t) -> {
       c.accept(t);
       return true;
     });
   }
 
-  @Check default Rule<T, R> afterCheck(final Predicate<T> p) {
+  @NotNull
+  @Check default Rule<T, R> afterCheck(@NotNull final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T ¢) {
         return inner.check(¢) && p.test(¢);
@@ -88,6 +95,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should be overridden */
+  @Nullable
   default String[] akas() {
     return new String[] { technicalName() };
   }
@@ -95,20 +103,24 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   /** Apply this instance to a parameter
    * @param ¢ subject of this application
    * @return result of application of this instance on the given subject */
+  @Nullable
   @Override @Apply R apply(T ¢);
 
+  @NotNull
   default Rule<T, R> beforeCheck(final boolean b) {
-    return beforeCheck((final T t) -> b);
+    return beforeCheck((@NotNull final T t) -> b);
   }
 
-  default Rule<T, R> beforeCheck(final Consumer<T> c) {
-    return beforeCheck((final T t) -> {
+  @NotNull
+  default Rule<T, R> beforeCheck(@NotNull final Consumer<T> c) {
+    return beforeCheck((@NotNull final T t) -> {
       c.accept(t);
       return true;
     });
   }
 
-  default Rule<T, R> beforeCheck(final Predicate<T> p) {
+  @NotNull
+  default Rule<T, R> beforeCheck(@NotNull final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T ¢) {
         return p.test(¢) && inner.check(¢);
@@ -123,6 +135,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
    *         this instance. */
   @Check boolean check(T n);
 
+  @Nullable
   default String description() {
     return format("%s/[%s]%s=", //
         className(Rule.class), //
@@ -133,17 +146,19 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should be overridden */
+  @NotNull
   default Example[] examples() {
     return new Example[0];
   }
 
-  T object();
+  @Nullable T object();
 
   default boolean ready() {
     return object() != null;
   }
 
   /** Should not be overridden */
+  @Nullable
   default String technicalName() {
     return getClass().getSimpleName();
   }
@@ -161,14 +176,14 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   @Inherited
   @Target(ElementType.METHOD)
   @interface Apply {
-    String value() default "A method for applying this instance";
+    @NotNull String value() default "A method for applying this instance";
   }
 
   @Documented
   @Inherited
   @Target(ElementType.METHOD)
   @interface Check {
-    String value() default "A boolean method for checking prior to application of this instance";
+    @NotNull String value() default "A boolean method for checking prior to application of this instance";
   }
 
   abstract class CountingDelegator<T, R> extends Interceptor<T, R> {
@@ -178,6 +193,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       super(inner);
     }
 
+    @Nullable
     @Override public Void before(final String key, final Object... arguments) {
       count.putIfAbsent(key, Integer.valueOf(0));
       count.put(key, Box.it(count.get(key).intValue() + 1));
@@ -192,6 +208,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       this.inner = inner;
     }
 
+    @Nullable
     @SuppressWarnings({ "static-method", "unused" }) public Void before(final String key, final Object... arguments) {
       return null;
     }
@@ -200,49 +217,52 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return inner.check(¢);
     }
 
+    @Nullable
     @Override public T object() {
       return inner.object();
     }
 
+    @Nullable
     @Override public R apply(final T ¢) {
       return inner.apply(¢);
     }
   }
 
   interface Listener<T, R> extends Supplier<T> {
-    default boolean afterCheck(final BooleanSupplier ¢) {
+    default boolean afterCheck(@NotNull final BooleanSupplier ¢) {
       return ¢.getAsBoolean();
     }
 
+    @NotNull
     @Override T get();
 
-    default String[] listenAkas(final Supplier<String[]> $) {
+    default String[] listenAkas(@NotNull final Supplier<String[]> $) {
       return $.get();
     }
 
-    default String listenDescription(final Supplier<String> $) {
+    default String listenDescription(@NotNull final Supplier<String> $) {
       return $.get();
     }
 
-    default Example[] listenExamples(final Supplier<Example[]> $) {
+    default Example[] listenExamples(@NotNull final Supplier<Example[]> $) {
       return $.get();
     }
 
-    default String listenTechnicalName(final Supplier<String> $) {
+    default String listenTechnicalName(@NotNull final Supplier<String> $) {
       return $.get();
     }
 
-    default R listenTip(final Function<T, R> f, final T t) {
+    default R listenTip(@NotNull final Function<T, R> f, final T t) {
       return f.apply(t);
     }
 
-    default String listenVerb(final Supplier<String> $) {
+    default String listenVerb(@NotNull final Supplier<String> $) {
       return $.get();
     }
   }
 
   interface OnApplicator<T, R> {
-    Rule<T, R> go(Consumer<T> c);
+    @NotNull Rule<T, R> go(Consumer<T> c);
   }
 
   /** Default implementation of {@link Rule},
@@ -251,8 +271,10 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R> {
+    @Nullable
     private T object;
 
+    @Nullable
     @Override public final R apply(final T ¢) {
       if (!ready())
         return badTypeState(//
@@ -265,12 +287,13 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
                 "    Previously checked arguments was: %s\n" + //
                 "    Operand to rule application is: %s\n",
             ¢, object());
-      final R $ = fire();
+      @Nullable final R $ = fire();
       object = null;
       return $;
     }
 
-    private R badTypeState(final String reason, final Object... os) {
+    @Nullable
+    private R badTypeState(@NotNull final String reason, final Object... os) {
       return monitor.logProbableBug(this,
           new IllegalStateException(//
               format(//
@@ -287,8 +310,10 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return ok(object = ¢);
     }
 
+    @Nullable
     public abstract R fire();
 
+    @Nullable
     @Override public final T object() {
       return object;
     }

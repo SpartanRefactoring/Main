@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** As per {@link Issue1008}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -22,13 +24,14 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -6339897616387193324L;
 
-  @Override protected boolean prerequisite(final MethodDeclaration ¢) {
+  @Override protected boolean prerequisite(@NotNull final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;
     final ASTNode $ = containing.typeDeclaration(¢);
     return constructors($).size() == 1 && initializersInstance($).isEmpty();
   }
 
+  @NotNull
   @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
@@ -38,7 +41,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
   }
 
   private static Tip tip(final Statement s) {
-    final Assignment x = az.assignment(expression(az.expressionStatement(s)));
+    @Nullable final Assignment x = az.assignment(expression(az.expressionStatement(s)));
     assert fault.unreachable() || !fault.unreachable() : fault.specifically(Environment.of(to(x)).description(), to(x), from(x));
     return null;
   }

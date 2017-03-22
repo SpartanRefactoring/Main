@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Represents a test case, in conjunction with {@link ReflectiveTester}.
  * <p>
@@ -27,6 +29,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
+  @Nullable
   public static final AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
   public static final AbstractTypeDeclaration reflection = types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
@@ -37,16 +40,17 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     }
   };
 
+  @NotNull
   public static Vocabulary reify(final AnonymousClassDeclaration cd) {
-    final Vocabulary $ = new Vocabulary();
+    @NotNull final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
-      final MethodDeclaration md = (MethodDeclaration) bd;
+      @NotNull final MethodDeclaration md = (MethodDeclaration) bd;
       final String mangle = mangle(md), model = extract.name(reflection);
       assert stencil.containsKey(mangle) //
       : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
           , md, stencil);
-      final String javaDoc = " have JavaDoc /** " + disabling.ByComment.disabler + "*/, just like the overrriden version in " + model;
+      @NotNull final String javaDoc = " have JavaDoc /** " + disabling.ByComment.disabler + "*/, just like the overrriden version in " + model;
       if (disabling.specificallyDisabled(stencil.get(mangle)))
         assert disabling.specificallyDisabled(md) //
         : fault.specifically("Method " + mangle + " must " + javaDoc, md, stencil);
@@ -58,7 +62,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     return $;
   }
 
-  public static Vocabulary reify(final ClassInstanceCreation ¢) {
+  public static Vocabulary reify(@NotNull final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
     return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }

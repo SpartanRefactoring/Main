@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Chage prfix expression to infix expression when possible toList Expand :
  * {@code
@@ -22,10 +24,11 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 2322066430397426252L;
 
-  @Override public ASTNode replacement(final PostfixExpression x) {
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;
-    final Expression one = az.expression(wizard.ast("1"));
+    @Nullable final Expression one = az.expression(wizard.ast("1"));
     final Assignment $ = subject
         .pair(x.getOperand(),
             x.getOperator() == Operator.DECREMENT ? subject.pair(x.getOperand(), one).to(InfixExpression.Operator.MINUS)
@@ -34,11 +37,12 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     return !needWrap(x) ? $ : subject.operand($).parenthesis();
   }
 
-  private static boolean needWrap(final PostfixExpression ¢) {
+  private static boolean needWrap(@NotNull final PostfixExpression ¢) {
     final ASTNode $ = ¢.getParent();
     return iz.infixExpression($) || iz.prefixExpression($) || iz.postfixExpression($);
   }
 
+  @Nullable
   @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
     return null;
   }

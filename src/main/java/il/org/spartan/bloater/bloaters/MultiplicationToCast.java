@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Covers Issues #1006 & #1007 toList Convert : {@code
  * x * 1. / x * 1.0
@@ -25,7 +27,8 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 6335095460390231348L;
 
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
     int i = 0;
@@ -49,7 +52,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
           $.setExpression(copy.of(x.getLeftOperand()));
           return $;
         }
-        final List<Expression> lstcp = extract.allOperands(x);
+        @Nullable final List<Expression> lstcp = extract.allOperands(x);
         lstcp.remove(i);
         $.setExpression(subject.operands(lstcp).to(x.getOperator()));
         return $;
@@ -59,6 +62,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     return null;
   }
 
+  @Nullable
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }

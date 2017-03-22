@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** Contains examples
  * @author Ori Marcovitch
@@ -24,6 +25,7 @@ public class Classifieric {
       return anyTips(tippers, ¢);
     }
 
+    @Nullable
     @Override public Tip pattern(final ForStatement ¢) {
       return firstTip(tippers, ¢);
     }

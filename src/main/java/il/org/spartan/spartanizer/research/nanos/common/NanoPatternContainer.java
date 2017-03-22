@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** List that can contain nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -19,21 +21,24 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     addAll(Arrays.asList(ts));
   }
 
-  public NanoPatternContainer<N> add(final String pattern) {
+  @NotNull
+  public NanoPatternContainer<N> add(@NotNull final String pattern) {
     return add(pattern, "", "");
   }
 
-  public NanoPatternContainer<N> add(final String pattern, final String replacement, final String description) {
+  @NotNull
+  public NanoPatternContainer<N> add(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
 
-  public NanoPatternContainer<N> statementPattern(final String pattern, final String replacement, final String description) {
+  @NotNull
+  public NanoPatternContainer<N> statementPattern(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
 
-  public boolean canTip(final N ¢) {
+  public boolean canTip(@Nullable final N ¢) {
     return ¢ != null//
         && stream().anyMatch(λ -> λ.check(¢));
   }
@@ -42,6 +47,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return !canTip(¢);
   }
 
+  @Nullable
   public Tip firstTip(final N ¢) {
     return firstTipper(¢).tip(¢);
   }

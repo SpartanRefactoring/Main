@@ -18,20 +18,22 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch */
 public enum anonymize {
   ;
-  public static String testcase(final String name, final String raw) {
+  public static String testcase(final String name, @NotNull final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
-  public static String unwarpedTestcase(final String raw) {
+  @NotNull public static String unwarpedTestcase(@NotNull final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
-  public static String code(final String raw) {
+  public static String code(@NotNull final String raw) {
     return format.code(shortenIdentifiers(raw));
   }
 
@@ -45,7 +47,7 @@ public enum anonymize {
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
-  static String renderIdentifier(final String old) {
+  @NotNull static String renderIdentifier(@NotNull final String old) {
     switch (old) {
       case "START":
         return "A";
@@ -63,29 +65,29 @@ public enum anonymize {
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
-  private static String linify(final String ¢) {
-    String $ = "";
-    try (Scanner scanner = new Scanner(¢)) {
+  @NotNull private static String linify(@NotNull final String ¢) {
+    @NotNull String $ = "";
+    try (@NotNull Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
         $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//\n";
     }
     return $;
   }
 
-  public static String shortenIdentifiers(final String javaFragment) {
-    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
+  public static String shortenIdentifiers(@NotNull final String javaFragment) {
+    @NotNull final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
+    @NotNull final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
-    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+    @NotNull final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-    final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
+    @Nullable final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
     if (n == null)
       return javaFragment;
     final ASTRewrite r = ASTRewrite.create(ast);
-    final Map<String, String> renaming = new HashMap<>();
+    @NotNull final Map<String, String> renaming = new HashMap<>();
     n.accept(new ASTVisitor(true) {
-      @Override public void preVisit(final ASTNode ¢) {
+      @Override public void preVisit(@NotNull final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;
         final String name = ((Name) ¢).getFullyQualifiedName();
@@ -104,18 +106,18 @@ public enum anonymize {
     return ASTutils.extractCode(javaFragment, $);
   }
 
-  private static void applyChanges(final IDocument d, final ASTRewrite r) {
+  private static void applyChanges(final IDocument d, @NotNull final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       ¢.printStackTrace();
     }
   }
 
   public static void main(final String[] args) {
     System.out.println("enter whatever:");
-    try (Scanner reader = new Scanner(System.in)) {
-      String s = "";
+    try (@NotNull Scanner reader = new Scanner(System.in)) {
+      @NotNull String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
       System.out.println("1s tipper: " + theSpartanizer.firstTipper(s));
@@ -127,12 +129,12 @@ public enum anonymize {
     }
   }
 
-  public static String makeTipperUnitTest(final String codeFragment) {
+  @NotNull public static String makeTipperUnitTest(@NotNull final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
   }
 
-  public static String makeBloaterUnitTest(final String codeFragment) {
+  @NotNull public static String makeBloaterUnitTest(@NotNull final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
   }
@@ -145,7 +147,7 @@ public enum anonymize {
     );
   }
 
-  public static String tipperBody(final String input) {
+  @NotNull public static String tipperBody(final String input) {
     for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
@@ -158,7 +160,7 @@ public enum anonymize {
     }
   }
 
-  public static String bloaterBody(final String input) {
+  @NotNull public static String bloaterBody(final String input) {
     for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(input);
       if (theSpartanizer.same(to, from))
@@ -168,11 +170,11 @@ public enum anonymize {
     }
   }
 
-  private static String operandClass(final Tipper<?> ¢) {
+  private static String operandClass(@NotNull final Tipper<?> ¢) {
     return system.className(¢.object());
   }
 
-  private static String tipperClass(final Tipper<?> ¢) {
+  @NotNull private static String tipperClass(@NotNull final Tipper<?> ¢) {
     return ¢.nanoName() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
   }
 }

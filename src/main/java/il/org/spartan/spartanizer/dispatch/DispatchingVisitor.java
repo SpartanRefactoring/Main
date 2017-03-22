@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 /** A visitor hack converting the type specific visit functions, into a single
  * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
@@ -19,7 +20,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   public final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
-  boolean cautiousGo(final ASTNode ¢) {
+  boolean cautiousGo(@NotNull final ASTNode ¢) {
     return !exclude.isExcluded(¢) && go(¢);
   }
 
@@ -36,187 +37,187 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     initialized = true;
   }
 
-  @Override public final boolean visit(final AnnotationTypeDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final AnnotationTypeDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ArrayAccess ¢) {
+  @Override public final boolean visit(@NotNull final ArrayAccess ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final Assignment ¢) {
+  @Override public final boolean visit(@NotNull final Assignment ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final Block ¢) {
+  @Override public final boolean visit(@NotNull final Block ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final BreakStatement ¢) {
+  @Override public final boolean visit(@NotNull final BreakStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final CastExpression ¢) {
+  @Override public final boolean visit(@NotNull final CastExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final CatchClause ¢) {
+  @Override public final boolean visit(@NotNull final CatchClause ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ClassInstanceCreation ¢) {
+  @Override public final boolean visit(@NotNull final ClassInstanceCreation ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ConditionalExpression ¢) {
+  @Override public final boolean visit(@NotNull final ConditionalExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ContinueStatement ¢) {
+  @Override public final boolean visit(@NotNull final ContinueStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final EnhancedForStatement ¢) {
+  @Override public final boolean visit(@NotNull final EnhancedForStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final EnumConstantDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final EnumConstantDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final EnumDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final EnumDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ExpressionStatement ¢) {
+  @Override public final boolean visit(@NotNull final ExpressionStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final FieldDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final FieldDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ForStatement ¢) {
+  @Override public final boolean visit(@NotNull final ForStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final IfStatement ¢) {
+  @Override public final boolean visit(@NotNull final IfStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final InfixExpression ¢) {
+  @Override public final boolean visit(@NotNull final InfixExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final Initializer ¢) {
+  @Override public final boolean visit(@NotNull final Initializer ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final InstanceofExpression ¢) {
+  @Override public final boolean visit(@NotNull final InstanceofExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final Javadoc ¢) {
+  @Override public final boolean visit(@NotNull final Javadoc ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final LambdaExpression ¢) {
+  @Override public final boolean visit(@NotNull final LambdaExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final MethodDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final MethodDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final MethodInvocation ¢) {
+  @Override public final boolean visit(@NotNull final MethodInvocation ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final Modifier ¢) {
+  @Override public final boolean visit(@NotNull final Modifier ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final NormalAnnotation ¢) {
+  @Override public final boolean visit(@NotNull final NormalAnnotation ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final NumberLiteral ¢) {
+  @Override public final boolean visit(@NotNull final NumberLiteral ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ParenthesizedExpression ¢) {
+  @Override public final boolean visit(@NotNull final ParenthesizedExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final PostfixExpression ¢) {
+  @Override public final boolean visit(@NotNull final PostfixExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final PrefixExpression ¢) {
+  @Override public final boolean visit(@NotNull final PrefixExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final QualifiedType ¢) {
+  @Override public final boolean visit(@NotNull final QualifiedType ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ReturnStatement ¢) {
+  @Override public final boolean visit(@NotNull final ReturnStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final SingleMemberAnnotation ¢) {
+  @Override public final boolean visit(@NotNull final SingleMemberAnnotation ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final SingleVariableDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final SingleVariableDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final SuperConstructorInvocation ¢) {
+  @Override public final boolean visit(@NotNull final SuperConstructorInvocation ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final SwitchCase ¢) {
+  @Override public final boolean visit(@NotNull final SwitchCase ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final SwitchStatement ¢) {
+  @Override public final boolean visit(@NotNull final SwitchStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final ThrowStatement ¢) {
+  @Override public final boolean visit(@NotNull final ThrowStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final TryStatement ¢) {
+  @Override public final boolean visit(@NotNull final TryStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final TypeDeclaration ¢) {
+  @Override public final boolean visit(@NotNull final TypeDeclaration ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final TypeParameter ¢) {
+  @Override public final boolean visit(@NotNull final TypeParameter ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final VariableDeclarationExpression ¢) {
+  @Override public final boolean visit(@NotNull final VariableDeclarationExpression ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final VariableDeclarationFragment ¢) {
+  @Override public final boolean visit(@NotNull final VariableDeclarationFragment ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final VariableDeclarationStatement ¢) {
+  @Override public final boolean visit(@NotNull final VariableDeclarationStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final WhileStatement ¢) {
+  @Override public final boolean visit(@NotNull final WhileStatement ¢) {
     return cautiousGo(¢);
   }
 
-  @Override public final boolean visit(final WildcardType ¢) {
+  @Override public final boolean visit(@NotNull final WildcardType ¢) {
     return cautiousGo(¢);
   }
 }

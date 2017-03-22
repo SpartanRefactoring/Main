@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Actually contains {@link Select} and {@link CopyCollection}
  * @nano for(X x : Y) if(Z) w.add(x);
@@ -47,6 +49,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
     private static final long serialVersionUID = -1531336007723130062L;
 
+    @Nullable
     @Override protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
@@ -61,18 +64,21 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
         || anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement $) {
     try {
       return firstTip(blockTippers, az.block(parent($)));
-    } catch (@SuppressWarnings("unused") final NoSuchElementException __) {
+    } catch (@NotNull @SuppressWarnings("unused") final NoSuchElementException __) {
       return firstTip(tippers, $);
     }
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }
 
+  @NotNull
   @Override public String nanoName() {
     return "SelectBy";
   }

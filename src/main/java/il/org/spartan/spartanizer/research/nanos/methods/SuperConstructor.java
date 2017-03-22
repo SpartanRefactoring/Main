@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Constructor invoking super constructor
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -22,7 +24,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
   }
 
   private boolean delegating(final MethodDeclaration ¢) {
-    final List<String> ps = parametersNames(¢);
+    @Nullable final List<String> ps = parametersNames(¢);
     final Iterable<Expression> as = arguments(az.superConstructorInvocation(onlyStatement(¢)));
     for (final Expression a : as)
       if (!iz.name(¢) && !ps.contains(identifier(az.name(a))))
@@ -30,6 +32,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
     return true;
   }
 
+  @NotNull
   @Override public String nanoName() {
     return "Super";
   }

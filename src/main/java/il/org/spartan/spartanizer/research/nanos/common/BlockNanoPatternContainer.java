@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.*;
+import org.jetbrains.annotations.NotNull;
 
 /** List that can contain {@link NanoPatternTipper<Block>}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -16,7 +17,8 @@ public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
     addAll(Arrays.asList(ts));
   }
 
-  public BlockNanoPatternContainer statementsPattern(final String pattern, final String replacement, final String description) {
+  @NotNull
+  public BlockNanoPatternContainer statementsPattern(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
     add(TipperFactory.statementsPattern(pattern, replacement, description));
     return this;
   }

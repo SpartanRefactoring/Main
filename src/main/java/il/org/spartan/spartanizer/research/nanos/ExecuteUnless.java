@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** Replace if(X) Y; when(X).eval(Y);
  * @author Ori Marcovitch
@@ -52,10 +53,11 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   private static boolean throwing(final Statement ¢) {
     if (yieldAncestors.untilClass(TryStatement.class).from(¢) != null)
       return true;
-    final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
+    @Nullable final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
+  @Nullable
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }

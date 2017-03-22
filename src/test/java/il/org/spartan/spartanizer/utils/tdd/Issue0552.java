@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.utils.tdd;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -16,7 +18,8 @@ import il.org.spartan.spartanizer.research.util.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0552 {
-  static ASTNode ast(final String ¢) {
+  @Nullable
+  static ASTNode ast(@NotNull final String ¢) {
     return wizard.ast(¢);
   }
 

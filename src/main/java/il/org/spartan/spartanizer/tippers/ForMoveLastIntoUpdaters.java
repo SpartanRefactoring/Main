@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Move last statement in a for(;;) into updaters list
  * @author Alex Kopzon
@@ -19,11 +20,12 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
         && cantTip.remvoeRedundantIf(¢);
   }
 
-  @Override public String description(final ForStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final ForStatement ¢) {
     return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
+  @Override public boolean prerequisite(@NotNull final ForStatement ¢) {
     fillUp(¢.getBody());
     return validUpdater() && notClaimedByOthers(¢);
   }
