@@ -27,8 +27,7 @@ public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Nullable @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }

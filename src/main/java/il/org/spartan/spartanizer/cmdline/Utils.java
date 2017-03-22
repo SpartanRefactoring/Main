@@ -25,8 +25,7 @@ public interface Utils {
     return $ < 0 ? 0 : (int) $ + 1;
   }
 
-  @NotNull
-  static String format2(final double ¢) {
+  @NotNull static String format2(final double ¢) {
     if (¢ < 0)
       return "-" + format2(-¢);
     final double $ = 100 * ¢;

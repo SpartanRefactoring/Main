@@ -17,13 +17,11 @@ public class EliminateConditionalContinueInFor extends EagerTipper<ForStatement>
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 1319731512145811654L;
 
-  @NotNull
-  @Override public String description(@NotNull final ForStatement ¢) {
+  @NotNull @Override public String description(@NotNull final ForStatement ¢) {
     return "Eliminate conditional continue before last statement in the for loop about " + ¢.getExpression();
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final ForStatement ¢) {
+  @Nullable @Override public Tip tip(@NotNull final ForStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

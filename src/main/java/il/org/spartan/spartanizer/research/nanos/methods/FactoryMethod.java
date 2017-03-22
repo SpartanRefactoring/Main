@@ -27,8 +27,7 @@ public class FactoryMethod extends JavadocMarkerNanoPattern {
         && anyTips(tippers.get(), onlyStatement(¢));
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return "Factory";
   }
 }

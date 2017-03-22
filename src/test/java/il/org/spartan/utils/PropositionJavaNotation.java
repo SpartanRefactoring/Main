@@ -7,33 +7,27 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-19 */
 public class PropositionJavaNotation extends PropositionInfixNotation {
-  @NotNull
-  @Override protected String close() {
+  @NotNull @Override protected String close() {
     return ")";
   }
 
-  @NotNull
-  @Override protected String empty() {
+  @NotNull @Override protected String empty() {
     return "";
   }
 
-  @NotNull
-  @Override protected String inter(@SuppressWarnings("unused") final And __) {
+  @NotNull @Override protected String inter(@SuppressWarnings("unused") final And __) {
     return " && ";
   }
 
-  @NotNull
-  @Override protected String inter(@SuppressWarnings("unused") final Or __) {
+  @NotNull @Override protected String inter(@SuppressWarnings("unused") final Or __) {
     return " || ";
   }
 
-  @NotNull
-  @Override protected String negation() {
+  @NotNull @Override protected String negation() {
     return "!";
   }
 
-  @NotNull
-  @Override protected String open() {
+  @NotNull @Override protected String open() {
     return "(";
   }
 }

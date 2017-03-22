@@ -27,16 +27,14 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 7624011796441469217L;
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("a=3;b=3;").to("b=a=3;"), //
         convert("a=c;b=c;").to("b=a=c;"), //
     };
   }
 
-  @Nullable
-  private static Expression extractRight(final Assignment ¢) {
+  @Nullable private static Expression extractRight(final Assignment ¢) {
     @Nullable final Expression $ = from(¢);
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
@@ -45,8 +43,7 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
     return operator(¢) != ASSIGN ? null : extractRight(¢);
   }
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @NotNull @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 

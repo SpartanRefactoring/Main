@@ -25,8 +25,7 @@ public class Classifieric {
       return anyTips(tippers, ¢);
     }
 
-    @Nullable
-    @Override public Tip pattern(final ForStatement ¢) {
+    @Nullable @Override public Tip pattern(final ForStatement ¢) {
       return firstTip(tippers, ¢);
     }
   }

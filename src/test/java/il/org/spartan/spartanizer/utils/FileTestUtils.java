@@ -44,8 +44,7 @@ public class FileTestUtils {
    * @param d
    * @param f
    * @return */
-  @NotNull
-  static File createTempFile(final StringBuilder b, final TestDirection d, @NotNull final File f) {
+  @NotNull static File createTempFile(final StringBuilder b, final TestDirection d, @NotNull final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
@@ -57,8 +56,7 @@ public class FileTestUtils {
     }
   }
 
-  @NotNull
-  private static File createTemporaryRandomAccessFile(@NotNull final File $, @NotNull final String s) {
+  @NotNull private static File createTemporaryRandomAccessFile(@NotNull final File $, @NotNull final String s) {
     try (@NotNull RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
       if ($ != null)
@@ -69,8 +67,7 @@ public class FileTestUtils {
     return $;
   }
 
-  @NotNull
-  private static StringBuilder deleteTestKeyword(@NotNull final StringBuilder $) {
+  @NotNull private static StringBuilder deleteTestKeyword(@NotNull final StringBuilder $) {
     if ($.indexOf(testKeyword) > 0)
       $.delete($.indexOf(testKeyword), $.length());
     return $;
@@ -101,18 +98,15 @@ public class FileTestUtils {
   }
 
   /** Makes an Input file out of a Test file */
-  @NotNull
-  protected static File makeInFile(@NotNull final File ¢) {
+  @NotNull protected static File makeInFile(@NotNull final File ¢) {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
-  @NotNull
-  static AbstractGUIApplicator makeLaconizationObject(@NotNull final File ¢) {
+  @NotNull static AbstractGUIApplicator makeLaconizationObject(@NotNull final File ¢) {
     return makeLaconizationObject(¢.getName());
   }
 
-  @NotNull
-  static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
+  @NotNull static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
     @Nullable final Class<?> c = asClass(folderForClass);
     assert c != null;
     @Nullable final Object $ = getInstance(c);
@@ -121,8 +115,7 @@ public class FileTestUtils {
   }
 
   /** Makes an Output file out of a Test file */
-  @NotNull
-  protected static File makeOutFile(@NotNull final File ¢) {
+  @NotNull protected static File makeOutFile(@NotNull final File ¢) {
     @NotNull final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
@@ -146,8 +139,7 @@ public class FileTestUtils {
         $.add(c);
     }
 
-    @NotNull
-    abstract Object[] makeCase(File d);
+    @NotNull abstract Object[] makeCase(File d);
   }
 
   /** An abstract class to be extended and implemented by client, while
@@ -166,8 +158,7 @@ public class FileTestUtils {
         }
     }
 
-    @NotNull
-    abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
+    @NotNull abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
   }
 
   /* Auxiliary function for test suite inherited classes */
@@ -183,8 +174,7 @@ public class FileTestUtils {
    * @since 2014/05/24 */
   public abstract static class Traverse extends FileTestUtils {
     /** @return a collection of all test cases generated in the traversal */
-    @NotNull
-    public final Collection<Object[]> go() {
+    @NotNull public final Collection<Object[]> go() {
       assert location != null;
       assert location.listFiles() != null;
       @NotNull final List<Object[]> $ = new ArrayList<>();

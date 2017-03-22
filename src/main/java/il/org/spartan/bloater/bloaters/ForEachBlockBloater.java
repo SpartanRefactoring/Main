@@ -21,8 +21,7 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 4091243669569596651L;
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final EnhancedForStatement s) {
+  @Nullable @Override public ASTNode replacement(@Nullable final EnhancedForStatement s) {
     if (s == null)
       return null;
     // TODO Raviv please use class subject
@@ -43,8 +42,7 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
     return "expand to block";
   }
 }

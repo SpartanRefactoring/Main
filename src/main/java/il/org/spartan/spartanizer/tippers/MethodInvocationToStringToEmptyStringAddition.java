@@ -20,8 +20,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 6764541766975586375L;
 
-  @NotNull
-  @Override public String description(final MethodInvocation ¢) {
+  @NotNull @Override public String description(final MethodInvocation ¢) {
     @NotNull final Expression $ = receiver(¢);
     return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }

@@ -27,8 +27,7 @@ public class Issue1036 {
     @NotNull List<Integer> children2 = new ArrayList<>();
     @NotNull String $ = "";
 
-    @NotNull
-    public String check1() {
+    @NotNull public String check1() {
       return "";
     }
   }

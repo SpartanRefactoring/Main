@@ -29,13 +29,11 @@ public class Oblivious extends JavadocMarkerNanoPattern {
     return $.stream().noneMatch(λ -> analyze.dependencies(body(d)).stream().map(String::toString).collect(toSet()).contains(λ));
   }
 
-  @Nullable
-  private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {
+  @Nullable private static AbstractTypeDeclaration ancestorType(final ASTNode ¢) {
     return yieldAncestors.untilContainingType().from(¢);
   }
 
-  @Nullable
-  private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
+  @Nullable private static MethodDeclaration ancestorMethod(final ASTNode ¢) {
     return yieldAncestors.untilContainingMethod().from(¢);
   }
 }

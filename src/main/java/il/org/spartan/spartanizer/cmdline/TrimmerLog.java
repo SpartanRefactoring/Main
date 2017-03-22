@@ -128,8 +128,7 @@ public enum TrimmerLog {
       System.out.println("Stopped logging visitations");
   }
 
-  @Nullable
-  private static CSVStatistics init() {
+  @Nullable private static CSVStatistics init() {
     try {
       return output = new CSVStatistics(outputDir, "Tips");
     } catch (@NotNull final IOException $) {

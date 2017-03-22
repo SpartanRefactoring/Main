@@ -39,8 +39,7 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipp
     return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final IfStatement s) {
+  @Nullable @Override public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);

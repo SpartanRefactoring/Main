@@ -44,8 +44,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
         || iz.conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "";
   }
 }

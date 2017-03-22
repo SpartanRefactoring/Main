@@ -30,8 +30,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     return $;
   }
 
-  @NotNull
-  @Override public String description(final MethodInvocation ¢) {
+  @NotNull @Override public String description(final MethodInvocation ¢) {
     return "Write " + first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 

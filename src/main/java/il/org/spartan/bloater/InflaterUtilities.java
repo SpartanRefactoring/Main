@@ -87,8 +87,7 @@ public enum InflaterUtilities {
    *         when we have a lot of statements) from compilationUnit - only kind
    *         of statements we might need for the Bloater SHOULD BE CHANGED when
    *         we add more expanders */
-  @NotNull
-  static List<ASTNode> getStatements(@NotNull final WrappedCompilationUnit u) {
+  @NotNull static List<ASTNode> getStatements(@NotNull final WrappedCompilationUnit u) {
     @NotNull final List<ASTNode> $ = new ArrayList<>();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue

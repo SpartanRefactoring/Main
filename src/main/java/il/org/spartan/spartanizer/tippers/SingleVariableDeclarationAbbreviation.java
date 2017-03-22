@@ -32,7 +32,8 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = -2709826205107840171L;
 
-  static void fixJavadoc(@NotNull final MethodDeclaration d, @NotNull final SimpleName oldName, final String newName, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  static void fixJavadoc(@NotNull final MethodDeclaration d, @NotNull final SimpleName oldName, final String newName, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
@@ -47,8 +48,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
             }
   }
 
-  @NotNull
-  private static String getExtraDimensions(final SingleVariableDeclaration d) {
+  @NotNull private static String getExtraDimensions(final SingleVariableDeclaration d) {
     @NotNull String $ = "";
     for (@NotNull String ¢ = d + ""; ¢.endsWith("[]");) {
       $ += "s";
@@ -69,8 +69,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
         && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
-  @NotNull
-  private static String pluralVariadic(@NotNull final SingleVariableDeclaration ¢) {
+  @NotNull private static String pluralVariadic(@NotNull final SingleVariableDeclaration ¢) {
     return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
@@ -78,8 +77,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return JavaTypeNameParser.make(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
 
-  @NotNull
-  @Override public String description(@NotNull final SingleVariableDeclaration ¢) {
+  @NotNull @Override public String description(@NotNull final SingleVariableDeclaration ¢) {
     return ¢.getName() + "";
   }
 

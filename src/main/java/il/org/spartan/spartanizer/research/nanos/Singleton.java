@@ -25,8 +25,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Nullable @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -46,8 +45,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @NotNull
-  @Override public NanoPatternTipper.Category category() {
+  @NotNull @Override public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

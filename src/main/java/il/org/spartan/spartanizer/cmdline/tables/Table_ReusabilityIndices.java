@@ -101,8 +101,7 @@ public class Table_ReusabilityIndices {
     return true;
   }
 
-  @NotNull
-  static int[] ranks(@NotNull final Map<?, Integer> m) {
+  @NotNull static int[] ranks(@NotNull final Map<?, Integer> m) {
     @NotNull final Int n = new Int();
     @NotNull final int[] $ = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());

@@ -20,18 +20,15 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -5595277222526598517L;
 
-  @NotNull
-  @Override public String description(final EnhancedForStatement ¢) {
+  @NotNull @Override public String description(final EnhancedForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return "Prune redundant continue";
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final EnhancedForStatement ¢) {
+  @NotNull @Override public Tip tip(@NotNull final EnhancedForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         remove(r, extract.lastStatement(¢), g);

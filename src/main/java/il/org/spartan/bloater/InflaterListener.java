@@ -33,13 +33,10 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Integer[] wheelEvents = { Integer.valueOf(SWT.MouseHorizontalWheel), Integer.valueOf(SWT.MouseVerticalWheel),
       Integer.valueOf(SWT.MouseWheel) };
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
-  @NotNull
-  final StyledText text;
+  @NotNull final StyledText text;
   final ITextEditor editor;
-  @NotNull
-  final Map<Integer, List<Listener>> externalListeners;
-  @NotNull
-  final Cursor activeCursor;
+  @NotNull final Map<Integer, List<Listener>> externalListeners;
+  @NotNull final Cursor activeCursor;
   final Cursor inactiveCursor;
   final Selection selection;
   boolean active;
@@ -130,8 +127,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     }
   }
 
-  @Nullable
-  public Listener find(@NotNull final Iterable<Listener> ls) {
+  @Nullable public Listener find(@NotNull final Iterable<Listener> ls) {
     @Nullable TypedListener $ = null;
     for (final Listener ¢ : ls)
       if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))

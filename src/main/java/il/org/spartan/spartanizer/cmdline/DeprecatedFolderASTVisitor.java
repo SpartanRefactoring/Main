@@ -30,10 +30,8 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
-  @NotNull
-  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @NotNull
-  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
+  @NotNull @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @NotNull @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor;
@@ -82,8 +80,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
-  @NotNull
-  protected static String makeFile(final String fileName) {
+  @NotNull protected static String makeFile(final String fileName) {
     return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 

@@ -28,8 +28,7 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
     return (i.getName() + "").equals($.getName() + "") && arguments(i).size() == parameters($).size();
   }
 
-  @NotNull
-  @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @NotNull @Override public String description(@NotNull final MethodDeclaration ¢) {
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
 

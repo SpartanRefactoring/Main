@@ -22,16 +22,14 @@ public final class Issue0214 {
   }
 
   private final Tipper<?> blockSimplify = new BlockSimplify();
-  @Nullable
-  private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
+  @Nullable private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
     static final long serialVersionUID = 7928987767029492793L;
 
     @Override public String description() {
       return null;
     }
 
-    @Nullable
-    @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
+    @Nullable @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
       return null;
     }
   };

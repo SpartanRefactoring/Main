@@ -29,8 +29,7 @@ public abstract class Tip extends Range {
     return $;
   }
 
-  @NotNull
-  static Range singleNodeRange(final @NotNull ASTNode ¢) {
+  @NotNull static Range singleNodeRange(final @NotNull ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return new Range($, $ + ¢.getLength());
   }

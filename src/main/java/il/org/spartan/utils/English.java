@@ -25,13 +25,11 @@ public interface English {
   String TRIM_SUFFIX = "...";
   int TRIM_THRESHOLD = 50;
 
-  @NotNull
-  static String indefinite(@NotNull final Object ¢) {
+  @NotNull static String indefinite(@NotNull final Object ¢) {
     return indefinite(className(¢));
   }
 
-  @NotNull
-  static String indefinite(@NotNull final String className) {
+  @NotNull static String indefinite(@NotNull final String className) {
     final String $ = namer.components(className)[0];
     final char openingLetter = first($);
     return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
@@ -45,19 +43,16 @@ public interface English {
   /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
    * @param ¢ list of items
    * @return a linguistic list of the items */
-  @NotNull
-  static String list(@Nullable final List<String> ¢) {
+  @NotNull static String list(@Nullable final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
   }
 
-  @NotNull
-  static String upperFirstLetter(@NotNull final String input) {
+  @NotNull static String upperFirstLetter(@NotNull final String input) {
     return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toUpperCase() + input.substring(1);
   }
 
-  @NotNull
-  static String lowerFirstLetter(@NotNull final String input) {
+  @NotNull static String lowerFirstLetter(@NotNull final String input) {
     return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toLowerCase() + input.substring(1);
   }
 
@@ -65,8 +60,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  @NotNull
-  static String plurales(final String s, final int i) {
+  @NotNull static String plurales(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "es";
   }
 
@@ -74,8 +68,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  @NotNull
-  static String plurales(final String s, @Nullable final Int i) {
+  @NotNull static String plurales(final String s, @Nullable final Int i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.get() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
@@ -83,8 +76,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  @NotNull
-  static String plurales(final String s, @Nullable final Integer i) {
+  @NotNull static String plurales(final String s, @Nullable final Integer i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
@@ -92,8 +84,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  @NotNull
-  static String plurals(final String s, final int i) {
+  @NotNull static String plurals(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "s";
   }
 
@@ -101,8 +92,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  @NotNull
-  static String plurals(final String s, @Nullable final Int i) {
+  @NotNull static String plurals(final String s, @Nullable final Int i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.get() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
@@ -110,13 +100,11 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-  @NotNull
-  static String plurals(final String s, @Nullable final Integer i) {
+  @NotNull static String plurals(final String s, @Nullable final Integer i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
-  @NotNull
-  static String pronounce(final char ¢) {
+  @NotNull static String pronounce(final char ¢) {
     if (Character.isUpperCase(¢))
       return pronounce(Character.toLowerCase(¢));
     switch (¢) {
@@ -197,43 +185,36 @@ public interface English {
    * @param l JD
    * @param x replacement suffix string
    * @return cut string */
-  @NotNull
-  static String trimAbsolute(@Nullable final String s, final int l, @NotNull final String x) {
+  @NotNull static String trimAbsolute(@Nullable final String s, final int l, @NotNull final String x) {
     assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
 
   /** @param ¢ something
    * @return printable {@link String} for it */
-  @NotNull
-  static <X> String unknownIfNull(@Nullable final X ¢) {
+  @NotNull static <X> String unknownIfNull(@Nullable final X ¢) {
     return ¢ != null ? ¢ + "" : UNKNOWN;
   }
 
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
-  @NotNull
-  static <X> String unknownIfNull(@Nullable final X x, @NotNull final Function<X, ?> f) {
+  @NotNull static <X> String unknownIfNull(@Nullable final X x, @NotNull final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
 
   interface Activity {
-    @NotNull
-    static Activity simple(@NotNull final String base) {
+    @NotNull static Activity simple(@NotNull final String base) {
       return new Activity() {
-        @NotNull
-        @Override public String get() {
+        @NotNull @Override public String get() {
           return base;
         }
 
-        @NotNull
-        @Override public String getEd() {
+        @NotNull @Override public String getEd() {
           return base + "ed";
         }
 
-        @NotNull
-        @Override public String getIng() {
+        @NotNull @Override public String getIng() {
           return base + "ing";
         }
       };

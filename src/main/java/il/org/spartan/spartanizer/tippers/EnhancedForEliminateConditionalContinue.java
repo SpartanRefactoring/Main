@@ -17,13 +17,11 @@ public class EnhancedForEliminateConditionalContinue extends EagerTipper<Enhance
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -212967427070060695L;
 
-  @NotNull
-  @Override public String description(@NotNull final EnhancedForStatement ¢) {
+  @NotNull @Override public String description(@NotNull final EnhancedForStatement ¢) {
     return "Eliminate conditional continue before last statement in for about " + ¢.getExpression();
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final EnhancedForStatement ¢) {
+  @Nullable @Override public Tip tip(@NotNull final EnhancedForStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

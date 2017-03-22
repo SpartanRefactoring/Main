@@ -46,8 +46,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Nullable
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     return execute(Selection.Util.project());
   }
 
@@ -71,7 +70,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param commit what to do with the dialog's result
    * @return null */
   public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
-                               @NotNull final BiFunction<IProject, Set<String>, Void> commit) {
+      @NotNull final BiFunction<IProject, Set<String>, Void> commit) {
     @Nullable final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
@@ -110,8 +109,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
 
   /** @param ¢ JD
    * @return preferences configuration dialog for project */
-  @Nullable
-  private static SpartanPreferencesDialog getDialog(final IProject ¢) {
+  @Nullable private static SpartanPreferencesDialog getDialog(final IProject ¢) {
     return getDialog(XMLSpartan.getTippersByCategories(¢));
   }
 
@@ -139,13 +137,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         //
       }
 
-      @NotNull
-      @Override public String getText(@Nullable final Object ¢) {
+      @NotNull @Override public String getText(@Nullable final Object ¢) {
         return ¢ == null ? "" : !(¢ instanceof SpartanElement) ? ¢ + "" : ((SpartanElement) ¢).name();
       }
 
-      @Nullable
-      @Override public Image getImage(final Object ¢) {
+      @Nullable @Override public Image getImage(final Object ¢) {
         return ¢ instanceof SpartanTipper ? Dialogs.image(Dialogs.ICON) : ¢ instanceof SpartanCategory ? Dialogs.image(Dialogs.CATEGORY) : null;
       }
     }, new ITreeContentProvider() {
@@ -153,18 +149,15 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return ¢ instanceof SpartanCategory && ((SpartanElement) ¢).hasChildren();
       }
 
-      @Nullable
-      @Override public Object getParent(final Object ¢) {
+      @Nullable @Override public Object getParent(final Object ¢) {
         return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent();
       }
 
-      @NotNull
-      @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
+      @NotNull @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
         return es;
       }
 
-      @Nullable
-      @Override public Object[] getChildren(final Object parentElement) {
+      @Nullable @Override public Object[] getChildren(final Object parentElement) {
         return !(parentElement instanceof SpartanCategory) ? null : m.get(parentElement);
       }
     });
@@ -260,30 +253,29 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           @NotNull final SpartanTipper st = (SpartanTipper) o;
-          @Nullable final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
+          @Nullable final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
+              λ -> prettify(((Converts) λ).from()));
           @NotNull final IDocument d = new Document(before);
           try {
-            @Nullable final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
+            @Nullable final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
+                λ -> prettify(((Converts) λ).to()));
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();
               }
 
-              @NotNull
-              @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
+              @NotNull @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
                 @NotNull @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
 
-              @NotNull
-              @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
+              @NotNull @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
                   throws OperationCanceledException {
                 return new RefactoringStatus();
               }
 
-              @NotNull
-              @Override public RefactoringStatus checkFinalConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
+              @NotNull @Override public RefactoringStatus checkFinalConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
                   throws OperationCanceledException {
                 return new RefactoringStatus();
               }
@@ -339,8 +331,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param filter examples filter
    * @param converter Example --> String converter
    * @return unified examples string */
-  @Nullable
-  static String getPreviewString(@Nullable final Example[] preview, @NotNull final Function<Example, Boolean> filter, @NotNull final Function<Example, String> converter) {
+  @Nullable static String getPreviewString(@Nullable final Example[] preview, @NotNull final Function<Example, Boolean> filter,
+      @NotNull final Function<Example, String> converter) {
     if (preview == null)
       return null;
     @NotNull final StringBuilder $ = new StringBuilder();

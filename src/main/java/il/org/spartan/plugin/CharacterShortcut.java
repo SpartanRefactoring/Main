@@ -34,8 +34,7 @@ public class CharacterShortcut extends AbstractHandler {
    *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Nullable
-  @Override public Object execute(@Nullable final ExecutionEvent e) {
+  @Nullable @Override public Object execute(@Nullable final ExecutionEvent e) {
     if (e == null)
       return null;
     final Object $ = e.getTrigger();
@@ -52,8 +51,7 @@ public class CharacterShortcut extends AbstractHandler {
    * @param c the character to write in the file
    * @param s the file and text location selected
    * @return null [[SuppressWarningsSpartan]] */
-  @Nullable
-  private static Object insertCharacter(final char c, @Nullable final Selection s) {
+  @Nullable private static Object insertCharacter(final char c, @Nullable final Selection s) {
     if (s == null || s.isEmpty() || s.textSelection == null)
       return null;
     final List<ICompilationUnit> us = s.getCompilationUnits();

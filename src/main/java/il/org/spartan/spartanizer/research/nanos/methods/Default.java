@@ -24,8 +24,7 @@ public class Default extends JavadocMarkerNanoPattern {
         || anyTips(tippers, onlyStatement(¢));
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return "DefaultValue";
   }
 }

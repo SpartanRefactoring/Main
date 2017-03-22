@@ -22,10 +22,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 16-11-14 */
 @SuppressWarnings("static-method")
 public class Issue0831 {
-  @Nullable
-  final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-  @Nullable
-  final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
+  @Nullable final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+  @Nullable final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void fourStatementInScanner() {
     @NotNull String body = "";
@@ -61,8 +59,7 @@ public class Issue0831 {
       super(method);
     }
 
-    @Nullable
-    @Override protected List<Statement> availableStatements() {
+    @Nullable @Override protected List<Statement> availableStatements() {
       return statements;
     }
   }

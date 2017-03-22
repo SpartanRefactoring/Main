@@ -23,8 +23,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1472927802038098123L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final IfStatement ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
     @Nullable final InfixExpression ie = az.infixExpression(¢.getExpression());
@@ -40,8 +39,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
 

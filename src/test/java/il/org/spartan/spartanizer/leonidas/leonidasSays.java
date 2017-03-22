@@ -73,8 +73,7 @@ public enum leonidasSays {
     return statements == null || statements.size() != 1 ? $ : first(statements);
   }
 
-  @Nullable
-  static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
+  @Nullable static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
     if (n == null)
       return null;
     @NotNull final Wrapper<Boolean> foundFirst = new Wrapper<>();
@@ -99,23 +98,19 @@ public enum leonidasSays {
     return $$;
   }
 
-  @NotNull
-  public static statementsTipper statementsTipper(@NotNull final String p, @NotNull final String s, @NotNull final String d) {
+  @NotNull public static statementsTipper statementsTipper(@NotNull final String p, @NotNull final String s, @NotNull final String d) {
     return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
   }
 
-  @NotNull
-  public static expression that(final String ¢) {
+  @NotNull public static expression that(final String ¢) {
     return new expression(¢);
   }
 
-  @NotNull
-  public static tipper tipper(@NotNull final String p, @NotNull final String s, @NotNull final String d) {
+  @NotNull public static tipper tipper(@NotNull final String p, @NotNull final String s, @NotNull final String d) {
     return new tipper(p, s, d);
   }
 
-  @NotNull
-  public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
+  @NotNull public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
     return new tipper(¢);
   }
 
@@ -218,8 +213,7 @@ public enum leonidasSays {
       assert tipper.check(az.block(wizard.ast(¢)));
     }
 
-    @NotNull
-    public blockTurns turns(final String ¢) {
+    @NotNull public blockTurns turns(final String ¢) {
       return new blockTurns(tipper, ¢);
     }
   }
@@ -247,8 +241,7 @@ public enum leonidasSays {
       assert tipper.check(extractStatementIfOne(wizard.ast(¢)));
     }
 
-    @NotNull
-    public turns turns(final String ¢) {
+    @NotNull public turns turns(final String ¢) {
       return new turns(tipper, ¢);
     }
   }

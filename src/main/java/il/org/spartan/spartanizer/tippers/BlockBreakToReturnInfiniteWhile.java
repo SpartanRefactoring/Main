@@ -23,8 +23,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -6223876197494261787L;
 
-  @Nullable
-  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     @Nullable Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (iz.ifStatement(¢))
@@ -75,8 +74,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return "Convert the break inside 'while()' loop to 'return'";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final WhileStatement ¢) {
+  @NotNull @Override public String description(@NotNull final WhileStatement ¢) {
     return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
 

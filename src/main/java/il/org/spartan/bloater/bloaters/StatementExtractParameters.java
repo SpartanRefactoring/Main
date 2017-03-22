@@ -40,13 +40,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 1875447962989759838L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final Statement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final Statement s) {
+  @Nullable @Override public Tip tip(@NotNull final Statement s) {
     final ASTNode root = s.getRoot();
     if (!s.getAST().hasResolvedBindings() || !(root instanceof CompilationUnit)
         || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
@@ -87,7 +85,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       }
 
       void goNonBlockParent(@NotNull final ASTNode p, final VariableDeclarationStatement x,
-                            final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, @NotNull final ASTRewrite r, final TextEditGroup g) {
+          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, @NotNull final ASTRewrite r, final TextEditGroup g) {
         // TODO Ori Roth: Use subject to block.
         final Block b = p.getAST().newBlock();
         statements(b).add(x);
@@ -96,7 +94,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       }
 
       void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug,
-                         final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, @NotNull final ASTRewrite r, final TextEditGroup g) {
+          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, @NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
         lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
         lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, s, g);
@@ -106,8 +104,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   // TODO Ori Roth: extend (?)
-  @NotNull
-  @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
+  @NotNull @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
     @NotNull final Collection<ASTNode> excludedParents = new ArrayList<>();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
@@ -163,7 +160,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param u
    * @param g
    * @param ilr */
-  static void fixAddedImports(@NotNull final Statement s, @NotNull final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, @NotNull final ListRewrite ilr) {
+  static void fixAddedImports(@NotNull final Statement s, @NotNull final ImportRewrite r, final CompilationUnit u, final TextEditGroup g,
+      @NotNull final ListRewrite ilr) {
     @NotNull final Collection<String> idns = new ArrayList<>();
     if (r.getAddedImports() != null)
       idns.addAll(as.list(r.getAddedImports()));
@@ -203,8 +201,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * {@link ArrayType} rather than {@link WildcardType}!
    * @param t
    * @return */
-  @Nullable
-  static Type fixWildCardType(@Nullable final Type $) {
+  @Nullable static Type fixWildCardType(@Nullable final Type $) {
     if ($ == null)
       return null;
     if ($ instanceof WildcardType)

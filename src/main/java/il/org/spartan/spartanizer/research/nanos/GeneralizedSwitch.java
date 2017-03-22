@@ -45,8 +45,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return branchesWrapper(¢).stream().map(step::expression).collect(toList());
   }
 
-  @NotNull
-  @Override public Tip pattern(@NotNull final N ¢) {
+  @NotNull @Override public Tip pattern(@NotNull final N ¢) {
     return new Tip(description(¢), ¢, myClass()) {
       @Override @SuppressWarnings("unchecked") public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
@@ -70,8 +69,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return $;
   }
 
-  @NotNull
-  private static String extractSemicolonIfNeeded(@NotNull final String ¢) {
+  @NotNull private static String extractSemicolonIfNeeded(@NotNull final String ¢) {
     final String $ = ¢.replaceAll("\n", "");
     return $ == null || !$.endsWith(";") ? $ : $.substring(0, $.length() - 1);
   }
@@ -94,14 +92,12 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @NotNull
-  private String lastElseWrapper(final N ¢) {
+  @NotNull private String lastElseWrapper(final N ¢) {
     return (!iz.conditionalExpression(¢) ? extract.lastElse(az.ifStatement(¢)) : extract.lastElse(az.conditionalExpression(¢))) + "";
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @NotNull
-  private String thenWrapper(final N ¢) {
+  @NotNull private String thenWrapper(final N ¢) {
     return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
 

@@ -35,13 +35,11 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return false;
   }
 
-  @NotNull
-  @Override public String description(final MethodDeclaration ¢) {
+  @NotNull @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final MethodDeclaration d) {
+  @Nullable @Override public Tip tip(@NotNull final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());

@@ -425,8 +425,7 @@ public final class EnvironmentTests {
           /**/}
       }
 
-      @Nullable
-      @Override public Iterator<Type> iterator() {
+      @Nullable @Override public Iterator<Type> iterator() {
         return new Iterator<Type>() {
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
 

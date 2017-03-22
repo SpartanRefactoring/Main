@@ -62,7 +62,8 @@ public enum SuppressWarningsLaconicOnOff {
    * @param pm progress monitor for the operation
    * @param m marked code to be disabled
    * @param tipper deactivation {@link Type} */
-  public void deactivate(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t) throws IllegalArgumentException, CoreException {
+  public void deactivate(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, @NotNull final Type t)
+      throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
@@ -72,8 +73,7 @@ public enum SuppressWarningsLaconicOnOff {
     pm.done();
   }
 
-  @NotNull
-  private static String fixNL(final BodyDeclaration ¢) {
+  @NotNull private static String fixNL(final BodyDeclaration ¢) {
     return ¢ instanceof EnumDeclaration || ¢ instanceof MethodDeclaration || ¢ instanceof EnumConstantDeclaration ? "\n" : "";
   }
 
@@ -135,7 +135,8 @@ public enum SuppressWarningsLaconicOnOff {
     unEnable($, d.getJavadoc());
   }
 
-  private ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final CompilationUnit u, @NotNull final IMarker m, @NotNull final Type t) {
+  private ASTRewrite createRewrite(@NotNull final IProgressMonitor pm, @NotNull final CompilationUnit u, @NotNull final IMarker m,
+      @NotNull final Type t) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());

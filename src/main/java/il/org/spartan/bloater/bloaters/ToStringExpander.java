@@ -22,8 +22,7 @@ public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 2259745231803950939L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (¢.getOperator() != Operator.PLUS || ¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null
         || extract.allOperands(¢).size() != 2)
       return null;
@@ -39,8 +38,7 @@ public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     return $;
   }
 
-  @Nullable
-  @Override @SuppressWarnings("unused") public String description(final InfixExpression __) {
+  @Nullable @Override @SuppressWarnings("unused") public String description(final InfixExpression __) {
     return null;
   }
 }

@@ -17,8 +17,7 @@ public class ThisConstructor extends JavadocMarkerNanoPattern {
         && iz.constructorInvocation(onlyStatement(¢));
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return "This";
   }
 }

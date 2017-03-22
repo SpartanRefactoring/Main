@@ -25,8 +25,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final String IMAGE_ID = "widget";
   static final AtomicBoolean active = new AtomicBoolean(false);
 
-  @Nullable
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     if (!active.get()) {
       active.set(true);
       launchWidget(λ -> new Point(λ.x - R, λ.y - R));
@@ -49,7 +48,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
     closeButton.setLocation(R / 2, 2 * R - closeButton.getSize().y / 2);
-    closeButton.addListener(SWT.Selection,  __ -> {
+    closeButton.addListener(SWT.Selection, __ -> {
       shell.close();
       active.set(false);
     });
@@ -142,8 +141,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseMove, l);
   }
 
-  @NotNull
-  static int[] circle(final int r) {
+  @NotNull static int[] circle(final int r) {
     @NotNull final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
@@ -162,8 +160,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     c.setSize(s == null ? minimalButtonSize : new Point(Math.max(s.x, minimalButtonSize.x), Math.max(s.y, minimalButtonSize.y)));
   }
 
-  @NotNull
-  static Canvas createImage(final Shell s) {
+  @NotNull static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
     final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
     @NotNull final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);

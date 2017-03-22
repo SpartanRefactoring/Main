@@ -29,8 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
-  @Nullable
-  public static final AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
+  @Nullable public static final AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
   public static final AbstractTypeDeclaration reflection = types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
@@ -40,8 +39,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     }
   };
 
-  @NotNull
-  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
+  @NotNull public static Vocabulary reify(final AnonymousClassDeclaration cd) {
     @NotNull final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);

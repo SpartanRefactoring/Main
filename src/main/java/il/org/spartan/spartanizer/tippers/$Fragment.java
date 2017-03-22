@@ -53,8 +53,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return true;
   }
 
-  @Nullable
-  @Override public Tip tip(final VariableDeclarationFragment ¢) {
+  @Nullable @Override public Tip tip(final VariableDeclarationFragment ¢) {
     assert ¢ == object();
     return new Tip(description(), null, null) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -72,8 +71,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
    * containing node is eliminated as well.
    * @return */
-  @NotNull
-  protected final ASTRewrite eliminateFragment(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @NotNull protected final ASTRewrite eliminateFragment(@NotNull final ASTRewrite r, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = otherSiblings();
     if (live.isEmpty()) {
       r.remove(parent(), g);
@@ -90,8 +88,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return fragment;
   }
 
-  @Nullable
-  protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
+  @Nullable protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
   protected final Expression initializer() {
     return initializer;
@@ -101,8 +98,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return name;
   }
 
-  @Nullable
-  protected final Statement nextStatement() {
+  @Nullable protected final Statement nextStatement() {
     return nextStatement;
   }
 
@@ -110,8 +106,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return fragments(parent()).stream().filter(λ -> λ != fragment()).collect(toList());
   }
 
-  @Nullable
-  protected VariableDeclarationStatement parent() {
+  @Nullable protected VariableDeclarationStatement parent() {
     return parent;
   }
 
@@ -125,8 +120,7 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
     return false;
   }
 
-  @NotNull
-  protected final Collection<VariableDeclarationFragment> youngerSiblings() {
+  @NotNull protected final Collection<VariableDeclarationFragment> youngerSiblings() {
     @NotNull final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment f : fragments(parent()))
@@ -150,8 +144,6 @@ public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragmen
   private VariableDeclarationFragment fragment;
   private Expression initializer;
   private SimpleName name;
-  @Nullable
-  private Statement nextStatement;
-  @Nullable
-  private VariableDeclarationStatement parent;
+  @Nullable private Statement nextStatement;
+  @Nullable private VariableDeclarationStatement parent;
 }

@@ -21,8 +21,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
         && !rival.get().matches(¢);
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return "ConstantValue";
   }
 }

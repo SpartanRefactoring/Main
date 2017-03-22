@@ -10,19 +10,16 @@ public interface Nested<@¢ T> {
     return Stream.empty();
   }
 
-  @Nullable
-  default T self() {
+  @Nullable default T self() {
     return null;
   }
 
-  @NotNull
-  default Stream<T> streamSelf() {
+  @NotNull default Stream<T> streamSelf() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
 
   interface Root<@¢ T> extends Nested<T> {
-    @NotNull
-    @Override default Stream<T> ancestors() {
+    @NotNull @Override default Stream<T> ancestors() {
       return streamSelf();
     }
   }
@@ -30,8 +27,7 @@ public interface Nested<@¢ T> {
   interface Compound<@¢ T> extends Nested<T> {
     @NotNull Nested<T> parent();
 
-    @Override
-    default Stream<T> ancestors() {
+    @Override default Stream<T> ancestors() {
       return Stream.concat(parent().ancestors(), streamSelf());
     }
   }

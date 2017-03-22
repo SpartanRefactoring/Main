@@ -87,8 +87,7 @@ public class InflaterProvider extends OperationsProvider {
     return toolbox.firstTipper(¢);
   }
 
-  @NotNull
-  @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+  @NotNull @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(first(λ));
   }
 }

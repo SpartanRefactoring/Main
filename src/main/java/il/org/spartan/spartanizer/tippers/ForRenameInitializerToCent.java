@@ -34,8 +34,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3634676628162924936L;
 
-  @NotNull
-  @Override public String description(final VariableDeclarationExpression ¢) {
+  @NotNull @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 

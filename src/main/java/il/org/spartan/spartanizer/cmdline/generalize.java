@@ -30,8 +30,7 @@ public enum generalize {
 
   /** @param type of placeHolder, can be X,N,M,B,A,L
    * @return */
-  @NotNull
-  static String renderIdentifier(final String type) {
+  @NotNull static String renderIdentifier(final String type) {
     return "$" + type + serial.inner++;
   }
 

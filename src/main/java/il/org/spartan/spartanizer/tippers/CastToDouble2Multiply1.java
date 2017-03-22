@@ -30,8 +30,7 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @NotNull
-  @Override public String description(final CastExpression ¢) {
+  @NotNull @Override public String description(final CastExpression ¢) {
     return "Use 1.*" + expression(¢) + " instead of (double)" + expression(¢);
   }
 

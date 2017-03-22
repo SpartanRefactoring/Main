@@ -35,13 +35,11 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;
 
-  @NotNull
-  @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @NotNull @Override public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Nullable
-  @Override @SuppressWarnings("unused") public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
+  @Nullable @Override @SuppressWarnings("unused") public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;

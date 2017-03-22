@@ -61,8 +61,7 @@ public interface ConfigurableReport {
       return outputList;
     }
 
-    @NotNull
-    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+    @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
@@ -89,8 +88,7 @@ public interface ConfigurableReport {
     private ASTNode output;
     private boolean robustMode;
 
-    @NotNull
-    public Action getAction() {
+    @NotNull public Action getAction() {
       return new Action();
     }
 
@@ -222,7 +220,7 @@ public interface ConfigurableReport {
       }
 
       @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, @Nullable final String id,
-                                                                      @Nullable final BiFunction<Integer, Integer> bf) {
+          @Nullable final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;

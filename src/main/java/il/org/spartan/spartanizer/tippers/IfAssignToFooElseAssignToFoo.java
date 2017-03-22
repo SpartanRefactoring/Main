@@ -25,8 +25,7 @@ public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfSta
     implements TipperCategory.Ternarization {
   private static final long serialVersionUID = -2214694723277558846L;
 
-  @Nullable
-  @Override public String description(final IfStatement ¢) {
+  @Nullable @Override public String description(final IfStatement ¢) {
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
 

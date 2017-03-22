@@ -13,8 +13,7 @@ import org.jetbrains.annotations.NotNull;
 abstract class InfixExpressionSorting extends ReplaceCurrentNode<InfixExpression> {
   private static final long serialVersionUID = 2767714386379462412L;
 
-  @NotNull
-  @Override public final String description(@NotNull final InfixExpression ¢) {
+  @NotNull @Override public final String description(@NotNull final InfixExpression ¢) {
     return "Reorder operands of " + ¢.getOperator();
   }
 

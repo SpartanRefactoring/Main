@@ -31,8 +31,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
     return constructors($).size() == 1 && initializersInstance($).isEmpty();
   }
 
-  @NotNull
-  @Override public String description(final MethodDeclaration ¢) {
+  @NotNull @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 

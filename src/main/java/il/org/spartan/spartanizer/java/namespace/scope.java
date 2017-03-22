@@ -29,8 +29,7 @@ public interface scope {
     return null;
   }
 
-  @NotNull
-  static List<ASTNode> of(final SingleVariableDeclaration x) {
+  @NotNull static List<ASTNode> of(final SingleVariableDeclaration x) {
     @NotNull final List<ASTNode> $ = new ArrayList<>();
     $.add(x);
     return $;
@@ -40,8 +39,7 @@ public interface scope {
     return scope.of(¢.getName());
   }
 
-  @Nullable
-  static List<? extends ASTNode> of(final SimpleName ¢) {
+  @Nullable static List<? extends ASTNode> of(final SimpleName ¢) {
     @Nullable final List<? extends ASTNode> $ = definition.scope(¢);
     assert $ != null : fault.dump() + //
         "\n\t n=" + ¢ + //
@@ -50,21 +48,18 @@ public interface scope {
     return $;
   }
 
-  @Nullable
-  static Block getBlock(final ASTNode ¢) {
+  @Nullable static Block getBlock(final ASTNode ¢) {
     return az.block(delimiter(¢));
   }
 
   /** Bug in ternary spartanizing, do not remove the suppress
    * [[SuppressWarningsSpartan]] */
-  @Nullable
-  static Namespace getScopeNamespace(final ASTNode ¢) {
+  @Nullable static Namespace getScopeNamespace(final ASTNode ¢) {
     @Nullable final ASTNode $ = delimiter(¢);
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
-  @NotNull
-  static String newName(final ASTNode ¢, final Type t) {
+  @NotNull static String newName(final ASTNode ¢, final Type t) {
     @Nullable final ASTNode b = delimiter(¢);
     @Nullable final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
     @NotNull final String $ = n.generateName(t);
@@ -73,8 +68,7 @@ public interface scope {
     return $;
   }
 
-  @NotNull
-  static String newName(final ASTNode ¢, final Type t, final String s) {
+  @NotNull static String newName(final ASTNode ¢, final Type t, final String s) {
     @Nullable final ASTNode b = delimiter(¢);
     @NotNull final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
     @NotNull final String $ = n.generateName(s);

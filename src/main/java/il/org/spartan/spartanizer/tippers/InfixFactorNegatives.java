@@ -30,21 +30,18 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -1245089074484114122L;
 
-  @NotNull
-  private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
 
-  @NotNull
-  private static List<Expression> gather(final InfixExpression ¢) {
+  @NotNull private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, new ArrayList<>());
   }
 
-  @NotNull
-  private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(x.getOperator(), TIMES, DIVIDE)) {
@@ -58,14 +55,12 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     return $;
   }
 
-  @NotNull
-  private static List<Expression> gather(@NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
+  @NotNull private static List<Expression> gather(@NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final InfixExpression ¢) {
+  @NotNull @Override public String description(@NotNull final InfixExpression ¢) {
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 

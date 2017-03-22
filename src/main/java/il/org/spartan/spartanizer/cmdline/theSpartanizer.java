@@ -89,8 +89,7 @@ public interface theSpartanizer {
     }
   }
 
-  @Nullable
-  static <N extends ASTNode> Tipper<N> safeFirstTipper(@NotNull final N $) {
+  @Nullable static <N extends ASTNode> Tipper<N> safeFirstTipper(@NotNull final N $) {
     try {
       return toolbox.firstTipper($);
     } catch (@NotNull final Exception ¢) {

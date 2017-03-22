@@ -24,8 +24,7 @@ import il.org.spartan.spartanizer.meta.*;
 public class HasEnvironmentTest extends MetaFixture {
   private static final Collection<String> signature = new HashSet<>();
 
-  @NotNull
-  private static Collection<Object[]> collect(final MetaFixture... fs) {
+  @NotNull private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
     @NotNull final Collection<Object[]> $ = new ArrayList<>();
     as.list(fs).forEach(t -> descendants.whoseClassIs(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
@@ -36,8 +35,7 @@ public class HasEnvironmentTest extends MetaFixture {
     return $;
   }
 
-  @NotNull
-  @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
+  @NotNull @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
     return collect(new NamespaceTest(), new definitionTest());
   }
 

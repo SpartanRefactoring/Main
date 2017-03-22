@@ -33,8 +33,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   private static final long serialVersionUID = -2252675511987504571L;
 
-  @NotNull
-  @Override public String[] akas() {
+  @NotNull @Override public String[] akas() {
     return new String[] { nanoName() };
   }
 
@@ -54,33 +53,27 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   public abstract boolean canTip(N n);
 
-  @NotNull
-  public String nanoName() {
+  @NotNull public String nanoName() {
     return getClass().getSimpleName();
   }
 
-  @Nullable
-  @Override public String description() {
+  @Nullable @Override public String description() {
     return super.description();
   }
 
-  @Nullable
-  public abstract String description(N n);
+  @Nullable public abstract String description(N n);
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] {};
   }
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
-  @NotNull
-  public final Class<N> myAbstractOperandsClass() {
+  @NotNull public final Class<N> myAbstractOperandsClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
-  @Nullable
-  public Class<N> myActualOperandsClass() {
+  @Nullable public Class<N> myActualOperandsClass() {
     @NotNull final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
@@ -88,31 +81,26 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable
-  public Tip tip(final N ¢) {
+  @Nullable public Tip tip(final N ¢) {
     return tip(¢, null);
   }
 
-  @Nullable
-  @Override public final Tip fire() {
+  @Nullable @Override public final Tip fire() {
     return tip(object());
   }
 
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable
-  public Tip tip(final N n, @Nullable final ExclusionManager m) {
+  @Nullable public Tip tip(final N n, @Nullable final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") private Class<N> castClass(@NotNull final Class<?> c2) {
+  @NotNull @SuppressWarnings("unchecked") private Class<N> castClass(@NotNull final Class<?> c2) {
     return (Class<N>) c2;
   }
 
-  @NotNull
-  private Class<N> initializeMyOperandsClass() {
+  @NotNull private Class<N> initializeMyOperandsClass() {
     @Nullable Class<N> $ = null;
     for (@NotNull final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
@@ -124,13 +112,11 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return ¢.getDeclaringClass() == getClass();
   }
 
-  @NotNull
-  private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
+  @NotNull private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") protected final Class<? extends Tipper<N>> myClass() {
+  @NotNull @SuppressWarnings("unchecked") protected final Class<? extends Tipper<N>> myClass() {
     return (Class<? extends Tipper<N>>) getClass();
   }
 

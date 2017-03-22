@@ -26,13 +26,11 @@ public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreatio
     return tippers.canTip(az.block(parent(parent(parent(x)))));
   }
 
-  @Nullable
-  @Override public Tip pattern(final ClassInstanceCreation x) {
+  @Nullable @Override public Tip pattern(final ClassInstanceCreation x) {
     return tippers.firstTip(az.block(parent(parent(parent(x)))));
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Iterative;
   }
 

@@ -32,15 +32,13 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("s=s.f();s=s.f();").to("s=s.f().f()"), //
     };
   }
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @NotNull @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into subsequent assignment";
   }
 
@@ -59,9 +57,8 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
         : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;
   }
 
-  @NotNull
-  private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,
-                               final Expression from2) {
+  @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
+      final Expression from1, final Expression from2) {
     $.remove(a1, g);
     final Expression newFrom = copy.of(from2);
     new Inliner(to, $, g).byValue(from1).inlineInto(newFrom);

@@ -16,8 +16,7 @@ import java.util.function.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
 public interface lazy<@¢ T> extends Supplier<T> {
-  @NotNull
-  static <T> lazy<T> get(@NotNull @¢ final Supplier<T> ¢) {
+  @NotNull static <T> lazy<T> get(@NotNull @¢ final Supplier<T> ¢) {
     return new lazy<T>() {
       /** Cached value; invalid cache if {@code null} */
       T $;

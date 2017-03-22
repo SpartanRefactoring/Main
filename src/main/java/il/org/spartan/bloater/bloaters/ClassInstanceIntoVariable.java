@@ -23,13 +23,11 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 1460785647125371675L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
+  @Nullable @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
     return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));

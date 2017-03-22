@@ -39,8 +39,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     return wizard.same(elze, left) || wizard.same(elze, right);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate ternary expression that evaluates to the same value";
   }
 }

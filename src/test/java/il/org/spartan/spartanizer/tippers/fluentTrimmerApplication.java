@@ -23,15 +23,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class fluentTrimmerApplication extends Trimmer.With {
-  @NotNull
-  public final String codeFragment;
+  @NotNull public final String codeFragment;
   public final GuessedContext guessedContext;
-  @NotNull
-  public final String wrappedFragment;
-  @NotNull
-  public final CompilationUnit compilationUnit;
-  @NotNull
-  public final Document document;
+  @NotNull public final String wrappedFragment;
+  @NotNull public final CompilationUnit compilationUnit;
+  @NotNull public final Document document;
   public final ASTRewrite createRewrite;
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;

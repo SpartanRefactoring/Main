@@ -24,8 +24,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     implements TipperCategory.NOP.onBooleans {
   private static final long serialVersionUID = 829099308877429388L;
 
-  @Nullable
-  private static BooleanLiteral literal(final InfixExpression ¢) {
+  @Nullable private static BooleanLiteral literal(final InfixExpression ¢) {
     return az.booleanLiteral(core(literalOnLeft(¢) ? left(¢) : right(¢)));
   }
 
@@ -41,13 +40,11 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return l.booleanValue() != (x.getOperator() == EQUALS);
   }
 
-  @NotNull
-  private static Expression nonLiteral(final InfixExpression ¢) {
+  @NotNull private static Expression nonLiteral(final InfixExpression ¢) {
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Omit redundant comparison with '" + literal(¢) + "'";
   }
 

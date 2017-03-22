@@ -34,8 +34,7 @@ public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assign
     return subject.operand(left(¢)).to(isIncrement(¢) ? INCREMENT : DECREMENT);
   }
 
-  @NotNull
-  @Override public String description(@NotNull final Assignment ¢) {
+  @NotNull @Override public String description(@NotNull final Assignment ¢) {
     return "Replace " + ¢ + " to " + right(¢) + (isIncrement(¢) ? "++" : "--");
   }
 

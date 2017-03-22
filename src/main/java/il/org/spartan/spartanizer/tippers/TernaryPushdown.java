@@ -30,8 +30,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -8630038787651083003L;
 
-  @Nullable
-  static Expression pushdown(@Nullable final ConditionalExpression x) {
+  @Nullable static Expression pushdown(@Nullable final ConditionalExpression x) {
     if (x == null)
       return null;
     @Nullable final Expression $ = core(then(x)), elze = core(elze(x));
@@ -43,8 +42,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
         : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(expression(x))).to(operator(a1))).into(x.getParent());
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, @NotNull final T $) {
+  @NotNull @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, @NotNull final T $) {
     return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) parenthesize($);
   }
 
@@ -132,7 +130,8 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression x, @NotNull final SuperMethodInvocation e1, @NotNull final SuperMethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression x, @NotNull final SuperMethodInvocation e1,
+      @NotNull final SuperMethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
     @NotNull final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
@@ -151,8 +150,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return "Pushdown ?: into expression";
   }
 
-  @Nullable
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @Nullable @Override public Expression replacement(final ConditionalExpression ¢) {
     return pushdown(¢);
   }
 }

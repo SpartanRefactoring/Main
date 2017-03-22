@@ -28,18 +28,15 @@ public class While {
       return anyTips(tippers, ¢);
     }
 
-    @Nullable
-    @Override public Tip pattern(final WhileStatement ¢) {
+    @Nullable @Override public Tip pattern(final WhileStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
-    @NotNull
-    @Override public String description() {
+    @NotNull @Override public String description() {
       return "Count elements in collection that satisfy some predicate";
     }
 
-    @NotNull
-    @Override public String technicalName() {
+    @NotNull @Override public String technicalName() {
       return "CountEInCSatisfyingX";
     }
 
@@ -51,8 +48,7 @@ public class While {
       return firstReplacement(tippers);
     }
 
-    @NotNull
-    @Override public String nanoName() {
+    @NotNull @Override public String nanoName() {
       return Aggregate.class.getSimpleName();
     }
   }

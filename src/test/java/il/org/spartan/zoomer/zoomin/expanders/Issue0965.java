@@ -23,8 +23,7 @@ public class Issue0965 {
   static class TestClass extends MetaFixture {
     final List<Integer> lst = new ArrayList<>();
 
-    @NotNull
-    public String check1() {
+    @NotNull public String check1() {
       return lst + "";
     }
 

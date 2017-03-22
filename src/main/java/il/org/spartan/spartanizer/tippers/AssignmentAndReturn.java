@@ -28,8 +28,7 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -1263526923784459386L;
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @NotNull @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 

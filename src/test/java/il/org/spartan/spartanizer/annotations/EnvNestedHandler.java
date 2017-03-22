@@ -55,8 +55,7 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
     runTest();
   }
 
-  @Nullable
-  @Override protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
+  @Nullable @Override protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
 
