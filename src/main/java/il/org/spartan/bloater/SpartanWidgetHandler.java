@@ -46,7 +46,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
     closeButton.setLocation(R / 2, 2 * R - closeButton.getSize().y / 2);
-    closeButton.addListener(SWT.Selection, (@SuppressWarnings("unused") final Event __) -> {
+    closeButton.addListener(SWT.Selection,  __ -> {
       shell.close();
       active.set(false);
     });
