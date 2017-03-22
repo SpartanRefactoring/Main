@@ -11,6 +11,7 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,8 +23,6 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Old class for some anlyzes, sort of deprecated since we use
  * {@link DeprecatedFolderASTVisitor}

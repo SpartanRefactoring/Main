@@ -13,8 +13,7 @@ import javax.xml.transform.stream.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -210,7 +209,7 @@ public class XMLSpartan {
       @Nullable final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
-    final String n = t.nanoName();
+    @NotNull final String n = t.nanoName();
     if (seen.contains(n))
       return;
     final Element $ = d.createElement(TIPPER);

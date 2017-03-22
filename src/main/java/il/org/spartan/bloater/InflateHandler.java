@@ -19,14 +19,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an

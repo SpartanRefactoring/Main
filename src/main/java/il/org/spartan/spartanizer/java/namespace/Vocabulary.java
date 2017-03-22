@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

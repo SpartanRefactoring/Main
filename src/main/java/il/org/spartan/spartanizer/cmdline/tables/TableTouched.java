@@ -3,12 +3,13 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Old table presenting touched methods (%)
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix

@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -9,7 +10,6 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

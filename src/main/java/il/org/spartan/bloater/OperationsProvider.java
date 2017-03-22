@@ -4,10 +4,10 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A provider of matching {@link Tipper} for an {@link ASTNode}.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

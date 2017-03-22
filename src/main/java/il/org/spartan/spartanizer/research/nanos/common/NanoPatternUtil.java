@@ -7,12 +7,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface NanoPatternUtil {
   static boolean excludeMethod(final MethodDeclaration ¢) {

@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.java;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import org.jetbrains.annotations.NotNull;
 
 /** An additive term, which might be either negative or positive
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** Notational convenience
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>

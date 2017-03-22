@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -15,8 +16,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Between Nano. Checking if some expression lays between two values
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

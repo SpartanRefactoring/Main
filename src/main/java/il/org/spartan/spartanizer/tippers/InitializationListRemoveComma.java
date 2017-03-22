@@ -3,10 +3,10 @@ package il.org.spartan.spartanizer.tippers;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 // This code is not working: we never managed to get this to work. Stav was the
 // last one working on it

@@ -11,9 +11,9 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Utility class for dialogs management.
  * @author Ori Roth

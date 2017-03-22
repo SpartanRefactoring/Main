@@ -1,9 +1,8 @@
 package il.org.spartan.plugin;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.function.*;
+
+import org.jetbrains.annotations.*;
 
 /** Listen to events, with an optional additional object. The events are defined
  * in received enum class.

@@ -5,11 +5,10 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** List that can contain nano patterns
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

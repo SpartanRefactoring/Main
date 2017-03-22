@@ -1,10 +1,9 @@
 package il.org.spartan.spartanizer.java.namespace;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Information about a variable in the environment - its {@link ASTNode}, its
  * parent's, its {@link type}, and which other variables does it hide. This

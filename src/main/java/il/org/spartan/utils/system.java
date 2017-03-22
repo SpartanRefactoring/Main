@@ -4,10 +4,10 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

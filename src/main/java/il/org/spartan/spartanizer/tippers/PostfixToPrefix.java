@@ -4,12 +4,12 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** converts, whenever possible, postfix increment/decrement to prefix
  * increment/decrement

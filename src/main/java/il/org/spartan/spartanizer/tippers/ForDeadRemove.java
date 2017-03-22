@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Simplify for statements as much as possible (or remove them or parts of
  * them) if and only if toList it doesn'tipper have any side-effect.

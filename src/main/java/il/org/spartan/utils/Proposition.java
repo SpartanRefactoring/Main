@@ -1,13 +1,16 @@
 package il.org.spartan.utils;
 
+import static il.org.spartan.utils.Proposition.*;
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import org.jetbrains.annotations.NotNull;
 
 /*** <p>
  * TODO second lecture
@@ -71,7 +74,7 @@ public interface Proposition extends BooleanSupplier {
 
   @NotNull Proposition or(BooleanSupplier s, BooleanSupplier... ss);
 
-  default <R> R reduce(@NotNull final PropositionReducer<R> ¢) {
+  @NotNull default <R> R reduce(@NotNull final PropositionReducer<R> ¢) {
     return ¢.reduce(this);
   }
 

@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** {@link Iterable} over the ancestors of a given node.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

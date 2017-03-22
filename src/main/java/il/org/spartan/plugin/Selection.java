@@ -15,12 +15,11 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection

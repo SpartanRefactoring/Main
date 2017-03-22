@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,8 +17,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Converts {@code x.size()==0} to {@code x.isEmpty()}, {@code x.size()!=0 }
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to

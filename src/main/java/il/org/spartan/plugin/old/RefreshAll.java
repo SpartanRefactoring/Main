@@ -3,11 +3,11 @@ package il.org.spartan.plugin.old;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

@@ -6,10 +6,9 @@ import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.handlers.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
@@ -37,7 +36,7 @@ abstract class BaseHandler extends AbstractHandler {
     }
   }
 
-  private String getDialogTitle() {
+  @Nullable private String getDialogTitle() {
     return inner.getName();
   }
 

@@ -3,11 +3,10 @@ package il.org.spartan.spartanizer.engine.nominal;
 import static il.org.spartan.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Trivia includes in it spaces, tabs, newlines, comments, line comments, and
  * in general anything that is not a token of Java. Here we have a bunch of

@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and
  * other conventions

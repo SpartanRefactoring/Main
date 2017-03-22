@@ -5,12 +5,12 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.util.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Collects statistics for a method in which a nano was found.
  * @author Ori Marcovitch */

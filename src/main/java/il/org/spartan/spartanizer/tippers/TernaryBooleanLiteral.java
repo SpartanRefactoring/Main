@@ -3,13 +3,13 @@ package il.org.spartan.spartanizer.tippers;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** {@code
  * a ? b : c
@@ -35,8 +35,8 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   private static final long serialVersionUID = 1656113602362467840L;
 
   /** Consider an expression {@code
-                                    * a ? b : c
-                                    * } in a sense it is the same as {@code
+                                     * a ? b : c
+                                     * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>

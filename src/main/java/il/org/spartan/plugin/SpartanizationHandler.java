@@ -12,12 +12,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link GUIBatchLaconizer} as its applicator.

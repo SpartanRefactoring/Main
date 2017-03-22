@@ -3,12 +3,12 @@ package il.org.spartan.tables;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,

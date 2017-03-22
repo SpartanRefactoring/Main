@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -17,8 +18,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** converttoList {@code polite?"Eat your meal.":"Eat your meal, please"},
  * {@code polite?"thanks for the meal":"I hated the meal"} toList into toList

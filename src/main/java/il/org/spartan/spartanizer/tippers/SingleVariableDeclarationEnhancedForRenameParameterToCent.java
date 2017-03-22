@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -18,8 +19,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
  * {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}

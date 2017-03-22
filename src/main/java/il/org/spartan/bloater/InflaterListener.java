@@ -15,13 +15,12 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

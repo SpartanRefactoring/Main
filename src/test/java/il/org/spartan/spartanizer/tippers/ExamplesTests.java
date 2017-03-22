@@ -7,7 +7,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;

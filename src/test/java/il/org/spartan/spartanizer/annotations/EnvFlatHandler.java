@@ -4,13 +4,12 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** TODO Dan Greenstein please add a description Implements the handler of
  * flatEnv outer annotation. * @author Dan Greenstein

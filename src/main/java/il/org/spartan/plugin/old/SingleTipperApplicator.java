@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -26,8 +27,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public final class SingleTipperApplicator {
   private static ASTRewrite createRewrite(//
@@ -46,7 +45,7 @@ public final class SingleTipperApplicator {
 
   private static ASTRewrite createRewrite(//
       @NotNull final IProgressMonitor pm, //
-      final IMarker m, //
+      @NotNull final IMarker m, //
       final Type t, //
       final Tipper<?> w, //
       @Nullable final IFile f) {
@@ -87,7 +86,7 @@ public final class SingleTipperApplicator {
     pm.done();
   }
 
-  @SuppressWarnings("boxing") public void goProject(@NotNull final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
+  @SuppressWarnings("boxing") public void goProject(@NotNull final IProgressMonitor pm, @NotNull final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
       return;

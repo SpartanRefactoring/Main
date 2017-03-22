@@ -9,9 +9,9 @@ import static java.lang.System.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.annotation.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("all")
 public final class EnvironmentTests {

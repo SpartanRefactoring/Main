@@ -6,10 +6,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Some useful utility functions used for binding manipulations.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>

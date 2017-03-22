@@ -5,9 +5,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A class for analyzing a method.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

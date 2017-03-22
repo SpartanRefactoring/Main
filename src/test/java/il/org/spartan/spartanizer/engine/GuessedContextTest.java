@@ -6,7 +6,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;

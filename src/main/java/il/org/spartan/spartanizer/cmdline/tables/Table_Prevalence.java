@@ -6,13 +6,14 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Generates a table that shows for every nano it's prevalence in corpus
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

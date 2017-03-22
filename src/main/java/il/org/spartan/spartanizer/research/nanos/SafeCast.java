@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A cast which is inside an IfStatement body which checks the casted
  * expression is actually of the casted to type

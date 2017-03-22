@@ -5,8 +5,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A class to search in the descendants of a given node. Based on
  * {@link yieldAncestors}

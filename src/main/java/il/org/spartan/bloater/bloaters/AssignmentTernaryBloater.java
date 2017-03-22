@@ -6,13 +6,12 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** converts {@code (a?b:c;)} to {@code (if(a) b; else c;)} relevant for
  * assignment <em>ternary</em> also relevant for assignment (<em>ternary</em>)

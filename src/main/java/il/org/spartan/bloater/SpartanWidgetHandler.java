@@ -10,10 +10,9 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

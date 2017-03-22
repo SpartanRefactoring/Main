@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jface.text.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,8 +26,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

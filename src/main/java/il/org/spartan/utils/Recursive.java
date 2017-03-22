@@ -2,10 +2,10 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.java.namespace.*;
 import junit.framework.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Organizes objects of the type parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the

@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.java;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Maintain a canonical order of modifiers.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

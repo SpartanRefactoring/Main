@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.meta.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Unit tests for {@link
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

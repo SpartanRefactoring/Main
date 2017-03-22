@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -21,8 +22,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An expander to extract complex arguments from {@link Statement}: {@code
  * f(1 + a[b ? 1 : 2]);
@@ -71,7 +70,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
         @Nullable final Type tt = fixWildCardType(t);
         final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
-        final String nn = scope.newName(s, tt);
+        @NotNull final String nn = scope.newName(s, tt);
         f.setName(make.from(s).identifier(nn));
         f.setInitializer(copy.of($));
         final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);

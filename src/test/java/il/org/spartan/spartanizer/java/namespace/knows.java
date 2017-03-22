@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.annotation.*;
+
+import org.jetbrains.annotations.*;
 
 /** To say that a certain name is recognized in a certain definition.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

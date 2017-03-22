@@ -3,14 +3,13 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Removes unnecessary uses of Boolean.valueOf, e.g.,
  * {@code Boolean.valueOf(true) } into {@code Boolean.TRUE}

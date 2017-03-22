@@ -8,12 +8,11 @@ package il.org.spartan.spartanizer.tipping;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 5265347217554350758L;

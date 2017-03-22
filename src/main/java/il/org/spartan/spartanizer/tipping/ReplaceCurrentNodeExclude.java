@@ -3,12 +3,11 @@ package il.org.spartan.spartanizer.tipping;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
