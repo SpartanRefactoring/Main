@@ -4,13 +4,13 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Type;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Collects boolean features of methods
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

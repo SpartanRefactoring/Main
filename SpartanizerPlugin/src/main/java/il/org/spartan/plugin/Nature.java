@@ -4,9 +4,9 @@ import static il.org.spartan.Utils.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.range.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin

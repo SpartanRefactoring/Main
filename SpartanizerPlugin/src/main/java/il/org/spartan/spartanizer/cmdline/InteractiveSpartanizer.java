@@ -3,11 +3,11 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -39,7 +39,7 @@ public class InteractiveSpartanizer {
 
   public Toolbox toolbox = Toolbox.defaultInstance();
 
-  @NotNull public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
+  @NotNull public InteractiveSpartanizer disable(@NotNull final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
     return this;
   }

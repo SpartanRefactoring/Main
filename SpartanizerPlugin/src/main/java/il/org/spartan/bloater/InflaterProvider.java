@@ -6,12 +6,12 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** holds the new toolbox for the expanders and returns them
  * @author Raviv Rachmiel

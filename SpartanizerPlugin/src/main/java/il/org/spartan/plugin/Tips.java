@@ -3,9 +3,10 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import org.jetbrains.annotations.NotNull;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /

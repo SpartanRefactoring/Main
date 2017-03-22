@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Classification of tippers
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

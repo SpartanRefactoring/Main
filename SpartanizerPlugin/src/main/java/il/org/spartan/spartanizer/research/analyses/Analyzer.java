@@ -4,7 +4,7 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** Analyzer base class
  * @author Ori Marcovitch

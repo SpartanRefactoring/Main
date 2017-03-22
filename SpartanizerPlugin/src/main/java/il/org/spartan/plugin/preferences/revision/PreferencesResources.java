@@ -3,12 +3,12 @@ package il.org.spartan.plugin.preferences.revision;
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Daniel Mittelman please add a description
  * @author Daniel Mittelman

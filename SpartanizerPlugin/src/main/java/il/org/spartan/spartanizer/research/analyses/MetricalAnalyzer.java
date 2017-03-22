@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.research.analyses;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /** Class to count statement inside a method before and after refactoring +
  * patterning

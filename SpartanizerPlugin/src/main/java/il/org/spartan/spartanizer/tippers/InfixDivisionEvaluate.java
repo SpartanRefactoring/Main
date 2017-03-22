@@ -8,12 +8,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Evaluate the subtraction of numbers according to the following rules {@code
  * int / int --> int
@@ -32,7 +32,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
     double $ = 0;
     try {
       $ = az.throwing.double¢(first(xs));
-      for (final Expression ¢ : rest(xs)) {
+      for (@NotNull final Expression ¢ : rest(xs)) {
         if (az.throwing.double¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.double¢(¢);

@@ -2,9 +2,10 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.external.External.Introspector.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru'

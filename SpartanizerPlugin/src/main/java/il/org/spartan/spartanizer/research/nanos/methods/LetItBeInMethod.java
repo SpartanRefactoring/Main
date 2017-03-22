@@ -5,12 +5,12 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.tippers.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Let x in S <br>
  * {@link Assignment} followed by {@link ExpressionStatement} or

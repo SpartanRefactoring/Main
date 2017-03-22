@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 

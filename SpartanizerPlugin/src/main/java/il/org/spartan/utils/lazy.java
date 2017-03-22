@@ -1,8 +1,8 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.function.*;
+
+import org.jetbrains.annotations.*;
 
 /** lazy initialization as in {@code
     static final lazy<Collection<Thing>> things = lazy.get(() -> as.list(//

@@ -1,7 +1,8 @@
 package il.org.spartan.bloater;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.plugin.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Applicator for the Athens project.
  * @author Ori Roth

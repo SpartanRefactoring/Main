@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.annotation.*;
+
+import org.jetbrains.annotations.*;
 
 @Target({ ElementType.FIELD, //
     ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, //

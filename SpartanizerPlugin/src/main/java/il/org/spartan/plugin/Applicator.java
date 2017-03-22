@@ -2,9 +2,10 @@ package il.org.spartan.plugin;
 
 import java.util.function.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Configurable applicator.
  * @author Ori Roth

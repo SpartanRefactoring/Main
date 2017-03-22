@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Class to count statement inside a method before and after refactoring +
  * patterning

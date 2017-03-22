@@ -3,8 +3,7 @@ package il.org.spartan.plugin;
 import java.util.*;
 
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** An abstract selection, containing files and possible text selection.
  * @author Ori Roth

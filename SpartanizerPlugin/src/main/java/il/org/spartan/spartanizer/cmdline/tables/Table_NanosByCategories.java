@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -11,7 +12,6 @@ import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A class which generates a table of all Nano Patterns gathered by categories.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

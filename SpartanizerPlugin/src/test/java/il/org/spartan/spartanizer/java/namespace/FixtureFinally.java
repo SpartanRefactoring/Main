@@ -2,8 +2,9 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.meta.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Fixture for testing plain for testing resources in try statement
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

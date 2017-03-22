@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.plugin.*;
@@ -62,10 +62,10 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                 * .repeatedly //  See {@link trim.repeatedely} 
-                                 * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                 * .of("a+(b-c)") //  See {@link #of(String)} 
-                                 * .gives("a+b-c")</code> */
+                                  * .repeatedly //  See {@link trim.repeatedely} 
+                                  * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                  * .of("a+(b-c)") //  See {@link #of(String)} 
+                                  * .gives("a+b-c")</code> */
   interface repeatedly {
     @NotNull static fluentTrimmerApplication of(@NotNull final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {

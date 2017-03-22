@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.engine.type.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A utility to determine the exact type of a Java character or numerical
  * literal.

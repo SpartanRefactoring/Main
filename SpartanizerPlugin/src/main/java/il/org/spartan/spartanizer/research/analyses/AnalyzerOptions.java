@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Created out of {@link ConfigurableObjectTemplate}
  * @author Ori Marcovitch

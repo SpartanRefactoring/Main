@@ -5,10 +5,9 @@ import static il.org.spartan.idiomatic.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

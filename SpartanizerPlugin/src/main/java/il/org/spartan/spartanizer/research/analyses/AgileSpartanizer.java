@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.research.analyses;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A Spartanizer without heavy or buggy tippers
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
