@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Counting utility
  * @author Ori Marcovitch

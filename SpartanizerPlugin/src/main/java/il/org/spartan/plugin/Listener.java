@@ -1,9 +1,9 @@
 package il.org.spartan.plugin;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.concurrent.atomic.*;
+
+import org.jetbrains.annotations.*;
 
 /** An abstract listener taking events that may have any number of parameters of
  * any kind; default implementation is empty, override to specialize, or use
@@ -56,10 +56,10 @@ public interface Listener {
     private static final long serialVersionUID = 1L;
 
     /** for fluent API use, i.e., <code>
-                                       *
-                                       * <code>
-                                               <b>public final</b> {@link Listener}  listeners = .
-                                   * </code>
+                                        *
+                                        * <code>
+                                                <b>public final</b> {@link Listener}  listeners = .
+                                    * </code>
      * @return an empty new instance */
     @NotNull public static Listener.S empty() {
       return new Listener.S();

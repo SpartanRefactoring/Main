@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.annotation;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @TODO real documentation here.
  * @author Alex Kopakzon

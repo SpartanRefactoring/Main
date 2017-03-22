@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** Eclipse common utilities.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

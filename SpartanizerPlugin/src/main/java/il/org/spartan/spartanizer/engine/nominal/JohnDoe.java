@@ -3,8 +3,7 @@ package il.org.spartan.spartanizer.engine.nominal;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** Fluent API.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

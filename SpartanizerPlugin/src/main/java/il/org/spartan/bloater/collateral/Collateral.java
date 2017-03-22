@@ -1,8 +1,8 @@
 package il.org.spartan.bloater.collateral;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.stream.*;
+
+import org.jetbrains.annotations.*;
 
 /** Implementation of the collateral function: ₡. An identical copy of this
  * class should be present in the SpartanFeature project.

@@ -2,9 +2,10 @@ package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

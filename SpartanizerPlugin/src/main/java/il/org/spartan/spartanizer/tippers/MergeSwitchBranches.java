@@ -3,13 +3,12 @@ package il.org.spartan.spartanizer.tippers;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Removing redundant case branches in switch statement such as
  * {@code switch(x) { case a: x=1; break; case b: x=2; break; default: x=1;

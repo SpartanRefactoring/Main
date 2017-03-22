@@ -6,9 +6,9 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Fluet API library for formatting things
  * @author Ori Marcovitch

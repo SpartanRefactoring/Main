@@ -5,7 +5,7 @@
  * @since Sep 26, 2016 */
 package il.org.spartan.spartanizer.tipping;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public abstract class TipperFailure extends Exception {
   private static final long serialVersionUID = 1L;

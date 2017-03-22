@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Method with empty body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

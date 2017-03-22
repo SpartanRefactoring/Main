@@ -5,11 +5,10 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A command handler which toggles the spartanization nature
  * @see IHandler

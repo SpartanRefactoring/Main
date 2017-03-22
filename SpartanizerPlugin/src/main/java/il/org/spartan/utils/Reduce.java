@@ -1,9 +1,9 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.*;
 import java.util.stream.*;
+
+import org.jetbrains.annotations.*;
 
 /** An abstract reducer
  * @param <R>

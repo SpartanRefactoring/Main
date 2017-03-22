@@ -1,10 +1,10 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.nio.charset.*;
 import java.util.stream.*;
+
+import org.jetbrains.annotations.*;
 
 /** Fluent API
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

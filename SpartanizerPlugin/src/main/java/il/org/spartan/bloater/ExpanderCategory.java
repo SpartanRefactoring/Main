@@ -3,10 +3,10 @@ package il.org.spartan.bloater;
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Classification of Expanders
  * @author Raviv Rachmiel

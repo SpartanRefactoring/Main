@@ -13,10 +13,9 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A shortcut to textually insert a new special character/s.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

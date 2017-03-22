@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Base class for all tests for method patterns
  * @author Ori Marcovitch

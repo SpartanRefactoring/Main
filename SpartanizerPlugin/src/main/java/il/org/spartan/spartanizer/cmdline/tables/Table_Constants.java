@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Generates a table, counting constants in repositories
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>

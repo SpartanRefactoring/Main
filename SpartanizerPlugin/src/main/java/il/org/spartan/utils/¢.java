@@ -2,8 +2,9 @@ package il.org.spartan.utils;
 
 import java.lang.annotation.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.engine.nominal.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Short name of {@link JohnDoe} parameter
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

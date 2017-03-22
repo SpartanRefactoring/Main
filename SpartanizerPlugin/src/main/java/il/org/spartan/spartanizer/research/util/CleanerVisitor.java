@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.research.util;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** A visitor to clean a tree of all comments and imports
  * @author Ori Marcovitch

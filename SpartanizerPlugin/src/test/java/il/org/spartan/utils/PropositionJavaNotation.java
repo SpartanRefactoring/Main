@@ -1,7 +1,8 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.Proposition.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Render {@link Proposition} using Java/C/C++ notation.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
