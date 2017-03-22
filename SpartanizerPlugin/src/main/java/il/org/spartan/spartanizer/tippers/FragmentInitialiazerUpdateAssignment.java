@@ -36,7 +36,7 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementInitia
     if (initializer() == null)
       return null;
     @Nullable final Assignment a = extract.assignment(nextStatement());
-    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(fragment(), from(a)))
+    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(object(), from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

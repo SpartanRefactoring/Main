@@ -173,8 +173,10 @@ public class Trimmer extends AbstractGUIApplicator {
     return true;
   }
 
-  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(@NotNull final Toolbox t, @NotNull final N ¢) {
-    return t.firstTipper(¢);
+  @SuppressWarnings("static-method") protected <N extends ASTNode> Tipper<N> getTipper(@NotNull final Toolbox t, @NotNull final N n) {
+    assert n != null;
+    assert t != null;
+    return t.firstTipper(n);
   }
 
   boolean firstAddition = true;

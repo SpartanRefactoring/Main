@@ -58,9 +58,10 @@ public abstract class Tip extends Range {
     assert other != null;
     this.description = description;
     this.tipperClass = tipperClass;
+    assert tipperClass != null;
   }
 
-  public <N extends ASTNode> Tip(final String description, @NotNull final N n, final Class<? extends Tipper<?>> c) {
+  public <N extends ASTNode> Tip(final String description, @NotNull final N n, @NotNull final Class<? extends Tipper<?>> c) {
     this(description, range(n), c);
   }
 
