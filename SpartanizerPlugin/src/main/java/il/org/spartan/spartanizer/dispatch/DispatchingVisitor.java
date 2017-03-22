@@ -21,6 +21,7 @@ public abstract class DispatchingVisitor extends ASTVisitor {
   private boolean initialized;
 
   boolean cautiousGo(@NotNull final ASTNode ¢) {
+    assert ¢ != null;
     return !exclude.isExcluded(¢) && go(¢);
   }
 
