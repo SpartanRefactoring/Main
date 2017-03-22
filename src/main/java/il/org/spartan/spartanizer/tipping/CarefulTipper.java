@@ -18,7 +18,7 @@ public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   }
 
   /** @param __ the ASTNode being inspected.
-   * @return whether the argument holds all the conditions needed for a tip to
+   * @return whether the argument satisfies all the conditions needed for a tip to
    *         be possible. */
   protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;

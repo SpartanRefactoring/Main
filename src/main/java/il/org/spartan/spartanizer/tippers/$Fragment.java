@@ -21,10 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-22 */
-public abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
-  protected static boolean forbidden(@NotNull final VariableDeclarationFragment f, @Nullable final Expression initializer) {
-    return initializer == null || haz.annotation(f);
-  }
+abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
 
   private static final long serialVersionUID = 1L;
 
