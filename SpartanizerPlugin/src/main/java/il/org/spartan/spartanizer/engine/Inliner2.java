@@ -32,6 +32,11 @@ public final class Inliner2 {
   /** Occurrences of {@link #what} in {@link #where} */
   public final Collection<? extends SimpleName> spots;
 
+  private Inliner2(final SimpleName what, @NotNull final Expression replacement, final List<? extends ASTNode> where) {
+    this.replacement = protect(replacement);
+    spots = collect.usesOf(this.what = what).in(this.where = where);
+  }
+
   /** Factory method: FAPI factory chain
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 [[SuppressWarningsSpartan]] */
@@ -39,59 +44,9 @@ public final class Inliner2 {
     return by -> location -> new Inliner2(of, by, location);
   }
 
-  public boolean ok() {
-    if (spots.stream().anyMatch(Inliner2::isLeftValue))
-      return false;
-    switch (spots.size()) {
-      case 0:
-        return nullaryInlineOK();
-      case 1:
-        return singletonInlineOK();
-      default:
-        return multipleInlineOK();
-    }
-  }
-
   private static boolean isLeftValue(@NotNull final SimpleName ¢) {
     @NotNull final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
-  }
-
-  @NotNull public ASTRewrite fire(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    for (final SimpleName ¢ : spots)
-      $.replace(¢, copy.of(replacement), g);
-    return $;
-  }
-
-  private Inliner2(final SimpleName what, @NotNull final Expression replacement, final List<? extends ASTNode> where) {
-    this.replacement = protect(replacement);
-    spots = collect.usesOf(this.what = what).in(this.where = where);
-  }
-
-  /** Computes the number of AST nodes added as a result of the replacement
-   * operation.
-   * @param es JD
-   * @return A non-negative integer, computed from the number of occurrences of
-   *         {@link #what} in the operands, and the size of the replacement. */
-  public int addedSize() {
-    return spots.size() * (metrics.size(replacement) - metrics.size(what));
-  }
-
-  /** [[SuppressWarningsSpartan]] */
-  private boolean multipleInlineOK() {
-    if (iz.deterministic(replacement))
-      return true;
-    if (PossiblyMultipleExecution.of(what).inContext(where))
-      return false;
-    return true;
-  }
-
-  private boolean singletonInlineOK() {
-    return sideEffects.free(replacement);
-  }
-
-  private boolean nullaryInlineOK() {
-    return sideEffects.sink(replacement);
   }
 
   public static int removalSaving(@NotNull final VariableDeclarationFragment f) {
@@ -135,6 +90,51 @@ public final class Inliner2 {
       default:
         return ¢;
     }
+  }
+
+  public boolean ok() {
+    if (spots.stream().anyMatch(Inliner2::isLeftValue))
+      return false;
+    switch (spots.size()) {
+      case 0:
+        return nullaryInlineOK();
+      case 1:
+        return singletonInlineOK();
+      default:
+        return multipleInlineOK();
+    }
+  }
+
+  @NotNull public ASTRewrite fire(@NotNull final ASTRewrite $, final TextEditGroup g) {
+    for (final SimpleName ¢ : spots)
+      $.replace(¢, copy.of(replacement), g);
+    return $;
+  }
+
+  /** Computes the number of AST nodes added as a result of the replacement
+   * operation.
+   * @param es JD
+   * @return A non-negative integer, computed from the number of occurrences of
+   *         {@link #what} in the operands, and the size of the replacement. */
+  public int addedSize() {
+    return spots.size() * (metrics.size(replacement) - metrics.size(what));
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  private boolean multipleInlineOK() {
+    if (iz.deterministic(replacement))
+      return true;
+    if (PossiblyMultipleExecution.of(what).inContext(where))
+      return false;
+    return true;
+  }
+
+  private boolean singletonInlineOK() {
+    return sideEffects.free(replacement);
+  }
+
+  private boolean nullaryInlineOK() {
+    return sideEffects.sink(replacement);
   }
 
   /** FAPI factory chain

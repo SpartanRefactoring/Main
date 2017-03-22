@@ -39,13 +39,13 @@ public class Classifier extends ASTVisitor {
   };
   private Map<String, Int> patterns;
 
-  @Override public boolean visit(final ForStatement node) {
+  @Override public boolean visit(@NotNull final ForStatement node) {
     if (!anyTips(node))
       forLoopsList.add(node);
     return super.visit(node);
   }
 
-  @Override public boolean visit(final EnhancedForStatement node) {
+  @Override public boolean visit(@NotNull final EnhancedForStatement node) {
     if (!anyTips(node))
       forLoopsList.add(node);
     return super.visit(node);
@@ -103,11 +103,11 @@ public class Classifier extends ASTVisitor {
     return $;
   }
 
-  private static boolean anyTips(final EnhancedForStatement ¢) {
+  private static boolean anyTips(@NotNull final EnhancedForStatement ¢) {
     return enhancedForKnownPatterns.stream().anyMatch(λ -> λ.check(¢));
   }
 
-  private static boolean anyTips(final ForStatement ¢) {
+  private static boolean anyTips(@NotNull final ForStatement ¢) {
     return forKnownPatterns.stream().anyMatch(λ -> λ.check(¢));
   }
 

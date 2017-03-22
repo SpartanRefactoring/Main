@@ -41,7 +41,7 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
         };
       }
 
-      @Override public boolean canTip(final EnhancedForStatement ¢) {
+      @Override public boolean canTip(@NotNull final EnhancedForStatement ¢) {
         return nano.check(¢);
       }
 

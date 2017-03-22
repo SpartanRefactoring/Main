@@ -37,13 +37,13 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragmen
     return new String[] { nanoName() };
   }
 
-  /** Determines whether this instance can make a {@link Fragment} for the parameter
-   * instance.
+  /** Determines whether this instance can make a {@link Fragment} for the
+   * parameter instance.
    * @param e JD
    * @return whether the argument is noneligible for the simplification offered
    *         by this object.
    * @see #check(InfixExpression) */
-  public final boolean cantTip(final N ¢) {
+  public final boolean cantTip(@NotNull final N ¢) {
     return !check(¢);
   }
 
@@ -82,7 +82,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragmen
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Fragment tip(final N ¢) {
+  @Nullable public Fragment tip(@NotNull final N ¢) {
     assert ¢ != null;
     return tip(¢, null);
   }
@@ -94,7 +94,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragmen
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Fragment tip(final N n, @Nullable final ExclusionManager m) {
+  @Nullable public Fragment tip(@NotNull final N n, @Nullable final ExclusionManager m) {
     assert n != null;
     return m != null && m.isExcluded(n) ? null : tip(n);
   }

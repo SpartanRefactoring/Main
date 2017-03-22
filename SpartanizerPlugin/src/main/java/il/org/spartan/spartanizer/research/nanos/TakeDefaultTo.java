@@ -19,12 +19,12 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
   ;
   static final DefaultsTo rival = new DefaultsTo();
 
-  @Override public boolean canTip(final ConditionalExpression ¢) {
+  @Override public boolean canTip(@NotNull final ConditionalExpression ¢) {
     return tippers.canTip(¢)//
         && rival.cantTip(¢);
   }
 
-  @Nullable @Override public Fragment pattern(final ConditionalExpression ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
     return tippers.firstTip(¢);
   }
 

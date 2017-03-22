@@ -24,7 +24,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(final InfixExpression ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 

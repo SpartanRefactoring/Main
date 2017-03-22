@@ -41,19 +41,19 @@ public abstract class Fragment extends Range {
   /** The line number of the first character to be rewritten **/
   public int lineNumber = -1;
   /** The tipper class that supplied that tip */
-  @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
+  @NotNull @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
 
   /** Instantiates this class
    * @param description a textual description of the changes described by this
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Fragment(final String description, @NotNull final ASTNode n, final Class<? extends Tipper<?>> tipperClass, final ASTNode... ns) {
+  public Fragment(final String description, @NotNull final ASTNode n, @NotNull final Class<? extends Tipper<?>> tipperClass, final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
   }
 
-  Fragment(final String description, @NotNull final Range other, final Class<? extends Tipper<?>> tipperClass) {
+  Fragment(final String description, @NotNull final Range other, @NotNull final Class<? extends Tipper<?>> tipperClass) {
     super(other);
     assert other != null;
     this.description = description;

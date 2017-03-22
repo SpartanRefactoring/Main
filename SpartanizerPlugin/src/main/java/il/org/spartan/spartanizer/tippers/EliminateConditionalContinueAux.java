@@ -21,7 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 enum EliminateConditionalContinueAux {
   ;
-  @Nullable public static Fragment actualReplacement(@Nullable final Block b, @NotNull final Statement s, final Class<? extends Tipper<?>> c) {
+  @Nullable public static Fragment actualReplacement(@Nullable final Block b, @NotNull final Statement s,
+      @NotNull final Class<? extends Tipper<?>> c) {
     if (b == null || statements(b).size() < 2)
       return null;
     @NotNull final List<Statement> $ = statements(b);

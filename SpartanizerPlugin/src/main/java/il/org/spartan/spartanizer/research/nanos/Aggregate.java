@@ -31,12 +31,12 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
       patternTipper("for($T $N1 : $X1) if($X2) $N2 += $X3;", "$N2 += ($X1).stream().filter($N1 -> $X2).map($N1 -> $X3).reduce((x,y) -> x + y).get();",
           "Go Fluent. Sum"));
 
-  @Override public boolean canTip(final EnhancedForStatement x) {
+  @Override public boolean canTip(@NotNull final EnhancedForStatement x) {
     return anyTips(tippers, x)//
         && rival.cantTip(x);
   }
 
-  @Nullable @Override public Fragment pattern(final EnhancedForStatement x) {
+  @Nullable @Override public Fragment pattern(@NotNull final EnhancedForStatement x) {
     return firstTip(tippers, x);
   }
 

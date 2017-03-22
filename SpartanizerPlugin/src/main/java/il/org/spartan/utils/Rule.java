@@ -285,7 +285,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       );
     }
 
-    @Override public final boolean check(final T ¢) {
+    @Override public final boolean check(@NotNull final T ¢) {
       assert ¢ != null;
       return ok(object = ¢);
     }

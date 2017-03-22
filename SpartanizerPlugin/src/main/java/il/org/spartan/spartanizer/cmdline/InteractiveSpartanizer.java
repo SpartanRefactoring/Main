@@ -62,7 +62,7 @@ public class InteractiveSpartanizer {
   @NotNull ASTVisitor collect(@NotNull final List<Fragment> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
-        final Tipper<N> t = toolbox.firstTipper(n);
+        @NotNull final Tipper<N> t = toolbox.firstTipper(n);
         return t == null || t.cantTip(n) || Trimmer.prune(t.tip(n, exclude), $);
       }
     };
