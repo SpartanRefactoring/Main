@@ -10,7 +10,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public enum generalize {

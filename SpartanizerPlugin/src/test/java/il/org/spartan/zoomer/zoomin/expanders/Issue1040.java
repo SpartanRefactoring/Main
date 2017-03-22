@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.testing.*;
  * {@link TestUtilsBloating} .
  * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
  * @since 2017-01-07 */
-// TODO: Yuval Simon: use fixture or inline.
+// TODO Yuval Simon: use fixture or inline.
 @Ignore // This is only for demonstration it doesn't suppose to work
 @SuppressWarnings("static-method")
 public class Issue1040 {
@@ -66,7 +66,6 @@ public class Issue1040 {
     }
 
     @SuppressWarnings("boxing") void toTest() {
-      total = 0;
       total = Stream.of(arr).map(λ -> total(1)).reduce((x, y) -> x + y).get().intValue();
     }
 

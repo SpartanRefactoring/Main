@@ -32,7 +32,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return "Convert switch statement to if-else statement";
   }
 
-  // TODO: Yuval Simon: this is one of the worst bits of code I have seen.
+  // TODO Yuval Simon: this is one of the worst bits of code I have seen.
   // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
   // transformation --yg
   @Override public ASTNode replacement(final SwitchStatement s) {

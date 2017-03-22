@@ -15,7 +15,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: Vivian Shehadeh please add a description
+/** TODO Vivian Shehadeh please add a description
  * @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 2016 */
