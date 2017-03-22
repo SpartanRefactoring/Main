@@ -1,18 +1,18 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.Example;
-
-import static il.org.spartan.utils.Example.*;
+import il.org.spartan.utils.*;
 
 /** replaces a do statement followed by an empty block with a do statement
- * followed by a semicolon.
- * in development, see issue #1125
+ * followed by a semicolon. in development, see issue #1125
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-22 */
 public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStatement> //
@@ -20,17 +20,17 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
   private static final long serialVersionUID = 2013380508545213297L;
 
   @Override public ASTNode replacement(final DoStatement ¢) {
-    DoStatement $ = copy.of(¢);
+    final DoStatement $ = copy.of(¢);
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
 
-  @Override protected boolean prerequisite(final DoStatement ¢) {
+  @Override protected boolean prerequisite(@NotNull final DoStatement ¢) {
     final Statement $ = ¢.getBody();
     return iz.block($) && iz.emptyBlock(az.block($));
   }
 
-  @Override public Example[] examples() {
+  @Override @NotNull public Example[] examples() {
     return new Example[] {
         convert("do{}while(x();y();z());")//
             .to("do;while(x();y();z());"), //
@@ -39,7 +39,7 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     };
   }
 
-  @Override public String description(@SuppressWarnings("unused") final DoStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final DoStatement __) {
     return "replaces a for statment followed by an empty block with a for statment followed by a semicolon";
   }
 }

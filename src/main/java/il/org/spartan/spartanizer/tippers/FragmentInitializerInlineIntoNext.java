@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,11 +31,12 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -228096256168103399L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable " + name(¢) + " into next statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final Statement nextStatement,
+      final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
         || wizard.frobiddenOpOnPrimitive(f, nextStatement))
       return null;
@@ -110,7 +112,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     final Bool $ = new Bool();
     final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor(true) {
-      @Override public boolean preVisit2(final ASTNode ¢) {
+      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
         if (parent.equals(¢))
           return true;
         if (!¢.equals(nextStatement)//
@@ -124,7 +126,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     return $.inner;
   }
 
-  private static boolean leftSide(final Statement nextStatement, final String id) {
+  private static boolean leftSide(@NotNull final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
     // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
@@ -143,7 +145,7 @@ public final class FragmentInitializerInlineIntoNext extends ReplaceToNextStatem
     return $.size() != 1 ? null : first($);
   }
 
-  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+  @NotNull static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

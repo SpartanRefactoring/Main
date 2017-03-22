@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -44,7 +45,7 @@ public interface hop {
 
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
-  static List<ASTNode> descendants(final ASTNode root) {
+  @Nullable static List<ASTNode> descendants(@Nullable final ASTNode root) {
     if (root == null)
       return null;
     final List<ASTNode> $ = new ArrayList<>();
@@ -61,7 +62,8 @@ public interface hop {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs,
+      final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 
@@ -70,7 +72,7 @@ public interface hop {
     return $ == null ? null : $.getName() + "";
   }
 
-  static SimpleName lastComponent(final Name ¢) {
+  @Nullable static SimpleName lastComponent(@Nullable final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 
@@ -82,7 +84,7 @@ public interface hop {
     return last(extract.statements(¢));
   }
 
-  static Name name(final Type ¢) {
+  static Name name(@NotNull final Type ¢) {
     return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
@@ -91,7 +93,7 @@ public interface hop {
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
    * @return a list of all operands of an expression */
-  static List<Expression> operands(final InfixExpression ¢) {
+  @Nullable static List<Expression> operands(@Nullable final InfixExpression ¢) {
     if (¢ == null)
       return null;
     final List<Expression> $ = as.list(left(¢), right(¢));
@@ -103,7 +105,7 @@ public interface hop {
   /** @param ¢ JD
    * @return conversion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
-  static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
+  @Nullable static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
     return penultimate(body(¢));
   }
 
@@ -116,7 +118,7 @@ public interface hop {
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
-  static VariableDeclarationFragment penultimate(final WhileStatement $) {
+  @Nullable static VariableDeclarationFragment penultimate(final WhileStatement $) {
     return penultimate(body($));
   }
 
@@ -124,7 +126,7 @@ public interface hop {
     return first(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
 
-  static SimpleName simpleName(final Type ¢) {
+  @Nullable static SimpleName simpleName(@NotNull final Type ¢) {
     return lastComponent(hop.name(¢));
   }
 }

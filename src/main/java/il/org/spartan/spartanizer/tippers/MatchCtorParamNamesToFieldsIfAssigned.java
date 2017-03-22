@@ -11,6 +11,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -33,11 +34,11 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return false;
   }
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @Override @NotNull public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Override public Tip tip(final MethodDeclaration d) {
+  @Override @Nullable public Tip tip(@NotNull final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());

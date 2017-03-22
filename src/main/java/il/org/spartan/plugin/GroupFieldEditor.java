@@ -7,6 +7,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
@@ -29,7 +30,7 @@ public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private int numColumns;
   private final Collection<FieldEditor> members = new ArrayList<>();
-  private final Group group;
+  @NotNull private final Group group;
   private final Composite parent;
   private boolean initialized;
 
@@ -38,7 +39,7 @@ public final class GroupFieldEditor extends FieldEditor {
    *        no label, pass {@code null}
    * @param fieldEditorParent the widget's parent, usually
    *        {@link FieldEditorPreferencePage#getFieldEditorParent()} */
-  public GroupFieldEditor(final String labelText, final Composite fieldEditorParent) {
+  public GroupFieldEditor(@Nullable final String labelText, final Composite fieldEditorParent) {
     final String title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
     numColumns = 0;
@@ -57,7 +58,7 @@ public final class GroupFieldEditor extends FieldEditor {
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
    * @return parent {@link Composite} object */
-  public Composite getFieldEditor() {
+  @NotNull public Composite getFieldEditor() {
     return group;
   }
 

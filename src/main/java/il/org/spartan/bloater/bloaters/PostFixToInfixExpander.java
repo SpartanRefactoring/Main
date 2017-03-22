@@ -2,6 +2,7 @@ package il.org.spartan.bloater.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,7 +23,7 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 2322066430397426252L;
 
-  @Override public ASTNode replacement(final PostfixExpression x) {
+  @Override @Nullable public ASTNode replacement(@NotNull final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;
     final Expression one = az.expression(wizard.ast("1"));
@@ -34,12 +35,12 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     return !needWrap(x) ? $ : subject.operand($).parenthesis();
   }
 
-  private static boolean needWrap(final PostfixExpression ¢) {
+  private static boolean needWrap(@NotNull final PostfixExpression ¢) {
     final ASTNode $ = ¢.getParent();
     return iz.infixExpression($) || iz.prefixExpression($) || iz.postfixExpression($);
   }
 
-  @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override @Nullable public String description(@SuppressWarnings("unused") final PostfixExpression __) {
     return null;
   }
 }

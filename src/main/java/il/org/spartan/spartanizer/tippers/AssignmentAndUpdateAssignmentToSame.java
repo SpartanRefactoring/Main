@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -34,17 +35,17 @@ public final class AssignmentAndUpdateAssignmentToSame extends ReplaceToNextStat
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
-  @Override public Example[] examples() {
+  @Override @NotNull public Example[] examples() {
     return new Example[] { //
         convert("a+=3;b=6;").to("a+=3+6"), //
     };
   }
 
-  @Override public String description(final Assignment ¢) {
+  @Override @NotNull public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     final Assignment a2 = extract.assignment(nextStatement);

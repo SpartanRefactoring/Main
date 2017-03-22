@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -99,7 +100,7 @@ public final class WrapTest {
     similar(trivia.removeComments("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar(final String s1, final String s2) {
+  private void similar(@NotNull final String s1, @NotNull final String s2) {
     azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
   }
 

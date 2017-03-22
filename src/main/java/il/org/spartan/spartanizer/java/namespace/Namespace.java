@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -39,12 +40,12 @@ public final class Namespace implements Environment {
   }
 
   /** add all the given itrable of BodyDeclarations to our NameSpace */
-  Namespace addAll(final Iterable<BodyDeclaration> ¢) {
+  @NotNull Namespace addAll(@NotNull final Iterable<BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;
   }
 
-  protected Namespace addAllReources(final Iterable<VariableDeclarationExpression> ¢) {
+  @NotNull protected Namespace addAllReources(@NotNull final Iterable<VariableDeclarationExpression> ¢) {
     ¢.forEach(this::put);
     return this;
   }
@@ -58,7 +59,7 @@ public final class Namespace implements Environment {
     return children.get(¢);
   }
 
-  protected Namespace addConstants(final EnumDeclaration d, final Iterable<EnumConstantDeclaration> ds) {
+  @NotNull protected Namespace addConstants(@NotNull final EnumDeclaration d, @NotNull final Iterable<EnumConstantDeclaration> ds) {
     @knows("¢") final type t = type.bring(d.getName() + "");
     ds.forEach(λ -> put(step.name(λ) + "", new Binding(t)));
     return this;
@@ -84,11 +85,11 @@ public final class Namespace implements Environment {
     return separate.these(ancestors()).by("\n\t * ");
   }
 
-  public String description() {
+  @NotNull public String description() {
     return description("");
   }
 
-  public String description(final String indent) {
+  @NotNull public String description(final String indent) {
     return indent + name + "" + flat + (children.isEmpty() ? ""
         : ":\n" + separate.these(children.stream().map(λ -> λ.description(indent + "  ")).toArray()).by("\n" + indent + "- "));
   }
@@ -99,7 +100,7 @@ public final class Namespace implements Environment {
   }
 
   /** @return Map entries used in the current scope. */
-  @Override public List<Map.Entry<String, Binding>> entries() {
+  @Override @NotNull public List<Map.Entry<String, Binding>> entries() {
     return new ArrayList<>(flat.entrySet());
   }
 
@@ -114,22 +115,22 @@ public final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-  static Namespace spawnFor(final Namespace $, final ForStatement s) {
+  @NotNull static Namespace spawnFor(@NotNull final Namespace $, @Nullable final ForStatement s) {
     final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
     return s == null || x == null ? $ : $.spawn(for¢).put(x);
   }
 
-  static Namespace spawnEnhancedFor(final Namespace n, final EnhancedForStatement s) {
+  @NotNull static Namespace spawnEnhancedFor(@NotNull final Namespace n, @Nullable final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());
   }
 
-  boolean fillScope(final ASTNode root) {
+  boolean fillScope(@Nullable final ASTNode root) {
     if (root == null)
       return false;
     property.attach(this).to(root);
     // noinspection SameReturnValue,SameReturnValue
     root.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
+      @Override public boolean visit(@NotNull final AnnotationTypeDeclaration ¢) {
         return ¢ == root || spawn(annotation, identifier(¢)).put(bodyDeclarations(¢)).fillScope(¢);
       }
 
@@ -180,7 +181,7 @@ public final class Namespace implements Environment {
         return ¢ == root || spawnEnhancedFor(Namespace.this, ¢).fillScope(¢);
       }
 
-      @Override public boolean visit(final EnumDeclaration ¢) {
+      @Override public boolean visit(@NotNull final EnumDeclaration ¢) {
         return ¢ == root || spawn("enum " + step.name(¢)).addAll(bodyDeclarations(¢)).addConstants(¢, enumConstants(¢)).fillScope(¢);
       }
 
@@ -218,14 +219,14 @@ public final class Namespace implements Environment {
         return false;
       }
 
-      @Override public boolean visit(final TypeDeclaration ¢) {
+      @Override public boolean visit(@NotNull final TypeDeclaration ¢) {
         return ¢ == root || spawn((!¢.isInterface() ? "class" : "interface") + " " + step.name(¢)).addAll(bodyDeclarations(¢)).fillScope(¢);
       }
     });
     return false;
   }
 
-  static Namespace spawnAndFill(final Namespace n, final TryStatement s) {
+  static Namespace spawnAndFill(@NotNull final Namespace n, @Nullable final TryStatement s) {
     if (s == null)
       return n;
     catchClauses(s).forEach(λ -> n.spawn(catch¢).put(exception(λ)).fillScope(λ));
@@ -238,7 +239,7 @@ public final class Namespace implements Environment {
   }
 
   /** @return names used the {@link Environment} . */
-  @Override public LinkedHashSet<String> keys() {
+  @Override @NotNull public LinkedHashSet<String> keys() {
     return new LinkedHashSet<>(flat.keySet());
   }
 
@@ -256,7 +257,7 @@ public final class Namespace implements Environment {
     return put("type " + step.name(¢), step.name(¢));
   }
 
-  private Namespace put(final AnnotationTypeMemberDeclaration ¢) {
+  private Namespace put(@NotNull final AnnotationTypeMemberDeclaration ¢) {
     return put("annotation member" + step.name(¢), ¢.getType());
   }
 
@@ -276,29 +277,29 @@ public final class Namespace implements Environment {
     return put("type " + step.name(¢), step.name(¢));
   }
 
-  private Namespace put(final FieldDeclaration d) {
+  @NotNull private Namespace put(@NotNull final FieldDeclaration d) {
     fragments(d).forEach(λ -> put(step.name(λ), d.getType()));
     return this;
   }
 
-  protected Namespace put(final Iterable<? extends BodyDeclaration> ¢) {
+  @NotNull protected Namespace put(@NotNull final Iterable<? extends BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;
   }
 
-  private Namespace put(final MethodDeclaration ¢) {
+  private Namespace put(@NotNull final MethodDeclaration ¢) {
     return put(step.name(¢) + "/" + ¢.parameters().size(), ¢.getReturnType2());
   }
 
-  Namespace put(final SimpleName key, final Type t) {
+  @NotNull Namespace put(final SimpleName key, final Type t) {
     return put(key + "", t);
   }
 
-  protected Namespace put(final SingleVariableDeclaration ¢) {
+  protected Namespace put(@NotNull final SingleVariableDeclaration ¢) {
     return put(step.name(¢), ¢.getType());
   }
 
-  private Namespace put(final String key, final ASTNode n) {
+  @NotNull private Namespace put(final String key, final ASTNode n) {
     put(key, new Binding(key, n));
     return this;
   }
@@ -310,18 +311,18 @@ public final class Namespace implements Environment {
     return hiding(identifier);
   }
 
-  private Namespace put(final String key, final Type t) {
+  @NotNull private Namespace put(final String key, final Type t) {
     put(key, new Binding(key, type.baptize(trivia.condense(t))));
     return this;
   }
 
-  protected Namespace put(final TypeDeclaration ¢) {
+  @NotNull protected Namespace put(@NotNull final TypeDeclaration ¢) {
     @knows("¢") final String key = "type " + step.name(¢);
     put(key, new Binding(key, type.baptize(step.name(¢) + "", !iz.interface¢(¢) ? "class" : "interface")));
     return this;
   }
 
-  protected Namespace put(final VariableDeclarationExpression x) {
+  @NotNull protected Namespace put(final VariableDeclarationExpression x) {
     fragments(x).forEach(λ -> put(step.name(λ), type(x)));
     return this;
   }
@@ -346,11 +347,11 @@ public final class Namespace implements Environment {
     return addChild(new Namespace(this, childName));
   }
 
-  @Override public String toString() {
+  @Override @NotNull public String toString() {
     return name + "" + flat;
   }
 
-  static boolean init(final Namespace n, final Iterable<? extends ASTNode> children) {
+  static boolean init(@NotNull final Namespace n, @NotNull final Iterable<? extends ASTNode> children) {
     children.forEach(n::fillScope);
     return false;
   }
@@ -364,7 +365,7 @@ public final class Namespace implements Environment {
       final String base = namer.variableName(t);
       int n = -1;
 
-      @Override public String next() {
+      @Override @NotNull public String next() {
         return ++n == 0 ? base : base + n;
       }
 
@@ -374,11 +375,11 @@ public final class Namespace implements Environment {
     };
   }
 
-  public String generateName(final Type ¢) {
+  @NotNull public String generateName(final Type ¢) {
     return generateName(namer.shorten(¢));
   }
 
-  public String generateName(final String ¢) {
+  @NotNull public String generateName(final String ¢) {
     int postface = 0;
     String $ = ¢ + "" + ++postface;
     while (has($))
@@ -386,7 +387,7 @@ public final class Namespace implements Environment {
     return $;
   }
 
-  public Namespace addNewName(final String s, final Type t) {
+  @NotNull public Namespace addNewName(final String s, final Type t) {
     return put(s, t);
   }
 
@@ -399,7 +400,7 @@ public final class Namespace implements Environment {
         && children.stream().allMatch(Namespace::allowsCurrentRecursive);
   }
 
-  private static boolean isVariable(final String key) {
+  private static boolean isVariable(@NotNull final String key) {
     return !key.contains(" ") && !key.contains("/");
   }
 }

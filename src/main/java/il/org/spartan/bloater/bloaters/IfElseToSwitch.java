@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,7 +22,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 7117505785157896738L;
 
-  @Override public ASTNode replacement(final IfStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
       return null;
@@ -50,7 +51,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static boolean isMyCase(final List<Expression> xs) {
+  private static boolean isMyCase(@Nullable final List<Expression> xs) {
     if (xs == null || xs.isEmpty() || !iz.infixEquals(first(xs)))
       return false;
     InfixExpression px = az.comparison(first(xs));
@@ -70,14 +71,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return true;
   }
 
-  private static List<Expression> getAllExpressions(final IfStatement s) {
+  @NotNull private static List<Expression> getAllExpressions(final IfStatement s) {
     final List<Expression> $ = new ArrayList<>();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
 
-  private static List<Block> getAllBlocks(final IfStatement s) {
+  @NotNull private static List<Block> getAllBlocks(@NotNull final IfStatement s) {
     final List<Block> $ = new ArrayList<>();
     final Statement p = addAllBlocks(s, $);
     if (p == null)
@@ -93,7 +94,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static Statement addAllBlocks(final IfStatement s, final Collection<Block> collectInto) {
+  private static Statement addAllBlocks(@NotNull final IfStatement s, @NotNull final Collection<Block> collectInto) {
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
       final Statement then = copy.of(then(az.ifStatement($)));
@@ -107,7 +108,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @Override public String description(final IfStatement __) {
+  @Override @NotNull public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";
   }
 }

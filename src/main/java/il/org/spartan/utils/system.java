@@ -4,6 +4,8 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
@@ -20,7 +22,7 @@ public interface system {
       final Process $ = Runtime.getRuntime().exec(new String[] { "/bin/bash", "-c", shellCommand });
       if ($ != null)
         return dumpOutput($);
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.logProbableBug(shellCommand, ¢);
     }
     return null;
@@ -35,21 +37,21 @@ public interface system {
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
 
-  static String className(final Class<?> ¢) {
+  @NotNull static String className(@NotNull final Class<?> ¢) {
     return ¢.getEnclosingClass() == null ? selfName(¢) : selfName(¢) + "." + className(¢.getEnclosingClass());
   }
 
-  static String className(final Object ¢) {
+  @NotNull static String className(@NotNull final Object ¢) {
     return className(¢.getClass());
   }
 
-  static Process dumpOutput(final Process $) {
+  @NotNull static Process dumpOutput(@NotNull final Process $) {
     if (windows())
       return $;
     try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, $ + "");
     }
     return $;
@@ -67,7 +69,7 @@ public interface system {
    * @deprecated since Nov 14, 2016, replaced by {@link Essence#of(String)}
    * @param codeFragment code fragment represented as a string
    * @return essence of the code fragment */
-  @Deprecated static String essence(final String codeFragment) {
+  @Deprecated static String essence(@NotNull final String codeFragment) {
     return codeFragment.replaceAll("//.*?\r\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "")//
         .replaceAll("^\\s*$", "")//
@@ -79,11 +81,11 @@ public interface system {
         .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
   }
 
-  static String essenced(final String fileName) {
+  @NotNull static String essenced(final String fileName) {
     return fileName + ".essence";
   }
 
-  static String folder2File(final String path) {
+  static String folder2File(@NotNull final String path) {
     return path//
         .replaceAll("^[.]$", "CWD")//
         .replaceAll("^[.][.]$", "DOT-DOT")//
@@ -97,7 +99,7 @@ public interface system {
   static BufferedWriter callingClassUniqueWriter() {
     try {
       return new BufferedWriter(new FileWriter(ephemeral(callingClassName()).dot("txt")));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢);
     }
     return null;
@@ -107,24 +109,24 @@ public interface system {
     return (new Date() + "").replaceAll(" ", "-");
   }
 
-  static String read() {
+  @NotNull static String read() {
     try (Scanner $ = new Scanner(System.in)) {
       return read($);
     }
   }
 
-  static String read(final Scanner ¢) {
+  @NotNull static String read(@NotNull final Scanner ¢) {
     String $ = "";
     while (¢.hasNext()) // Can be Nano?
       $ += "\n" + ¢.nextLine();
     return $;
   }
 
-  static ProcessBuilder runScript() {
+  @NotNull static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
 
-  static String runScript(final Process p) throws IOException {
+  @NotNull static String runScript(@NotNull final Process p) throws IOException {
     try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
       for (final StringBuilder $ = new StringBuilder();; $.append(¢))
@@ -133,16 +135,16 @@ public interface system {
     }
   }
 
-  static String selfName(final Class<?> ¢) {
+  @NotNull static String selfName(@NotNull final Class<?> ¢) {
     return ¢.isAnonymousClass() ? "{}"
         : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
 
-  static Process shellEssenceMetrics(final String fileName) {
+  @Nullable static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 
-  static int tokens(final String s) {
+  static int tokens(@NotNull final String s) {
     int $ = 0;
     for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
       final Token t = tokenizer.next();
@@ -161,7 +163,7 @@ public interface system {
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted
    * @return the number of words the given string contains */
-  static int wc(final String $) {
+  static int wc(@Nullable final String $) {
     return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 
@@ -170,6 +172,6 @@ public interface system {
   }
 
   interface Extension {
-    File dot(String extentsion);
+    @NotNull File dot(String extentsion);
   }
 }

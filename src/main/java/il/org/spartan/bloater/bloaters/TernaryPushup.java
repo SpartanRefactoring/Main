@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -34,7 +35,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     return subject.pair(subject.pair(then(ll), r).to(operator(x)), subject.pair(elze(ll), r).to(operator(x))).toCondition(expression(ll));
   }
 
-  @Override protected boolean prerequisite(final InfixExpression x) {
+  @Override protected boolean prerequisite(@Nullable final InfixExpression x) {
     if (x == null)
       return false;
     final Expression $ = extract.core(left(x)), r = extract.core(right(x));
@@ -42,7 +43,7 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
         || iz.conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "";
   }
 }

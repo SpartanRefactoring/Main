@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,7 +23,7 @@ public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpre
     return "Remove 'false' argument to '||'";
   }
 
-  @Override public boolean prerequisite(final InfixExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
     return iz.conditionalOr(¢) && have.falseLiteral(extract.allOperands(¢));
   }
 

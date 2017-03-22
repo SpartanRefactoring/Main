@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,19 +26,19 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = 287035013781478896L;
 
-  @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
+  @Override @NotNull public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
     return new Tip(description(n), n, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, copy.of($), g);
         r.replace($, copy.of(n), g);
       }
     };
   }
 
-  @Override protected boolean prerequisite(final SwitchCase n) {
+  @Override protected boolean prerequisite(@NotNull final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
     return cases.size() <= switchBranch.MAX_CASES_FOR_SPARTANIZATION && cases.stream().noneMatch(SwitchCase::isDefault) && $ != null && !$.isDefault()
@@ -45,7 +46,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
         && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
   }
 
-  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @Override @NotNull @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "sort cases with same flow control";
   }
 }

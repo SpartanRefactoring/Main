@@ -11,6 +11,7 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -53,18 +54,18 @@ public enum Analyze {
     return a < d ? a : d;
   }
 
-  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
-  public static CSVStatistics openSummaryFile(final String $) {
+  public static CSVStatistics openSummaryFile(@NotNull final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
@@ -138,7 +139,7 @@ public enum Analyze {
                 .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
-          } catch (@SuppressWarnings("unused") final AssertionError __) {
+          } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
             //
           }
         Logger.finishedType();
@@ -177,7 +178,7 @@ public enum Analyze {
       Logger.logFile(¢.getName());
       try {
         appendFile(new File(outputDir() + "/after.java"), spartanize(cu));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
+      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         //
       }
       // @author matteo append also before */
@@ -204,7 +205,7 @@ public enum Analyze {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
                         .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
-                  } catch (final AssertionError __) {
+                  } catch (@NotNull final AssertionError __) {
                     ___.unused(__);
                     //
                   }

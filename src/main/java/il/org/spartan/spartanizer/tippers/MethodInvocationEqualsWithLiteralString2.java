@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -21,7 +22,7 @@ public final class MethodInvocationEqualsWithLiteralString2 extends ReplaceCurre
   private static final long serialVersionUID = 5039278220973820474L;
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
-  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
+  private static ASTNode replacement(@NotNull final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(copy.of(¢));
     $.setName(copy.of(n));
@@ -29,7 +30,7 @@ public final class MethodInvocationEqualsWithLiteralString2 extends ReplaceCurre
     return $;
   }
 
-  @Override public String description(final MethodInvocation ¢) {
+  @Override @NotNull public String description(final MethodInvocation ¢) {
     return "Write " + first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 

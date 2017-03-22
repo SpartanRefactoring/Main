@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
@@ -50,7 +51,7 @@ public class Classifier extends ASTVisitor {
     return super.visit(node);
   }
 
-  public void analyze(final ASTNode ¢) {
+  public void analyze(@NotNull final ASTNode ¢) {
     ¢.accept(this);
     forLoopsAmount = forLoopsList.size();
     patterns = filterAllIntrestingPatterns();
@@ -81,7 +82,7 @@ public class Classifier extends ASTVisitor {
     System.out.println("Lets classify them together!");
   }
 
-  private Map<String, Int> filterAllIntrestingPatterns() {
+  @NotNull private Map<String, Int> filterAllIntrestingPatterns() {
     final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
@@ -123,7 +124,7 @@ public class Classifier extends ASTVisitor {
     return true;
   }
 
-  private static String tipperize(final String code, final String classification) {
+  @NotNull private static String tipperize(final String code, final String classification) {
     return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
         + "();\", \"" + classification + "\"));";
   }

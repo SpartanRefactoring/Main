@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -25,7 +26,7 @@ public class Issue0777 {
     azzertEquals("class C{void foo(){}}", addMethodToType("class C{}", "void foo(){}"));
   }
 
-  private String addMethodToType(final String type, final String method) throws BadLocationException {
+  private String addMethodToType(final String type, @NotNull final String method) throws BadLocationException {
     final IDocument $ = new Document(type);
     final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
@@ -34,7 +35,7 @@ public class Issue0777 {
     return $.get();
   }
 
-  private void azzertEquals(final String expected, final String actual) {
+  private void azzertEquals(@NotNull final String expected, @NotNull final String actual) {
     azzert.that(actual.replaceAll("[\n\t\r ]", ""), is(expected.replaceAll("[\n\t\r ]", "")));
   }
 

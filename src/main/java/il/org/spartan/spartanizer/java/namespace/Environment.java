@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,9 +31,9 @@ public interface Environment {
   /** Return true iff this instance is empty. */
   boolean empty();
 
-  List<Entry<String, Binding>> entries();
+  @NotNull List<Entry<String, Binding>> entries();
 
-  default Collection<Entry<String, Binding>> fullEntries() {
+  @NotNull default Collection<Entry<String, Binding>> fullEntries() {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
@@ -41,13 +42,13 @@ public interface Environment {
 
   /** Get full path of the current this instance (all scope hierarchy). Used for
    * full names of the variables. */
-  default String fullName() {
+  @NotNull default String fullName() {
     final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
   }
 
   /** @return all the full names of the this instance. */
-  default Collection<String> fullNames() {
+  @NotNull default Collection<String> fullNames() {
     final Collection<String> $ = new LinkedHashSet<>(keys());
     if (nest() != null)
       $.addAll(nest().fullNames());
@@ -59,7 +60,7 @@ public interface Environment {
   }
 
   /** @return null iff the name is not in use in the this instance */
-  Binding get(String name);
+  @Nullable Binding get(String name);
 
   /** Answer the question whether the name is in use in the current this
    * instance */
@@ -67,18 +68,18 @@ public interface Environment {
 
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
-  default Binding hiding(final String name) {
+  @Nullable default Binding hiding(final String name) {
     return nest() == null ? null : nest().get(name);
   }
 
   /** @return The names used in the current scope. */
-  Set<String> keys();
+  @NotNull Set<String> keys();
 
   String name();
 
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
-  Environment nest();
+  @Nullable Environment nest();
 
   /** Should return the hidden entry, or null if no entry hidden by this one.
    * Note: you will have to assume multiple definitions in the same block, this
@@ -95,7 +96,7 @@ public interface Environment {
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
-  Environment NULL = new Environment() {
+  @Nullable Environment NULL = new Environment() {
     @Override public boolean empty() {
       return true;
     }
@@ -104,7 +105,7 @@ public interface Environment {
       return Collections.emptyList();
     }
 
-    @Override public Binding get(@SuppressWarnings("unused") final String name) {
+    @Override @Nullable public Binding get(@SuppressWarnings("unused") final String name) {
       return null;
     }
 
@@ -128,7 +129,7 @@ public interface Environment {
       return 0;
     }
 
-    @Override public Namespace spawn() {
+    @Override @NotNull public Namespace spawn() {
       return new Namespace(this);
     }
 
@@ -143,7 +144,7 @@ public interface Environment {
    *         contained ({@link Block}s. If the {@link Statement} is a
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
-  static Collection<Entry<String, Binding>> declarationsOf(final Statement ¢) {
+  @NotNull static Collection<Entry<String, Binding>> declarationsOf(@NotNull final Statement ¢) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     if (¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT)
       return $;
@@ -151,7 +152,7 @@ public interface Environment {
     return $;
   }
 
-  static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
+  @NotNull static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
     final type t = type.baptize(trivia.condense(type(s)));
     final String path = fullName(s);
@@ -160,7 +161,7 @@ public interface Environment {
   }
 
   /** @return set of entries declared in the node, including all hiding. */
-  static Set<Entry<String, Binding>> declaresDown(final ASTNode ¢) {
+  @NotNull static Set<Entry<String, Binding>> declaresDown(@NotNull final ASTNode ¢) {
     // Holds the declarations in the subtree and relevant siblings.
     final LinkedHashSet<Entry<String, Binding>> $ = new LinkedHashSet<>();
     ¢.accept(new EnvironmentVisitor($));
@@ -168,27 +169,27 @@ public interface Environment {
   }
 
   /** Gets declarations made in ASTNode's Ancestors */
-  static LinkedHashSet<Entry<String, Binding>> declaresUp(final ASTNode n) {
+  @NotNull static LinkedHashSet<Entry<String, Binding>> declaresUp(@NotNull final ASTNode n) {
     for (Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
       statements(PB).forEach(λ -> upEnv.addAll(declarationsOf(λ)));
     return upEnv;
   }
 
-  static String fullName(final ASTNode ¢) {
+  @NotNull static String fullName(@Nullable final ASTNode ¢) {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
   /** Spawns the first nested this instance. Should be used when the first block
    * is opened. */
-  static Environment genesis() {
+  @NotNull static Environment genesis() {
     return NULL.spawn();
   }
 
-  static Binding get(final LinkedHashSet<Entry<String, Binding>> ss, final String s) {
+  static Binding get(@NotNull final LinkedHashSet<Entry<String, Binding>> ss, @NotNull final String s) {
     return ss.stream().filter(λ -> s.equals(λ.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
 
-  static Binding getHidden(final String s) {
+  static Binding getHidden(@NotNull final String s) {
     for (String ¢ = parentNameScope(s); ¢ != null && !¢.isEmpty(); ¢ = parentNameScope(¢)) {
       final Binding $ = get(upEnv, ¢ + "." + s.substring(s.lastIndexOf(".") + 1));
       if ($ != null)
@@ -197,11 +198,11 @@ public interface Environment {
     return null;
   }
 
-  static Block getParentBlock(final ASTNode ¢) {
+  @Nullable static Block getParentBlock(@NotNull final ASTNode ¢) {
     return az.block(¢.getParent());
   }
 
-  static Binding makeBinding(final VariableDeclarationFragment ¢, final type t) {
+  @Nullable static Binding makeBinding(@NotNull final VariableDeclarationFragment ¢, final type t) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
 
@@ -209,11 +210,11 @@ public interface Environment {
     return "???";
   }
 
-  static String name(final VariableDeclarationFragment ¢) {
+  @NotNull static String name(@NotNull final VariableDeclarationFragment ¢) {
     return ¢.getName() + "";
   }
 
-  static Namespace of(final ASTNode n) {
+  static Namespace of(@NotNull final ASTNode n) {
     for (final ASTNode ¢ : ancestors.of(n)) {
       final Namespace $ = property.obtain(Namespace.class).from(¢);
       if ($ != null)
@@ -228,13 +229,13 @@ public interface Environment {
     return null;
   }
 
-  static String parentNameScope(final String ¢) {
+  @NotNull static String parentNameScope(@Nullable final String ¢) {
     return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 
   /** @return set of entries used in a given node. this includes the list of
    *         entries that were defined in the node */
-  static Set<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
+  @NotNull static Set<Entry<String, Binding>> uses(@SuppressWarnings("unused") final ASTNode __) {
     return new LinkedHashSet<>();
   }
 }

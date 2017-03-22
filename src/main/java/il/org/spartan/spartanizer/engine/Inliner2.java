@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -51,18 +52,18 @@ public final class Inliner2 {
     }
   }
 
-  private static boolean isLeftValue(final SimpleName ¢) {
+  private static boolean isLeftValue(@NotNull final SimpleName ¢) {
     final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
 
-  public ASTRewrite fire(final ASTRewrite $, final TextEditGroup g) {
+  @NotNull public ASTRewrite fire(@NotNull final ASTRewrite $, final TextEditGroup g) {
     for (final SimpleName ¢ : spots)
       $.replace(¢, copy.of(replacement), g);
     return $;
   }
 
-  private Inliner2(final SimpleName what, final Expression replacement, final List<? extends ASTNode> where) {
+  private Inliner2(final SimpleName what, @NotNull final Expression replacement, final List<? extends ASTNode> where) {
     this.replacement = protect(replacement);
     spots = collect.usesOf(this.what = what).in(this.where = where);
   }
@@ -93,7 +94,7 @@ public final class Inliner2 {
     return sideEffects.sink(replacement);
   }
 
-  public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
@@ -103,7 +104,7 @@ public final class Inliner2 {
     return $;
   }
 
-  public static boolean leftSide(final Statement nextStatement, final String id) {
+  public static boolean leftSide(@NotNull final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
     // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
@@ -116,7 +117,7 @@ public final class Inliner2 {
     return $.inner;
   }
 
-  public static Expression protect(final Expression ¢) {
+  public static Expression protect(@NotNull final Expression ¢) {
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:
       case CAST_EXPRESSION:
@@ -130,13 +131,13 @@ public final class Inliner2 {
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-16 */
   public interface Of {
-    By by(Expression by);
+    @NotNull By by(Expression by);
   }
 
   /** FAPI factory chain
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-16 */
   public interface By {
-    Inliner2 in(List<? extends ASTNode> ns);
+    @NotNull Inliner2 in(List<? extends ASTNode> ns);
   }
 }

@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,12 +22,12 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -534365936521275928L;
 
-  private static Expression collapse(final ConditionalExpression ¢) {
+  private static Expression collapse(@NotNull final ConditionalExpression ¢) {
     Expression $;
     return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
   }
 
-  private static Expression collapseOnElse(final ConditionalExpression x) {
+  private static Expression collapseOnElse(@NotNull final ConditionalExpression x) {
     final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
     if ($ == null)
       return null;
@@ -38,7 +39,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
                 .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf($.getExpression())).to(CONDITIONAL_AND));
   }
 
-  private static Expression collaspeOnThen(final ConditionalExpression x) {
+  private static Expression collaspeOnThen(@NotNull final ConditionalExpression x) {
     final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
     if ($ == null)
       return null;
@@ -53,7 +54,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     return "Eliminate nested conditional expression";
   }
 
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @Override @Nullable public Expression replacement(@NotNull final ConditionalExpression ¢) {
     return collapse(¢);
   }
 }

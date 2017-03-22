@@ -5,6 +5,7 @@ import static il.org.spartan.tide.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -32,7 +33,7 @@ public class MetricsReport implements ConfigurableReport {
     settings.getAction().initialize();
   }
 
-  public static Settings getSettings() {
+  @NotNull public static Settings getSettings() {
     return settings;
   }
 
@@ -74,7 +75,7 @@ public class MetricsReport implements ConfigurableReport {
         m("tide" + id, λ -> clean(λ + "").length())); //
   }
 
-  static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+  @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
 

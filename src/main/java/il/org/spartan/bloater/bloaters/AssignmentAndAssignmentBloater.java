@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -20,15 +21,15 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 121321364655045957L;
 
-  @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
   // TODO Doron - I spartanized your code. --yg
-  @Override public Tip tip(final ExpressionStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final ExpressionStatement ¢) {
     final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         // TODO Doron Meshulam: use class subject --yg
         final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
@@ -40,7 +41,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         l.remove(¢, g);
       }
 
-      public Assignment rightMost(final Assignment newTail) {
+      @Nullable public Assignment rightMost(final Assignment newTail) {
         for (@SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
             return $;

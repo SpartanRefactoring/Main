@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -16,7 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0741 {
-  static TypeDeclaration getTypeDeclaration(final String td) {
+  @NotNull static TypeDeclaration getTypeDeclaration(@NotNull final String td) {
     return findFirst.typeDeclaration(wizard.ast(td));
   }
 

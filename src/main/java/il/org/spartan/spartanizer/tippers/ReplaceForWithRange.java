@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -67,7 +68,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
     return false;
   }
 
-  private static boolean ChangedInBlock(final String id, final Block b) {
+  private static boolean ChangedInBlock(final String id, @NotNull final Block b) {
     final Bool $ = new Bool();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     b.accept(new ASTVisitor(true) {

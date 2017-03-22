@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -37,9 +38,9 @@ public final class IfThenOrElseIsCommandsFollowedBySequencer extends CarefulTipp
     return elze(¢) != null && (endsWithSequencer(then(¢)) || endsWithSequencer(elze(¢)));
   }
 
-  @Override public Tip tip(final IfStatement s) {
+  @Override @Nullable public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement shorterIf = makeShorterIf(s);
         final List<Statement> remainder = extract.statements(elze(shorterIf));
         shorterIf.setElseStatement(null);

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,7 +20,7 @@ public final class ExclusionManager {
     inner.add(¢);
   }
 
-  public void excludeAll(final Collection<? extends ASTNode> ¢) {
+  public void excludeAll(@NotNull final Collection<? extends ASTNode> ¢) {
     inner.addAll(¢);
   }
 

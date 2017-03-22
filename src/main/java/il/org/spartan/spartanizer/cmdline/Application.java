@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
@@ -25,7 +26,7 @@ public final class Application implements IApplication {
    * @param ¢ File
    * @return
    * @throws IOException */
-  static int countLines(final File ¢) throws IOException {
+  static int countLines(@NotNull final File ¢) throws IOException {
     try (LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
       $.skip(Long.MAX_VALUE);
       return $.getLineNumber();
@@ -36,14 +37,14 @@ public final class Application implements IApplication {
    * @param fileName
    * @return
    * @throws IOException */
-  static int countLines(final String fileName) throws IOException {
+  static int countLines(@NotNull final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
 
-  static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
+  static MethodInvocation getMethodInvocation(@NotNull final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final MethodInvocation ¢) {
+      @Override public boolean visit(@NotNull final MethodInvocation ¢) {
         if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
           $.set(¢);
         return super.visit(¢);
@@ -52,7 +53,7 @@ public final class Application implements IApplication {
     return $.get() == null ? i : $.get();
   }
 
-  private static String getPackageNameFromSource(final String source) {
+  private static String getPackageNameFromSource(@NotNull final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
@@ -80,10 +81,10 @@ public final class Application implements IApplication {
     System.out.println("");
   }
 
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+  private static String getPackageNameFromSource(@NotNull final Wrapper<String> $, @NotNull final ASTNode n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final PackageDeclaration ¢) {
+      @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -102,24 +103,24 @@ public final class Application implements IApplication {
   private int optRounds = 20;
   private String optPath;
 
-  @Override public Object start(final IApplicationContext arg0) {
+  @Override public Object start(@NotNull final IApplicationContext arg0) {
     final Object $ = startInner(arg0);
     try (Scanner s = new Scanner(System.in)) {
       try {
         s.nextLine();
-      } catch (@SuppressWarnings("unused") final Exception __) {
+      } catch (@NotNull @SuppressWarnings("unused") final Exception __) {
         //
       }
     }
     return $;
   }
 
-  @SuppressWarnings("OverlyComplexMethod") public Object startInner(final IApplicationContext arg0) {
+  @SuppressWarnings("OverlyComplexMethod") public Object startInner(@NotNull final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
     try {
       prepareTempIJavaProject();
-    } catch (final CoreException ¢) {
+    } catch (@NotNull final CoreException ¢) {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
@@ -131,13 +132,13 @@ public final class Application implements IApplication {
         u = openCompilationUnit(f);
         fileStats.add(process(f, u));
         ++done;
-      } catch (final JavaModelException ¢) {
+      } catch (@NotNull final JavaModelException ¢) {
         monitor.logProbableBug(this, ¢);
         ++failed;
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢);
         ++failed;
-      } catch (final Exception ¢) {
+      } catch (@NotNull final Exception ¢) {
         monitor.debug(this, ¢);
         ++failed;
       } finally {
@@ -152,7 +153,7 @@ public final class Application implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  private FileStats process(final File f, final ICompilationUnit u) throws IOException, JavaModelException {
+  @NotNull private FileStats process(@NotNull final File f, @NotNull final ICompilationUnit u) throws IOException, JavaModelException {
     final FileStats $ = new FileStats(f);
     final Trimmer t = new Trimmer();
     IntStream.range(0, optRounds).forEach(λ -> t.apply(u));
@@ -167,17 +168,17 @@ public final class Application implements IApplication {
     ___.nothing();
   }
 
-  String determineOutputFilename(final String path) {
+  @NotNull String determineOutputFilename(@NotNull final String path) {
     return optOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
 
   /** Discard compilation unit u
    * @param u */
-  private void discardCompilationUnit(final ICompilationUnit u) {
+  private void discardCompilationUnit(@NotNull final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
-    } catch (final NullPointerException | JavaModelException ¢) {
+    } catch (@NotNull final NullPointerException | JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
   }
@@ -186,18 +187,18 @@ public final class Application implements IApplication {
     try {
       javaProject.close();
       javaProject.getProject().delete(true, null);
-    } catch (final CoreException ¢) {
+    } catch (@NotNull final CoreException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+  private ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private boolean parseArguments(final Collection<String> args) {
+  private boolean parseArguments(@Nullable final Collection<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;
@@ -210,7 +211,7 @@ public final class Application implements IApplication {
       try {
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
-      } catch (@SuppressWarnings("unused") final NumberFormatException __) {
+      } catch (@NotNull @SuppressWarnings("unused") final NumberFormatException __) {
         // Ignore
       }
       if ("-V".equals(a))
@@ -245,7 +246,7 @@ public final class Application implements IApplication {
     javaProject.setRawClasspath(buildPath, null);
   }
 
-  private void printLineStatistics(final Iterable<FileStats> ss) {
+  private void printLineStatistics(@NotNull final Iterable<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
       for (final FileStats ¢ : ss) {
@@ -268,7 +269,7 @@ public final class Application implements IApplication {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
 
-  @SuppressWarnings("boxing") private void printChangeStatistics(final Collection<FileStats> ss) {
+  @SuppressWarnings("boxing") private void printChangeStatistics(@NotNull final Collection<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (!optIndividualStatistics)
       range.to(optRounds).forEach(i -> System.out
@@ -297,7 +298,7 @@ public final class Application implements IApplication {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
 
-    public String fileName() {
+    @NotNull public String fileName() {
       return file.getName();
     }
 
@@ -312,7 +313,7 @@ public final class Application implements IApplication {
     public int getRoundStat(final int $) {
       try {
         return roundStats.get($).intValue();
-      } catch (final IndexOutOfBoundsException ¢) {
+      } catch (@NotNull final IndexOutOfBoundsException ¢) {
         monitor.logProbableBug(¢);
         return 0;
       }

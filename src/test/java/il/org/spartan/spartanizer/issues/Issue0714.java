@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -62,7 +63,7 @@ public class Issue0714 {
     assert determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class A {}")))));
   }
 
-  private TypeDeclaration typeConvert(final String $) {
+  @NotNull private TypeDeclaration typeConvert(@NotNull final String $) {
     return (TypeDeclaration) first(types(az.compilationUnit(wizard.ast($))));
   }
 }

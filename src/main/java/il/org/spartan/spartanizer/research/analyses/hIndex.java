@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 14, 2016 */
 public interface hIndex {
-  static int hindex(final List<Pair<String, Int>> ¢) {
+  static int hindex(@NotNull final List<Pair<String, Int>> ¢) {
     for (int $ = 0; $ < ¢.size(); ++$) {
       if ($ > ¢.get($).second.inner)
         return $;
@@ -47,7 +48,7 @@ public interface hIndex {
     System.out.println("h-index: " + hindex(rs));
   }
 
-  static String declarationFile(final CompilationUnit u, final String methodName, final String fileName) {
+  @NotNull static String declarationFile(final CompilationUnit u, final String methodName, @NotNull final String fileName) {
     return !methodNames(u).contains(methodName) ? "" : fileName.replaceAll("\\.java", "") + ".";
   }
 }

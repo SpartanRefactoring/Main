@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,7 +22,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 8867383151468342949L;
 
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
@@ -44,11 +45,11 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  private static Expression Initializers(final VariableDeclarationFragment ¢) {
+  @Nullable private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  @Nullable private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
@@ -70,12 +71,12 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
-      final ExclusionManager exclude) {
+  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
+      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement vds = parent(f);

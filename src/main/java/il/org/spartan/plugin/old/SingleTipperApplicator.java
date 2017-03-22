@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -29,8 +30,8 @@ import il.org.spartan.utils.range.*;
 
 public final class SingleTipperApplicator {
   private static ASTRewrite createRewrite(//
-      final IProgressMonitor pm, //
-      final CompilationUnit u, //
+      @NotNull final IProgressMonitor pm, //
+      @NotNull final CompilationUnit u, //
       final IMarker m, //
       final Type t, //
       final Tipper<?> w) {
@@ -43,19 +44,19 @@ public final class SingleTipperApplicator {
   }
 
   private static ASTRewrite createRewrite(//
-      final IProgressMonitor pm, //
+      @NotNull final IProgressMonitor pm, //
       final IMarker m, //
       final Type t, //
       final Tipper<?> w, //
-      final IFile f) {
+      @Nullable final IFile f) {
     return createRewrite(pm, (CompilationUnit) (f != null ? makeAST.COMPILATION_UNIT.from(f) : makeAST.COMPILATION_UNIT.from(m, pm)), m, t, w);
   }
 
-  private static Tipper<?> fillRewrite(final ASTRewrite $, //
-      final CompilationUnit u, //
+  @Nullable private static Tipper<?> fillRewrite(final ASTRewrite $, //
+      @NotNull final CompilationUnit u, //
       final IMarker m, //
       final Type t, //
-      final Tipper<?> w) {
+      @Nullable final Tipper<?> w) {
     Toolbox.refresh();
     final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
@@ -65,7 +66,7 @@ public final class SingleTipperApplicator {
     return v.tipper;
   }
 
-  public void go(final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+  public void go(@NotNull final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     if (Type.PROJECT.equals(t)) {
       goProject(pm, m);
       return;
@@ -85,7 +86,7 @@ public final class SingleTipperApplicator {
     pm.done();
   }
 
-  @SuppressWarnings("boxing") public void goProject(final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
+  @SuppressWarnings("boxing") public void goProject(@NotNull final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
       return;
@@ -117,7 +118,7 @@ public final class SingleTipperApplicator {
             textChange.setTextType("java");
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
-            } catch (JavaModelException | IllegalArgumentException ¢) {
+            } catch (@NotNull JavaModelException | IllegalArgumentException ¢) {
               monitor.logEvaluationError(this, ¢);
               exhausted.add(u);
             }
@@ -126,7 +127,7 @@ public final class SingleTipperApplicator {
             else
               try {
                 textChange.perform(pm);
-              } catch (final CoreException ¢) {
+              } catch (@NotNull final CoreException ¢) {
                 monitor.logEvaluationError(this, ¢);
               }
             px.worked(1);
@@ -135,9 +136,9 @@ public final class SingleTipperApplicator {
           todo.removeAll(exhausted);
           px.done();
         });
-      } catch (final InvocationTargetException ¢) {
+      } catch (@NotNull final InvocationTargetException ¢) {
         monitor.logEvaluationError(this, ¢);
-      } catch (final InterruptedException ¢) {
+      } catch (@NotNull final InterruptedException ¢) {
         monitor.logCancellationRequest(this, ¢);
       }
       if (todo.isEmpty() || canelled.get())
@@ -156,7 +157,7 @@ public final class SingleTipperApplicator {
     final ASTRewrite rewrite;
     final Type type;
     final CompilationUnit compilationUnit;
-    Tipper<?> tipper;
+    @Nullable Tipper<?> tipper;
     /** A boolean flag indicating end of traversal. Set true after required
      * operation has been made. */
     boolean doneTraversing;
@@ -179,7 +180,7 @@ public final class SingleTipperApplicator {
       this.tipper = tipper;
     }
 
-    protected final void apply(final Tipper<?> w, final ASTNode n) {
+    protected final void apply(@NotNull final Tipper<?> w, final ASTNode n) {
       tipper = w;
       if (type == Type.DECLARATION)
         applyDeclaration(w, n);
@@ -187,15 +188,15 @@ public final class SingleTipperApplicator {
         applyFile(w, n);
     }
 
-    protected void applyDeclaration(final Tipper<?> w, final ASTNode n) {
+    protected void applyDeclaration(@NotNull final Tipper<?> w, final ASTNode n) {
       applyLocal(w, yieldAncestors.untilClass(BodyDeclaration.class).inclusiveFrom(n));
     }
 
-    protected void applyFile(final Tipper<?> w, final ASTNode n) {
+    protected void applyFile(@NotNull final Tipper<?> w, final ASTNode n) {
       applyLocal(w, yieldAncestors.untilClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
-    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
+    protected void applyLocal(@NotNull @SuppressWarnings("rawtypes") final Tipper w, @NotNull final ASTNode b) {
       b.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           if (disabling.on(n) || !w.myAbstractOperandsClass().isInstance(n))
@@ -216,7 +217,7 @@ public final class SingleTipperApplicator {
       });
     }
 
-    @Override protected <N extends ASTNode> boolean go(final N n) {
+    @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
       if (doneTraversing)
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))

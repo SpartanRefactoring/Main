@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.utils.*;
@@ -28,7 +29,7 @@ public enum generalize {
 
   /** @param type of placeHolder, can be X,N,M,B,A,L
    * @return */
-  static String renderIdentifier(final String type) {
+  @NotNull static String renderIdentifier(final String type) {
     return "$" + type + serial.inner++;
   }
 
@@ -60,7 +61,7 @@ public enum generalize {
         return false;
       }
 
-      @Override public boolean visit(final SimpleName $) {
+      @Override public boolean visit(@NotNull final SimpleName $) {
         final String name = $.getFullyQualifiedName();
         if (!renaming.containsKey(name))
           renaming.put(name, renderIdentifier("N"));
@@ -70,7 +71,7 @@ public enum generalize {
     });
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logEvaluationError(¢);
     }
     return ASTutils.extractCode(s, d);

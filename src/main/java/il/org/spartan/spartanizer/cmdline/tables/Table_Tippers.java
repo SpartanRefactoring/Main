@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -36,7 +37,7 @@ public class Table_Tippers {
     }
   }
 
-  public static String name(final Class<?> ¢) {
+  @NotNull public static String name(@Nullable final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }

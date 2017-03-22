@@ -3,6 +3,8 @@ package il.org.spartan.tables;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
@@ -12,7 +14,7 @@ public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file
    * @param fileName the name of the output file
    * @throws IOException */
-  public RecordWriter(final TableRenderer renderer, final String basePath) throws IOException {
+  public RecordWriter(@NotNull final TableRenderer renderer, @NotNull final String basePath) throws IOException {
     this.renderer = renderer;
     fileName = basePath.replaceAll("\\.[a-z0-9A-Z_]*$", "") + "." + renderer.extension();
     file = new File(fileName);
@@ -20,20 +22,20 @@ public class RecordWriter implements Closeable {
     write(renderer.beforeTable());
   }
 
-  public void write(final String s) {
+  public void write(@NotNull final String s) {
     try {
       writer.write(s);
       writer.flush();
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       throw new RuntimeException(¢);
     }
   }
 
-  public final File file;
+  @NotNull public final File file;
   /** The name of the file into which records are written. */
-  public final String fileName;
-  public final OutputStreamWriter writer;
-  public final TableRenderer renderer;
+  @NotNull public final String fileName;
+  @NotNull public final OutputStreamWriter writer;
+  @NotNull public final TableRenderer renderer;
   private boolean shouldPrintHeader = true;
   private boolean footerPrinted;
 
@@ -43,19 +45,19 @@ public class RecordWriter implements Closeable {
         write(renderer.afterFooter());
       write(renderer.afterTable());
       writer.close();
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       throw new RuntimeException(¢);
     }
   }
 
-  public void write(final Map<String, Object> ¢) {
+  public void write(@NotNull final Map<String, Object> ¢) {
     if (shouldPrintHeader)
       writeHeader(¢);
     shouldPrintHeader = false;
     writeData(¢);
   }
 
-  public void writeFooter(final Map<String, Object> ¢) {
+  public void writeFooter(@NotNull final Map<String, Object> ¢) {
     if (!footerPrinted) {
       write(renderer.beforeFooter());
       footerPrinted = true;
@@ -63,18 +65,18 @@ public class RecordWriter implements Closeable {
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
 
-  private void writeData(final Map<String, Object> ¢) {
+  private void writeData(@NotNull final Map<String, Object> ¢) {
     write(renderer.renderRow(¢.values()));
   }
 
-  private void writeHeader(final Map<String, Object> ¢) {
+  private void writeHeader(@NotNull final Map<String, Object> ¢) {
     renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
   }
 
-  private String writeHeaderInner(final Map<String, Object> m) {
+  @NotNull private String writeHeaderInner(@NotNull final Map<String, Object> m) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();
     m.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));

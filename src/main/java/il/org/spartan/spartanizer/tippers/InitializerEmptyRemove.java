@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Example.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,7 +19,7 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 8587376936334392420L;
 
-  @Override protected boolean prerequisite(final Initializer ¢) {
+  @Override protected boolean prerequisite(@NotNull final Initializer ¢) {
     final Block $ = ¢.getBody();
     return ¢.getJavadoc() == null && ($ == null || statements($).isEmpty());
   }
@@ -27,11 +28,11 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     return "Remove empty initializer";
   }
 
-  @Override public String description(final Initializer ¢) {
+  @Override @NotNull public String description(@NotNull final Initializer ¢) {
     return "Remove empty " + (iz.static¢(¢) ? "" : "non-") + "static initializer";
   }
 
-  @Override public Example[] examples() {
+  @Override @NotNull public Example[] examples() {
     return new Example[] { //
         convert("class C {{}}") //
             .to("class C {}"), //

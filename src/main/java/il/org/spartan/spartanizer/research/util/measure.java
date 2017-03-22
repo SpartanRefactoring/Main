@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,7 +17,7 @@ import il.org.spartan.utils.*;
  * @since Oct 28, 2016 */
 public enum measure {
   ;
-  public static int allExpressions(final CompilationUnit u) {
+  public static int allExpressions(@Nullable final CompilationUnit u) {
     if (u == null)
       return 0;
     final Int $ = new Int();
@@ -29,7 +30,7 @@ public enum measure {
     return $.inner;
   }
 
-  public static int expressions(final ASTNode n) {
+  public static int expressions(@Nullable final ASTNode n) {
     if (iz.compilationUnit(n))
       return allExpressions(az.compilationUnit(n));
     if (n == null)
@@ -45,7 +46,7 @@ public enum measure {
     return $.inner;
   }
 
-  public static int allCommands(final CompilationUnit u) {
+  public static int allCommands(@Nullable final CompilationUnit u) {
     final Int $ = new Int();
     if (u == null)
       return 0;
@@ -59,7 +60,7 @@ public enum measure {
     return $.inner;
   }
 
-  public static int commands(final ASTNode n) {
+  public static int commands(@Nullable final ASTNode n) {
     if (iz.compilationUnit(n))
       return allCommands(az.compilationUnit(n));
     final Int $ = new Int();
@@ -75,7 +76,7 @@ public enum measure {
     return $.inner;
   }
 
-  static boolean excluded(final Statement ¢) {
+  static boolean excluded(@NotNull final Statement ¢) {
     return as.list(//
         Block.class, //
         // BreakStatement.class, //
@@ -91,7 +92,7 @@ public enum measure {
             && initializer(onlyOne(fragments(az.variableDeclarationStatement(¢)))) == null;
   }
 
-  static boolean excluded(final Expression ¢) {
+  static boolean excluded(@NotNull final Expression ¢) {
     return as.list(//
         Annotation.class //
     // ArrayAccess.class, //

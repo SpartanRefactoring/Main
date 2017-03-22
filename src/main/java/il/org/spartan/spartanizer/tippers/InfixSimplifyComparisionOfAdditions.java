@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,7 +24,7 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 7585159565469454722L;
 
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Override @Nullable public ASTNode replacement(final InfixExpression x) {
     if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
       return null;
@@ -43,12 +44,12 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
-  @Override public boolean prerequisite(final InfixExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }
 }

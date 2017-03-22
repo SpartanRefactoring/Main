@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -23,7 +24,7 @@ import il.org.spartan.utils.*;
 public class TrimmingOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
   protected static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
-  private final Trimmer trimmer;
+  @NotNull private final Trimmer trimmer;
   private static int rerunsLeft = 5;
 
   public TrimmingOperand(final String inner) {
@@ -31,7 +32,7 @@ public class TrimmingOperand extends Wrapper<String> {
     trimmer = new Trimmer();
   }
 
-  void checkExpected(final String expected) {
+  void checkExpected(@NotNull final String expected) {
     final Wrap w = Wrap.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
@@ -47,7 +48,7 @@ public class TrimmingOperand extends Wrapper<String> {
   public void doesNotCrash() {
     try {
       apply();
-    } catch (final Throwable ¢) {
+    } catch (@NotNull final Throwable ¢) {
       System.err.println("*** Test crashed with " + ¢.getClass().getSimpleName());
       System.err.println("*** Test crashed with " + ¢.getMessage());
       System.err.println("*** Test crashed rerunning ");
@@ -61,7 +62,7 @@ public class TrimmingOperand extends Wrapper<String> {
     return trim.apply(trimmer, Wrap.find(get()).on(get()));
   }
 
-  public TrimmingOperand gives(final String $) {
+  @Nullable public TrimmingOperand gives(@NotNull final String $) {
     final Wrap w = Wrap.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
@@ -87,13 +88,13 @@ public class TrimmingOperand extends Wrapper<String> {
     System.err.printf(QUICK + format, os);
     System.err.println(NEW_UNIT_TEST + anonymize.makeTipperUnitTest(get()));
   }
-  
+
   /** Check whether one of the code options is correct
    * @param options
    * @return Operand
    * @author Dor Ma'ayan
    * @since 09-12-2016 */
-  public TrimmingOperand givesEither(final String... options) {
+  @Nullable public TrimmingOperand givesEither(@NotNull final String... options) {
     assert options != null;
     final Wrap w = Wrap.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
@@ -141,12 +142,12 @@ public class TrimmingOperand extends Wrapper<String> {
     System.err.printf("*** %d reruns left \n ", box.it(--rerunsLeft));
   }
 
-  public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
+  @NotNull public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
     trimmer.fix(c, ¢);
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
     as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
     return this;
   }

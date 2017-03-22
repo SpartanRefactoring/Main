@@ -2,16 +2,18 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 public interface Streamer<@¢ T> {
-  default T self() {
+  @Nullable default T self() {
     return null;
   }
 
-  default Compounder<T> compounder() {
+  @NotNull default Compounder<T> compounder() {
     return Compounder.empty();
   }
 
-  default Stream<T> streamSelf() {
+  @NotNull default Stream<T> streamSelf() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
 
@@ -20,7 +22,7 @@ public interface Streamer<@¢ T> {
   }
 
   interface Atomic<@¢ T> extends Streamer<T> {
-    @Override default Stream<T> stream() {
+    @Override @NotNull default Stream<T> stream() {
       return streamSelf();
     }
   }
@@ -35,11 +37,11 @@ public interface Streamer<@¢ T> {
 
   @FunctionalInterface
   interface Compounder<T> {
-    Stream<T> compound(T self, Iterable<? extends Streamer<T>> others);
+    @NotNull Stream<T> compound(T self, Iterable<? extends Streamer<T>> others);
 
-    static <T> Compounder<T> empty() {
+    @NotNull static <T> Compounder<T> empty() {
       return new Compounder<T>() {
-        @Override @SuppressWarnings("unused") public Stream<T> compound(T self, Iterable<? extends Streamer<T>> others) {
+        @Override @NotNull @SuppressWarnings("unused") public Stream<T> compound(final T self, final Iterable<? extends Streamer<T>> others) {
           return Stream.empty();
         }
       };

@@ -21,9 +21,11 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
@@ -59,14 +61,14 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   }
 
   /** @return open projects in workspace */
-  private static List<Entry<String, Object>> getProjects() {
+  @NotNull private static List<Entry<String, Object>> getProjects() {
     final List<Entry<String, Object>> $ = new ArrayList<>();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     for (final IProject p : workspaceRoot.getProjects())
       try {
         if (p.isOpen() && p.hasNature(JavaCore.NATURE_ID))
           $.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
-      } catch (final CoreException ¢) {
+      } catch (@NotNull final CoreException ¢) {
         monitor.log(¢);
       }
     return $;
@@ -93,7 +95,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     /* (non-Javadoc)
      *
      * @see org.eclipse.jface.preference.PreferencePage#performApply() */
-    @Override public void propertyChange(final PropertyChangeEvent ¢) {
+    @Override public void propertyChange(@Nullable final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
         refreshNeeded.set();
       else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null
@@ -111,12 +113,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * @since 2017-02-25 */
   static class ListSelectionEditor extends ListEditor {
     static final String DELIMETER = ",";
-    final List<Map.Entry<String, Object>> elements;
-    Button configureButton;
-    Button ableButton;
+    @NotNull final List<Map.Entry<String, Object>> elements;
+    @Nullable Button configureButton;
+    @Nullable Button ableButton;
 
-    ListSelectionEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
-        final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
+    ListSelectionEditor(final String name, final String labelText, @NotNull final Composite parent,
+        @NotNull final List<Map.Entry<String, Object>> elements, @NotNull final Consumer<Object> onConfigure,
+        @NotNull final Function<Object, Boolean> isAble, @NotNull final Consumer<Object> onAble) {
       super(name, labelText, parent);
       this.elements = new ArrayList<>(elements);
       final Composite buttonBox = new Composite(parent, SWT.NULL);
@@ -204,11 +207,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       getButtonBoxControl(parent).dispose();
     }
 
-    @Override protected String[] parseString(final String stringList) {
+    @Override @NotNull protected String[] parseString(@Nullable final String stringList) {
       return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements.stream().map(Entry::getKey).toArray(String[]::new);
     }
 
-    @Override protected String getNewInputObject() {
+    @Override @Nullable protected String getNewInputObject() {
       return null;
     }
 
@@ -227,9 +230,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-25 */
   static class Changes implements Cloneable {
-    private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
-    private final Map<IProject, Set<String>> preferences2;
-    private final Map<IProject, Boolean> enabled;
+    @NotNull private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
+    @NotNull private final Map<IProject, Set<String>> preferences2;
+    @NotNull private final Map<IProject, Boolean> enabled;
 
     private Changes() {
       preferences1 = new HashMap<>();
@@ -237,7 +240,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       enabled = new HashMap<>();
     }
 
-    public Changes(final Iterable<Object> projects) {
+    public Changes(@NotNull final Iterable<Object> projects) {
       preferences1 = new HashMap<>();
       preferences2 = new HashMap<>();
       enabled = new HashMap<>();
@@ -248,7 +251,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     }
 
-    @Override protected Object clone() {
+    @Override @NotNull protected Object clone() {
       final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
       $.preferences2.putAll(preferences2);
@@ -260,12 +263,12 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
     }
 
-    public Boolean getAble(final IProject p) {
+    public Boolean getAble(@NotNull final IProject p) {
       final Boolean $ = enabled.get(p);
       if ($ == null)
         try {
           return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
-        } catch (final CoreException ¢) {
+        } catch (@NotNull final CoreException ¢) {
           monitor.log(¢);
           return Boolean.FALSE;
         }
@@ -276,7 +279,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       enabled.put(p, able);
     }
 
-    public Void update(final IProject p, final Set<String> preference) {
+    @Nullable public Void update(final IProject p, @NotNull final Set<String> preference) {
       preferences2.put(p, preference);
       for (final SpartanTipper[] ts : preferences1.get(p).values())
         for (final SpartanTipper ¢ : ts)
@@ -295,7 +298,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
     private void commitSelf() {
       new Job("Applying preferences changes") {
-        @Override @SuppressWarnings("synthetic-access") protected IStatus run(final IProgressMonitor m) {
+        @Override @SuppressWarnings("synthetic-access") protected IStatus run(@NotNull final IProgressMonitor m) {
           m.beginTask("Applying preferences changes", preferences2.keySet().size());
           for (final IProject p : preferences2.keySet()) {
             if (preferences2.get(p) != null)
@@ -303,7 +306,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
             if (enabled.get(p) != null)
               try {
                 TipsOnOffToggle.toggleNature(p, enabled.get(p).booleanValue());
-              } catch (final CoreException ¢) {
+              } catch (@NotNull final CoreException ¢) {
                 monitor.log(¢);
               }
             m.worked(1);

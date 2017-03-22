@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -19,11 +20,11 @@ public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<M
     return "Remove redundant final modifier of paramaeter to abstract method";
   }
 
-  @Override public String description(final Modifier ¢) {
+  @Override @NotNull public String description(final Modifier ¢) {
     return "Remove redundant final '" + az.singleVariableDeclaration(parent(¢)) + "' (parameter to abstract method)";
   }
 
-  @Override public boolean prerequisite(final Modifier m) {
+  @Override public boolean prerequisite(@NotNull final Modifier m) {
     if (!m.isFinal())
       return false;
     final SingleVariableDeclaration v = az.singleVariableDeclaration(parent(m));

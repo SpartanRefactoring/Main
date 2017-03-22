@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.Proposition.*;
 
 /** TODO Yossi Gil: document class
@@ -54,7 +56,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return inner.reduce();
   }
 
-  private R reduce(final And a) {
+  private R reduce(@NotNull final And a) {
     R $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(a.inner.get(¢)));
@@ -73,11 +75,11 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
                     : map(¢);
   }
 
-  private R reduce(final Not ¢) {
+  private R reduce(@NotNull final Not ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
-  private R reduce(final Or o) {
+  private R reduce(@NotNull final Or o) {
     R $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(o.inner.get(¢)));
@@ -87,7 +89,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(o));
   }
 
-  private R reduce(final P ¢) {
+  private R reduce(@NotNull final P ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 

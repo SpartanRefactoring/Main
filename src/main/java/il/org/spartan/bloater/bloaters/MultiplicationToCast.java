@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,7 +26,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 6335095460390231348L;
 
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
     int i = 0;
@@ -59,7 +60,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     return null;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override @Nullable public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }
 }
