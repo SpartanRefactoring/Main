@@ -15,13 +15,11 @@ public enum TestsUtilsTrimmer {
     return a.collectSuggestions(u).size();
   }
 
-  @NotNull
-  public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
+  @NotNull public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
 
-  @NotNull
-  public static TrimmingOperand trimmingOf(final String from) {
+  @NotNull public static TrimmingOperand trimmingOf(final String from) {
     return new TrimmingOperand(from);
   }
 
@@ -67,14 +65,12 @@ public enum TestsUtilsTrimmer {
       return $.get();
     }
 
-    @NotNull
-    public OperandToTipper<N> in(@NotNull final Rule<N, Tip> ¢) {
+    @NotNull public OperandToTipper<N> in(@NotNull final Rule<N, Tip> ¢) {
       assert ¢.check(findNode(¢));
       return this;
     }
 
-    @NotNull
-    public OperandToTipper<N> notIn(@NotNull final Rule<N, Tip> ¢) {
+    @NotNull public OperandToTipper<N> notIn(@NotNull final Rule<N, Tip> ¢) {
       assert !¢.check(findNode(¢));
       return this;
     }

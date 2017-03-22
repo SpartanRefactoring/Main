@@ -22,8 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 8015068204117686495L;
 
-  @Nullable
-  @Override public Tip tip(@NotNull final IfStatement s) {
+  @Nullable @Override public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement $ = copy.of(s);
@@ -49,8 +48,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<I
     return super.description();
   }
 
-  @NotNull
-  @Override public String description(final IfStatement ¢) {
+  @NotNull @Override public String description(final IfStatement ¢) {
     return "Consolidate " + ¢ + " with next statements";
   }
 }

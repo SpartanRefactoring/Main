@@ -61,8 +61,7 @@ public enum ASTutils {
     }
   }
 
-  @Nullable
-  private static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
+  @Nullable private static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
     if (n == null)
       return null;
     @NotNull final Wrapper<Boolean> foundFirst = new Wrapper<>();

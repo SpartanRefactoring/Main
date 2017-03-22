@@ -37,18 +37,15 @@ public interface system {
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
 
-  @NotNull
-  static String className(@NotNull final Class<?> ¢) {
+  @NotNull static String className(@NotNull final Class<?> ¢) {
     return ¢.getEnclosingClass() == null ? selfName(¢) : selfName(¢) + "." + className(¢.getEnclosingClass());
   }
 
-  @NotNull
-  static String className(@NotNull final Object ¢) {
+  @NotNull static String className(@NotNull final Object ¢) {
     return className(¢.getClass());
   }
 
-  @NotNull
-  static Process dumpOutput(@NotNull final Process $) {
+  @NotNull static Process dumpOutput(@NotNull final Process $) {
     if (windows())
       return $;
     try (@NotNull BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
@@ -84,8 +81,7 @@ public interface system {
         .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
   }
 
-  @NotNull
-  static String essenced(final String fileName) {
+  @NotNull static String essenced(final String fileName) {
     return fileName + ".essence";
   }
 
@@ -113,28 +109,24 @@ public interface system {
     return (new Date() + "").replaceAll(" ", "-");
   }
 
-  @NotNull
-  static String read() {
+  @NotNull static String read() {
     try (@NotNull Scanner $ = new Scanner(System.in)) {
       return read($);
     }
   }
 
-  @NotNull
-  static String read(@NotNull final Scanner ¢) {
+  @NotNull static String read(@NotNull final Scanner ¢) {
     @NotNull String $ = "";
     while (¢.hasNext()) // Can be Nano?
       $ += "\n" + ¢.nextLine();
     return $;
   }
 
-  @NotNull
-  static ProcessBuilder runScript() {
+  @NotNull static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
 
-  @NotNull
-  static String runScript(@NotNull final Process p) throws IOException {
+  @NotNull static String runScript(@NotNull final Process p) throws IOException {
     try (InputStream s = p.getInputStream(); @NotNull BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
       for (@NotNull final StringBuilder $ = new StringBuilder();; $.append(¢))
@@ -143,14 +135,12 @@ public interface system {
     }
   }
 
-  @NotNull
-  static String selfName(@NotNull final Class<?> ¢) {
+  @NotNull static String selfName(@NotNull final Class<?> ¢) {
     return ¢.isAnonymousClass() ? "{}"
         : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
 
-  @Nullable
-  static Process shellEssenceMetrics(final String fileName) {
+  @Nullable static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 

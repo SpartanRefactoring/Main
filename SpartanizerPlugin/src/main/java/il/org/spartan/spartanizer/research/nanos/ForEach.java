@@ -44,8 +44,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
         && nonTips(rivals, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Nullable @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -53,8 +52,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @NotNull
-  @Override public String technicalName() {
+  @NotNull @Override public String technicalName() {
     return "foreach C [s.t. P(·)] do S(·)";
   }
 

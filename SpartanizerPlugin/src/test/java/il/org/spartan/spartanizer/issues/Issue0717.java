@@ -21,12 +21,9 @@ public class Issue0717 {
   private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int MAX_NAME_SIZE = 100;
   private static final int MAX_STAT_AMOUNT = 100;
-  @Nullable
-  final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
-  @Nullable
-  final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-  @Nullable
-  final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
+  @Nullable final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
+  @Nullable final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+  @Nullable final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
 
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"));
@@ -40,8 +37,7 @@ public class Issue0717 {
     assert !determineIf.hasBigBlock(fourStatMethod);
   }
 
-  @NotNull
-  private String generateRandomString() {
+  @NotNull private String generateRandomString() {
     @NotNull final StringBuilder $ = new StringBuilder();
     @NotNull final Random randomGenerator = new Random();
     final int len = Math.max(1, randomGenerator.nextInt(Issue0717.MAX_NAME_SIZE));

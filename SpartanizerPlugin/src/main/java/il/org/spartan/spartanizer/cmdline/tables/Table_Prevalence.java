@@ -22,8 +22,7 @@ class Table_Prevalence extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
-  @NotNull
-  static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
+  @NotNull static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
     @Override public boolean visit(@NotNull final CompilationUnit $) {
       try {
         $.accept(new AnnotationCleanerVisitor());

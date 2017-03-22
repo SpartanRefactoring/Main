@@ -34,8 +34,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -3692738201124876878L;
 
-  @NotNull
-  private static List<Statement> commmonSuffix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
+  @NotNull private static List<Statement> commmonSuffix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
     @NotNull final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = last(ss1);
@@ -96,8 +95,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
 
   private static class DefinitionsCollector extends ASTVisitor {
     private boolean allDefined = true;
-    @NotNull
-    private final Statement[] statements;
+    @NotNull private final Statement[] statements;
 
     DefinitionsCollector(@NotNull final List<Statement> statements) {
       allDefined = true;

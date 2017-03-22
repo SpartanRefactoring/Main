@@ -30,15 +30,12 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   private static String inputDir;
   private static boolean defaultDir;
   private int classesDone;
-  @NotNull
-  private final String beforeFileName;
-  @NotNull
-  private final String afterFileName;
+  @NotNull private final String beforeFileName;
+  @NotNull private final String afterFileName;
   private PrintWriter befores;
   private PrintWriter afters;
   private CSVStatistics report;
-  @NotNull
-  private final String reportFileName;
+  @NotNull private final String reportFileName;
 
   /** Main method used to run BatchSpartanizer as a stand alone application
    * @param args */
@@ -80,8 +77,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       }
   }
 
-  @NotNull
-  public static ProcessBuilder runScript¢(final String pathname) {
+  @NotNull public static ProcessBuilder runScript¢(final String pathname) {
     @NotNull final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
@@ -255,7 +251,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         beforeFileName, //
         afterFileName);
     try (@NotNull PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-         @NotNull PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+        @NotNull PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
@@ -273,8 +269,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     system.bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 
-  @NotNull
-  public static String runScript(final String pathname) throws IOException {
+  @NotNull public static String runScript(final String pathname) throws IOException {
     return system.runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
 

@@ -20,8 +20,7 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3459237093161980438L;
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final IfStatement s) {
+  @Nullable @Override public ASTNode replacement(@Nullable final IfStatement s) {
     if (s == null || iz.block(then(s)) && elze(s) == null || iz.block(then(s)) && elze(s) != null && iz.block(elze(s)))
       return null;
     final IfStatement $ = copy.of(s);
@@ -39,8 +38,7 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @Nullable
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Nullable @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return null;
   }
 }

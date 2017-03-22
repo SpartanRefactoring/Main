@@ -38,8 +38,7 @@ public class ReportGenerator implements ConfigurableReport {
   protected static final Map<String, PrintWriter> files = new HashMap<>();
   @SuppressWarnings("rawtypes") protected static final HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
 
-  @NotNull
-  @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
+  @NotNull @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
     return metricsMap;
   }
 
@@ -52,8 +51,7 @@ public class ReportGenerator implements ConfigurableReport {
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
-    @NotNull
-    @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
+    @NotNull @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
       @NotNull final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
       $.put("methods",
@@ -69,8 +67,7 @@ public class ReportGenerator implements ConfigurableReport {
       return $;
     }
 
-    @NotNull
-    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+    @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
@@ -114,25 +111,25 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void write(final ASTNode input, final ASTNode output, final String id,
-                                                                        @NotNull final BiFunction<Integer, Integer> i) {
+      @NotNull final BiFunction<Integer, Integer> i) {
     as.list(ReportGenerator.Util.functions(""))
         .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), i.apply(λ.function().run(input), λ.function().run(output))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
-                                                                            @NotNull final BiFunction<Integer, Integer> i) {
+      @NotNull final BiFunction<Integer, Integer> i) {
     as.list(ReportGenerator.Util.functions(""))
         .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), (int) i.apply(λ.function().run(n1), λ.function().run(n2))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
-                                                                                         @NotNull final BiFunction<Integer, Integer> i) {
+      @NotNull final BiFunction<Integer, Integer> i) {
     for (@NotNull final NamedFunction ¢ : Util.functions(""))
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
-                                                                                        @NotNull final BiFunction<Integer, Integer> i) {
+      @NotNull final BiFunction<Integer, Integer> i) {
     for (@NotNull final NamedFunction ¢ : Util.functions(""))
       Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
   }
@@ -143,7 +140,7 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
-                                                                          @NotNull final BiFunction<Integer, Integer> i) {
+      @NotNull final BiFunction<Integer, Integer> i) {
     final int ess = Util.find("essence").function().run(n1), tide = Util.find("tide").function().run(n1), body = Util.find("body").function().run(n1),
         nodes = Util.find("nodes").function().run(n1);
     Util.report("metrics").put("R(E/L)", i.apply(Util.find("length").function().run(n1), ess));
@@ -261,8 +258,7 @@ public class ReportGenerator implements ConfigurableReport {
     files(key).close();
   }
 
-  @NotNull
-  public static HashMap<String, CSVStatistics> reports() {
+  @NotNull public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
 
@@ -326,7 +322,8 @@ public class ReportGenerator implements ConfigurableReport {
     report("tips").put("lastTimeDiff", "");
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output, @NotNull final String id) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output,
+      @NotNull final String id) {
     for (@NotNull final NamedFunction ¢ : metricsMap().get(id)) {
       Util.report(id).put(¢.name() + "1", ¢.function().run(input));
       Util.report(id).put(¢.name() + "2", ¢.function().run(output));

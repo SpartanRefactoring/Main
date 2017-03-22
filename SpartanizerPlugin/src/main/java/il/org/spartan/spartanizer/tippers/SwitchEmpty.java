@@ -29,8 +29,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 2775485343542030030L;
 
-  @NotNull
-  @Override public Tip tip(@NotNull final SwitchStatement s) {
+  @NotNull @Override public Tip tip(@NotNull final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @NotNull final List<Statement> ll = statements(s);
@@ -49,8 +48,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     };
   }
 
-  @NotNull
-  static String statementsToString(@NotNull final Iterable<Statement> ¢) {
+  @NotNull static String statementsToString(@NotNull final Iterable<Statement> ¢) {
     @NotNull final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";

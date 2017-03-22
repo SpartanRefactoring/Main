@@ -14,8 +14,7 @@ public class AgileSpartanizer extends InteractiveSpartanizer {
     removeHeavy();
   }
 
-  @NotNull
-  private AgileSpartanizer removeHeavy() {
+  @NotNull private AgileSpartanizer removeHeavy() {
     remove(SwitchStatement.class, //
         new SwitchEmpty(), //
         new MergeSwitchBranches(), //

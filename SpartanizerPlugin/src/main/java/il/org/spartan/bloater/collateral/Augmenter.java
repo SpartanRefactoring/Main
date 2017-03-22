@@ -54,8 +54,7 @@ public class Augmenter implements Application {
 
   /** @param u JD
    * @return selection as list of lists of statements */
-  @NotNull
-  private static List<List<Statement>> getSelection(@NotNull final CompilationUnit u, final ITextSelection s) {
+  @NotNull private static List<List<Statement>> getSelection(@NotNull final CompilationUnit u, final ITextSelection s) {
     @NotNull final List<List<Statement>> $ = new ArrayList<>();
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
@@ -81,7 +80,8 @@ public class Augmenter implements Application {
    * @param sss selection as list of lists of statements
    * @param textEditGroup JD
    * @return true iff rewrite object should be applied */
-  private static boolean rewrite(@NotNull final ASTRewrite r, @NotNull final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
+  private static boolean rewrite(@NotNull final ASTRewrite r, @NotNull final List<List<Statement>> sss,
+      @SuppressWarnings("unused") final TextEditGroup __) {
     if (sss.isEmpty() || first(sss).isEmpty())
       return false;
     r.replace(((TypeDeclaration) first(types((CompilationUnit) first(first(sss)).getRoot()))).getName(),
@@ -94,8 +94,7 @@ public class Augmenter implements Application {
    * as list of lists of statements.
    * @param ss statements to be collateralized
    * @return collateralization output as list of lists of statements */
-  @Nullable
-  public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
+  @Nullable public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
 
@@ -173,8 +172,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
-  @NotNull
-  private static ITextSelection getTextSelection(@NotNull final CompilationUnit u, @Nullable final ITextSelection s) {
+  @NotNull private static ITextSelection getTextSelection(@NotNull final CompilationUnit u, @Nullable final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }

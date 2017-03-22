@@ -41,8 +41,7 @@ public class ASTTrotter extends ASTVisitor {
     return $;
   }
 
-  @NotNull
-  private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
+  @NotNull private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
     return dispatch[¢] = dispatch[¢] != null ? dispatch[¢] : new ArrayList<>();
   }
 
@@ -112,11 +111,9 @@ public class ASTTrotter extends ASTVisitor {
   private int interesting;
   private int total;
 
-  @NotNull
-  public <N extends ASTNode> Hookable<N> on(final Class<N> c) {
+  @NotNull public <N extends ASTNode> Hookable<N> on(final Class<N> c) {
     return new Hookable<N>() {
-      @NotNull
-      @Override public Hookable<N> hook(final Rule<N, Object> ¢) {
+      @NotNull @Override public Hookable<N> hook(final Rule<N, Object> ¢) {
         hookClassOnRule(c, ¢);
         return this;
       }

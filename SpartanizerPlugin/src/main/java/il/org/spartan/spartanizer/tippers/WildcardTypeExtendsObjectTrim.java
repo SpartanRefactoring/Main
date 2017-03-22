@@ -16,8 +16,7 @@ public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<Wild
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 6954094761117949540L;
 
-  @NotNull
-  @Override public String description(final WildcardType ¢) {
+  @NotNull @Override public String description(final WildcardType ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 

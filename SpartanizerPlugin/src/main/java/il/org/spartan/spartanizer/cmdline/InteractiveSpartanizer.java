@@ -27,8 +27,7 @@ public class InteractiveSpartanizer {
     }
   }
 
-  @NotNull
-  static String read() {
+  @NotNull static String read() {
     @NotNull String $ = "";
     try (@NotNull Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
@@ -40,8 +39,7 @@ public class InteractiveSpartanizer {
 
   public Toolbox toolbox = Toolbox.defaultInstance();
 
-  @NotNull
-  public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
+  @NotNull public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
     return this;
   }
@@ -72,8 +70,7 @@ public class InteractiveSpartanizer {
 
   boolean changed;
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
@@ -81,8 +78,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
@@ -90,8 +86,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;

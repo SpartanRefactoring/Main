@@ -25,8 +25,7 @@ public abstract class InfixExpressionSortingFull extends InfixExpressionSorting 
     return !Tippers.mixedLiteralKind($) && sort($);
   }
 
-  @Nullable
-  @Override public Expression replacement(@NotNull final InfixExpression ¢) {
+  @Nullable @Override public Expression replacement(@NotNull final InfixExpression ¢) {
     @Nullable final List<Expression> $ = extract.allOperands(¢);
     return !sort($) ? null : subject.operands($).to(¢.getOperator());
   }

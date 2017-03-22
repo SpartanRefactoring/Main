@@ -55,8 +55,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
   }
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @NotNull @Override public String description(final Assignment ¢) {
     return "Replace x = x " + operator(¢) + "a; with x " + operator(¢) + "= a;";
   }
 

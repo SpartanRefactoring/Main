@@ -24,8 +24,7 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 2322066430397426252L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final PostfixExpression x) {
+  @Nullable @Override public ASTNode replacement(@NotNull final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;
     @Nullable final Expression one = az.expression(wizard.ast("1"));
@@ -42,8 +41,7 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     return iz.infixExpression($) || iz.prefixExpression($) || iz.postfixExpression($);
   }
 
-  @Nullable
-  @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Nullable @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
     return null;
   }
 }

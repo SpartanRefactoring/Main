@@ -25,8 +25,7 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -4807179505337496498L;
 
-  @Nullable
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Nullable @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixPlus(right(¢))//
         || !"1".equals(token(az.numberLiteral(right(az.infixExpression(right(¢))))))//
@@ -38,8 +37,7 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     return iz.infixLess(¢);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }
 }

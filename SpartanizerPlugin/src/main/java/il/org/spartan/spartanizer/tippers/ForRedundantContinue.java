@@ -22,18 +22,15 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 2135500968807051621L;
 
-  @NotNull
-  @Override public String description(final ForStatement ¢) {
+  @NotNull @Override public String description(final ForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return "Prune redundant continue";
   }
 
-  @Nullable
-  @Override public Tip tip(@NotNull final ForStatement ¢) {
+  @Nullable @Override public Tip tip(@NotNull final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final Block b = az.block(body(¢));

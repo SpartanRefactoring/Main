@@ -20,8 +20,7 @@ public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
     return sideEffects.free(¢);
   }
 
-  @NotNull
-  @Override public String description(final WhileStatement ¢) {
+  @NotNull @Override public String description(final WhileStatement ¢) {
     return "Remove :" + trivia.gist(¢);
   }
 

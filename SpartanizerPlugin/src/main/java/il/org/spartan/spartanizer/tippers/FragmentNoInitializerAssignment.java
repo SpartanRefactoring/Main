@@ -30,8 +30,7 @@ public final class FragmentNoInitializerAssignment extends $FragementInitializer
     return $;
   }
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 

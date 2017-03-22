@@ -27,13 +27,11 @@ public interface trim {
     return a.collectSuggestions(u).size();
   }
 
-  @NotNull
-  static fluentTrimmerApplication of(@NotNull final String codeFragment) {
+  @NotNull static fluentTrimmerApplication of(@NotNull final String codeFragment) {
     return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
 
-  @NotNull
-  @SafeVarargs //
+  @NotNull @SafeVarargs //
   static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
     return new fluentTrimmer(clazz, ts);
   }
@@ -64,13 +62,12 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                * .repeatedly //  See {@link trim.repeatedely} 
-                                * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                * .of("a+(b-c)") //  See {@link #of(String)} 
-                                * .gives("a+b-c")</code> */
+                                 * .repeatedly //  See {@link trim.repeatedely} 
+                                 * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                 * .of("a+(b-c)") //  See {@link #of(String)} 
+                                 * .gives("a+b-c")</code> */
   interface repeatedly {
-    @NotNull
-    static fluentTrimmerApplication of(@NotNull final String codeFragment) {
+    @NotNull static fluentTrimmerApplication of(@NotNull final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
@@ -82,8 +79,7 @@ public interface trim {
       };
     }
 
-    @NotNull
-    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
+    @NotNull @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
       return new fluentTrimmer(clazz, ts) {
         @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
           return super.checkAllConditions(pm);

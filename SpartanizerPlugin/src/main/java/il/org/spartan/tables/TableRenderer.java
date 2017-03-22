@@ -12,13 +12,11 @@ import org.jetbrains.annotations.NotNull;
 public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {
-      @NotNull
-      @Override public String afterHeader() {
+      @NotNull @Override public String afterHeader() {
         return "\\midrule" + NL;
       }
 
-      @NotNull
-      @Override public String afterTable() {
+      @NotNull @Override public String afterTable() {
         return "\\bottomrule" + NL;
       }
 
@@ -26,28 +24,23 @@ public interface TableRenderer {
       @NotNull@Override public String arraySeparator() { return ", "; }
       @NotNull@Override public String beforeFooter() { return "\\midrule" + NL; }
     // @formatter:on
-      @NotNull
-      @Override public String beforeTable() {
+      @NotNull @Override public String beforeTable() {
         return "\\toprule" + NL;
       }
 
-      @NotNull
-      @Override public String null¢() {
+      @NotNull @Override public String null¢() {
         return "$\\#$";
       }
 
-      @NotNull
-      @Override public String recordEnd() {
+      @NotNull @Override public String recordEnd() {
         return " \\\\" + NL;
       }
 
-      @NotNull
-      @Override public String recordSeparator() {
+      @NotNull @Override public String recordSeparator() {
         return "\t&\t";
       }
 
-      @NotNull
-      @Override public String render(@NotNull final Statistic ¢) {
+      @NotNull @Override public String render(@NotNull final Statistic ¢) {
         switch (¢) {
           case Σ:
             return "\\hfill$\\Sum$";
@@ -62,13 +55,11 @@ public interface TableRenderer {
       }
     },
     TEX2 {
-      @NotNull
-      @Override public String afterHeader() {
+      @NotNull @Override public String afterHeader() {
         return "\\hline" + NL;
       }
 
-      @NotNull
-      @Override public String afterTable() {
+      @NotNull @Override public String afterTable() {
         return "\\hline" + NL;
       }
 
@@ -76,18 +67,15 @@ public interface TableRenderer {
     @NotNull@Override public String arraySeparator() { return ", "; }
     @NotNull@Override public String beforeFooter() { return "\\hline" + NL; }
   // @formatter:on
-      @NotNull
-      @Override public String beforeTable() {
+      @NotNull @Override public String beforeTable() {
         return "\\hline" + NL;
       }
 
-      @NotNull
-      @Override public String footerEnd() {
+      @NotNull @Override public String footerEnd() {
         return "\\\\" + NL;
       }
 
-      @NotNull
-      @Override public String recordSeparator() {
+      @NotNull @Override public String recordSeparator() {
         return "\t&\t";
       }
     },
@@ -98,8 +86,7 @@ public interface TableRenderer {
     // @formatter:on
     },
     MARKDOWN {
-      @NotNull
-      @Override public String afterHeader() {
+      @NotNull @Override public String afterHeader() {
         @NotNull String $ = "| ";
         for (int ¢ = 0; ¢ < lastSize; ++¢)
           $ += "--- |";
@@ -126,8 +113,7 @@ public interface TableRenderer {
 
   String NL = System.getProperty("line.separator");
 
-  @NotNull
-  default String cellReal(@NotNull final Double ¢) {
+  @NotNull default String cellReal(@NotNull final Double ¢) {
     return ¢.longValue() != ¢.doubleValue() ? ¢ + "" : cellInt(Long.valueOf(¢.longValue()));
   }
 
@@ -139,13 +125,11 @@ public interface TableRenderer {
     return "\t";
   }
 
-  @NotNull
-  default String afterFooter() {
+  @NotNull default String afterFooter() {
     return empty();
   }
 
-  @NotNull
-  default String afterHeader() {
+  @NotNull default String afterHeader() {
     return empty();
   }
 
@@ -173,8 +157,7 @@ public interface TableRenderer {
   @NotNull default String headerSeparator() { return recordSeparator(); }
   @NotNull default String null¢() { return "Nº"; }
   // @formatter:on
-  @NotNull
-  default String recordBegin() {
+  @NotNull default String recordBegin() {
     return empty();
   }
 
@@ -182,18 +165,15 @@ public interface TableRenderer {
     return NL;
   }
 
-  @NotNull
-  default String recordSeparator() {
+  @NotNull default String recordSeparator() {
     return tab();
   }
 
-  @NotNull
-  default String render(final Statistic ¢) {
+  @NotNull default String render(final Statistic ¢) {
     return ¢ + "";
   }
 
-  @NotNull
-  default String renderRow(@NotNull final Collection<Object> values) {
+  @NotNull default String renderRow(@NotNull final Collection<Object> values) {
     @NotNull final StringBuilder $ = new StringBuilder(recordBegin());
     @NotNull final Separator s = new Separator(recordSeparator());
     values.forEach(λ -> $.append(s)

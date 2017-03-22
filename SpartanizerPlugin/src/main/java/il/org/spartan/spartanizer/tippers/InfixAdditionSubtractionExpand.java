@@ -14,8 +14,7 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
     implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = 8781877067464919917L;
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;
   }
 

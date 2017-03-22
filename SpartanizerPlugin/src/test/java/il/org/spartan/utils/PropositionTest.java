@@ -203,8 +203,7 @@ public class PropositionTest {
 
   @Test public void z() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @NotNull
-      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+      @NotNull @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
         return "";
       }
     }), is(""));
@@ -282,8 +281,7 @@ public class PropositionTest {
 
   @Test public void d1() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @NotNull
-      @Override protected String map(final BooleanSupplier ¢) {
+      @NotNull @Override protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
     }), is("T_OR_F_OR_X"));

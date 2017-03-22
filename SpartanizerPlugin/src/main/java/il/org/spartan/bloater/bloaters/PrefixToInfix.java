@@ -39,8 +39,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
         && (iz.expressionStatement($) || iz.forStatement($));
   }
 
-  @Nullable
-  @Override @SuppressWarnings("unused") public String description(final PrefixExpression __) {
+  @Nullable @Override @SuppressWarnings("unused") public String description(final PrefixExpression __) {
     return null;
   }
 }

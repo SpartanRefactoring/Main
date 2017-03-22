@@ -46,18 +46,15 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  @Nullable
-  private static Expression Initializers(final VariableDeclarationFragment ¢) {
+  @Nullable private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  @Nullable
-  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  @Nullable private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
-  @NotNull
-  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  @NotNull private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     // TODO Dor: use extract.core
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
@@ -75,14 +72,12 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f, @Nullable final Statement nextStatement, final TextEditGroup g,
-                                    @Nullable final ExclusionManager exclude) {
+  @Nullable @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
+      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     @Nullable final VariableDeclarationStatement vds = parent(f);

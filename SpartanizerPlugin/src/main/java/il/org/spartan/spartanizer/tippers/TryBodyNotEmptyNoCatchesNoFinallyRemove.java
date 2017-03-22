@@ -26,8 +26,7 @@ public final class TryBodyNotEmptyNoCatchesNoFinallyRemove extends ReplaceCurren
     return ¢.getBody();
   }
 
-  @NotNull
-  @Override public String description(@NotNull final TryStatement ¢) {
+  @NotNull @Override public String description(@NotNull final TryStatement ¢) {
     return "Remove the do-nothing try wrap around block " + trivia.gist(¢.getBody());
   }
 }

@@ -23,8 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public final class Logger {
   public static int numMethods;
   private static String currentFile;
-  @NotNull
-  private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
+  @NotNull private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
   private static final Collection<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   private Logger() {}
@@ -55,8 +54,7 @@ public final class Logger {
     return Integer.valueOf((currentFile + "." + getType() + name(¢) + parametersTypes(¢)).hashCode());
   }
 
-  @NotNull
-  private static String getType() {
+  @NotNull private static String getType() {
     return currentType == null || currentType.isEmpty() ? "" : currentType.peek() + "";
   }
 

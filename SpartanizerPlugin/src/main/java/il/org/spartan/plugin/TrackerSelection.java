@@ -24,13 +24,11 @@ public class TrackerSelection extends Selection {
     super(asList(compilationUnit), textSelection, name);
   }
 
-  @Nullable
-  public static TrackerSelection empty() {
+  @Nullable public static TrackerSelection empty() {
     return new TrackerSelection(null, null, null);
   }
 
-  @NotNull
-  public TrackerSelection track(@NotNull final ASTNode ¢) {
+  @NotNull public TrackerSelection track(@NotNull final ASTNode ¢) {
     assert ¢ != null;
     assert ¢ instanceof MethodDeclaration || ¢ instanceof AbstractTypeDeclaration;
     track = ¢;
@@ -53,16 +51,14 @@ public class TrackerSelection extends Selection {
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
 
-  @NotNull
-  private static List<WrappedCompilationUnit> asList(@Nullable final WrappedCompilationUnit ¢) {
+  @NotNull private static List<WrappedCompilationUnit> asList(@Nullable final WrappedCompilationUnit ¢) {
     @NotNull final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
     return $;
   }
 
-  @Nullable
-  private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
+  @Nullable private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
     return yieldAncestors.untilNodeType(nodeType).from(coveredNode);
   }
 

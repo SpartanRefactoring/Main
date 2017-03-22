@@ -17,8 +17,7 @@ public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<N
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -3150743394756288696L;
 
-  @NotNull
-  @Override public String description(@NotNull final NormalAnnotation ¢) {
+  @NotNull @Override public String description(@NotNull final NormalAnnotation ¢) {
     return "Remove redundant parenthesis from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 

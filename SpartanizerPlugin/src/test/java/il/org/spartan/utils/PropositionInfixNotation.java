@@ -12,46 +12,35 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
     super(new ReduceStringConcatenate());
   }
 
-  @NotNull
-  @Override protected final String ante(@NotNull final Proposition.Not ¢) {
+  @NotNull @Override protected final String ante(@NotNull final Proposition.Not ¢) {
     return negation() + (¢.inner instanceof Proposition.C ? open() : empty());
   }
 
-  @NotNull
-  @Override protected final String ante(@NotNull final Proposition.P ¢) {
+  @NotNull @Override protected final String ante(@NotNull final Proposition.P ¢) {
     return ¢.inner instanceof Proposition.C ? open() : empty();
   }
 
-  @NotNull
-  protected abstract String close();
+  @NotNull protected abstract String close();
 
-  @NotNull
-  protected abstract String empty();
+  @NotNull protected abstract String empty();
 
-  @NotNull
-  @Override protected abstract String inter(Proposition.And a);
+  @NotNull @Override protected abstract String inter(Proposition.And a);
 
-  @NotNull
-  @Override protected abstract String inter(Proposition.Or o);
+  @NotNull @Override protected abstract String inter(Proposition.Or o);
 
-  @NotNull
-  @Override protected String map(final BooleanSupplier ¢) {
+  @NotNull @Override protected String map(final BooleanSupplier ¢) {
     return ¢ + "";
   }
 
-  @NotNull
-  protected abstract String negation();
+  @NotNull protected abstract String negation();
 
-  @NotNull
-  protected abstract String open();
+  @NotNull protected abstract String open();
 
-  @NotNull
-  @Override protected final String post(@NotNull final Proposition.Not ¢) {
+  @NotNull @Override protected final String post(@NotNull final Proposition.Not ¢) {
     return ¢.inner instanceof Proposition.C ? close() : empty();
   }
 
-  @NotNull
-  @Override protected String post(@NotNull final Proposition.P ¢) {
+  @NotNull @Override protected String post(@NotNull final Proposition.P ¢) {
     return ¢.inner instanceof Proposition.C ? close() : empty();
   }
 }

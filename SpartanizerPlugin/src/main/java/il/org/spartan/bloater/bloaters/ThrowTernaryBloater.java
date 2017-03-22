@@ -48,13 +48,11 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
         : innerThrowReplacement(expression($), ¢);
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final ThrowStatement ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final ThrowStatement ¢) {
     return replaceReturn(¢);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ThrowStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ThrowStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
 }

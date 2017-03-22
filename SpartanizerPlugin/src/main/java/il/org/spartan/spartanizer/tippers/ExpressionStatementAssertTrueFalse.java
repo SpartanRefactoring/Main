@@ -24,26 +24,22 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 3496864953281334906L;
 
-  @NotNull
-  @Override public String description(final ExpressionStatement ¢) {
+  @NotNull @Override public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
 
-  @Nullable
-  @Override public ASTNode replacement(final ExpressionStatement ¢) {
+  @Nullable @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replacement(az.methodInvocation(expression(¢)));
   }
 
-  @Nullable
-  private static ASTNode replacement(@Nullable final MethodInvocation ¢) {
+  @Nullable private static ASTNode replacement(@Nullable final MethodInvocation ¢) {
     if (¢ == null)
       return null;
     @NotNull final List<Expression> $ = arguments(¢);
     return replacement(¢, first($), second($));
   }
 
-  @Nullable
-  public static ASTNode replacement(@NotNull final MethodInvocation i, final Expression first, @Nullable final Expression second) {
+  @Nullable public static ASTNode replacement(@NotNull final MethodInvocation i, final Expression first, @Nullable final Expression second) {
     @Nullable final Expression message = second == null ? null : first, condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
     if (message != null)
@@ -65,8 +61,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     }
   }
 
-  @NotNull
-  private static AssertStatement setAssert(@NotNull final AssertStatement $, final Expression x) {
+  @NotNull private static AssertStatement setAssert(@NotNull final AssertStatement $, final Expression x) {
     $.setExpression(x);
     return $;
   }

@@ -17,8 +17,8 @@ public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
     addAll(Arrays.asList(ts));
   }
 
-  @NotNull
-  public BlockNanoPatternContainer statementsPattern(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
+  @NotNull public BlockNanoPatternContainer statementsPattern(@NotNull final String pattern, @NotNull final String replacement,
+      @NotNull final String description) {
     add(TipperFactory.statementsPattern(pattern, replacement, description));
     return this;
   }

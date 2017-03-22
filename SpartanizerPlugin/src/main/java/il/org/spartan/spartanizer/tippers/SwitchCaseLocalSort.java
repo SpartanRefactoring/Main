@@ -27,8 +27,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = 287035013781478896L;
 
-  @NotNull
-  @Override public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
+  @NotNull @Override public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
     @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
@@ -48,8 +47,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
         && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
   }
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @NotNull @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "sort cases with same flow control";
   }
 }

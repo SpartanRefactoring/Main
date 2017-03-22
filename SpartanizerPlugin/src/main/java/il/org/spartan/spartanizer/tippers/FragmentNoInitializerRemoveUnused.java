@@ -20,8 +20,7 @@ public final class FragmentNoInitializerRemoveUnused extends $Fragment implement
     return "Remove unused, uninitialized variable";
   }
 
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove unused and unitialized variable: " + trivia.gist(¢);
   }
 
@@ -29,8 +28,7 @@ public final class FragmentNoInitializerRemoveUnused extends $Fragment implement
     return super.prerequisite(f) && initializer() == null && collect.usesOf(name()).in(scope.of(f)).isEmpty();
   }
 
-  @NotNull
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @NotNull @Override protected ASTRewrite go(@NotNull final ASTRewrite r, final TextEditGroup g) {
     return eliminateFragment(r, g);
   }
 }

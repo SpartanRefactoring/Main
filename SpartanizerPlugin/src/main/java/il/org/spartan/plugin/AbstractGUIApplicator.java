@@ -39,10 +39,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
-  @Nullable
-  private IMarker marker;
-  @Nullable
-  protected String name;
+  @Nullable private IMarker marker;
+  @Nullable protected String name;
   private ITextSelection selection;
   private final List<Tip> tips = new ArrayList<>();
   private int totalChanges;
@@ -61,8 +59,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
   }
 
-  @NotNull
-  @Override public RefactoringStatus checkFinalConditions(@NotNull final IProgressMonitor pm) throws CoreException, OperationCanceledException {
+  @NotNull @Override public RefactoringStatus checkFinalConditions(@NotNull final IProgressMonitor pm)
+      throws CoreException, OperationCanceledException {
     changes.clear();
     totalChanges = 0;
     if (marker == null)
@@ -75,8 +73,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return new RefactoringStatus();
   }
 
-  @NotNull
-  @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
+  @NotNull @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     @NotNull final RefactoringStatus $ = new RefactoringStatus();
     if (iCompilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
@@ -88,15 +85,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
-  @NotNull
-  public final Collection<Tip> collectSuggestions(@NotNull final CompilationUnit ¢) {
+  @NotNull public final Collection<Tip> collectSuggestions(@NotNull final CompilationUnit ¢) {
     @NotNull final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
   }
 
-  @NotNull
-  private IFile compilationUnitIFile() {
+  @NotNull private IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
 
@@ -120,8 +115,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return totalChanges;
   }
 
-  @NotNull
-  @Override public final Change createChange(final IProgressMonitor pm) throws OperationCanceledException {
+  @NotNull @Override public final Change createChange(final IProgressMonitor pm) throws OperationCanceledException {
     progressMonitor = pm;
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
@@ -174,11 +168,9 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
    * @since 2013/07/01
    * @return a quick fix for this instance */
-  @Nullable
-  public IMarkerResolution getFix() {
+  @Nullable public IMarkerResolution getFix() {
     return new IMarkerResolution() {
-      @Nullable
-      @Override public String getLabel() {
+      @Nullable @Override public String getLabel() {
         return getName();
       }
 
@@ -193,21 +185,18 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** @return a quick fix with a preview for this instance. */
-  @Nullable
-  public IMarkerResolution getFixWithPreview() {
+  @Nullable public IMarkerResolution getFixWithPreview() {
     return getFixWithPreview(getName());
   }
 
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
-  @Nullable
-  private IMarkerResolution getFixWithPreview(final String s) {
+  @Nullable private IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
       /** a quickfix which opens a refactoring wizard with the tipper
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
        *         (v2) */
-      @NotNull
-      @Override public String getLabel() {
+      @NotNull @Override public String getLabel() {
         return "Apply after preview";
       }
 
@@ -228,8 +217,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return iCompilationUnit;
   }
 
-  @Nullable
-  @Override public final String getName() {
+  @Nullable @Override public final String getName() {
     return name;
   }
 
@@ -300,8 +288,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m the marker for which the refactoring needs to system
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */
-  @NotNull
-  public RefactoringStatus runAsMarkerFix(@NotNull final IMarker ¢) throws CoreException {
+  @NotNull public RefactoringStatus runAsMarkerFix(@NotNull final IMarker ¢) throws CoreException {
     return innerRunAsMarkerFix(¢, false);
   }
 
@@ -328,8 +315,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return tips.size();
   }
 
-  @Nullable
-  @Override public String toString() {
+  @Nullable @Override public String toString() {
     return name;
   }
 
@@ -346,8 +332,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  @Nullable
-  protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
+  @Nullable protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
 
   public void parse() {
     compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
@@ -438,8 +423,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  @NotNull
-  private RefactoringStatus innerRunAsMarkerFix(@NotNull final IMarker m, final boolean preview) throws CoreException {
+  @NotNull private RefactoringStatus innerRunAsMarkerFix(@NotNull final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
     scanCompilationUnitForMarkerFix(m, preview);
@@ -499,8 +483,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-  @NotNull
-  private TextFileChange init(@NotNull final WrappedCompilationUnit ¢) {
+  @NotNull private TextFileChange init(@NotNull final WrappedCompilationUnit ¢) {
     setICompilationUnit(¢.descriptor);
     progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
     @NotNull final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());

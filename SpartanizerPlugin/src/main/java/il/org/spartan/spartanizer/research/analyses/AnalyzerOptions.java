@@ -27,8 +27,7 @@ public enum AnalyzerOptions {
     options.get(cls).put(property, value);
   }
 
-  @Nullable
-  public static String get(final String property) {
+  @Nullable public static String get(final String property) {
     return get(Analyze.class.getSimpleName(), property);
   }
 
@@ -71,8 +70,7 @@ public enum AnalyzerOptions {
       setOuterProperty(li[0], li[1]);
   }
 
-  @NotNull
-  private static String[] bisect(@NotNull final String s, @NotNull final String by) {
+  @NotNull private static String[] bisect(@NotNull final String s, @NotNull final String by) {
     @NotNull final String[] $ = new String[2];
     final int i = s.indexOf(by);
     $[0] = s.substring(0, i);

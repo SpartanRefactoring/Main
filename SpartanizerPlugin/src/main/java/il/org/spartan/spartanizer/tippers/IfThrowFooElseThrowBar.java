@@ -25,8 +25,7 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
     implements TipperCategory.Ternarization {
   private static final long serialVersionUID = -7106502252108749001L;
 
-  @NotNull
-  @Override public String description(@NotNull final IfStatement ¢) {
+  @NotNull @Override public String description(@NotNull final IfStatement ¢) {
     return "Consolidate 'if' " + trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
   }
 

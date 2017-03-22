@@ -28,8 +28,7 @@ public interface idiomatic {
   };
   /** an ignoring trigger */
   @Nullable Trigger tIgnore = new Trigger() {
-    @Nullable
-    @Override public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
+    @Nullable @Override public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
       return null;
     }
   };
@@ -57,8 +56,7 @@ public interface idiomatic {
    * @param condition
    * @param t JD
    * @return T */
-  @Nullable
-  static <T> T incase(final boolean condition, final T t) {
+  @Nullable static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
 
@@ -80,25 +78,21 @@ public interface idiomatic {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  @NotNull
-  static String quote(@Nullable final String $) {
+  @NotNull static String quote(@Nullable final String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
   /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
-  @NotNull
-  static Runner run(final Runnable ¢) {
+  @NotNull static Runner run(final Runnable ¢) {
     return new Runner(¢);
   }
 
-  @NotNull
-  static <T> Storer<T> take(final T ¢) {
+  @NotNull static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
 
-  @Nullable
-  static Trigger unless(final boolean condition) {
+  @Nullable static Trigger unless(final boolean condition) {
     return vhen(!condition);
   }
 
@@ -107,8 +101,7 @@ public interface idiomatic {
    * @param t JD
    * @return non-boolean parameter, in case the boolean parameter is true, or
    *         null, otherwise */
-  @Nullable
-  static <T> T unless(final boolean condition, final T t) {
+  @Nullable static <T> T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
 
@@ -119,8 +112,7 @@ public interface idiomatic {
       this.t = t;
     }
 
-    @Nullable
-    public ConditionHolder nulls() {
+    @Nullable public ConditionHolder nulls() {
       return new ConditionHolder(t == null);
     }
   }
@@ -132,8 +124,7 @@ public interface idiomatic {
       this.b = b;
     }
 
-    @NotNull
-    public <T> SupplierHolder<T> eval(final Supplier<T> ¢) {
+    @NotNull public <T> SupplierHolder<T> eval(final Supplier<T> ¢) {
       return new SupplierHolder<>(¢, b);
     }
   }
@@ -152,20 +143,17 @@ public interface idiomatic {
     }
   }
 
-  @NotNull
-  static <T> ObjectHolder<T> when(final T ¢) {
+  @NotNull static <T> ObjectHolder<T> when(final T ¢) {
     return new ObjectHolder<>(¢);
   }
 
-  @NotNull
-  static ConditionHolder when(final boolean ¢) {
+  @NotNull static ConditionHolder when(final boolean ¢) {
     return new ConditionHolder(¢);
   }
 
   /** @param condition JD
    * @return */
-  @Nullable
-  static Trigger vhen(final boolean condition) {
+  @Nullable static Trigger vhen(final boolean condition) {
     return condition ? eval : tIgnore;
   }
 
@@ -176,8 +164,7 @@ public interface idiomatic {
     public abstract <T> void when(boolean c);
   }
 
-  @NotNull
-  static Executor execute(final Runnable r) {
+  @NotNull static Executor execute(final Runnable r) {
     return new Executor() {
       final Runnable runnable = r;
 
@@ -188,8 +175,7 @@ public interface idiomatic {
     };
   }
 
-  @NotNull
-  static <T> Storer<T> default¢(final T ¢) {
+  @NotNull static <T> Storer<T> default¢(final T ¢) {
     return new Storer<>(¢);
   }
 
@@ -203,8 +189,7 @@ public interface idiomatic {
      * @param unless condition on which value is returned
      * @return {@link #get()} when the parameter is {@code true} , otherwise
      *         {@code null. */
-    @Nullable
-    default T unless(final boolean unless) {
+    @Nullable default T unless(final boolean unless) {
       return when(!unless);
     }
 
@@ -212,8 +197,7 @@ public interface idiomatic {
      * @return {@link #get()} when the parameter is {@code true} , otherwise
      *         {@code null.
      * @param when condition on which value is returned */
-    @Nullable
-    default T when(final boolean when) {
+    @Nullable default T when(final boolean when) {
       return when ? get() : null;
     }
 
@@ -294,8 +278,7 @@ public interface idiomatic {
     /** @param <T> JD
      * @param $ JD
      * @return */
-    @Nullable
-    default <T> T eval(final T $) {
+    @Nullable default <T> T eval(final T $) {
       return eval(() -> $);
     }
   }
@@ -307,8 +290,7 @@ public interface idiomatic {
    * apply, reduce, ...
    * @param ¢
    * @return */
-  @NotNull
-  static <T, CT extends Collection<T>> CollectionHolder<T, CT> on(final CT ¢) {
+  @NotNull static <T, CT extends Collection<T>> CollectionHolder<T, CT> on(final CT ¢) {
     return new CollectionHolder<>(¢);
   }
 
@@ -323,13 +305,11 @@ public interface idiomatic {
       collection.forEach(mapper);
     }
 
-    @NotNull
-    @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
+    @NotNull @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
       return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
     }
 
-    @NotNull
-    @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
+    @NotNull @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
       return (CT) collection.stream().filter(mapper).collect(new GenericCollector<>(collection.getClass()));
     }
 
@@ -349,8 +329,7 @@ public interface idiomatic {
   /** This is not good. java cannot infer types.
    * @param mapper
    * @return */
-  @NotNull
-  static <T, R> MapperLambdaHolder<T, R> mapp(final Function<T, R> mapper) {
+  @NotNull static <T, R> MapperLambdaHolder<T, R> mapp(final Function<T, R> mapper) {
     return new MapperLambdaHolder<>(mapper);
   }
 
@@ -361,8 +340,7 @@ public interface idiomatic {
       this.mapper = mapper;
     }
 
-    @NotNull
-    @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(@NotNull final CT ¢) {
+    @NotNull @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(@NotNull final CT ¢) {
       return (CR) ¢.stream().map(mapper).collect(new GenericCollector<>(¢.getClass()));
     }
     // @SuppressWarnings("boxing") @Test public void useNewMapper() {
@@ -393,8 +371,7 @@ public interface idiomatic {
       return λ -> (Collection<R>) λ;
     }
 
-    @Nullable
-    @Override @SuppressWarnings("unchecked") public Supplier<Collection<R>> supplier() {
+    @Nullable @Override @SuppressWarnings("unchecked") public Supplier<Collection<R>> supplier() {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
@@ -409,21 +386,18 @@ public interface idiomatic {
       return Collection::add;
     }
 
-    @NotNull
-    @Override public BinaryOperator<Collection<R>> combiner() {
+    @NotNull @Override public BinaryOperator<Collection<R>> combiner() {
       return (left, right) -> {
         left.addAll(right);
         return left;
       };
     }
 
-    @NotNull
-    @Override public Function<Collection<R>, Collection<R>> finisher() {
+    @NotNull @Override public Function<Collection<R>, Collection<R>> finisher() {
       return castingIdentity();
     }
 
-    @NotNull
-    @Override public Set<Characteristics> characteristics() {
+    @NotNull @Override public Set<Characteristics> characteristics() {
       return new HashSet<>();
     }
   }

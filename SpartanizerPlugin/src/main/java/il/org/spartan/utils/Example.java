@@ -20,8 +20,7 @@ public interface Example {
 
   static Converter convert(@NotNull final String from) {
     return to -> new Converts() {
-      @NotNull
-      @Override public String from() {
+      @NotNull @Override public String from() {
         return from;
       }
 

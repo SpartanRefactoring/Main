@@ -32,7 +32,8 @@ import il.org.spartan.spartanizer.java.*;
 public final class TippersTest {
   @Test public void countInEnhancedFor() {
     @NotNull final String input = "int f() { for (int a: as) return a; }";
-    @NotNull final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
+    @NotNull final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class)
+        .in(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
     azzert.that(m, iz(input));
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(body(m)))).getParameter();
     assert p != null;

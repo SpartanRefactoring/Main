@@ -31,18 +31,15 @@ public class ForEachSuchThat extends ForEach {
         && nonTips(rivals, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Nullable @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return ForEach.class.getSimpleName();
   }
 }

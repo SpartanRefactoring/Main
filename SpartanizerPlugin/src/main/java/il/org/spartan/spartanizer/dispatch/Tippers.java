@@ -25,8 +25,8 @@ import org.jetbrains.annotations.Nullable;
  * @since 2015-07-17 */
 public enum Tippers {
   ;
-  public static void addAllReplacing(final Collection<Statement> to, @NotNull final Iterable<Statement> from, final Statement substitute, final Statement by1,
-                                     final Iterable<Statement> by2) {
+  public static void addAllReplacing(final Collection<Statement> to, @NotNull final Iterable<Statement> from, final Statement substitute,
+      final Statement by1, final Iterable<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
         copy.into(¢, to);
@@ -57,14 +57,16 @@ public enum Tippers {
     }
   }
 
-  public static ListRewrite insertAfter(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  public static ListRewrite insertAfter(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
       if (¢ < 0)
         return $;
   }
 
-  public static ListRewrite insertBefore(final Statement where, @NotNull final Iterable<Statement> what, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  public static ListRewrite insertBefore(final Statement where, @NotNull final Iterable<Statement> what, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
@@ -107,8 +109,8 @@ public enum Tippers {
         .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[0]));
   }
 
-  @NotNull
-  public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by, final TextEditGroup g) {
+  @NotNull public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by,
+      final TextEditGroup g) {
     @Nullable final Block parent = az.block(what.getParent());
     @NotNull final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);

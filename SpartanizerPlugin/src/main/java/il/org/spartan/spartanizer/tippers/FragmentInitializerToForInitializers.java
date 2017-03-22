@@ -65,8 +65,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     return copy.of(left(from));
   }
 
-  @NotNull
-  public static Expression handleParenthesizedCondition(@NotNull final ParenthesizedExpression from, final VariableDeclarationStatement s) {
+  @NotNull public static Expression handleParenthesizedCondition(@NotNull final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     @Nullable final Assignment $ = az.assignment(from.getExpression());
     @Nullable final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
@@ -100,14 +99,12 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f, @Nullable final Statement nextStatement, final TextEditGroup g,
-                                    @Nullable final ExclusionManager exclude) {
+  @Nullable @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
+      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     @Nullable final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());

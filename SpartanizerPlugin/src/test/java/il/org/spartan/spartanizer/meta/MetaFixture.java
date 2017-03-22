@@ -35,8 +35,7 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
-  @Nullable
-  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  @Nullable protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -51,8 +50,7 @@ public abstract class MetaFixture {
         .reduce((x, y) -> x + y).get();
   }
 
-  @NotNull
-  protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
+  @NotNull protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
     @NotNull @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
     for (@Nullable @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
@@ -102,8 +100,7 @@ public abstract class MetaFixture {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
-  @NotNull
-  private static String[] values(@Nullable final Expression $) {
+  @NotNull private static String[] values(@Nullable final Expression $) {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
@@ -116,13 +113,11 @@ public abstract class MetaFixture {
     return as.array(¢.getLiteralValue());
   }
 
-  @NotNull
-  public Iterable<Annotation> annotations() {
+  @NotNull public Iterable<Annotation> annotations() {
     return descendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
 
-  @NotNull
-  public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
+  @NotNull public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
     @NotNull final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
@@ -158,8 +153,7 @@ public abstract class MetaFixture {
     return classToText.get(c);
   }
 
-  @NotNull
-  public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
+  @NotNull public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return descendants.whoseClassIs(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 }

@@ -29,13 +29,11 @@ public class MyArguments extends JavadocMarkerNanoPattern {
         && !invocations.isEmpty();
   }
 
-  @NotNull
-  private static String stringify(final MethodDeclaration ¢) {
+  @NotNull private static String stringify(final MethodDeclaration ¢) {
     return "," + separate.these(parametersNames(¢)).by(",") + ",";
   }
 
-  @NotNull
-  private static String stringify(final MethodInvocation ¢) {
+  @NotNull private static String stringify(final MethodInvocation ¢) {
     return "," + separate.these(arguments(¢)).by(",") + ",";
   }
 }

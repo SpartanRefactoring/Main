@@ -23,8 +23,7 @@ public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
     return String.format("Remove empty Javadoc comment of %d characters", box.it(metrics.length(¢)));
   }
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("/***/ void f() {}") //
             .to("void f() {}"), //

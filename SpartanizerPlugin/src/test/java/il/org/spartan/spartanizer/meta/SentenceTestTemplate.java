@@ -45,15 +45,13 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
-    @NotNull
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       @NotNull final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
 
-    @NotNull
-    public static Object[] ____(@NotNull final MethodDeclaration changes) {
+    @NotNull public static Object[] ____(@NotNull final MethodDeclaration changes) {
       return new Object[] { changes.getName() + "", changes };
     }
 
@@ -76,8 +74,7 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class ChangesTo {
-    @NotNull
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       @NotNull final Collection<Object[]> $ = new ArrayList<>();
       for (@NotNull final List<MethodDeclaration> sentence : allSentences())
         for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
@@ -86,8 +83,7 @@ public enum SentenceTestTemplate {
       return $;
     }
 
-    @NotNull
-    public static Object[] ____(@NotNull final MethodDeclaration from, @NotNull final MethodDeclaration to) {
+    @NotNull public static Object[] ____(@NotNull final MethodDeclaration from, @NotNull final MethodDeclaration to) {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
 
@@ -124,16 +120,14 @@ public enum SentenceTestTemplate {
    * @since 2017-01-18 */
   @RunWith(Parameterized.class)
   public static class Stays {
-    @NotNull
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       @NotNull final Collection<Object[]> $ = new ArrayList<>();
       allSentences()
           .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
     }
 
-    @NotNull
-    public static Object[] ____(@NotNull final MethodDeclaration stays) {
+    @NotNull public static Object[] ____(@NotNull final MethodDeclaration stays) {
       return new Object[] { stays.getName() + "", stays, };
     }
 

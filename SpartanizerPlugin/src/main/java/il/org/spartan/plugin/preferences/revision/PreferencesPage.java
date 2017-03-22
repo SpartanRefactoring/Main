@@ -61,8 +61,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   }
 
   /** @return open projects in workspace */
-  @NotNull
-  private static List<Entry<String, Object>> getProjects() {
+  @NotNull private static List<Entry<String, Object>> getProjects() {
     @NotNull final List<Entry<String, Object>> $ = new ArrayList<>();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     for (@NotNull final IProject p : workspaceRoot.getProjects())
@@ -114,13 +113,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * @since 2017-02-25 */
   static class ListSelectionEditor extends ListEditor {
     static final String DELIMETER = ",";
-    @NotNull
-    final List<Map.Entry<String, Object>> elements;
+    @NotNull final List<Map.Entry<String, Object>> elements;
     @Nullable Button configureButton;
     @Nullable Button ableButton;
 
-    ListSelectionEditor(final String name, final String labelText, @NotNull final Composite parent, @NotNull final List<Map.Entry<String, Object>> elements,
-                        @NotNull final Consumer<Object> onConfigure, @NotNull final Function<Object, Boolean> isAble, @NotNull final Consumer<Object> onAble) {
+    ListSelectionEditor(final String name, final String labelText, @NotNull final Composite parent,
+        @NotNull final List<Map.Entry<String, Object>> elements, @NotNull final Consumer<Object> onConfigure,
+        @NotNull final Function<Object, Boolean> isAble, @NotNull final Consumer<Object> onAble) {
       super(name, labelText, parent);
       this.elements = new ArrayList<>(elements);
       @NotNull final Composite buttonBox = new Composite(parent, SWT.NULL);
@@ -208,13 +207,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       getButtonBoxControl(parent).dispose();
     }
 
-    @NotNull
-    @Override protected String[] parseString(@Nullable final String stringList) {
+    @NotNull @Override protected String[] parseString(@Nullable final String stringList) {
       return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements.stream().map(Entry::getKey).toArray(String[]::new);
     }
 
-    @Nullable
-    @Override protected String getNewInputObject() {
+    @Nullable @Override protected String getNewInputObject() {
       return null;
     }
 
@@ -233,12 +230,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
    * @since 2017-02-25 */
   static class Changes implements Cloneable {
-    @NotNull
-    private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
-    @NotNull
-    private final Map<IProject, Set<String>> preferences2;
-    @NotNull
-    private final Map<IProject, Boolean> enabled;
+    @NotNull private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
+    @NotNull private final Map<IProject, Set<String>> preferences2;
+    @NotNull private final Map<IProject, Boolean> enabled;
 
     private Changes() {
       preferences1 = new HashMap<>();
@@ -257,8 +251,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     }
 
-    @NotNull
-    @Override protected Object clone() {
+    @NotNull @Override protected Object clone() {
       @NotNull final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
       $.preferences2.putAll(preferences2);
@@ -286,8 +279,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       enabled.put(p, able);
     }
 
-    @Nullable
-    public Void update(final IProject p, @NotNull final Set<String> preference) {
+    @Nullable public Void update(final IProject p, @NotNull final Set<String> preference) {
       preferences2.put(p, preference);
       for (@NotNull final SpartanTipper[] ts : preferences1.get(p).values())
         for (@NotNull final SpartanTipper ¢ : ts)

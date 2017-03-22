@@ -71,8 +71,7 @@ enum CollectMetrics {
     new FilesGenerator(".java").from(where).forEach(CollectMetrics::go);
   }
 
-  @NotNull
-  private static CSVStatistics init(@NotNull final String $, final String property) {
+  @NotNull private static CSVStatistics init(@NotNull final String $, final String property) {
     try {
       return new CSVStatistics($, property);
     } catch (@NotNull final IOException ¢) {
@@ -115,8 +114,7 @@ enum CollectMetrics {
     }
   }
 
-  @NotNull
-  private static CompilationUnit spartanize(final String javaCode) {
+  @NotNull private static CompilationUnit spartanize(final String javaCode) {
     final String $ = new Trimmer().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);

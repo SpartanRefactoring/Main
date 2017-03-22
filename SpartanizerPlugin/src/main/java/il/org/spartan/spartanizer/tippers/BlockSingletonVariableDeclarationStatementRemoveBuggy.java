@@ -27,8 +27,7 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
     return "Remove the block";
   }
 
-  @NotNull
-  @Override public String description(final Block ¢) {
+  @NotNull @Override public String description(final Block ¢) {
     return "Remove the block: " + trivia.gist(¢);
   }
 

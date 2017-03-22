@@ -33,13 +33,11 @@ public class FlatMap extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Nullable @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return "Flatten a collection of collecions into one collection, optionally mapping";
   }
 }

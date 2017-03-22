@@ -187,8 +187,7 @@ public interface wizard {
       }
     }
   };
-  @Nullable
-  @SuppressWarnings("unchecked") Map<Class<? extends ASTNode>, Integer> //
+  @Nullable @SuppressWarnings("unchecked") Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     static final long serialVersionUID = 1L;
     {
@@ -218,7 +217,8 @@ public interface wizard {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
 
-  static <N extends MethodDeclaration> void addJavaDoc(@NotNull final N n, @NotNull final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+  static <N extends MethodDeclaration> void addJavaDoc(@NotNull final N n, @NotNull final ASTRewrite r, final TextEditGroup g,
+      final String addedJavadoc) {
     final Javadoc j = n.getJavadoc();
     if (j == null)
       r.replace(n,
@@ -253,12 +253,12 @@ public interface wizard {
    * @param m JD
    * @param r rewriter
    * @param g edit group, usually null */
-  static void addMethodToType(@NotNull final AbstractTypeDeclaration d, final MethodDeclaration m, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  static void addMethodToType(@NotNull final AbstractTypeDeclaration d, final MethodDeclaration m, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
 
-  @NotNull
-  static <N extends ASTNode> List<? extends ASTNode> addRest(@NotNull final List<ASTNode> $, final N n, @Nullable final List<N> ns) {
+  @NotNull static <N extends ASTNode> List<? extends ASTNode> addRest(@NotNull final List<ASTNode> $, final N n, @Nullable final List<N> ns) {
     if (ns == null)
       return $;
     boolean add = false;
@@ -356,18 +356,15 @@ public interface wizard {
     return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
   }
 
-  @NotNull
-  static CompilationUnit compilationUnitWithBinding(@NotNull final File ¢) {
+  @NotNull static CompilationUnit compilationUnitWithBinding(@NotNull final File ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
-  @NotNull
-  static CompilationUnit compilationUnitWithBinding(@NotNull final String ¢) {
+  @NotNull static CompilationUnit compilationUnitWithBinding(@NotNull final String ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
-  @NotNull
-  static <T> String completionIndex(@NotNull final List<T> ts, final T t) {
+  @NotNull static <T> String completionIndex(@NotNull final List<T> ts, final T t) {
     @NotNull final String $ = ts.size() + "";
     @NotNull String i = ts.indexOf(t) + 1 + "";
     while (i.length() < $.length())
@@ -478,7 +475,8 @@ public interface wizard {
    * @param es1
    * @param es2
    * @return */
-  @SuppressWarnings("boxing") static int findSingleDifference(@NotNull final List<? extends ASTNode> es1, @NotNull final List<? extends ASTNode> es2) {
+  @SuppressWarnings("boxing") static int findSingleDifference(@NotNull final List<? extends ASTNode> es1,
+      @NotNull final List<? extends ASTNode> es2) {
     int $ = -1;
     for (final Integer ¢ : range.from(0).to(es1.size()))
       if (!wizard.same(es1.get(¢), es2.get(¢))) {
@@ -517,8 +515,7 @@ public interface wizard {
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  @NotNull
-  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(@NotNull final ASTNode n) {
+  @NotNull @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(@NotNull final ASTNode n) {
     @NotNull final Collection<MethodDeclaration> $ = new ArrayList<>();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
@@ -670,13 +667,11 @@ public interface wizard {
                                 : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
-  @NotNull
-  static String nodeName(@Nullable final ASTNode ¢) {
+  @NotNull static String nodeName(@Nullable final ASTNode ¢) {
     return ¢ == null ? "???" : nodeName(¢.getClass());
   }
 
-  @NotNull
-  static String nodeName(@NotNull final Class<? extends ASTNode> ¢) {
+  @NotNull static String nodeName(@NotNull final Class<? extends ASTNode> ¢) {
     return system.className(¢);
   }
 
@@ -716,8 +711,7 @@ public interface wizard {
     return $;
   }
 
-  @Nullable
-  static <T> T previous(final T t, @Nullable final List<T> ts) {
+  @Nullable static <T> T previous(final T t, @Nullable final List<T> ts) {
     if (ts == null)
       return null;
     final int $ = ts.indexOf(t);
@@ -737,8 +731,7 @@ public interface wizard {
    * @return a duplicate of the parameter, downcasted to the returned type.
    * @see ASTNode#copySubtree
    * @see ASTRewrite */
-  @NotNull
-  @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
+  @NotNull @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
 
@@ -752,8 +745,7 @@ public interface wizard {
         return $;
   }
 
-  @NotNull
-  static Set<Predicate<Modifier>> redundancies(@NotNull final BodyDeclaration ¢) {
+  @NotNull static Set<Predicate<Modifier>> redundancies(@NotNull final BodyDeclaration ¢) {
     @NotNull final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
       return $;
@@ -908,8 +900,7 @@ public interface wizard {
     return !($ instanceof CompilationUnit) || ((CompilationUnit) $).getProblems().length == 0;
   }
 
-  @NotNull
-  static String problems(final ASTNode ¢) {
+  @NotNull static String problems(final ASTNode ¢) {
     return !(¢ instanceof CompilationUnit) ? "???" : problems((CompilationUnit) ¢);
   }
 

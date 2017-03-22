@@ -18,8 +18,7 @@ public class PojoConstructor extends JavadocMarkerNanoPattern {
         && notEmpty(¢);
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return "Pojo";
   }
 }

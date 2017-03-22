@@ -141,7 +141,8 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(final int statementsTotal, @NotNull final Integer numStatements, @NotNull final Collection<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal, @NotNull final Integer numStatements,
+      @NotNull final Collection<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 
@@ -153,13 +154,11 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @Nullable
-  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 

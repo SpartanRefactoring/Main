@@ -24,8 +24,7 @@ public final class FragmentInitializerReturnAssignment extends $FragementInitial
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1334179326644184831L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 

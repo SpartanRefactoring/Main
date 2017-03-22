@@ -30,8 +30,7 @@ public class SpartanMovie extends AbstractHandler {
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
-  @Nullable
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
     @Nullable final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
@@ -148,7 +147,8 @@ public class SpartanMovie extends AbstractHandler {
   }
 
   static void moveProgressDialog() {
-    @Nullable final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(), parentShell = shell == null ? null : shell.getParent().getShell();
+    @Nullable final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+        parentShell = shell == null ? null : shell.getParent().getShell();
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }

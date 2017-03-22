@@ -37,8 +37,7 @@ public enum guessName {
     return of(e) == CLASS_NAME;
   }
 
-  @Nullable
-  public static guessName of(@Nullable final String nameOfSomething) {
+  @Nullable public static guessName of(@Nullable final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
     for (@NotNull final guessName $ : guessName.values())

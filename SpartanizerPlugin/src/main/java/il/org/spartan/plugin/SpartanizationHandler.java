@@ -28,16 +28,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   public static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
-  @Nullable
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     @NotNull final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
   }
 
-  @NotNull
-  @Override public String getLabel() {
+  @NotNull @Override public String getLabel() {
     return "Apply";
   }
 
@@ -45,15 +43,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
 
-  @NotNull
-  public static GUIBatchLaconizer applicator() {
+  @NotNull public static GUIBatchLaconizer applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @NotNull
-  public static GUIBatchLaconizer applicator(@NotNull final English.Activity activityNamer) {
+  @NotNull public static GUIBatchLaconizer applicator(@NotNull final English.Activity activityNamer) {
     @NotNull final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     @NotNull final Trimmer t = new Trimmer();
     @NotNull final ProgressMonitorDialog d = Dialogs.progress(false);
@@ -133,8 +129,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @NotNull
-  @Deprecated @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
+  @NotNull @Deprecated @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
     @NotNull final GUIBatchLaconizer $ = new GUIBatchLaconizer();
     @NotNull final Trimmer t = new Trimmer();
     @NotNull final ProgressMonitorDialog d = Dialogs.progress(false);

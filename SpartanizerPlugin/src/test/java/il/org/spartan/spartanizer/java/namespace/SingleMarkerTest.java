@@ -22,8 +22,7 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class SingleMarkerTest extends MetaFixture {
-  @NotNull
-  @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
+  @NotNull @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
     @NotNull final List<Object[]> $ = new ArrayList<>();
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       @NotNull final String key = (a + "").substring(1);
@@ -33,8 +32,7 @@ public class SingleMarkerTest extends MetaFixture {
     return $;
   }
 
-  @NotNull
-  private final SimpleName name;
+  @NotNull private final SimpleName name;
   private final definition.Kind kind;
 
   public SingleMarkerTest(final definition.Kind kind, @NotNull final SimpleName name) {

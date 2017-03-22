@@ -23,8 +23,7 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null, new ExclusionManager()) != null;
   }
 
-  @NotNull
-  @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
+  @NotNull @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
     @Nullable final Statement $ = extract.nextStatement(n);
     assert $ != null;
     if (exclude != null)
@@ -36,6 +35,5 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
     };
   }
 
-  @Nullable
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
+  @Nullable protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
 }

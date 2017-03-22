@@ -38,8 +38,7 @@ public enum subject {
   /** Create a new Operand
    * @param inner the expression of the operand
    * @return the new operand */
-  @NotNull
-  public static Operand operand(final Expression inner) {
+  @NotNull public static Operand operand(final Expression inner) {
     return new Operand(inner);
   }
 
@@ -47,8 +46,7 @@ public enum subject {
    * expressions in separate and not as a list
    * @param xs JD
    * @return a new instance using the given expressions */
-  @NotNull
-  public static Several operands(final Expression... ¢) {
+  @NotNull public static Several operands(final Expression... ¢) {
     return new Several(as.list(¢));
   }
 
@@ -56,8 +54,7 @@ public enum subject {
    * expressions as a list
    * @param xs a list of expressions
    * @return a new Several instance using the given list of expressions */
-  @NotNull
-  public static Several operands(@NotNull final List<Expression> ¢) {
+  @NotNull public static Several operands(@NotNull final List<Expression> ¢) {
     return new Several(¢);
   }
 
@@ -65,8 +62,7 @@ public enum subject {
    * @param left the left expression
    * @param right the right expression
    * @return a new instance of the class pair */
-  @NotNull
-  public static Pair pair(final Expression left, final Expression right) {
+  @NotNull public static Pair pair(final Expression left, final Expression right) {
     return new Pair(left, right);
   }
 
@@ -74,8 +70,7 @@ public enum subject {
    * @param s1 the first statement
    * @param s2 the second statement
    * @return a new instance of the class StatementPair */
-  @NotNull
-  public static StatementPair pair(final Statement s1, final Statement s2) {
+  @NotNull public static StatementPair pair(final Statement s1, final Statement s2) {
     return new StatementPair(s1, s2);
   }
 
@@ -83,8 +78,7 @@ public enum subject {
    * sideEffects as a list
    * @param ss a list of sideEffects
    * @return a new instance using the given sideEffects */
-  @NotNull
-  public static SeveralStatements ss(@NotNull final List<Statement> ¢) {
+  @NotNull public static SeveralStatements ss(@NotNull final List<Statement> ¢) {
     return new SeveralStatements(¢);
   }
 
@@ -92,8 +86,7 @@ public enum subject {
    * statement
    * @param context JD
    * @return a new instance using the given statement */
-  @NotNull
-  public static SeveralStatements statement(final Statement ¢) {
+  @NotNull public static SeveralStatements statement(final Statement ¢) {
     return statements(¢);
   }
 
@@ -101,14 +94,12 @@ public enum subject {
    * sideEffects in separate and not as a list
    * @param ss JD
    * @return a new instance using the given sideEffects */
-  @NotNull
-  public static SeveralStatements statements(final Statement... ¢) {
+  @NotNull public static SeveralStatements statements(final Statement... ¢) {
     return ss(as.list(¢));
   }
 
   public static class Claimer {
-    @Nullable
-    protected final AST ast;
+    @Nullable protected final AST ast;
 
     /** Assign to ast the AST that owns the node n (the parameter)
      * @param n an AST node */
@@ -138,8 +129,7 @@ public enum subject {
 
   /** All the expressions that use a single operand */
   public static class Operand extends Claimer {
-    @NotNull
-    private final Expression inner;
+    @NotNull private final Expression inner;
 
     /** Assign the expression inner to the parameter inner
      * @param inner an Expression */
@@ -247,8 +237,7 @@ public enum subject {
   /** All the expressions that use two operands */
   public static class Pair extends Claimer {
     /** The two expressions in the pair */
-    @NotNull
-    final Expression left, right;
+    @NotNull final Expression left, right;
 
     /** Assign the expressions left and right to the parameters, the newly-
      * created ast will own the left node
@@ -314,8 +303,7 @@ public enum subject {
 
   public static class Several extends Claimer {
     /** To deal with more than 2 operands, we maintain a list */
-    @NotNull
-    private final List<Expression> operands;
+    @NotNull private final List<Expression> operands;
 
     /** assign each of the given operands to the operands list the left operand
      * is the owner
@@ -342,11 +330,10 @@ public enum subject {
 
   /** Some Statements */
   public static class SeveralStatements extends Claimer {
-    @NotNull
-    private final List<Statement> inner; // here we work with several
-                                         // sideEffects
-                                         // so we have a sideEffects
-                                         // list
+    @NotNull private final List<Statement> inner; // here we work with several
+                                                  // sideEffects
+                                                  // so we have a sideEffects
+                                                  // list
 
     /** assign each of the given operands to the inner list the left operand is
      * the owner
@@ -367,8 +354,7 @@ public enum subject {
 
     /** Transform the inner into a block if it's possible
      * @return a Block statement {@code or} a {@code null} */
-    @Nullable
-    public Statement toOneStatementOrNull() {
+    @Nullable public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
 
@@ -395,10 +381,8 @@ public enum subject {
 
   /** A pair of sideEffects */
   public static class StatementPair extends Claimer {
-    @Nullable
-    private final Statement elze;
-    @Nullable
-    private final Statement then;
+    @Nullable private final Statement elze;
+    @Nullable private final Statement then;
 
     /** assign then and elze to the matching fields the then operand is the
      * owner

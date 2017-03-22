@@ -56,8 +56,7 @@ public class OperandBloating extends TrimmingOperand {
     }
   }
 
-  @Nullable
-  @Override public OperandBloating gives(@NotNull final String $) {
+  @Nullable @Override public OperandBloating gives(@NotNull final String $) {
     assert $ != null;
     @NotNull final Wrap w = Wrap.find(get());
     @NotNull final String wrap = w.on(get());
@@ -89,8 +88,7 @@ public class OperandBloating extends TrimmingOperand {
     return null;
   }
 
-  @Nullable
-  public OperandBloating givesWithBinding(@NotNull final String $) {
+  @Nullable public OperandBloating givesWithBinding(@NotNull final String $) {
     assert $ != null;
     @Nullable final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
@@ -121,8 +119,7 @@ public class OperandBloating extends TrimmingOperand {
   /** @param $ java code
    * @param f tested method name. expanders will be applied only for this method
    * @return */
-  @Nullable
-  public OperandBloating givesWithBinding(@NotNull final String $, final String f) {
+  @Nullable public OperandBloating givesWithBinding(@NotNull final String $, final String f) {
     assert $ != null;
     @Nullable final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
@@ -160,8 +157,7 @@ public class OperandBloating extends TrimmingOperand {
    * @since 19-01-2017
    * @param b
    * @return */
-  @Nullable
-  private static CompilationUnit rename(@Nullable final CompilationUnit u) {
+  @Nullable private static CompilationUnit rename(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     TestUtilsBloating.counter = 0;
@@ -178,14 +174,14 @@ public class OperandBloating extends TrimmingOperand {
   }
 
   private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-    @NotNull final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
+    @NotNull final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f))
+        .from(u);
     if ($.isEmpty())
       azzert.fail("No such method Exists");
     return first($);
   }
 
-  @Nullable
-  private static CompilationUnit createCUWithBinding(@NotNull final String text) {
+  @Nullable private static CompilationUnit createCUWithBinding(@NotNull final String text) {
     final ASTParser $ = make.COMPILATION_UNIT.parser(text);
     $.setResolveBindings(true);
     return az.compilationUnit($.createAST(null));

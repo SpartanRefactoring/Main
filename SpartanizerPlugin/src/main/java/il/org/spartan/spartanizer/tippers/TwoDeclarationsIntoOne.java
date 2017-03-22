@@ -34,8 +34,8 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -401300117746539825L;
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Nullable @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationStatement s,
+      final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))
       return null;
     final VariableDeclarationStatement sc = copy.of(s);
@@ -45,13 +45,11 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Unify two variable declarations of the same type into one";
   }
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("int a; int b; int c; f(a, b, c);") //
             .to("int a, b; int c; f(a, b, c);"), //

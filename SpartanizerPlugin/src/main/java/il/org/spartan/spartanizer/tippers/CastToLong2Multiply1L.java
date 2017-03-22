@@ -32,8 +32,7 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @NotNull
-  @Override public String description(final CastExpression ¢) {
+  @NotNull @Override public String description(final CastExpression ¢) {
     return "Use 1L*" + expression(¢) + " instead of (long)" + expression(¢);
   }
 

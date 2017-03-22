@@ -28,8 +28,8 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 3971327019011226138L;
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @Nullable final ForStatement s, @Nullable final Statement nextStatement, final TextEditGroup g) {
+  @Nullable @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @Nullable final ForStatement s, @Nullable final Statement nextStatement,
+      final TextEditGroup g) {
     if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
@@ -40,8 +40,7 @@ public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "combine the for and return statements to a single statement";
   }
 }

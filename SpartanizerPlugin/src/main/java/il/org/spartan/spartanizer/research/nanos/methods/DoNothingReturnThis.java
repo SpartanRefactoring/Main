@@ -15,8 +15,7 @@ public class DoNothingReturnThis extends JavadocMarkerNanoPattern {
         && returnsThis(¢);
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Default;
   }
 }

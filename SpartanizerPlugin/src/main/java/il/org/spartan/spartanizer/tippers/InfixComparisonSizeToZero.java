@@ -32,13 +32,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -4217296742524813844L;
 
-  @NotNull
-  private static String description(@Nullable final Expression ¢) {
+  @NotNull private static String description(@Nullable final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
 
-  @Nullable
-  private static ASTNode replacement(final Operator o, @NotNull final Expression receiver, final int threshold) {
+  @Nullable private static ASTNode replacement(final Operator o, @NotNull final Expression receiver, final int threshold) {
     assert receiver != null : fault.dump() + //
         "\n threshold='" + threshold + //
         "\n receiver ='" + receiver + //
@@ -70,8 +68,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     return null;
   }
 
-  @Nullable
-  private static ASTNode replacement(final Operator o, final int sign, @NotNull final NumberLiteral l, @NotNull final Expression receiver) {
+  @Nullable private static ASTNode replacement(final Operator o, final int sign, @NotNull final NumberLiteral l, @NotNull final Expression receiver) {
     return replacement(o, receiver, sign * Integer.parseInt(l.getToken()));
   }
 
@@ -112,8 +109,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     @NotNull final Expression $ = left(¢);
     return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }

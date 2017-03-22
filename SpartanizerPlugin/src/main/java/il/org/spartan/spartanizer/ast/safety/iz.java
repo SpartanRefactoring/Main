@@ -711,21 +711,17 @@ public interface iz {
     return iz.nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  @NotNull
-  static iz izParser(@NotNull final String name) {
+  @NotNull static iz izParser(@NotNull final String name) {
     return new iz() {
-      @NotNull
-      @Override public String toString() {
+      @NotNull @Override public String toString() {
         return name;
       }
     };
   }
 
-  @NotNull
-  static iz izParser(@NotNull final Throwable ¢) {
+  @NotNull static iz izParser(@NotNull final Throwable ¢) {
     return new iz() {
-      @NotNull
-      @Override public String toString() {
+      @NotNull @Override public String toString() {
         return Arrays.toString(¢.getStackTrace());
       }
     };

@@ -50,8 +50,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
         .containsAll(parametersNames(¢));
   }
 
-  @NotNull
-  @Override public String nanoName() {
+  @NotNull @Override public String nanoName() {
     return "DefaultArguments";
   }
 }

@@ -38,8 +38,7 @@ public class InflateHandler extends AbstractHandler {
   public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
-  @Nullable
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Nullable @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     @NotNull final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }
@@ -64,8 +63,7 @@ public class InflateHandler extends AbstractHandler {
     return null;
   }
 
-  @NotNull
-  protected static List<Listener> getListeners(@Nullable final StyledText t) {
+  @NotNull protected static List<Listener> getListeners(@Nullable final StyledText t) {
     @NotNull final List<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
@@ -105,20 +103,17 @@ public class InflateHandler extends AbstractHandler {
     return !($ instanceof ITextEditor) ? null : (ITextEditor) $;
   }
 
-  @Nullable
-  protected static StyledText getText(@Nullable final ITextEditor ¢) {
+  @Nullable protected static StyledText getText(@Nullable final ITextEditor ¢) {
     if (¢ == null)
       return null;
     final Control $ = ¢.getAdapter(Control.class);
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 
-  @NotNull
-  public static GUIBatchLaconizer applicator() {
+  @NotNull public static GUIBatchLaconizer applicator() {
     return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
         ¢ -> Integer.valueOf(as.bit(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
-          @NotNull
-          @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+          @NotNull @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;
           }
         }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null)))).name(OPERATION_ACTIVITY.getIng())
@@ -133,8 +128,7 @@ public class InflateHandler extends AbstractHandler {
     return $ == null ? null : $.getPartService();
   }
 
-  @NotNull
-  @SuppressWarnings("unused") private static IPartListener pageListener() {
+  @NotNull @SuppressWarnings("unused") private static IPartListener pageListener() {
     return new IPartListener() {
       @Override public void partActivated(final IWorkbenchPart __) {
         //
@@ -195,8 +189,7 @@ public class InflateHandler extends AbstractHandler {
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 
-  @NotNull
-  private static Iterable<ITextEditor> getOpenedEditors() {
+  @NotNull private static Iterable<ITextEditor> getOpenedEditors() {
     @Nullable final IWorkbenchPage $ = getPage();
     return $ == null ? new ArrayList<>()
         : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)

@@ -62,8 +62,7 @@ public enum minus {
     return az.bit(operator(¢) == wizard.MINUS1) + level(operand(¢));
   }
 
-  @NotNull
-  public static Expression peel(final Expression $) {
+  @NotNull public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
             : iz.nodeTypeEquals($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
@@ -79,13 +78,11 @@ public enum minus {
     return ¢.stream().map(minus::peel).collect(toList());
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final NumberLiteral $) {
+  @NotNull public static Expression peel(@NotNull final NumberLiteral $) {
     return !token($).startsWith("-") && !token($).startsWith("+") ? $ : $.getAST().newNumberLiteral(token($).substring(1));
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final PrefixExpression $) {
+  @NotNull public static Expression peel(@NotNull final PrefixExpression $) {
     return out(operator($), wizard.MINUS1, wizard.PLUS1) ? $ : peel(operand($));
   }
 }

@@ -22,8 +22,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -3538528399312058847L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
+  @Nullable @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
     @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
@@ -37,8 +36,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Sort switch branches";
   }
 }

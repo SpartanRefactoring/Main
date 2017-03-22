@@ -15,10 +15,8 @@ import org.jetbrains.annotations.NotNull;
 /** Collects statistics for a method in which a nano was found.
  * @author Ori Marcovitch */
 public class MethodRecord {
-  @NotNull
-  public final String methodName;
-  @NotNull
-  public final String methodClassName;
+  @NotNull public final String methodName;
+  @NotNull public final String methodClassName;
   private int numNPStatements;
   private int numNPNodes;
   int numNPExpressions;
@@ -27,8 +25,7 @@ public class MethodRecord {
   public final int numStatements;
   public final int numExpressions;
   public final int numNodes;
-  @NotNull
-  public final MethodDeclaration before;
+  @NotNull public final MethodDeclaration before;
   public MethodDeclaration after;
   private boolean fullyMatched;
 

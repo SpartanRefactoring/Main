@@ -26,8 +26,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 2701028813439219141L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }
 
@@ -35,8 +34,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     return fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).count() >= 2;
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final VariableDeclarationStatement ¢) {
+  @NotNull @Override public Tip tip(@NotNull final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
     final VariableDeclarationFragment fs = getFirstAssignment($), ff = fragments(first).get(fragments($).indexOf(fs));
     fragments($).remove(fs);

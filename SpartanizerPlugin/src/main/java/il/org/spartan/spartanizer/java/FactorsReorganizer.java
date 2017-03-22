@@ -16,23 +16,19 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {
-  @Nullable
-  static Expression simplify(final InfixExpression ¢) {
+  @Nullable static Expression simplify(final InfixExpression ¢) {
     return build(new FactorsCollector(¢));
   }
 
-  @Nullable
-  static Expression build(@NotNull final FactorsCollector ¢) {
+  @Nullable static Expression build(@NotNull final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
 
-  @Nullable
-  static Expression build(@NotNull final List<Expression> multipliers, @NotNull final List<Expression> dividers) {
+  @Nullable static Expression build(@NotNull final List<Expression> multipliers, @NotNull final List<Expression> dividers) {
     return buildDividers(buildMultipliers(multipliers), dividers);
   }
 
-  @Nullable
-  static Expression buildDividers(@Nullable final Expression first, @NotNull final List<Expression> rest) {
+  @Nullable static Expression buildDividers(@Nullable final Expression first, @NotNull final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
     if (rest.isEmpty())

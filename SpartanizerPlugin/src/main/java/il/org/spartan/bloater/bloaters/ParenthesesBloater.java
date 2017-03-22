@@ -21,8 +21,7 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 4274439512923950861L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (iz.parenthesizedExpression(¢) || !iz.infixExpression(¢.getParent()))
       return null;
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
@@ -30,8 +29,7 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Add parentheses to InfixExpression who's parent is also InfixExpression";
   }
 }

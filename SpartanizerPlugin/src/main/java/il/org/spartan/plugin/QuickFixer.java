@@ -28,8 +28,7 @@ import org.jetbrains.annotations.Nullable;
 // TODO OriRoth can we eliminate some of these many fields? --yg
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
-  @NotNull
-  @Override public IMarkerResolution[] getResolutions(final IMarker __) {
+  @NotNull @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     return new IMarkerResolution[] { //
         apply, //
         // applyPreview, //
@@ -83,31 +82,25 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", λ -> SpartanizationHandler.applicator()
       .defaultRunAction(SingleTipper.getApplicator(λ)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(λ)).go());
   /** Disable spartanization in function. */
-  @Nullable
-  private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
+  @Nullable private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
   /** Disable spartanization in class. */
-  @Nullable
-  private final IMarkerResolution disableClass = fixers.disableClassFix();
+  @Nullable private final IMarkerResolution disableClass = fixers.disableClassFix();
   /** Disable spartanization in file. */
-  @Nullable
-  private final IMarkerResolution disableFile = fixers.disableFileFix();
+  @Nullable private final IMarkerResolution disableFile = fixers.disableFileFix();
   /** Disable spartanization in class by annotation. */
-  @Nullable
-  private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
+  @Nullable private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
 
   /** Factory method for {@link IMarkerResolution}s.
    * @param name resolution's name
    * @param solution resolution's solution
    * @return marker resolution */
-  @NotNull
-  private static IMarkerResolution quickFix(@NotNull final String name, @NotNull final Consumer<IMarker> solution) {
+  @NotNull private static IMarkerResolution quickFix(@NotNull final String name, @NotNull final Consumer<IMarker> solution) {
     return new IMarkerResolution() {
       @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
 
-      @NotNull
-      @Override public String getLabel() {
+      @NotNull @Override public String getLabel() {
         return name;
       }
     };
@@ -126,8 +119,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @author Ori Roth
    * @since 2016 */
   private static class SingleTipper<N extends ASTNode> extends Trimmer {
-    @NotNull
-    final Tipper<N> tipper;
+    @NotNull final Tipper<N> tipper;
 
     SingleTipper(@NotNull final Tipper<N> tipper) {
       this.tipper = tipper;
@@ -138,8 +130,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
     }
 
-    @Nullable
-    @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(final Toolbox __, @NotNull final ASTNode ¢) {
+    @Nullable @Override @SuppressWarnings("unchecked") protected Tipper<N> getTipper(final Toolbox __, @NotNull final ASTNode ¢) {
       assert check(¢);
       return !tipper.check((N) ¢) ? null : tipper;
     }
@@ -169,8 +160,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";
 
-    @Nullable
-    static IMarkerResolution apply(final SingleTipperApplicator.Type t, final String label) {
+    @Nullable static IMarkerResolution apply(final SingleTipperApplicator.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
@@ -186,43 +176,36 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       };
     }
 
-    @Nullable
-    static IMarkerResolution applyFile() {
+    @Nullable static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
 
-    @Nullable
-    static IMarkerResolution applyFunction() {
+    @Nullable static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
 
-    @Nullable
-    static IMarkerResolution applyProject() {
+    @Nullable static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
 
-    @Nullable
-    static IMarkerResolution disableClassFix() {
+    @Nullable static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress spartanization tips on class");
     }
 
-    @Nullable
-    static IMarkerResolution disableFileFix() {
+    @Nullable static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FILE, "Suppress spartanization tips on out most class");
     }
 
-    @Nullable
-    static IMarkerResolution disableFunctionFix() {
+    @Nullable static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
     }
 
-    @Nullable
-    static IMarkerResolution disableClassAnnotationFix() {
+    @Nullable static IMarkerResolution disableClassAnnotationFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByAnnotation, SuppressWarningsLaconicOnOff.Type.CLASS, "Class under construction");
     }
 
-    @Nullable
-    static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler, @NotNull final SuppressWarningsLaconicOnOff.Type t, final String label) {
+    @Nullable static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler,
+        @NotNull final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;

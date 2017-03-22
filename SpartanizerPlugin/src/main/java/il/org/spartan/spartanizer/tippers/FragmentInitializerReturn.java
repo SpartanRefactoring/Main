@@ -30,8 +30,7 @@ public final class FragmentInitializerReturn extends $FragementInitializerStatem
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 6714687738774731933L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
