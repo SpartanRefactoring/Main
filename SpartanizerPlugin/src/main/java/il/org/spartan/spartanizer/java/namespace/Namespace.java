@@ -67,12 +67,13 @@ public final class Namespace implements Environment {
 
   private Iterable<Environment> ancestors() {
     return () -> new Iterator<Environment>() {
-      Environment next = Namespace.this;
+      @Nullable Environment next = Namespace.this;
 
       @Override public boolean hasNext() {
         return next != null;
       }
 
+      @Nullable
       @Override public Environment next() {
         final Environment $ = next;
         next = next.nest();
@@ -305,6 +306,7 @@ public final class Namespace implements Environment {
   }
 
   /** Add name to the current scope in the {@link Environment} . */
+  @Nullable
   @Override public Binding put(final String identifier, final Binding value) {
     flat.put(identifier, value);
     assert !flat.isEmpty();
@@ -360,7 +362,7 @@ public final class Namespace implements Environment {
     return has(identifier) || children.stream().anyMatch(λ -> λ.allows(identifier));
   }
 
-  public static Iterable<String> namesGenerator(final SimpleType t) {
+  public static Iterable<String> namesGenerator(@NotNull final SimpleType t) {
     return () -> new Iterator<String>() {
       final String base = namer.variableName(t);
       int n = -1;

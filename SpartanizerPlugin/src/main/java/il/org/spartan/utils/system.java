@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 public interface system {
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
-  static Process bash(final String shellCommand) {
+  static Process bash(@NotNull final String shellCommand) {
     if (windows())
       return null;
     try {

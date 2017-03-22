@@ -29,7 +29,7 @@ public enum makeAST {
       return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(wizard.nullProgressMonitor);
     }
 
-    @Override @NotNull public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
+    @Override @NotNull public CompilationUnit from(@NotNull final IMarker m, final IProgressMonitor pm) {
       return (CompilationUnit) make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
 
@@ -51,7 +51,7 @@ public enum makeAST {
       return (Expression) make.EXPRESSION.parser(¢).createAST(wizard.nullProgressMonitor);
     }
 
-    @Override @NotNull public Expression from(final IMarker m, final IProgressMonitor pm) {
+    @Override @NotNull public Expression from(@NotNull final IMarker m, final IProgressMonitor pm) {
       return (Expression) make.EXPRESSION.parser(m).createAST(pm);
     }
 
@@ -137,7 +137,7 @@ public enum makeAST {
    * @param m Marker
    * @param pm ProgressMonitor
    * @return ASTNode */
-  public ASTNode from(final IMarker m, final IProgressMonitor pm) {
+  public ASTNode from(@NotNull final IMarker m, final IProgressMonitor pm) {
     return make.from(this).parser(m).createAST(pm);
   }
 

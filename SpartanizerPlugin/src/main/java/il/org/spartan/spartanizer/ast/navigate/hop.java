@@ -58,12 +58,12 @@ public interface hop {
     return $;
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, @NotNull final SimpleName n) {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs,
-      final SimpleName ¢) {
+                                                                              @NotNull final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 

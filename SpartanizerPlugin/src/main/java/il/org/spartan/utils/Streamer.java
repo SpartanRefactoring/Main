@@ -28,7 +28,7 @@ public interface Streamer<@¢ T> {
   }
 
   interface Compound<@¢ T> extends Streamer<T> {
-    Iterable<? extends Streamer<T>> next();
+    @NotNull Iterable<? extends Streamer<T>> next();
 
     @Override default Stream<T> stream() {
       return compounder().compound(self(), next());

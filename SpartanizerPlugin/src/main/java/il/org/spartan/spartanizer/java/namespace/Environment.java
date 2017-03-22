@@ -85,6 +85,7 @@ public interface Environment {
    * Note: you will have to assume multiple definitions in the same block, this
    * is a compilation error, but nevertheless, let a later entry with of a
    * certain name to "hide" a former entry with the same name. */
+  @Nullable
   default Binding put(final String name, final Binding b) {
     throw new IllegalArgumentException(name + "/" + b);
   }

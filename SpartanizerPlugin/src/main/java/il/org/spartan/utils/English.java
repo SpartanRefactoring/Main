@@ -29,7 +29,7 @@ public interface English {
     return indefinite(className(¢));
   }
 
-  @NotNull static String indefinite(final String className) {
+  @NotNull static String indefinite(@NotNull final String className) {
     final String $ = namer.components(className)[0];
     final char openingLetter = first($);
     return isAcronym($) ? indefinite(pronounce(openingLetter)) : //

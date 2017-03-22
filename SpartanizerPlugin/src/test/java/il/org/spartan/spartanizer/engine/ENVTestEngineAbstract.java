@@ -132,6 +132,7 @@ public abstract class ENVTestEngineAbstract {
   // potential annotations.
   protected ASTNode n;
 
+  @Nullable
   protected abstract LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(BodyDeclaration $);
 
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
