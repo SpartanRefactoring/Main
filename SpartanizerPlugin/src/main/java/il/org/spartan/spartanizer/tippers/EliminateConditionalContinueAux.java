@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 enum EliminateConditionalContinueAux {
   ;
-  @SuppressWarnings("rawtypes") public static Tip actualReplacement(final Block b, final Statement s, final Class<? extends Tipper> c) {
+  public static Tip actualReplacement(final Block b, final Statement s, final Class<? extends Tipper<?>> c) {
     if (b == null || statements(b).size() < 2)
       return null;
     final List<Statement> $ = statements(b);
@@ -28,11 +28,15 @@ enum EliminateConditionalContinueAux {
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
     final IfStatement replacementIf = subject.pair(last($), null).toNot(continueStatement.getExpression());
-    return new Tip("Eliminate conditional continue before last statement in the for loop", s, c) {
+    return new Tip(description(), s, c) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(last($), g);
         r.replace(continueStatement, replacementIf, g);
       }
     };
+  }
+
+  private static String description() {
+    return "Eliminate conditional continue before last statement in the for loop";
   }
 }

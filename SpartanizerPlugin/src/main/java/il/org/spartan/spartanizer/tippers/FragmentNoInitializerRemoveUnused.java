@@ -23,20 +23,11 @@ public final class FragmentNoInitializerRemoveUnused extends $Fragment implement
     return "Remove unused and unitialized variable: " + trivia.gist(¢);
   }
 
-  @Override public Tip tip(final VariableDeclarationFragment f) {
-    return !collect.usesOf(name()).in(scope.of(f)).isEmpty() ? null : new Tip(description(f), name(), getClass()) {
-          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            eliminateFragment(r, g);
-          }
-        };
+  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+    return super.prerequisite(f) && initializer() == null && collect.usesOf(name()).in(scope.of(f)).isEmpty();
   }
 
-  @Override
-  public boolean prerequisite(final VariableDeclarationFragment ¢) {
-    return super.prerequisite(¢) && initializer() == null && collect.usesOf(¢.getName()).in(scope.of(¢)).isEmpty();
-  }
-
-  protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
-    return null;
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    return eliminateFragment(r, g);
   }
 }

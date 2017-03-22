@@ -7,6 +7,7 @@ import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -46,7 +47,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return !check(¢);
   }
 
-  @Override public final boolean ok(final N ¢) {
+  @Override public final boolean ok(@NotNull final N ¢) {
     return canTip(¢);
   }
 
@@ -113,6 +114,10 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
+  }
+
+  @SuppressWarnings("unchecked") protected final Class<? extends Tipper<N>> myClass() {
+    return (Class<? extends Tipper<N>>) getClass();
   }
 
   private Class<N> myOperandsClass;
