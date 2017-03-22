@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
@@ -10,7 +11,6 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch

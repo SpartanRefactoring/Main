@@ -1,8 +1,8 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.function.*;
+
+import org.jetbrains.annotations.*;
 
 /** TODO
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>

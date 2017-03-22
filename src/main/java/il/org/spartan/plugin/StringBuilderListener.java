@@ -2,11 +2,12 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.Listener.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.Separator;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** A kind of {@link Listener} that records a long string of the message it got.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

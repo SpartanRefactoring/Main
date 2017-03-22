@@ -3,9 +3,9 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.function.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A {@link Listener} that listen to {@link event}s. Maps both the recorders
  * and the results to the events. The recorders can be {@link Function}s,

@@ -2,8 +2,9 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.statistics.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

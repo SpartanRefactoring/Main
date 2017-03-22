@@ -5,13 +5,12 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link AbstractGUIApplicator}. This class must eventually die.

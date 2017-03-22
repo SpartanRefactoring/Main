@@ -12,13 +12,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.

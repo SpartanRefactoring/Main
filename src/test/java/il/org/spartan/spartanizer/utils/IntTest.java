@@ -7,7 +7,7 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;

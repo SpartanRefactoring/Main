@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
@@ -12,7 +13,6 @@ import il.org.spartan.spartanizer.research.classifier.patterns.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** NOT ACTIVE RIGHT NOW. <br>
  * NEED TO ADD CATEGORIES.

@@ -10,12 +10,11 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.

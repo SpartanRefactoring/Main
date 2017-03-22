@@ -5,13 +5,13 @@ import static il.org.spartan.tide.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Collects a set of metrics A wrapper for {@link CSVStatistics}
  * @author Matteo Orru'

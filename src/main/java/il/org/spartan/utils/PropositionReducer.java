@@ -2,9 +2,9 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.Proposition.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** TODO Yossi Gil: document class
  * @param <R>

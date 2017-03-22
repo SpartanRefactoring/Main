@@ -7,13 +7,13 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Convert {@code T extends Object} to {@code T}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

@@ -4,11 +4,10 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth

@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import org.jetbrains.annotations.NotNull;
-
 import static il.org.spartan.utils.Box.*;
 
 import java.io.*;
+
+import org.jetbrains.annotations.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>

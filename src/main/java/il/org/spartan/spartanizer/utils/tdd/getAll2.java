@@ -3,10 +3,9 @@ package il.org.spartan.spartanizer.utils.tdd;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

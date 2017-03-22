@@ -6,7 +6,7 @@ import static il.org.spartan.utils.Proposition.*;
 import java.util.*;
 import java.util.function.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 

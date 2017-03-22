@@ -1,9 +1,8 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.stream.*;
+
+import org.jetbrains.annotations.*;
 
 public interface Nested<@¢ T> {
   default Stream<T> ancestors() {

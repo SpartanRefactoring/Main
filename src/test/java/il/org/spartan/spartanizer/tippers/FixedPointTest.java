@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 

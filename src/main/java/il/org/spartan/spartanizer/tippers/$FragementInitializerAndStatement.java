@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

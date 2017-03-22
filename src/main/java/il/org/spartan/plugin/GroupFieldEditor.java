@@ -7,11 +7,10 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A {@link FieldEditor} designed to store multiple controls within a group
  * panel widget, to be used in conjunction with an

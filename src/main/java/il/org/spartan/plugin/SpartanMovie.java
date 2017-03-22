@@ -12,14 +12,13 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.

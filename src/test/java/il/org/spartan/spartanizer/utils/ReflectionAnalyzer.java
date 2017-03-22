@@ -5,8 +5,9 @@
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.utils;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
-import org.jetbrains.annotations.NotNull;
 
 class A {
   {

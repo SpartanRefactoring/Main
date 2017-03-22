@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.util.*;
 
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 

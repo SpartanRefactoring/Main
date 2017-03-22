@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth

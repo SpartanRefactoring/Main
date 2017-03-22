@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.utils.range.*;

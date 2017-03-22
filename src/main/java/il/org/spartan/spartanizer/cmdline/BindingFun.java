@@ -7,11 +7,11 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch

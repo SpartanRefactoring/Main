@@ -3,11 +3,11 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
-import org.jetbrains.annotations.NotNull;
 
 /** convert pattern <code>try {s} [ finally { <i>empty</i> }]</code>, {@code s}
  * not empty, to {@code {s}}.

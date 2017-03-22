@@ -1,9 +1,9 @@
 package il.org.spartan.utils.range;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.stream.*;
+
+import org.jetbrains.annotations.*;
 
 /** A fluent API implementation for range
  * @author Dor Ma'ayan

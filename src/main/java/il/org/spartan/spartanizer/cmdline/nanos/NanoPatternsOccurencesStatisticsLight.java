@@ -3,9 +3,9 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.analyses.util.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Map containing data about nano patterns occurences
  * @author orimarco <marcovitch.ori@gmail.com>

@@ -5,11 +5,11 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
-import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

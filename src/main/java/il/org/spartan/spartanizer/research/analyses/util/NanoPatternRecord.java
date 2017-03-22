@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Collects statistics for a nano.
  * @author Ori Marcovitch */

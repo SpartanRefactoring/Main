@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -18,8 +19,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.range.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of type String
  * @author Stav Namir

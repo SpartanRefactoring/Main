@@ -3,11 +3,11 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, type of subclass

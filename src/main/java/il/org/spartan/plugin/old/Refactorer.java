@@ -13,11 +13,10 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth

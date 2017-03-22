@@ -13,10 +13,10 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public enum LogToTest {
   ;
@@ -96,7 +96,7 @@ public enum LogToTest {
   }
 
   private static void buildTest(@NotNull final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
-      final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
+      final String errorName, final String fileName, final String errorCode, @NotNull final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, anonymize.unwarpedTestcase(rawCode),
         errorLocationFileUnclean));
   }

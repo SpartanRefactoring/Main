@@ -1,8 +1,5 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
 
@@ -10,6 +7,8 @@ import java.lang.annotation.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
+
+import org.jetbrains.annotations.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
  * search, logging, computing statistics, etc.

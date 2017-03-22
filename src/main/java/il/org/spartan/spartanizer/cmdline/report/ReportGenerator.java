@@ -14,6 +14,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,7 +24,6 @@ import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Generator for reports
  * @author Matteo Orru'

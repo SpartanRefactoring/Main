@@ -8,13 +8,12 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /** Three groups of visitors here: 1. Non-declarations with a name. 2.
  * Non-declarations without a name. 3. Actual Declarations. First two groups are

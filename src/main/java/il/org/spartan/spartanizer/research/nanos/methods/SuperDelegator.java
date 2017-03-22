@@ -7,11 +7,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Method delegating to super
  * @author Ori Marcovitch */

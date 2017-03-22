@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.testing;
 
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.meta.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Testing utils for expanders Issue #961
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>

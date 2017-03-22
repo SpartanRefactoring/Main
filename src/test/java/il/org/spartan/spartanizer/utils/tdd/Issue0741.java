@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
