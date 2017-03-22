@@ -425,26 +425,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
-   * fragments which are not live in the containing
-   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
-   * containing node is eliminated as well.
-   * @param f
-   * @param r
-   * @param g */
-  static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
-    if (live.isEmpty()) {
-      r.remove(parent, g);
-      return;
-    }
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    r.replace(parent, newParent, g);
-  }
-
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
@@ -651,12 +631,6 @@ public interface wizard {
 
   static boolean isValueType(final Type ¢) {
     return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
-  }
-
-  static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
-    fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
-    return $;
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
