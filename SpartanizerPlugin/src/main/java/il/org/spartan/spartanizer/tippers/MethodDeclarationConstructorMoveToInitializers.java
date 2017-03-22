@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,14 +23,14 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -6339897616387193324L;
 
-  @Override protected boolean prerequisite(final MethodDeclaration ¢) {
+  @Override protected boolean prerequisite(@NotNull final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;
     final ASTNode $ = containing.typeDeclaration(¢);
     return constructors($).size() == 1 && initializersInstance($).isEmpty();
   }
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @Override @NotNull public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 

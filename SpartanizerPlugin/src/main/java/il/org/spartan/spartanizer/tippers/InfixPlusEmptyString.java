@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -31,11 +32,11 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
     return "[\"\"+foo]->foo";
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
-  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement(@NotNull final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
     final List<Expression> es = hop.operands(x);

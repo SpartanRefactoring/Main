@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,7 +24,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 5922696779617973428L;
 
-  static Statement reorganizeNestedStatement(final Statement ¢) {
+  static Statement reorganizeNestedStatement(@NotNull final Statement ¢) {
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
       case 0:
@@ -35,22 +36,22 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     }
   }
 
-  @SuppressWarnings("boxing") private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
+  @SuppressWarnings("boxing") private static boolean identical(@NotNull final List<Statement> os1, @NotNull final List<Statement> os2) {
     return os1.size() == os2.size() && range.to(os1.size()).stream().allMatch(λ -> os1.get(λ) == os2.get(λ));
   }
 
-  private static Block reorganizeStatement(final Statement s) {
+  private static Block reorganizeStatement(@NotNull final Statement s) {
     final List<Statement> ss = extract.statements(s);
     final Block $ = s.getAST().newBlock();
     copy.into(ss, statements($));
     return $;
   }
 
-  @Override public String description(final Block ¢) {
+  @Override @NotNull public String description(final Block ¢) {
     return "Simplify block with  " + extract.statements(¢).size() + " sideEffects";
   }
 
-  @Override public Statement replacement(final Block b) {
+  @Override public Statement replacement(@NotNull final Block b) {
     final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || haz.hidings(ss))
       return null;

@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -48,12 +49,12 @@ public final class specificity implements Comparator<Expression> {
       }
     },
     CONSTANT {
-      @Override boolean includes(final ASTNode ¢) {
+      @Override boolean includes(@NotNull final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
-      @Override boolean includes(final ASTNode ¢) {
+      @Override boolean includes(@NotNull final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },

@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -23,10 +24,10 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   private List<Expression> arguments;
   private MethodInvocation methodInvocation;
   private Expression first;
-  private BooleanLiteral booleanLiteral;
+  @Nullable private BooleanLiteral booleanLiteral;
   private ExpressionStatement expressionStatement;
 
-  @Override public String description(final ExpressionStatement ¢) {
+  @Override @NotNull public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
 

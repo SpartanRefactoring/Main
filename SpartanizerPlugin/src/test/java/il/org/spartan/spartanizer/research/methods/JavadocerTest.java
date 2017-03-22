@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -18,7 +19,7 @@ public abstract class JavadocerTest {
     return javadoced("public class A{" + ¢ + "}");
   }
 
-  private static boolean javadoced(final String ¢) {
+  private static boolean javadoced(@NotNull final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.nanoName() + "]]");
   }
 
@@ -30,7 +31,7 @@ public abstract class JavadocerTest {
     spartanizer.add(MethodDeclaration.class, JAVADOCER = ¢);
   }
 
-  private static String spartanized(final String ¢) {
+  private static String spartanized(@NotNull final String ¢) {
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 }

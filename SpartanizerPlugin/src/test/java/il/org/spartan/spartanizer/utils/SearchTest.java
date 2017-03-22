@@ -13,6 +13,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -416,7 +417,7 @@ public final class SearchTest {
     azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
   }
 
-  private Collector searcher() {
+  @NotNull private Collector searcher() {
     return collect.usesOf(n);
   }
 

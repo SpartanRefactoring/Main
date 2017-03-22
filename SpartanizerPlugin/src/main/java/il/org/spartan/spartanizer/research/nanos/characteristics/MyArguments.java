@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -28,11 +29,11 @@ public class MyArguments extends JavadocMarkerNanoPattern {
         && !invocations.isEmpty();
   }
 
-  private static String stringify(final MethodDeclaration ¢) {
+  @NotNull private static String stringify(final MethodDeclaration ¢) {
     return "," + separate.these(parametersNames(¢)).by(",") + ",";
   }
 
-  private static String stringify(final MethodInvocation ¢) {
+  @NotNull private static String stringify(final MethodInvocation ¢) {
     return "," + separate.these(arguments(¢)).by(",") + ",";
   }
 }

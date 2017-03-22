@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,15 +28,15 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 5172128174751851623L;
 
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
 
-  @Override public Tip tip(final SwitchStatement s) {
+  @Override @NotNull public Tip tip(@NotNull final SwitchStatement s) {
     final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
     final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
     return new Tip(description(s), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
         $.forEach(λ -> l.insertBefore(copy.of(λ), n, g));
         if (!iz.sequencerComplex(last($)))
@@ -61,7 +62,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return null;
   }
 
-  private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
+  @NotNull private static List<Statement> getAdditionalStatements(@NotNull final List<Statement> ss, final SwitchCase c) {
     final List<Statement> $ = new ArrayList<>();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c) + 1, ss.size())) {

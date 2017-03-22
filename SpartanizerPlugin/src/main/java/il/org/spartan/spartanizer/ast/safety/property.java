@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -14,10 +15,10 @@ public enum property {
 
   @FunctionalInterface
   public interface Obtainer<N> {
-    N from(ASTNode n);
+    @NotNull N from(ASTNode n);
   }
 
-  public static Attached attach(final Object o) {
+  public static Attached attach(@NotNull final Object o) {
     return λ -> λ.setProperty(key(o.getClass()), o);
   }
 
@@ -26,7 +27,7 @@ public enum property {
    * @param key property name
    * @return key property of node, null if it does not have this property. */
   @SuppressWarnings("unchecked") //
-  public static <T> T get(final ASTNode n, final String key) {
+  @Nullable public static <T> T get(@Nullable final ASTNode n, final String key) {
     return n == null ? null : (T) n.getProperty(key);
   }
 
@@ -34,15 +35,15 @@ public enum property {
    * @param n JD
    * @param key property name
    * @return whether node contains the key property */
-  public static boolean has(final ASTNode n, final String key) {
+  public static boolean has(@Nullable final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
   }
 
-  static <N> String key(final Class<N> ¢) {
+  static <N> String key(@NotNull final Class<N> ¢) {
     return ¢.getCanonicalName();
   }
 
-  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> c) {
+  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(@NotNull final Class<N> c) {
     return λ -> (N) λ.getProperty(key(c));
   }
 
@@ -57,7 +58,7 @@ public enum property {
    * @param n JD
    * @param key property name
    * @param value property value */
-  public static <T> T set(final ASTNode n, final String key, final T value) {
+  @Nullable public static <T> T set(@Nullable final ASTNode n, final String key, final T value) {
     if (n == null)
       return null;
     n.setProperty(key, value);
@@ -67,7 +68,7 @@ public enum property {
   /** Unsets a key property for this node.
    * @param n an {@link ASTNode}
    * @param key property name */
-  public static void unset(final ASTNode n, final String key) {
+  public static void unset(@Nullable final ASTNode n, final String key) {
     if (n != null)
       n.setProperty(key, null);
   }

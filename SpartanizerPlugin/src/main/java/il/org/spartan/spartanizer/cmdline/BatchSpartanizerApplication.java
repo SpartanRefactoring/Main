@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -93,22 +94,22 @@ final class BatchSpartanizerApplication implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
+  ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private static String getPackageNameFromSource(final String source) {
+  private static String getPackageNameFromSource(@NotNull final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
 
-  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
+  private static String getPackageNameFromSource(@NotNull final Wrapper<String> $, @NotNull final ASTNode n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final PackageDeclaration ¢) {
+      @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -122,11 +123,11 @@ final class BatchSpartanizerApplication implements IApplication {
 
   /** Discard compilation unit u
    * @param u */
-  void discardCompilationUnit(final ICompilationUnit u) {
+  void discardCompilationUnit(@NotNull final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
-    } catch (final NullPointerException | JavaModelException ¢) {
+    } catch (@NotNull final NullPointerException | JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
   }
@@ -184,7 +185,7 @@ final class BatchSpartanizerApplication implements IApplication {
   // }
   // }
   // }
-  public static ProcessBuilder runScript¢(final String pathname) {
+  @NotNull public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
@@ -206,7 +207,7 @@ final class BatchSpartanizerApplication implements IApplication {
   private PrintWriter afters;
   private CSVStatistics report;
 
-  private BatchSpartanizerApplication(final String path) {
+  private BatchSpartanizerApplication(@NotNull final String path) {
     this(path, system.folder2File(path));
   }
 
@@ -216,7 +217,7 @@ final class BatchSpartanizerApplication implements IApplication {
       System.out.println(dir.mkdir());
   }
 
-  boolean collect(final AbstractTypeDeclaration in) {
+  boolean collect(@NotNull final AbstractTypeDeclaration in) {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");

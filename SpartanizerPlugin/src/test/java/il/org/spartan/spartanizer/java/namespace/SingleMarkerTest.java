@@ -10,6 +10,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.meta.*;
 
 @RunWith(Parameterized.class)
 public class SingleMarkerTest extends MetaFixture {
-  @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
+  @NotNull @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
     final List<Object[]> $ = new ArrayList<>();
     for (final MarkerAnnotation a : new definitionTest().markers()) {
       final String key = (a + "").substring(1);
@@ -31,10 +32,10 @@ public class SingleMarkerTest extends MetaFixture {
     return $;
   }
 
-  private final SimpleName name;
+  @NotNull private final SimpleName name;
   private final definition.Kind kind;
 
-  public SingleMarkerTest(final definition.Kind kind, final SimpleName name) {
+  public SingleMarkerTest(final definition.Kind kind, @NotNull final SimpleName name) {
     assert name != null;
     this.name = name;
     this.kind = kind;

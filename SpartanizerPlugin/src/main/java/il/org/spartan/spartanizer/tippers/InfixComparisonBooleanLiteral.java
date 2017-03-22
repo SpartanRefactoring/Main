@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,7 +23,7 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     implements TipperCategory.NOP.onBooleans {
   private static final long serialVersionUID = 829099308877429388L;
 
-  private static BooleanLiteral literal(final InfixExpression ¢) {
+  @Nullable private static BooleanLiteral literal(final InfixExpression ¢) {
     return az.booleanLiteral(core(literalOnLeft(¢) ? left(¢) : right(¢)));
   }
 
@@ -34,23 +35,23 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return iz.booleanLiteral(core(right(¢)));
   }
 
-  private static boolean negating(final InfixExpression x, final BooleanLiteral l) {
+  private static boolean negating(@NotNull final InfixExpression x, @NotNull final BooleanLiteral l) {
     return l.booleanValue() != (x.getOperator() == EQUALS);
   }
 
-  private static Expression nonLiteral(final InfixExpression ¢) {
+  @NotNull private static Expression nonLiteral(final InfixExpression ¢) {
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Omit redundant comparison with '" + literal(¢) + "'";
   }
 
-  @Override public boolean prerequisite(final InfixExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(@NotNull final InfixExpression x) {
     final BooleanLiteral $ = literal(x);
     final Expression nonliteral = core(nonLiteral(x));
     return make.plant(!negating(x, $) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());

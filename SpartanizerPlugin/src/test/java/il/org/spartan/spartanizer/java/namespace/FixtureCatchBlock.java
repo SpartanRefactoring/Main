@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing resources in the catch block of a try
@@ -19,7 +21,7 @@ public class FixtureCatchBlock extends MetaFixture {
           try (@knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
             if (f() == 3)
               return c.hashCode();
-          } catch (@foreign("d") @knows({ "y", "fileReader" }) final IOException y) {
+          } catch (@NotNull @foreign("d") @knows({ "y", "fileReader" }) final IOException y) {
             y.printStackTrace();
             @foreign({ "x", "d" }) final int a = hashCode() * y.hashCode();
             @knows({ "a", "y", "$" }) final int $ = a * a;
@@ -29,7 +31,7 @@ public class FixtureCatchBlock extends MetaFixture {
           }
           if (f() == 3)
             return c.hashCode();
-        } catch (@foreign("d") @knows("x") final IOException x) {
+        } catch (@NotNull @foreign("d") @knows("x") final IOException x) {
           for (@foreign("resourceInTry") @knows({ "x", "water", "wine" }) @ScopeSize(3) @for¢ int water = new Object() {
             @Override public int hashCode() {
               return super.hashCode();
@@ -45,7 +47,7 @@ public class FixtureCatchBlock extends MetaFixture {
         }
       }
       return fileReader.hashCode();
-    } catch (@foreign("$") final IOException x) {
+    } catch (@NotNull @foreign("$") final IOException x) {
       @foreign("$") final int a = hashCode() * x.hashCode();
       @knows("a") final int y = a * a;
       f(y + a * y + x.hashCode());
@@ -68,10 +70,10 @@ public class FixtureCatchBlock extends MetaFixture {
   void simple() {
     try (FileReader r = new FileReader(toString())) {
       r.read();
-    } catch (final FileNotFoundException x) {
+    } catch (@NotNull final FileNotFoundException x) {
       @foreign("r") final int a1 = hashCode() * hashCode() * x.hashCode();
       f(a1 * a1 * a1);
-    } catch (final IOException x) {
+    } catch (@NotNull final IOException x) {
       @knows({ "a2", "x" }) @foreign("r") final int a2 = hashCode() * hashCode();
       f(a2 * x.hashCode());
       @knows({ "a2", "x" }) final int r = hashCode();

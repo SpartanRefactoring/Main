@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -43,13 +44,13 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= int¢;
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
 
-  @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
+  @Override long evaluateLong(@NotNull final List<Expression> xs) throws IllegalArgumentException {
     for (final Expression ¢ : xs)
       if (type.of(¢) == Certain.DOUBLE)
         throw new NumberFormatException("Expected long or int in " + xs + " but found: " + ¢);
@@ -62,7 +63,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Remainder in division by zero is undefined");
         $ %= long¢;
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
