@@ -49,7 +49,7 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
     return tippers.firstReplacement();
   }
 
-  @Override public String className() {
+  @Override public String nanoName() {
     return Aggregate.class.getSimpleName();
   }
 }

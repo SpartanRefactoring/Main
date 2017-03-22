@@ -43,7 +43,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
     ((VariableDeclaration) first(fragments($))).setInitializer(null);
     final Assignment a = ¢.getAST().newAssignment();
     final VariableDeclarationFragment f2 = first(fragments(¢));
-    // TODO: Tomer Dragucki : use class subject --yg
+    // TODO Tomer Dragucki : use class subject --yg
     a.setLeftHandSide(copy.of(az.expression(f2.getName())));
     a.setRightHandSide(copy.of(az.expression(f2.getInitializer())));
     return new Tip(description(¢), ¢, getClass()) {

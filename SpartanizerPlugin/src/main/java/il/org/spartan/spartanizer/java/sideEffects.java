@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil please add a description
+/** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public enum sideEffects {
@@ -106,7 +106,7 @@ public enum sideEffects {
     return free(expression(¢), then(¢), elze(¢));
   }
 
-  public static boolean sink(Expression x) {
+  public static boolean sink(final Expression x) {
     return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> intIsIn(λ, STRICT_SIDE_EFFECT));
   }
 

@@ -24,7 +24,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new SuppressException(), //
+        new IgnoringExceptions(), //
         null)//
             .add(CastExpression.class, //
                 new SafeCast(), //
@@ -33,7 +33,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new DefaultsTo(), //
                 new GeneralizedSwitch<>(), //
                 new Unless(), //
-                new SafeReference(), //
+                new SafeNavigation(), //
                 new TakeDefaultTo(), //
                 null) //
             .add(EnhancedForStatement.class, //
@@ -55,18 +55,19 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new ForEachInRange(), //
                 null) //
             .add(IfStatement.class, //
-                new NotNullOrThrow(), //
+                new ThrowOnNull(), //
                 new NotNullOrReturn(), //
                 new ExecuteUnless(), //
                 new GeneralizedSwitch<>(), //
                 new PreconditionNotNull(), //
-                new NotHoldsOrThrow(), //
+                new ThrowOnFalse(), //
+                new HoldsOrReturn(), //
                 null) //
             .add(InfixExpression.class, //
-                new Infix.SafeReference(), //
+                new Infix.SafeNavigation(), //
                 null)//
             .add(MethodInvocation.class, //
-                new Reduction(), //
+                new MyName(), //
                 null) //
             .add(VariableDeclarationFragment.class, //
                 new LetItBeIn(), //
@@ -119,6 +120,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
         new Down.Caster(), // rare
+        new Empty(), // merged into default
         new ForEachApplier(), // rare + we have ForEach
         new SelfCaster(), // rare
         new TypeChecker(), // rare --> merged into examiner
@@ -131,13 +133,12 @@ public class SpartAnalyzer extends AgileSpartanizer {
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
-        new ArgumentsTuple(), //
+        new MyArguments(), //
         new ConstantReturner(), //
         new FactoryMethod(), //
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
-        new Empty(), //
         new Examiner(), //
         new Getter(), //
         new LetItBeInMethod(), //

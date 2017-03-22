@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.meta.*;
 @Ignore
 @RunWith(Parameterized.class)
 public class Issue1090 extends MetaFixture {
+  @UnderConstruction("yogi -- 22/03/2017")
   static class Fixture {
     byte byteField;
     char charField;

@@ -14,11 +14,11 @@ public class PropositionJavaNotation extends PropositionInfixNotation {
     return "";
   }
 
-  @Override protected String inter(@SuppressWarnings("unused") And __) {
+  @Override protected String inter(@SuppressWarnings("unused") final And __) {
     return " && ";
   }
 
-  @Override protected String inter(@SuppressWarnings("unused") Or __) {
+  @Override protected String inter(@SuppressWarnings("unused") final Or __) {
     return " || ";
   }
 

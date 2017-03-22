@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * different number of parameters (overloading).
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-02-01 */
-public final class Reduction extends NanoPatternTipper<MethodInvocation> {
+public final class MyName extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 4064181238809686028L;
 
   @Override public boolean canTip(final MethodInvocation ¢) {
@@ -39,10 +39,6 @@ public final class Reduction extends NanoPatternTipper<MethodInvocation> {
         r.replace(¢, $, g);
       }
     };
-  }
-
-  @Override public Category category() {
-    return Category.Iterative;
   }
 
   @Override public String description() {

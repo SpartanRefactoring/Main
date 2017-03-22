@@ -10,11 +10,11 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
     super(new ReduceStringConcatenate());
   }
 
-  @Override protected final String ante(Proposition.Not ¢) {
+  @Override protected final String ante(final Proposition.Not ¢) {
     return negation() + (¢.inner instanceof Proposition.C ? open() : empty());
   }
 
-  @Override protected final String ante(Proposition.P ¢) {
+  @Override protected final String ante(final Proposition.P ¢) {
     return ¢.inner instanceof Proposition.C ? open() : empty();
   }
 
@@ -34,11 +34,11 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
 
   protected abstract String open();
 
-  @Override protected final String post(Proposition.Not ¢) {
+  @Override protected final String post(final Proposition.Not ¢) {
     return ¢.inner instanceof Proposition.C ? close() : empty();
   }
 
-  @Override protected String post(Proposition.P ¢) {
+  @Override protected String post(final Proposition.P ¢) {
     return ¢.inner instanceof Proposition.C ? close() : empty();
   }
 }

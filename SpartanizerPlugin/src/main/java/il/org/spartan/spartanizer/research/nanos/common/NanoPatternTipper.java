@@ -58,7 +58,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     final Tip $ = pattern(¢);
     return new Tip($.description, ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Logger.logNP(¢, className());
+        Logger.logNP(¢, nanoName());
         $.go(r, g);
       }
     };
@@ -69,7 +69,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   @Override public String technicalName() {
-    return className();
+    return nanoName();
   }
 
   @SuppressWarnings("static-method") public String example() {
@@ -81,7 +81,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   @Override public String[] akas() {
-    return new String[] { className() };
+    return new String[] { nanoName() };
   }
 
   protected abstract Tip pattern(N ¢);
