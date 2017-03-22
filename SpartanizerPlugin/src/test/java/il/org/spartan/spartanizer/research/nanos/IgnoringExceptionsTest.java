@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** Tests {@link SuppressException}
+/** Tests {@link IgnoringExceptions}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
 @SuppressWarnings("static-method")
-public class SuppressExceptionTest {
+public class IgnoringExceptionsTest {
   @Test public void a() {
     trimmingOf(//
         "try {" + //
@@ -17,7 +17,7 @@ public class SuppressExceptionTest {
             "  }" + //
             " catch (  B i) {}"//
     ) //
-        .using(CatchClause.class, new SuppressException())//
+        .using(CatchClause.class, new IgnoringExceptions())//
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
@@ -29,7 +29,7 @@ public class SuppressExceptionTest {
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
-        .using(CatchClause.class, new SuppressException())//
+        .using(CatchClause.class, new IgnoringExceptions())//
         .gives("{try{{thing();}}catch(B|A a){ignore();};}")//
         .gives("try{{thing();}}catch(B|A a){ignore();}")//
         .gives("try{thing();}catch(B|A a){ignore();}")//
