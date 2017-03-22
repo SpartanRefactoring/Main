@@ -17,7 +17,7 @@ import il.org.spartan.plugin.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-03-21 */
 public class SpartanWidgetHandler extends AbstractHandler {
-  private static final int R = 100;
+  private static final int R = 70;
   private static final int TRANSPERACY = 100;
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
@@ -32,9 +32,16 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
 
   public static void launchWidget(Function<Point, Point> startLocation) {
-    final Display display = PlatformUI.getWorkbench().getDisplay();
+    IWorkbench w = PlatformUI.getWorkbench();
+    if (w == null)
+      return;
+    final Display display = w.getDisplay();
+    if (display == null)
+      return;
+    Shell originalShell = display.getActiveShell();
+    if (originalShell == null || originalShell.isDisposed())
+      return;
     final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
-    setMovable(display, shell, shell);
     Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
@@ -45,7 +52,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
         active.set(false);
       }
     });
-    Shell originalShell = display.getActiveShell();
     AtomicBoolean widgetFocus = new AtomicBoolean(true);
     final Listener setTransparent = λ -> {
       shell.setAlpha(TRANSPERACY);
@@ -56,22 +62,21 @@ public class SpartanWidgetHandler extends AbstractHandler {
       widgetFocus.set(true);
     };
     setControl(shell, setSolid, setTransparent);
+    setMovable(display, shell, shell);
     setControl(closeButton, setSolid, setTransparent);
     Canvas canvas = createImage(shell);
     setControl(canvas, setSolid, setTransparent);
     setMovable(display, canvas, shell);
     final Region region = new Region();
-    region.add(circle(100));
+    region.add(circle(R));
     region.add(closeButton.getBounds());
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
-    Point mouse = Eclipse.mouseLocation();
-    shell.setLocation(startLocation.apply(mouse));
+    shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
     shell.open();
-    if (originalShell != null)
-      originalShell.forceFocus();
-    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().addShellListener(new ShellListener() {
+    originalShell.forceFocus();
+    originalShell.addShellListener(new ShellListener() {
       @Override public void shellIconified(@SuppressWarnings("unused") ShellEvent __) {
         //
       }
