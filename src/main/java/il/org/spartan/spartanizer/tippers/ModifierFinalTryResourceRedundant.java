@@ -28,7 +28,7 @@ public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modi
   @Override public boolean prerequisite(@NotNull final Modifier $) {
     if (!$.isFinal())
       return false;
-    final VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));
+    @Nullable final VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));
     return x != null && az.tryStatement(parent(x)) != null;
   }
 }

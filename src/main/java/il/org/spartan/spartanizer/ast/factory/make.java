@@ -152,7 +152,7 @@ public enum make {
   }
 
   @NotNull static List<Expression> minus(final List<Expression> ¢) {
-    final List<Expression> $ = new ArrayList<>();
+    @NotNull final List<Expression> $ = new ArrayList<>();
     $.add(first(¢));
     $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
     return $;
@@ -244,7 +244,7 @@ public enum make {
    * @return parameter, but logically negated and simplified */
   public static Expression notOf(final Expression ¢) {
     final PrefixExpression $ = subject.operand(¢).to(NOT);
-    final Expression $$ = PrefixNotPushdown.simplifyNot($);
+    @Nullable final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
 
@@ -354,7 +354,7 @@ public enum make {
     private boolean stringConcatingSafeIn(final ASTNode host) {
       if (!infixExpression(host))
         return false;
-      final InfixExpression $ = az.infixExpression(host);
+      @Nullable final InfixExpression $ = az.infixExpression(host);
       return ($.getOperator() != wizard.PLUS2 || !type.isNotString($)) && isStringConactingSafe(inner);
     }
   }
@@ -367,7 +367,7 @@ public enum make {
     }
 
     public void intoThen(@NotNull final IfStatement s) {
-      final IfStatement plant = az.ifStatement(inner);
+      @Nullable final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
   }

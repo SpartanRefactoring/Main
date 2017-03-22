@@ -18,12 +18,12 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
   private static final long serialVersionUID = 5265347217554350758L;
 
   @Override public boolean prerequisite(@NotNull final N current) {
-    final Statement $ = extract.nextStatement(current);
+    @Nullable final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;
   }
 
   @Override @Nullable public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
-    final Statement $ = extract.nextStatement(n);
+    @Nullable final Statement $ = extract.nextStatement(n);
     if ($ == null || exclude != null && exclude.isExcluded($))
       return null;
     if (exclude != null)

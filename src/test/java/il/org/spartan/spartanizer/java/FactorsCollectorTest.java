@@ -14,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -50,7 +51,7 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test04() {
-    final InfixExpression i = i("a/c");
+    @NotNull final InfixExpression i = i("a/c");
     azzert.that(i.getOperator(), is(DIVIDE));
     azzert.that(left(i), iz("a"));
     azzert.that(right(i), iz("c"));
@@ -60,7 +61,7 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test05() {
-    final InfixExpression i = i("a/c");
+    @NotNull final InfixExpression i = i("a/c");
     azzert.that(i.getOperator(), is(DIVIDE));
     azzert.that(left(i), iz("a"));
     azzert.that(right(i), iz("c"));
@@ -70,7 +71,7 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test06() {
-    final InfixExpression i = i("a * b / c");
+    @NotNull final InfixExpression i = i("a * b / c");
     azzert.that(i.getOperator(), is(DIVIDE));
     azzert.that(az.infixExpression(left(i)).getOperator(), is(TIMES));
     c.collect(i);

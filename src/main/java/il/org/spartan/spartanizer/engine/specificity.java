@@ -107,7 +107,7 @@ public final class specificity implements Comparator<Expression> {
     }
 
     private static int ofCore(final Expression ¢) {
-      for (final Level $ : values())
+      for (@NotNull final Level $ : values())
         if ($.includes(¢))
           return $.ordinal();
       return values().length;

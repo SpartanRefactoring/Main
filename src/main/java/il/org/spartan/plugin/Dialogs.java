@@ -90,7 +90,7 @@ public enum Dialogs {
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   @NotNull public static MessageDialog messageOnTheRun(@NotNull final String message) {
-    final MessageDialog $ = message(message);
+    @NotNull final MessageDialog $ = message(message);
     $.setBlockOnOpen(false);
     return $;
   }
@@ -99,7 +99,7 @@ public enum Dialogs {
    * @return dialog with progress bar, connected to a
    *         {@link IProgressMonitor} */
   @NotNull public static ProgressMonitorDialog progress(final boolean openOnRun) {
-    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+    @NotNull final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }

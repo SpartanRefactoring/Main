@@ -71,13 +71,13 @@ public class Table extends Row<Table> implements Closeable {
 
   @Override public void close() {
     if (!stats.isEmpty())
-      for (final Statistic s : statisics) {
+      for (@NotNull final Statistic s : statisics) {
         for (final String key : keySet()) {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-        final String key = lastEmptyColumn();
-        for (final RecordWriter ¢ : writers) {
+        @Nullable final String key = lastEmptyColumn();
+        for (@NotNull final RecordWriter ¢ : writers) {
           put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
@@ -86,7 +86,7 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   @Nullable private String lastEmptyColumn() {
-    String $ = null;
+    @Nullable String $ = null;
     for (final String key : keySet()) {
       final RealStatistics r = getRealStatistics(key);
       if (r != null && r.n() != 0)
@@ -113,12 +113,12 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   @NotNull public String description() {
-    String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
+    @NotNull String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
         "The table has " + length() + " data rows, each consisting of " + size() + " columns.\n" + //
         "Table header is  " + keySet() + "\n"; //
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
-    final Int n = new Int();
+    @NotNull final Int n = new Int();
     return $ + writers.stream().map(λ -> "\t " + ++n.inner + ". " + λ.fileName + "\n").reduce((x, y) -> x + y).get();
   }
 

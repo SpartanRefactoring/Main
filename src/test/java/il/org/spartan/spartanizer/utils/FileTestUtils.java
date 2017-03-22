@@ -57,7 +57,7 @@ public class FileTestUtils {
   }
 
   @NotNull private static File createTemporaryRandomAccessFile(@NotNull final File $, @NotNull final String s) {
-    try (RandomAccessFile fh = new RandomAccessFile($, "rw")) {
+    try (@NotNull RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
       if ($ != null)
         $.deleteOnExit();
@@ -107,16 +107,16 @@ public class FileTestUtils {
   }
 
   @NotNull static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
-    final Class<?> c = asClass(folderForClass);
+    @Nullable final Class<?> c = asClass(folderForClass);
     assert c != null;
-    final Object $ = getInstance(c);
+    @Nullable final Object $ = getInstance(c);
     assert $ != null;
     return (AbstractGUIApplicator) $;
   }
 
   /** Makes an Output file out of a Test file */
   @NotNull protected static File makeOutFile(@NotNull final File ¢) {
-    final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
+    @NotNull final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
     return createTempFile($, TestDirection.Out, ¢);
@@ -134,7 +134,7 @@ public class FileTestUtils {
     @Override public final void go(@NotNull final List<Object[]> $, @NotNull final File f) {
       if (!f.isDirectory())
         return;
-      final Object[] c = makeCase(f);
+      @NotNull final Object[] c = makeCase(f);
       if (c != null)
         $.add(c);
     }
@@ -150,9 +150,9 @@ public class FileTestUtils {
    * @since 2014/05/24 */
   public abstract static class Files extends FileTestUtils.Traverse {
     @Override public void go(@NotNull final List<Object[]> $, @NotNull final File d) {
-      for (final File f : d.listFiles()) // NANO
+      for (@Nullable final File f : d.listFiles()) // NANO
         if (f != null && f.isFile() && f.exists()) {
-          final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
+          @NotNull final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
           if (c != null)
             $.add(c);
         }
@@ -177,8 +177,8 @@ public class FileTestUtils {
     @NotNull public final Collection<Object[]> go() {
       assert location != null;
       assert location.listFiles() != null;
-      final List<Object[]> $ = new ArrayList<>();
-      for (final File ¢ : location.listFiles()) {
+      @NotNull final List<Object[]> $ = new ArrayList<>();
+      for (@NotNull final File ¢ : location.listFiles()) {
         assert ¢ != null;
         go($, ¢);
       }

@@ -145,7 +145,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   private String fixedPoint(final String from) {
-    for (final IDocument $ = new Document(from);;) {
+    for (@NotNull final IDocument $ = new Document(from);;) {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
@@ -189,7 +189,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        Tipper<N> tipper = null;
+        @Nullable Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch (@NotNull final Exception ¢) {
@@ -197,7 +197,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        Tip s = null;
+        @Nullable Tip s = null;
         try {
           s = tipper.tip(n, exclude);
         } catch (@NotNull final Exception ¢) {
@@ -205,11 +205,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (s != null) {
           ++tippersAppliedOnCurrentObject;
-          final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
+          @Nullable final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
           ReportGenerator.report("tips").put("including Class", includingClass.getName());
           ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
           ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
-          final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
+          @Nullable final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
           ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
           ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
           ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
@@ -240,7 +240,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        Tipper<N> tipper = null;
+        @Nullable Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch (@NotNull final Exception ¢) {
@@ -248,7 +248,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        Tip s = null;
+        @Nullable Tip s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
@@ -269,14 +269,14 @@ public class CommandLine$Applicator extends Generic$Applicator {
       }
 
       <N extends ASTNode> void tick(@NotNull final Tipper<N> w) {
-        final String key = system.className(w.getClass());
+        @NotNull final String key = system.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
       <N extends ASTNode> void tick2(@SuppressWarnings("unused") final N __, @NotNull final Tipper<N> w) {
-        @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + system.className(w.getClass());
+        @NotNull @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + system.className(w.getClass());
         if (!coverage.containsKey(key))
           coverage.put(key, 0);
         coverage.put(key, coverage.get(key) + 1);
@@ -309,7 +309,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
   }
 
   public boolean apply(@NotNull final AbstractSelection<?> __) {
-    for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
+    for (@NotNull final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
       System.out.println("presentFileName: " + presentFileName);
       System.out.println("presentFilePath: " + presentFilePath);
       w.compilationUnit.accept(new ASTVisitor(true) {

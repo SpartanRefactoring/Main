@@ -41,7 +41,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
     if (!shoudlInvert(asVirtualIf))
       return null;
     final IfStatement canonicalIf = invert(asVirtualIf);
-    final List<Statement> ss = extract.statements(elze(canonicalIf));
+    @NotNull final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {
       ss.add(0, canonicalIf);

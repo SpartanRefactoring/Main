@@ -63,7 +63,7 @@ public enum sideEffects {
   public static boolean deterministic(@NotNull final Expression x) {
     if (!sideEffects.free(x))
       return false;
-    final Bool $ = new Bool(true);
+    @NotNull final Bool $ = new Bool(true);
     // noinspection SameReturnValue
     x.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {

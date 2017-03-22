@@ -125,7 +125,7 @@ public interface namer {
 
   @NotNull static String signature(final String code) {
     String $ = code;
-    for (final String keyword : wizard.keywords)
+    for (@NotNull final String keyword : wizard.keywords)
       $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
     return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }

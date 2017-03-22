@@ -26,7 +26,7 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
   @Override @Nullable public ASTNode replacement(@NotNull final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;
-    final Expression one = az.expression(wizard.ast("1"));
+    @Nullable final Expression one = az.expression(wizard.ast("1"));
     final Assignment $ = subject
         .pair(x.getOperand(),
             x.getOperator() == Operator.DECREMENT ? subject.pair(x.getOperand(), one).to(InfixExpression.Operator.MINUS)

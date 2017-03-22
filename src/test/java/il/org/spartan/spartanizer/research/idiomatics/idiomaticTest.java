@@ -75,39 +75,39 @@ public class idiomaticTest {
   }
 
   @Test public void useMapper() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
-    final List<String> after = idiomatic.on(before).map(this::mapper);
+    @NotNull final List<String> after = idiomatic.on(before).map(this::mapper);
     azzert.that(first(after), is("11"));
     azzert.that(after.get(1), is("22"));
     azzert.that(after.get(2), is("33"));
   }
 
   @Test @SuppressWarnings("boxing") public void useMapper2() {
-    final List<Integer> before = new ArrayList<>();
+    @NotNull final List<Integer> before = new ArrayList<>();
     before.add(1);
     before.add(2);
     before.add(3);
-    final List<String> after = idiomatic.on(before).map(this::mapper);
+    @NotNull final List<String> after = idiomatic.on(before).map(this::mapper);
     azzert.that(first(after), is("1"));
     azzert.that(after.get(1), is("2"));
     azzert.that(after.get(2), is("3"));
   }
 
   @Test @SuppressWarnings("boxing") public void useFilter() {
-    final List<Integer> before = new ArrayList<>();
+    @NotNull final List<Integer> before = new ArrayList<>();
     before.add(1);
     before.add(2);
     before.add(3);
-    final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
+    @NotNull final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
     azzert.that(first(after).intValue(), is(1));
     azzert.that(after.get(1).intValue(), is(3));
   }
 
   @Test public void useReduce() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -115,7 +115,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMax() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -123,7 +123,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMin() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");

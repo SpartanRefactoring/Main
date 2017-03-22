@@ -27,7 +27,7 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     final EnhancedForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
-    final Collection<Boolean> cc = new ArrayList<>();
+    @NotNull final Collection<Boolean> cc = new ArrayList<>();
     // noinspection SameReturnValue
     body(s).accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {

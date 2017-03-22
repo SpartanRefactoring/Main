@@ -25,7 +25,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   @Override public boolean canTip(final InstanceofExpression ¢) {
     if (!(type(¢) instanceof SimpleType))
       return false;
-    final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }

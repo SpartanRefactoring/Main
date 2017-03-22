@@ -29,10 +29,10 @@ public class Table_ReusabilityIndices {
         addMissingKeys();
         initializeWriter();
         writer.col("Project", presentSourceName);
-        try (Table t = new Table("rindices")) {
+        try (@NotNull Table t = new Table("rindices")) {
           for (final String category : usage.keySet()) {
             final Map<String, Integer> map = usage.get(category);
-            final Int n = new Int(), m = new Int();
+            @NotNull final Int n = new Int(), m = new Int();
             map.keySet()
                 .forEach(λ -> t//
                     .col("N", ++n.inner)//
@@ -102,8 +102,8 @@ public class Table_ReusabilityIndices {
   }
 
   @NotNull static int[] ranks(@NotNull final Map<?, Integer> m) {
-    final Int n = new Int();
-    final int[] $ = new int[m.size()];
+    @NotNull final Int n = new Int();
+    @NotNull final int[] $ = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
@@ -164,13 +164,13 @@ public class Table_ReusabilityIndices {
   }
 
   protected static int rExternal() {
-    final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+    @NotNull final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     defined.forEach($::remove);
     return rindex(ranks($));
   }
 
   protected static int rInternal() {
-    final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+    @NotNull final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     new ArrayList<>($.keySet()).stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
     return rindex(ranks($));
   }

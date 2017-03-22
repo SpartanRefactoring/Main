@@ -18,7 +18,7 @@ public final class RefreshAll extends BaseHandler {
   }
 
   public static void go(@NotNull final IProject p) {
-    final IProgressMonitor npm = new NullProgressMonitor();
+    @NotNull final IProgressMonitor npm = new NullProgressMonitor();
     new Thread(() -> {
       try {
         if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null)

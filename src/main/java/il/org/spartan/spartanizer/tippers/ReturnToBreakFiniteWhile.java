@@ -29,7 +29,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
   }
 
   @Nullable private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
-    Statement $ = null;
+    @Nullable Statement $ = null;
     for (final Statement ¢ : statements(b)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
@@ -53,7 +53,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     if (compareReturnStatements(az.returnStatement(then), nextReturn))
       return then;
     if (iz.block(then)) {
-      final Statement $ = handleBlock((Block) then, nextReturn);
+      @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
       if ($ != null)
         return $;
     }
@@ -63,7 +63,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
       if (compareReturnStatements(az.returnStatement(elze), nextReturn))
         return elze;
       if (iz.block(elze)) {
-        final Statement $ = handleBlock((Block) elze, nextReturn);
+        @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
         if ($ != null)
           return $;
       }
@@ -90,10 +90,10 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
   }
 
   @Override public Tip tip(@Nullable final WhileStatement b, @Nullable final ExclusionManager exclude) {
-    final ReturnStatement nextReturn = extract.nextReturn(b);
+    @Nullable final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
-    final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    @NotNull final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (exclude != null)
       exclude.exclude(b);

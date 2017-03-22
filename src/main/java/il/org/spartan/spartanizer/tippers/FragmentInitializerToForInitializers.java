@@ -44,7 +44,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    * @param x
    * @return whether initializer's and declaration's modifiers are mergable. */
   private static boolean fittingModifiers(final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
-    final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
+    @NotNull final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
 
@@ -65,8 +65,8 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   }
 
   @NotNull public static Expression handleParenthesizedCondition(@NotNull final ParenthesizedExpression from, final VariableDeclarationStatement s) {
-    final Assignment $ = az.assignment(from.getExpression());
-    final InfixExpression e = az.infixExpression(extract.core(from));
+    @Nullable final Assignment $ = az.assignment(from.getExpression());
+    @Nullable final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
   }
 
@@ -81,7 +81,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   }
 
   private static boolean sameTypeAndModifiers(@NotNull final VariableDeclarationStatement s, final ForStatement ¢) {
-    final List<Expression> initializers = initializers(¢);
+    @NotNull final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
     if (!iz.variableDeclarationExpression(first(initializers)))
@@ -106,10 +106,10 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
       @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
+    @Nullable final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
     if (declarationStatement == null)
       return null;
-    final ForStatement forStatement = az.forStatement(nextStatement);
+    @Nullable final ForStatement forStatement = az.forStatement(nextStatement);
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
     exclude.excludeAll(fragments(declarationStatement));

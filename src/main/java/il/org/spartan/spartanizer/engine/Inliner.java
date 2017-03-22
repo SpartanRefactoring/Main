@@ -24,8 +24,8 @@ import il.org.spartan.utils.*;
  * @since Sep 13, 2016 */
 public final class Inliner {
   @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode... ns) {
-    @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
-    final Int i = new Int();
+    @NotNull @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
+    @NotNull final Int i = new Int();
     Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
     return $;
   }
@@ -59,10 +59,10 @@ public final class Inliner {
   public static boolean isArrayInitWithUnmatchingTypes(@NotNull final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
-    final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
+    @Nullable final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
     if (!(f.getInitializer() instanceof ArrayCreation))
       return false;
-    final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
+    @Nullable final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
@@ -99,11 +99,11 @@ public final class Inliner {
   }
 
   public static boolean variableNotUsedAfterStatement(@NotNull final Statement s, final SimpleName n) {
-    final Block b = az.block(s.getParent());
+    @Nullable final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is not a block";
-    final List<Statement> statements = statements(b);
+    @NotNull final List<Statement> statements = statements(b);
     boolean passedFor = false;
-    for (final Statement ¢ : statements) {
+    for (@NotNull final Statement ¢ : statements) {
       if (passedFor && !collect.usesOf(n).in(¢).isEmpty())
         return false;
       if (¢.equals(s))

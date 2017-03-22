@@ -18,7 +18,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
   private static final long serialVersionUID = -3476158475903575781L;
 
   @Override public final boolean canTip(final MethodDeclaration ¢) {
-    final Javadoc $ = javadoc(¢);
+    @NotNull final Javadoc $ = javadoc(¢);
     return ($ == null || !($ + "").contains(tag()))//
         && prerequisites(¢)//
     ;

@@ -34,7 +34,7 @@ public final class SequencerNotLastInBlock<S extends Statement> extends ReplaceT
   }
 
   @Override @NotNull protected ASTRewrite go(@NotNull final ASTRewrite $, final S s, final Statement nextStatement, final TextEditGroup g) {
-    final Block b = az.block(parent(s));
+    @Nullable final Block b = az.block(parent(s));
     if (b == null) {
       $.remove(nextStatement, g);
       return $;

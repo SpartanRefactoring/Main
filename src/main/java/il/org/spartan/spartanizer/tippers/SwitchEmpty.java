@@ -32,7 +32,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
   @Override @NotNull public Tip tip(@NotNull final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final List<Statement> ll = statements(s);
+        @NotNull final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(copy.of(expression(s)));
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
@@ -49,7 +49,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
   }
 
   @NotNull static String statementsToString(@NotNull final Iterable<Statement> ¢) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";
   }

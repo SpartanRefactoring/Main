@@ -22,12 +22,12 @@ public abstract class InfixExpressionSortingRest extends InfixExpressionSorting 
   @Override public final boolean prerequisite(@NotNull final InfixExpression ¢) {
     if (!suitable(¢))
       return false;
-    final List<Expression> $ = extract.allOperands(¢);
+    @Nullable final List<Expression> $ = extract.allOperands(¢);
     return $.size() > 2 && !Tippers.mixedLiteralKind($) && sort(chop($));
   }
 
   @Override public final Expression replacement(@NotNull final InfixExpression $) {
-    final List<Expression> operands = extract.allOperands($);
+    @Nullable final List<Expression> operands = extract.allOperands($);
     final Expression first = operands.remove(0);
     if (!sort(operands))
       return null;

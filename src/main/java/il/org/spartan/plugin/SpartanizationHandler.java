@@ -28,7 +28,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final GUIBatchLaconizer a = applicator().defaultSelection();
+    @NotNull final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -49,9 +49,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   @NotNull public static GUIBatchLaconizer applicator(@NotNull final English.Activity activityNamer) {
-    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
-    final Trimmer t = new Trimmer();
-    final ProgressMonitorDialog d = Dialogs.progress(false);
+    @NotNull final GUIBatchLaconizer $ = new GUIBatchLaconizer();
+    @NotNull final Trimmer t = new Trimmer();
+    @NotNull final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
@@ -129,10 +129,10 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   @Deprecated @NotNull @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
-    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
-    final Trimmer t = new Trimmer();
-    final ProgressMonitorDialog d = Dialogs.progress(false);
-    final Bool openDialog = new Bool();
+    @NotNull final GUIBatchLaconizer $ = new GUIBatchLaconizer();
+    @NotNull final Trimmer t = new Trimmer();
+    @NotNull final ProgressMonitorDialog d = Dialogs.progress(false);
+    @NotNull final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {

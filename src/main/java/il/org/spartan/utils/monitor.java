@@ -215,9 +215,9 @@ public enum monitor {
   /** logs an error in the plugin into an external file
    * @param tipper an error */
   public static void logToFile(@NotNull final Throwable t, @NotNull final Object... os) {
-    final StringWriter w = new StringWriter();
+    @NotNull final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
-    final Object[] nos = new Object[os.length + 2];
+    @NotNull final Object[] nos = new Object[os.length + 2];
     System.arraycopy(os, 0, nos, 2, os.length);
     nos[0] = t + "";
     nos[1] = (w + "").trim();

@@ -37,7 +37,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
   // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
   // transformation --yg
   @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
-    final List<switchBranch> bs = switchBranch.intoBranches(s);
+    @NotNull final List<switchBranch> bs = switchBranch.intoBranches(s);
     if (bs.size() != 2)
       return null;
     final switchBranch first = first(bs);
@@ -59,8 +59,8 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
   }
 
   @Nullable private static InfixExpression makeFrom(final SwitchStatement s, @NotNull final Iterable<SwitchCase> cs) {
-    InfixExpression $ = null;
-    for (final SwitchCase c : cs) {
+    @Nullable InfixExpression $ = null;
+    for (@NotNull final SwitchCase c : cs) {
       if (c.isDefault())
         continue;
       final InfixExpression n = subject.pair(expression(s), expression(c)).to(Operator.EQUALS);

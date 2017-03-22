@@ -30,7 +30,7 @@ public class Issue0822 {
   }
 
   @Test public void testBuilderException() {
-    StringBuilder sb = null;
+    @Nullable StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
     } catch (@NotNull final Exception ¢) {

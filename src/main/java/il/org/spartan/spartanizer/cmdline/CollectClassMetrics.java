@@ -28,9 +28,9 @@ enum CollectClassMetrics {
   }
 
   @NotNull static CompilationUnit spartanize(@NotNull final CompilationUnit before) {
-    final Trimmer tr = new Trimmer();
+    @NotNull final Trimmer tr = new Trimmer();
     assert tr != null;
-    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    @NotNull final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
     tr.setICompilationUnit($);
     assert $ != null;
     try {

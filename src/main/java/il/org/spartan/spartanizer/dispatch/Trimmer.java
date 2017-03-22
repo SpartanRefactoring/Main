@@ -56,15 +56,15 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @NotNull final Int i) {
-    final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
-    final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
+    @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
+    @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
         progressMonitor.worked(1);
         TrimmerLog.visitation(n);
         if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
-        Tipper<N> w = null;
+        @Nullable Tipper<N> w = null;
         try {
           w = getTipper(t, n);
         } catch (@NotNull final Exception ¢) {
@@ -72,7 +72,7 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (w == null)
           return true;
-        Tip s = null;
+        @Nullable Tip s = null;
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
@@ -94,13 +94,13 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   public String fixed(final String from) {
-    for (final IDocument $ = new Document(from);;)
+    for (@NotNull final IDocument $ = new Document(from);;)
       if (fixed(once($)))
         return $.get();
   }
 
   public String once(final String from) {
-    final IDocument $ = new Document(from);
+    @NotNull final IDocument $ = new Document(from);
     once($);
     return $.get();
   }
@@ -133,12 +133,12 @@ public class Trimmer extends AbstractGUIApplicator {
       @Nullable Toolbox t;
 
       @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
-        final String fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
+        @NotNull final String fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
             λ -> λ.getJavaElement() == null ? English.UNKNOWN : λ.getJavaElement().getElementName());
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
-        Tipper<N> w = null;
+        @Nullable Tipper<N> w = null;
         try {
           w = getTipper(t, n);
         } catch (@NotNull final Exception ¢) {
@@ -216,7 +216,7 @@ public class Trimmer extends AbstractGUIApplicator {
     final Toolbox $ = Toolbox.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
-    for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
+    for (@NotNull final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
       ¢.removeAll(xs);
     toolboxes.put(p, $);
     return $;

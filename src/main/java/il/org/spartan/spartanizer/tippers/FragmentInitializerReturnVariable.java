@@ -33,10 +33,10 @@ public final class FragmentInitializerReturnVariable extends $FragementAndStatem
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
-    final Expression returnValue = expression(s);
+    @NotNull final Expression returnValue = expression(s);
     if (returnValue == null || !wizard.same(n, returnValue))
       return null;
     wizard.eliminate(f, $, g);

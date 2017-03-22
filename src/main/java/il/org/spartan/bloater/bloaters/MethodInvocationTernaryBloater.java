@@ -21,7 +21,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
   private static final long serialVersionUID = -373710981362225466L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final ExpressionStatement s) {
-    final MethodInvocation i = az.methodInvocation(s.getExpression());
+    @Nullable final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)
       return null;
     final ConditionalExpression $ = findFirst.conditionalArgument(i);

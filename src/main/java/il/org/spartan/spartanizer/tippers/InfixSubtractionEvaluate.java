@@ -42,7 +42,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     int $ = 0;
     try {
       $ = az.throwing.int¢(first(xs));
-      for (final Expression ¢ : rest(xs)) {
+      for (@NotNull final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         $ -= az.throwing.int¢(¢);
@@ -57,7 +57,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     long $ = 0;
     try {
       $ = az.throwing.long¢(first(xs));
-      for (final Expression ¢ : rest(xs)) {
+      for (@NotNull final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
         $ -= az.throwing.long¢(¢);

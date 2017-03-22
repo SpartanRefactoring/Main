@@ -33,8 +33,8 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   @Override @NotNull public Tip tip(@NotNull final SwitchStatement s) {
-    final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
-    final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
+    @NotNull final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
+    @NotNull final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
     return new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
@@ -50,7 +50,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
-    SwitchCase $ = null;
+    @Nullable SwitchCase $ = null;
     for (final Statement ¢ : statements(x)) // TOUGH
       if (iz.sequencerComplex(¢))
         $ = null;
@@ -63,7 +63,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   @NotNull private static List<Statement> getAdditionalStatements(@NotNull final List<Statement> ss, final SwitchCase c) {
-    final List<Statement> $ = new ArrayList<>();
+    @NotNull final List<Statement> $ = new ArrayList<>();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c) + 1, ss.size())) {
       if (¢ instanceof SwitchCase)

@@ -24,9 +24,9 @@ public enum TypeNamesCollector {
 
   public static void main(@NotNull final String[] where) throws IOException {
     collect(where.length != 0 ? where : as.array("."));
-    final CSVStatistics w = new CSVStatistics("types.csv", "property");
+    @NotNull final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
-      final String shortName = namer.shorten(s);
+      @NotNull final String shortName = namer.shorten(s);
       w.put("Count", longNames.get(s).intValue());
       w.put("Log(Count)", Math.log(longNames.get(s).intValue()));
       w.put("Sqrt(Count)", Math.sqrt(longNames.get(s).intValue()));
@@ -49,7 +49,7 @@ public enum TypeNamesCollector {
       void record(final String longName) {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
-        final String shortName = namer.shorten(longName);
+        @NotNull final String shortName = namer.shorten(longName);
         shortToFull.putIfAbsent(shortName, new HashSet<>());
         shortToFull.get(shortName).add(longName);
       }

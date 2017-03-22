@@ -23,7 +23,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
   private static final long serialVersionUID = -9043350929840336722L;
 
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x));
+    @Nullable final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null
         : subject.pair(az.expressionStatement($.getAST().newExpressionStatement(subject.pair(left, then($)).to(o))),
             az.expressionStatement($.getAST().newExpressionStatement(subject.pair(left, elze($)).to(o)))).toIf($.getExpression());
@@ -33,7 +33,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);
     if (expressionStatement == null)
       return null;
-    final Assignment $ = az.assignment(expressionStatement.getExpression());
+    @Nullable final Assignment $ = az.assignment(expressionStatement.getExpression());
     return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
   }
 

@@ -33,13 +33,13 @@ public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStateme
   @Override protected ASTRewrite go(@NotNull final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    final ReturnStatement r1 = extract.returnStatement(then(s));
+    @Nullable final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
       return null;
     final Expression $ = extract.core(r1.getExpression());
     if ($ == null)
       return null;
-    final ReturnStatement r2 = extract.returnStatement(nextStatement);
+    @Nullable final ReturnStatement r2 = extract.returnStatement(nextStatement);
     if (r2 == null)
       return null;
     final Expression e2 = extract.core(r2.getExpression());

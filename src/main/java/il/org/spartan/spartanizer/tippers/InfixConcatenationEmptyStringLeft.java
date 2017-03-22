@@ -23,7 +23,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
   private static final long serialVersionUID = -774288757243201042L;
 
   private static InfixExpression replace(@NotNull final InfixExpression ¢) {
-    final List<Expression> $ = extract.allOperands(¢);
+    @Nullable final List<Expression> $ = extract.allOperands(¢);
     lisp2.swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
   }

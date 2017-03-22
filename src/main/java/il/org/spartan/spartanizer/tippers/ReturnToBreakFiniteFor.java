@@ -29,7 +29,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
   }
 
   @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
-    Statement $ = null;
+    @Nullable Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
@@ -44,13 +44,13 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     if (!iz.ifStatement(s))
       return null;
-    final IfStatement ifStatement = az.ifStatement(s);
+    @Nullable final IfStatement ifStatement = az.ifStatement(s);
     final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
     if (then != null) {
       if (compareReturnStatements(az.returnStatement(then), nextReturn))
         return then;
       if (iz.block(then)) {
-        final Statement $ = handleBlock((Block) then, nextReturn);
+        @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
         if ($ != null)
           return $;
       }
@@ -60,7 +60,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
         if (compareReturnStatements(az.returnStatement(elze), nextReturn))
           return elze;
         if (iz.block(elze)) {
-          final Statement $ = handleBlock((Block) elze, nextReturn);
+          @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
           if ($ != null)
             return $;
         }
@@ -88,10 +88,10 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
   }
 
   @Override public Tip tip(@NotNull final ForStatement s, @Nullable final ExclusionManager exclude) {
-    final ReturnStatement nextReturn = extract.nextReturn(s);
+    @Nullable final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;
-    final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    @NotNull final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     if (exclude != null)
       exclude.exclude(s);

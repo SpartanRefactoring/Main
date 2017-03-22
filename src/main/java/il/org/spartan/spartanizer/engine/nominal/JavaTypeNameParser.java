@@ -43,7 +43,7 @@ public final class JavaTypeNameParser {
   /** @return an abbreviation of the type name */
   public String abbreviate() {
     String $ = "";
-    for (final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName);; $ += ¢.group())
+    for (@NotNull final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName);; $ += ¢.group())
       if (!¢.find())
         return $.toLowerCase();
   }

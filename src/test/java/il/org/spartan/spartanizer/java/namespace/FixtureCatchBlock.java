@@ -13,12 +13,12 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("InfiniteRecursion")
 public class FixtureCatchBlock extends MetaFixture {
   @knows("f/0") private int f() {
-    try (@knows("fileReader") FileReader fileReader = new FileReader(toString())) {
-      try (@knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
+    try (@NotNull @knows("fileReader") FileReader fileReader = new FileReader(toString())) {
+      try (@NotNull @knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
         if (f() == 3)
           return fileReader.hashCode();
-        try (@knows({ "c", "b", "fileReader" }) FileReader c = new FileReader(toString())) {
-          try (@knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
+        try (@NotNull @knows({ "c", "b", "fileReader" }) FileReader c = new FileReader(toString())) {
+          try (@NotNull @knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
             if (f() == 3)
               return c.hashCode();
           } catch (@NotNull @foreign("d") @knows({ "y", "fileReader" }) final IOException y) {
@@ -68,7 +68,7 @@ public class FixtureCatchBlock extends MetaFixture {
   }
 
   void simple() {
-    try (FileReader r = new FileReader(toString())) {
+    try (@NotNull FileReader r = new FileReader(toString())) {
       r.read();
     } catch (@NotNull final FileNotFoundException x) {
       @foreign("r") final int a1 = hashCode() * hashCode() * x.hashCode();

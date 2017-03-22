@@ -59,17 +59,17 @@ public class XMLSpartan {
    * @param p JD
    * @return enabled tippers for the project */
   @NotNull public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
-    final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
-    final Document d = getFile(p);
+    @NotNull final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
+    @Nullable final Document d = getFile(p);
     if (d == null)
       return $;
     final NodeList ns = d.getElementsByTagName(TIPPER);
     if (ns == null)
       return $;
-    final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
-    final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
+    @NotNull final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
+    @NotNull final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
     for (int i = 0; i < ns.getLength(); ++i) {
-      final Element e = (Element) ns.item(i);
+      @NotNull final Element e = (Element) ns.item(i);
       final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
@@ -80,7 +80,7 @@ public class XMLSpartan {
         tgs.put(g, new ArrayList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
-      final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
+      @NotNull final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
           description != null ? description : "No description available", preview != null && preview.length > 0 ? preview : EMPTY_PREVIEW);
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
@@ -98,7 +98,7 @@ public class XMLSpartan {
         .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
       return $;
-    final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p);
+    @NotNull final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p);
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
@@ -110,14 +110,14 @@ public class XMLSpartan {
    * @param p JD
    * @param ss enabled tippers by name */
   public static void updateEnabledTippers(@NotNull final IProject p, @NotNull final Collection<String> ss) {
-    final Document d = getFile(p);
+    @Nullable final Document d = getFile(p);
     if (d == null)
       return;
     final NodeList l = d.getElementsByTagName(TIPPER);
     if (l == null)
       return;
     for (int i = 0; i < l.getLength(); ++i) {
-      final Element e = (Element) l.item(i);
+      @NotNull final Element e = (Element) l.item(i);
       final String nameByID = Toolbox.Tables.TipperIDNameTranslationTable.get(e.getAttribute(TIPPER_ID));
       e.setAttribute(ENABLED, nameByID != null && ss.contains(nameByID) ? "true" : "false");
     }
@@ -159,14 +159,14 @@ public class XMLSpartan {
     if (b == null)
       return null;
     if (!fl.exists()) {
-      final Document i = initialize(b.newDocument());
+      @Nullable final Document i = initialize(b.newDocument());
       if (i == null)
         return null;
       fl.create(new ByteArrayInputStream("".getBytes()), false, new NullProgressMonitor());
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-    Document $ = b.parse(fl.getContents());
+    @Nullable Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
@@ -192,7 +192,7 @@ public class XMLSpartan {
       return $;
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
-    final Collection<String> seen = new HashSet<>();
+    @NotNull final Collection<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
@@ -209,7 +209,7 @@ public class XMLSpartan {
       @Nullable final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
-    final String n = t.nanoName();
+    @NotNull final String n = t.nanoName();
     if (seen.contains(n))
       return;
     final Element $ = d.createElement(TIPPER);
@@ -226,9 +226,9 @@ public class XMLSpartan {
    * @param d JD
    * @return true iff the operation has been completed successfully */
   private static boolean commit(@NotNull final IFile f, final Document d) {
-    final Source domSource = new DOMSource(d);
-    final StringWriter writer = new StringWriter();
-    final Result result = new StreamResult(writer);
+    @NotNull final Source domSource = new DOMSource(d);
+    @NotNull final StringWriter writer = new StringWriter();
+    @NotNull final Result result = new StreamResult(writer);
     final TransformerFactory tf = TransformerFactory.newInstance();
     try {
       final Transformer t = tf.newTransformer();

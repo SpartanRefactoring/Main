@@ -30,7 +30,7 @@ public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDe
   }
 
   @Override public VariableDeclarationFragment replacement(@NotNull final VariableDeclarationFragment f) {
-    final FieldDeclaration parent = az.fieldDeclaration(parent(f));
+    @Nullable final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;
     final Expression e = f.getInitializer();

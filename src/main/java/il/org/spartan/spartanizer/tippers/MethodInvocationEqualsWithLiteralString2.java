@@ -35,13 +35,13 @@ public final class MethodInvocationEqualsWithLiteralString2 extends ReplaceCurre
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
-    final SimpleName $ = name(i);
+    @NotNull final SimpleName $ = name(i);
     if (!mns.contains($ + ""))
       return null;
     final Expression ¢ = onlyOne(arguments(i));
     if (!(¢ instanceof StringLiteral))
       return null;
-    final Expression e = receiver(i);
+    @NotNull final Expression e = receiver(i);
     return e == null || e instanceof StringLiteral ? null : replacement($, ¢, e);
   }
 }

@@ -47,7 +47,7 @@ public class Issue0741 {
   }
 
   @Test public void publicFields_test6() {
-    final List<String> pFields = getAll2
+    @NotNull final List<String> pFields = getAll2
         .publicFields(getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}"));
     assert pFields.contains("y");
     assert !pFields.contains("x");
@@ -55,13 +55,13 @@ public class Issue0741 {
   }
 
   @Test public void publicFields_test7() {
-    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public int x; class B { public int y; } }"));
+    @NotNull final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public int x; class B { public int y; } }"));
     assert pFields.contains("x");
     assert !pFields.contains("y");
   }
 
   @Test public void publicFields_test8() {
-    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public class B { public int x; } }"));
+    @NotNull final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public class B { public int x; } }"));
     assert !pFields.contains("B");
     assert !pFields.contains("x");
   }

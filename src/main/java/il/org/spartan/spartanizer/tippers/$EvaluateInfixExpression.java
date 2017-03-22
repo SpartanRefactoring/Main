@@ -28,7 +28,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
 
   private static int indexForLeftEvaluation(@NotNull final InfixExpression x) {
     int $ = 0;
-    for (final Expression ¢ : extract.allOperands(x)) {
+    for (@NotNull final Expression ¢ : extract.allOperands(x)) {
       if (!iz.number(¢))
         return $ > 1 ? $ : 0;
       ++$;
@@ -37,7 +37,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static int indexForRightEvaluation(@NotNull final InfixExpression x) {
-    final List<Expression> es = extract.allOperands(x);
+    @Nullable final List<Expression> es = extract.allOperands(x);
     for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
       if (!iz.number(es.get(¢)))
         return $ > 1 ? $ : 0;
@@ -59,16 +59,16 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   @Override public final ASTNode replacement(@NotNull final InfixExpression x) {
     try {
       if (iz.validForEvaluation(x)) {
-        final String $ = opportunisticReplacement(x);
+        @Nullable final String $ = opportunisticReplacement(x);
         if ($ != null && $.length() < (x + "").length())
           return x.getAST().newNumberLiteral($);
       }
       if (indexForLeftEvaluation(x) > 1) {
         final int index = indexForLeftEvaluation(x);
         final InfixExpression cuttedExpression = subject.operands(extract.allOperands(x).subList(0, index)).to(operator());
-        final List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index, extract.allOperands(x).size());
+        @NotNull final List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index, extract.allOperands(x).size());
         if (iz.validForEvaluation(cuttedExpression)) {
-          final String str = opportunisticReplacement(cuttedExpression);
+          @Nullable final String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
             return subject
                 .pair(az.expression(x.getAST().newNumberLiteral(str)),
@@ -80,9 +80,9 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         final int index = indexForRightEvaluation(x);
         final InfixExpression cuttedExpression = subject
             .operands(extract.allOperands(x).subList(extract.allOperands(x).size() - index, extract.allOperands(x).size())).to(operator());
-        final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
+        @NotNull final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
         if (iz.validForEvaluation(cuttedExpression)) {
-          final String s = opportunisticReplacement(cuttedExpression);
+          @Nullable final String s = opportunisticReplacement(cuttedExpression);
           if (s != null)
             return subject.pair(
                 beforeExpressionOperands.size() == 1 ? first(beforeExpressionOperands) : subject.operands(beforeExpressionOperands).to(operator()),

@@ -39,7 +39,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static ASTNode replacement(@NotNull final List<Expression> xs) {
-    final List<Expression> $ = prune(xs);
+    @Nullable final List<Expression> $ = prune(xs);
     if ($ == null)
       return null;
     final Expression first = first(xs);

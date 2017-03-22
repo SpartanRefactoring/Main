@@ -23,9 +23,9 @@ import il.org.spartan.spartanizer.meta.*;
 @RunWith(Parameterized.class)
 public class SingleMarkerTest extends MetaFixture {
   @NotNull @Parameters(name = "{index}] {0} {1}") public static Collection<Object[]> data() {
-    final List<Object[]> $ = new ArrayList<>();
+    @NotNull final List<Object[]> $ = new ArrayList<>();
     for (final MarkerAnnotation a : new definitionTest().markers()) {
-      final String key = (a + "").substring(1);
+      @NotNull final String key = (a + "").substring(1);
       if (definition.Kind.has(key))
         annotees.of(a).forEach(λ -> $.add(as.array(definition.Kind.valueOf(key), λ)));
     }

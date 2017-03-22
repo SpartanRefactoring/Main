@@ -92,7 +92,7 @@ public class MethodRecord {
 
   static String findTypeAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
-    String $ = "";
+    @NotNull String $ = "";
     while (n != null) {
       while (!iz.abstractTypeDeclaration(n) && n != null)
         n = parent(n);

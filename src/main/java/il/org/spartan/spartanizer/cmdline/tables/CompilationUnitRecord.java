@@ -73,7 +73,7 @@ public class CompilationUnitRecord {
    *         [[SuppressWarningsSpartan]] */
   static boolean containsTestAnnotation(@NotNull final File f) {
     try {
-      final String javaCode = FileUtils.read(f);
+      @NotNull final String javaCode = FileUtils.read(f);
       containsTestAnnotation(javaCode);
     } catch (@NotNull final IOException x) {
       monitor.infoIOException(x, "File = " + f);
@@ -82,7 +82,7 @@ public class CompilationUnitRecord {
   }
 
   public static boolean containsTestAnnotation(@NotNull final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    @NotNull final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     // noinspection SameReturnValue
     cu.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final AnnotationTypeDeclaration node) {

@@ -25,7 +25,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
-    final InfixExpression ie = az.infixExpression(¢.getExpression());
+    @Nullable final InfixExpression ie = az.infixExpression(¢.getExpression());
     final IfStatement newThen = subject.pair(then(¢), null)
         .toIf(!ie.hasExtendedOperands() ? ie.getRightOperand() : az.expression(getReducedIEFromIEWithExtOp(ie))),
         $ = subject.pair(newThen, null).toIf(az.infixExpression(¢.getExpression()).getLeftOperand());

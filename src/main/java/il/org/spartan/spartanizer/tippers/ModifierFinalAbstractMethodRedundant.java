@@ -27,10 +27,10 @@ public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<M
   @Override public boolean prerequisite(@NotNull final Modifier m) {
     if (!m.isFinal())
       return false;
-    final SingleVariableDeclaration v = az.singleVariableDeclaration(parent(m));
+    @Nullable final SingleVariableDeclaration v = az.singleVariableDeclaration(parent(m));
     if (v == null)
       return false;
-    final MethodDeclaration $ = az.methodDeclaration(parent(v));
+    @Nullable final MethodDeclaration $ = az.methodDeclaration(parent(v));
     return $ != null && body($) == null;
   }
 }

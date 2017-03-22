@@ -11,6 +11,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -36,9 +38,9 @@ public final class Version230 {
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
-    final String from = "2 + a<b";
-    final Wrap w = Wrap.Expression;
-    final String wrap = w.on(from);
+    @NotNull final String from = "2 + a<b";
+    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final String unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
@@ -509,7 +511,7 @@ public final class Version230 {
   }
 
   @Test public void comaprisonWithSpecific0Legibiliy00() {
-    final InfixExpression e = i("this !=a");
+    @NotNull final InfixExpression e = i("this !=a");
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
     assert !iz.booleanLiteral(right(e));
     assert !iz.booleanLiteral(left(e));
@@ -1389,7 +1391,7 @@ public final class Version230 {
   }
 
   @Test public void isGreaterTrue() {
-    final InfixExpression e = i("f(a,b,c,d,e)* f(a,b,c)");
+    @NotNull final InfixExpression e = i("f(a,b,c,d,e)* f(a,b,c)");
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d,e)"));
@@ -1397,19 +1399,19 @@ public final class Version230 {
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
-    final Expression e1 = left(e), e2 = right(e);
+    @NotNull final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
-    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
   @Test public void isGreaterTrueButAlmostNot() {
-    final InfixExpression e = i("f(a,b,c,d)* f(a,b,c)");
+    @NotNull final InfixExpression e = i("f(a,b,c,d)* f(a,b,c)");
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d)"));
@@ -1417,13 +1419,13 @@ public final class Version230 {
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
-    final Expression e1 = left(e), e2 = right(e);
+    @NotNull final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     assert count.nodes(e1) <= count.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
-    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d)"));
   }
@@ -2899,12 +2901,12 @@ public final class Version230 {
   }
 
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
-    final InfixExpression e = i("null !=a");
+    @NotNull final InfixExpression e = i("null !=a");
     final Tipper<InfixExpression> w = Toolbox.defaultInstance().firstTipper(e);
     assert w != null;
     assert w.check(e);
     assert w.check(e);
-    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
+    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("a != null"));
   }
@@ -3012,7 +3014,7 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
+    @NotNull final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
         .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')   u +=2;else if(s.charAt(i)=='d')u -=1;return u; "));
     assert f != null;
     azzert.that(f, iz(" u=0"));
