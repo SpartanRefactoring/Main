@@ -15,6 +15,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -126,9 +127,15 @@ public enum anonymize {
     }
   }
 
-  public static String makeUnitTest(final String codeFragment) {
+  public static String makeTipperUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), body($));
+    return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
+  }
+  
+  
+  public static String makeBloaterUnitTest(final String codeFragment) {
+    final String $ = squeeze(removeComments(code(essence(codeFragment))));
+    return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
   }
 
   public static String comment() {
@@ -139,7 +146,7 @@ public enum anonymize {
     );
   }
 
-  public static String body(final String input) {
+  public static String tipperBody(final String input) {
     for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
@@ -148,6 +155,16 @@ public enum anonymize {
       assert t != null;
       $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
           + format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      from = to;
+    }
+  }
+  
+  public static String bloaterBody(final String input) {
+    for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
+      final String to = OperandBloating.bloat(input);
+      if (theSpartanizer.same(to, from))
+        return $ + "  .stays() //\n  ;";
+      $ += format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
   }
