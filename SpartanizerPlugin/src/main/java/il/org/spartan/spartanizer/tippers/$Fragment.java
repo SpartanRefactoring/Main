@@ -22,27 +22,14 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-22 */
 abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
-
   private static final long serialVersionUID = 1L;
-
-  public int eliminationSaving() {
-    final List<VariableDeclarationFragment> live = otherSiblings();
-    final int $ = metrics.size(parent());
-    if (live.isEmpty())
-      return $;
-    final VariableDeclarationStatement newParent = copy.of(parent());
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
-  }
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
     if (haz.annotation(f))
       return false;
     if (f == null)
       return false;
-    fragment = f;
-    name = f.getName();
+    name = object().getName();
     parent = az.variableDeclarationStatement(f.getParent());
     nextStatement = extract.nextStatement(f);
     initializer = f.getInitializer();
@@ -50,8 +37,9 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   }
 
   @Nullable @Override public Tip tip(final VariableDeclarationFragment ¢) {
+    assert ¢ == null;
     assert ¢ == object();
-    return new Tip(description(), null, null) {
+    return new Tip(description(), object(), myClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         $Fragment.this.go(r, g);
       }
@@ -80,17 +68,24 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
     return r;
   }
 
-  protected final VariableDeclarationFragment fragment() {
-    return fragment;
+  protected int eliminationSaving() {
+    final List<VariableDeclarationFragment> live = otherSiblings();
+    final int $ = metrics.size(parent());
+    if (live.isEmpty())
+      return $;
+    final VariableDeclarationStatement newParent = copy.of(parent());
+    fragments(newParent).clear();
+    fragments(newParent).addAll(live);
+    return $ - metrics.size(newParent);
   }
 
   @Nullable protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
-  protected final Expression initializer() {
+  @Nullable protected final Expression initializer() {
     return initializer;
   }
 
-  protected final SimpleName name() {
+  @NotNull protected final SimpleName name() {
     return name;
   }
 
@@ -99,7 +94,7 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   }
 
   protected final List<VariableDeclarationFragment> otherSiblings() {
-    return fragments(parent()).stream().filter(λ -> λ != fragment()).collect(toList());
+    return fragments(parent()).stream().filter(λ -> λ != object()).collect(toList());
   }
 
   @Nullable protected VariableDeclarationStatement parent() {
@@ -107,11 +102,8 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   }
 
   protected boolean usedInSubsequentInitializers() {
-    boolean searching = true;
-    for (@NotNull final VariableDeclarationFragment f : fragments(parent()))
-      if (searching)
-        searching = f != fragment();
-      else if (!collect.usesOf(name()).in(f.getInitializer()).isEmpty())
+    for (@NotNull final VariableDeclarationFragment f : youngerSiblings())
+      if (!collect.usesOf(name()).in(f.getInitializer()).isEmpty())
         return true;
     return false;
   }
@@ -120,7 +112,7 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
     @NotNull final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment f : fragments(parent()))
-      if (f == fragment())
+      if (f == object())
         collecting = true;
       else if (collecting)
         $.add(f);
@@ -130,16 +122,14 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.
-   * @param f
    * @param r
    * @param g */
   void remove(@NotNull final ASTRewrite r, final TextEditGroup g) {
-    r.remove(parent().fragments().size() > 1 ? fragment() : parent(), g);
+    r.remove(parent().fragments().size() > 1 ? object() : parent(), g);
   }
 
-  private VariableDeclarationFragment fragment;
-  private Expression initializer;
-  private SimpleName name;
+  @Nullable private Expression initializer;
+  @NotNull private SimpleName name;
   @Nullable private Statement nextStatement;
   @Nullable private VariableDeclarationStatement parent;
 }

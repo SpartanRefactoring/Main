@@ -373,6 +373,7 @@ public class Toolbox {
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N n,
       @NotNull final Collection<Tipper<?>> ts) {
+    assert n != null;
     return ts.stream().filter(x -> x != null).filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
@@ -434,7 +435,7 @@ public class Toolbox {
    * @param pattern JD
    * @return first {@link Tipper} for which the parameter is within scope, or
    *         {@code null if no such {@link Tipper} is found. @ */
-  public <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N ¢) {
+  @NotNull public <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N ¢) {
     return firstTipper(¢, get(¢));
   }
 
