@@ -51,23 +51,11 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     return firstTip(tippers, az.block(parent($)));
   }
 
-  @Override public Category category() {
-    return Category.Iterative;
-  }
-
   @Override public String description() {
     return "Iterate a collection for the first element matching some predicate";
   }
 
-  @Override public String technicalName() {
-    return "ReturnFirstInCSatisfyingXIfNoneY";
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
+  @Override public String nanoName() {
+    return "FirstSuchThat";
   }
 }
