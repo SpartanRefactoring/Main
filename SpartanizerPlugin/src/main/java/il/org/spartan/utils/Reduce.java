@@ -22,8 +22,8 @@ public abstract class Reduce<@¢ R> {
     return $ == null ? reduce() : Stream.of($).filter(Objects::nonNull).reduce(this::reduce).orElse(reduce());
   }
 
-  @Nullable
-  @SafeVarargs public final R reduce(final R r1, final R r2, final R... rs) {
+  @SafeVarargs
+  @Nullable public final R reduce(final R r1, final R r2, final R... rs) {
     return reduce(r1, reduce(r2, reduce(rs)));
   }
 }
