@@ -58,7 +58,7 @@ public final class SingleTipperApplicator {
       final Type t, //
       @Nullable final Tipper<?> w) {
     Toolbox.refresh();
-    final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
+    @Nullable final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
       u.accept(v);
     else
@@ -72,8 +72,8 @@ public final class SingleTipperApplicator {
       return;
     }
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+    @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    @Nullable final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
     if (w == null)
       return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
@@ -90,31 +90,31 @@ public final class SingleTipperApplicator {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
       return;
-    final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
+    @Nullable final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
     // XXX Roth: find a better way to get tipper from marker
-    final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+    @Nullable final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
       pm.done();
       return;
     }
     for (final Integer i : range.from(0).to(SpartanizeProject.MAX_PASSES)) {
       final IProgressService ps = PlatformUI.getWorkbench().getProgressService();
-      final Int pn = new Int(i + 1);
-      final Bool canelled = new Bool();
+      @NotNull final Int pn = new Int(i + 1);
+      @NotNull final Bool canelled = new Bool();
       try {
         ps.run(true, true, px -> {
           px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
           int n = 0;
-          final Collection<ICompilationUnit> exhausted = new ArrayList<>();
-          for (final ICompilationUnit u : todo) {
+          @NotNull final Collection<ICompilationUnit> exhausted = new ArrayList<>();
+          for (@NotNull final ICompilationUnit u : todo) {
             if (px.isCanceled()) {
               canelled.set();
               break;
             }
-            final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+            @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
             textChange.setTextType("java");
             try {
               textChange.setEdit(createRewrite(newSubMonitor(pm), m, Type.PROJECT, w, (IFile) u.getResource()).rewriteAST());
@@ -204,7 +204,7 @@ public final class SingleTipperApplicator {
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x != null) {
-            final Tip make = x.tip(n, exclude);
+            @Nullable final Tip make = x.tip(n, exclude);
             if (make != null)
               make.go(rewrite, null);
           }

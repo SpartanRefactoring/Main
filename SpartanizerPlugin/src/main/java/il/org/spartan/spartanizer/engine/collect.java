@@ -57,7 +57,7 @@ public enum collect {
   @NotNull public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
       @Override @NotNull public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        @NotNull final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
         return $;
       }
@@ -67,7 +67,7 @@ public enum collect {
   @NotNull public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override @NotNull public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        @NotNull final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
         return $;
       }
@@ -81,7 +81,7 @@ public enum collect {
   @NotNull public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override @NotNull public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        @NotNull final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
         return $;
       }
@@ -95,7 +95,7 @@ public enum collect {
   @NotNull public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override @NotNull public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        @NotNull final List<SimpleName> $ = new ArrayList<>();
         as.list(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
         return $;
       }
@@ -111,7 +111,7 @@ public enum collect {
   @NotNull public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override @NotNull public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        @NotNull final List<SimpleName> $ = new ArrayList<>();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
         return $;
       }
@@ -125,7 +125,7 @@ public enum collect {
       }
 
       @Override @NotNull public List<String> inside(final ASTNode... ns) {
-        final List<String> $ = new ArrayList<>();
+        @NotNull final List<String> $ = new ArrayList<>();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
         return $;
       }
@@ -395,7 +395,7 @@ public enum collect {
       }
 
       @NotNull Collection<VariableDeclarationFragment> getFieldsOfClass(@NotNull final ASTNode classNode) {
-        final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
+        @NotNull final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
         // noinspection SameReturnValue
         classNode.accept(new ASTVisitor(true) {
           @Override public boolean visit(final FieldDeclaration ¢) {
@@ -438,7 +438,7 @@ public enum collect {
    * @param ns the n in which to counted
    * @return list of uses */
   @NotNull List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
-    final List<SimpleName> $ = new ArrayList<>();
+    @NotNull final List<SimpleName> $ = new ArrayList<>();
     as.list(ns).forEach(λ -> as.list(collectors(what, $)).forEach(λ::accept));
     removeDuplicates($);
     $.sort(Comparator.comparingInt(ASTNode::getStartPosition));

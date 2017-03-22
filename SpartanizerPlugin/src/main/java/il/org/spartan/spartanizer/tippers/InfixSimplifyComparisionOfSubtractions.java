@@ -30,7 +30,7 @@ public class InfixSimplifyComparisionOfSubtractions extends ReplaceCurrentNode<I
       return null;
     final Expression $ = az.infixExpression(x.getLeftOperand()).getLeftOperand(), lr = az.infixExpression(x.getLeftOperand()).getRightOperand(),
         rl = az.infixExpression(x.getRightOperand()).getLeftOperand(), rr = az.infixExpression(x.getRightOperand()).getRightOperand();
-    final InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($)
+    @Nullable final InfixExpression res = iz.infixExpression(rr) || iz.infixExpression(rl) || iz.infixExpression(lr) || iz.infixExpression($)
         || iz.numberLiteral($) || iz.numberLiteral(lr) || iz.numberLiteral(rl) || iz.numberLiteral(rr) ? null
             : subject.pair(subject.pair($, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());
     return prerequisite(res) ? res : null;

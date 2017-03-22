@@ -29,7 +29,7 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
   @Override @Nullable public Tip tip(@NotNull final ExpressionStatement ¢) {
     return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
+        @Nullable final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = cic.getType();
         r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY).replace(¢,
             make.variableDeclarationStatement(copy.of(t), scope.newName(cic, t), copy.of(cic)), g);

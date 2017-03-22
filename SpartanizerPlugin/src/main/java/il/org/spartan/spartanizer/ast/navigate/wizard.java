@@ -236,9 +236,9 @@ public interface wizard {
    * @param m */
   static void addMethodToFile(final String fileName, final MethodDeclaration m) {
     try {
-      final String str = readFromFile(fileName);
-      final IDocument d = new Document(str);
-      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      @NotNull final String str = readFromFile(fileName);
+      @NotNull final IDocument d = new Document(str);
+      @NotNull final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
       final ASTRewrite r = ASTRewrite.create(t.getAST());
       wizard.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
@@ -323,7 +323,7 @@ public interface wizard {
   }
 
   static ASTNode commonAncestor(@NotNull final ASTNode n1, @NotNull final ASTNode n2) {
-    final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
+    @NotNull final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
     for (int $ = 0; $ < Math.min(ns1.size(), ns2.size()); ++$)
       if (ns1.get($) == ns2.get($))
         return ns1.get($);
@@ -364,8 +364,8 @@ public interface wizard {
   }
 
   @NotNull static <T> String completionIndex(@NotNull final List<T> ts, final T t) {
-    final String $ = ts.size() + "";
-    String i = ts.indexOf(t) + 1 + "";
+    @NotNull final String $ = ts.size() + "";
+    @NotNull String i = ts.indexOf(t) + 1 + "";
     while (i.length() < $.length())
       i = " " + i;
     return i + "/" + $;
@@ -436,8 +436,8 @@ public interface wizard {
    * @param r
    * @param g */
   static void eliminate(@NotNull final VariableDeclarationFragment f, @NotNull final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
+    @NotNull final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    @NotNull final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     if (live.isEmpty()) {
       r.remove(parent, g);
       return;
@@ -509,9 +509,9 @@ public interface wizard {
   static boolean forbiddenOpOnPrimitive(@NotNull final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    @NotNull final ExpressionStatement x = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(x.getExpression())) {
-      final Expression $ = core(expression(x.getExpression()));
+      @Nullable final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(x.getExpression()))
@@ -523,9 +523,9 @@ public interface wizard {
   static boolean frobiddenOpOnPrimitive(@NotNull final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
-    final ExpressionStatement x = (ExpressionStatement) nextStatement;
+    @NotNull final ExpressionStatement x = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(x.getExpression())) {
-      final Expression $ = core(expression(x.getExpression()));
+      @Nullable final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(x.getExpression()))
@@ -535,7 +535,7 @@ public interface wizard {
   }
 
   @NotNull @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(@NotNull final ASTNode n) {
-    final Collection<MethodDeclaration> $ = new ArrayList<>();
+    @NotNull final Collection<MethodDeclaration> $ = new ArrayList<>();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
@@ -548,10 +548,10 @@ public interface wizard {
   }
 
   static Expression goInfix(@NotNull final InfixExpression from, final VariableDeclarationStatement s) {
-    final List<Expression> $ = hop.operands(from);
+    @Nullable final List<Expression> $ = hop.operands(from);
     // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
-      final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
+      @Nullable final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(left(a));
       fragments(s).stream().filter(λ -> (name(λ) + "").equals(var + "")).forEach(λ -> {
         λ.setInitializer(copy.of(right(a)));
@@ -659,7 +659,7 @@ public interface wizard {
 
   @NotNull static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
       @NotNull final Collection<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    @NotNull final List<VariableDeclarationFragment> $ = new ArrayList<>();
     fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }
@@ -745,7 +745,7 @@ public interface wizard {
   }
 
   static BodyDeclaration prune(final BodyDeclaration $, @NotNull final Set<Predicate<Modifier>> ms) {
-    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
+    for (@NotNull final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
         ¢.remove();
     return $;
@@ -772,7 +772,7 @@ public interface wizard {
   }
 
   @NotNull static Set<Predicate<Modifier>> redundancies(@NotNull final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
+    @NotNull final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
       return $;
     if (iz.enumDeclaration(¢))
@@ -934,7 +934,7 @@ public interface wizard {
     final IProblem[] v = u.getProblems();
     if (v.length == 0)
       return "???";
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 }

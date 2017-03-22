@@ -33,9 +33,9 @@ public enum TestsUtilsTrimmer {
 
     private N findNode(@NotNull final Rule<N, Tip> t) {
       assert t != null;
-      final Wrap wrap = Wrap.find(get());
+      @NotNull final Wrap wrap = Wrap.find(get());
       assert wrap != null;
-      final CompilationUnit u = wrap.intoCompilationUnit(get());
+      @NotNull final CompilationUnit u = wrap.intoCompilationUnit(get());
       assert u != null;
       final N $ = firstInstance(u);
       assert $ != null;
@@ -43,7 +43,7 @@ public enum TestsUtilsTrimmer {
     }
 
     private N firstInstance(@NotNull final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
+      @NotNull final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor(true) {
         /** The implementation of the visitation procedure in the JDT seems to
          * be buggy. Each time we find a node which is an instance of the sought

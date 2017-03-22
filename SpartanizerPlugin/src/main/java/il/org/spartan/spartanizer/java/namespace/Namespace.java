@@ -75,7 +75,7 @@ public final class Namespace implements Environment {
 
       @Override
       @Nullable public Environment next() {
-        final Environment $ = next;
+        @Nullable final Environment $ = next;
         next = next.nest();
         return $;
       }
@@ -155,11 +155,11 @@ public final class Namespace implements Environment {
             continue;
           }
           if (iz.typeDeclaration(s)) {
-            final TypeDeclaration d = az.typeDeclaration(s);
+            @Nullable final TypeDeclaration d = az.typeDeclaration(s);
             n.spawn(definition.kind(d)).put(d).fillScope(s);
           }
           if (iz.variableDeclarationStatement(s)) {
-            final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
+            @Nullable final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
             n = n.spawn(local);
             for (final VariableDeclarationFragment ¢ : fragments(vds))
               n.put(step.name(¢), type(vds));
@@ -319,7 +319,7 @@ public final class Namespace implements Environment {
   }
 
   @NotNull protected Namespace put(@NotNull final TypeDeclaration ¢) {
-    @knows("¢") final String key = "type " + step.name(¢);
+    @NotNull @knows("¢") final String key = "type " + step.name(¢);
     put(key, new Binding(key, type.baptize(step.name(¢) + "", !iz.interface¢(¢) ? "class" : "interface")));
     return this;
   }
@@ -383,7 +383,7 @@ public final class Namespace implements Environment {
 
   @NotNull public String generateName(final String ¢) {
     int postface = 0;
-    String $ = ¢ + "" + ++postface;
+    @NotNull String $ = ¢ + "" + ++postface;
     while (has($))
       $ = ¢ + "" + ++postface;
     return $;

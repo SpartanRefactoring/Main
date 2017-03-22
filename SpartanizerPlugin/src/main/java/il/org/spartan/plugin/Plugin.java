@@ -95,11 +95,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.get())
         return;
       try {
-        final MProject mp = new MProject();
+        @NotNull final MProject mp = new MProject();
         e.getDelta().accept(d -> {
           if (d == null || d.getResource() == null || !(d.getResource() instanceof IProject))
             return true;
-          final IProject p = (IProject) d.getResource();
+          @NotNull final IProject p = (IProject) d.getResource();
           if (d.getKind() == IResourceDelta.ADDED) {
             mp.p = p;
             mp.type = NEW_PROJECT;

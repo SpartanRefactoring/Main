@@ -36,13 +36,13 @@ public final class FragmentInitialiazerAssignment extends $FragementAndStatement
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final Assignment a = extract.assignment(nextStatement);
+    @Nullable final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);

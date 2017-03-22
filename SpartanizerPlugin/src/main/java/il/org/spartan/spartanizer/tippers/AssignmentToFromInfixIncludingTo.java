@@ -29,8 +29,8 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   private static final long serialVersionUID = -6131575687350461523L;
 
   private static List<Expression> dropAnyIfSame(@NotNull final List<Expression> xs, @NotNull final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    for (final Expression ¢ : xs)
+    @NotNull final List<Expression> $ = new ArrayList<>(xs);
+    for (@NotNull final Expression ¢ : xs)
       if (same(¢, left)) {
         $.remove(¢);
         return $;
@@ -43,14 +43,14 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static Expression reduce(final InfixExpression x, @NotNull final Expression deleteMe) {
-    final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
+    @Nullable final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
     return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
   }
 
   private static ASTNode replacement(@NotNull final Expression to, final InfixExpression from) {
     if (iz.arrayAccess(to) || !sideEffects.free(to))
       return null;
-    final Expression $ = reduce(from, to);
+    @Nullable final Expression $ = reduce(from, to);
     return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
   }
 

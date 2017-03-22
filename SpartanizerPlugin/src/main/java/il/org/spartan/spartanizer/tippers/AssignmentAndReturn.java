@@ -32,10 +32,10 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
   }
 
   @Override public ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    final Statement parent = az.statement(parent(a));
+    @Nullable final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(to(a), core(expression(s))))
       return null;
     $.remove(parent, g);

@@ -24,7 +24,7 @@ public interface metrics {
    * @param n JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int bodySize(@NotNull final ASTNode n) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
@@ -45,8 +45,8 @@ public interface metrics {
   @SuppressWarnings("boxing") static int dexterity(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
-    final Recurser<Integer> $ = new Recurser<>(n, 0);
-    final Collection<Integer> nodesTypeSet = new HashSet<>();
+    @NotNull final Recurser<Integer> $ = new Recurser<>(n, 0);
+    @NotNull final Collection<Integer> nodesTypeSet = new HashSet<>();
     return $.preVisit(λ -> {
       if (nodesTypeSet.contains(λ.getRoot().getNodeType()))
         return λ.getCurrent();
@@ -58,7 +58,7 @@ public interface metrics {
   /** @param pattern JD
    * @return */
   @NotNull static Set<String> dictionary(@NotNull final ASTNode u) {
-    final Set<String> $ = new LinkedHashSet<>();
+    @NotNull final Set<String> $ = new LinkedHashSet<>();
     u.accept(new ASTVisitor(true) {
       @Override public void endVisit(final SimpleName node) {
         $.add(step.identifier(node));
@@ -84,13 +84,13 @@ public interface metrics {
   }
 
   static int height(@NotNull final List<ASTNode> ns) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     ns.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
 
   static int height(@NotNull final List<Statement> ss, @SuppressWarnings("unused") final int x) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     ss.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
@@ -116,7 +116,7 @@ public interface metrics {
   }
 
   @NotNull static Set<String> literals(@NotNull final ASTNode n) {
-    final Set<String> $ = new LinkedHashSet<>();
+    @NotNull final Set<String> $ = new LinkedHashSet<>();
     n.accept(new ASTVisitor(true) {
       @Override public void endVisit(final BooleanLiteral node) {
         $.add(node + "");
@@ -153,7 +153,7 @@ public interface metrics {
 
   static int tokens(@NotNull final String s) {
     int $ = 0;
-    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+    for (@NotNull final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
       final Token t = tokenizer.next();
       if (t == null || t == Token.EOF)
         return $;
@@ -167,7 +167,7 @@ public interface metrics {
   }
 
   static int countStatements(@NotNull final ASTNode n) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement && !(¢ instanceof Block))
@@ -182,7 +182,7 @@ public interface metrics {
   }
 
   static int countStatementsOfType(@NotNull final Statement s, final int type) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     s.accept(new ASTVisitor(true) {
       @Override public void preVisit(@NotNull final ASTNode ¢) {
         if (¢.getNodeType() == type)
@@ -197,7 +197,7 @@ public interface metrics {
   }
 
   static int countExpressions(@NotNull final ASTNode n) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Expression)
@@ -208,7 +208,7 @@ public interface metrics {
   }
 
   static int countMethods(@NotNull final ASTNode n) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final MethodDeclaration __) {
@@ -223,10 +223,10 @@ public interface metrics {
    * @param n
    * @return */
   static int nodeUnderstandability(@NotNull final ASTNode n) {
-    final Int depth = new Int();
-    final Stack<Int> siblings = new Stack<>();
+    @NotNull final Int depth = new Int();
+    @NotNull final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
-    final Int $ = Int.valueOf(-1);
+    @NotNull final Int $ = Int.valueOf(-1);
     n.getRoot().accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if ($.inner != -1)
@@ -252,10 +252,10 @@ public interface metrics {
    * @param n
    * @return */
   static int subtreeUnderstandability(@NotNull final ASTNode n) {
-    final Int depth = new Int();
-    final Stack<Int> siblings = new Stack<>();
+    @NotNull final Int depth = new Int();
+    @NotNull final Stack<Int> siblings = new Stack<>();
     siblings.push(new Int());
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(@SuppressWarnings("unused") final ASTNode __) {
         $.inner += depth.inner + siblings.peek().inner;
@@ -276,10 +276,10 @@ public interface metrics {
    * @param n
    * @return */
   static int subtreeUnderstandability2(@NotNull final ASTNode n) {
-    final Int depth = new Int();
-    final Stack<Int> variables = new Stack<>();
+    @NotNull final Int depth = new Int();
+    @NotNull final Stack<Int> variables = new Stack<>();
     variables.push(new Int());
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         ifStatementIncreaseResult(¢);

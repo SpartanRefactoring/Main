@@ -20,8 +20,8 @@ public class MyArguments extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (!hazAtLeastTwoParameters(d))
       return false;
-    final String $ = stringify(d);
-    final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
+    @NotNull final String $ = stringify(d);
+    @NotNull final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
     return invocations.stream()//
         .map(MyArguments::stringify)
         .allMatch(λ -> λ != null//

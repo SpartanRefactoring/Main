@@ -32,7 +32,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
   }
 
   @Override public Tip tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
-    final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
+    @Nullable final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));
@@ -42,7 +42,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     final SimpleName $ = d.getName();
     if (namer.isSpecial($) || !JohnDoe.property(d))
       return null;
-    final Statement body = body(s);
+    @NotNull final Statement body = body(s);
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = newCurrent(s);

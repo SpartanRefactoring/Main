@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 public enum Files {
   ;
   public static void createOutputDirIfNeeded() {
-    final File dir = new File(outputDir());
+    @NotNull final File dir = new File(outputDir());
     if (!dir.exists())
       dir.mkdir();
   }
@@ -44,7 +44,7 @@ public enum Files {
   }
 
   public static void blank(@NotNull final String s) {
-    try (PrintWriter p = new PrintWriter(s)) {
+    try (@NotNull PrintWriter p = new PrintWriter(s)) {
       p.close();
     } catch (@NotNull final FileNotFoundException ¢) {
       ¢.printStackTrace();
@@ -52,7 +52,7 @@ public enum Files {
   }
 
   public static void blank(@NotNull final File f) {
-    try (PrintWriter p = new PrintWriter(f)) {
+    try (@NotNull PrintWriter p = new PrintWriter(f)) {
       p.close();
     } catch (@NotNull final FileNotFoundException ¢) {
       ¢.printStackTrace();
@@ -63,7 +63,7 @@ public enum Files {
    * @param f file
    * @param s string */
   public static void appendFile(@NotNull final File f, @NotNull final String s) {
-    try (FileWriter w = new FileWriter(f, true)) {
+    try (@NotNull FileWriter w = new FileWriter(f, true)) {
       w.write(s);
     } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, "append");
@@ -74,7 +74,7 @@ public enum Files {
    * @param f file
    * @param s string */
   public static void writeFile(@NotNull final File f, @NotNull final String s) {
-    try (FileWriter w = new FileWriter(f, false)) {
+    try (@NotNull FileWriter w = new FileWriter(f, false)) {
       w.write(s);
     } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, "write");
@@ -115,10 +115,10 @@ public enum Files {
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
   @NotNull private static Collection<File> getJavaFiles(@Nullable final File directory) {
-    final Collection<File> $ = new HashSet<>();
+    @NotNull final Collection<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
       return $;
-    for (final File entry : directory.listFiles())
+    for (@NotNull final File entry : directory.listFiles())
       if (javaFile(entry) && notTest(entry))
         $.add(entry);
       else

@@ -38,7 +38,7 @@ public enum Wrap {
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
   @NotNull public static Wrap find(@NotNull final String codeFragment) {
-    for (final Wrap $ : WRAPS) // NANO
+    for (@NotNull final Wrap $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
     azzert.fail("Cannot parse '\n" + codeFragment + "\n W********* I tried the following options:" + options(codeFragment));
@@ -46,10 +46,10 @@ public enum Wrap {
   }
 
   @NotNull private static String options(final String codeFragment) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     int i = 0;
-    for (final Wrap w : Wrap.WRAPS) {
-      final String on = w.on(codeFragment);
+    for (@NotNull final Wrap w : Wrap.WRAPS) {
+      @NotNull final String on = w.on(codeFragment);
       final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
       $.append("\n* I = <").append(trivia.essence(on)).append(">;");

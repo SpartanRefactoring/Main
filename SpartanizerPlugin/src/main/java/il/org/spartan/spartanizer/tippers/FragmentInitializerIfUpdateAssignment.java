@@ -35,16 +35,16 @@ public final class FragmentInitializerIfUpdateAssignment extends $FragementAndSt
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    final IfStatement s = az.ifStatement(nextStatement);
+    @Nullable final IfStatement s = az.ifStatement(nextStatement);
     if (s == null || !iz.vacuousElse(s))
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
-    final Assignment a = extract.assignment(then(s));
+    @Nullable final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer).toCondition(condition);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);

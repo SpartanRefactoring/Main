@@ -34,12 +34,12 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
   @Nullable private static ASTNode replacement(@Nullable final MethodInvocation ¢) {
     if (¢ == null)
       return null;
-    final List<Expression> $ = arguments(¢);
+    @NotNull final List<Expression> $ = arguments(¢);
     return replacement(¢, first($), second($));
   }
 
   @Nullable public static ASTNode replacement(@NotNull final MethodInvocation i, final Expression first, @Nullable final Expression second) {
-    final Expression message = second == null ? null : first, condition = second == null ? first : second;
+    @Nullable final Expression message = second == null ? null : first, condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
     if (message != null)
       $.setMessage(copy.of(message));

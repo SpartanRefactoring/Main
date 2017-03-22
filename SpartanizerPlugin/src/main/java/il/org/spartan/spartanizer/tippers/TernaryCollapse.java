@@ -23,15 +23,15 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
   private static final long serialVersionUID = -534365936521275928L;
 
   private static Expression collapse(@NotNull final ConditionalExpression ¢) {
-    Expression $;
+    @Nullable Expression $;
     return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
   }
 
   private static Expression collapseOnElse(@NotNull final ConditionalExpression x) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
+    @Nullable final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
     if ($ == null)
       return null;
-    final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
+    @Nullable final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
     return !wizard.same(then, elseElse) && !wizard.same(then, elseThen) ? null
         : wizard.same(then, elseElse)
             ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), $.getExpression()).to(CONDITIONAL_AND))
@@ -40,10 +40,10 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
   }
 
   private static Expression collaspeOnThen(@NotNull final ConditionalExpression x) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
+    @Nullable final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
     if ($ == null)
       return null;
-    final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
+    @Nullable final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
     return wizard.same(thenElse, elze)
         ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), $.getExpression()).to(CONDITIONAL_AND))
         : wizard.same(thenThen, elze)

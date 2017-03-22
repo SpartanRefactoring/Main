@@ -35,17 +35,17 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     private static final long serialVersionUID = 2390117956692878327L;
 
     @Override public boolean prerequisite(final VariableDeclarationFragment f) {
-      final Statement nextStatement = extract.nextStatement(f);
-      final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
+      @Nullable final Statement nextStatement = extract.nextStatement(f);
+      @Nullable final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
       return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && noFurtherUsage(name(f), nextStatement)
           && initializer(f) != null;
     }
 
     @Override @NotNull protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement,
         final TextEditGroup g) {
-      final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
-      final Expression initializer = initializer(f);
-      final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+      @Nullable final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
+      @NotNull final Expression initializer = initializer(f);
+      @Nullable final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
@@ -56,7 +56,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     }
 
     private static boolean noFurtherUsage(final SimpleName n, final Statement nextStatement) {
-      final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
+      @Nullable final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
       $.remove(n);
       $.removeAll(collect.forAllOccurencesExcludingDefinitions(n).in(nextStatement));
       return $.isEmpty();

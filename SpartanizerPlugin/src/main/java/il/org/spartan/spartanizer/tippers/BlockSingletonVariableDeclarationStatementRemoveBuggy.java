@@ -32,7 +32,7 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
   }
 
   @Override public Tip tip(@NotNull final Block n) {
-    final List<Statement> $ = statements(n);
+    @NotNull final List<Statement> $ = statements(n);
     if ($.isEmpty())
       return null;
     for (final Statement ¢ : $)

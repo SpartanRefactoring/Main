@@ -34,14 +34,14 @@ public enum generalize {
   }
 
   public static String generalizeIdentifiers(@NotNull final String s) {
-    final IDocument d = new Document(ASTutils.wrapCode(s));
+    @NotNull final IDocument d = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(d.get().toCharArray());
-    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+    @NotNull final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-    final ASTNode n = ASTutils.extractASTNode(s, cu);
+    @Nullable final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
-    final Map<String, String> renaming = new HashMap<>();
+    @NotNull final Map<String, String> renaming = new HashMap<>();
     // noinspection SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final StringLiteral $) {

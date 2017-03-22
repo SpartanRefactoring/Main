@@ -18,12 +18,12 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
   private static final long serialVersionUID = 8014414856762598558L;
 
   private static ASTNode innerThrowReplacement(final Expression x, @NotNull final Statement s) {
-    final ConditionalExpression ¢;
+    @Nullable final ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
     else {
       // TODO Doron Meshulam: Use extract.core --yg
-      final Expression unpar = expression(az.parenthesizedExpression(x));
+      @NotNull final Expression unpar = expression(az.parenthesizedExpression(x));
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
@@ -42,7 +42,7 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
   }
 
   private static ASTNode replaceReturn(@NotNull final Statement ¢) {
-    final ThrowStatement $ = az.throwStatement(¢);
+    @Nullable final ThrowStatement $ = az.throwStatement(¢);
     return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
         : innerThrowReplacement(expression($), ¢);
   }

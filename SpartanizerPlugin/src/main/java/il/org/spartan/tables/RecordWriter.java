@@ -77,8 +77,8 @@ public class RecordWriter implements Closeable {
   }
 
   @NotNull private String writeHeaderInner(@NotNull final Map<String, Object> m) {
-    final Separator s = new Separator(renderer.headerSeparator());
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final Separator s = new Separator(renderer.headerSeparator());
+    @NotNull final StringBuilder $ = new StringBuilder();
     m.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));
     return $ + "";
   }

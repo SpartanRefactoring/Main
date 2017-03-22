@@ -32,11 +32,11 @@ public final class FragmentInitializerReturnAssignment extends $FragementAndStat
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
-    final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
+    @Nullable final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);

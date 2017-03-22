@@ -56,7 +56,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   @Override @NotNull public final Tip tip(@NotNull final N ¢) {
-    final Tip $ = pattern(¢);
+    @Nullable final Tip $ = pattern(¢);
     return new Tip($.description, ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Logger.logNP(¢, nanoName());

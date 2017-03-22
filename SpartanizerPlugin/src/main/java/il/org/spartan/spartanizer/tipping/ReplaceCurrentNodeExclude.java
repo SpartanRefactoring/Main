@@ -17,7 +17,7 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
 
   @Override public final Tip tip(@NotNull final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
-    final ASTNode $ = replacement(n, m);
+    @Nullable final ASTNode $ = replacement(n, m);
     return $ == null ? null : new Tip(description(n), n, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);

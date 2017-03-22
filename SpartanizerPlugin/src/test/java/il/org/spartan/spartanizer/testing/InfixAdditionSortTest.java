@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -152,7 +153,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test08() {
-    final InfixAdditionSubtractionExpand e = new InfixAdditionSubtractionExpand();
+    @NotNull final InfixAdditionSubtractionExpand e = new InfixAdditionSubtractionExpand();
     assert e != null;
     assert !TermsCollector.isLeafTerm(INPUT);
     assert TermsExpander.simplify(INPUT) != null;
@@ -164,9 +165,9 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test09() {
-    final Expression e = TermsExpander.simplify(INPUT);
+    @NotNull final Expression e = TermsExpander.simplify(INPUT);
     azzert.that(e, instanceOf(InfixExpression.class));
-    final InfixExpression i = (InfixExpression) e;
+    @NotNull final InfixExpression i = (InfixExpression) e;
     azzert.that(i.getOperator(), is(wizard.PLUS2));
     assert hop.operands(i) != null;
     azzert.that(hop.operands(i).size(), is(nTERMS));
@@ -174,7 +175,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test10() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
+    @NotNull final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert INPUT != null;
     assert !wizard.same(i, INPUT);
@@ -182,20 +183,20 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test11() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
+    @NotNull final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert INPUT != null;
     assert wizard.same(into.i(tide.clean(i + "")), INPUT);
   }
 
   @Test public void test12() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
+    @NotNull final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     azzert.that(tide.clean(i + ""), is(tide.clean(INPUT + "")));
   }
 
   @Test public void test13() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
+    @NotNull final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert i.getNodeType() == INPUT.getNodeType();
     assert i != INPUT;
@@ -203,7 +204,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test14() {
-    final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
+    @NotNull final InfixExpression i = (InfixExpression) TermsExpander.simplify(INPUT);
     assert i != null;
     assert i != INPUT;
     azzert.that(i, iz(INPUT + ""));

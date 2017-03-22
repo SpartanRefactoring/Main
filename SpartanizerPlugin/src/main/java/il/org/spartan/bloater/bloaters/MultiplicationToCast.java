@@ -50,7 +50,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
           $.setExpression(copy.of(x.getLeftOperand()));
           return $;
         }
-        final List<Expression> lstcp = extract.allOperands(x);
+        @Nullable final List<Expression> lstcp = extract.allOperands(x);
         lstcp.remove(i);
         $.setExpression(subject.operands(lstcp).to(x.getOperator()));
         return $;

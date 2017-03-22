@@ -39,7 +39,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
-    final MethodVariablesScanner $ = new MethodVariablesScanner(d);
+    @NotNull final MethodVariablesScanner $ = new MethodVariablesScanner(d);
     for (final Statement ¢ : $.statements()) {
       $.update();
       if ($.isOptionalForkPoint())
@@ -83,7 +83,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       s.setExpression(i);
       statements(d1).add(s);
     }
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     $.add(d1);
     final MethodDeclaration d2 = copy.of(d);
     fixStatements(d, d2, r);
@@ -122,7 +122,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         parameters(d2).add(copy.of((SingleVariableDeclaration) v));
       else {
         final SingleVariableDeclaration sv = d.getAST().newSingleVariableDeclaration();
-        final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
+        @Nullable final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(copy.of(v.getName()));
         sv.setType(copy.of(p.getType()));
         extendedModifiers(p).forEach(λ -> extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) λ)));
@@ -134,12 +134,12 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    final List<TagElement> ts = tags(j);
+    @NotNull final List<TagElement> ts = tags(j);
     final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
     boolean noParameterTags = true;
     int tagPosition = -1;
-    final Collection<TagElement> xs = new ArrayList<>();
-    for (final TagElement ¢ : ts)
+    @NotNull final Collection<TagElement> xs = new ArrayList<>();
+    for (@NotNull final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
         noParameterTags = false;
         if (tagPosition < 0)
@@ -193,7 +193,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("unchecked") public void update() {
-      final Iterable<VariableDeclaration> vs = new ArrayList<>(uses.keySet());
+      @NotNull final Iterable<VariableDeclaration> vs = new ArrayList<>(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
         if ((!(currentStatement instanceof ExpressionStatement) || !(((ExpressionStatement) currentStatement).getExpression() instanceof Assignment))
             && inactive.contains(¢) && uses.get(¢).contains(currentStatement)) {

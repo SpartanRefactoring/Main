@@ -27,8 +27,8 @@ public class Issue0777 {
   }
 
   private String addMethodToType(final String type, @NotNull final String method) throws BadLocationException {
-    final IDocument $ = new Document(type);
-    final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
+    @NotNull final IDocument $ = new Document(type);
+    @NotNull final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
     wizard.addMethodToType(d, az.methodDeclaration(ast(method)), r, null);
     r.rewriteAST($, null).apply($);

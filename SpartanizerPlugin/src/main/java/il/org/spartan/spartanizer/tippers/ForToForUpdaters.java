@@ -44,22 +44,22 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
-    final Block bodyBlock = az.block(step.body(¢));
+    @Nullable final Block bodyBlock = az.block(step.body(¢));
     if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2
         || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
-    final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
+    @Nullable final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
-    final Expression e = expression(updater);
+    @NotNull final Expression e = expression(updater);
     final PrefixExpression $ = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
-    final Assignment a = az.assignment(e);
+    @Nullable final Assignment a = az.assignment(e);
     return updaterDeclaredInFor(¢,
         $ != null ? az.simpleName(operand($)) : post != null ? az.simpleName(operand(post)) : a != null ? az.simpleName(left(a)) : null);
   }
 
   public static boolean bodyDeclaresElementsOf(@NotNull final ASTNode n) {
-    final Block $ = az.block(n.getParent());
+    @Nullable final Block $ = az.block(n.getParent());
     return $ != null && extract.fragments($).stream().anyMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
   }
 
@@ -68,7 +68,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static void setUpdaters(final ForStatement $) {
-    final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
+    @NotNull final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
     updaters($).clear();
     updaters($).add(updaterFromBody($));
     updaters($).addAll(oldUpdaters);

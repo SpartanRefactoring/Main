@@ -51,7 +51,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final IProject p = getProject();
+    @Nullable final IProject p = getProject();
     if (p == null)
       return null;
     try {
@@ -63,7 +63,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   }
 
   private static IProject getProject() {
-    final IProject $ = Selection.Util.project();
+    @Nullable final IProject $ = Selection.Util.project();
     return $ != null ? $ : null;
   }
 }

@@ -23,7 +23,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   private static final long serialVersionUID = -6223876197494261787L;
 
   @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
-    Statement $ = null;
+    @Nullable Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (iz.ifStatement(¢))
         $ = handleIf(az.ifStatement(¢), nextReturn);
@@ -36,7 +36,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   }
 
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
-    final IfStatement ifStatement = az.ifStatement(s);
+    @Nullable final IfStatement ifStatement = az.ifStatement(s);
     if (ifStatement == null)
       return null;
     final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
@@ -44,7 +44,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
       if (iz.breakStatement(then))
         return then;
       if (iz.block(then)) {
-        final Statement $ = handleBlock((Block) then, nextReturn);
+        @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
         if ($ != null)
           return $;
       }
@@ -54,7 +54,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
         if (iz.breakStatement(elze))
           return elze;
         if (iz.block(elze)) {
-          final Statement $ = handleBlock((Block) elze, nextReturn);
+          @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
           if ($ != null)
             return $;
         }
@@ -82,10 +82,10 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   }
 
   @Override public Tip tip(@Nullable final WhileStatement s, @Nullable final ExclusionManager exclude) {
-    final ReturnStatement nextReturn = extract.nextReturn(s);
+    @Nullable final ReturnStatement nextReturn = extract.nextReturn(s);
     if (s == null || !isInfiniteLoop(s) || nextReturn == null)
       return null;
-    final Statement body = body(s), //
+    @NotNull final Statement body = body(s), //
         $ = iz.ifStatement(body) ? handleIf(az.ifStatement(body), nextReturn) //
             : iz.block(body) ? handleBlock(az.block(body), nextReturn) //
                 : iz.breakStatement(body) ? body : null;

@@ -26,13 +26,13 @@ public final class FragmentInitializerReturnExpression extends $FragementAndStat
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (forbidden(f, initializer) || usedInSubsequentInitializers(f, n))
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
     final Expression newReturnValue = s.getExpression();
     if (newReturnValue == null)
       return null;
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;

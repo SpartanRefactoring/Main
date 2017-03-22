@@ -42,7 +42,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     final SimpleName $ = parameter.getName();
     if (namer.isSpecial($))
       return null;
-    final Block b = body(c);
+    @NotNull final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)

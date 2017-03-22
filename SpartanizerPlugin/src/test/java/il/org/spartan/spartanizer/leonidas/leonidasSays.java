@@ -31,7 +31,7 @@ import il.org.spartan.utils.*;
 public enum leonidasSays {
   ;
   static void azzertEquals(@NotNull final String s, @NotNull final IDocument d) {
-    String actual = null;
+    @Nullable String actual = null;
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -68,16 +68,16 @@ public enum leonidasSays {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode $) {
-    final List<Statement> statements = statements(az.block($));
+    @NotNull final List<Statement> statements = statements(az.block($));
     return statements == null || statements.size() != 1 ? $ : first(statements);
   }
 
   @Nullable static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<Boolean> foundFirst = new Wrapper<>();
+    @NotNull final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
-    final Wrapper<ASTNode> $ = new Wrapper<>();
+    @NotNull final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
         if ($.get() != null)
@@ -93,7 +93,7 @@ public enum leonidasSays {
         return true;
       }
     });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
+    @NotNull @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
   }
 
@@ -141,13 +141,13 @@ public enum leonidasSays {
     }
 
     public void into(@NotNull final String rrr) {
-      final IDocument document = new Document(wrapCode(string));
+      @Nullable final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
-      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+      @NotNull final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
-      final Bool tipped = new Bool();
+      @NotNull final Bool tipped = new Bool();
       // noinspection SameReturnValue
       n.accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
@@ -255,13 +255,13 @@ public enum leonidasSays {
     }
 
     public void into(@NotNull final String expected) {
-      final IDocument document = new Document(wrapCode(string));
+      @NotNull final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
-      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+      @NotNull final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
-      final Bool tipped = new Bool();
+      @NotNull final Bool tipped = new Bool();
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
           if (!tipper.check(¢))

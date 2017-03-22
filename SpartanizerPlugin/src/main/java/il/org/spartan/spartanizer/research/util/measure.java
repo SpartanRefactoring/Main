@@ -20,7 +20,7 @@ public enum measure {
   public static int allExpressions(@Nullable final CompilationUnit u) {
     if (u == null)
       return 0;
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
@@ -35,7 +35,7 @@ public enum measure {
       return allExpressions(az.compilationUnit(n));
     if (n == null)
       return 0;
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
@@ -47,7 +47,7 @@ public enum measure {
   }
 
   public static int allCommands(@Nullable final CompilationUnit u) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     if (u == null)
       return 0;
     u.accept(new ASTVisitor(true) {
@@ -63,7 +63,7 @@ public enum measure {
   public static int commands(@Nullable final ASTNode n) {
     if (iz.compilationUnit(n))
       return allCommands(az.compilationUnit(n));
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     if (n == null)
       return 0;
     n.accept(new ASTVisitor(true) {

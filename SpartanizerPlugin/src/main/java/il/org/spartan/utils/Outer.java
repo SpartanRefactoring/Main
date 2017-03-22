@@ -19,7 +19,7 @@ public abstract class Outer<Inner> {
       return true;
     if (¢ == null || getClass() != ¢.getClass())
       return false;
-    @SuppressWarnings("unchecked") final Outer<Inner> $ = (Outer<Inner>) ¢;
+    @Nullable @SuppressWarnings("unchecked") final Outer<Inner> $ = (Outer<Inner>) ¢;
     return equals($);
   }
 

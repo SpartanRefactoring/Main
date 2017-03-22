@@ -73,17 +73,17 @@ public final class WrapTest {
   }
 
   @Test public void intoCompilationUnit() {
-    final Wrap w = Wrap.Expression;
-    final String codeFragment = "a + b * c";
-    final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final String codeFragment = "a + b * c";
+    @NotNull final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
     azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
-    final Wrap w = Wrap.Expression;
-    final String codeFragment = "a + b * c";
-    final Document d = w.intoDocument(codeFragment);
+    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final String codeFragment = "a + b * c";
+    @NotNull final Document d = w.intoDocument(codeFragment);
     assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }

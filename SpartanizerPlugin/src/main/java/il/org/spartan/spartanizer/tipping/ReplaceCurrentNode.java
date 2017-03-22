@@ -18,7 +18,7 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTippe
 
   @Override public final Tip tip(@NotNull final N n) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + fault.done();
-    final ASTNode $ = replacement(n);
+    @Nullable final ASTNode $ = replacement(n);
     return $ == null ? null : new Tip(description(n), n, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);

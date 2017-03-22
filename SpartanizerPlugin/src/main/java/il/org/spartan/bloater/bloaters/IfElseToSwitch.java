@@ -23,14 +23,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   private static final long serialVersionUID = 7117505785157896738L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
-    final List<Expression> xs = getAllExpressions(¢);
+    @NotNull final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
       return null;
     final AST create = ¢.getAST();
     final SwitchStatement $ = create.newSwitchStatement();
     $.setExpression(copy.of(az.simpleName(left(az.comparison(first(xs))))));
-    final List<Statement> ss = statements($);
-    final List<Block> bs = getAllBlocks(¢);
+    @NotNull final List<Statement> ss = statements($);
+    @NotNull final List<Block> bs = getAllBlocks(¢);
     int i = 0;
     for (final Expression x : xs) {
       final SwitchCase sc = create.newSwitchCase();
@@ -54,17 +54,17 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   private static boolean isMyCase(@Nullable final List<Expression> xs) {
     if (xs == null || xs.isEmpty() || !iz.infixEquals(first(xs)))
       return false;
-    InfixExpression px = az.comparison(first(xs));
+    @Nullable InfixExpression px = az.comparison(first(xs));
     if (!iz.infixEquals(px))
       return false;
-    final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
+    @Nullable final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
     if (switchVariable == null)
       return false;
     for (final Expression e : xs) {
       px = az.comparison(e);
       if (!iz.infixEquals(px))
         return false;
-      final SimpleName currName = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
+      @Nullable final SimpleName currName = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
       if (currName == null || !currName.getIdentifier().equals(switchVariable.getIdentifier()))
         return false;
     }
@@ -72,14 +72,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   }
 
   @NotNull private static List<Expression> getAllExpressions(final IfStatement s) {
-    final List<Expression> $ = new ArrayList<>();
+    @NotNull final List<Expression> $ = new ArrayList<>();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
 
   @NotNull private static List<Block> getAllBlocks(@NotNull final IfStatement s) {
-    final List<Block> $ = new ArrayList<>();
+    @NotNull final List<Block> $ = new ArrayList<>();
     final Statement p = addAllBlocks(s, $);
     if (p == null)
       return $;
@@ -98,7 +98,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
       final Statement then = copy.of(then(az.ifStatement($)));
-      Block b = az.block(then);
+      @Nullable Block b = az.block(then);
       if (b == null) {
         b = s.getAST().newBlock();
         statements(b).add(az.statement(then));

@@ -95,7 +95,7 @@ final class BatchSpartanizerApplication implements IApplication {
   }
 
   ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws JavaModelException, IOException {
-    final String $ = FileUtils.read(¢);
+    @NotNull final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
@@ -147,7 +147,7 @@ final class BatchSpartanizerApplication implements IApplication {
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    @NotNull final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
@@ -186,7 +186,7 @@ final class BatchSpartanizerApplication implements IApplication {
   // }
   // }
   @NotNull public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder $ = system.runScript();
+    @NotNull final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
@@ -212,7 +212,7 @@ final class BatchSpartanizerApplication implements IApplication {
   }
 
   @SuppressWarnings("unused") private BatchSpartanizerApplication(final String presentSourcePath, final String name) {
-    final File dir = new File(folder + outputDir);
+    @NotNull final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }

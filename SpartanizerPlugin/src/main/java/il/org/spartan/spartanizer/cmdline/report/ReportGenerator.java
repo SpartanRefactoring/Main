@@ -52,7 +52,7 @@ public class ReportGenerator implements ConfigurableReport {
     }
 
     @NotNull @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
-      final HashMap<String, NamedFunction[]> $ = new HashMap<>();
+      @NotNull final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
       $.put("methods",
           as.array(m("N. of Nodes", count::nodes), //
@@ -83,7 +83,7 @@ public class ReportGenerator implements ConfigurableReport {
 
   // running report
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, @NotNull final String id) {
-    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+    for (@NotNull final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(n1));
       ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(n2));
     }
@@ -124,18 +124,18 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
       @NotNull final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : Util.functions(""))
+    for (@NotNull final NamedFunction ¢ : Util.functions(""))
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
       @NotNull final BiFunction<Integer, Integer> i) {
-    for (final NamedFunction ¢ : Util.functions(""))
+    for (@NotNull final NamedFunction ¢ : Util.functions(""))
       Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    for (final NamedFunction ¢ : Util.functions(""))
+    for (@NotNull final NamedFunction ¢ : Util.functions(""))
       Util.report("metrics").put(id + ¢.name() + " %", Utils.p(¢.function().run(n1), ¢.function().run(n2)));
   }
 
@@ -324,7 +324,7 @@ public class ReportGenerator implements ConfigurableReport {
 
   @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output,
       @NotNull final String id) {
-    for (final NamedFunction ¢ : metricsMap().get(id)) {
+    for (@NotNull final NamedFunction ¢ : metricsMap().get(id)) {
       Util.report(id).put(¢.name() + "1", ¢.function().run(input));
       Util.report(id).put(¢.name() + "2", ¢.function().run(output));
     }

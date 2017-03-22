@@ -65,7 +65,7 @@ public class EnglishTest {
   }
 
   @Test public void testTrimAbsoluteTrimsOnLongStrings() {
-    final StringBuilder sb = new StringBuilder();
+    @NotNull final StringBuilder sb = new StringBuilder();
     IntStream.rangeClosed(0, English.TRIM_THRESHOLD).forEach(λ -> sb.append("a"));
     azzert.that(English.trimAbsolute(sb + "", English.TRIM_THRESHOLD, English.TRIM_SUFFIX),
         is((sb + "").substring(0, (sb + "").length() - 4) + English.TRIM_SUFFIX));

@@ -31,16 +31,16 @@ public interface hIndex {
   }
 
   static void analyze() {
-    final Map<String, Pair<String, Int>> ranking = new HashMap<>();
-    for (final File f : inputFiles()) {
-      final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+    @NotNull final Map<String, Pair<String, Int>> ranking = new HashMap<>();
+    for (@NotNull final File f : inputFiles()) {
+      @Nullable final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       descendants.whoseClassIs(MethodInvocation.class).from(cu).forEach(m -> {
-        final String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
+        @NotNull final String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
         ranking.putIfAbsent(key, new Pair<>(key, new Int()));
         ++ranking.get(key).second.inner;
       });
     }
-    final List<Pair<String, Int>> rs = new ArrayList<>();
+    @NotNull final List<Pair<String, Int>> rs = new ArrayList<>();
     rs.addAll(ranking.values());
     rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : as.bit(x.second.inner < y.second.inner));
     System.out.println("Max: " + first(rs).first + " [" + first(rs).second.inner + "]");

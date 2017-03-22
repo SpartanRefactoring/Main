@@ -28,10 +28,10 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
 
   @Override public TypeParameter replacement(final TypeParameter p) {
     final TypeParameter $ = copy.of(p);
-    final List<Type> ts = typeBounds($);
+    @NotNull final List<Type> ts = typeBounds($);
     if (!haz.hasObject(ts))
       return null;
-    for (final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
+    for (@NotNull final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
       if (isObject(¢.next()))
         ¢.remove();
     return $;

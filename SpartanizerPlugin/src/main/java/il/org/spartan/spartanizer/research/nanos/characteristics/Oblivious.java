@@ -19,11 +19,11 @@ public class Oblivious extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 2377142689255053588L;
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
-    final List<String> $ = parametersNames(d);
-    for (AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))
+    @Nullable final List<String> $ = parametersNames(d);
+    for (@Nullable AbstractTypeDeclaration ¢ = ancestorType(d); ¢ != null; ¢ = ancestorType(¢))
       if (iz.typeDeclaration(¢))
         $.addAll(fieldDeclarationsNames(az.typeDeclaration(¢)));
-    for (MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
+    for (@Nullable MethodDeclaration ¢ = ancestorMethod(d); ¢ != null; ¢ = ancestorMethod(¢))
       if (iz.methodDeclaration(¢))
         $.addAll(parametersNames(az.methodDeclaration(¢)));
     return $.stream().noneMatch(λ -> analyze.dependencies(body(d)).stream().map(String::toString).collect(toSet()).contains(λ));

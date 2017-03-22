@@ -93,7 +93,7 @@ public interface TableRenderer {
     },
     MARKDOWN {
       @Override @NotNull public String afterHeader() {
-        String $ = "| ";
+        @NotNull String $ = "| ";
         for (int ¢ = 0; ¢ < lastSize; ++¢)
           $ += "--- |";
         return $ + NL;
@@ -193,8 +193,8 @@ public interface TableRenderer {
   }
 
   @NotNull default String renderRow(@NotNull final Collection<Object> values) {
-    final StringBuilder $ = new StringBuilder(recordBegin());
-    final Separator s = new Separator(recordSeparator());
+    @NotNull final StringBuilder $ = new StringBuilder(recordBegin());
+    @NotNull final Separator s = new Separator(recordSeparator());
     values.forEach(λ -> $.append(s)
         .append(λ instanceof Object[] ? cellArray((Object[]) λ)
             : λ instanceof Integer ? cellInt(Long.valueOf(((Integer) λ).intValue())) : λ instanceof Long ? cellInt((Long) λ) //

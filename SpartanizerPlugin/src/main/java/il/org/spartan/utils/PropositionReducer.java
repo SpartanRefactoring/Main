@@ -59,7 +59,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
 
   @Nullable
   private R reduce(@NotNull final And a) {
-    R $ = ante(a);
+    @Nullable R $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(a.inner.get(¢)));
       if (¢ < size - 1)
@@ -85,7 +85,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
 
   @Nullable
   private R reduce(@NotNull final Or o) {
-    R $ = ante(o);
+    @Nullable R $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(o.inner.get(¢)));
       if (¢ < size - 1)

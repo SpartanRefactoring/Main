@@ -31,13 +31,13 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
   }
 
   @Override public Statement replacement(@NotNull final IfStatement s) {
-    final Expression then = expression(extract.expressionStatement(then(s)));
+    @NotNull final Expression then = expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    final Expression elze = expression(extract.expressionStatement(elze(s)));
+    @NotNull final Expression elze = expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
-    final Expression $ = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
+    @Nullable final Expression $ = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
     return $ == null ? null : subject.operand($).toStatement();
   }
 }

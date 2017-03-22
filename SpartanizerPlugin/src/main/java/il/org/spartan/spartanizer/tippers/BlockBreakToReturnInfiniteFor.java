@@ -30,7 +30,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     if (iz.breakStatement(then))
       return then;
     if (iz.block(then)) {
-      final Statement $ = handleBlock(az.block(then), nextReturn);
+      @Nullable final Statement $ = handleBlock(az.block(then), nextReturn);
       if ($ != null)
         return $;
     }
@@ -41,7 +41,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     if (iz.breakStatement(elze))
       return elze;
     if (iz.block(elze)) {
-      final Statement $ = handleBlock(az.block(elze), nextReturn);
+      @Nullable final Statement $ = handleBlock(az.block(elze), nextReturn);
       if ($ != null)
         return $;
     }
@@ -56,7 +56,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   @Nullable private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
-    Statement $ = null;
+    @Nullable Statement $ = null;
     for (final Statement ¢ : statements(b)) {
       if (iz.ifStatement(¢))
         $ = handleIf(az.ifStatement(¢), nextReturn);
@@ -83,7 +83,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   private Tip make(final ForStatement vor, final ReturnStatement nextReturn, @Nullable final ExclusionManager exclude) {
-    final Statement $ = make(body(vor), nextReturn);
+    @Nullable final Statement $ = make(body(vor), nextReturn);
     if (exclude != null)
       exclude.exclude(vor);
     return $ == null ? null : new Tip(description(), vor, getClass(), nextReturn) {
@@ -101,7 +101,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   @Override @Nullable public Tip tip(@Nullable final ForStatement vor, final ExclusionManager exclude) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
-    final ReturnStatement $ = extract.nextReturn(vor);
+    @Nullable final ReturnStatement $ = extract.nextReturn(vor);
     return $ == null ? null : make(vor, $, exclude);
   }
 }

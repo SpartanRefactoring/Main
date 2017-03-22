@@ -63,9 +63,9 @@ public enum ASTutils {
   @Nullable private static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<Boolean> foundFirst = new Wrapper<>();
+    @NotNull final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
-    final Wrapper<ASTNode> $ = new Wrapper<>();
+    @NotNull final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
         if ($.get() != null)
@@ -81,7 +81,7 @@ public enum ASTutils {
         return true;
       }
     });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
+    @NotNull @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
   }
 }

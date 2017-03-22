@@ -39,7 +39,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
   }
 
   private static Tip tip(final Statement s) {
-    final Assignment x = az.assignment(expression(az.expressionStatement(s)));
+    @Nullable final Assignment x = az.assignment(expression(az.expressionStatement(s)));
     assert fault.unreachable() || !fault.unreachable() : fault.specifically(Environment.of(to(x)).description(), to(x), from(x));
     return null;
   }

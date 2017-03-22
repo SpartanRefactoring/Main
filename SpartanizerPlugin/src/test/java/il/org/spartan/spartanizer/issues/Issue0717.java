@@ -37,8 +37,8 @@ public class Issue0717 {
   }
 
   @NotNull private String generateRandomString() {
-    final StringBuilder $ = new StringBuilder();
-    final Random randomGenerator = new Random();
+    @NotNull final StringBuilder $ = new StringBuilder();
+    @NotNull final Random randomGenerator = new Random();
     final int len = Math.max(1, randomGenerator.nextInt(Issue0717.MAX_NAME_SIZE));
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
     range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
@@ -66,10 +66,10 @@ public class Issue0717 {
   }
 
   @Test public void randomBigBlockReturnsTrue() {
-    final String methodName = generateRandomString(), firstStat = "{int x; ++x;", nextStat = "x=4;";
-    final Random random = new Random();
+    @NotNull final String methodName = generateRandomString(), firstStat = "{int x; ++x;", nextStat = "x=4;";
+    @NotNull final Random random = new Random();
     final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 6 ? 6 : random.nextInt(MAX_STAT_AMOUNT);
-    String randomBigBlock = "public void " + methodName + "()" + firstStat;
+    @NotNull String randomBigBlock = "public void " + methodName + "()" + firstStat;
     for (int ¢ = 0; ¢ < statAmount; ++¢)
       randomBigBlock += nextStat;
     randomBigBlock += "}";

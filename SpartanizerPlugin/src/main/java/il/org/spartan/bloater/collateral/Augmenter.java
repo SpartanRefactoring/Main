@@ -34,7 +34,7 @@ public class Augmenter implements Application {
     if (!checkServiceAvailableBeforeCalculation())
       return Integer.valueOf(0);
     try {
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
       if (rewrite(r, getSelection(u.compilationUnit, getTextSelection(u.compilationUnit, s.textSelection)), null)
@@ -54,7 +54,7 @@ public class Augmenter implements Application {
   /** @param u JD
    * @return selection as list of lists of statements */
   @NotNull private static List<List<Statement>> getSelection(@NotNull final CompilationUnit u, final ITextSelection s) {
-    final List<List<Statement>> $ = new ArrayList<>();
+    @NotNull final List<List<Statement>> $ = new ArrayList<>();
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Block b) {
@@ -63,7 +63,7 @@ public class Augmenter implements Application {
         if (inRange(b, s))
           $.add(statements(b));
         else {
-          final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
+          @NotNull final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
@@ -104,7 +104,7 @@ public class Augmenter implements Application {
   private static void addCollateralImport(@Nullable final ASTRewrite r, @Nullable final CompilationUnit u, final TextEditGroup g) {
     if (u == null || r == null)
       return;
-    final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
+    @NotNull final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
     if (hasImportIncluded(u, i))
       return;
     final ListRewrite l = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);

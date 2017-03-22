@@ -49,8 +49,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       λ -> new GUIBatchLaconizer().defaultSettings().defaultRunAction(getSpartanizer(λ)).passes(1).selection(Selection.Util.by(λ)).go());
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
-    final AbstractGUIApplicator g = getSpartanizer(¢);
-    final Applicator a = new GUIBatchLaconizer().defaultSettings().passes(1).selection(Selection.Util.by(¢));
+    @Nullable final AbstractGUIApplicator g = getSpartanizer(¢);
+    @NotNull final Applicator a = new GUIBatchLaconizer().defaultSettings().passes(1).selection(Selection.Util.by(¢));
     a.setRunAction(u -> {
       try {
         new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);

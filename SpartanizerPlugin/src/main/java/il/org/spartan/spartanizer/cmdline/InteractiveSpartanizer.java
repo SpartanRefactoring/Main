@@ -20,7 +20,7 @@ public class InteractiveSpartanizer {
       BatchSpartanizer.fire(fileNames); // change from main to fire
     else {
       System.err.println("input: "); //
-      final String input = read();
+      @NotNull final String input = read();
       final GuessedContext c = GuessedContext.find(input);
       System.err.println("output: " + new InteractiveSpartanizer()
           .fixedPoint(c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE) ? input : c.intoCompilationUnit(input) + ""));
@@ -28,8 +28,8 @@ public class InteractiveSpartanizer {
   }
 
   @NotNull static String read() {
-    String $ = "";
-    try (Scanner s = new Scanner(System.in)) {
+    @NotNull String $ = "";
+    try (@NotNull Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;

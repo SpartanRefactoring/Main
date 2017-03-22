@@ -42,12 +42,12 @@ public class OperandBloating extends TrimmingOperand {
   }
 
   public static String bloat(@NotNull final String source) {
-    final String wrap = Wrap.find(source).on(source);
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    @NotNull final String wrap = Wrap.find(source).on(source);
+    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final IDocument $ = new Document(wrap);
+      @NotNull final IDocument $ = new Document(wrap);
       r.rewriteAST($, null).apply($);
       return $.get();
     } catch (@NotNull @SuppressWarnings("unused") MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
@@ -57,15 +57,15 @@ public class OperandBloating extends TrimmingOperand {
 
   @Override @Nullable public OperandBloating gives(@NotNull final String $) {
     assert $ != null;
-    final Wrap w = Wrap.find(get());
-    final String wrap = w.on(get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final String wrap = w.on(get());
+    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final IDocument doc = new Document(wrap);
+      @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
+      @NotNull final String unpeeled = doc.get(), $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "",
           unpeeled1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(unpeeled)) + "";
       if ((rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap)) + "").equals(unpeeled1))
         azzert.fail("Nothing done on " + get());
@@ -89,15 +89,15 @@ public class OperandBloating extends TrimmingOperand {
 
   @Nullable public OperandBloating givesWithBinding(@NotNull final String $) {
     assert $ != null;
-    final CompilationUnit u = az.compilationUnit(ast);
+    @Nullable final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
-      final IDocument doc = new Document(wrap);
+      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+      @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
+      @NotNull final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       if (unpeeled.equals(get()))
@@ -120,13 +120,13 @@ public class OperandBloating extends TrimmingOperand {
    * @return */
   @Nullable public OperandBloating givesWithBinding(@NotNull final String $, final String f) {
     assert $ != null;
-    final CompilationUnit u = az.compilationUnit(ast);
+    @Nullable final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     MethodDeclaration m = getMethod(u, f);
     SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final IDocument doc = new Document(wrap);
+      @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
       if (wrap.equals(unpeeled))
@@ -134,7 +134,7 @@ public class OperandBloating extends TrimmingOperand {
       if (unpeeled.equals(get()))
         azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
       m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
-      final String s = m + "";
+      @NotNull final String s = m + "";
       if (!$.equals(s) && !trivia.essence(s).equals(trivia.essence($))) {
         copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
             trivia.escapeQuotes(trivia.essence(s)), //
@@ -173,7 +173,7 @@ public class OperandBloating extends TrimmingOperand {
   }
 
   private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-    final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
+    @NotNull final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
     if ($.isEmpty())
       azzert.fail("No such method Exists");
     return first($);
@@ -188,13 +188,13 @@ public class OperandBloating extends TrimmingOperand {
   private void checkSame() {
     if (get().isEmpty())
       return;
-    final Wrap w = Wrap.find(get());
-    final String wrap = w.on(get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final String wrap = w.on(get());
+    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final IDocument doc = new Document(wrap);
+      @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get(), peeled = w.off(unpeeled);
       if (wrap.equals(peeled) || trivia.essence(get()).equals(trivia.essence(peeled)))
@@ -210,11 +210,11 @@ public class OperandBloating extends TrimmingOperand {
 
   private void checkSameWithBinding() {
     final String wrap = get();
-    final CompilationUnit u = az.compilationUnit(ast);
+    @Nullable final CompilationUnit u = az.compilationUnit(ast);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final IDocument doc = new Document(wrap);
+      @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
       if (wrap.equals(unpeeled) || trivia.essence(get()).equals(trivia.essence(unpeeled)))

@@ -24,7 +24,7 @@ public class Generic$Applicator {
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
   @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(@NotNull final String... ss) {
-    final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
+    @NotNull final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
       for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
@@ -98,7 +98,7 @@ public class Generic$Applicator {
   }
 
   @NotNull private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
-    final Collection<String> $ = new ArrayList<>();
+    @NotNull final Collection<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;
   }

@@ -113,11 +113,11 @@ public class switchBranch {
   }
 
   @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
-    final List<Statement> l = step.statements(n);
+    @NotNull final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
-    List<SwitchCase> c = null;
-    List<Statement> s = null;
-    final List<switchBranch> $ = new ArrayList<>();
+    @Nullable List<SwitchCase> c = null;
+    @Nullable List<Statement> s = null;
+    @NotNull final List<switchBranch> $ = new ArrayList<>();
     boolean nextBranch = true;
     for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
       if (nextBranch) {
@@ -167,7 +167,7 @@ public class switchBranch {
       return copy.of(s);
     final AST $ = s.getAST();
     if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
+      @Nullable final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
       f.setThenStatement(removeBreakSequencer(step.then(t)));
       f.setElseStatement(removeBreakSequencer(step.elze(t)));
@@ -181,9 +181,9 @@ public class switchBranch {
   }
 
   @NotNull public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
-    final Collection<Statement> $ = new ArrayList<>();
-    for (final Statement ¢ : ss) {
-      final Statement s = removeBreakSequencer(¢);
+    @NotNull final Collection<Statement> $ = new ArrayList<>();
+    for (@NotNull final Statement ¢ : ss) {
+      @Nullable final Statement s = removeBreakSequencer(¢);
       if (s != null)
         $.add(s);
     }

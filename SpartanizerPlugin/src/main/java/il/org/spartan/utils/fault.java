@@ -30,7 +30,7 @@ public interface fault {
   }
 
   @NotNull static String trace(@NotNull final Throwable ¢) {
-    final ByteArrayOutputStream $ = new ByteArrayOutputStream();
+    @NotNull final ByteArrayOutputStream $ = new ByteArrayOutputStream();
     ¢.printStackTrace(new PrintStream($));
     return new String($.toByteArray(), StandardCharsets.UTF_8);
   }

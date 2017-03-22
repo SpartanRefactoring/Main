@@ -29,7 +29,7 @@ public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfSta
   }
 
   @Override public Statement replacement(@NotNull final IfStatement s) {
-    final Assignment $ = extract.assignment(then(s)), elze = extract.assignment(elze(s));
+    @Nullable final Assignment $ = extract.assignment(then(s)), elze = extract.assignment(elze(s));
     return !wizard.compatible($, elze) ? null
         : subject.pair(to($), subject.pair(from($), from(elze)).toCondition(s.getExpression())).toStatement($.getOperator());
   }

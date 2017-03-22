@@ -36,7 +36,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    final SimpleName $ = new Conservative(d).selectReturnVariable();
+    @Nullable final SimpleName $ = new Conservative(d).selectReturnVariable();
     if ($ == null)
       return null;
     if (exclude != null)
@@ -57,7 +57,7 @@ abstract class AbstractRenamePolicy {
   private static List<ReturnStatement> prune(@NotNull final List<ReturnStatement> $) {
     if ($.isEmpty())
       return null;
-    for (final Iterator<ReturnStatement> i = $.iterator(); i.hasNext();) {
+    for (@NotNull final Iterator<ReturnStatement> i = $.iterator(); i.hasNext();) {
       final ReturnStatement r = i.next();
       // Empty returns stop the search. Something wrong is going on.
       if (r.getExpression() == null)
@@ -74,7 +74,7 @@ abstract class AbstractRenamePolicy {
   @Nullable final List<ReturnStatement> returnStatements;
 
   AbstractRenamePolicy(final MethodDeclaration inner) {
-    final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
+    @NotNull final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();
     parameters = step.parameters(inner);
     returnStatements = prune(explorer.returnStatements());
@@ -125,7 +125,7 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   @Override SimpleName innerSelectReturnVariable() {
-    for (final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
+    for (@NotNull final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
       if (unused($.next()))
         $.remove();
     return !localVariables.isEmpty() ? first(localVariables)

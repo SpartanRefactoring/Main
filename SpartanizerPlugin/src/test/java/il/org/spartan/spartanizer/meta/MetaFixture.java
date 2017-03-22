@@ -44,19 +44,19 @@ public abstract class MetaFixture {
   };
 
   public static String ancestry(final ASTNode n) {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
 
   @NotNull protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
-    for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
+    @NotNull @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
+    for (@Nullable @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
-        for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
+        for (@NotNull @knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))
             for (@knows({ "t", "a", "s" }) final String s : values(a))
-              for (@knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
+              for (@NotNull @knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
                 $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
     return $;
   }
@@ -69,7 +69,7 @@ public abstract class MetaFixture {
   }
 
   private static CompilationUnit loadAST(@NotNull final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
+    for (@NotNull final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);
@@ -81,7 +81,7 @@ public abstract class MetaFixture {
   }
 
   private static String loadText(@NotNull final String fileName) {
-    for (final File $ : new FilesGenerator(".java").from("."))
+    for (@NotNull final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;
@@ -118,7 +118,7 @@ public abstract class MetaFixture {
 
   @NotNull public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
-    final Vocabulary $ = new Vocabulary();
+    @NotNull final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
       assert ¢ instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(¢), ¢);
       $.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);

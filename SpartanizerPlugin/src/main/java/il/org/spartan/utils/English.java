@@ -175,7 +175,7 @@ public interface English {
    * @param s JD
    * @return cut string */
   static String trim(@NotNull final String s) {
-    final String[] $ = s.split("\n");
+    @NotNull final String[] $ = s.split("\n");
     IntStream.range(0, $.length).forEach(λ -> $[λ] = trimAbsolute($[λ], TRIM_THRESHOLD, TRIM_SUFFIX));
     return String.join("\n", $);
   }

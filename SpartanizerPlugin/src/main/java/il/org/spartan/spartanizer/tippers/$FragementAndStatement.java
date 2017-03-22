@@ -34,8 +34,8 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   }
 
   static int eliminationSaving(@NotNull final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = wizard.live(f, fragments(parent));
+    @NotNull final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    @NotNull final List<VariableDeclarationFragment> live = wizard.live(f, fragments(parent));
     final int $ = metrics.size(parent);
     if (live.isEmpty())
       return $;
@@ -50,7 +50,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   }
 
   @NotNull private static Collection<VariableDeclarationFragment> forbiddenSiblings(@NotNull final VariableDeclarationFragment f) {
-    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
+    @NotNull final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
       if (brother == f) {
@@ -64,7 +64,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   }
 
   public static int removalSaving(@NotNull final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    @NotNull final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final int $ = metrics.size(parent);
     if (parent.fragments().size() <= 1)
       return $;
@@ -80,13 +80,13 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
    * @param r
    * @param g */
   static void remove(@NotNull final VariableDeclarationFragment f, @NotNull final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    @NotNull final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
 
   static boolean usedInSubsequentInitializers(@NotNull final VariableDeclarationFragment f, final SimpleName n) {
     boolean searching = true;
-    for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
+    for (@NotNull final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
       if (searching)
         searching = ff != f;
       else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
@@ -106,7 +106,7 @@ public abstract class $FragementAndStatement extends ReplaceToNextStatement<Vari
   }
 
   @Override public final Tip tip(@NotNull final VariableDeclarationFragment f, @Nullable final ExclusionManager exclude) {
-    final Tip $ = super.tip(f, exclude);
+    @Nullable final Tip $ = super.tip(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

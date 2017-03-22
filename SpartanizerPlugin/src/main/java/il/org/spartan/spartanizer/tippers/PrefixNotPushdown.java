@@ -45,7 +45,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   static Expression pushdownNot(final Expression ¢) {
-    Expression $;
+    @Nullable Expression $;
     return ($ = perhapsNotOfLiteral(¢)) != null//
         || ($ = perhapsDoubleNegation(¢)) != null//
         || ($ = perhapsDeMorgan(¢)) != null//
@@ -109,7 +109,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   @Nullable private static Expression tryToSimplify(final Expression ¢) {
-    final Expression $ = pushdownNot(az.not(¢));
+    @Nullable final Expression $ = pushdownNot(az.not(¢));
     return $ != null ? $ : ¢;
   }
 

@@ -24,7 +24,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
 
   @Nullable
   protected R map(final Block b) {
-    R $ = reduce();
+    @Nullable R $ = reduce();
     for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
@@ -144,7 +144,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
 
   @Nullable
   protected R reduceExpressions(@Nullable final Iterable<Expression> xs) {
-    R $ = reduce();
+    @Nullable R $ = reduce();
     if (xs != null)
       for (final Expression ¢ : xs)
         $ = reduce($, map(¢));

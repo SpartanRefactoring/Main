@@ -32,7 +32,7 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
   }
 
   @Override protected boolean prerequisite(@NotNull final MethodDeclaration ¢) {
-    final ExpressionStatement $ = extract.expressionStatement(¢);
+    @Nullable final ExpressionStatement $ = extract.expressionStatement(¢);
     return $ != null && $.getExpression() instanceof SuperMethodInvocation && shouldRemove(¢, (SuperMethodInvocation) $.getExpression());
   }
 }
