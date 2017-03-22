@@ -36,44 +36,30 @@ import junit.framework.*;
  * @see Atomic
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-11 */
-public interface Recursive<@¢ T> {
-  default Stream<T> streamSelf() {
-    return self() == null ? Stream.empty() : Stream.of(self());
-  }
-
-  default T self() {
-    return null;
-  }
-
-  default Stream<T> descendants() {
-    return Stream.empty();
-  }
-
+public interface Recursive<@¢ T> extends Streamer<T> {
   /** An atomic recursive structure specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Atomic<@¢ T> extends Recursive<T> {
-    @Override default Stream<T> descendants() {
-      return streamSelf();
-    }
+  interface Atomic<@¢ T> extends Recursive<T>, Streamer.Atomic<T> {
+    //
   }
 
   /** A compound recursive structure, specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Compound<@¢ T> extends Recursive<T> {
+  interface Compound<@¢ T> extends Recursive<T>, Streamer.Compound<T> {
     Iterable<Recursive<T>> children();
 
-    @Override default T self() {
-      return null;
+    @Override default Iterable<? extends Streamer<T>> next() {
+      return children();
     }
   }
 
   interface Postorder<E> extends Compound<E> {
-    @Override default Stream<E> descendants() {
+    @Override default Stream<E> stream() {
       Stream<E> $ = Stream.empty();
       for (final Recursive<E> ¢ : children())
-        $ = Stream.concat(¢.descendants(), $);
+        $ = Stream.concat(¢.stream(), $);
       return Stream.concat($, streamSelf());
     }
   }
@@ -84,10 +70,10 @@ public interface Recursive<@¢ T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Preorder<E> extends Compound<E> {
-    @Override default Stream<E> descendants() {
+    @Override default Stream<E> stream() {
       Stream<E> $ = self() == null ? Stream.empty() : Stream.of(self());
       for (final Recursive<E> ¢ : children())
-        $ = Stream.concat($, ¢.descendants());
+        $ = Stream.concat($, ¢.stream());
       return $;
     }/* A compound recurkksive structure enumerating {@link #descendants()} in
       * post-order

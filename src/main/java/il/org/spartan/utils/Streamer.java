@@ -26,7 +26,7 @@ public interface Streamer<@¢ T> {
   }
 
   interface Compound<@¢ T> extends Streamer<T> {
-    Stream<Streamer<T>> next();
+    Iterable<? extends Streamer<T>> next();
 
     @Override default Stream<T> stream() {
       return compounder().compound(self(), next());
@@ -35,11 +35,11 @@ public interface Streamer<@¢ T> {
 
   @FunctionalInterface
   interface Compounder<T> {
-    Stream<T> compound(T self, Stream<Streamer<T>> others);
+    Stream<T> compound(T self, Iterable<? extends Streamer<T>> others);
 
     static <T> Compounder<T> empty() {
       return new Compounder<T>() {
-        @SuppressWarnings("unused") @Override public Stream<T> compound(T self, Stream<Streamer<T>> others) {
+        @SuppressWarnings("unused") @Override public Stream<T> compound(T self, Iterable<? extends Streamer<T>> others) {
           return Stream.empty();
         }
       };
