@@ -203,8 +203,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return toggle(SuppressWarningsLaconicOnOff.ByAnnotation, SuppressWarningsLaconicOnOff.Type.CLASS, "Class under construction");
     }
 
-    @Nullable static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler, @NotNull final SuppressWarningsLaconicOnOff.Type t,
-                                              final String label) {
+    @Nullable static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler,
+        @NotNull final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;

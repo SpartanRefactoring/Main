@@ -90,8 +90,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should be overridden */
-  @Nullable
-  default String[] akas() {
+  @Nullable default String[] akas() {
     return new String[] { technicalName() };
   }
 
@@ -136,8 +135,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should be overridden */
-  @NotNull
-  default Example[] examples() {
+  @NotNull default Example[] examples() {
     return new Example[0];
   }
 
@@ -148,8 +146,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should not be overridden */
-  @Nullable
-  default String technicalName() {
+  @Nullable default String technicalName() {
     return getClass().getSimpleName();
   }
 
@@ -275,8 +272,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return $;
     }
 
-    @Nullable
-    private R badTypeState(@NotNull final String reason, final Object... os) {
+    @Nullable private R badTypeState(@NotNull final String reason, final Object... os) {
       return monitor.logProbableBug(this,
           new IllegalStateException(//
               format(//

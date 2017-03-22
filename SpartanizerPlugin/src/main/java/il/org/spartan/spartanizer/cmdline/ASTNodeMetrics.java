@@ -3,10 +3,10 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import org.jetbrains.annotations.Nullable;
 
 /** A Class that contains all the metrics for an {@link ASTNode}
  * @author Matteo Orru'

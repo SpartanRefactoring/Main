@@ -57,8 +57,7 @@ public class TrackerSelection extends Selection {
     return $;
   }
 
-  @Nullable
-  private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
+  @Nullable private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
     return yieldAncestors.untilNodeType(nodeType).from(coveredNode);
   }
 

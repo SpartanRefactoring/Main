@@ -39,8 +39,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
   @Nullable private IMarker marker;
-  @Nullable
-  protected String name;
+  @Nullable protected String name;
   private ITextSelection selection;
   private final List<Tip> tips = new ArrayList<>();
   private int totalChanges;
@@ -170,8 +169,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return a quick fix for this instance */
   @Nullable public IMarkerResolution getFix() {
     return new IMarkerResolution() {
-      @Override
-      @Nullable public String getLabel() {
+      @Override @Nullable public String getLabel() {
         return getName();
       }
 
@@ -218,8 +216,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return iCompilationUnit;
   }
 
-  @Override
-  @Nullable public final String getName() {
+  @Override @Nullable public final String getName() {
     return name;
   }
 
@@ -317,8 +314,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return tips.size();
   }
 
-  @Override
-  @Nullable public String toString() {
+  @Override @Nullable public String toString() {
     return name;
   }
 
@@ -335,8 +331,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  @Nullable
-  protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
+  @Nullable protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
 
   public void parse() {
     compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);

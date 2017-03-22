@@ -251,7 +251,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         beforeFileName, //
         afterFileName);
     try (@NotNull PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-         @NotNull PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+        @NotNull PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");

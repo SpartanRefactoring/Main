@@ -63,7 +63,7 @@ public interface hop {
   }
 
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs,
-                                                                              @NotNull final SimpleName ¢) {
+      @NotNull final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 

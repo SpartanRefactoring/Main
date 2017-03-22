@@ -173,7 +173,8 @@ public class OperandBloating extends TrimmingOperand {
   }
 
   private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-    @NotNull final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
+    @NotNull final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f))
+        .from(u);
     if ($.isEmpty())
       azzert.fail("No such method Exists");
     return first($);

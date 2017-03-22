@@ -34,8 +34,7 @@ public abstract class MethodScanner {
   }
 
   /** @return List of available statements from the method to be scanned. */
-  @Nullable
-  protected abstract List<Statement> availableStatements();
+  @Nullable protected abstract List<Statement> availableStatements();
 
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */
