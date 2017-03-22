@@ -5,8 +5,6 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -33,7 +31,7 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //
-        convert("s=s.f();s=s.f();").to("s=s.f().f()"), //
+        convert("s=s.f();s=s.g();").to("s=s.f().g()"), //
     };
   }
 
@@ -51,9 +49,16 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     @Nullable final Expression from1 = from(a1), from2 = from(a2);
-    final List<SimpleName> uses = collect.usesOf(to).in(from2);
-    return uses.size() > 1 ? !sideEffects.free(from1) || !iz.deterministic(from1) ? null : go($, a1, g, to, from1, from2)
-        : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;
+    switch (collect.usesOf(to).in(from2).size()) {
+      case 0:
+        return null;
+      case 1:
+        return go($, a1, g, to, from1, from2);
+      default:
+        if (iz.deterministic(from1) && sideEffects.free(from1))
+          return go($, a1, g, to, from1, from2);
+        return null;
+    }
   }
 
   @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
