@@ -21,8 +21,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-12 */
 public class TrimmingOperand extends Wrapper<String> {
-  private static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
-  private static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
+  protected static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
+  protected static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
   private final Trimmer trimmer;
   private static int rerunsLeft = 5;
 
@@ -85,9 +85,9 @@ public class TrimmingOperand extends Wrapper<String> {
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + anonymize.makeUnitTest(get()));
+    System.err.println(NEW_UNIT_TEST + anonymize.makeTipperUnitTest(get()));
   }
-
+  
   /** Check whether one of the code options is correct
    * @param options
    * @return Operand
@@ -128,7 +128,7 @@ public class TrimmingOperand extends Wrapper<String> {
     azzert.that(trivia.essence(peeled), is(trivia.essence(expected)));
   }
 
-  private void rerun() {
+  public void rerun() {
     if (rerunsLeft < 1)
       return;
     System.err.println("*** Test failed (rerunning to collect more information)");
