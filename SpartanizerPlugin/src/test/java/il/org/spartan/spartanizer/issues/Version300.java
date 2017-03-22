@@ -167,8 +167,7 @@ public final class Version300 {
   @Test public void x() {
     trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
         .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)break;return ¢;}") //
-        .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}") //
-        .stays();
+        .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}");
   }
 
   /** Introduced by Yossi on Thu-Mar-16-12:37:12-IST-2017 (code automatically
@@ -178,8 +177,7 @@ public final class Version300 {
         .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
-        .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
-        .stays() //
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}");
     ;
   }
 
@@ -188,8 +186,7 @@ public final class Version300 {
         .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
-        .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
-        .stays() //
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}")//
     ;
   }
 }
