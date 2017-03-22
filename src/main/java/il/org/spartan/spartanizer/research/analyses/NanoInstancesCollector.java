@@ -1,4 +1,4 @@
-/* TODO: orimarco <marcovitch.ori@gmail.com> please add a description
+/* TODO orimarco <marcovitch.ori@gmail.com> please add a description
  *
  * @author orimarco <marcovitch.ori@gmail.com>
  *
@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
-  static final File out = new File(system.tmp + File.separator + nano.className() + ".txt");
+  static final File out = new File(system.tmp + File.separator + nano.nanoName() + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

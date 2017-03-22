@@ -21,11 +21,11 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 15, 2017 */
 public class InflaterListener implements MouseWheelListener, KeyListener {
-  // TODO: Ori Roth why so many fields? --yg
+  // TODO Ori Roth why so many fields? --yg
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
   private static final Function<Device, Color> DEFLATE_COLOR = λ -> new Color(λ, 200, 255, 200);
   private static final Integer[] wheelEvents = { Integer.valueOf(SWT.MouseHorizontalWheel), Integer.valueOf(SWT.MouseVerticalWheel),

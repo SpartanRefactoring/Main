@@ -79,7 +79,7 @@ public final class Inliner {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType(az.arrayType(copy.of(type(currentStatement)))); // TODO:
+    $.setType(az.arrayType(copy.of(type(currentStatement)))); // TODO
                                                               // causes
                                                               // IllegalArgumentException
                                                               // (--om)

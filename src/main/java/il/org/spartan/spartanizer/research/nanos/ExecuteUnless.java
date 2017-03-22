@@ -63,20 +63,4 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   @Override public String description() {
     return "Execute a statement only if condition holds";
   }
-
-  @Override public String technicalName() {
-    return "IfXThenExecuteS";
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public NanoPatternTipper.Category category() {
-    return Category.Conditional;
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
-  }
 }

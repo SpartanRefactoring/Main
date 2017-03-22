@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Oct 31, 2016 */
 public enum determineIf {

@@ -1769,12 +1769,13 @@ public final class Version230 {
   @Test public void issue62a() {
     trimmingOf("int f(int ixx){ for(;;++ixx)if(false)break;return ixx;}")//
         .gives("int f(int ixx){ for(;;++ixx){} return ixx;}")//
+        .gives("int f(int ixx){ for(;;++ixx); return ixx;}")//
         .stays();
   }
 
   @Test public void issue62b_1() {
-    trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)break;return ixx;}").gives("int f(int ixx){ for(;ixx<100;ixx+=1){} return ixx;}")//
-        .stays();
+    trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)break;return ixx;}")//
+        .gives("int f(int ixx){ for(;ixx<100;ixx+=1){} return ixx;}");
   }
 
   @Test public void issue62c() {
@@ -3563,14 +3564,44 @@ public final class Version230 {
         .stays();
   }
 
-  @Test public void ternarize42() {
-    trimmingOf(" int a, b;a=3;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;} else if(b==3)b=2;else{ b=a*a; b=3;}")
-        .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}")
-        .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}")
-        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")
-        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")
-        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
-        .stays();
+  /** Introduced by Yossi on Wed-Mar-22-21:22:15-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
+    trimmingOf("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
+        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
+        .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
+        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
+        .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
+        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope()) //
+        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .using(Assignment.class, new AssignmentAndAssignmentOfSameValue()) //
+        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .using(Assignment.class, new AssignmentAndAssignmentOfSameVariable()) //
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3;}") //
+        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else b=b==3?2:3;") //
+        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .gives("int b=5;b=3==4?b==3?2:(b=3):b==3?2:3;") //
+        .using(ConditionalExpression.class, new TernaryShortestFirst()) //
+        .gives("int b=5;b=3!=4?b==3?2:3:b==3?2:(b=3);") //
+        .using(ConditionalExpression.class, new TernaryShortestFirst()) //
+        .gives("int b=5;b=3!=4?b==3?2:3:b!=3?(b=3):2;") //
+        .stays() //
+    ;
+  }
+
+  /** Introduced by Yossi on Wed-Mar-22-21:27:17-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_inta0b0cd0e0fabIfabcdceg() {
+    trimmingOf("int a = 0, b = 0, c, d = 0, e = 0; f(a, b); if (a < b) { c = d; c = e; } g();") //
+        .using(Assignment.class, new AssignmentAndAssignmentOfSameVariable()) //
+        .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b){c=e;}g();") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b)c=e;g();") //
+        .stays() //
+    ;
   }
 
   @Test public void ternarize45() {
@@ -3590,6 +3621,8 @@ public final class Version230 {
 
   @Test public void ternarize52() {
     trimmingOf("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b){c=d;c=e;} f();")//
+        .gives("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b){c=e;}f();") //
+        .gives("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b)c=e;f();") //
         .stays();
   }
 

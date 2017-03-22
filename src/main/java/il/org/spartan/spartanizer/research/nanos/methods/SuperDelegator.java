@@ -35,7 +35,7 @@ public class SuperDelegator extends Delegator {
         && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.instanceOf(SuperMethodInvocation.class).in(s))));
   }
 
-  @Override public String className() {
+  @Override public String nanoName() {
     return Delegator.class.getSimpleName();
   }
 }

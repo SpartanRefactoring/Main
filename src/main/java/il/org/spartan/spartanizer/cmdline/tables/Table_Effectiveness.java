@@ -72,7 +72,7 @@ class Table_Effectiveness extends NanoTable {
 
   static void fillAbsents() {
     spartanalyzer.allNanoPatterns().stream()//
-        .map(Tipper::className)//
+        .map(Tipper::nanoName)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> writer.put(λ, "-"));
   }
