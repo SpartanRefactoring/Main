@@ -29,7 +29,8 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return this;
   }
 
-  @NotNull public NanoPatternContainer<N> statementPattern(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
+  @NotNull public NanoPatternContainer<N> statementPattern(@NotNull final String pattern, @NotNull final String replacement,
+      @NotNull final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }

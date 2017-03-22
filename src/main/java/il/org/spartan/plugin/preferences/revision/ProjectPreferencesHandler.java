@@ -252,10 +252,12 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           @NotNull final SpartanTipper st = (SpartanTipper) o;
-          @Nullable final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
+          @Nullable final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
+              λ -> prettify(((Converts) λ).from()));
           @NotNull final IDocument d = new Document(before);
           try {
-            @Nullable final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
+            @Nullable final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
+                λ -> prettify(((Converts) λ).to()));
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();

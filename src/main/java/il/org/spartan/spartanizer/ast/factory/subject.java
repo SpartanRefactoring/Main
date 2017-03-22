@@ -128,8 +128,7 @@ public enum subject {
 
   /** All the expressions that use a single operand */
   public static class Operand extends Claimer {
-    @NotNull
-    private final Expression inner;
+    @NotNull private final Expression inner;
 
     /** Assign the expression inner to the parameter inner
      * @param inner an Expression */
@@ -237,8 +236,7 @@ public enum subject {
   /** All the expressions that use two operands */
   public static class Pair extends Claimer {
     /** The two expressions in the pair */
-    @NotNull
-    final Expression left, right;
+    @NotNull final Expression left, right;
 
     /** Assign the expressions left and right to the parameters, the newly-
      * created ast will own the left node

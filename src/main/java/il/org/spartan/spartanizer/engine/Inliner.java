@@ -152,10 +152,10 @@ public final class Inliner {
       assert n != null;
       final ASTNode oldExpression = n.get(), newExpression = copy.of(oldExpression);
       assert oldExpression != null;
-      n.set(newExpression);
+      final Expression replacement = get();
       rewriter.replace(oldExpression, newExpression, editGroup);
-      collect.usesOf(name).in(newExpression)
-          .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? get() : make.plant(get()).into(λ.getParent()), editGroup));
+      collect.usesOf(name).in(newExpression).forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
+      n.set(newExpression);
     }
 
     @Nullable private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {

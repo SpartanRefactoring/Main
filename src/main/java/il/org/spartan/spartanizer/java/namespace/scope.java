@@ -38,8 +38,7 @@ public interface scope {
     return scope.of(¢.getName());
   }
 
-  @Nullable
-  static List<? extends ASTNode> of(final SimpleName ¢) {
+  @Nullable static List<? extends ASTNode> of(final SimpleName ¢) {
     @Nullable final List<? extends ASTNode> $ = definition.scope(¢);
     assert $ != null : fault.dump() + //
         "\n\t n=" + ¢ + //
@@ -59,8 +58,7 @@ public interface scope {
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
-  @NotNull
-  static String newName(final ASTNode ¢, final Type t) {
+  @NotNull static String newName(final ASTNode ¢, final Type t) {
     @Nullable final ASTNode b = delimiter(¢);
     @Nullable final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
     @NotNull final String $ = n.generateName(t);
@@ -69,8 +67,7 @@ public interface scope {
     return $;
   }
 
-  @NotNull
-  static String newName(final ASTNode ¢, final Type t, final String s) {
+  @NotNull static String newName(final ASTNode ¢, final Type t, final String s) {
     @Nullable final ASTNode b = delimiter(¢);
     @Nullable final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
     @NotNull final String $ = n.generateName(s);

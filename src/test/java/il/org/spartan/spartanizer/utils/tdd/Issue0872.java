@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 /** tests of ParameterBool according to issue 872
