@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
@@ -21,6 +22,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
+  @NotNull
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
@@ -79,6 +81,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
+  @NotNull
   public SpartAnalyzer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
@@ -130,6 +133,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
+  @NotNull
   private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
@@ -153,6 +157,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
+  @NotNull
   protected SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
@@ -165,13 +170,14 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @Override public String fixedPoint(final ASTNode ¢) {
+  @Override public String fixedPoint(@NotNull final ASTNode ¢) {
     ¢.accept(new AnnotationCleanerVisitor());
     return super.fixedPoint(¢);
   }
 
+  @NotNull
   public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
-    final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
+    @NotNull final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }

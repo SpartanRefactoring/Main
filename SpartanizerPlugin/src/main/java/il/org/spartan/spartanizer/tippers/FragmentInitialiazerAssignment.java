@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * int a;
@@ -27,20 +29,21 @@ public final class FragmentInitialiazerAssignment extends $FragementInitializerS
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1477509470490701826L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull
+  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
     if (initializer() == null)
       return null;
-    final Assignment a = extract.assignment(nextStatement());
+    @Nullable final Assignment a = extract.assignment(nextStatement());
     if (a == null || !wizard.same(name(), to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(fragment(), newInitializer))
       return null;
-    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement(), initializer()) > 0)
       return null;
     $.replace(initializer(), newInitializer, g);

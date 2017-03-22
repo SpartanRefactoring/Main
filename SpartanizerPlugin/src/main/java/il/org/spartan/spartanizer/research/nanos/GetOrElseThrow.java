@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** {@code
  *  if(X)
@@ -32,36 +34,43 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
     ;
   }
 
+  @Nullable
   static Statement next(final IfStatement ¢) {
     return extract.nextStatement(¢);
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Nullable
+  @Override public Tip pattern(@NotNull final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Statement next = next(¢);
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+        @Nullable final Statement next = next(¢);
         r.remove(next, g);
         r.replace(¢, extract.singleStatement(ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }
     };
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Safety;
   }
 
+  @NotNull
   @Override public String description() {
     return description;
   }
 
+  @NotNull
   @Override public String technicalName() {
     return "IfXIsNullThrowElseReturnY";
   }
 
+  @NotNull
   @Override public String example() {
     return "if(X == null) throw new RuntimeException(); return Y;";
   }
 
+  @NotNull
   @Override public String symbolycReplacement() {
     return "notNull(X).get(Y);";
   }

@@ -21,6 +21,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
@@ -33,7 +35,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return "Go Fluent: Generalized Switch";
   }
 
-  @Override public boolean canTip(final N ¢) {
+  @Override public boolean canTip(@NotNull final N ¢) {
     return !¢.equals(then(az.conditionalExpression(parent(¢))))//
         && differsInSingleAtomic(branchesExpressions(¢))//
         || differsInSingleExpression(branchesExpressions(¢));
@@ -43,9 +45,10 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     return branchesWrapper(¢).stream().map(step::expression).collect(toList());
   }
 
-  @Override public Tip pattern(final N ¢) {
+  @NotNull
+  @Override public Tip pattern(@NotNull final N ¢) {
     return new Tip(description(¢), ¢, myClass()) {
-      @Override @SuppressWarnings("unchecked") public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override @SuppressWarnings("unchecked") public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,
             ast("holds(" + namer.it + " ->"
@@ -59,47 +62,50 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
     };
   }
 
-  String createExpressionOns(final List<Expression> diffs, final List<N> branches) {
+  @NotNull String createExpressionOns(@NotNull final List<Expression> diffs, @NotNull final List<N> branches) {
     assert diffs.size() == branches.size();
-    String $ = "";
+    @NotNull String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
       $ += ".on(() ->" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
     return $;
   }
 
-  private static String extractSemicolonIfNeeded(final String ¢) {
+  @NotNull
+  private static String extractSemicolonIfNeeded(@NotNull final String ¢) {
     final String $ = ¢.replaceAll("\n", "");
     return $ == null || !$.endsWith(";") ? $ : $.substring(0, $.length() - 1);
   }
 
-  String elseString(final N ¢) {
+  @NotNull String elseString(final N ¢) {
     return lastElseWrapper(¢) == null ? "" : ".elze(() -> " + extractSemicolonIfNeeded(lastElseWrapper(¢)) + ")" + (iz.ifStatement(¢) ? ";" : "");
   }
 
-  String createOns(final List<String> diffs, final List<? extends N> branches) {
+  @NotNull String createOns(@NotNull final List<String> diffs, @NotNull final List<? extends N> branches) {
     assert diffs.size() == branches.size();
-    String $ = "";
+    @NotNull String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
       $ += ".on(" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
     return $;
   }
 
   /** [[SuppressWarningsSpartan]] */
-  Collection<? extends ASTNode> branchesWrapper(final N ¢) {
+  @Nullable Collection<? extends ASTNode> branchesWrapper(final N ¢) {
     return !iz.conditionalExpression(¢) ? extract.branches(az.ifStatement(¢)) : extract.branches(az.conditionalExpression(¢));
   }
 
   /** [[SuppressWarningsSpartan]] */
+  @NotNull
   private String lastElseWrapper(final N ¢) {
     return (!iz.conditionalExpression(¢) ? extract.lastElse(az.ifStatement(¢)) : extract.lastElse(az.conditionalExpression(¢))) + "";
   }
 
   /** [[SuppressWarningsSpartan]] */
+  @NotNull
   private String thenWrapper(final N ¢) {
     return (!iz.conditionalExpression(¢) ? then(az.ifStatement(¢)) : then(az.conditionalExpression(¢))) + "";
   }
 
-  static String replaceAll(final String target, final CharSequence oldString, final CharSequence newString) {
+  static String replaceAll(final String target, @NotNull final CharSequence oldString, @NotNull final CharSequence newString) {
     String $ = target;
     while (!$.replace(oldString, newString).equals($))
       $ = $.replace(oldString, newString);

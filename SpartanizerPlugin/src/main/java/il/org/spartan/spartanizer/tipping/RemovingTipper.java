@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import org.jetbrains.annotations.NotNull;
 
 /** An abstract tipping strategy that removes a node if
  * {@link RemovingTipper#prerequisite(ASTNode)} holds.
@@ -14,9 +15,10 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1791362595323626807L;
 
-  @Override public final Tip tip(final N n) {
+  @NotNull
+  @Override public final Tip tip(@NotNull final N n) {
     return new Tip(description(n), n, myClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.remove(n, g);
       }
     };

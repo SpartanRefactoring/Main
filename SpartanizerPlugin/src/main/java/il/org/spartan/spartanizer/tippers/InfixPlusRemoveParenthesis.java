@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.range.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Removes unnecessary parenthesis in infixPlus expression, that may be string
  * concating {@code x+\"\"+(4) } goes to {@code x+\"\"+4 }
@@ -32,7 +34,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return whetherthe parenthesis can be removed and false otherwise */
-  private static boolean canRemove(final InfixExpression x) {
+  private static boolean canRemove(@NotNull final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
         || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
@@ -41,22 +43,23 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return "Remove redundant parenthesis";
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return description() + " around " + trivia.gist(¢);
   }
 
-  @Override public Expression replacement(final InfixExpression x) {
+  @Override public Expression replacement(@NotNull final InfixExpression x) {
     if (operator(x) != wizard.PLUS2)
       return null;
-    final List<Expression> es = hop.operands(x);
+    @Nullable final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for (final Integer i : range.to(es.size())) {
+    for (@NotNull final Integer i : range.to(es.size())) {
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
       // TODO Dor Ma'ayan: use extract.core --yg
       if (iz.parenthesizedExpression(es.get(ii))) {
-        Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
+        @NotNull Expression ¢ = expression(az.parenthesizedExpression(es.get(ii)));
         while (iz.parenthesizedExpression(¢)) {
           ¢ = expression(az.parenthesizedExpression(¢));
           replace(es, ¢, ii);

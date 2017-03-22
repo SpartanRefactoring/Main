@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** if(X) [return | return null];
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -26,6 +27,7 @@ public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }

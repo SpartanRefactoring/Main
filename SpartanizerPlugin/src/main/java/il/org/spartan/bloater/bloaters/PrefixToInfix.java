@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * ++i; --i;
@@ -24,7 +26,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 3775670587866472032L;
 
-  @Override public ASTNode replacement(final PrefixExpression ¢) {
+  @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
     return subject.pair(step.operand(¢), $)
@@ -32,11 +34,12 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {
-    final ASTNode $ = parent(¢);
+    @NotNull final ASTNode $ = parent(¢);
     return (step.operator(¢) == PrefixExpression.Operator.INCREMENT || step.operator(¢) == PrefixExpression.Operator.DECREMENT)
         && (iz.expressionStatement($) || iz.forStatement($));
   }
 
+  @Nullable
   @Override @SuppressWarnings("unused") public String description(final PrefixExpression __) {
     return null;
   }

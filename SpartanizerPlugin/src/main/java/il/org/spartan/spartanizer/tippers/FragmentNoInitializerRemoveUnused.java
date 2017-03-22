@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Remove unused variable
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -19,15 +20,17 @@ public final class FragmentNoInitializerRemoveUnused extends $Fragment implement
     return "Remove unused, uninitialized variable";
   }
 
+  @NotNull
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove unused and unitialized variable: " + trivia.gist(¢);
   }
 
-  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+  @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
     return super.prerequisite(f) && initializer() == null && collect.usesOf(name()).in(scope.of(f)).isEmpty();
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @NotNull
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, final TextEditGroup g) {
     return eliminateFragment(r, g);
   }
 }

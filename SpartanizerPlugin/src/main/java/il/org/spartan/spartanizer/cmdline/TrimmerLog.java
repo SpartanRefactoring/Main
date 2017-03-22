@@ -11,6 +11,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Logging stuff
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
@@ -46,7 +48,7 @@ public enum TrimmerLog {
     logToScreen = true;
   }
 
-  public static void application(final ASTRewrite r, final Tip t) {
+  public static void application(final ASTRewrite r, @NotNull final Tip t) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
         System.out.println("Stopped logging applications");
@@ -90,7 +92,7 @@ public enum TrimmerLog {
     TrimmerLog.outputDir = $;
   }
 
-  public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) {
+  public static <N extends ASTNode> void tip(@NotNull final Tipper<N> w, final N n) {
     if (--maxTips <= 0) {
       if (maxTips == 0)
         System.out.println("Stopped logging tips");
@@ -118,7 +120,7 @@ public enum TrimmerLog {
     System.out.println("    Suggests: " + w.tip(n));
   }
 
-  public static void visitation(final ASTNode ¢) {
+  public static void visitation(@NotNull final ASTNode ¢) {
     if (--maxVisitations > 0)
       System.out.println(
           "VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + system.className(¢) + ") parent = " + system.className(parent(¢)));
@@ -126,10 +128,11 @@ public enum TrimmerLog {
       System.out.println("Stopped logging visitations");
   }
 
+  @Nullable
   private static CSVStatistics init() {
     try {
       return output = new CSVStatistics(outputDir, "Tips");
-    } catch (final IOException $) {
+    } catch (@NotNull final IOException $) {
       return monitor.infoIOException($);
     }
   }

@@ -22,13 +22,14 @@ public abstract class Tip extends Range {
     return range(singleNodeRange(n), ns);
   }
 
-  static Range range(final Range r, final ASTNode... ns) {
+  static Range range(final Range r, @NotNull final ASTNode... ns) {
     Range $ = r;
-    for (final ASTNode ¢ : ns)
+    for (@NotNull final ASTNode ¢ : ns)
       $ = $.merge(singleNodeRange(¢));
     return $;
   }
 
+  @NotNull
   static Range singleNodeRange(final @NotNull ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return new Range($, $ + ¢.getLength());
@@ -46,12 +47,12 @@ public abstract class Tip extends Range {
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, final ASTNode n, final Class<? extends Tipper<?>> tipperClass, final ASTNode... ns) {
+  public Tip(final String description, @NotNull final ASTNode n, final Class<? extends Tipper<?>> tipperClass, final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
   }
 
-  Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
+  Tip(final String description, @NotNull final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     super(other);
     this.description = description;
     this.tipperClass = tipperClass;

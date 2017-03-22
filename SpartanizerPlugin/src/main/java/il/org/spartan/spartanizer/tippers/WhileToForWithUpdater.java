@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Alex Kopzon please add a description
  * @author Alex Kopzon
@@ -17,7 +19,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -382828224028857273L;
 
-  private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
+  private static ForStatement buildForWhithoutLastStatement(@NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(copy.of(¢.getExpression()));
     updaters($).add(copy.of(az.expressionStatement(hop.lastStatement(body(¢))).getExpression()));
@@ -25,7 +27,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     return $;
   }
 
-  private static boolean fitting(final WhileStatement ¢) {
+  private static boolean fitting(@Nullable final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
         && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
@@ -35,15 +37,17 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
         && !ForToForUpdaters.bodyDeclaresElementsOf(hop.lastStatement(body(¢)));
   }
 
-  @Override public String description(final WhileStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
-  @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final WhileStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
-  @Override public ASTNode replacement(final WhileStatement ¢) {
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Generates table presenting {@link ASTNode}s coverage
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -31,14 +32,14 @@ public class Table_Nodes_Coverage {
         statistics.clear();
       }
     }.fire(new ASTVisitor(true) {
-      @Override public boolean visit(final CompilationUnit ¢) {
+      @Override public boolean visit(@NotNull final CompilationUnit ¢) {
         ¢.accept(new AnnotationCleanerVisitor());
         try {
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
           statistics.logAfterSpartanization(into.cu(spartanzied));
           analyze.apply(spartanzied);
-        } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+        } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           ___.unused(__);
         }
         return true;

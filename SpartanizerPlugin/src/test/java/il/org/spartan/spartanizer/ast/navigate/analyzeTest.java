@@ -9,6 +9,7 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -22,6 +23,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
+  @Nullable
   private static final ASTNode AST = wizard.ast("public void m(int y){ y=5;}");
 
   @Test public void a() {

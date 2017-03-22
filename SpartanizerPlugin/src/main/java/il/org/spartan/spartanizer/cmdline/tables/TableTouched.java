@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Old table presenting touched methods (%)
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
@@ -50,11 +51,11 @@ public class TableTouched extends TableNanosCoverage {
     touchedWriter.nl();
   }
 
-  private static double fractionOfMethodsTouched(final Collection<MethodRecord> ¢) {
+  private static double fractionOfMethodsTouched(@NotNull final Collection<MethodRecord> ¢) {
     return safe.div(totalMethodsTouched(¢), ¢.size());
   }
 
-  private static double totalMethodsTouched(final Collection<MethodRecord> ¢) {
+  private static double totalMethodsTouched(@NotNull final Collection<MethodRecord> ¢) {
     return ¢.stream().filter(MethodRecord::touched).count();
   }
 }

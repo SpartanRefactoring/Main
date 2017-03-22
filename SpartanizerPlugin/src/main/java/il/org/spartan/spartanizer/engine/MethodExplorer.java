@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A class for analyzing a method.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -27,15 +28,16 @@ public final class MethodExplorer {
    * also correctly adds variables declared within plain and extended for loops,
    * just as local variables defined within a try and catch clauses.
    * @return a list of {@link SimpleName} from the given method. */
+  @NotNull
   public List<SimpleName> localVariables() {
-    final List<SimpleName> $ = new ArrayList<>();
+    @NotNull final List<SimpleName> $ = new ArrayList<>();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
-      @Override public boolean visit(final CatchClause ¢) {
+      @Override public boolean visit(@NotNull final CatchClause ¢) {
         return add(¢.getException());
       }
 
-      @Override public boolean visit(final EnhancedForStatement ¢) {
+      @Override public boolean visit(@NotNull final EnhancedForStatement ¢) {
         return add(¢.getParameter());
       }
 
@@ -52,17 +54,17 @@ public final class MethodExplorer {
         return true;
       }
 
-      boolean add(final Iterable<? extends Expression> xs) {
+      boolean add(@NotNull final Iterable<? extends Expression> xs) {
         xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
 
-      boolean add(final SingleVariableDeclaration ¢) {
+      boolean add(@NotNull final SingleVariableDeclaration ¢) {
         $.add(¢.getName());
         return true;
       }
 
-      void addFragments(final Iterable<VariableDeclarationFragment> fs) {
+      void addFragments(@NotNull final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> $.add(λ.getName()));
       }
     });
@@ -74,8 +76,9 @@ public final class MethodExplorer {
    * <p>
    * This method correctly ignores return sideEffects found within nested types.
    * @return a list of {@link ReturnStatement} from the given method. */
+  @NotNull
   public List<ReturnStatement> returnStatements() {
-    final List<ReturnStatement> $ = new ArrayList<>();
+    @NotNull final List<ReturnStatement> $ = new ArrayList<>();
     // noinspection SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final ReturnStatement ¢) {

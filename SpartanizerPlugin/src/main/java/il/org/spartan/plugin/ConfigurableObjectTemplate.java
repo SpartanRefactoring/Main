@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 // TODO Matteo: check this out, its Yossi's example for a configurable object.
 // See what you can get out of it.
 
+import org.jetbrains.annotations.Nullable;
+
 /** Demo of recommended use of {@link Listener.S} Copy the code, changing the
  * name {@link ConfigurableObjectTemplate} to whatever you need. provide.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -18,12 +20,12 @@ public interface ConfigurableObjectTemplate {
     /* (extending our */ Some fields;
     /* current class) */ May be;
     /* may then write */
-    final If changes = null;
+    @Nullable final If changes = null;
     /* or read any of */ Other might, assume, the, form, of;
     /* the Settings's */ static When its, appropriate;
     /* fields without */ Or even;
     /* any setters or */
-    static final If particular = null;
+    @Nullable static final If particular = null;
     /* any getters... */ Or these, occassions, in, which,it, makes, sense;
 
     //

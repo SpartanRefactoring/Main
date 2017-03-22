@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -22,7 +23,7 @@ public class Issue0819 {
   }
 
   @Test public void str_test2() {
-    final Str s = new Str();
+    @NotNull final Str s = new Str();
     s.set("Hamadia");
     azzert.that(s.inner(), is("Hamadia"));
   }

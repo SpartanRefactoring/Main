@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Generates a table that shows how many times each nano occurred in each
  * project
@@ -55,11 +56,11 @@ public class Table_RawNanoStatistics extends NanoTable {
           writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
-      @Override public boolean visit(final CompilationUnit $) {
+      @Override public boolean visit(@NotNull final CompilationUnit $) {
         try {
           $.accept(new AnnotationCleanerVisitor());
           spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
-        } catch (final IllegalArgumentException | AssertionError __) {
+        } catch (@NotNull final IllegalArgumentException | AssertionError __) {
           ___.unused(__);
         }
         return super.visit($);

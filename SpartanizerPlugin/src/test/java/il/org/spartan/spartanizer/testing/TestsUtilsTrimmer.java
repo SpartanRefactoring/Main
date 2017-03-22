@@ -7,17 +7,20 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 public enum TestsUtilsTrimmer {
   ;
-  public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+  public static int countOpportunities(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u) {
     return a.collectSuggestions(u).size();
   }
 
+  @NotNull
   public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
 
+  @NotNull
   public static TrimmingOperand trimmingOf(final String from) {
     return new TrimmingOperand(from);
   }
@@ -30,19 +33,19 @@ public enum TestsUtilsTrimmer {
       this.clazz = clazz;
     }
 
-    private N findNode(final Rule<N, Tip> t) {
+    private N findNode(@NotNull final Rule<N, Tip> t) {
       assert t != null;
-      final Wrap wrap = Wrap.find(get());
+      @NotNull final Wrap wrap = Wrap.find(get());
       assert wrap != null;
-      final CompilationUnit u = wrap.intoCompilationUnit(get());
+      @NotNull final CompilationUnit u = wrap.intoCompilationUnit(get());
       assert u != null;
       final N $ = firstInstance(u);
       assert $ != null;
       return $;
     }
 
-    private N firstInstance(final CompilationUnit u) {
-      final Wrapper<N> $ = new Wrapper<>();
+    private N firstInstance(@NotNull final CompilationUnit u) {
+      @NotNull final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor(true) {
         /** The implementation of the visitation procedure in the JDT seems to
          * be buggy. Each time we find a node which is an instance of the sought
@@ -52,7 +55,7 @@ public enum TestsUtilsTrimmer {
          * null, we do not carry out any further tests.
          * @param pattern the node currently being visited.
          * @return whether the sought node is found. */
-        @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
+        @Override @SuppressWarnings("unchecked") public boolean preVisit2(@NotNull final ASTNode ¢) {
           if ($.get() != null)
             return false;
           if (!clazz.isAssignableFrom(¢.getClass()))
@@ -64,12 +67,14 @@ public enum TestsUtilsTrimmer {
       return $.get();
     }
 
-    public OperandToTipper<N> in(final Rule<N, Tip> ¢) {
+    @NotNull
+    public OperandToTipper<N> in(@NotNull final Rule<N, Tip> ¢) {
       assert ¢.check(findNode(¢));
       return this;
     }
 
-    public OperandToTipper<N> notIn(final Rule<N, Tip> ¢) {
+    @NotNull
+    public OperandToTipper<N> notIn(@NotNull final Rule<N, Tip> ¢) {
       assert !¢.check(findNode(¢));
       return this;
     }

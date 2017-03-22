@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code int a = 3;return a;} into {@code return a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -17,20 +19,21 @@ public final class FragmentInitializerReturnExpression extends $FragementInitial
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1067290925840665930L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull
+  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
     if (forbidden(fragment(), initializer()) || usedInSubsequentInitializers())
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement());
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement());
     if (s == null)
       return null;
     final Expression newReturnValue = s.getExpression();
     if (newReturnValue == null)
       return null;
-    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (wizard.same(name(), newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving() - metrics.size(newReturnValue) > 0)
       return null;

@@ -7,6 +7,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,
@@ -16,66 +18,68 @@ import il.org.spartan.utils.*;
 public class Table extends Row<Table> implements Closeable {
   String path;
 
-  public Table(final Object o) {
+  public Table(@NotNull final Object o) {
     this(o.getClass());
   }
 
-  public Table(final Class<?> c) {
+  public Table(@NotNull final Class<?> c) {
     this(classToNormalizedFileName(c));
   }
 
-  public Table(final String name) {
+  public Table(@NotNull final String name) {
     this(name, TableRenderer.builtin.values());
   }
 
-  @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
+  @SuppressWarnings("resource") public Table(@NotNull final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
     as.list(rs).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
     });
   }
 
-  @SuppressWarnings("resource") public Table(final String name, final String outputFolder) {
+  @SuppressWarnings("resource") public Table(@NotNull final String name, @NotNull final String outputFolder) {
     this.name = name.toLowerCase();
     path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
     as.list(TableRenderer.builtin.values()).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
     });
   }
 
-  public Table(final Class<?> c, final String outputFolder) {
+  public Table(@NotNull final Class<?> c, @NotNull final String outputFolder) {
     this(classToNormalizedFileName(c), outputFolder);
   }
 
   private int length;
+  @NotNull
   public final String name;
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
 
+  @NotNull
   public String baseName() {
     return system.tmp + name + ".*";
   }
 
   @Override public void close() {
     if (!stats.isEmpty())
-      for (final Statistic s : statisics) {
+      for (@NotNull final Statistic s : statisics) {
         for (final String key : keySet()) {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-        final String key = lastEmptyColumn();
-        for (final RecordWriter ¢ : writers) {
+        @Nullable final String key = lastEmptyColumn();
+        for (@NotNull final RecordWriter ¢ : writers) {
           put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
@@ -83,8 +87,9 @@ public class Table extends Row<Table> implements Closeable {
     writers.forEach(RecordWriter::close);
   }
 
+  @Nullable
   private String lastEmptyColumn() {
-    String $ = null;
+    @Nullable String $ = null;
     for (final String key : keySet()) {
       final RealStatistics r = getRealStatistics(key);
       if (r != null && r.n() != 0)
@@ -104,19 +109,21 @@ public class Table extends Row<Table> implements Closeable {
     return super.col(key, value);
   }
 
+  @NotNull
   @Override public Table col(final String key, final long value) {
     getRealStatistics(key).record(value);
     super.col(key, value);
     return this;
   }
 
+  @NotNull
   public String description() {
-    String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
+    @NotNull String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
         "The table has " + length() + " data rows, each consisting of " + size() + " columns.\n" + //
         "Table header is  " + keySet() + "\n"; //
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
-    final Int n = new Int();
+    @NotNull final Int n = new Int();
     return $ + writers.stream().map(λ -> "\t " + ++n.inner + ". " + λ.fileName + "\n").reduce((x, y) -> x + y).get();
   }
 
@@ -134,52 +141,58 @@ public class Table extends Row<Table> implements Closeable {
     reset();
   }
 
+  @NotNull
   private String path() {
     return (path != null ? path : system.tmp) + name;
   }
 
+  @NotNull
   public Table noStatistics() {
     statisics = new Statistic[0];
     return this;
   }
 
+  @NotNull
   public Table remove(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.removeAll(as.list(¢));
     return set($);
   }
 
+  @NotNull
   public Table add(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.addAll(as.list(¢));
     return set($);
   }
 
+  @NotNull
   @Override protected Table reset() {
     keySet().forEach(λ -> put(λ, ""));
     put(null, ++length + "");
     return this;
   }
 
-  /* @formatter:off*/ @Override
+  /* @formatter:off*/ @NotNull@Override
    protected Table self() { return this; } /*@formatter:on*/
 
-  private Table set(final List<Statistic> ¢) {
+  @NotNull
+  private Table set(@NotNull final List<Statistic> ¢) {
     return set(¢.toArray(new Statistic[¢.size()]));
   }
 
-  Table set(final Statistic... ¢) {
+  @NotNull Table set(final Statistic... ¢) {
     statisics = ¢;
     return this;
   }
 
   private static final long serialVersionUID = 1L;
 
-  public static String classToNormalizedFileName(final Class<?> ¢) {
+  public static String classToNormalizedFileName(@NotNull final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
   }
 
-  static String classToNormalizedFileName(final String className) {
+  static String classToNormalizedFileName(@NotNull final String className) {
     return separate.these(lisp.rest(as.iterable(namer.components(className)))).by('-').toLowerCase();
   }
 }

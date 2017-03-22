@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.issues;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,8 +21,11 @@ public class Issue0717 {
   private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int MAX_NAME_SIZE = 100;
   private static final int MAX_STAT_AMOUNT = 100;
+  @Nullable
   final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
+  @Nullable
   final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+  @Nullable
   final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
 
   @Test public void bigBlockWithAnnotationReturnsTrue() {
@@ -35,9 +40,10 @@ public class Issue0717 {
     assert !determineIf.hasBigBlock(fourStatMethod);
   }
 
+  @NotNull
   private String generateRandomString() {
-    final StringBuilder $ = new StringBuilder();
-    final Random randomGenerator = new Random();
+    @NotNull final StringBuilder $ = new StringBuilder();
+    @NotNull final Random randomGenerator = new Random();
     final int len = Math.max(1, randomGenerator.nextInt(Issue0717.MAX_NAME_SIZE));
     $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length() - 10)));
     range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
@@ -65,10 +71,10 @@ public class Issue0717 {
   }
 
   @Test public void randomBigBlockReturnsTrue() {
-    final String methodName = generateRandomString(), firstStat = "{int x; ++x;", nextStat = "x=4;";
-    final Random random = new Random();
+    @NotNull final String methodName = generateRandomString(), firstStat = "{int x; ++x;", nextStat = "x=4;";
+    @NotNull final Random random = new Random();
     final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 6 ? 6 : random.nextInt(MAX_STAT_AMOUNT);
-    String randomBigBlock = "public void " + methodName + "()" + firstStat;
+    @NotNull String randomBigBlock = "public void " + methodName + "()" + firstStat;
     for (int ¢ = 0; ¢ < statAmount; ++¢)
       randomBigBlock += nextStat;
     randomBigBlock += "}";

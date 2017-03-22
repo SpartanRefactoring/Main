@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
 
 /** takes care of of multiplicative terms with minus symbol in them.
  * <p>
@@ -32,10 +33,10 @@ public enum minus {
    * @param ¢ JD {@code null if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  public static Statement lastStatement(final Statement $) {
+  public static Statement lastStatement(@NotNull final Statement $) {
     if (!iz.block($))
       return make.emptyStatement($);
-    final List<Statement> ss = step.statements(az.block($));
+    @NotNull final List<Statement> ss = step.statements(az.block($));
     if (!ss.isEmpty())
       ss.remove(ss.size() - 1);
     return $;
@@ -53,7 +54,7 @@ public enum minus {
     return out(operator(¢), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
+  @SuppressWarnings("boxing") public static int level(@NotNull final Collection<Expression> xs) {
     return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
   }
 
@@ -61,6 +62,7 @@ public enum minus {
     return az.bit(operator(¢) == wizard.MINUS1) + level(operand(¢));
   }
 
+  @NotNull
   public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
@@ -73,15 +75,17 @@ public enum minus {
     return out(operator(¢), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(operator(¢));
   }
 
-  private static List<Expression> peel(final Collection<Expression> ¢) {
+  private static List<Expression> peel(@NotNull final Collection<Expression> ¢) {
     return ¢.stream().map(minus::peel).collect(toList());
   }
 
-  public static Expression peel(final NumberLiteral $) {
+  @NotNull
+  public static Expression peel(@NotNull final NumberLiteral $) {
     return !token($).startsWith("-") && !token($).startsWith("+") ? $ : $.getAST().newNumberLiteral(token($).substring(1));
   }
 
-  public static Expression peel(final PrefixExpression $) {
+  @NotNull
+  public static Expression peel(@NotNull final PrefixExpression $) {
     return out(operator($), wizard.MINUS1, wizard.PLUS1) ? $ : peel(operand($));
   }
 }

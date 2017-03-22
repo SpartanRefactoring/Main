@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @nano a method which is empty or contains one statement which return a
  *       default value of some type.
@@ -23,6 +24,7 @@ public class Default extends JavadocMarkerNanoPattern {
         || anyTips(tippers, onlyStatement(¢));
   }
 
+  @NotNull
   @Override public String nanoName() {
     return "DefaultValue";
   }

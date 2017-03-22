@@ -23,12 +23,16 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Parse and visit all Java files under a given path.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
+  @NotNull
   @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @NotNull
   @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
@@ -53,14 +57,14 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     }
     try {
       return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
-    } catch (NoSuchMethodException | SecurityException ¢) {
+    } catch (@NotNull NoSuchMethodException | SecurityException ¢) {
       monitor.logProbableBug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
       throw new RuntimeException();
     }
   }
 
-  public static void main(final String[] args)
+  public static void main(@NotNull final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);
   }
@@ -78,6 +82,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
+  @NotNull
   protected static String makeFile(final String fileName) {
     return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
@@ -92,19 +97,19 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     done(path);
   }
 
-  void collect(final CompilationUnit u) {
+  void collect(@NotNull final CompilationUnit u) {
     try {
       u.accept(this);
-    } catch (final NullPointerException ¢) {
+    } catch (@NotNull final NullPointerException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  void collect(final String javaCode) {
+  void collect(@NotNull final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  void visit(final File f) {
+  void visit(@NotNull final File f) {
     if (!silent)
       dotter.click();
     if (!Utils.isTestFile(f) && ASTInFilesVisitor.productionCode(f))
@@ -114,13 +119,13 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
         collect(FileUtils.read(f));
         if (!silent)
           dotter.click();
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
   }
 
   public static class FieldsOnly extends DeprecatedFolderASTVisitor {
-    public static void main(final String[] args)
+    public static void main(@NotNull final String[] args)
         throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       clazz = FieldsOnly.class;
       DeprecatedFolderASTVisitor.main(args);
@@ -137,46 +142,46 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     private int interesting;
     private int total;
 
-    public static void main(final String[] args)
+    public static void main(@NotNull final String[] args)
         throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       clazz = BucketMethods.class;
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢);
         return;
       }
       DeprecatedFolderASTVisitor.main(args);
     }
 
-    @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
+    @Override @SuppressWarnings("boxing") public boolean visit(@NotNull final MethodDeclaration d) {
       ++total;
       if (interesting(d)) {
         ++interesting;
-        final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
+        @NotNull final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
         System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
         try {
           out.write(summary);
-        } catch (final IOException ¢) {
+        } catch (@NotNull final IOException ¢) {
           System.err.println("Error: " + ¢.getMessage());
         }
       }
       return true;
     }
 
-    private static boolean interesting(final MethodDeclaration ¢) {
+    private static boolean interesting(@NotNull final MethodDeclaration ¢) {
       return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
     }
 
-    private static boolean leaking(final Stream<ASTNode> ¢) {
+    private static boolean leaking(@NotNull final Stream<ASTNode> ¢) {
       return ¢.noneMatch(BucketMethods::leaking);
     }
 
-    private static boolean interesting(final List<Statement> ¢) {
+    private static boolean interesting(@Nullable final List<Statement> ¢) {
       return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
     }
 
-    static boolean letItBeIn(final List<Statement> ¢) {
+    static boolean letItBeIn(@NotNull final List<Statement> ¢) {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
 

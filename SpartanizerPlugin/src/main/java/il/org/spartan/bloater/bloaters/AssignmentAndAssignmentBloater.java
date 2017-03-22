@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
@@ -20,18 +22,20 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 121321364655045957L;
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
   // TODO Doron - I spartanized your code. --yg
-  @Override public Tip tip(final ExpressionStatement ¢) {
-    final Assignment $ = az.assignment(expression(¢));
+  @Nullable
+  @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
+    @Nullable final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         // TODO Doron Meshulam: use class subject --yg
-        final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
+        @Nullable final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
@@ -40,8 +44,9 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         l.remove(¢, g);
       }
 
+      @Nullable
       public Assignment rightMost(final Assignment newTail) {
-        for (@SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
+        for (@Nullable @SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
             return $;
       }

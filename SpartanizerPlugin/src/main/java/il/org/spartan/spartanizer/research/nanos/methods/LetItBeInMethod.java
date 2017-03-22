@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.tippers.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Let x in S <br>
  * {@link Assignment} followed by {@link ExpressionStatement} or
@@ -37,6 +38,7 @@ public class LetItBeInMethod extends JavadocMarkerNanoPattern {
         || iz.returnStatement(secondStatement);
   }
 
+  @NotNull
   @Override public String nanoName() {
     return "LetIn";
   }

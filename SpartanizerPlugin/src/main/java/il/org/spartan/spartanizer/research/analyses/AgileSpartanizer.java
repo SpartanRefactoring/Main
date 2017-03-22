@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A Spartanizer without heavy or buggy tippers
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -13,6 +14,7 @@ public class AgileSpartanizer extends InteractiveSpartanizer {
     removeHeavy();
   }
 
+  @NotNull
   private AgileSpartanizer removeHeavy() {
     remove(SwitchStatement.class, //
         new SwitchEmpty(), //

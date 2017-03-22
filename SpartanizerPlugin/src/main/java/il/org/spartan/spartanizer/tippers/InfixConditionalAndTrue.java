@@ -6,6 +6,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code
  * b && true
@@ -22,11 +23,11 @@ public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpre
     return "Remove 'true' argument to '&&'";
   }
 
-  @Override public boolean prerequisite(final InfixExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
     return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
   }
 
-  @Override public Expression replacement(final InfixExpression ¢) {
+  @Override public Expression replacement(@NotNull final InfixExpression ¢) {
     return Tippers.eliminateLiteral(¢, true);
   }
 }

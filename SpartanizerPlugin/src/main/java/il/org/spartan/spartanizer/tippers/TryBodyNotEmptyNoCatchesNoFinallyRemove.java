@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert pattern <code>try {s} [ finally { <i>empty</i> }]</code>, {@code s}
  * not empty, to {@code {s}}.
@@ -16,16 +17,17 @@ public final class TryBodyNotEmptyNoCatchesNoFinallyRemove extends ReplaceCurren
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 8032399675463811972L;
 
-  @Override public boolean prerequisite(final TryStatement ¢) {
+  @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
     return !statements(body(¢)).isEmpty() && ¢.resources().isEmpty() && ¢.catchClauses().isEmpty()
         && (¢.getFinally() == null || statements(¢.getFinally()).isEmpty());
   }
 
-  @Override public ASTNode replacement(final TryStatement ¢) {
+  @Override public ASTNode replacement(@NotNull final TryStatement ¢) {
     return ¢.getBody();
   }
 
-  @Override public String description(final TryStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final TryStatement ¢) {
     return "Remove the do-nothing try wrap around block " + trivia.gist(¢.getBody());
   }
 }

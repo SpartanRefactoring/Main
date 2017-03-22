@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Create a collection out of a copy of another
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -24,10 +26,12 @@ public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreatio
     return tippers.canTip(az.block(parent(parent(parent(x)))));
   }
 
+  @Nullable
   @Override public Tip pattern(final ClassInstanceCreation x) {
     return tippers.firstTip(az.block(parent(parent(parent(x)))));
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }

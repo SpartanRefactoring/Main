@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * a = 3;
@@ -26,15 +28,16 @@ public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -1263526923784459386L;
 
+  @NotNull
   @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 
-  @Override public ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    final Statement parent = az.statement(parent(a));
+  @Override public ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+    @Nullable final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(to(a), core(expression(s))))
       return null;
     $.remove(parent, g);

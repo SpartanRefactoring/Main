@@ -1,5 +1,8 @@
 package il.org.spartan.plugin;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.function.*;
 
 /** Listen to events, with an optional additional object. The events are defined
@@ -30,7 +33,7 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
     return enumClass.getEnumConstants();
   }
 
-  @Override @SuppressWarnings("unchecked") public void tick(final Object... ¢) {
+  @Override @SuppressWarnings("unchecked") public void tick(@Nullable final Object... ¢) {
     if (¢ != null && enumClass.isInstance(¢[0]))
       if (¢.length == 1)
         tick((E) ¢[0]);
@@ -43,7 +46,8 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
    * @param c operation to be conducted on accepted event
    * @return listener that send events from the enum class to the consumer
    *         [[SuppressWarningsSpartan]] */
-  public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c) {
+  @NotNull
+  public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, @NotNull final Consumer<E> c) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E ¢) {
         c.accept(¢);
@@ -61,7 +65,8 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
    * @param bc operation to be conducted on accepted event and object
    * @return listener that send events from the enum class to consumers
    *         [[SuppressWarningsSpartan]] */
-  public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, final Consumer<E> c, final BiConsumer<E, Object> bc) {
+  @NotNull
+  public static <E extends Enum<?>> EventListener<E> simpleListener(final Class<E> enumClass, @NotNull final Consumer<E> c, @NotNull final BiConsumer<E, Object> bc) {
     return new EventListener<E>(enumClass) {
       @Override public void tick(final E ¢) {
         c.accept(¢);

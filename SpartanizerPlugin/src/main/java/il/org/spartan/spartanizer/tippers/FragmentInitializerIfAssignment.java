@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * int a = 2;
@@ -25,25 +27,26 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
 public final class FragmentInitializerIfAssignment extends $FragementInitializerStatement implements TipperCategory.Inlining {
   private static final long serialVersionUID = 748535255358071695L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull
+  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
     if (initializer() == null)
       return null;
-    final IfStatement s = az.ifStatement(nextStatement());
+    @Nullable final IfStatement s = az.ifStatement(nextStatement());
     if (s == null || !iz.vacuousElse(s))
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     if (condition == null)
       return null;
-    final Assignment a = extract.assignment(then(s));
+    @Nullable final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), name()) || a.getOperator() != Assignment.Operator.ASSIGN
         || doesUseForbiddenSiblings(fragment(), condition, from(a)))
       return null;
-    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(condition, from(a)))
       return null;
     final ConditionalExpression newInitializer = subject.pair(from(a), initializer()).toCondition(condition);

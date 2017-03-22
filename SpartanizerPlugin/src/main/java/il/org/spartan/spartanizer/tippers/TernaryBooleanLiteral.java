@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** {@code
  * a ? b : c
@@ -53,7 +54,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
    * }
    * </ol>
   */
-  private static Expression simplifyTernary(final ConditionalExpression ¢) {
+  private static Expression simplifyTernary(@NotNull final ConditionalExpression ¢) {
     return simplifyTernary(¢.getThenExpression(), ¢.getElseExpression(), copy.of(¢.getExpression()));
   }
 
@@ -68,11 +69,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return "Convert conditional expression into logical expression";
   }
 
-  @Override public boolean prerequisite(final ConditionalExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final ConditionalExpression ¢) {
     return have.booleanLiteral(¢.getThenExpression(), ¢.getElseExpression());
   }
 
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @Override public Expression replacement(@NotNull final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }
 }

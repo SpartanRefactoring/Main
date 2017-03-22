@@ -9,24 +9,30 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {
+  @Nullable
   static Expression simplify(final InfixExpression ¢) {
     return build(new FactorsCollector(¢));
   }
 
-  static Expression build(final FactorsCollector ¢) {
+  @Nullable
+  static Expression build(@NotNull final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
 
-  static Expression build(final List<Expression> multipliers, final List<Expression> dividers) {
+  @Nullable
+  static Expression build(@NotNull final List<Expression> multipliers, @NotNull final List<Expression> dividers) {
     return buildDividers(buildMultipliers(multipliers), dividers);
   }
 
-  static Expression buildDividers(final Expression first, final List<Expression> rest) {
+  @Nullable
+  static Expression buildDividers(@Nullable final Expression first, @NotNull final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
     if (rest.isEmpty())
@@ -35,7 +41,7 @@ interface FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
 
-  static Expression buildDividers(final List<Expression> ¢) {
+  static Expression buildDividers(@NotNull final List<Expression> ¢) {
     final Expression $ = subject.pair(first(¢).getAST().newNumberLiteral("1"), first(¢)).to(DIVIDE);
     if (¢.size() == 1)
       return $;
@@ -44,7 +50,7 @@ interface FactorsReorganizer {
     return subject.operands(¢).to(DIVIDE);
   }
 
-  static Expression buildMultipliers(final List<Expression> ¢) {
+  static Expression buildMultipliers(@NotNull final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:
         return null;

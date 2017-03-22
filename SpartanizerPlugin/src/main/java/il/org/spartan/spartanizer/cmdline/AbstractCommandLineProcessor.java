@@ -4,6 +4,7 @@ import java.io.*;
 
 import il.org.spartan.*;
 import il.org.spartan.external.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
@@ -15,11 +16,12 @@ abstract class AbstractCommandLineProcessor {
 
   public abstract void apply();
 
+  @NotNull
   protected String makeFile(final String fileName) {
     return outputFolder + File.separator + presentSourceName + "." + fileName;
   }
 
-  public static void main(final String[] args) {
+  public static void main(@NotNull final String[] args) {
     if (args.length != 0)
       as.list(args).forEach(λ -> new BatchSpartanizer(λ).fire());
     else

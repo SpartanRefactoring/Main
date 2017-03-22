@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -16,13 +17,13 @@ public class Issue0873 {
   }
 
   @Test public void test1() {
-    final ParameterObject<MyType> i = new ParameterObject<>();
+    @NotNull final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(5));
     azzert.that(i.objectValue().getVal(), is(5));
   }
 
   @Test(expected = IllegalArgumentException.class) public void test2() {
-    final ParameterObject<MyType> i = new ParameterObject<>();
+    @NotNull final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(5));
     azzert.that(i.objectValue().getVal(), is(5));
     i.set(new MyType(4));
@@ -33,7 +34,7 @@ public class Issue0873 {
   }
 
   @Test public void test4() {
-    final ParameterObject<MyType> i = new ParameterObject<>();
+    @NotNull final ParameterObject<MyType> i = new ParameterObject<>();
     i.set(new MyType(3));
     assert i.hasValue();
   }

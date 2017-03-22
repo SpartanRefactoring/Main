@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code if (x) return b; else {} } into {@code
  * if (x)
@@ -24,11 +26,12 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @Override public String description(final IfStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final IfStatement ¢) {
     return "Remove vacuous 'else' branch of 'if(" + trivia.gist(¢.getExpression() + "") + ")...'";
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final IfStatement ¢) {
     return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
 
