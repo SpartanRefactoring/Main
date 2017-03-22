@@ -27,7 +27,7 @@ public interface trim {
     return a.collectSuggestions(u).size();
   }
 
-  @NotNull static fluentTrimmerApplication of(final String codeFragment) {
+  @NotNull static fluentTrimmerApplication of(@NotNull final String codeFragment) {
     return new fluentTrimmerApplication(new Trimmer(), codeFragment);
   }
 
@@ -67,7 +67,7 @@ public interface trim {
                                * .of("a+(b-c)") //  See {@link #of(String)} 
                                * .gives("a+b-c")</code> */
   interface repeatedly {
-    @NotNull static fluentTrimmerApplication of(final String codeFragment) {
+    @NotNull static fluentTrimmerApplication of(@NotNull final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));

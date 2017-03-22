@@ -50,12 +50,14 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce();
   }
 
+  @NotNull
   protected abstract R map(BooleanSupplier ¢);
 
   @Override public R reduce() {
     return inner.reduce();
   }
 
+  @Nullable
   private R reduce(@NotNull final And a) {
     R $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
@@ -66,6 +68,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(a));
   }
 
+  @NotNull
   public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
@@ -75,10 +78,12 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
                     : map(¢);
   }
 
+  @Nullable
   private R reduce(@NotNull final Not ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
+  @Nullable
   private R reduce(@NotNull final Or o) {
     R $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
@@ -89,10 +94,12 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(o));
   }
 
+  @Nullable
   private R reduce(@NotNull final P ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
+  @Nullable
   @Override public R reduce(final R r1, final R r2) {
     return inner.reduce(r1, r2);
   }

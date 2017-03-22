@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since Nov 13, 2016 */
 public enum generalize {
   ;
-  public static String code(final String code) {
+  public static String code(@NotNull final String code) {
     finish();
     return generalizeIdentifiers(code);
   }
@@ -33,7 +33,7 @@ public enum generalize {
     return "$" + type + serial.inner++;
   }
 
-  public static String generalizeIdentifiers(final String s) {
+  public static String generalizeIdentifiers(@NotNull final String s) {
     final IDocument d = new Document(ASTutils.wrapCode(s));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource(d.get().toCharArray());

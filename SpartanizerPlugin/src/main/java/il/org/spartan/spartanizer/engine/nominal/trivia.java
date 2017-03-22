@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-19 */
 public interface trivia {
-  static String accurateEssence(final String codeFragment) {
+  static String accurateEssence(@NotNull final String codeFragment) {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }
 

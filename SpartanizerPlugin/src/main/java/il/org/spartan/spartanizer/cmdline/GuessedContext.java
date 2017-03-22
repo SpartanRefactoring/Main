@@ -166,7 +166,7 @@ public enum GuessedContext {
     return before + codeFragment + after;
   }
 
-  private boolean accurateContains(@NotNull final String wrap, final String inner) {
+  private boolean accurateContains(@NotNull final String wrap, @NotNull final String inner) {
     final String off = off(wrap), $ = trivia.accurateEssence(inner), essence2 = trivia.accurateEssence(off);
     assert essence2 != null;
     return essence2.contains($);

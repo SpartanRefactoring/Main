@@ -38,6 +38,7 @@ public interface scope {
     return scope.of(¢.getName());
   }
 
+  @Nullable
   static List<? extends ASTNode> of(final SimpleName ¢) {
     final List<? extends ASTNode> $ = definition.scope(¢);
     assert $ != null : fault.dump() + //
@@ -58,6 +59,7 @@ public interface scope {
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
+  @NotNull
   static String newName(final ASTNode ¢, final Type t) {
     final ASTNode b = delimiter(¢);
     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
@@ -67,6 +69,7 @@ public interface scope {
     return $;
   }
 
+  @NotNull
   static String newName(final ASTNode ¢, final Type t, final String s) {
     final ASTNode b = delimiter(¢);
     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");

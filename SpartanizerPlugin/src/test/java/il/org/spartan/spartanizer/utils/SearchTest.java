@@ -405,7 +405,7 @@ public final class SearchTest {
     azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
   }
 
-  private int nCount(final String statement) {
+  private int nCount(@NotNull final String statement) {
     return searcher().in(s(statement)).size();
   }
 

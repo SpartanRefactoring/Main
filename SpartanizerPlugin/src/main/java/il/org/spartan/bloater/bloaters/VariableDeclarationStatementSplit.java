@@ -34,7 +34,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     return fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).count() >= 2;
   }
 
-  @Override @NotNull public Tip tip(final VariableDeclarationStatement ¢) {
+  @Override @NotNull public Tip tip(@NotNull final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
     final VariableDeclarationFragment fs = getFirstAssignment($), ff = fragments(first).get(fragments($).indexOf(fs));
     fragments($).remove(fs);
