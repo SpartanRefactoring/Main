@@ -36,6 +36,7 @@ abstract class BaseHandler extends AbstractHandler {
     }
   }
 
+  @Nullable
   private String getDialogTitle() {
     return inner.getName();
   }

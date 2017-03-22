@@ -415,7 +415,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    *        refactoring
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final IMarker ¢) {
+  private ASTRewrite createRewrite(@NotNull final IMarker ¢) {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 

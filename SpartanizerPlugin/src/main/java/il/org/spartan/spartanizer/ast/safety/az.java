@@ -545,7 +545,7 @@ public enum az {
       return ¢.substring(0, ¢.length() - 1);
     }
 
-    static double double¢(final Expression ¢) throws NumberFormatException {
+    static double double¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
           : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
@@ -556,7 +556,7 @@ public enum az {
       return Double.parseDouble(token);
     }
 
-    static int int¢(final Expression ¢) throws NumberFormatException {
+    static int int¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
     }
@@ -565,7 +565,7 @@ public enum az {
       return Integer.parseInt(token);
     }
 
-    static long long¢(final Expression ¢) throws NumberFormatException {
+    static long long¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
           : !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
