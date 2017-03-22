@@ -38,9 +38,9 @@ public enum SuppressWarningsLaconicOnOff {
     else
       r.replace(d, r.createGroupNode(new ASTNode[] { r.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), r.createCopyTarget(d) }), null);
   }), ByAnnotation((r, d) -> {
-    StringLiteral s = d.getAST().newStringLiteral();
+    final StringLiteral s = d.getAST().newStringLiteral();
     s.setLiteralValue(Eclipse.user() + " -- " + Eclipse.date());
-    SingleMemberAnnotation a = d.getAST().newSingleMemberAnnotation();
+    final SingleMemberAnnotation a = d.getAST().newSingleMemberAnnotation();
     a.setTypeName(d.getAST().newName(disabling.ByAnnotation.disabler));
     a.setValue(s);
     r.getListRewrite(d, d.getModifiersProperty()).insertFirst(a, null);
@@ -51,7 +51,7 @@ public enum SuppressWarningsLaconicOnOff {
    * @param d a {@link BodyDeclaration} to disable */
   final BiConsumer<ASTRewrite, BodyDeclaration> disable;
 
-  SuppressWarningsLaconicOnOff(BiConsumer<ASTRewrite, BodyDeclaration> disable) {
+  SuppressWarningsLaconicOnOff(final BiConsumer<ASTRewrite, BodyDeclaration> disable) {
     this.disable = disable;
   }
 
@@ -80,7 +80,7 @@ public enum SuppressWarningsLaconicOnOff {
   static boolean disabledByAncestor(final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (iz.bodyDeclaration(p)) {
-        BodyDeclaration d = (BodyDeclaration) p;
+        final BodyDeclaration d = (BodyDeclaration) p;
         if (d.getJavadoc() != null) {
           final String s = d.getJavadoc() + "";
           for (final String e : disabling.ByComment.enablers) // NANO

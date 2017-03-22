@@ -16,7 +16,7 @@ public interface ExpanderCategory {
 
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
-   * ExpanderGroup TODO: Roth, add - {@link ExpanderGroup} when you make the
+   * ExpanderGroup TODO Roth, add - {@link ExpanderGroup} when you make the
    * expander preferencesResources
    * @return preference group this tipper belongs to */
   default ExpanderGroup tipperGroup() {
@@ -31,7 +31,7 @@ public interface ExpanderCategory {
     return system.className(¢);
   }
 
-  // TODO: Roth, to preferences?
+  // TODO Roth, to preferences?
   @FunctionalInterface
   interface Nominal extends ExpanderCategory {
     String label = "Nominal";
@@ -62,7 +62,7 @@ public interface ExpanderCategory {
   }
 
   /** An enum holding together all the "enabled expanders" options */
-  // TODO: Roth, please make a preferencesResources file for the expanders
+  // TODO Roth, please make a preferencesResources file for the expanders
   enum ExpanderGroup {
     Abbreviation(ExpanderCategory.Clearification.class), //
     Explanation(ExpanderCategory.Explanation.class), //

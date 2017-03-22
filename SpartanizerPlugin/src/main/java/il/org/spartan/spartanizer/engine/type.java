@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO: Niv Shalmon please add a description
+/** TODO Niv Shalmon please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Dor Maayan
  * @author Niv Shalmon
@@ -84,7 +84,7 @@ public interface type {
     return of(¢) == STRING;
   }
 
-  // TODO: Matteo: Nano-pattern of values: not implemented
+  // TODO Matteo: Nano-pattern of values: not implemented
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }

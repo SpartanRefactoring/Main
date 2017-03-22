@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import il.org.spartan.spartanizer.ast.navigate.descendants;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;

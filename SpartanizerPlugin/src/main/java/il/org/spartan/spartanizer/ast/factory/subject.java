@@ -136,7 +136,7 @@ public enum subject {
       this.inner = claim(inner);
     }
 
-    // ** TODO: Yossi Gil: integrate with fluent API
+    // ** TODO Yossi Gil: integrate with fluent API
     /** Create a number literal node owned by ast
      * @param text the number of the literal node
      * @return the number literal node with text as a number */

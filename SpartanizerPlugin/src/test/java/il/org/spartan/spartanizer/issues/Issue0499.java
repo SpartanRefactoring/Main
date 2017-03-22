@@ -7,7 +7,7 @@ import org.junit.*;
 /** Checking that a bug with centification in Lambda Expression was fixed
  * @author Dor Ma'ayan
  * @since 17-11-2016 */
-@Ignore // TODO: Dor M'ayan
+@Ignore // TODO Dor M'ayan
 @SuppressWarnings("static-method")
 public class Issue0499 {
   @Test public void test0() {

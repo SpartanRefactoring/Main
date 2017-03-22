@@ -4,7 +4,7 @@ import java.util.*;
 
 import il.org.spartan.statistics.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-26 */
 public enum Statistic {

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-22 */
 public interface definition {
