@@ -161,7 +161,7 @@ public class Toolbox {
             new BlockBreakToReturnInfiniteWhile(), //
             new ReturnToBreakFiniteWhile(), //
             new WhileDeadRemove(), //
-            new WhileToForUpdaters(), //
+            new WhileToForWithUpdater(), //
             null) //
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //

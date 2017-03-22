@@ -93,6 +93,16 @@ public final class Inliner2 {
     return sideEffects.sink(replacement);
   }
 
+  public static int removalSaving(final VariableDeclarationFragment f) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    final int $ = metrics.size(parent);
+    if (parent.fragments().size() <= 1)
+      return $;
+    final VariableDeclarationStatement newParent = copy.of(parent);
+    newParent.fragments().remove(parent.fragments().indexOf(f));
+    return $ - metrics.size(newParent);
+  }
+
   public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;

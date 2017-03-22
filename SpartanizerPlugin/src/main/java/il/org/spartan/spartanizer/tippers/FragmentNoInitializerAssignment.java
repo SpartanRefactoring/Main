@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentNoInitializerAssignment extends $FragementAndStatement//
+public final class FragmentNoInitializerAssignment extends $FragementInitializerStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 929095358016977298L;
 
@@ -32,14 +32,13 @@ public final class FragmentNoInitializerAssignment extends $FragementAndStatemen
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer != null)
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    if (initializer() != null)
       return null;
-    final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    final Assignment a = extract.assignment(nextStatement());
+    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(fragment(), from(a)))
       return null;
-    $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
+    $.replace(fragment(), makeVariableDeclarationFragement(fragment(), from(a)), g);
     $.remove(extract.containingStatement(a), g);
     return $;
   }

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitialiazerUpdateAssignment extends $FragementAndStatement//
+public final class FragmentInitialiazerUpdateAssignment extends $FragementInitializerStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
@@ -31,23 +31,22 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementAndSta
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null)
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    if (initializer() == null)
       return null;
-    final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    final Assignment a = extract.assignment(nextStatement());
+    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(fragment(), from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
+    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement(), initializer()) > 0)
       return null;
-    $.replace(initializer, newInitializer, g);
+    $.replace(initializer(), newInitializer, g);
     i.inlineInto(newInitializer);
-    $.remove(nextStatement, g);
+    $.remove(nextStatement(), g);
     return $;
   }
 }
