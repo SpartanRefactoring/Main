@@ -29,7 +29,8 @@ public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulT
   }
 
   @Override public final Tip tip(final N n) {
-    return new Tip(description(n), n, getClass()) {
+    @SuppressWarnings("unchecked") final Class<? extends ListReplaceCurrentNode<N>> class1 = (Class<? extends ListReplaceCurrentNode<N>>) getClass();
+    return new Tip(description(n), n, class1) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n.getParent(), listDescriptor(n));
         ListReplaceCurrentNode.this.go(r, n, g).forEach(λ -> l.insertBefore(λ, n, g));

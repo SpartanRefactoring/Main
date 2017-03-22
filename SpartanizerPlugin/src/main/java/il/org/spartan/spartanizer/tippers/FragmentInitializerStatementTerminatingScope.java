@@ -32,7 +32,8 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    if (fragment() == null || extract.core(fragment().getInitializer()) instanceof LambdaExpression || initializer() == null || haz.annotation(fragment())
+    if (fragment() == null || extract.core(fragment().getInitializer()) instanceof LambdaExpression || initializer() == null
+        || haz.annotation(fragment())
         || iz.enhancedFor(nextStatement()) && iz.simpleName(az.enhancedFor(nextStatement()).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement()).getExpression()) + "").equals(name() + "") && !iz.simpleName(initializer())
             && !iz.literal(initializer())
@@ -67,7 +68,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
       return null;
     $.replace(nextStatement(), newStatement, g);
     i.inlineInto(newStatement);
-    remove(fragment(), $, g);
+    remove($, g);
     return $;
   }
 }

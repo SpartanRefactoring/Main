@@ -87,7 +87,7 @@ public class TrimmingOperand extends Wrapper<String> {
     System.err.printf(QUICK + format, os);
     System.err.println(NEW_UNIT_TEST + anonymize.makeTipperUnitTest(get()));
   }
-  
+
   /** Check whether one of the code options is correct
    * @param options
    * @return Operand

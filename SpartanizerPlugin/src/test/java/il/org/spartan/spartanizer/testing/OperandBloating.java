@@ -34,14 +34,13 @@ public class OperandBloating extends TrimmingOperand {
     ast = inner;
   }
 
-  @Override
-  protected void copyPasteReformat(final String format, final Object... os) {
+  @Override protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
     System.err.println(NEW_UNIT_TEST + anonymize.makeBloaterUnitTest(get()));
   }
-  
-  public static String bloat(String source){
+
+  public static String bloat(final String source) {
     final String wrap = Wrap.find(source).on(source);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -54,7 +53,7 @@ public class OperandBloating extends TrimmingOperand {
       return "Error";
     }
   }
-  
+
   @Override public OperandBloating gives(final String $) {
     assert $ != null;
     final Wrap w = Wrap.find(get());

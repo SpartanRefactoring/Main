@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tipping;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 /** A {@link Tipper} in which {@link #tip(ASTNode)} is invoked only if
  * {@link #check(ASTNode)} returns true. However, in such cases
@@ -10,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   private static final long serialVersionUID = -1200037106702768820L;
 
-  @Override public final boolean canTip(final N ¢) {
+  @Override public final boolean canTip(@NotNull final N ¢) {
     return prerequisite(¢) && tip(¢) != null;
   }
 
