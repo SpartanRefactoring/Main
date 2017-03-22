@@ -24,7 +24,7 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final ForStatement ¢) {
+  @Nullable @Override public Fragment pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

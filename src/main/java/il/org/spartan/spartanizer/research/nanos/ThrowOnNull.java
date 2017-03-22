@@ -24,7 +24,7 @@ public final class ThrowOnNull extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final IfStatement ¢) {
+  @Nullable @Override public Fragment pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

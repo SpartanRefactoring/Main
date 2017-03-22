@@ -49,7 +49,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
 
-  @Nullable @Override public Tip pattern(@SuppressWarnings("unused") final InfixExpression $) {
+  @Nullable @Override public Fragment pattern(@SuppressWarnings("unused") final InfixExpression $) {
     return null;
   }
 

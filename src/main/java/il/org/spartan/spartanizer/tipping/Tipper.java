@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
-public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
+public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragment> //
     implements TipperCategory, Serializable {
   // TODO Yossi: decide whether to move this to {@link Example} --or
   public static Example.Ignores ignores(final String code) {
@@ -37,7 +37,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return new String[] { nanoName() };
   }
 
-  /** Determines whether this instance can make a {@link Tip} for the parameter
+  /** Determines whether this instance can make a {@link Fragment} for the parameter
    * instance.
    * @param e JD
    * @return whether the argument is noneligible for the simplification offered
@@ -82,19 +82,19 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Tip tip(final N ¢) {
+  @Nullable public Fragment tip(final N ¢) {
     assert ¢ != null;
     return tip(¢, null);
   }
 
-  @Nullable @Override public final Tip fire() {
+  @Nullable @Override public final Fragment fire() {
     return tip(object());
   }
 
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Tip tip(final N n, @Nullable final ExclusionManager m) {
+  @Nullable public Fragment tip(final N n, @Nullable final ExclusionManager m) {
     assert n != null;
     return m != null && m.isExcluded(n) ? null : tip(n);
   }

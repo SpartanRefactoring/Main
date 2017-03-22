@@ -42,8 +42,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
 
-  @NotNull @Override public Tip pattern(@NotNull final CastExpression ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @NotNull @Override public Fragment pattern(@NotNull final CastExpression ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);

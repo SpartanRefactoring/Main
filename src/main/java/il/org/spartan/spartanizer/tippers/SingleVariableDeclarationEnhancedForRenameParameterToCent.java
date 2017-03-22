@@ -33,7 +33,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     return ¢ + "";
   }
 
-  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
+  @Override public Fragment tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
     @Nullable final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
       return null;
@@ -59,7 +59,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (m != null)
       m.exclude(body);
     final SimpleName ¢ = namer.newCurrent(d);
-    return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
+    return isNameDefined($, ¢) ? null : new Fragment("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, $, r, g);
       }

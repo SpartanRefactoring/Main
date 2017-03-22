@@ -49,7 +49,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override public Tip tip(@NotNull final IfStatement s) {
+  @Override public Fragment tip(@NotNull final IfStatement s) {
     @NotNull final List<Statement> $ = extract.statements(then(s));
     if ($.isEmpty())
       return null;
@@ -63,7 +63,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
       if (c.notAllDefined())
         return null;
     }
-    return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, getClass()) {
+    return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Fragment(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
@@ -88,7 +88,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     };
   }
 
-  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
+  @Override public Fragment tip(final IfStatement s, final ExclusionManager exclude) {
     return super.tip(s, exclude);
   }
 

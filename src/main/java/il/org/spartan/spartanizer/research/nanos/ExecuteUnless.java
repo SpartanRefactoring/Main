@@ -57,7 +57,7 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Nullable @Override public Tip pattern(final IfStatement ¢) {
+  @Nullable @Override public Fragment pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

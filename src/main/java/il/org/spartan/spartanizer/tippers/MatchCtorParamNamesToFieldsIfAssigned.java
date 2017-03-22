@@ -38,7 +38,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final MethodDeclaration d) {
+  @Nullable @Override public Fragment tip(@NotNull final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
@@ -66,7 +66,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       $.add(paramName);
       newNames.add(fieldName);
     }
-    return $.isEmpty() ? null : new Tip(description(d), d, getClass()) {
+    return $.isEmpty() ? null : new Fragment(description(d), d, getClass()) {
       final List<SimpleName> on = new ArrayList<>($);
       final List<SimpleName> nn = new ArrayList<>(newNames);
 

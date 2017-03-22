@@ -38,7 +38,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     return ¢.getName() + "";
   }
 
-  @Nullable @Override @SuppressWarnings("unused") public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
+  @Nullable @Override @SuppressWarnings("unused") public Fragment tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -55,7 +55,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
       prev.add($);
       after.add(¢);
     }
-    return prev.isEmpty() ? null : new Tip("Rename paraemters", d, getClass()) {
+    return prev.isEmpty() ? null : new Fragment("Rename paraemters", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {

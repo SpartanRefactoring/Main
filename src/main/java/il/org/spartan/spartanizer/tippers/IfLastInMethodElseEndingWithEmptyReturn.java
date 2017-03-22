@@ -30,12 +30,12 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
 
-  @Override public Tip tip(@NotNull final IfStatement s) {
+  @Override public Fragment tip(@NotNull final IfStatement s) {
     @Nullable final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
     @Nullable final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
-    return $ == null || $.getExpression() != null ? null : new Tip(description(s), s, getClass()) {
+    return $ == null || $.getExpression() != null ? null : new Fragment(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace($, make.emptyStatement(s), g);
       }

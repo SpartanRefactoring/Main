@@ -24,8 +24,8 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
     return "Extract expression from " + ¢ + " statement";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final ReturnStatement s) {
-    return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
+  @Nullable @Override public Fragment tip(@NotNull final ReturnStatement s) {
+    return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Fragment(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final Assignment a = az.assignment(expression(s));
         // TODO Doron Meshulam: use class subject --yg

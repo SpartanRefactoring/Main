@@ -37,8 +37,8 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
     return extract.nextStatement(¢);
   }
 
-  @Nullable @Override public Tip pattern(@NotNull final IfStatement ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @Nullable @Override public Fragment pattern(@NotNull final IfStatement ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final Statement next = next(¢);
         r.remove(next, g);

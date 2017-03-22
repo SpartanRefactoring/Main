@@ -22,12 +22,12 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null, new ExclusionManager()) != null;
   }
 
-  @NotNull @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
+  @NotNull @Override public Fragment tip(final N n, @Nullable final ExclusionManager exclude) {
     @Nullable final Statement $ = extract.nextStatement(n);
     assert $ != null;
     if (exclude != null)
       exclude.exclude($);
-    return new Tip(description(n), n, myClass(), $) {
+    return new Fragment(description(n), n, myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         ReplaceToNextStatementExclude.this.go(r, n, $, g, exclude);
       }

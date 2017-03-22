@@ -30,8 +30,8 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
-  @NotNull @Override public Tip pattern(@NotNull final InstanceofExpression ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @NotNull @Override public Fragment pattern(@NotNull final InstanceofExpression ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
         if (!izMethodExist(¢))

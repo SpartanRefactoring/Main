@@ -17,7 +17,7 @@ public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTip
     return null;
   }
 
-  @Nullable @Override protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
+  @Nullable @Override protected Fragment pattern(@SuppressWarnings("unused") final N ¢) {
     return null;
   }
 
