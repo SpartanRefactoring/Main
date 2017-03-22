@@ -66,7 +66,7 @@ public final class SingleTipperApplicator {
     return v.tipper;
   }
 
-  public void go(@NotNull final IProgressMonitor pm, final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
+  public void go(@NotNull final IProgressMonitor pm, @NotNull final IMarker m, final Type t) throws IllegalArgumentException, CoreException {
     if (Type.PROJECT.equals(t)) {
       goProject(pm, m);
       return;
@@ -211,7 +211,7 @@ public final class SingleTipperApplicator {
           return true;
         }
 
-        @Override protected void initialization(final ASTNode ¢) {
+        @Override protected void initialization(@NotNull final ASTNode ¢) {
           disabling.scan(¢);
         }
       });

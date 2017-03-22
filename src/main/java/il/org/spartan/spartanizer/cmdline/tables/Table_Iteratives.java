@@ -68,7 +68,7 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
     return false;
   }
 
-  private static void log(final String spartanized) {
+  private static void log(@NotNull final String spartanized) {
     into.cu(spartanized).accept(new ASTVisitor(true) {
       @Override public void preVisit(@NotNull final ASTNode ¢) {
         if (!iz.loop(¢))

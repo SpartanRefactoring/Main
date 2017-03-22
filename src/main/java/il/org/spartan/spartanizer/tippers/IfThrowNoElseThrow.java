@@ -35,7 +35,7 @@ public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement
     return "Consolidate into a single 'throw'";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     final Expression $ = getThrowExpression(then(s));

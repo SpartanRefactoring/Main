@@ -111,7 +111,7 @@ public enum subject {
      * @return a copy of the expression e
      * @see #rebase
      * @see copy#duplicate */
-    Expression claim(final Expression ¢) {
+    @NotNull Expression claim(final Expression ¢) {
       return wizard.rebase(copy.of(extract.core(¢)), ast);
     }
 
@@ -128,6 +128,7 @@ public enum subject {
 
   /** All the expressions that use a single operand */
   public static class Operand extends Claimer {
+    @NotNull
     private final Expression inner;
 
     /** Assign the expression inner to the parameter inner
@@ -236,6 +237,7 @@ public enum subject {
   /** All the expressions that use two operands */
   public static class Pair extends Claimer {
     /** The two expressions in the pair */
+    @NotNull
     final Expression left, right;
 
     /** Assign the expressions left and right to the parameters, the newly-

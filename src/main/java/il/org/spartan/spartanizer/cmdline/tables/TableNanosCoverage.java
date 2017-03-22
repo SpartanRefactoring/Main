@@ -41,7 +41,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
+  @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
     try {
@@ -78,7 +78,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
-  private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
+  private static void logNanoContainingMethodInfo(@NotNull final ASTNode n, final String np) {
     if (!containedInInstanceCreation(n))
       scope.peek().markNP(n, np);
   }

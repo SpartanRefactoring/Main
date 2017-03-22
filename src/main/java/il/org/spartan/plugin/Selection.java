@@ -50,7 +50,7 @@ public class Selection extends AbstractSelection<Selection> {
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation units */
-  @NotNull public static Selection of(final List<ICompilationUnit> ¢) {
+  @NotNull public static Selection of(@NotNull final List<ICompilationUnit> ¢) {
     return new Selection(WrappedCompilationUnit.of(¢), null, getName(¢));
   }
 

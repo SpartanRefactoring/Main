@@ -112,7 +112,7 @@ public enum make {
   /** Creates a parser for a given marked text.
    * @param m JD
    * @return created parser */
-  public ASTParser parser(final IMarker ¢) {
+  public ASTParser parser(@NotNull final IMarker ¢) {
     return parser(makeAST.iCompilationUnit(¢));
   }
 

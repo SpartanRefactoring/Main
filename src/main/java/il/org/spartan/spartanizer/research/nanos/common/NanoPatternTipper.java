@@ -65,10 +65,12 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     };
   }
 
+  @Nullable
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "";
   }
 
+  @Nullable
   @Override public String technicalName() {
     return nanoName();
   }
@@ -85,6 +87,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return new String[] { nanoName() };
   }
 
+  @Nullable
   protected abstract Tip pattern(N ¢);
 
   @SuppressWarnings("static-method") @Nullable public Category category() {

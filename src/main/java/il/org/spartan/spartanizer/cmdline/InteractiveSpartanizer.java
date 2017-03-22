@@ -39,7 +39,7 @@ public class InteractiveSpartanizer {
 
   public Toolbox toolbox = Toolbox.defaultInstance();
 
-  @NotNull public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
+  @NotNull public InteractiveSpartanizer disable(@NotNull final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
     return this;
   }
@@ -59,7 +59,7 @@ public class InteractiveSpartanizer {
     return new Trimmer(toolbox).once(from);
   }
 
-  @NotNull ASTVisitor collect(final List<Tip> $) {
+  @NotNull ASTVisitor collect(@NotNull final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Tipper<N> t = toolbox.firstTipper(n);

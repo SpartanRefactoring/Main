@@ -182,7 +182,7 @@ public class Table extends Row<Table> implements Closeable {
     return classToNormalizedFileName(¢.getSimpleName());
   }
 
-  static String classToNormalizedFileName(final String className) {
+  static String classToNormalizedFileName(@NotNull final String className) {
     return separate.these(lisp.rest(as.iterable(namer.components(className)))).by('-').toLowerCase();
   }
 }

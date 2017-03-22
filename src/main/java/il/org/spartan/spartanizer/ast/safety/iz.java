@@ -422,7 +422,7 @@ public interface iz {
     return ¢ instanceof DoStatement;
   }
 
-  static boolean doubleType(final Expression ¢) {
+  static boolean doubleType(@NotNull final Expression ¢) {
     return type.of(¢) == DOUBLE;
   }
 
@@ -825,7 +825,7 @@ public interface iz {
     return literal(¢, 1);
   }
 
-  static boolean longType(final Expression ¢) {
+  static boolean longType(@NotNull final Expression ¢) {
     return type.of(¢) == LONG;
   }
 
@@ -915,7 +915,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, NULL_LITERAL);
   }
 
-  static boolean number(final Expression ¢) {
+  static boolean number(@NotNull final Expression ¢) {
     return iz.numberLiteral(¢) && (type.isInt(¢) || type.isDouble(¢) || type.isLong(¢));
   }
 
@@ -985,7 +985,7 @@ public interface iz {
     return (¢.getModifiers() & Modifier.PROTECTED) != 0;
   }
 
-  static boolean pseudoNumber(final Expression ¢) {
+  static boolean pseudoNumber(@NotNull final Expression ¢) {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
@@ -1247,7 +1247,7 @@ public interface iz {
     return iz.vacuous(then(¢));
   }
 
-  static boolean validForEvaluation(final InfixExpression ¢) {
+  static boolean validForEvaluation(@NotNull final InfixExpression ¢) {
     return extract.allOperands(¢).stream().allMatch(iz::pseudoNumber);
   }
 

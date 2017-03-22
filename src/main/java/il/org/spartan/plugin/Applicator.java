@@ -147,14 +147,17 @@ public abstract class Applicator {
   /** Main operation of this applicator. */
   public abstract void go();
 
+  @NotNull
   public Applicator defaultListenerNoisy() {
     return this;
   }
 
+  @NotNull
   public Applicator defaultSelection(@SuppressWarnings("unused") final AbstractSelection<?> of) {
     return this;
   }
 
+  @NotNull
   @SuppressWarnings("unused") public Applicator defaultRunAction(final CommandLine$Applicator __) {
     return this;
   }

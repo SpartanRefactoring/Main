@@ -37,7 +37,7 @@ public final class Logger {
 
   public static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
 
-  private static void logMethodInfo(final MethodDeclaration ¢) {
+  private static void logMethodInfo(@NotNull final MethodDeclaration ¢) {
     methodsStatistics.putIfAbsent(hashMethod(¢), new MethodRecord(¢));
   }
 

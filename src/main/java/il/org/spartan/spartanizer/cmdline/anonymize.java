@@ -24,15 +24,15 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch */
 public enum anonymize {
   ;
-  public static String testcase(final String name, final String raw) {
+  public static String testcase(final String name, @NotNull final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
-  @NotNull public static String unwarpedTestcase(final String raw) {
+  @NotNull public static String unwarpedTestcase(@NotNull final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
-  public static String code(final String raw) {
+  public static String code(@NotNull final String raw) {
     return format.code(shortenIdentifiers(raw));
   }
 
@@ -73,7 +73,7 @@ public enum anonymize {
     return $;
   }
 
-  public static String shortenIdentifiers(final String javaFragment) {
+  public static String shortenIdentifiers(@NotNull final String javaFragment) {
     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
     final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
@@ -159,7 +159,7 @@ public enum anonymize {
     }
   }
 
-  @NotNull public static String bloaterBody(final String input) {
+  @NotNull public static String bloaterBody(@NotNull final String input) {
     for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(input);
       if (theSpartanizer.same(to, from))
