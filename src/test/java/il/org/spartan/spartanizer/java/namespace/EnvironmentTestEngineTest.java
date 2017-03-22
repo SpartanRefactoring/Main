@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore("This class should be deprecated")
 @SuppressWarnings({ "unused", "javadoc" })
 public class EnvironmentTestEngineTest {
   private LinkedHashSet<Entry<String, Binding>> s;
