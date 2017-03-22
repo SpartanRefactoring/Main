@@ -23,7 +23,7 @@ public final class FragmentInitializerReturnExpression extends $FragementInitial
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (forbidden(fragment(), initializer()) || usedInSubsequentInitializers())
+    if (usedInSubsequentInitializers())
       return null;
     @Nullable final ReturnStatement s = az.returnStatement(nextStatement());
     if (s == null)
