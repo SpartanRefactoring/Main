@@ -33,18 +33,18 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (fragment() == null || extract.core(fragment().getInitializer()) instanceof LambdaExpression || initializer() == null
-        || haz.annotation(fragment())
+    if (object() == null || extract.core(object().getInitializer()) instanceof LambdaExpression || initializer() == null
+        || haz.annotation(object())
         || iz.enhancedFor(nextStatement()) && iz.simpleName(az.enhancedFor(nextStatement()).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement()).getExpression()) + "").equals(name() + "") && !iz.simpleName(initializer())
             && !iz.literal(initializer())
-        || wizard.frobiddenOpOnPrimitive(fragment(), nextStatement()) || Inliner.isArrayInitWithUnmatchingTypes(fragment()))
+        || wizard.frobiddenOpOnPrimitive(object(), nextStatement()) || Inliner.isArrayInitWithUnmatchingTypes(object()))
       return null;
-    @Nullable final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(fragment().getParent());
+    @Nullable final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(object().getParent());
     boolean searching = true;
     for (@NotNull final VariableDeclarationFragment ff : fragments(currentStatement))
       if (searching)
-        searching = ff != fragment();
+        searching = ff != object();
       else if (!collect.usesOf(name()).in(ff.getInitializer()).isEmpty())
         return null;
     @Nullable final Block parent = az.block(currentStatement.getParent());
@@ -65,7 +65,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
     final Expression v = Inliner.protect(initializer(), currentStatement);
     @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement());
-    if (i.addedSize(newStatement) - Inliner2.removalSaving(fragment()) > 0)
+    if (i.addedSize(newStatement) - Inliner2.removalSaving(object()) > 0)
       return null;
     $.replace(nextStatement(), newStatement, g);
     i.inlineInto(newStatement);

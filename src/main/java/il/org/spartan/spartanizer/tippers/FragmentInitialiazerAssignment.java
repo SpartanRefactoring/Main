@@ -39,7 +39,7 @@ public final class FragmentInitialiazerAssignment extends $FragementInitializerS
     if (a == null || !wizard.same(name(), to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
-    if (doesUseForbiddenSiblings(fragment(), newInitializer))
+    if (doesUseForbiddenSiblings(object(), newInitializer))
       return null;
     @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement(), initializer()) > 0)
