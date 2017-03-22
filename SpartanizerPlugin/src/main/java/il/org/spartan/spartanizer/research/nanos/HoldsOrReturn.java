@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** if(X) [return | return null];
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-22 */
-public final class NotHoldsOrReturn extends NanoPatternTipper<IfStatement> {
+public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = -5274202747883054963L;
   private static final NotNullOrReturn rival = new NotNullOrReturn();
   private static final List<UserDefinedTipper<IfStatement>> tippers = as.list(//
