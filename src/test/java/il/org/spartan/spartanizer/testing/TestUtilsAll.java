@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** TODO: Yossi Gil please add a description
+/** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 @SuppressWarnings("javadoc")

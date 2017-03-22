@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ori Roth
  * @since 2013/07/01 */
-// TODO: OriRoth can we eliminate some of these many fields? --yg
+// TODO OriRoth can we eliminate some of these many fields? --yg
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {

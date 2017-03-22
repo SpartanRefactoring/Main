@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -47,7 +48,7 @@ public class ExamplesTests {
     try {
       test.run();
     } catch (final AssertionError x) {
-      throw new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
+      throw new AssertionError("Example failure at " + tipper.nanoName() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }
 
@@ -60,11 +61,16 @@ public class ExamplesTests {
     return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
   }
 
-  /** Get all tippers from {@link Toolbox}. Removes duplicated tippers (same
+  /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same
    * class, different templates).
+   * @return 
    * @return all tippers to be tested */
+  @SuppressWarnings("rawtypes")
   private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
-        .stream().collect(Collectors.toMap(λ -> λ.getClass(), λ -> λ, (t1, t2) -> t1)).values();
+        .stream()
+        .collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass,
+            λ -> λ, (t1, t2) -> t1))
+        .values();
   }
 }

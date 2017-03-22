@@ -1,4 +1,4 @@
-/* TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
+/* TODO YuvalSimon <yuvaltechnion@gmail.com> please add a description
  *
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  *
@@ -114,7 +114,7 @@ public class SwitchBranch {
     return $;
   }
 
-  // TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
+  // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
   @SuppressWarnings("null") public static List<SwitchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = statements(n);
@@ -129,7 +129,7 @@ public class SwitchBranch {
         s = new ArrayList<>();
         $.add(new SwitchBranch(c, s));
         nextBranch = false;
-        // TODO: Yuval = make this into a decent for loop --yg
+        // TODO Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)
@@ -182,7 +182,7 @@ public class SwitchBranch {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
         $ = a.newEmptyStatement();
     } else {
-      // TODO: Yuval - please use class subject
+      // TODO Yuval - please use class subject
       final Block b = a.newBlock();
       statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
       $ = b;

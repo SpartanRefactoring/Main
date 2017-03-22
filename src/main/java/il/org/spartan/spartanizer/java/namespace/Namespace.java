@@ -26,15 +26,19 @@ public final class Namespace implements Environment {
   public final String name;
   public final Environment nest;
 
+  /** A constructor which get only the environment without any name */
   Namespace(final Environment environment) {
     this(environment, "");
   }
 
+  /** A constructor which get only the environment and a name of the
+   * NameSpace */
   public Namespace(final Environment nest, final String name) {
     this.nest = nest;
     this.name = name;
   }
 
+  /** add all the given itrable of BodyDeclarations to our NameSpace */
   Namespace addAll(final Iterable<BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;
@@ -256,6 +260,8 @@ public final class Namespace implements Environment {
     return put("annotation member" + step.name(¢), ¢.getType());
   }
 
+  /** Add to the NameSpace a new name according to its type, we habdle each kind
+   * of node with a different function */
   @SuppressWarnings({}) protected Namespace put(final BodyDeclaration ¢) {
     return iz.methodDeclaration(¢) ? put(az.methodDeclaration(¢))
         : iz.fieldDeclaration(¢) ? put(az.fieldDeclaration(¢))

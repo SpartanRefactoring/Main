@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Oct 28, 2016 */
 public enum enumerate {

@@ -34,12 +34,4 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   @Override public String description() {
     return "Evaluate expression, if null- replace with default value";
   }
-
-  @Override public String technicalName() {
-    return "IfX₁IsNullX₁ElseX₂";
-  }
-
-  @Override public NanoPatternTipper.Category category() {
-    return Category.Default;
-  }
 }
