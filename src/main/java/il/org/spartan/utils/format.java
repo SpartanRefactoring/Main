@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -14,13 +15,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since Nov 13, 2016 */
 public enum format {
   ;
-  public static String code(final String code) {
+  public static String code(@NotNull final String code) {
     final TextEdit textEdit = ToolFactory.createCodeFormatter(null).format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     final IDocument $ = new Document(code);
     try {
       if (textEdit != null)
         textEdit.apply($);
-    } catch (final BadLocationException | MalformedTreeException ¢) {
+    } catch (@NotNull final BadLocationException | MalformedTreeException ¢) {
       ¢.printStackTrace();
     }
     return $.get();

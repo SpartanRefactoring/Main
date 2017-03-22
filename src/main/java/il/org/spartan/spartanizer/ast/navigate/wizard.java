@@ -31,6 +31,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -185,7 +186,7 @@ public interface wizard {
       }
     }
   };
-  @SuppressWarnings("unchecked") Map<Class<? extends ASTNode>, Integer> //
+  @SuppressWarnings("unchecked") @Nullable Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     static final long serialVersionUID = 1L;
     {
@@ -193,11 +194,11 @@ public interface wizard {
         try {
           // monitor.debug("Found node type number of " + nodeClassForType);
           put(ASTNode.nodeClassForType(nodeType), Integer.valueOf(nodeType));
-        } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
+        } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException ¢) {
           // We must suffer this exception; no other way to find the first
           // unused node type
           break;
-        } catch (final Exception ¢) {
+        } catch (@NotNull final Exception ¢) {
           monitor.logEvaluationError(this, ¢);
           break;
         }
@@ -211,11 +212,12 @@ public interface wizard {
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
   Bool resolveBinding = Bool.valueOf(false);
 
-  static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
+  static void addImport(final CompilationUnit u, @NotNull final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
 
-  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+  static <N extends MethodDeclaration> void addJavaDoc(@NotNull final N n, @NotNull final ASTRewrite r, final TextEditGroup g,
+      final String addedJavadoc) {
     final Javadoc j = n.getJavadoc();
     if (j == null)
       r.replace(n,
@@ -241,7 +243,7 @@ public interface wizard {
       wizard.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(fileName, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
+    } catch (@NotNull IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
       x2.printStackTrace();
     }
   }
@@ -250,11 +252,12 @@ public interface wizard {
    * @param m JD
    * @param r rewriter
    * @param g edit group, usually null */
-  static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
+  static void addMethodToType(@NotNull final AbstractTypeDeclaration d, final MethodDeclaration m, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
 
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
+  @NotNull static <N extends ASTNode> List<? extends ASTNode> addRest(@NotNull final List<ASTNode> $, final N n, @Nullable final List<N> ns) {
     if (ns == null)
       return $;
     boolean add = false;
@@ -270,15 +273,15 @@ public interface wizard {
    * @param s JD
    * @param r rewriter
    * @param g edit group, usually null */
-  static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
+  static void addStatement(final MethodDeclaration d, final ReturnStatement s, @NotNull final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 
-  static Expression applyDeMorgan(final InfixExpression $) {
+  static Expression applyDeMorgan(@NotNull final InfixExpression $) {
     return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(wizard.negate(operator($)));
   }
 
-  static InfixExpression.Operator assign2infix(final Assignment ¢) {
+  static InfixExpression.Operator assign2infix(@NotNull final Assignment ¢) {
     return assign2infix.get(¢.getOperator());
   }
 
@@ -291,7 +294,7 @@ public interface wizard {
    * @param javaSnippet string to convert
    * @return AST, if string is not a valid AST according to any form, then
    *         null */
-  static ASTNode ast(final String javaSnippet) {
+  static ASTNode ast(@NotNull final String javaSnippet) {
     switch (GuessedContext.find(javaSnippet)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
         return into.cu(javaSnippet);
@@ -333,11 +336,11 @@ public interface wizard {
    * @param as The assignments to compare
    * @return whetherall assignments has the same left hand side and operator as
    *         the first one or false otherwise */
-  static boolean compatible(final Assignment base, final Assignment... as) {
+  static boolean compatible(@NotNull final Assignment base, final Assignment... as) {
     return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> incompatible(base, λ));
   }
 
-  static boolean compatible(final Assignment a1, final Assignment a2) {
+  static boolean compatible(@NotNull final Assignment a1, @NotNull final Assignment a2) {
     return !incompatible(a1, a2);
   }
 
@@ -352,15 +355,15 @@ public interface wizard {
     return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
   }
 
-  static CompilationUnit compilationUnitWithBinding(final File ¢) {
+  @NotNull static CompilationUnit compilationUnitWithBinding(@NotNull final File ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
-  static CompilationUnit compilationUnitWithBinding(final String ¢) {
+  @NotNull static CompilationUnit compilationUnitWithBinding(@NotNull final String ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
 
-  static <T> String completionIndex(final List<T> ts, final T t) {
+  @NotNull static <T> String completionIndex(@NotNull final List<T> ts, final T t) {
     final String $ = ts.size() + "";
     String i = ts.indexOf(t) + 1 + "";
     while (i.length() < $.length())
@@ -382,7 +385,7 @@ public interface wizard {
    * @return whetherone of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
-  static boolean containIncOrDecExp(final ASTNode... ns) {
+  static boolean containIncOrDecExp(@Nullable final ASTNode... ns) {
     return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
   }
 
@@ -408,7 +411,7 @@ public interface wizard {
    *         {@link Operator#CONDITIONAL_OR} if this operator is
    *         {@link Operator#CONDITIONAL_AND}
    * @see copy#deMorgan(Operator) */
-  static InfixExpression.Operator deMorgan(final InfixExpression ¢) {
+  static InfixExpression.Operator deMorgan(@NotNull final InfixExpression ¢) {
     return wizard.deMorgan(¢.getOperator());
   }
 
@@ -420,7 +423,7 @@ public interface wizard {
    *         {@link Operator#CONDITIONAL_OR} if the parameter is
    *         {@link Operator#CONDITIONAL_AND}
    * @see wizard#deMorgan(InfixExpression) */
-  static InfixExpression.Operator deMorgan(final InfixExpression.Operator ¢) {
+  static InfixExpression.Operator deMorgan(@NotNull final InfixExpression.Operator ¢) {
     assert iz.deMorgan(¢);
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
@@ -432,7 +435,7 @@ public interface wizard {
    * @param f
    * @param r
    * @param g */
-  static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+  static void eliminate(@NotNull final VariableDeclarationFragment f, @NotNull final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     if (live.isEmpty()) {
@@ -451,7 +454,7 @@ public interface wizard {
    * @param ¢ JD
    * @return true <b>iff</b> the Statement can be verified to end with a
    *         sequencer. */
-  static boolean endsWithSequencer(final Statement ¢) {
+  static boolean endsWithSequencer(@Nullable final Statement ¢) {
     if (¢ == null)
       return false;
     final Statement $ = hop.lastStatement(¢);
@@ -481,7 +484,7 @@ public interface wizard {
    * @param xs JD
    * @return first expression from the given list (es) whose boolean value
    *         matches to the given boolean (b). */
-  static Expression find(final boolean b, final List<Expression> xs) {
+  static Expression find(final boolean b, @NotNull final List<Expression> xs) {
     return xs.stream().filter(λ -> iz.booleanLiteral(λ) && b == az.booleanLiteral(λ).booleanValue()).findFirst().orElse(null);
   }
 
@@ -491,7 +494,8 @@ public interface wizard {
    * @param es1
    * @param es2
    * @return */
-  @SuppressWarnings("boxing") static int findSingleDifference(final List<? extends ASTNode> es1, final List<? extends ASTNode> es2) {
+  @SuppressWarnings("boxing") static int findSingleDifference(@NotNull final List<? extends ASTNode> es1,
+      @NotNull final List<? extends ASTNode> es2) {
     int $ = -1;
     for (final Integer ¢ : range.from(0).to(es1.size()))
       if (!wizard.same(es1.get(¢), es2.get(¢))) {
@@ -502,7 +506,7 @@ public interface wizard {
     return $;
   }
 
-  static boolean forbiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+  static boolean forbiddenOpOnPrimitive(@NotNull final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
     final ExpressionStatement x = (ExpressionStatement) nextStatement;
@@ -516,7 +520,7 @@ public interface wizard {
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  static boolean frobiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
+  static boolean frobiddenOpOnPrimitive(@NotNull final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
     final ExpressionStatement x = (ExpressionStatement) nextStatement;
@@ -530,7 +534,7 @@ public interface wizard {
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
+  @NotNull @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(@NotNull final ASTNode n) {
     final Collection<MethodDeclaration> $ = new ArrayList<>();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
@@ -543,7 +547,7 @@ public interface wizard {
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
 
-  static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
+  static Expression goInfix(@NotNull final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
     // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
@@ -557,11 +561,11 @@ public interface wizard {
     return subject.append(subject.pair(first($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
 
-  static boolean incompatible(final Assignment a1, final Assignment a2) {
+  static boolean incompatible(@NotNull final Assignment a1, @NotNull final Assignment a2) {
     return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
   }
 
-  static Operator infix2assign(final InfixExpression.Operator ¢) {
+  static Operator infix2assign(@NotNull final InfixExpression.Operator ¢) {
     assert ¢ != null;
     final Operator $ = infix2assign.get(¢);
     assert $ != null : "No assignment equivalent to " + ¢;
@@ -601,7 +605,7 @@ public interface wizard {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
 
-  static boolean isObject(final Type ¢) {
+  static boolean isObject(@Nullable final Type ¢) {
     if (¢ == null)
       return false;
     switch (¢ + "") {
@@ -629,7 +633,7 @@ public interface wizard {
    * @return
    *         <p>
    *         [[SuppressWarningsSpartan]] */
-  static boolean isString(final String typeName) {
+  static boolean isString(@Nullable final String typeName) {
     if (typeName == null)
       return false;
     switch (typeName) {
@@ -649,35 +653,36 @@ public interface wizard {
     return valueTypes.contains(typeName);
   }
 
-  static boolean isValueType(final Type ¢) {
+  static boolean isValueType(@NotNull final Type ¢) {
     return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
   }
 
-  static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
+  @NotNull static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f,
+      @NotNull final Collection<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = new ArrayList<>();
     fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }
 
-  static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
+  static Set<Modifier> matches(final BodyDeclaration d, @NotNull final Set<Predicate<Modifier>> ms) {
     return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
   }
 
-  static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
+  static Set<Modifier> matches(@NotNull final List<IExtendedModifier> ms, @NotNull final Set<Predicate<Modifier>> ps) {
     return ms.stream().filter(λ -> test(λ, ps)).map(Modifier.class::cast).collect(toSet());
   }
 
-  static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
+  static Set<Modifier> matchess(final BodyDeclaration ¢, @NotNull final Set<Predicate<Modifier>> ms) {
     return matches(extendedModifiers(¢), ms);
   }
 
-  static MethodDeclaration methodWithBinding(final String m) {
+  static MethodDeclaration methodWithBinding(@NotNull final String m) {
     return findFirst.instanceOf(MethodDeclaration.class).in(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
   }
 
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
-  static InfixExpression.Operator negate(final InfixExpression.Operator ¢) {
+  static InfixExpression.Operator negate(@NotNull final InfixExpression.Operator ¢) {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR //
         : ¢.equals(CONDITIONAL_OR) ? CONDITIONAL_AND //
             : ¢.equals(EQUALS) ? NOT_EQUALS
@@ -688,11 +693,11 @@ public interface wizard {
                                 : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
-  static String nodeName(final ASTNode ¢) {
+  @NotNull static String nodeName(@Nullable final ASTNode ¢) {
     return ¢ == null ? "???" : nodeName(¢.getClass());
   }
 
-  static String nodeName(final Class<? extends ASTNode> ¢) {
+  @NotNull static String nodeName(@NotNull final Class<? extends ASTNode> ¢) {
     return system.className(¢);
   }
 
@@ -709,7 +714,7 @@ public interface wizard {
     return nonAssociative(az.infixExpression(¢));
   }
 
-  static boolean nonAssociative(final InfixExpression ¢) {
+  static boolean nonAssociative(@Nullable final InfixExpression ¢) {
     return ¢ != null && (in(¢.getOperator(), MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
@@ -718,7 +723,7 @@ public interface wizard {
    * @param x JD
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
    *         parenthesis. */
-  static Expression parenthesize(final Expression ¢) {
+  static Expression parenthesize(@NotNull final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
 
@@ -732,14 +737,14 @@ public interface wizard {
     return $;
   }
 
-  static <T> T previous(final T t, final List<T> ts) {
+  @Nullable static <T> T previous(final T t, @Nullable final List<T> ts) {
     if (ts == null)
       return null;
     final int $ = ts.indexOf(t);
     return $ < 1 ? null : ts.get($ - 1);
   }
 
-  static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
+  static BodyDeclaration prune(final BodyDeclaration $, @NotNull final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
         ¢.remove();
@@ -752,7 +757,7 @@ public interface wizard {
    * @return a duplicate of the parameter, downcasted to the returned type.
    * @see ASTNode#copySubtree
    * @see ASTRewrite */
-  @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
+  @NotNull @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
 
@@ -760,13 +765,13 @@ public interface wizard {
    * in "if - else if - ... - else" statement
    * @param ¢ JD
    * @return last nested else statement */
-  static Statement recursiveElze(final IfStatement ¢) {
+  static Statement recursiveElze(@NotNull final IfStatement ¢) {
     for (Statement $ = ¢.getElseStatement();; $ = ((IfStatement) $).getElseStatement())
       if (!($ instanceof IfStatement))
         return $;
   }
 
-  static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
+  @NotNull static Set<Predicate<Modifier>> redundancies(@NotNull final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
       return $;
@@ -824,7 +829,7 @@ public interface wizard {
     return $;
   }
 
-  static Set<Modifier> redundants(final BodyDeclaration ¢) {
+  static Set<Modifier> redundants(@NotNull final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
   }
 
@@ -833,7 +838,7 @@ public interface wizard {
    * <p>
    * @param ¢ JD
    * @param xs JD */
-  static void removeAll(final boolean ¢, final List<Expression> xs) {
+  static void removeAll(final boolean ¢, @NotNull final List<Expression> xs) {
     // noinspection ForLoopReplaceableByWhile
     for (;;) {
       final Expression x = find(¢, xs);
@@ -846,7 +851,7 @@ public interface wizard {
   /** replaces an ASTNode with another
    * @param n
    * @param with */
-  static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
+  static <N extends ASTNode> void replace(final N n, final N with, @NotNull final ASTRewrite r) {
     r.replace(n, with, null);
   }
 
@@ -858,7 +863,7 @@ public interface wizard {
    * @param n1 JD
    * @param n2 JD
    * @return {@code true} if the parameters are the same. */
-  static boolean same(final ASTNode n1, final ASTNode n2) {
+  static boolean same(@Nullable final ASTNode n1, @Nullable final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
 
@@ -873,7 +878,7 @@ public interface wizard {
    * @return {@code true} if the parameters are the same.
    * @author matteo
    * @since 15/3/2017 */
-  static boolean same2(final ASTNode n1, final ASTNode n2) {
+  static boolean same2(@Nullable final ASTNode n1, @Nullable final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
         && tide.clean(trivia.cleanForm(n1) + "").equals(tide.clean(trivia.cleanForm(n2) + ""));
   }
@@ -891,11 +896,11 @@ public interface wizard {
    * @param ns1 first list to compare
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
-  @SuppressWarnings("boxing") static <N extends ASTNode> boolean same(final List<N> ns1, final List<N> ns2) {
+  @SuppressWarnings("boxing") static <N extends ASTNode> boolean same(@NotNull final List<N> ns1, @NotNull final List<N> ns2) {
     return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(λ -> same(ns1.get(λ), ns2.get(λ)));
   }
 
-  static void setBinding(final ASTParser $) {
+  static void setBinding(@NotNull final ASTParser $) {
     $.setResolveBindings(resolveBinding.inner);
     if (resolveBinding.inner)
       $.setEnvironment(null, null, null, true);
@@ -905,11 +910,11 @@ public interface wizard {
     resolveBinding.inner = true;
   }
 
-  static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
+  static boolean test(final IExtendedModifier m, @NotNull final Set<Predicate<Modifier>> ms) {
     return m instanceof Modifier && test((Modifier) m, ms);
   }
 
-  static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
+  static boolean test(final Modifier m, @NotNull final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(λ -> λ.test(m));
   }
 
@@ -921,11 +926,11 @@ public interface wizard {
     return !($ instanceof CompilationUnit) || ((CompilationUnit) $).getProblems().length == 0;
   }
 
-  static String problems(final ASTNode ¢) {
+  @NotNull static String problems(final ASTNode ¢) {
     return !(¢ instanceof CompilationUnit) ? "???" : problems((CompilationUnit) ¢);
   }
 
-  static String problems(final CompilationUnit u) {
+  static String problems(@NotNull final CompilationUnit u) {
     final IProblem[] v = u.getProblems();
     if (v.length == 0)
       return "???";

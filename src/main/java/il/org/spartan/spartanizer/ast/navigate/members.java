@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -12,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-22 */
 public interface members {
-  static List<BodyDeclaration> of(final EnumDeclaration ¢) {
+  @NotNull static List<BodyDeclaration> of(final EnumDeclaration ¢) {
     final List<BodyDeclaration> $ = new ArrayList<>(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
@@ -26,7 +27,7 @@ public interface members {
     return step.bodyDeclarations(¢);
   }
 
-  static List<? extends BodyDeclaration> of(final AnonymousClassDeclaration ¢) {
+  @NotNull static List<? extends BodyDeclaration> of(@NotNull final AnonymousClassDeclaration ¢) {
     assert ¢ != null;
     final List<BodyDeclaration> $ = step.bodyDeclarations(¢);
     assert $ != null;

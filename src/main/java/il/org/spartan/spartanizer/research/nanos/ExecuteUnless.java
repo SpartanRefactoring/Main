@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -56,7 +57,7 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override @Nullable public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

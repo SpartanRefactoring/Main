@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -27,7 +28,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return tippers.canTip(¢);
   }
 
-  @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
     return tippers2.cantTip(containingBlock(¢)) ? tippers.firstTip(¢) : tippers2.firstTip(containingBlock(¢));
   }
 

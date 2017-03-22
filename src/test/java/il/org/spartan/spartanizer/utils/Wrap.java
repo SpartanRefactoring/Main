@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -36,7 +37,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
-  public static Wrap find(final String codeFragment) {
+  @NotNull public static Wrap find(@NotNull final String codeFragment) {
     for (final Wrap $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
@@ -44,7 +45,7 @@ public enum Wrap {
     throw new RuntimeException();
   }
 
-  private static String options(final String codeFragment) {
+  @NotNull private static String options(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
     for (final Wrap w : Wrap.WRAPS) {
@@ -70,7 +71,7 @@ public enum Wrap {
     this.after = after;
   }
 
-  private boolean contains(final String wrap, final String inner) {
+  private boolean contains(@NotNull final String wrap, @NotNull final String inner) {
     final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
     assert essence2 != null;
     return essence2.contains($);
@@ -81,7 +82,7 @@ public enum Wrap {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  public CompilationUnit intoCompilationUnit(final String codeFragment) {
+  @NotNull public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
 
@@ -89,21 +90,21 @@ public enum Wrap {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  public Document intoDocument(final String codeFragment) {
+  @NotNull public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
 
   /** Remove a wrap from around a phrase
    * @param codeFragment a wrapped program phrase
    * @return unwrapped phrase */
-  public String off(final String codeFragment) {
+  public String off(@NotNull final String codeFragment) {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
 
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
-  public String on(final String codeFragment) {
+  @NotNull public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
 }

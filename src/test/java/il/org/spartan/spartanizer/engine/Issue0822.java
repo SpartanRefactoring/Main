@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -32,7 +33,7 @@ public class Issue0822 {
     StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
-    } catch (final Exception ¢) {
+    } catch (@NotNull final Exception ¢) {
       fail(¢.getMessage());
     }
     assert sb != null;

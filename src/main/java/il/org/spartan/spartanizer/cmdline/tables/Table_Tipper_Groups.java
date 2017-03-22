@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -33,13 +35,13 @@ public class Table_Tipper_Groups {
     system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
 
-  private static void inc(final Map<TipperGroup, Integer> categories, final TipperCategory λ) {
+  private static void inc(@NotNull final Map<TipperGroup, Integer> categories, @NotNull final TipperCategory λ) {
     final TipperGroup key = λ.tipperGroup();
     categories.putIfAbsent(key, box.it(0));
     categories.put(key, box.it(categories.get(key).intValue() + 1));
   }
 
-  private static <T> Stream<T> flow(final Collection<T> ¢) {
+  private static <T> Stream<T> flow(@NotNull final Collection<T> ¢) {
     return ¢.stream().filter(Objects::nonNull);
   }
 }

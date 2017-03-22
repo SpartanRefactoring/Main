@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -40,7 +41,8 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
           && initializer(f) != null;
     }
 
-    @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    @Override @NotNull protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement,
+        final TextEditGroup g) {
       final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
       final Expression initializer = initializer(f);
       final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
@@ -69,12 +71,12 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
-    @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
+    @Override @NotNull public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
   }
 
-  @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
+  @Override @Nullable protected Tip pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }
 

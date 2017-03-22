@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,7 +22,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -6223876197494261787L;
 
-  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (iz.ifStatement(¢))
@@ -64,7 +65,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return null;
   }
 
-  private static boolean isInfiniteLoop(final WhileStatement ¢) {
+  private static boolean isInfiniteLoop(@NotNull final WhileStatement ¢) {
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -72,15 +73,15 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return "Convert the break inside 'while()' loop to 'return'";
   }
 
-  @Override public String description(final WhileStatement ¢) {
+  @Override @NotNull public String description(@NotNull final WhileStatement ¢) {
     return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
 
-  @Override public boolean prerequisite(final WhileStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final WhileStatement s, final ExclusionManager exclude) {
+  @Override public Tip tip(@Nullable final WhileStatement s, @Nullable final ExclusionManager exclude) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (s == null || !isInfiniteLoop(s) || nextReturn == null)
       return null;
@@ -91,7 +92,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     if (exclude != null)
       exclude.exclude(s);
     return $ == null ? null : new Tip(description(s), s.getExpression(), getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }

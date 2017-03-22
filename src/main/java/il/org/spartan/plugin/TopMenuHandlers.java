@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.utils.*;
@@ -38,7 +39,7 @@ public class TopMenuHandlers extends AbstractHandler {
     }
   };
 
-  @Override public Object execute(final ExecutionEvent ¢) {
+  @Override @Nullable public Object execute(@NotNull final ExecutionEvent ¢) {
     final String id = ¢.getCommand().getId();
     if (!handlers.containsKey(id)) {
       monitor.now().info("Handler " + id + " is not registered in " + getClass().getName());

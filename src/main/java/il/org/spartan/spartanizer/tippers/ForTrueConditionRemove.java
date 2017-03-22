@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,16 +17,16 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
   private static final long serialVersionUID = 7460439456362668944L;
   public static final String DESCRIPTION = "Simplify 'for(?;true;?)' to 'for(?;;?)'";
 
-  private static ForStatement buildForWithoutCondition(final ForStatement $) {
+  @NotNull private static ForStatement buildForWithoutCondition(@NotNull final ForStatement $) {
     $.setExpression(null);
     return $;
   }
 
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return DESCRIPTION;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
     return DESCRIPTION;
   }
 
@@ -33,7 +34,7 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     return iz.literal.true¢(step.expression(¢));
   }
 
-  @Override public ASTNode replacement(final ForStatement ¢) {
+  @Override @NotNull public ASTNode replacement(final ForStatement ¢) {
     return buildForWithoutCondition(copy.of(¢));
   }
 }

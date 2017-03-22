@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -44,13 +45,13 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
 
-    public static Object[] ____(final MethodDeclaration changes) {
+    @NotNull public static Object[] ____(@NotNull final MethodDeclaration changes) {
       return new Object[] { changes.getName() + "", changes };
     }
 
@@ -73,7 +74,7 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class ChangesTo {
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       for (final List<MethodDeclaration> sentence : allSentences())
         for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
@@ -82,7 +83,7 @@ public enum SentenceTestTemplate {
       return $;
     }
 
-    public static Object[] ____(final MethodDeclaration from, final MethodDeclaration to) {
+    @NotNull public static Object[] ____(@NotNull final MethodDeclaration from, @NotNull final MethodDeclaration to) {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
 
@@ -100,7 +101,7 @@ public enum SentenceTestTemplate {
       return (first + "").replace(disabling.ByComment.disabler, "");
     }
 
-    CharSequence firstName() {
+    @NotNull CharSequence firstName() {
       return first.getName() + "";
     }
 
@@ -108,7 +109,7 @@ public enum SentenceTestTemplate {
       return (second + "").replace(secondName(), firstName()).replace(disabling.ByComment.disabler, "");
     }
 
-    CharSequence secondName() {
+    @NotNull CharSequence secondName() {
       return second.getName() + "";
     }
   }
@@ -119,14 +120,14 @@ public enum SentenceTestTemplate {
    * @since 2017-01-18 */
   @RunWith(Parameterized.class)
   public static class Stays {
-    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
       final Collection<Object[]> $ = new ArrayList<>();
       allSentences()
           .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
     }
 
-    public static Object[] ____(final MethodDeclaration stays) {
+    @NotNull public static Object[] ____(@NotNull final MethodDeclaration stays) {
       return new Object[] { stays.getName() + "", stays, };
     }
 

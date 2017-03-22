@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -36,11 +37,11 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
   }
 
-  @Override public ASTNode replacement(final ExpressionStatement ¢) {
+  @Override @Nullable public ASTNode replacement(final ExpressionStatement ¢) {
     return replaceAssignment(¢);
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Expanding a ternary operator to a full if-else statement";
   }
 }

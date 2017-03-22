@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,12 +28,12 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementAndSta
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, @NotNull final SimpleName n,
+      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);

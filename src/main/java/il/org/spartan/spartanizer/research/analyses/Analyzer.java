@@ -4,6 +4,7 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 /** Analyzer base class
  * @author Ori Marcovitch
@@ -21,7 +22,7 @@ abstract class Analyzer<T> {
     return Integer.valueOf(¢);
   }
 
-  int getMax(final Map<Integer, T> m) {
+  int getMax(@NotNull final Map<Integer, T> m) {
     return m.keySet().stream().max((x, y) -> x.intValue() > y.intValue() ? 1 : -1).get().intValue();
   }
 
@@ -29,12 +30,12 @@ abstract class Analyzer<T> {
    * If parameter is double, leaves only 2 first digits.
    * @param ¢
    * @return */
-  static String tidy(final double ¢) {
+  @NotNull static String tidy(final double ¢) {
     final double $ = Double.parseDouble(new DecimalFormat("#0.00").format(¢));
     return $ != Math.floor($) ? $ + "" : asInt($);
   }
 
-  private static String asInt(final double $) {
+  @NotNull private static String asInt(final double $) {
     return (int) $ + "";
   }
 

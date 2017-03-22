@@ -8,6 +8,7 @@ package il.org.spartan.spartanizer.tipping;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,12 +17,12 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = -2896529202034446513L;
 
-  @Override public boolean prerequisite(final N current) {
+  @Override public boolean prerequisite(@NotNull final N current) {
     final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null, new ExclusionManager()) != null;
   }
 
-  @Override public Tip tip(final N n, final ExclusionManager exclude) {
+  @Override @NotNull public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
     final Statement $ = extract.nextStatement(n);
     assert $ != null;
     if (exclude != null)
@@ -33,5 +34,5 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
     };
   }
 
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
+  @Nullable protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
 }

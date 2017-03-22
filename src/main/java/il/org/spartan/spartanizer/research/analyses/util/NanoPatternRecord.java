@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -12,9 +13,9 @@ public class NanoPatternRecord {
   public int occurences;
   public int numNPStatements;
   public int numNPExpressions;
-  public final String className;
+  @NotNull public final String className;
 
-  public NanoPatternRecord(final String name, final Class<? extends ASTNode> cl) {
+  public NanoPatternRecord(final String name, @NotNull final Class<? extends ASTNode> cl) {
     this.name = name;
     className = cl.getSimpleName();
   }

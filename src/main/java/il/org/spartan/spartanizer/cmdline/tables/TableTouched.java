@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
@@ -50,11 +52,11 @@ public class TableTouched extends TableNanosCoverage {
     touchedWriter.nl();
   }
 
-  private static double fractionOfMethodsTouched(final Collection<MethodRecord> ¢) {
+  private static double fractionOfMethodsTouched(@NotNull final Collection<MethodRecord> ¢) {
     return safe.div(totalMethodsTouched(¢), ¢.size());
   }
 
-  private static double totalMethodsTouched(final Collection<MethodRecord> ¢) {
+  private static double totalMethodsTouched(@NotNull final Collection<MethodRecord> ¢) {
     return ¢.stream().filter(MethodRecord::touched).count();
   }
 }

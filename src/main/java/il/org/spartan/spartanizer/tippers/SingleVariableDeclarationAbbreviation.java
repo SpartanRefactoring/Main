@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,7 +31,8 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = -2709826205107840171L;
 
-  static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
+  static void fixJavadoc(@NotNull final MethodDeclaration d, @NotNull final SimpleName oldName, final String newName, @NotNull final ASTRewrite r,
+      final TextEditGroup g) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
@@ -45,7 +47,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
             }
   }
 
-  private static String getExtraDimensions(final SingleVariableDeclaration d) {
+  @NotNull private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (String ¢ = d + ""; ¢.endsWith("[]");) {
       $ += "s";
@@ -54,31 +56,31 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return $;
   }
 
-  private static boolean isShort(final SingleVariableDeclaration ¢) {
+  private static boolean isShort(@NotNull final SingleVariableDeclaration ¢) {
     final String $ = namer.shorten(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(¢.getName().getIdentifier());
   }
 
-  private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
+  private static boolean legal(@NotNull final SingleVariableDeclaration $, @NotNull final MethodDeclaration d) {
     return namer.shorten($.getType()) != null
         && new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
         && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
         && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
   }
 
-  private static String pluralVariadic(final SingleVariableDeclaration ¢) {
+  @NotNull private static String pluralVariadic(@NotNull final SingleVariableDeclaration ¢) {
     return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
-  private static boolean suitable(final SingleVariableDeclaration ¢) {
+  private static boolean suitable(@NotNull final SingleVariableDeclaration ¢) {
     return JavaTypeNameParser.make(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
 
-  @Override public String description(final SingleVariableDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final SingleVariableDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager exclude) {
     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
@@ -87,7 +89,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, make.from(d).identifier(newName), $, r, g);
         fixJavadoc($, oldName, newName, r, g);
       }

@@ -10,6 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,17 +31,17 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
-  @Override public Example[] examples() {
+  @Override @NotNull public Example[] examples() {
     return new Example[] { //
         convert("s=s.f();s=s.f();").to("s=s.f().f()"), //
     };
   }
 
-  @Override public String description(final Assignment ¢) {
+  @Override @NotNull public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into subsequent assignment";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     final Assignment a2 = extract.assignment(nextStatement);
@@ -55,8 +56,8 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
         : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;
   }
 
-  private static ASTRewrite go(final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,
-      final Expression from2) {
+  @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
+      final Expression from1, final Expression from2) {
     $.remove(a1, g);
     final Expression newFrom = copy.of(from2);
     new Inliner(to, $, g).byValue(from1).inlineInto(newFrom);

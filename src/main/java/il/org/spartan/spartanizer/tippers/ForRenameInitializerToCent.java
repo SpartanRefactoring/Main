@@ -16,6 +16,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -32,11 +33,11 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3634676628162924936L;
 
-  @Override public String description(final VariableDeclarationExpression ¢) {
+  @Override @NotNull public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
-  @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
+  @Override public Tip tip(@NotNull final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
     final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;

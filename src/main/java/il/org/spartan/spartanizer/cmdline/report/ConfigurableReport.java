@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -59,7 +60,7 @@ public interface ConfigurableReport {
       return outputList;
     }
 
-    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+    @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
@@ -86,7 +87,7 @@ public interface ConfigurableReport {
     private ASTNode output;
     private boolean robustMode;
 
-    public Action getAction() {
+    @NotNull public Action getAction() {
       return new Action();
     }
 
@@ -130,10 +131,10 @@ public interface ConfigurableReport {
       this.outputFolder = outputFolder;
     }
 
-    public void setReport(final String reportFilename, final String header) {
+    public void setReport(@NotNull final String reportFilename, final String header) {
       try {
         report = new CSVStatistics(reportFilename, header);
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢, header);
       }
     }
@@ -195,12 +196,12 @@ public interface ConfigurableReport {
       public void initialize() {
         try {
           report = new CSVStatistics(getFileName(), getHeader());
-        } catch (final IOException ¢) {
+        } catch (@NotNull final IOException ¢) {
           monitor.infoIOException(¢);
         }
       }
 
-      private void name(final ASTNode i) {
+      private void name(@NotNull final ASTNode i) {
         report().put("name", extract.name(i));
         report().put("category", extract.category(i));
       }
@@ -217,8 +218,8 @@ public interface ConfigurableReport {
         }
       }
 
-      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, final String id,
-          final BiFunction<Integer, Integer> bf) {
+      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, @Nullable final String id,
+          @Nullable final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;

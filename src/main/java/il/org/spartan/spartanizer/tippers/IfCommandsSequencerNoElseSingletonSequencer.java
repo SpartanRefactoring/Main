@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -28,7 +29,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceTo
     return "Invert conditional and use next statement)";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !wizard.endsWithSequencer(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());

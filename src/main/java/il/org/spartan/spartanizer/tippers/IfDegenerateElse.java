@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -24,11 +25,11 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @Override public String description(final IfStatement ¢) {
+  @Override @NotNull public String description(@NotNull final IfStatement ¢) {
     return "Remove vacuous 'else' branch of 'if(" + trivia.gist(¢.getExpression() + "") + ")...'";
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final IfStatement ¢) {
     return ¢ != null && then(¢) != null && degenerateElse(¢);
   }
 

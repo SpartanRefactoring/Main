@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -32,7 +33,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     return $;
   }
 
-  private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
+  private static boolean fitting(@NotNull final VariableDeclarationStatement s, @NotNull final ForStatement ¢) {
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
   }
 
@@ -42,18 +43,18 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    * @param s
    * @param x
    * @return whether initializer's and declaration's modifiers are mergable. */
-  private static boolean fittingModifiers(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
+  private static boolean fittingModifiers(final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
     final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
 
-  private static boolean fittingType(final VariableDeclarationStatement s, final VariableDeclarationExpression x) {
+  private static boolean fittingType(@NotNull final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
     return (x.getType() + "").equals(s.getType() + "");
   }
 
   // TODO now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
-  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
+  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, @NotNull final ForStatement s) {
     return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
 
@@ -63,7 +64,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     return copy.of(left(from));
   }
 
-  public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
+  @NotNull public static Expression handleParenthesizedCondition(@NotNull final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
@@ -79,7 +80,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
         : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
-  private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
+  private static boolean sameTypeAndModifiers(@NotNull final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
@@ -97,12 +98,12 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
-      final ExclusionManager exclude) {
+  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
+      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
     final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
