@@ -1275,22 +1275,7 @@ public final class Version230 {
     trimmingOf(" public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives(" public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
-  @Ignore @Test public void inlineArrayInitialization1() {
-    trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
-        + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
-        + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
-        + " assertArrayEquals(int1, int2); " //
-        + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
-                + " int[][] int1={{1, 2, 3}, {4, 5, 6}}" //
-                + " , int2={{1, 2, 3}, {4, 5, 6}}; " //
-                + " assertArrayEquals(int1, int2); " //
-                + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
-                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}}); " //
-                + "}");
-  }
-
+  
   @Test public void inlineArrayInitialization2() {
     trimmingOf("public double[] solve(){ " //
         + " final SimpleRegression regress=new SimpleRegression(true); " //
@@ -3407,13 +3392,7 @@ public final class Version230 {
         + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}");
   }
 
-  @Ignore // trimmer wraps with void method so it is tipped by {@link
-  // RemoveRedundantSwitchReturn}
-  @Test public void switchSimplifyCaseAfterDefault1() {
-    trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
-        + "case THROW_STATEMENT:return 3;default:return-1;}")//
-            .stays();
-  }
+
 
   @Test public void switchSimplifyWithDefault2() {
     trimmingOf("switch(a){case \"-E\":optIndividualStatistics=true;break;case \"-N\":optDoNotOverwrite=true;break;"

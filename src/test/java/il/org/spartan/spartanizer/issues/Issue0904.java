@@ -16,15 +16,14 @@ public class Issue0904 {
         .stays();
   }
 
-  @Ignore // TODO Raviv Rachmiel
   @Test public void c() {
-    trimmingOf("int i,j;j++;")//
-        .gives("int j;j++;")//
-        .gives("int j;++j;") //
+    trimmingOf("int i,j=1;j++;")//
+        .gives("int j=1;++j;")//
+        .gives("int j=1+2;") //
+        .gives("int j=3;") //
         .stays();
   }
 
-  @Ignore // TODO Raviv Rachmiel
   @Test public void issue075h() {
     trimmingOf("int i = +0;")//
         .gives("");
