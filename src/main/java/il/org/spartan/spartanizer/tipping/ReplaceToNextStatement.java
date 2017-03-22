@@ -22,13 +22,13 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null) != null;
   }
 
-  @Nullable @Override public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
+  @Nullable @Override public Fragment tip(final N n, @Nullable final ExclusionManager exclude) {
     @Nullable final Statement $ = extract.nextStatement(n);
     if ($ == null || exclude != null && exclude.isExcluded($))
       return null;
     if (exclude != null)
       exclude.exclude($);
-    return new Tip(description(n), n, myClass(), $) {
+    return new Fragment(description(n), n, myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         ReplaceToNextStatement.this.go(r, n, $, g);
       }

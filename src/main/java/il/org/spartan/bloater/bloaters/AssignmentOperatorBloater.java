@@ -33,8 +33,8 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.convertToInfix(¢.getOperator()) != null;
   }
 
-  @NotNull @Override public Tip tip(@NotNull final Assignment ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final Assignment ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         // TODO Ori Roth: use class subject
         final InfixExpression e = ¢.getAST().newInfixExpression();

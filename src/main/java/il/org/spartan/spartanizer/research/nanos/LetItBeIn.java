@@ -76,7 +76,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     }
   }
 
-  @Nullable @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
+  @Nullable @Override protected Fragment pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }
 

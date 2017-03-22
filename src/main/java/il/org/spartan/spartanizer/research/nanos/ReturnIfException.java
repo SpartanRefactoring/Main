@@ -26,7 +26,7 @@ public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  @Nullable @Override public Tip pattern(final CatchClause ¢) {
+  @Nullable @Override public Fragment pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 

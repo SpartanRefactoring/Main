@@ -35,7 +35,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return ts.stream().filter(λ -> λ.check(n)).findFirst().get();
   }
 
-  @Nullable public static <N extends ASTNode> Tip firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+  @Nullable public static <N extends ASTNode> Fragment firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
     return firstTipper(ts, n).tip(n);
   }
 
@@ -55,10 +55,10 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return yieldAncestors.untilContainingBlock().from(¢);
   }
 
-  @NotNull @Override public final Tip tip(@NotNull final N ¢) {
-    @Nullable final Tip $ = pattern(¢);
+  @NotNull @Override public final Fragment tip(@NotNull final N ¢) {
+    @Nullable final Fragment $ = pattern(¢);
     @NotNull @SuppressWarnings("unchecked") final Class<? extends NanoPatternTipper<N>> c = (Class<? extends NanoPatternTipper<N>>) getClass();
-    return new Tip($.description, ¢, c) {
+    return new Fragment($.description, ¢, c) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Logger.logNP(¢, nanoName());
         $.go(r, g);
@@ -86,7 +86,7 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return new String[] { nanoName() };
   }
 
-  @Nullable protected abstract Tip pattern(N ¢);
+  @Nullable protected abstract Fragment pattern(N ¢);
 
   @Nullable @SuppressWarnings("static-method") public Category category() {
     return null;

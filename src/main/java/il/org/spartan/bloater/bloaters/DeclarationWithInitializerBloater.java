@@ -39,7 +39,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
         && ((VariableDeclaration) first(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
-  @NotNull @Override public Tip tip(@NotNull final VariableDeclarationStatement ¢) {
+  @NotNull @Override public Fragment tip(@NotNull final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
     ((VariableDeclaration) first(fragments($))).setInitializer(null);
     final Assignment a = ¢.getAST().newAssignment();
@@ -47,7 +47,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
     // TODO Tomer Dragucki : use class subject --yg
     a.setLeftHandSide(copy.of(az.expression(f2.getName())));
     a.setRightHandSide(copy.of(az.expression(f2.getInitializer())));
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(¢.getParent(), !SwitchStatement.STATEMENTS_PROPERTY.getNodeClass().isInstance(¢.getParent())
             ? Block.STATEMENTS_PROPERTY : SwitchStatement.STATEMENTS_PROPERTY);

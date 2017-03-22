@@ -23,7 +23,7 @@ public final class First extends NanoPatternTipper<MethodInvocation> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final MethodInvocation ¢) {
+  @Nullable @Override public Fragment pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 

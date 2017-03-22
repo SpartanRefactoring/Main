@@ -16,11 +16,11 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTippe
 
   @Nullable public abstract ASTNode replacement(N n);
 
-  @Override public final Tip tip(@NotNull final N n) {
+  @Override public final Fragment tip(@NotNull final N n) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + fault.done();
     @Nullable final ASTNode $ = replacement(n);
     @NotNull @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> class1 = (Class<? extends Tipper<N>>) getClass();
-    return $ == null ? null : new Tip(description(n), n, class1) {
+    return $ == null ? null : new Fragment(description(n), n, class1) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }

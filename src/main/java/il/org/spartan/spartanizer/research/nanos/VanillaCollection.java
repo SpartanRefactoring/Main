@@ -28,8 +28,8 @@ public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration>
         && specificTypes.contains(type(az.parameterizedType(type(az.classInstanceCreation(initializer(onlyOne(fragments($))))))) + "");
   }
 
-  @NotNull @Override public Tip pattern(@NotNull final FieldDeclaration ¢) {
-    return new Tip(description(), ¢, getClass()) {
+  @NotNull @Override public Fragment pattern(@NotNull final FieldDeclaration ¢) {
+    return new Fragment(description(), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.remove(¢, g);
       }

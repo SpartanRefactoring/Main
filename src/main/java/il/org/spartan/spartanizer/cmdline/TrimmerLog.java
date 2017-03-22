@@ -47,7 +47,7 @@ public enum TrimmerLog {
     logToScreen = true;
   }
 
-  public static void application(final ASTRewrite r, @NotNull final Tip t) {
+  public static void application(final ASTRewrite r, @NotNull final Fragment t) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
         System.out.println("Stopped logging applications");

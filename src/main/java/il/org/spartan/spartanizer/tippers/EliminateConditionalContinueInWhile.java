@@ -20,7 +20,7 @@ public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatem
     return "Eliminate conditional continue before last statement in the for loop";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final WhileStatement ¢) {
+  @Nullable @Override public Fragment tip(@NotNull final WhileStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

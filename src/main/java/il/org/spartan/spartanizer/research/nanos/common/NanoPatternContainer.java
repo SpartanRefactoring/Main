@@ -44,7 +44,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return !canTip(¢);
   }
 
-  @Nullable public Tip firstTip(final N ¢) {
+  @Nullable public Fragment firstTip(final N ¢) {
     return firstTipper(¢).tip(¢);
   }
 

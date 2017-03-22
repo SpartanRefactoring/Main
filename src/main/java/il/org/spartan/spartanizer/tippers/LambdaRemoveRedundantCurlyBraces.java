@@ -24,9 +24,9 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -574482795207645961L;
 
-  @NotNull @Override public Tip tip(@NotNull final LambdaExpression x) {
+  @NotNull @Override public Fragment tip(@NotNull final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
-    return new Tip(description(x), x, getClass()) {
+    return new Fragment(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, replacement(x, r, g), g);
       }

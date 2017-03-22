@@ -32,8 +32,8 @@ public enum TipperFactory {
     return new UserDefinedTipper<Block>() {
       static final long serialVersionUID = 4793662826325577880L;
 
-      @NotNull @Override public Tip tip(final Block n) {
-        return new Tip(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
+      @NotNull @Override public Fragment tip(final Block n) {
+        return new Fragment(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
           @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.blockReplacement(n), g);
           }
@@ -89,8 +89,8 @@ public enum TipperFactory {
         return description;
       }
 
-      @NotNull @Override public Tip tip(@NotNull final N n) {
-        return new Tip(description(n), n, getClass()) {
+      @NotNull @Override public Fragment tip(@NotNull final N n) {
+        return new Fragment(description(n), n, getClass()) {
           @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.replacement(n), g);
           }

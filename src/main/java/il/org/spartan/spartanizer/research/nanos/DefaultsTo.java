@@ -28,7 +28,7 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return tippers.canTip(¢);
   }
 
-  @Nullable @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Nullable @Override public Fragment pattern(final ConditionalExpression ¢) {
     return tippers2.cantTip(containingBlock(¢)) ? tippers.firstTip(¢) : tippers2.firstTip(containingBlock(¢));
   }
 

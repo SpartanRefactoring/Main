@@ -29,7 +29,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(@NotNull final MethodDeclaration d, @Nullable final ExclusionManager m) {
+  @Override public Fragment tip(@NotNull final MethodDeclaration d, @Nullable final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -46,7 +46,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     if (m != null)
       m.exclude(d);
     final SimpleName ¢ = namer.newCurrent(d);
-    return new Tip("Rename paraemter " + $ + " to ¢ ", d, getClass()) {
+    return new Fragment("Rename paraemter " + $ + " to ¢ ", d, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename($, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);

@@ -25,7 +25,7 @@ public final class ThrowOnFalse extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
-  @Nullable @Override public Tip pattern(final IfStatement ¢) {
+  @Nullable @Override public Fragment pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

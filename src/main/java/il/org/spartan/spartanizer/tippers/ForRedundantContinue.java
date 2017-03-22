@@ -29,8 +29,8 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     return "Prune redundant continue";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final ForStatement ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @Nullable @Override public Fragment tip(@NotNull final ForStatement ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final Block b = az.block(body(¢));
         if (b == null)

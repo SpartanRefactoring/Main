@@ -22,8 +22,8 @@ public class SafeCast extends NanoPatternTipper<CastExpression> {
     return (expression(yieldAncestors.untilClass(IfStatement.class).from(¢)) + "").contains(expression(¢) + " instanceof " + type(¢));
   }
 
-  @NotNull @Override public Tip pattern(@NotNull final CastExpression ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @NotNull @Override public Fragment pattern(@NotNull final CastExpression ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, wizard.ast("safeCast(" + expression(¢) + ")"), g);
       }

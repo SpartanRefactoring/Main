@@ -35,11 +35,11 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     return null;
   }
 
-  @NotNull @Override public Tip tip(@NotNull final ArrayAccess a) {
+  @NotNull @Override public Fragment tip(@NotNull final ArrayAccess a) {
     final Expression $ = copy.of(a.getIndex());
     @Nullable final ASTNode b = extract.containingStatement(a);
     final AST t = b.getAST();
-    return new Tip(description(a), a, getClass()) {
+    return new Fragment(description(a), a, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = copy.of(a);

@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 8015068204117686495L;
 
-  @Nullable @Override public Tip tip(@NotNull final IfStatement s) {
-    return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
+  @Nullable @Override public Fragment tip(@NotNull final IfStatement s) {
+    return new Fragment(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement $ = copy.of(s);
         r.getListRewrite(then($), Block.STATEMENTS_PROPERTY).remove(extract.lastStatement(then($)), g);

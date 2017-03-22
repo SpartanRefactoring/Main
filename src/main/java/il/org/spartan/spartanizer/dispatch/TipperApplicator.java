@@ -42,7 +42,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     });
   }
 
-  @Nullable @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
+  @Nullable @Override protected ASTVisitor makeTipsCollector(@NotNull final List<Fragment> $) {
     return new ASTVisitor(true) {
       @Override public void preVisit(@NotNull final ASTNode ¢) {
         super.preVisit(¢);

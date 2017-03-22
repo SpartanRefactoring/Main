@@ -29,8 +29,8 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 2775485343542030030L;
 
-  @NotNull @Override public Tip tip(@NotNull final SwitchStatement s) {
-    return new Tip(description(s), s, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final SwitchStatement s) {
+    return new Fragment(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @NotNull final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(copy.of(expression(s)));

@@ -27,7 +27,7 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
     return anyTips(tippers, az.block(parent(x)));
   }
 
-  @Nullable @Override public Tip pattern(final ReturnStatement $) {
+  @Nullable @Override public Fragment pattern(final ReturnStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
