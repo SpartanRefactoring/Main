@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitialiazerUpdateAssignment extends $FragementInitializerStatement//
+public final class FragmentInitialiazerUpdateAssignment extends FragementInitializerStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
@@ -33,15 +33,13 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementInitia
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (initializer() == null)
+    @Nullable final Assignment assignment = extract.assignment(nextStatement());
+    if (assignment == null || !wizard.same(name(), to(assignment)) || doesUseForbiddenSiblings(object(), from(assignment)))
       return null;
-    @Nullable final Assignment a = extract.assignment(nextStatement());
-    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(object(), from(a)))
-      return null;
-    final Operator o = a.getOperator();
+    final Operator o = assignment.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
+    final InfixExpression newInitializer = subject.pair(to(assignment), from(assignment)).to(wizard.assign2infix(o));
     @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement(), initializer()) > 0)
       return null;

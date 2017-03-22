@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerStatementTerminatingScope extends $FragementInitializerStatement //
+public final class FragmentInitializerStatementTerminatingScope extends FragementInitializerStatement //
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -221763355000543721L;
 

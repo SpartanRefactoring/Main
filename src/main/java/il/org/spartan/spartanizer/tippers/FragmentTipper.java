@@ -14,6 +14,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -22,6 +23,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-22 */
 abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment> {
+  public FragmentTipper() {
+    System.err.println("Constructing " + myClass());
+  }
+
+
   private static final long serialVersionUID = 1L;
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
@@ -37,7 +43,8 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
   }
 
   @Nullable @Override public Fragment tip(@Nullable final VariableDeclarationFragment ¢) {
-    assert ¢ == null;
+    System.err.println("Tipping " + ¢ + ":" + myClass());
+    assert ¢ != null;
     assert ¢ == object();
     return new Fragment(description(), object(), myClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

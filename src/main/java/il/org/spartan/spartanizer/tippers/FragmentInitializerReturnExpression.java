@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
 /** convert {@code int a = 3;return a;} into {@code return a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturnExpression extends $FragementInitializerStatement//
+public final class FragmentInitializerReturnExpression extends FragementInitializerStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1067290925840665930L;
 

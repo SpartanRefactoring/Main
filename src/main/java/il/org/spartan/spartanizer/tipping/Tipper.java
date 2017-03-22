@@ -49,6 +49,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragmen
 
   @Override public final boolean ok(@NotNull final N ¢) {
     assert ¢ != null;
+    System.err.println("Running in " + myClass());
     return canTip(¢);
   }
 
@@ -83,6 +84,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragmen
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
   @Nullable public Fragment tip(@NotNull final N ¢) {
+System.err.println("Tipping of " + ¢ +": " + myClass());
     assert ¢ != null;
     return tip(¢, null);
   }

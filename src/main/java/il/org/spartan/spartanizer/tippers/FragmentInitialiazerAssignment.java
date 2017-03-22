@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitialiazerAssignment extends $FragementInitializerStatement//
+public final class FragmentInitialiazerAssignment extends FragementInitializerStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1477509470490701826L;
 
@@ -33,8 +33,6 @@ public final class FragmentInitialiazerAssignment extends $FragementInitializerS
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (initializer() == null)
-      return null;
     @Nullable final Assignment a = extract.assignment(nextStatement());
     if (a == null || !wizard.same(name(), to(a)) || a.getOperator() != ASSIGN)
       return null;

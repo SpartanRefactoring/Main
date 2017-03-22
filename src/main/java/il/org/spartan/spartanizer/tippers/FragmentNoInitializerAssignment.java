@@ -10,6 +10,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a;
@@ -19,9 +20,16 @@ import il.org.spartan.spartanizer.dispatch.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentNoInitializerAssignment extends $FragementInitializerStatement//
-    implements TipperCategory.Unite {
+public final class FragmentNoInitializerAssignment extends FragmentTipperNoInitializer implements TipperCategory.Unite {
   private static final long serialVersionUID = 929095358016977298L;
+  private Assignment assignment;
+
+  @Override public Example[] examples() {
+    return new Example[] { //
+        Example.convert("int a; a = 3;").to("int a=3;"), //
+        Example.convert("int b=2,a c=3; a = 3;").to("int a=3;"), //
+    };
+  }
 
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
     final VariableDeclarationFragment $ = copy.of(f);
@@ -34,13 +42,17 @@ public final class FragmentNoInitializerAssignment extends $FragementInitializer
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (initializer() != null)
-      return null;
-    @Nullable final Assignment a = extract.assignment(nextStatement());
-    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(object(), from(a)))
-      return null;
-    $.replace(object(), makeVariableDeclarationFragement(object(), from(a)), g);
-    $.remove(extract.containingStatement(a), g);
+    $.replace(object(), makeVariableDeclarationFragement(object(), from(assignment)), g);
+    $.remove(extract.containingStatement(assignment), g);
     return $;
+  }
+
+  @Override public boolean prerequisite(VariableDeclarationFragment f) {
+    if (!super.prerequisite(f))
+      return false;
+    assignment = extract.assignment(nextStatement());
+    if (assignment == null || !wizard.same(name(), to(assignment)) || doesUseForbiddenSiblings(object(), from(assignment)))
+      return false;
+    return true;
   }
 }
