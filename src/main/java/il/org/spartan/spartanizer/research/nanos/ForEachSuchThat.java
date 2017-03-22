@@ -37,18 +37,6 @@ public class ForEachSuchThat extends ForEach {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override public String technicalName() {
-    return "ForEachEInCSatisfyingXApplyS";
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
-  }
-
   @Override public String nanoName() {
     return ForEach.class.getSimpleName();
   }
