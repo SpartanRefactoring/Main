@@ -24,7 +24,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
   private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new SuppressException(), //
+        new IgnoringExceptions(), //
         null)//
             .add(CastExpression.class, //
                 new SafeCast(), //
