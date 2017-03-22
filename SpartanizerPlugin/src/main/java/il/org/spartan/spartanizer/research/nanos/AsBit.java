@@ -27,7 +27,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Nullable @Override public Fragment pattern(final ConditionalExpression ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }
 

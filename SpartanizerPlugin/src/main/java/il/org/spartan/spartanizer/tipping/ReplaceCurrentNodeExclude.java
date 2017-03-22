@@ -15,10 +15,10 @@ import il.org.spartan.utils.*;
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
   private static final long serialVersionUID = 8188241616526954088L;
 
-  @Override public final Tip tip(@NotNull final N n, final ExclusionManager m) {
+  @Override public final Fragment tip(@NotNull final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
     @Nullable final ASTNode $ = replacement(n, m);
-    return $ == null ? null : new Tip(description(n), n, myClass()) {
+    return $ == null ? null : new Fragment(description(n), n, myClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }

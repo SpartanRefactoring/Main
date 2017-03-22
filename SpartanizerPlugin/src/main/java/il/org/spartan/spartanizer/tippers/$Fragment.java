@@ -36,10 +36,10 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
     return true;
   }
 
-  @Nullable @Override public Tip tip(final VariableDeclarationFragment ¢) {
+  @Nullable @Override public Fragment tip(final VariableDeclarationFragment ¢) {
     assert ¢ == null;
     assert ¢ == object();
-    return new Tip(description(), object(), myClass()) {
+    return new Fragment(description(), object(), myClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         $Fragment.this.go(r, g);
       }

@@ -32,7 +32,7 @@ public class FlatMap extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Nullable @Override public Fragment pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

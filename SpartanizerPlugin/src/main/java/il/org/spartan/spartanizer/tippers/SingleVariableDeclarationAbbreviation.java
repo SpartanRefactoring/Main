@@ -80,7 +80,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager exclude) {
+  @Override public Fragment tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager exclude) {
     @Nullable final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
@@ -88,7 +88,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       exclude.exclude($);
     final SimpleName oldName = d.getName();
     @NotNull final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
-    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
+    return new Fragment("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, make.from(d).identifier(newName), $, r, g);
         fixJavadoc($, oldName, newName, r, g);

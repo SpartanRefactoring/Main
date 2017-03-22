@@ -26,8 +26,8 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
     return "Split assignment statement";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
-    return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
+  @Nullable @Override public Fragment tip(@NotNull final ExpressionStatement ¢) {
+    return !iz.classInstanceCreation(expression(¢)) ? null : new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @Nullable final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = cic.getType();

@@ -104,8 +104,8 @@ enum CollectMetrics {
     output.put(prefix + "No Imports", count.noimports(¢));
   }
 
-  private static void reportTips(@NotNull final Iterable<Tip> ¢) {
-    for (@NotNull final Tip $ : ¢) {
+  private static void reportTips(@NotNull final Iterable<Fragment> ¢) {
+    for (@NotNull final Fragment $ : ¢) {
       Tips.put("description", $.description);
       Tips.put("from", $.from);
       Tips.put("to", $.to);

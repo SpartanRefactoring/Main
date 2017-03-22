@@ -40,11 +40,11 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     return "Merge conditionals of nested if staement";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final IfStatement ¢) {
+  @Nullable @Override public Fragment tip(@NotNull final IfStatement ¢) {
     return tip(¢, null);
   }
 
-  @Override public Tip tip(@NotNull final IfStatement $, @Nullable final ExclusionManager exclude) {
+  @Override public Fragment tip(@NotNull final IfStatement $, @Nullable final ExclusionManager exclude) {
     if (!iz.vacuousElse($))
       return null;
     @Nullable final IfStatement then = az.ifStatement(extract.singleThen($));
@@ -52,7 +52,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
       return null;
     if (exclude != null)
       exclude.exclude(then);
-    return new Tip(description($), $, getClass()) {
+    return new Fragment(description($), $, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         collapse(Tippers.blockIfNeeded($, r, g), r, g);
       }

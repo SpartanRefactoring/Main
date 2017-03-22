@@ -30,8 +30,8 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     return "Remove redundant modifier";
   }
 
-  @NotNull @Override public Tip tip(@NotNull final Modifier ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final Modifier ¢) {
+    return new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);
       }

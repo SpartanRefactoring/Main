@@ -30,7 +30,7 @@ public class ForEachSuchThat extends ForEach {
         && nonTips(rivals, ¢);
   }
 
-  @Nullable @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Nullable @Override public Fragment pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

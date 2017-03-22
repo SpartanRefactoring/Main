@@ -32,8 +32,8 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
       static final long serialVersionUID = -8053877776935099016L;
 
-      @NotNull @Override public Tip pattern(@NotNull final EnhancedForStatement ¢) {
-        return new Tip("", ¢, getClass()) {
+      @NotNull @Override public Fragment pattern(@NotNull final EnhancedForStatement ¢) {
+        return new Fragment("", ¢, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
             nano.tip(¢).go(r, g);

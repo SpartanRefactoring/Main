@@ -14,8 +14,8 @@ public abstract class $FragementInitializerStatement extends $Fragment {
 
   @Override public abstract String description(VariableDeclarationFragment f);
 
-  @Override public final Tip tip(@NotNull final VariableDeclarationFragment f, @Nullable final ExclusionManager exclude) {
-    @Nullable final Tip $ = super.tip(f, exclude);
+  @Override public final Fragment tip(@NotNull final VariableDeclarationFragment f, @Nullable final ExclusionManager exclude) {
+    @Nullable final Fragment $ = super.tip(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

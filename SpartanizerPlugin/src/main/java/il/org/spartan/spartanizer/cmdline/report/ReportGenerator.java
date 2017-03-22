@@ -272,7 +272,7 @@ public class ReportGenerator implements ConfigurableReport {
     report(reportName).put("category", extract.category(input));
   }
 
-  public static void tip(@NotNull final Tip ¢) {
+  public static void tip(@NotNull final Fragment ¢) {
     report("tips").put("FileName", CommandLine$Applicator.presentFileName);
     report("tips").put("Path", CommandLine$Applicator.presentFilePath);
     report("tips").put("tipName", ¢.getClass());
@@ -288,7 +288,7 @@ public class ReportGenerator implements ConfigurableReport {
     report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
 
-  public static void writeTipsLine(@SuppressWarnings("unused") final ASTNode __, @NotNull final Tip t, final String reportName) {
+  public static void writeTipsLine(@SuppressWarnings("unused") final ASTNode __, @NotNull final Fragment t, final String reportName) {
     // name(n, reportName);
     tip(t);
     report(reportName).nl();

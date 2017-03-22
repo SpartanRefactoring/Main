@@ -204,7 +204,7 @@ public final class SingleTipperApplicator {
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x != null) {
-            @Nullable final Tip make = x.tip(n, exclude);
+            @Nullable final Fragment make = x.tip(n, exclude);
             if (make != null)
               make.go(rewrite, null);
           }

@@ -31,14 +31,14 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
     return "Remove the block: " + trivia.gist(¢);
   }
 
-  @Override public Tip tip(@NotNull final Block n) {
+  @Override public Fragment tip(@NotNull final Block n) {
     @NotNull final List<Statement> $ = statements(n);
     if ($.isEmpty())
       return null;
     for (final Statement ¢ : $)
       if (!iz.variableDeclarationStatement(¢))
         return null;
-    return new Tip(description(), n, getClass()) {
+    return new Fragment(description(), n, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         $.forEach(λ -> r.remove(λ, g));
       }

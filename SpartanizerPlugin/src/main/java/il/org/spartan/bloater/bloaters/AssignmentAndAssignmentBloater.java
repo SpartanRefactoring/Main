@@ -26,9 +26,9 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
   }
 
   // TODO Doron - I spartanized your code. --yg
-  @Nullable @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
+  @Nullable @Override public Fragment tip(@NotNull final ExpressionStatement ¢) {
     @Nullable final Assignment $ = az.assignment(expression(¢));
-    return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
+    return $ == null || !iz.assignment(right($)) ? null : new Fragment(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         // TODO Doron Meshulam: use class subject --yg

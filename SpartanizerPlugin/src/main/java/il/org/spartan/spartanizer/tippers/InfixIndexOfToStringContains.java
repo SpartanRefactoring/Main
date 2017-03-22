@@ -36,7 +36,7 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
   }
 
   /** Operates the first tip that can be implemented. */
-  @Override public Tip tip(final InfixExpression ¢) {
+  @Override public Fragment tip(final InfixExpression ¢) {
     return tippers.stream().filter(λ -> λ.check(¢)).map(λ -> λ.tip(¢)).findFirst().orElse(null);
   }
 

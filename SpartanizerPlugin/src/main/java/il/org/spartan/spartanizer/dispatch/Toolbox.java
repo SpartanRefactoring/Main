@@ -83,12 +83,12 @@ public class Toolbox {
     return $;
   }
 
-  @Nullable public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+  @Nullable public static Fragment extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @NotNull @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
-  @Nullable public static Tip extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
+  @Nullable public static Fragment extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
     return t.tip(n);
   }
 

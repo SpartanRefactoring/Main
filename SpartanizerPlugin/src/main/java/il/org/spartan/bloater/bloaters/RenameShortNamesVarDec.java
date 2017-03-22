@@ -37,7 +37,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
     return ¢ + "";
   }
 
-  @Nullable @Override @SuppressWarnings("unused") public Tip tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
+  @Nullable @Override @SuppressWarnings("unused") public Fragment tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
       @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
@@ -56,7 +56,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
         prev.add($);
         after.add(¢);
       }
-      return s.getParent() == null || prev.isEmpty() ? null : new Tip("Rename parameters", s, getClass()) {
+      return s.getParent() == null || prev.isEmpty() ? null : new Fragment("Rename parameters", s, getClass()) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
           for (final SimpleName ¢ : prev) {

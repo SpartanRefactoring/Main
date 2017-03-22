@@ -23,8 +23,8 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -4185849867633961690L;
 
-  @NotNull @Override public Tip tip(@NotNull final ReturnStatement x) {
-    return new Tip(description(x), x, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final ReturnStatement x) {
+    return new Fragment(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         @NotNull final Expression ee = expression(x);
         @Nullable final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));

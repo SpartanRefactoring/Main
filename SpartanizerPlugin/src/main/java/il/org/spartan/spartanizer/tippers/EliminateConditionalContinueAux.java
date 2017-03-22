@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 enum EliminateConditionalContinueAux {
   ;
-  @Nullable public static Tip actualReplacement(@Nullable final Block b, @NotNull final Statement s, final Class<? extends Tipper<?>> c) {
+  @Nullable public static Fragment actualReplacement(@Nullable final Block b, @NotNull final Statement s, final Class<? extends Tipper<?>> c) {
     if (b == null || statements(b).size() < 2)
       return null;
     @NotNull final List<Statement> $ = statements(b);
@@ -29,7 +29,7 @@ enum EliminateConditionalContinueAux {
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
     final IfStatement replacementIf = subject.pair(last($), null).toNot(continueStatement.getExpression());
-    return new Tip(description(), s, c) {
+    return new Fragment(description(), s, c) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.remove(last($), g);
         r.replace(continueStatement, replacementIf, g);

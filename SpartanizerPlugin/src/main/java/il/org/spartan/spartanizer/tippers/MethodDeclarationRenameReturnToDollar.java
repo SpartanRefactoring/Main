@@ -32,7 +32,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(@NotNull final MethodDeclaration d, @Nullable final ExclusionManager exclude) {
+  @Override public Fragment tip(@NotNull final MethodDeclaration d, @Nullable final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
@@ -41,7 +41,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Tip("Rename '" + $ + "' to $ (main variable returned by " + description(d) + ")", d, getClass()) {
+    return new Fragment("Rename '" + $ + "' to $ (main variable returned by " + description(d) + ")", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }

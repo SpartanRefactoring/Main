@@ -82,11 +82,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
-  private Tip make(final ForStatement vor, final ReturnStatement nextReturn, @Nullable final ExclusionManager exclude) {
+  private Fragment make(final ForStatement vor, final ReturnStatement nextReturn, @Nullable final ExclusionManager exclude) {
     @Nullable final Statement $ = make(body(vor), nextReturn);
     if (exclude != null)
       exclude.exclude(vor);
-    return $ == null ? null : new Tip(description(), vor, getClass(), nextReturn) {
+    return $ == null ? null : new Fragment(description(), vor, getClass(), nextReturn) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
@@ -98,7 +98,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Nullable @Override public Tip tip(@Nullable final ForStatement vor, final ExclusionManager exclude) {
+  @Nullable @Override public Fragment tip(@Nullable final ForStatement vor, final ExclusionManager exclude) {
     if (vor == null || !isInfiniteLoop(vor))
       return null;
     @Nullable final ReturnStatement $ = extract.nextReturn(vor);

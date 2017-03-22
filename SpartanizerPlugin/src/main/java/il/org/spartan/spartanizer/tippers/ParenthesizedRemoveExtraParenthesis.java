@@ -24,8 +24,8 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 4265122877786904832L;
 
-  @NotNull @Override public Tip tip(@NotNull final ParenthesizedExpression x) {
-    return new Tip(description(x), x, getClass()) {
+  @NotNull @Override public Fragment tip(@NotNull final ParenthesizedExpression x) {
+    return new Fragment(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, copy.of(expression(x)), g);
       }

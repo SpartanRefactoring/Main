@@ -43,7 +43,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return "Extract complex parameter from statement";
   }
 
-  @Nullable @Override public Tip tip(@NotNull final Statement s) {
+  @Nullable @Override public Fragment tip(@NotNull final Statement s) {
     final ASTNode root = s.getRoot();
     if (!s.getAST().hasResolvedBindings() || !(root instanceof CompilationUnit)
         || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
@@ -65,7 +65,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setFilterImplicitImports(true); // along with this of course
     final Type t = ir.addImport(binding, s.getAST());
     // TODO Ori Roth: enable assignments extraction
-    return t == null || $ instanceof Assignment ? null : new Tip(description(s), s, myClass()) {
+    return t == null || $ instanceof Assignment ? null : new Fragment(description(s), s, myClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
         @Nullable final Type tt = fixWildCardType(t);
