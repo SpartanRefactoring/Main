@@ -22,7 +22,8 @@ public class ConcatenateStringLiterals extends Tipper<InfixExpression> {
 
   StringLiteral first;
   StringLiteral second;
-  private boolean findTwoConsecutive() {
+
+  @SuppressWarnings("static-method") private boolean findTwoConsecutive() {
     // Make sure that there are two consecutive string literals in the
     // list of extended operators. Set these two into fields.
     return false;
