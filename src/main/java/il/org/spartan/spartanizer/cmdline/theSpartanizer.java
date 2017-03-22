@@ -23,21 +23,22 @@ public interface theSpartanizer {
   static Tipper<?> firstTipper(@NotNull final String from) {
     @NotNull final Wrapper<Tipper<?>> $ = new Wrapper<>();
     @Nullable final ASTNode n = wizard.ast(from);
-    if (n != null)
-      n.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(@NotNull final N ¢) {
-          return searching && go(toolbox.firstTipper(¢));
-        }
+    if (n == null)
+      return $.get();
+    n.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(@NotNull final N ¢) {
+        return searching && go(toolbox.firstTipper(¢));
+      }
 
-        <N extends ASTNode> boolean go(@Nullable final Tipper<N> ¢) {
-          if (¢ == null)
-            return true;
-          $.set(¢);
-          return searching = false;
-        }
+      <N extends ASTNode> boolean go(@Nullable final Tipper<N> ¢) {
+        if (¢ == null)
+          return true;
+        $.set(¢);
+        return searching = false;
+      }
 
-        boolean searching = true;
-      });
+      boolean searching = true;
+    });
     return $.get();
   }
 

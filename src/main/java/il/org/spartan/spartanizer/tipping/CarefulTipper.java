@@ -12,7 +12,9 @@ public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
   private static final long serialVersionUID = -1200037106702768820L;
 
   @Override public final boolean canTip(@NotNull final N ¢) {
-    return prerequisite(¢) && tip(¢) != null;
+    assert ¢ != null;
+    return prerequisite(¢) 
+        && tip(¢) != null;
   }
 
   /** @param __ the ASTNode being inspected.

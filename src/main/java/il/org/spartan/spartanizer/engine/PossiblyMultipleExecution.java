@@ -54,7 +54,7 @@ public class PossiblyMultipleExecution {
         case ENHANCED_FOR_STATEMENT:
           if (multiple((EnhancedForStatement) $))
             return false;
-          continue;
+
       }
     }
     assert fault.unreachable() : fault.specifically("Context does not contain current node", what, where);
