@@ -83,7 +83,7 @@ public class MethodRecord {
         && iz.expressionStatement(parent(¢));
   }
 
-  private static final List<String> excluded = Collections.singletonList(ArgumentsTuple.class.getSimpleName());
+  private static final List<String> excluded = Collections.singletonList(MyArguments.class.getSimpleName());
 
   public static boolean excluded(final String np) {
     return excluded.contains(np);

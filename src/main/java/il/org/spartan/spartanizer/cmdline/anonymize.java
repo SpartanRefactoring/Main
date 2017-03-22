@@ -174,6 +174,6 @@ public enum anonymize {
   }
 
   private static String tipperClass(final Tipper<?> ¢) {
-    return ¢.className() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
+    return ¢.nanoName() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
   }
 }

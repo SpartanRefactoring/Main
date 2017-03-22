@@ -33,7 +33,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   private static final long serialVersionUID = -2252675511987504571L;
 
   @Override public String[] akas() {
-    return new String[] { className() };
+    return new String[] { nanoName() };
   }
 
   /** Determines whether this instance can make a {@link Tip} for the parameter
@@ -52,7 +52,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   public abstract boolean canTip(N n);
 
-  public String className() {
+  public String nanoName() {
     return getClass().getSimpleName();
   }
 

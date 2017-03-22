@@ -5,21 +5,21 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** Tests {@link NotHoldsOrThrow}
+/** Tests {@link ThrowOnFalse}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-04 */
 @SuppressWarnings("static-method")
-public class NotHoldsOrThrowTest {
+public class ThrowOnFalseTest {
   @Test public void a() {
     trimmingOf("if(x.isCute()) throw new Watever();")//
-        .using(IfStatement.class, new NotHoldsOrThrow())//
+        .using(IfStatement.class, new ThrowOnFalse())//
         .gives("holds(!(x.isCute())).orThrow(()->new Watever());")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("if(x.isCute() || iWant()) throw new Watever(with(This, and, zis()));")//
-        .using(IfStatement.class, new NotHoldsOrThrow())//
+        .using(IfStatement.class, new ThrowOnFalse())//
         .gives("holds(!(x.isCute()||iWant())).orThrow(()->new Watever(with(This,and,zis())));")//
         .gives("holds(!x.isCute()&&!iWant()).orThrow(()->new Watever(with(This,and,zis())));")//
         .stays();

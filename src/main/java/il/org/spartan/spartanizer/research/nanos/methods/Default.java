@@ -19,10 +19,11 @@ public class Default extends JavadocMarkerNanoPattern {
   private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("return $D;", "", ""));
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return empty(¢) || anyTips(tippers, onlyStatement(¢));
+    return empty(¢)//
+        || anyTips(tippers, onlyStatement(¢));
   }
 
-  @Override public Category category() {
-    return Category.Default;
+  @Override public String nanoName() {
+    return "DefaultValue";
   }
 }
