@@ -42,7 +42,7 @@ public final class FragmentInitializerIfAssignment extends $FragementInitializer
       return null;
     @Nullable final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), name()) || a.getOperator() != Assignment.Operator.ASSIGN
-        || doesUseForbiddenSiblings(fragment(), condition, from(a)))
+        || doesUseForbiddenSiblings(object(), condition, from(a)))
       return null;
     @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(condition, from(a)))

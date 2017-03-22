@@ -37,9 +37,9 @@ public final class FragmentNoInitializerAssignment extends $FragementInitializer
     if (initializer() != null)
       return null;
     @Nullable final Assignment a = extract.assignment(nextStatement());
-    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(fragment(), from(a)))
+    if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(object(), from(a)))
       return null;
-    $.replace(fragment(), makeVariableDeclarationFragement(fragment(), from(a)), g);
+    $.replace(object(), makeVariableDeclarationFragement(object(), from(a)), g);
     $.remove(extract.containingStatement(a), g);
     return $;
   }

@@ -40,7 +40,7 @@ public final class FragmentInitializerIfUpdateAssignment extends $FragementIniti
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     @Nullable final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), name()) || doesUseForbiddenSiblings(fragment(), condition, from(a))
+    if (a == null || !wizard.same(to(a), name()) || doesUseForbiddenSiblings(object(), condition, from(a))
         || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer()).toCondition(condition);

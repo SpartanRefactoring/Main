@@ -34,7 +34,7 @@ public final class FragmentInitializerReturn extends $FragementInitializerStatem
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (initializer() == null || haz.annotation(fragment()))
+    if (initializer() == null || haz.annotation(object()))
       return null;
     @Nullable final ReturnStatement s = az.returnStatement(nextStatement());
     if (s == null)
