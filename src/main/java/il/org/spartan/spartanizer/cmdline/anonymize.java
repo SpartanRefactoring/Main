@@ -131,8 +131,7 @@ public enum anonymize {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
   }
-  
-  
+
   public static String makeBloaterUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
@@ -158,7 +157,7 @@ public enum anonymize {
       from = to;
     }
   }
-  
+
   public static String bloaterBody(final String input) {
     for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(input);
