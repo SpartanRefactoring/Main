@@ -15,10 +15,15 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue0236 {
   @Test public void issue236_01() {
     trimmingOf("b ? \"a long string\" : \"another \"+\"long\"+\" string\"")//
-        .gives("(b ? \"a long\" : \"another \"+\"long\"+\"\") +\" string\"").gives("(b ? \"a long\" : \"another \"+\"long\") +\" string\"")//
-        .gives("((b ? \"a \" : \"another \"+\"\") +\"long\")+\" string\"").gives("(b ? \"a \" : \"another \"+\"\") +\"long\"+\" string\"")//
-        .gives("(b ? \"a \" : \"another \") +\"long\"+\" string\"").gives("((b ? \"a\" : \"another\") + \" \") +\"long\"+\" string\"")//
-        .gives("(b ? \"a\" : \"another\") + \" \" +\"long\"+\" string\"")//
+        .gives("(b ? \"a long\" : \"another \"+\"long\"+\"\") +\" string\"")//
+        .gives("(b ? \"a long\" : \"another \"+\"long\") +\" string\"")//
+        .gives("((b ? \"a \" : \"another \"+\"\") +\"long\")+\" string\"")//
+        .gives("(b ? \"a \" : \"another \"+\"\") +\"long\"+\" string\"")//
+        .gives("(b ? \"a \" : \"another \"+\"\") +\"long string\"")//
+        .gives("(b ? \"a \" : \"another \") +\"long string\"")//
+        .gives("((b ? \"a\" : \"another\") + \" \") +\"long string\"")//
+        .gives("(b ? \"a\" : \"another\") + \" \" +\"long string\"")//
+        .gives("(b ? \"a\" : \"another\") + \" long string\"")//
         .stays();
   }
 
