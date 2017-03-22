@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 24, 2017 */
-public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDeclarationFragment>
+public final class FragmentFieldInitializerDefaultValue extends ReplaceCurrentNode<VariableDeclarationFragment>
     //
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 6215455250967484555L;

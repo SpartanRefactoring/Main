@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * } https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturnVariable extends $FragementInitializerStatement//
+public final class FragmentInitializerReturnVariable extends FragementInitializerStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -7344214948464934471L;
 

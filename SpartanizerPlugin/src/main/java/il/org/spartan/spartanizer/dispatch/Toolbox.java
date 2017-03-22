@@ -321,7 +321,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new FragmentInitializerDead(), //
+            new FragmentFieldInitializerDefaultValue(), //
             new FragmentNoInitializerAssignment(), //
             new FragmentInitialiazerUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //

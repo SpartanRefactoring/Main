@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerIfAssignment extends $FragementInitializerStatement implements TipperCategory.Inlining {
+public final class FragmentInitializerIfAssignment extends FragementInitializerStatement implements TipperCategory.Inlining {
   private static final long serialVersionUID = 748535255358071695L;
 
   @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
@@ -31,8 +31,6 @@ public final class FragmentInitializerIfAssignment extends $FragementInitializer
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
-    if (initializer() == null)
-      return null;
     @Nullable final IfStatement s = az.ifStatement(nextStatement());
     if (s == null || !iz.vacuousElse(s))
       return null;
