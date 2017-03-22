@@ -18,15 +18,15 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 2013380508545213297L;
 
-  @Override public ASTNode replacement(final WhileStatement s) {
-    WhileStatement $ = copy.of(s);
+  @Override public ASTNode replacement(final WhileStatement ¢) {
+    WhileStatement $ = copy.of(¢);
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
 
-  @Override protected boolean prerequisite(final WhileStatement s) {
-    final Statement body = s.getBody();
-    return iz.block(body) && iz.emptyBlock(az.block(body));
+  @Override protected boolean prerequisite(final WhileStatement ¢) {
+    final Statement $ = ¢.getBody();
+    return iz.block($) && iz.emptyBlock(az.block($));
   }
 
   @Override public Example[] examples() {
