@@ -1,6 +1,5 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.Proposition.*;
 
 import static il.org.spartan.lisp.*;
 

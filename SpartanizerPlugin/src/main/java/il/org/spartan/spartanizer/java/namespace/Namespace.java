@@ -73,8 +73,8 @@ public final class Namespace implements Environment {
         return next != null;
       }
 
-      @Nullable
-      @Override public Environment next() {
+      @Override
+      @Nullable public Environment next() {
         final Environment $ = next;
         next = next.nest();
         return $;
@@ -306,8 +306,8 @@ public final class Namespace implements Environment {
   }
 
   /** Add name to the current scope in the {@link Environment} . */
-  @Nullable
-  @Override public Binding put(final String identifier, final Binding value) {
+  @Override
+  @Nullable public Binding put(final String identifier, final Binding value) {
     flat.put(identifier, value);
     assert !flat.isEmpty();
     return hiding(identifier);
