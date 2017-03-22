@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO Alex Kopzon please add a description
  * @author Alex Kopzon
@@ -266,6 +269,28 @@ public class Issue0311 {
         .stays();
   }
 
+  /** Introduced by Yogi on Wed-Mar-22-09:57:18-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_intabWhilea10aReturnFalse() {
+    trimmingOf("int a=b;while(a<10)++a;return false;}") //
+        .gives("for(int a=b;a<10;)++a;return false;}") //
+        .stays() //
+    ;
+  }
+
+  /** Introduced by Yogi on Wed-Mar-22-09:51:07-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_whileabcdeaIntfdaIntgdhIntigfjiAklfiIfmNullmnkopkag() {
+    trimmingOf(
+        "while (a < b.c() && d.e(a)) { int f = d.a(); int g = d.h(); int i = g - f; j(i); A[] k = l(f, i); if ((m == null) || m.n(k)) o.p(k); a = g; }") //
+            .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
+            .gives("while(a<b.c()&&d.e(a)){int f=d.a(),g=d.h();int i=g-f;j(i);A[] k=l(f,i);if((m==null)||m.n(k))o.p(k);a=g;}") //
+            .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
+            .gives("while(a<b.c()&&d.e(a)){int f=d.a(),g=d.h(),i=g-f;j(i);A[] k=l(f,i);if((m==null)||m.n(k))o.p(k);a=g;}") //
+            .stays() //
+    ;
+  }
+
   @Test public void while_1() {
     trimmingOf("c(N n){N p=n;while(p!=null){if(dns.c(p))return true;++i;}return false;}")
         .gives("c(N n){for(N p=n;p!=null;){if(dns.c(p))return true;++i;}return false;}").stays();
@@ -293,6 +318,12 @@ public class Issue0311 {
         .gives("for(int ¢=0;;){(new int[]{1,2,3,4,5})[¢]=0;++¢;}")//
         .gives("for(int ¢=0;;++¢){(new int[]{1,2,3,4,5})[¢]=0;}")//
         .gives("for(int ¢=0;;++¢)(new int[]{1,2,3,4,5})[¢]=0;")//
+        .stays();
+  }
+
+  @Test public void z() {
+    trimmingOf("int p=i;while(p<10)++p;return false;}")//
+        .gives("for(int p=i; p<10;)++p;return false;}")//
         .stays();
   }
 }
