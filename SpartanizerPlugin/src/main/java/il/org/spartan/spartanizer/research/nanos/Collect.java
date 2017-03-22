@@ -73,7 +73,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     return Category.Iterative;
   }
 
-  @Override public String technicalName() {
-    return "collect C [s.t. P(·)]";
+  @Override public String nanoName() {
+    return "SelectBy";
   }
 }

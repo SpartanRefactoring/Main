@@ -14,7 +14,7 @@ public class Empty extends JavadocMarkerNanoPattern {
     return empty(¢);
   }
 
-  @Override public String className() {
+  @Override public String nanoName() {
     return Default.class.getSimpleName();
   }
 }

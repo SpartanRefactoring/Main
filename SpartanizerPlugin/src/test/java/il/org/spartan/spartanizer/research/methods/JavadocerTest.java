@@ -19,7 +19,7 @@ public abstract class JavadocerTest {
   }
 
   private static boolean javadoced(final String ¢) {
-    return spartanized(¢).contains("[[" + JAVADOCER.className() + "]]");
+    return spartanized(¢).contains("[[" + JAVADOCER.nanoName() + "]]");
   }
 
   protected static boolean not(final String ¢) {

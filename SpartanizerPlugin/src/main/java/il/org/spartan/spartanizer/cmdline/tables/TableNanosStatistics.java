@@ -91,7 +91,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
 
   private static void fillAbsents() {
     spartanalyzer.allNanoPatterns().stream()//
-        .map(Tipper::className)//
+        .map(Tipper::nanoName)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.col(λ, 0));
   }
