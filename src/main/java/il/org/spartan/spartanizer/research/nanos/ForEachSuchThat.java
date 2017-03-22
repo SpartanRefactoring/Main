@@ -49,7 +49,7 @@ public class ForEachSuchThat extends ForEach {
     return firstReplacement(tippers);
   }
 
-  @Override public String className() {
+  @Override public String nanoName() {
     return ForEach.class.getSimpleName();
   }
 }

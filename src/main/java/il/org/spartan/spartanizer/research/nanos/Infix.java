@@ -11,11 +11,11 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** Just another form of {@link SafeReference}
+/** Just another form of {@link SafeNavigation}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-04 */
 public final class Infix {
-  public static class SafeReference extends NanoPatternTipper<InfixExpression> {
+  public static class SafeNavigation extends NanoPatternTipper<InfixExpression> {
     private static final long serialVersionUID = -6291051971300893152L;
     private static final List<UserDefinedTipper<InfixExpression>> tippers = as.list(
         patternTipper("$N1 != null && $N1.$N2", "safe($N1).get(()->$N1.$N2)", "safe reference"),

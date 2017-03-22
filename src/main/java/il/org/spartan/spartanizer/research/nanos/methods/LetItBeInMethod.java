@@ -36,4 +36,8 @@ public class LetItBeInMethod extends JavadocMarkerNanoPattern {
     return iz.expressionStatement(secondStatement) //
         || iz.returnStatement(secondStatement);
   }
+
+  @Override public String nanoName() {
+    return "LetIn";
+  }
 }

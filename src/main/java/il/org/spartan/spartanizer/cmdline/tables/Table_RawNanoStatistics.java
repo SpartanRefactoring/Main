@@ -36,7 +36,7 @@ public class Table_RawNanoStatistics extends NanoTable {
 
   static void fillAbsents() {
     spartanalyzer.allNanoPatterns().stream()//
-        .map(Tipper::className)//
+        .map(Tipper::nanoName)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> writer.col(λ, 0));
   }
