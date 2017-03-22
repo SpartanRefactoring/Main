@@ -39,7 +39,7 @@ public interface Streamer<@¢ T> {
 
     static <T> Compounder<T> empty() {
       return new Compounder<T>() {
-        @SuppressWarnings("unused") @Override public Stream<T> compound(T self, Iterable<? extends Streamer<T>> others) {
+        @Override @SuppressWarnings("unused") public Stream<T> compound(T self, Iterable<? extends Streamer<T>> others) {
           return Stream.empty();
         }
       };
