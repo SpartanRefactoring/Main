@@ -76,7 +76,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Nullable public Class<N> myActualOperandsClass() {
-    final Class<N> $ = myAbstractOperandsClass();
+    @NotNull final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
@@ -103,8 +103,8 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @NotNull private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
-    for (final Method ¢ : getClass().getMethods())
+    @Nullable Class<N> $ = null;
+    for (@NotNull final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
         $ = lowest($, ¢.getParameterTypes()[0]);
     return $ != null ? $ : castClass(ASTNode.class);

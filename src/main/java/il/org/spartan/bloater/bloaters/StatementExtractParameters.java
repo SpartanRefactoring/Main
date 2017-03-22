@@ -54,7 +54,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final ITypeBinding binding = $.resolveTypeBinding();
     if (binding == null)
       return null;
-    final CompilationUnit u = az.compilationUnit(root);
+    @Nullable final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
       return null;
     // TODO Ori Roth: use library code
@@ -68,9 +68,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return t == null || $ instanceof Assignment ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
-        final Type tt = fixWildCardType(t);
+        @Nullable final Type tt = fixWildCardType(t);
         final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
-        final String nn = scope.newName(s, tt);
+        @NotNull final String nn = scope.newName(s, tt);
         f.setName(make.from(s).identifier(nn));
         f.setInitializer(copy.of($));
         final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
@@ -104,11 +104,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: extend (?)
   @NotNull @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
-    final Collection<ASTNode> excludedParents = new ArrayList<>();
+    @NotNull final Collection<ASTNode> excludedParents = new ArrayList<>();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
-    final List<Expression> $ = new ArrayList<>();
+    @NotNull final List<Expression> $ = new ArrayList<>();
     s.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)
@@ -124,11 +124,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
           case ASTNode.WHILE_STATEMENT:
             return false;
           case ASTNode.ENHANCED_FOR_STATEMENT:
-            final EnhancedForStatement efs = (EnhancedForStatement) ¢;
+            @NotNull final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
           case ASTNode.FOR_STATEMENT:
-            final ForStatement fs = (ForStatement) ¢;
+            @NotNull final ForStatement fs = (ForStatement) ¢;
             consider($, fs.initializers());
             return false;
           case ASTNode.EXPRESSION_STATEMENT:
@@ -161,12 +161,12 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param ilr */
   static void fixAddedImports(@NotNull final Statement s, @NotNull final ImportRewrite r, final CompilationUnit u, final TextEditGroup g,
       @NotNull final ListRewrite ilr) {
-    final Collection<String> idns = new ArrayList<>();
+    @NotNull final Collection<String> idns = new ArrayList<>();
     if (r.getAddedImports() != null)
       idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)
       idns.addAll(as.list(r.getAddedStaticImports()));
-    outer: for (final String idn : idns) {
+    outer: for (@NotNull final String idn : idns) {
       if (imports(u).stream().anyMatch(λ -> idn.equals(λ.getName().getFullyQualifiedName())))
         continue outer;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
@@ -206,7 +206,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if ($ instanceof WildcardType)
       return copy.of(((WildcardType) $).getBound());
     // here is the manual work...
-    final String s = $ + "";
+    @NotNull final String s = $ + "";
     if (!s.startsWith("? extends "))
       return $;
     $.accept(new ASTVisitor(true) {
@@ -222,7 +222,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         stop = true;
         if (!($.getParent() instanceof Type))
           return false;
-        final Type pt = (Type) $.getParent();
+        @NotNull final Type pt = (Type) $.getParent();
         // TODO Ori Roth: more cases?
         if (pt instanceof ArrayType)
           ((ArrayType) pt).setElementType(copy.of($.getBound()));

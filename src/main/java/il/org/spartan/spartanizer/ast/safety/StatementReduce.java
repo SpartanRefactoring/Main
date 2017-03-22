@@ -23,8 +23,8 @@ public abstract class StatementReduce<T> {
   }
 
   @Nullable private T reduce(@NotNull final Iterable<Expression> xs) {
-    T $ = neutralElement();
-    for (final Expression ¢ : xs)
+    @Nullable T $ = neutralElement();
+    for (@NotNull final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
@@ -38,8 +38,8 @@ public abstract class StatementReduce<T> {
   }
 
   @Nullable protected T map(final Block b) {
-    T $ = neutralElement();
-    for (final Statement ¢ : statements(b))
+    @Nullable T $ = neutralElement();
+    for (@NotNull final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
@@ -195,7 +195,7 @@ public abstract class StatementReduce<T> {
   @NotNull protected abstract T reduce(T t1, T t2);
 
   @SafeVarargs @NotNull protected final T reduce(final T t1, final T t2, @NotNull final T... ts) {
-    T $ = reduce(t1, t2);
+    @NotNull T $ = reduce(t1, t2);
     for (final T ¢ : ts)
       $ = reduce($, ¢);
     return $;

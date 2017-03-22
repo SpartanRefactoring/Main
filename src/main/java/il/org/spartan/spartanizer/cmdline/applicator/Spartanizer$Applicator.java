@@ -42,8 +42,8 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @param forTrueConditionRemove
    * @return */
   public boolean apply(@NotNull final AbstractSelection<?> __) {
-    final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
-    for (final WrappedCompilationUnit w : list) {
+    @Nullable final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
+    for (@NotNull final WrappedCompilationUnit w : list) {
       assert w != null;
       assert w.compilationUnit != null;
       System.out.println(w.compilationUnit);
@@ -102,7 +102,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   }
 
   private String fixedPoint(final String from) {
-    for (final IDocument $ = new Document(from);;) {
+    for (@NotNull final IDocument $ = new Document(from);;) {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
       try {
         e.apply($);
@@ -143,7 +143,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        Tipper<N> tipper = null;
+        @Nullable Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch (@NotNull final Exception ¢) {
@@ -151,7 +151,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        Tip s = null;
+        @Nullable Tip s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
@@ -176,7 +176,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       }
 
       <N extends ASTNode> void tick(@NotNull final Tipper<N> w) {
-        final String key = system.className(w.getClass());
+        @NotNull final String key = system.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);
@@ -195,7 +195,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        Tipper<N> tipper = null;
+        @Nullable Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch (@NotNull final Exception ¢) {
@@ -203,7 +203,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        Tip s = null;
+        @Nullable Tip s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
@@ -228,7 +228,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
       }
 
       <N extends ASTNode> void tick(@NotNull final Tipper<N> w) {
-        final String key = system.className(w.getClass());
+        @NotNull final String key = system.className(w.getClass());
         if (!spectrum.containsKey(key))
           spectrum.put(key, 0);
         spectrum.put(key, spectrum.get(key) + 1);

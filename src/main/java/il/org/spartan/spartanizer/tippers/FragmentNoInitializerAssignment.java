@@ -37,7 +37,7 @@ public final class FragmentNoInitializerAssignment extends $FragementAndStatemen
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
-    final Assignment a = extract.assignment(nextStatement);
+    @Nullable final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);

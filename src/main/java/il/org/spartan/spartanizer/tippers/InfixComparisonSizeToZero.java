@@ -75,7 +75,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (!"size".equals(name(i).getIdentifier()))
       return null;
     int $ = -1;
-    NumberLiteral l = az.throwing.negativeLiteral(x);
+    @Nullable NumberLiteral l = az.throwing.negativeLiteral(x);
     if (l == null) {
       /* should be unnecessary since validTypes uses isNumber so n is either a
        * NumberLiteral or an PrefixExpression which is a negative number */
@@ -84,16 +84,16 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         return null;
       $ = 1;
     }
-    final Expression receiver = receiver(i);
+    @NotNull final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
     /* In case binding is available, uses it to ensure that isEmpty() is
      * accessible from current scope. Currently untested */
     if (i.getAST().hasResolvedBindings()) {
-      final CompilationUnit u = containing.compilationUnit(x);
+      @Nullable final CompilationUnit u = containing.compilationUnit(x);
       if (u == null)
         return null;
-      final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
+      @Nullable final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
       if (b == null)
         return null;
       final ITypeBinding t = b.getReturnType();
@@ -109,7 +109,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   }
 
   @Override @NotNull public String description(final InfixExpression ¢) {
-    final Expression $ = left(¢);
+    @NotNull final Expression $ = left(¢);
     return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }
 
@@ -117,7 +117,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     final Operator $ = x.getOperator();
     if (!iz.comparison($))
       return null;
-    final Expression right = right(x), left = left(x);
+    @NotNull final Expression right = right(x), left = left(x);
     return !validTypes(right, left) ? null
         : iz.methodInvocation(left) ? replacement($, az.methodInvocation(left), right)
             : replacement(wizard.conjugate($), az.methodInvocation(right), left);

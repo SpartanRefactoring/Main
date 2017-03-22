@@ -131,19 +131,19 @@ public class Issue0404 {
   }
 
   @Test public void kc() {
-    final List<String> $ = dig.stringLiterals(into.a("s = \"a\""));
+    @NotNull final List<String> $ = dig.stringLiterals(into.a("s = \"a\""));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert "a".equals(first($)) : "The contained element was not the expected one.";
   }
 
   @Test public void kd() {
-    final List<String> $ = dig.stringLiterals(into.c("\"a\".size()> b.size() ? b : a"));
+    @NotNull final List<String> $ = dig.stringLiterals(into.c("\"a\".size()> b.size() ? b : a"));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert "a".equals(first($));
   }
 
   @Test public void ke() {
-    final List<String> $ = dig.stringLiterals(into.cu(//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "char c = '\"';\n"//
             + "String foo(String s){\n"//
@@ -155,7 +155,7 @@ public class Issue0404 {
   }
 
   @Test public void kf() {
-    final List<String> $ = dig.stringLiterals(into.cu(//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "char c1 = '\"';\n"//
             + "char c2 = '\"';\n"//
@@ -168,7 +168,7 @@ public class Issue0404 {
   }
 
   @Test public void la() {
-    final List<String> $ = dig.stringLiterals(into.cu(//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "int i = \"four\".size();\n"//
             + "String foo(){\n"//
@@ -181,7 +181,7 @@ public class Issue0404 {
   }
 
   @Test public void lb() {
-    final List<String> $ = dig.stringLiterals(into.cu(//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\nchar c1 = '\"';"//
             + "int i = \"four\".size();\n"//
             + "String foo(){\n"//
@@ -194,7 +194,7 @@ public class Issue0404 {
   }
 
   @Test public void lc() {
-    final List<String> $ = dig.stringLiterals(into.d("int f(String a){\nreturn a.equals(\"2\") ? \"3\".size() : \"one\".size();\n"//
+    @NotNull final List<String> $ = dig.stringLiterals(into.d("int f(String a){\nreturn a.equals(\"2\") ? \"3\".size() : \"one\".size();\n"//
         + "}"));
     assert $.size() == 3 : "The List did not contain the expected number of elements";
     assert $.contains("2") : "List did not contain expected element \"2\"";
@@ -203,21 +203,21 @@ public class Issue0404 {
   }
 
   @Test public void ld() {
-    final List<String> $ = dig.stringLiterals(into.s("{ a=\"\"; b=\"str\";}"));
+    @NotNull final List<String> $ = dig.stringLiterals(into.s("{ a=\"\"; b=\"str\";}"));
     assert $.size() == 2 : "The List did not contain the expected number of elements";
     assert $.contains("") : "List did not contain expected element \"\"";
     assert $.contains("str") : "List did not contain expected element \"str\"";
   }
 
   @Test public void le() {
-    final List<String> $ = dig.stringLiterals(into.i("\"0\" + \"1\""));
+    @NotNull final List<String> $ = dig.stringLiterals(into.i("\"0\" + \"1\""));
     assert $.size() == 2 : "The List did not contain the expected number of elements";
     assert $.contains("0") : "List did not contain expected element \"0\"";
     assert $.contains("1") : "List did not contain expected element \"1\"";
   }
 
   @Test public void lf() {
-    final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu("class A{\n"//
         + "int i = \"first\".size();\n"//
         + "String s = \"second\"String foo(){\n"//
         + "return i> 5 ? \"third\" : \"fourth\";\n"//
@@ -233,62 +233,62 @@ public class Issue0404 {
   // Writing an escaped string within an escaped string within another string is
   // a bit cumbersome. Setting the value manually.
   @Test public void ma() {
-    final Expression x = into.e("\"\"");
+    @NotNull final Expression x = into.e("\"\"");
     assert x instanceof StringLiteral;
-    final StringLiteral l = (StringLiteral) x;
+    @NotNull final StringLiteral l = (StringLiteral) x;
     l.setLiteralValue("\"");
-    final List<String> $ = dig.stringLiterals(l);
+    @NotNull final List<String> $ = dig.stringLiterals(l);
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains("\"") : "The List did not contain the expected element \"";
   }
 
   @Test public void mb() {
-    final InfixExpression x = into.i("\"\" + \" \"");
+    @NotNull final InfixExpression x = into.i("\"\" + \" \"");
     assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
     final StringLiteral left = x.getAST().newStringLiteral(), right = x.getAST().newStringLiteral();
     left.setLiteralValue("\"");
     right.setLiteralValue("\'");
     x.setLeftOperand(left);
     x.setRightOperand(right);
-    final List<String> $ = dig.stringLiterals(x);
+    @NotNull final List<String> $ = dig.stringLiterals(x);
     assert $.size() == 2 : "The List did not contain the expected number of elements.";
     assert "\"".equals(first($)) : "The List did not contain the expected element \" at index 0";
     assert "\'".equals($.get(1)) : "The List did not contain the expected element \' at index 1";
   }
 
   @Test public void mc() {
-    final InfixExpression x = into.i("\"\" + \"\"");
+    @NotNull final InfixExpression x = into.i("\"\" + \"\"");
     assert x.getLeftOperand() instanceof StringLiteral && x.getRightOperand() instanceof StringLiteral;
     final StringLiteral left = x.getAST().newStringLiteral(), right = x.getAST().newStringLiteral();
     left.setLiteralValue(String.valueOf((char) 34)); // "
     right.setLiteralValue(String.valueOf((char) 1));
     x.setLeftOperand(left);
     x.setRightOperand(right);
-    final List<String> $ = dig.stringLiterals(x);
+    @NotNull final List<String> $ = dig.stringLiterals(x);
     assert $.size() == 2 : "The List did not contain the expected number of elements.";
     assert "\"".equals(first($)) : "The List did not contain the expected element \" at index 0";
     assert String.valueOf((char) 1).equals($.get(1)) : "The List did not contain the expected element \' at index 1";
   }
 
   @Test public void md() {
-    final List<String> $ = dig.stringLiterals(into.s("String str = '\"' + \"onoes\" + '\"';"));
+    @NotNull final List<String> $ = dig.stringLiterals(into.s("String str = '\"' + \"onoes\" + '\"';"));
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains("onoes") : "The List did not contain expected element \"onoes\"";
   }
 
   @Test public void me() {
-    final Assignment a = into.a("str =\"onoes\"");
+    @NotNull final Assignment a = into.a("str =\"onoes\"");
     final StringLiteral l = a.getAST().newStringLiteral();
     l.setLiteralValue("\"onoes\"");
     a.setRightHandSide(l);
-    final List<String> $ = dig.stringLiterals(a);
+    @NotNull final List<String> $ = dig.stringLiterals(a);
     assert $.size() == 1 : "The List did not contain the expected number of elements.";
     assert $.contains("\"onoes\"") : "The List did not contain expected element \"onoes\"";
   }
 
   // Extended Latin and Hebrew
   @Test public void na() {
-    final List<String> $ = dig.stringLiterals(into.cu(//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "int i = \"ĀĆ\".size();\n"//
             + "String s = \"Ēċ\"String foo(){\n"//
@@ -303,7 +303,7 @@ public class Issue0404 {
   }
 
   @Test public void nb() {
-    final List<String> $ = dig.stringLiterals(into.cu(//
+    @NotNull final List<String> $ = dig.stringLiterals(into.cu(//
         "class A{\n"//
             + "int i = \"עוד חוזר הניגון שזנחת לשווא\".size();\n"//
             + "String s = \"והדרך עודנה נפקחת לאורך\"String foo(){\n"//

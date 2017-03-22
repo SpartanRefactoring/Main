@@ -45,7 +45,7 @@ public abstract class descendants<N extends ASTNode> {
     }
 
     @Override @NotNull public List<N> from(@NotNull final ASTNode n) {
-      final List<N> $ = new ArrayList<>();
+      @NotNull final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(@NotNull final ASTNode ¢) {
           if (n != ¢ && clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
@@ -56,7 +56,7 @@ public abstract class descendants<N extends ASTNode> {
     }
 
     @Override @NotNull public List<N> inclusiveFrom(@Nullable final ASTNode n) {
-      final List<N> $ = new ArrayList<>();
+      @NotNull final List<N> $ = new ArrayList<>();
       if (n == null)
         return $;
       n.accept(new ASTVisitor(true) {
@@ -70,7 +70,7 @@ public abstract class descendants<N extends ASTNode> {
   }
 
   @NotNull public static List<ASTNode> of(@NotNull final ASTNode n) {
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);

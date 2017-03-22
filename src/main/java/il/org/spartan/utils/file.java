@@ -26,7 +26,7 @@ public enum file {
   }
 
   private static boolean exists(@NotNull final String path) {
-    final File $ = new File(path);
+    @NotNull final File $ = new File(path);
     return $.exists() && !$.isDirectory();
   }
 

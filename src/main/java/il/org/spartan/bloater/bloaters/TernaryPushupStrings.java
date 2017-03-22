@@ -27,8 +27,8 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
   @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
-    final StringLiteral l;
-    final ConditionalExpression r;
+    @Nullable final StringLiteral l;
+    @Nullable final ConditionalExpression r;
     if (iz.stringLiteral(left(nn))) {
       l = az.stringLiteral(left(nn));
       r = az.conditionalExpression(expression(right(nn)));
@@ -38,7 +38,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     }
     final ConditionalExpression $ = ast.newConditionalExpression();
     $.setExpression(copy.of(r.getExpression()));
-    final StringLiteral l1 = az.stringLiteral(then(r)), l2 = az.stringLiteral(elze(r)), n1 = copy.of(l1), n2 = copy.of(l2);
+    @Nullable final StringLiteral l1 = az.stringLiteral(then(r)), l2 = az.stringLiteral(elze(r)), n1 = copy.of(l1), n2 = copy.of(l2);
     if (iz.stringLiteral(left(nn))) {
       n1.setLiteralValue(l.getLiteralValue() + l1.getLiteralValue());
       n2.setLiteralValue(l.getLiteralValue() + l2.getLiteralValue());
@@ -63,7 +63,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     final Expression r = expression(x);
     if (!iz.conditionalExpression(r))
       return false;
-    final ConditionalExpression $ = az.conditionalExpression(r);
+    @Nullable final ConditionalExpression $ = az.conditionalExpression(r);
     return iz.stringLiteral(then($)) && iz.stringLiteral(elze($));
   }
 

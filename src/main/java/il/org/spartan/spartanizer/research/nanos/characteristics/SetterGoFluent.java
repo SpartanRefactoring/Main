@@ -33,7 +33,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     final Expression e = az.expressionStatement(first(ss)).getExpression();
     if (!iz.assignment(e))
       return false;
-    final Assignment $ = az.assignment(e);
+    @Nullable final Assignment $ = az.assignment(e);
     return (iz.name(left($)) || tipper.check(left($))) && wizard.same(right($), first(parameters(¢)).getName());
   }
 
@@ -42,7 +42,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(returnType(d)))
           return;
-        final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
+        @Nullable final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
         n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(yieldAncestors.untilContainingType().from(d)))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());

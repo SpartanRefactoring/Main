@@ -51,11 +51,11 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
     if (nextAssignment == null || nextAssignment.getOperator() != Operator.ASSIGN)
       return null;
-    final Name left1 = az.name(a.getLeftHandSide());
+    @Nullable final Name left1 = az.name(a.getLeftHandSide());
     final Expression right1 = a.getRightHandSide();
     if (left1 == null || right1 == null)
       return null;
-    final Name left2 = az.name(nextAssignment.getLeftHandSide());
+    @Nullable final Name left2 = az.name(nextAssignment.getLeftHandSide());
     if (left2 == null //
         || !left1.getFullyQualifiedName().equals(left2.getFullyQualifiedName()) //
         || !sideEffects.sink(right1))

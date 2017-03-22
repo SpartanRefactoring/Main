@@ -80,10 +80,10 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
       @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    final VariableDeclarationStatement vds = parent(f);
+    @Nullable final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
       return null;
-    final WhileStatement s = az.whileStatement(nextStatement);
+    @Nullable final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null || !fitting(vds, s))
       return null;
     exclude.excludeAll(fragments(vds));

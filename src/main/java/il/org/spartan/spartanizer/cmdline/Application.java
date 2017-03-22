@@ -27,7 +27,7 @@ public final class Application implements IApplication {
    * @return
    * @throws IOException */
   static int countLines(@NotNull final File ¢) throws IOException {
-    try (LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
+    try (@NotNull LineNumberReader $ = new LineNumberReader(new FileReader(¢))) {
       $.skip(Long.MAX_VALUE);
       return $.getLineNumber();
     }
@@ -42,7 +42,7 @@ public final class Application implements IApplication {
   }
 
   static MethodInvocation getMethodInvocation(@NotNull final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
-    final Wrapper<MethodInvocation> $ = new Wrapper<>();
+    @NotNull final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final MethodInvocation ¢) {
         if (u.getLineNumber(¢.getStartPosition()) == lineNumber)
@@ -105,7 +105,7 @@ public final class Application implements IApplication {
 
   @Override public Object start(@NotNull final IApplicationContext arg0) {
     final Object $ = startInner(arg0);
-    try (Scanner s = new Scanner(System.in)) {
+    try (@NotNull Scanner s = new Scanner(System.in)) {
       try {
         s.nextLine();
       } catch (@NotNull @SuppressWarnings("unused") final Exception __) {
@@ -125,9 +125,9 @@ public final class Application implements IApplication {
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
-    final Collection<FileStats> fileStats = new ArrayList<>();
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
-      ICompilationUnit u = null;
+    @NotNull final Collection<FileStats> fileStats = new ArrayList<>();
+    for (@NotNull final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
+      @Nullable ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
         fileStats.add(process(f, u));
@@ -154,8 +154,8 @@ public final class Application implements IApplication {
   }
 
   @NotNull private FileStats process(@NotNull final File f, @NotNull final ICompilationUnit u) throws IOException, JavaModelException {
-    final FileStats $ = new FileStats(f);
-    final Trimmer t = new Trimmer();
+    @NotNull final FileStats $ = new FileStats(f);
+    @NotNull final Trimmer t = new Trimmer();
     IntStream.range(0, optRounds).forEach(λ -> t.apply(u));
     FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
     if (optVerbose)
@@ -193,7 +193,7 @@ public final class Application implements IApplication {
   }
 
   private ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws IOException, JavaModelException {
-    final String $ = FileUtils.read(¢);
+    @NotNull final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
@@ -203,7 +203,7 @@ public final class Application implements IApplication {
       printHelpPrompt();
       return true;
     }
-    for (final String a : args) {
+    for (@NotNull final String a : args) {
       if ("-N".equals(a))
         optOverwrite = false;
       if ("-E".equals(a))
@@ -241,7 +241,7 @@ public final class Application implements IApplication {
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    @NotNull final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
@@ -249,14 +249,14 @@ public final class Application implements IApplication {
   private void printLineStatistics(@NotNull final Iterable<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
-      for (final FileStats ¢ : ss) {
+      for (@NotNull final FileStats ¢ : ss) {
         System.out.println("\n  " + ¢.fileName());
         System.out.println("    Lines before: " + ¢.getLinesBefore());
         System.out.println("    Lines after: " + ¢.getLinesAfter());
       }
     else {
       int totalBefore = 0, totalAfter = 0;
-      for (final FileStats ¢ : ss) {
+      for (@NotNull final FileStats ¢ : ss) {
         totalBefore += ¢.getLinesBefore();
         totalAfter += ¢.getLinesAfter();
       }
@@ -275,7 +275,7 @@ public final class Application implements IApplication {
       range.to(optRounds).forEach(i -> System.out
           .println("    Round #" + i + 1 + ": " + (i < 9 ? " " : "") + ss.stream().map(λ -> λ.getRoundStat(i)).reduce((x, y) -> x + y).get()));
     else
-      for (final FileStats f : ss) {
+      for (@NotNull final FileStats f : ss) {
         System.out.println("\n  " + f.fileName());
         for (int ¢ = 0; ¢ < optRounds; ++¢)
           System.out.println("    Round #" + ¢ + 1 + ": " + (¢ < 9 ? " " : "") + f.getRoundStat(¢));

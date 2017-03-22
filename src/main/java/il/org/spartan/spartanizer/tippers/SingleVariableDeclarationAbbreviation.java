@@ -36,9 +36,9 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    final List<TagElement> ts = tags(j);
+    @NotNull final List<TagElement> ts = tags(j);
     if (ts != null)
-      for (final TagElement t : ts)
+      for (@NotNull final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final Object ¢ : fragments(t))
             if (¢ instanceof SimpleName && wizard.same((ASTNode) ¢, oldName)) {
@@ -48,8 +48,8 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   @NotNull private static String getExtraDimensions(final SingleVariableDeclaration d) {
-    String $ = "";
-    for (String ¢ = d + ""; ¢.endsWith("[]");) {
+    @NotNull String $ = "";
+    for (@NotNull String ¢ = d + ""; ¢.endsWith("[]");) {
       $ += "s";
       ¢ = ¢.substring(0, ¢.length() - 2);
     }
@@ -81,13 +81,13 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager exclude) {
-    final MethodDeclaration $ = az.methodDeclaration(parent(d));
+    @Nullable final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     if (exclude != null)
       exclude.exclude($);
     final SimpleName oldName = d.getName();
-    final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
+    @NotNull final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, make.from(d).identifier(newName), $, r, g);

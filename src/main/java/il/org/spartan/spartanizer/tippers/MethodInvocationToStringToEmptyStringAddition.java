@@ -21,14 +21,14 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
   private static final long serialVersionUID = 6764541766975586375L;
 
   @Override @NotNull public String description(final MethodInvocation ¢) {
-    final Expression $ = receiver(¢);
+    @NotNull final Expression $ = receiver(¢);
     return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
 
   @Override public ASTNode replacement(@NotNull final MethodInvocation i) {
     if (!"toString".equals(name(i).getIdentifier()) || !arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
       return null;
-    final Expression receiver = receiver(i);
+    @NotNull final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
     final InfixExpression $ = subject.pair(make.makeEmptyString(i), receiver).to(PLUS2);

@@ -44,7 +44,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void lexicalUsesCollector() {
-    final Collection<SimpleName> into = new ArrayList<>();
+    @NotNull final Collection<SimpleName> into = new ArrayList<>();
     a.accept(collect.lexicalUsesCollector(into, a));
     azzert.that(into.size(), is(1));
   }

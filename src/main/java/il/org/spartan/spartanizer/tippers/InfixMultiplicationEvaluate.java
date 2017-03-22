@@ -39,7 +39,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
   @Override int evaluateInt(@NotNull final List<Expression> xs) {
     int $ = 1;
     try {
-      for (final Expression ¢ : xs) {
+      for (@NotNull final Expression ¢ : xs) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         $ *= az.throwing.int¢(¢);
@@ -53,7 +53,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
   @Override long evaluateLong(@NotNull final List<Expression> xs) {
     long $ = 1;
     try {
-      for (final Expression ¢ : xs) {
+      for (@NotNull final Expression ¢ : xs) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
         $ *= az.throwing.long¢(¢);

@@ -29,7 +29,7 @@ public enum subject {
   }
 
   public static InfixExpression append(final InfixExpression base, @NotNull final Iterable<Expression> adds) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>(base);
+    @NotNull final Wrapper<InfixExpression> $ = new Wrapper<>(base);
     adds.forEach(λ -> $.set(append($.get(), λ)));
     return $.get();
   }
@@ -121,7 +121,7 @@ public enum subject {
      * @see rebase
      * @see copy */
     @Nullable Statement claim(final Statement ¢) {
-      final Statement $ = extract.core(¢);
+      @Nullable final Statement $ = extract.core(¢);
       return $ == null ? null : wizard.rebase(copy.of($), ast);
     }
   }

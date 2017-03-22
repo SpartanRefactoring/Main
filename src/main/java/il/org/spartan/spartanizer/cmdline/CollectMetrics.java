@@ -58,10 +58,10 @@ enum CollectMetrics {
 
   private static void go(@NotNull final String javaCode) {
     output.put("Characters", javaCode.length());
-    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    @NotNull final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
     collectTips(javaCode, before);
-    final CompilationUnit after = spartanize(javaCode);
+    @NotNull final CompilationUnit after = spartanize(javaCode);
     assert after != null;
     report("After-", after);
     output.nl();
@@ -105,7 +105,7 @@ enum CollectMetrics {
   }
 
   private static void reportTips(@NotNull final Iterable<Tip> ¢) {
-    for (final Tip $ : ¢) {
+    for (@NotNull final Tip $ : ¢) {
       Tips.put("description", $.description);
       Tips.put("from", $.from);
       Tips.put("to", $.to);

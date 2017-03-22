@@ -23,7 +23,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
   }
 
   private boolean delegating(final MethodDeclaration ¢) {
-    final List<String> ps = parametersNames(¢);
+    @Nullable final List<String> ps = parametersNames(¢);
     final Iterable<Expression> as = arguments(az.superConstructorInvocation(onlyStatement(¢)));
     for (final Expression a : as)
       if (!iz.name(¢) && !ps.contains(identifier(az.name(a))))

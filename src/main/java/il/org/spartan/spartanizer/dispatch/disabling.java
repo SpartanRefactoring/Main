@@ -39,7 +39,7 @@ public interface disabling {
   static void scan(@NotNull final ASTNode n) {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
+        @Nullable final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.specificallyDisabled(¢2))
           return true;
         disabling.disable(¢2);

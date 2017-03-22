@@ -44,13 +44,13 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
-    final Assignment a2 = extract.assignment(nextStatement);
+    @Nullable final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a2) != ASSIGN)
       return null;
     final SimpleName to = az.simpleName(to(a1));
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
-    final Expression from1 = from(a1), from2 = from(a2);
+    @Nullable final Expression from1 = from(a1), from2 = from(a2);
     final List<SimpleName> uses = collect.usesOf(to).in(from2);
     return uses.size() > 1 ? !sideEffects.free(from1) || !iz.deterministic(from1) ? null : go($, a1, g, to, from1, from2)
         : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;

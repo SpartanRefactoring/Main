@@ -33,8 +33,8 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   void checkExpected(@NotNull final String expected) {
-    final Wrap w = Wrap.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
+    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
     final String peeled = w.off(unpeeled);
@@ -63,8 +63,8 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   @Nullable public TrimmingOperand gives(@NotNull final String $) {
-    final Wrap w = Wrap.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
       copyPasteReformat("  .stays()//\n  ;\n");
       azzert.fail("Nothing done on " + get());
@@ -96,8 +96,8 @@ public class TrimmingOperand extends Wrapper<String> {
    * @since 09-12-2016 */
   @Nullable public TrimmingOperand givesEither(@NotNull final String... options) {
     assert options != null;
-    final Wrap w = Wrap.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
     final String peeled = w.off(unpeeled);
@@ -105,7 +105,7 @@ public class TrimmingOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    for (final String $ : options)
+    for (@NotNull final String $ : options)
       if (trivia.essence($).equals(trivia.essence(peeled)))
         return new TrimmingOperand($);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
@@ -113,8 +113,8 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   public void stays() {
-    final Wrap w = Wrap.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       return;
     final String peeled = w.off(unpeeled);

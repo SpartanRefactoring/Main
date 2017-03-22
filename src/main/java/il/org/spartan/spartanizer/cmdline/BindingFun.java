@@ -37,7 +37,7 @@ final class BindingFun implements IApplication {
   }
 
   private static String getPackageNameFromSource(@NotNull final ASTNode n) {
-    final Wrapper<String> $ = new Wrapper<>("");
+    @NotNull final Wrapper<String> $ = new Wrapper<>("");
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
@@ -60,13 +60,13 @@ final class BindingFun implements IApplication {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
-    for (final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
+    for (@NotNull final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
       try {
         final ICompilationUnit u = openCompilationUnit(f);
         final ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setResolveBindings(true);
         parser.setSource(u);
-        final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        @NotNull final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
         ___.______unused();
         iterateMethodInvocations(cu);
       } catch (@NotNull final IOException ¢) {
@@ -102,7 +102,7 @@ final class BindingFun implements IApplication {
   }
 
   private ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws JavaModelException, IOException {
-    final String $ = FileUtils.read(¢);
+    @NotNull final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
@@ -122,7 +122,7 @@ final class BindingFun implements IApplication {
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    @NotNull final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }

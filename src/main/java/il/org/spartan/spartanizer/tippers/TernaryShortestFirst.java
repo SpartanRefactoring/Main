@@ -42,12 +42,12 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
 
   @Override public ConditionalExpression replacement(@NotNull final ConditionalExpression x) {
     final ConditionalExpression $ = subject.pair(elze(x), then(x)).toCondition(make.notOf(x.getExpression()));
-    final Expression then = elze($), elze = then($);
+    @NotNull final Expression then = elze($), elze = then($);
     if (!iz.conditionalExpression(then) && iz.conditionalExpression(elze))
       return null;
     if (iz.conditionalExpression(then) && !iz.conditionalExpression(elze))
       return $;
-    final ConditionalExpression parent = az.conditionalExpression(x.getParent());
+    @Nullable final ConditionalExpression parent = az.conditionalExpression(x.getParent());
     if (parent != null && parent.getElseExpression() == x && compatibleCondition(parent.getExpression(), x.getExpression())) {
       final Expression alignTo = parent.getThenExpression();
       final double a1 = align(elze, alignTo), a2 = align(then, alignTo);

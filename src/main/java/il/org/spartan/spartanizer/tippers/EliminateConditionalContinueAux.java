@@ -25,8 +25,8 @@ enum EliminateConditionalContinueAux {
       final Class<? extends Tipper> c) {
     if (b == null || statements(b).size() < 2)
       return null;
-    final List<Statement> $ = statements(b);
-    final IfStatement continueStatement = az.ifStatement($.get($.size() - 2));
+    @NotNull final List<Statement> $ = statements(b);
+    @Nullable final IfStatement continueStatement = az.ifStatement($.get($.size() - 2));
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
     final IfStatement replacementIf = subject.pair(last($), null).toNot(continueStatement.getExpression());

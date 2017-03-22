@@ -168,12 +168,12 @@ public enum haz {
   }
 
   public static boolean unknownNumberOfEvaluations(final MethodDeclaration d) {
-    final Block $ = body(d);
+    @NotNull final Block $ = body(d);
     return $ != null && statements($).stream().anyMatch(λ -> Coupling.unknownNumberOfEvaluations(d, λ));
   }
 
   public static boolean variableDefinition(@NotNull final ASTNode n) {
-    final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
+    @NotNull final Wrapper<Boolean> $ = new Wrapper<>(Boolean.FALSE);
     n.accept(new ASTVisitor(true) {
       boolean continue¢(@NotNull final Collection<VariableDeclarationFragment> fs) {
         return fs.stream().anyMatch(λ -> continue¢(step.name(λ)));

@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -50,10 +51,10 @@ public final class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void runGo() throws Exception {
-    final String input = Wrap.Statement.on(INPUT + "");
-    final IDocument d = new Document(input);
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
-    final IfStatement s = findFirst.ifStatement(u);
+    @NotNull final String input = Wrap.Statement.on(INPUT + "");
+    @NotNull final IDocument d = new Document(input);
+    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
+    @NotNull final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     TIPPER.tip(s).go(r, null);

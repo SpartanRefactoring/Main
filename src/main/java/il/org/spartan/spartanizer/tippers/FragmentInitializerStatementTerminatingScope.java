@@ -40,17 +40,17 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
             && !iz.literal(initializer)
         || wizard.frobiddenOpOnPrimitive(f, nextStatement) || Inliner.isArrayInitWithUnmatchingTypes(f))
       return null;
-    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
+    @Nullable final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     boolean searching = true;
-    for (final VariableDeclarationFragment ff : fragments(currentStatement))
+    for (@NotNull final VariableDeclarationFragment ff : fragments(currentStatement))
       if (searching)
         searching = ff != f;
       else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
         return null;
-    final Block parent = az.block(currentStatement.getParent());
+    @Nullable final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
-    final List<Statement> ss = statements(parent);
+    @NotNull final List<Statement> ss = statements(parent);
     if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
@@ -63,7 +63,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
       if (Inliner.never(use, nextStatement) || Inliner.isPresentOnAnonymous(use, nextStatement))
         return null;
     final Expression v = Inliner.protect(initializer, currentStatement);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
+    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;

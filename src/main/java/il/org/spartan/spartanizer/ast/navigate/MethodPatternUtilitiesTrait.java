@@ -144,7 +144,7 @@ public interface MethodPatternUtilitiesTrait {
   };
 
   default boolean setter(final MethodDeclaration ¢) {
-    final List<String> $ = parametersNames(¢);
+    @Nullable final List<String> $ = parametersNames(¢);
     return statements(¢).stream()
         .allMatch(λ -> setterTippers.canTip(expression(λ)) && isRightSideParameterOrLiteral(right(az.assignment(expression(λ))), $));
   }

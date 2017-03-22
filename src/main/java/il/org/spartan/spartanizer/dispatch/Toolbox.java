@@ -32,8 +32,8 @@ public class Toolbox {
     public static final Map<Class<? extends Tipper<?>>, Example[]> TipperExamplesCache = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
-      for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
-        final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
+      for (@NotNull final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
+        @NotNull final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
         TipperIDClassTranslationTable.put(id, (Class<? extends Tipper<?>>) t.getClass());
         TipperIDNameTranslationTable.put(id, t.nanoName());
         TipperDescriptionCache.put((Class<? extends Tipper<?>>) t.getClass(), t.description());
@@ -64,7 +64,7 @@ public class Toolbox {
    * @return */
   public ASTRewrite pickFirstTip(@NotNull final ASTNode root) {
     disabling.scan(root);
-    final Bool done = new Bool();
+    @NotNull final Bool done = new Bool();
     final ASTRewrite $ = ASTRewrite.create(root.getAST());
     root.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode n) {
@@ -84,7 +84,7 @@ public class Toolbox {
   }
 
   @Nullable public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
-    @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
+    @NotNull @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
@@ -401,7 +401,7 @@ public class Toolbox {
   }
 
   @SafeVarargs @NotNull public final <N extends ASTNode> Toolbox add(@NotNull final Integer nodeType, @NotNull final Tipper<N>... ts) {
-    for (final Tipper<N> ¢ : ts) {
+    for (@Nullable final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : fault.specifically(//
@@ -424,7 +424,7 @@ public class Toolbox {
   }
 
   @NotNull public Collection<Tipper<? extends ASTNode>> getAllTippers() {
-    final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
+    @NotNull final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;
@@ -483,7 +483,7 @@ public class Toolbox {
   }
 
   @NotNull public static List<String> get(@Nullable final TipperGroup ¢) {
-    final List<String> $ = new ArrayList<>();
+    @NotNull final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
     final Toolbox t = freshCopyOfAllTippers();

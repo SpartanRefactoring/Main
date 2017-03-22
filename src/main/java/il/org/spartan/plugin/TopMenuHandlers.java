@@ -16,7 +16,7 @@ public class TopMenuHandlers extends AbstractHandler {
   @SuppressWarnings("serial") public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
     {
       put("il.org.spartan.LaconizeSelection", e -> {
-        final Selection s = Selection.Util.current();
+        @Nullable final Selection s = Selection.Util.current();
         SpartanizationHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
       put("il.org.spartan.LaconizeCurrent",
@@ -28,7 +28,7 @@ public class TopMenuHandlers extends AbstractHandler {
           InflateHandler.goWheelAction();
       });
       put("il.org.spartan.ZoomSelection", e -> {
-        final Selection s = Selection.Util.current().setUseBinding();
+        @NotNull final Selection s = Selection.Util.current().setUseBinding();
         if (!s.isTextSelection)
           InflateHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
         else if (InflateHandler.active.get() || showZoomToolMessage())

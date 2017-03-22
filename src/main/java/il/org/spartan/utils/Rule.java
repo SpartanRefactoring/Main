@@ -270,7 +270,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
                 "    Previously checked arguments was: %s\n" + //
                 "    Operand to rule application is: %s\n",
             ¢, object());
-      final R $ = fire();
+      @Nullable final R $ = fire();
       object = null;
       return $;
     }

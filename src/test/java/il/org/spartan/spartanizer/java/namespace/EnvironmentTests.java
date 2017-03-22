@@ -27,7 +27,7 @@ public final class EnvironmentTests {
   }
 
   void EX1() {
-    @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
+    @NotNull @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
     "a".equals(s);
     "a".equals(s);
     out.print("a");
@@ -49,7 +49,7 @@ public final class EnvironmentTests {
       }
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
-        final List<String> tmp = new ArrayList<>();
+        @NotNull final List<String> tmp = new ArrayList<>();
         tmp.add("a");
         tmp.forEach(λ -> y = λ);
       }
@@ -133,9 +133,9 @@ public final class EnvironmentTests {
     static void func() {
       @Begin
       class Q {}
-      final EX3 top = new EX3();
-      final x_hiding X = new x_hiding();
-      @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) final x_hiding.y_hiding Y = X.new y_hiding();
+      @NotNull final EX3 top = new EX3();
+      @NotNull final x_hiding X = new x_hiding();
+      @NotNull @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) final x_hiding.y_hiding Y = X.new y_hiding();
       top.x = 3;
       x_hiding.x = 4;
       X.xsy.y = 5;
@@ -200,9 +200,9 @@ public final class EnvironmentTests {
     void func() {
       @Begin
       class Q {}
-      @OutOfOrderFlatENV("x") final Parent p = new Parent();
-      @OutOfOrderFlatENV({ "x", "p" }) final Child1 c1 = new Child1();
-      @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @InOrderFlatENV({ "x", "p", "c1" }) @OutOfOrderFlatENV({ "p", "c1",
+      @NotNull @OutOfOrderFlatENV("x") final Parent p = new Parent();
+      @NotNull @OutOfOrderFlatENV({ "x", "p" }) final Child1 c1 = new Child1();
+      @NotNull @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @InOrderFlatENV({ "x", "p", "c1" }) @OutOfOrderFlatENV({ "p", "c1",
           "x" }) final Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();

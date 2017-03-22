@@ -61,7 +61,7 @@ public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDecla
   }
 
   private static boolean canTip(@NotNull final VariableDeclarationStatement $, final Statement nextStatement) {
-    final Block parent = az.block(parent($));
+    @Nullable final Block parent = az.block(parent($));
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
         && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
         && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()

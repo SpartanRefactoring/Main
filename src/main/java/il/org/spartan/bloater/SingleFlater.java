@@ -38,7 +38,7 @@ public final class SingleFlater {
    * @param ¢ JD
    * @return new */
   @NotNull public static SingleFlater in(final ASTNode ¢) {
-    final SingleFlater $ = new SingleFlater();
+    @NotNull final SingleFlater $ = new SingleFlater();
     $.root = ¢;
     return $;
   }
@@ -84,12 +84,12 @@ public final class SingleFlater {
     if (root == null || operationsProvider == null)
       return false;
     disabling.scan(root);
-    final List<Operation<?>> operations = new ArrayList<>();
+    @NotNull final List<Operation<?>> operations = new ArrayList<>();
     root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
-        Tipper<N> w = null;
+        @Nullable Tipper<N> w = null;
         try {
           w = operationsProvider.getTipper(n);
         } catch (@NotNull final Exception ¢) {
@@ -104,7 +104,7 @@ public final class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    for (final Operation o : operationsProvider.getFunction().apply(operations))
+    for (@NotNull final Operation o : operationsProvider.getFunction().apply(operations))
       try {
         o.tipper.tip(o.node).go(r, g);
       } catch (@NotNull final Exception ¢) {
@@ -118,7 +118,7 @@ public final class SingleFlater {
       final StyledText t, final ITextEditor e, final WindowInformation i) {
     boolean $ = false;
     try {
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());

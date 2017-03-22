@@ -21,7 +21,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
   private static final long serialVersionUID = 7233894972736348329L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
+    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
     for (int i = 0; i < $.size(); ++i)

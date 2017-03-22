@@ -54,12 +54,12 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
   }
 
   @Override public boolean canTip(final ForStatement s) {
-    for (final UserDefinedTipper<ForStatement> ¢ : tippers)
+    for (@NotNull final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.check(s)) {
         final SimpleName n = az.simpleName(¢.getMatching(s, "$N"));
         if (n == null)
           continue;
-        final Block b = az.block(¢.getMatching(s, "$B"));
+        @Nullable final Block b = az.block(¢.getMatching(s, "$B"));
         if (b == null)
           continue;
         if (!ChangedInBlock(identifier(n), b))
@@ -69,7 +69,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
   }
 
   private static boolean ChangedInBlock(final String id, @NotNull final Block b) {
-    final Bool $ = new Bool();
+    @NotNull final Bool $ = new Bool();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {

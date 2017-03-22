@@ -116,7 +116,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @Nullable Object initializeValue() {
       assert !initialized;
       initialized = true;
-      final Object $;
+      @Nullable final Object $;
       if (initializationSupplier == null) {
         $ = initialization;
         initialization = null;
@@ -242,7 +242,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
      * @param ¢ JD
      * @return {@code this} functor. */
     @NotNull @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWith(final X ¢) {
-      final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
+      @NotNull final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
       $.initialization = ¢;
       return $;
@@ -253,7 +253,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
      * @param ¢ JD
      * @return {@code this} functor. */
     @NotNull @SuppressWarnings("unchecked") public <X> EventMapperFunctor<E, X, O> startWithSupplyOf(final Supplier<X> ¢) {
-      final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
+      @NotNull final EventMapperFunctor<E, X, O> $ = (EventMapperFunctor<E, X, O>) this;
       $.initialized = false;
       $.initializationSupplier = ¢;
       return $;

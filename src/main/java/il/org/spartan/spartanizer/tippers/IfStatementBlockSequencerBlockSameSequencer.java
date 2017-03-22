@@ -26,7 +26,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<I
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement $ = copy.of(s);
         r.getListRewrite(then($), Block.STATEMENTS_PROPERTY).remove(extract.lastStatement(then($)), g);
-        final Block b = az.block(parent(s));
+        @Nullable final Block b = az.block(parent(s));
         final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
         // This is buggy
         lr.remove(b, g);

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.*;
  * @since 2016-10-07 */
 public interface dig {
   @NotNull static List<String> stringLiterals(@Nullable final ASTNode n) {
-    final List<String> $ = new ArrayList<>();
+    @NotNull final List<String> $ = new ArrayList<>();
     if (n == null)
       return $;
     // noinspection SameReturnValue

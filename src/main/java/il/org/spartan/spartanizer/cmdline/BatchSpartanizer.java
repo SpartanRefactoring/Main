@@ -55,7 +55,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   private static void spartanize() {
-    final File input = new File(inputDir);
+    @NotNull final File input = new File(inputDir);
     if (input.isDirectory()) {
       System.out.println(" ---- Analyzing directory: " + input.getAbsolutePath() + " -------- ");
       spartanizeDir(input);
@@ -70,7 +70,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   private static void spartanizeDir(@NotNull final File input) {
-    for (final File ¢ : input.listFiles())
+    for (@NotNull final File ¢ : input.listFiles())
       if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
         System.out.println(¢.getAbsolutePath());
         spartanizeFile(¢);
@@ -78,7 +78,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   @NotNull public static ProcessBuilder runScript¢(final String pathname) {
-    final ProcessBuilder $ = system.runScript();
+    @NotNull final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
@@ -124,7 +124,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     beforeFileName = outputDir + File.separator + name + ".before.java";
     afterFileName = outputDir + File.separator + name + ".after.java";
     reportFileName = outputDir + File.separator + name + ".CSV";
-    final File dir = new File(folder + outputDir);
+    @NotNull final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
@@ -250,8 +250,8 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         presentSourcePath, //
         beforeFileName, //
         afterFileName);
-    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+    try (@NotNull PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+         @NotNull PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");

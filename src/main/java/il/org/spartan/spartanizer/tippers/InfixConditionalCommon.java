@@ -34,7 +34,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
   private static final long serialVersionUID = -8462153823342463816L;
 
   private static Expression chopHead(@NotNull final InfixExpression ¢) {
-    final List<Expression> $ = allOperands(¢);
+    @Nullable final List<Expression> $ = allOperands(¢);
     $.remove(0);
     return $.size() < 2 ? copy.of(first($)) : subject.operands($).to(¢.getOperator());
   }
@@ -53,14 +53,14 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     final Operator $ = x.getOperator();
     if (!in($, CONDITIONAL_AND, CONDITIONAL_OR))
       return null;
-    final Operator conjugate = conjugate($);
-    final InfixExpression left = az.infixExpression(core(left(x)));
+    @NotNull final Operator conjugate = conjugate($);
+    @Nullable final InfixExpression left = az.infixExpression(core(left(x)));
     if (left == null || left.getOperator() != conjugate)
       return null;
-    final InfixExpression right = az.infixExpression(core(right(x)));
+    @Nullable final InfixExpression right = az.infixExpression(core(right(x)));
     if (right == null || right.getOperator() != conjugate)
       return null;
-    final Expression leftLeft = left(left);
+    @NotNull final Expression leftLeft = left(left);
     return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to($)).to(conjugate);
   }

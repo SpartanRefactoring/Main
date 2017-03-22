@@ -47,7 +47,7 @@ public enum ReflectionAnalyzer {
   }
 
   @NotNull static String toBinary(final int value) {
-    String $ = "";
+    @NotNull String $ = "";
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;
     return $;

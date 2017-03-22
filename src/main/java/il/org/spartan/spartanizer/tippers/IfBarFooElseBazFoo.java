@@ -34,7 +34,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -3692738201124876878L;
 
   @NotNull private static List<Statement> commmonSuffix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
-    final List<Statement> $ = new ArrayList<>();
+    @NotNull final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = last(ss1);
       if (!wizard.same(s1, last(ss2)))
@@ -50,22 +50,22 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
   }
 
   @Override public Tip tip(@NotNull final IfStatement s) {
-    final List<Statement> $ = extract.statements(then(s));
+    @NotNull final List<Statement> $ = extract.statements(then(s));
     if ($.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(elze(s));
+    @NotNull final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final List<Statement> commmonSuffix = commmonSuffix($, elze);
-    for (final Statement st : commmonSuffix) {
-      final DefinitionsCollector c = new DefinitionsCollector($);
+    @NotNull final List<Statement> commmonSuffix = commmonSuffix($, elze);
+    for (@NotNull final Statement st : commmonSuffix) {
+      @NotNull final DefinitionsCollector c = new DefinitionsCollector($);
       st.accept(c);
       if (c.notAllDefined())
         return null;
     }
     return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final IfStatement newIf = replacement();
+        @Nullable final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
           final ListRewrite lr = insertAfter(s, commmonSuffix, r, g);
           lr.insertAfter(newIf, s, g);

@@ -13,7 +13,7 @@ public interface Nested<@¢ T> extends Streamer<T> {
   @Override @NotNull default Compounder<T> compounder() {
     return (self, others) -> {
       Stream<T> $ = Stream.empty();
-      for (final Streamer<T> ¢ : others)
+      for (@NotNull final Streamer<T> ¢ : others)
         $ = Stream.concat(¢.stream(), streamSelf());
       return $;
     };

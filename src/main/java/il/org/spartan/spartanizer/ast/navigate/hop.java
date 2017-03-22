@@ -48,7 +48,7 @@ public interface hop {
   @Nullable static List<ASTNode> descendants(@Nullable final ASTNode root) {
     if (root == null)
       return null;
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);
@@ -68,7 +68,7 @@ public interface hop {
   }
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
+    @Nullable final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
     return $ == null ? null : $.getName() + "";
   }
 
@@ -111,7 +111,7 @@ public interface hop {
 
   static VariableDeclarationFragment penultimate(final Statement body) {
     final ASTNode n = hop.lastStatement(copy.of(body));
-    final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
+    @Nullable final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
     return n == null || $ == null ? null : previous($);
   }
 

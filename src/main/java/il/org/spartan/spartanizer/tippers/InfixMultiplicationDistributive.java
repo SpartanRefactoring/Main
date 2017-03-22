@@ -37,7 +37,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @NotNull private static List<Expression> removeFirstElement(@NotNull final List<Expression> ¢) {
-    final List<Expression> $ = new ArrayList<>(¢);
+    @NotNull final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first
     return $;
   }
@@ -82,16 +82,16 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   private ASTNode replacement(@NotNull final InfixExpression e1, @NotNull final InfixExpression e2) {
     assert e1 != null;
     assert e2 != null;
-    final List<Expression> es1 = extract.allOperands(e1);
+    @Nullable final List<Expression> es1 = extract.allOperands(e1);
     assert es1 != null;
-    final List<Expression> es2 = extract.allOperands(e2);
+    @Nullable final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
-    final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
-    for (final Expression ¢ : es1) {
+    @NotNull final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
+    for (@NotNull final Expression ¢ : es1) {
       assert ¢ != null;
       (isIn(¢, es2) ? $ : different).add(¢);
     }
-    for (final Expression ¢ : es2) { // [a c]
+    for (@NotNull final Expression ¢ : es2) { // [a c]
       assert ¢ != null;
       if (!isIn(¢, $))
         different.add(¢);
@@ -117,11 +117,11 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)
       return replacement(az.infixExpression(first(xs)), az.infixExpression(second(xs)));
-    final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
-    List<Expression> temp = new ArrayList<>(xs);
+    @NotNull final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
+    @NotNull List<Expression> temp = new ArrayList<>(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
       temp = removeFirstElement(temp);
-      for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
+      for (@NotNull final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
             addCommon(op, $);
@@ -132,7 +132,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
         removeElFromList(different, $);
       }
     }
-    Expression addition = null;
+    @Nullable Expression addition = null;
     for (final Integer ¢ : range.from(0).to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     if ($.isEmpty())
@@ -141,7 +141,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return subject.pair(first($), addition).to(TIMES);
     if ($.size() <= 1)
       return null;
-    Expression multiplication = null;
+    @Nullable Expression multiplication = null;
     for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
       multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1))).to(TIMES);

@@ -80,7 +80,7 @@ public enum TermsExpander {
       return $;
     assert ts != null;
     assert !ts.isEmpty();
-    final Operator o = operator($);
+    @NotNull final Operator o = operator($);
     assert o != null;
     assert o == PLUS2 || o == MINUS2;
     final Term first = first(ts);

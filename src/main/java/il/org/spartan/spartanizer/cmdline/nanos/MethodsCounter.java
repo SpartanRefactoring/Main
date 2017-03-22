@@ -70,7 +70,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
   }
 
   public void summarizeNumbers() {
-    final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
+    @Nullable final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
     if (report == null)
       return;
     methods.keySet().forEach(λ -> {

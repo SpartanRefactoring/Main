@@ -39,9 +39,9 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
   @Override @SuppressWarnings("boxing") public Expression replacement(@NotNull final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
-    final List<Expression> es = hop.operands(x);
+    @Nullable final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    final List<Expression> $ = new ArrayList<>();
+    @NotNull final List<Expression> $ = new ArrayList<>();
     boolean isArithmetic = true;
     for (final Integer i : range.from(0).to(es.size())) {
       final Expression e = es.get(i);

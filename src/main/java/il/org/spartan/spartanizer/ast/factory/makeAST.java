@@ -34,7 +34,7 @@ public enum makeAST {
     }
 
     @Override @NotNull public CompilationUnit from(@NotNull final String ¢) {
-      final char[] charArray = ¢.toCharArray();
+      @NotNull final char[] charArray = ¢.toCharArray();
       final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
       $.setSource(charArray);
       final ASTNode createAST = $.createAST(wizard.nullProgressMonitor);
@@ -84,8 +84,8 @@ public enum makeAST {
    * @param f JD
    * @return entire contents of this file, as one string */
   public static String string(@NotNull final File f) {
-    try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
-      for (String $ = "", ¢ = r.readLine();; $ += ¢ + System.lineSeparator(), ¢ = r.readLine())
+    try (@NotNull BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
+      for (@NotNull String $ = "", ¢ = r.readLine();; $ += ¢ + System.lineSeparator(), ¢ = r.readLine())
         if (¢ == null)
           return $;
     } catch (@NotNull final IOException ¢) {
@@ -105,7 +105,7 @@ public enum makeAST {
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter. */
   @NotNull public StringBuilder builder(@NotNull final File f) {
-    try (Scanner $ = new Scanner(f)) {
+    try (@NotNull Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (@NotNull final Exception ¢) {
       monitor.logEvaluationError(this, ¢);

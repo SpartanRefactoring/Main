@@ -46,7 +46,7 @@ public enum SentenceTestTemplate {
   @RunWith(Parameterized.class)
   public static class Changes {
     @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
+      @NotNull final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
@@ -59,7 +59,7 @@ public enum SentenceTestTemplate {
     @Parameter(0) @SuppressWarnings("CanBeFinal") public String name;
 
     @Test public void changes() {
-      final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
+      @NotNull final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = Wrap.Method.off(unpeeled);
       azzert.that("No trimming of " + name, peeled, is(not(from)));
@@ -75,8 +75,8 @@ public enum SentenceTestTemplate {
   @RunWith(Parameterized.class)
   public static class ChangesTo {
     @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
-      for (final List<MethodDeclaration> sentence : allSentences())
+      @NotNull final Collection<Object[]> $ = new ArrayList<>();
+      for (@NotNull final List<MethodDeclaration> sentence : allSentences())
         for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
           if (disabling.specificallyDisabled(sentence.get(¢)))
             $.add(____(sentence.get(¢), sentence.get(¢ + 1)));
@@ -121,7 +121,7 @@ public enum SentenceTestTemplate {
   @RunWith(Parameterized.class)
   public static class Stays {
     @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
+      @NotNull final Collection<Object[]> $ = new ArrayList<>();
       allSentences()
           .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
@@ -135,7 +135,7 @@ public enum SentenceTestTemplate {
     @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration stays;
 
     @Test public void stays() {
-      final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
+      @NotNull final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = Wrap.Method.off(unpeeled);

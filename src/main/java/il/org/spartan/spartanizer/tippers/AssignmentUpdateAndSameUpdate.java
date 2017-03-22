@@ -43,13 +43,13 @@ public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (in(a1.getOperator(), ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
       return null;
-    final ASTNode parent = parent(a1);
+    @NotNull final ASTNode parent = parent(a1);
     if (!iz.statement(parent))
       return null;
-    final Assignment a2 = extract.assignment(nextStatement);
+    @Nullable final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a1) != operator(a2))
       return null;
-    final Expression to = to(a1);
+    @Nullable final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.remove(parent, g);

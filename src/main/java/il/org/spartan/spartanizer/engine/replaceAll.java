@@ -41,8 +41,8 @@ public interface replaceAll {
   }
 
   @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode[] ns) {
-    @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
-    final Int i = new Int();
+    @NotNull @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
+    @NotNull final Int i = new Int();
     as.list(ns).forEach(λ -> $[i.next()] = new Wrapper<>(λ));
     return $;
   }

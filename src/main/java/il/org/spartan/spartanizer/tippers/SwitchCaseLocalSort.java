@@ -27,7 +27,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
   private static final long serialVersionUID = 287035013781478896L;
 
   @Override @NotNull public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
-    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+    @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
     return new Tip(description(n), n, getClass()) {
@@ -39,8 +39,8 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
   }
 
   @Override protected boolean prerequisite(@NotNull final SwitchCase n) {
-    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
-    final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
+    @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+    @Nullable final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
     return cases.size() <= switchBranch.MAX_CASES_FOR_SPARTANIZATION && cases.stream().noneMatch(SwitchCase::isDefault) && $ != null && !$.isDefault()
         && !n.isDefault() && (iz.intType(expression(n)) || (expression(n) + "").compareTo(expression($) + "") > 0)
         && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));

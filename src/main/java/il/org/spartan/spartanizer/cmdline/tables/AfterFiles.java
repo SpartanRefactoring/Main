@@ -49,10 +49,10 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     try {
       final Integer key = Integer.valueOf(measure.commands(¢));
       methods.putIfAbsent(key, new ArrayList<>());
-      final MethodRecord m = new MethodRecord(¢);
+      @NotNull final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       methods.get(key).add(m);
-      final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
+      @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
           .in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
@@ -108,7 +108,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
   }
 
   @SuppressWarnings("boxing") private void summarizeSortedMethodStatistics(@NotNull final String path) {
-    try (Table report = new Table(path)) {
+    try (@NotNull Table report = new Table(path)) {
       int statementsTotal = 0, methodsTotal = 0;
       for (final Integer numStatements : methods.keySet()) {
         if (numStatements == 0)
@@ -117,7 +117,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
         methodsTotal += li.size();
         statementsTotal += numStatements * li.size();
       }
-      for (final Integer numStatements : methods.keySet()) {
+      for (@NotNull final Integer numStatements : methods.keySet()) {
         if (numStatements == 0)
           continue;
         final List<MethodRecord> li = methods.get(numStatements);
@@ -177,7 +177,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
   }
 
   private void summarizeNPStatistics() {
-    final CSVStatistics report = openNPSummaryFile(outputFolder);
+    @Nullable final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
       return;
     npStatistics.keySet().stream()

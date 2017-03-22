@@ -36,22 +36,22 @@ public enum InflaterUtilities {
   static boolean rewrite(final ASTRewrite r, @NotNull final Iterable<ASTNode> ns, final TextEditGroup g) {
     boolean $ = false;
     for (final ASTNode statement : ns) {
-      final ReturnTernaryExpander cc = new ReturnTernaryExpander();
+      @NotNull final ReturnTernaryExpander cc = new ReturnTernaryExpander();
       if (statement instanceof ReturnStatement && cc.check(az.returnStatement(statement))) {
         cc.tip(az.returnStatement(statement)).go(r, g);
         $ = true;
       } else {
-        final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
+        @NotNull final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
         if (statement instanceof VariableDeclarationStatement && s.check(az.variableDeclarationStatement(statement))) {
           s.tip(az.variableDeclarationStatement(statement)).go(r, g);
           $ = true;
         } else {
-          final CasesSplit x = new CasesSplit();
+          @NotNull final CasesSplit x = new CasesSplit();
           if (statement instanceof SwitchStatement && x.check((SwitchStatement) statement)) {
             x.tip((SwitchStatement) statement).go(r, g);
             $ = true;
           } else {
-            final DeclarationWithInitializerBloater s1 = new DeclarationWithInitializerBloater();
+            @NotNull final DeclarationWithInitializerBloater s1 = new DeclarationWithInitializerBloater();
             if (statement instanceof VariableDeclarationStatement && s1.check(az.variableDeclarationStatement(statement))) {
               s1.tip(az.variableDeclarationStatement(statement)).go(r, g);
               $ = true;
@@ -68,7 +68,7 @@ public enum InflaterUtilities {
    *        changed */
   static void commitChanges(@NotNull final WrappedCompilationUnit u, @NotNull final Iterable<ASTNode> ns) {
     try {
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
       if (rewrite(r, ns, null)) {
@@ -88,7 +88,7 @@ public enum InflaterUtilities {
    *         of statements we might need for the Bloater SHOULD BE CHANGED when
    *         we add more expanders */
   @NotNull static List<ASTNode> getStatements(@NotNull final WrappedCompilationUnit u) {
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
     u.compilationUnit.accept(new ASTVisitor(true) {

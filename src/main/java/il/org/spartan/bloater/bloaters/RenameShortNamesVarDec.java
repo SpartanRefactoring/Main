@@ -40,8 +40,8 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
   @Override @SuppressWarnings("unused") @Nullable public Tip tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-      final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-      for (final Object v : make.variableDeclarationExpression(s).fragments()) {
+      @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+      for (@NotNull final Object v : make.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclaration) v).getName();
         if (!in($.getIdentifier(), namer.specials) && $.getIdentifier().length() > 1)
           return null;

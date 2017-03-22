@@ -72,7 +72,7 @@ public enum Analyze {
   }
 
   private static void summarizeMethodStatistics(final String outputDir) {
-    final CSVStatistics report = openMethodSummaryFile(outputDir);
+    @Nullable final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
     double sumSratio = 0, sumEratio = 0;
@@ -126,16 +126,16 @@ public enum Analyze {
 
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
-    final List<MethodDeclaration> methods = new ArrayList<>();
-    for (final File f : inputFiles()) {
-      final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+    @NotNull final List<MethodDeclaration> methods = new ArrayList<>();
+    for (@NotNull final File f : inputFiles()) {
+      @Nullable final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
         for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(toList()))
           try {
             Count.before(¢);
-            final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
+            @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
                 .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
@@ -171,9 +171,9 @@ public enum Analyze {
   private static void analyze() {
     AnalyzerOptions.setVerbose();
     deleteOutputFile();
-    for (final File ¢ : inputFiles()) {
+    for (@NotNull final File ¢ : inputFiles()) {
       System.out.println("\nnow: " + ¢.getPath());
-      final ASTNode cu = compilationUnit(¢);
+      @NotNull final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
       try {

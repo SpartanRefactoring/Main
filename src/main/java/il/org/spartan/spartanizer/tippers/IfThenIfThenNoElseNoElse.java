@@ -31,7 +31,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -2589593872356482061L;
 
   static void collapse(@NotNull final IfStatement s, @NotNull final ASTRewrite r, final TextEditGroup g) {
-    final IfStatement then = az.ifStatement(extract.singleThen(s));
+    @Nullable final IfStatement then = az.ifStatement(extract.singleThen(s));
     r.replace(s.getExpression(), subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND), g);
     r.replace(then, copy.of(then(then)), g);
   }
@@ -47,7 +47,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
   @Override public Tip tip(@NotNull final IfStatement $, @Nullable final ExclusionManager exclude) {
     if (!iz.vacuousElse($))
       return null;
-    final IfStatement then = az.ifStatement(extract.singleThen($));
+    @Nullable final IfStatement then = az.ifStatement(extract.singleThen($));
     if (then == null || !iz.vacuousElse(then))
       return null;
     if (exclude != null)

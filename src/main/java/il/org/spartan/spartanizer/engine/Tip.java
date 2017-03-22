@@ -24,7 +24,7 @@ public abstract class Tip extends Range {
 
   static Range range(final Range r, @NotNull final ASTNode... ns) {
     Range $ = r;
-    for (final ASTNode ¢ : ns)
+    for (@NotNull final ASTNode ¢ : ns)
       $ = $.merge(singleNodeRange(¢));
     return $;
   }

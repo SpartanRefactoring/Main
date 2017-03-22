@@ -44,15 +44,15 @@ public class GUIBatchLaconizer extends Applicator {
     if (!shouldRun())
       return;
     final boolean isAutoBuildChanged = selection().size() >= DISABLE_AUTO_BUILD_THRESHOLD && disableAutoBuild();
-    final Int totalTipsInvoked = new Int();
+    @NotNull final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
       for (final Integer pass : range.from(1).to(passes()).inclusive()) {
-        final Int thisPassTipsInvoked = new Int();
+        @NotNull final Int thisPassTipsInvoked = new Int();
         listener().push(message.run_pass.get(pass));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
-        for (final WrappedCompilationUnit ¢ : alive) {
+        @Nullable final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
+        for (@NotNull final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)
             done.add(¢);

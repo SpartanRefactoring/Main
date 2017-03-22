@@ -58,7 +58,7 @@ public abstract class ENVTestEngineAbstract {
     assert contained != null;
     assert contains != null;
     final Iterator<Entry<String, Binding>> s = contains.iterator();
-    for (final Entry<String, Binding> ¢ : contained) {
+    for (@NotNull final Entry<String, Binding> ¢ : contained) {
       boolean notFound = true;
       while (s.hasNext())
         if (¢.equals(s.next())) {
@@ -100,7 +100,7 @@ public abstract class ENVTestEngineAbstract {
   protected static ASTNode getCompilationUnit(@NotNull final String from) {
     assert from != null;
     assert rOOT != null;
-    final File f = new File(rOOT + from);
+    @NotNull final File f = new File(rOOT + from);
     assert f != null;
     assert f.exists() : f;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
@@ -211,7 +211,7 @@ public abstract class ENVTestEngineAbstract {
           testSetsReset();
           return;
         }
-        final LinkedHashSet<Entry<String, Binding>> enviromentSet = buildEnvironmentSet($);
+        @Nullable final LinkedHashSet<Entry<String, Binding>> enviromentSet = buildEnvironmentSet($);
         if (enviromentSet == null)
           return;
         compare(enviromentSet);

@@ -68,7 +68,7 @@ public class Classifier extends ASTVisitor {
   }
 
   private void classifyPatterns() {
-    for (final String k : patterns.keySet()) {
+    for (@NotNull final String k : patterns.keySet()) {
       System.out.println(k);
       System.out.println("[Matched " + patterns.get(k).inner + " times]");
       if (!classify(k))
@@ -83,12 +83,12 @@ public class Classifier extends ASTVisitor {
   }
 
   @NotNull private Map<String, Int> filterAllIntrestingPatterns() {
-    final Map<String, Int> $ = new HashMap<>();
+    @NotNull final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       for (final ASTNode ¢ : forLoopsList) {
-        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
+        @NotNull final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
+        @NotNull final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);

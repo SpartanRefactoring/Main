@@ -26,7 +26,7 @@ public class SpartanizerTest {
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> $ = modifiers(d);
+        @NotNull final List<?> $ = modifiers(d);
         return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
 
@@ -204,7 +204,7 @@ public class SpartanizerTest {
   }
 
   @Test public void testSpartanizerCheckMethod_03() {
-    final String test4 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
+    @NotNull final String test4 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
         + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{public void method1(){int i = 1; assert (i>0);} }";
     print(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
@@ -277,7 +277,7 @@ public class SpartanizerTest {
   private void visitASTNode(@NotNull final ASTNode u1) {
     u1.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        final List<?> $ = modifiers(d);
+        @NotNull final List<?> $ = modifiers(d);
         return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
 

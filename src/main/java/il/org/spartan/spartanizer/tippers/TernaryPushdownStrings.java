@@ -116,8 +116,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
 
   private static InfixExpression replacePrefix(@NotNull final InfixExpression x, final int i) {
     assert x.getOperator() == PLUS2;
-    final List<Expression> $ = extract.allOperands(x);
-    final StringLiteral l = az.stringLiteral(first($));
+    @Nullable final List<Expression> $ = extract.allOperands(x);
+    @Nullable final StringLiteral l = az.stringLiteral(first($));
     assert l != null;
     assert l.getLiteralValue().length() >= i;
     replaceFirst($, getSuffix(l.getLiteralValue(), i, x));
@@ -126,8 +126,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
 
   private static InfixExpression replaceSuffix(@NotNull final InfixExpression x, final int i) {
     assert x.getOperator() == PLUS2;
-    final List<Expression> $ = extract.allOperands(x);
-    final StringLiteral l = az.stringLiteral(last($));
+    @Nullable final List<Expression> $ = extract.allOperands(x);
+    @Nullable final StringLiteral l = az.stringLiteral(last($));
     assert l != null;
     assert l.getLiteralValue().length() >= i : fault.dump() + //
         "\n x = " + x + //
@@ -158,7 +158,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static Expression simplify(@NotNull final Expression condition, @NotNull final StringLiteral then, @NotNull final InfixExpression elze) {
     final String $ = then.getLiteralValue();
     assert elze.getOperator() == PLUS2;
-    final List<Expression> elzeOperands = extract.allOperands(elze);
+    @Nullable final List<Expression> elzeOperands = extract.allOperands(elze);
     if (iz.stringLiteral(first(elzeOperands))) {
       final int commonPrefixIndex = firstDifference($, az.stringLiteral(first(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
@@ -187,9 +187,9 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static Expression simplifyStrings(@NotNull final InfixExpression then, @NotNull final InfixExpression elze,
       @NotNull final Expression condition) {
     assert then.getOperator() == PLUS2;
-    final List<Expression> thenOperands = extract.allOperands(then);
+    @Nullable final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == PLUS2;
-    final List<Expression> elzeOperands = extract.allOperands(elze);
+    @Nullable final List<Expression> elzeOperands = extract.allOperands(elze);
     if (iz.stringLiteral(first(thenOperands)) && iz.stringLiteral(first(elzeOperands))) {
       final String $ = az.stringLiteral(first(thenOperands)).getLiteralValue();
       final int commonPrefixIndex = firstDifference($, az.stringLiteral(first(elzeOperands)).getLiteralValue());

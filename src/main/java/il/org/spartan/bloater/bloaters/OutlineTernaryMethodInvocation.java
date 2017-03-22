@@ -29,12 +29,12 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
   @Override @Nullable public ASTNode replacement(@Nullable final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;
-    final List<Expression> l = arguments(n);
+    @NotNull final List<Expression> l = arguments(n);
     if (l.isEmpty())
       return null;
     // TODO Yuval Simon: move into loop --yg
     for (int i = 0; i < l.size(); ++i) {
-      final ConditionalExpression $;
+      @Nullable final ConditionalExpression $;
       if (($ = az.conditionalExpression(l.get(i))) != null) {
         if (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
           return null;

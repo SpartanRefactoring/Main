@@ -53,7 +53,7 @@ public final class Inliner2 {
   }
 
   private static boolean isLeftValue(@NotNull final SimpleName ¢) {
-    final ASTNode $ = parent(¢);
+    @NotNull final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
 
@@ -105,7 +105,7 @@ public final class Inliner2 {
   }
 
   public static boolean leftSide(@NotNull final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
+    @NotNull final Bool $ = new Bool();
     // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {

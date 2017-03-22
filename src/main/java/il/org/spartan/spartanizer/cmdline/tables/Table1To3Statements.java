@@ -52,7 +52,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
     try {
       final Integer key = Integer.valueOf(measure.commands(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
-      final MethodRecord m = new MethodRecord(¢);
+      @NotNull final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));

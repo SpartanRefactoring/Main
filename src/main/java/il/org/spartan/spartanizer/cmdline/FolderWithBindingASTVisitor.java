@@ -45,7 +45,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
   }
 
   private static String getPackageNameFromSource(@NotNull final ASTNode n) {
-    final Wrapper<String> $ = new Wrapper<>("");
+    @NotNull final Wrapper<String> $ = new Wrapper<>("");
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
@@ -87,7 +87,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
   }
 
   ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws IOException, JavaModelException {
-    final String $ = FileUtils.read(¢);
+    @NotNull final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
@@ -107,7 +107,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    @NotNull final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }

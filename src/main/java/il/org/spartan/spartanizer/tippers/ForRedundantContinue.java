@@ -32,7 +32,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
   @Override @Nullable public Tip tip(@NotNull final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final Block b = az.block(body(¢));
+        @Nullable final Block b = az.block(body(¢));
         if (b == null)
           r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
         else {
@@ -48,7 +48,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
   @Override public boolean prerequisite(@NotNull final ForStatement ¢) {
     final Statement s = extract.lastStatement(¢);
     if (iz.continueStatement(s)) {
-      final SimpleName n = label(az.continueStatement(s));
+      @NotNull final SimpleName n = label(az.continueStatement(s));
       if (n == null || iz.labeledStatement(parent(¢)) && n.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier()))
         return true;
     }

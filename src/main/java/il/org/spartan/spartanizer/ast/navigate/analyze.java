@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
 public enum analyze {
   ;
   @NotNull public static Collection<String> dependencies(@NotNull final ASTNode n) {
-    final Collection<String> $ = new HashSet<>();
+    @NotNull final Collection<String> $ = new HashSet<>();
     // noinspection SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
@@ -45,7 +45,7 @@ public enum analyze {
   }
 
   public static Collection<String> dependencies(@NotNull final Iterable<Expression> arguments) {
-    final Set<String> $ = new HashSet<>();
+    @NotNull final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
       $.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
@@ -55,8 +55,8 @@ public enum analyze {
   }
 
   @Nullable public static String type(final Name n) {
-    final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
-    final String $ = m == null ? null : findDeclarationInMethod(n, m);
+    @Nullable final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
+    @Nullable final String $ = m == null ? null : findDeclarationInMethod(n, m);
     return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
   }
 
@@ -71,7 +71,7 @@ public enum analyze {
   }
 
   @Nullable private static String findDeclarationInMethod(final Name n, @NotNull final MethodDeclaration d) {
-    final Str $ = new Str();
+    @NotNull final Str $ = new Str();
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         if ($.notEmpty() || !identifier(¢).equals(n + ""))

@@ -62,8 +62,8 @@ public interface NanoPatternUtil {
   }
 
   @NotNull static Iterable<String> nullCheckees(final IfStatement ¢) {
-    Expression e = expression(¢);
-    final Collection<String> $ = new ArrayList<>();
+    @NotNull Expression e = expression(¢);
+    @NotNull final Collection<String> $ = new ArrayList<>();
     while (nullComparisonIncremental(e)) {
       $.add(left(az.infixExpression(left(az.infixExpression(e)))) + "");
       e = right(az.infixExpression(e));

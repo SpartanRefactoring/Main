@@ -65,8 +65,8 @@ public enum anonymize {
    * @param ¢ string to linify
    * @return */
   @NotNull private static String linify(@NotNull final String ¢) {
-    String $ = "";
-    try (Scanner scanner = new Scanner(¢)) {
+    @NotNull String $ = "";
+    try (@NotNull Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
         $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//\n";
     }
@@ -74,17 +74,17 @@ public enum anonymize {
   }
 
   public static String shortenIdentifiers(@NotNull final String javaFragment) {
-    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
+    @NotNull final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
+    @NotNull final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
-    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+    @NotNull final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-    final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
+    @Nullable final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
     if (n == null)
       return javaFragment;
     final ASTRewrite r = ASTRewrite.create(ast);
-    final Map<String, String> renaming = new HashMap<>();
+    @NotNull final Map<String, String> renaming = new HashMap<>();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(@NotNull final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
@@ -115,8 +115,8 @@ public enum anonymize {
 
   public static void main(final String[] args) {
     System.out.println("enter whatever:");
-    try (Scanner reader = new Scanner(System.in)) {
-      String s = "";
+    try (@NotNull Scanner reader = new Scanner(System.in)) {
+      @NotNull String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
       System.out.println("1s tipper: " + theSpartanizer.firstTipper(s));
