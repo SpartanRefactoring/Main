@@ -155,6 +155,7 @@ public class Toolbox {
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //
             new ForRedundantContinue(), //
+            new ForEmptyBlockToEmptyStatement(), //
             null)//
         .add(WhileStatement.class, //
             new EliminateConditionalContinueInWhile(), //
@@ -162,7 +163,11 @@ public class Toolbox {
             new ReturnToBreakFiniteWhile(), //
             new WhileDeadRemove(), //
             new WhileToForUpdaters(), //
+            new WhileEmptyBlockToEmptyStatement(),//
             null) //
+        .add(DoStatement.class, //
+            new DoWhileEmptyBlockToEmptyStatement(),//
+            null)
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
