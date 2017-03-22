@@ -178,7 +178,6 @@ public final class Version300 {
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
         .gives("int a(int b){for(;b<100;b+=1){}return b;}");
-    ;
   }
 
   @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {

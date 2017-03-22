@@ -19,15 +19,15 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 2013380508545213297L;
 
-  @Override public ASTNode replacement(final DoStatement s) {
-    DoStatement $ = copy.of(s);
+  @Override public ASTNode replacement(final DoStatement ¢) {
+    DoStatement $ = copy.of(¢);
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
 
-  @Override protected boolean prerequisite(final DoStatement s) {
-    final Statement body = s.getBody();
-    return iz.block(body) && iz.emptyBlock(az.block(body));
+  @Override protected boolean prerequisite(final DoStatement ¢) {
+    final Statement $ = ¢.getBody();
+    return iz.block($) && iz.emptyBlock(az.block($));
   }
 
   @Override public Example[] examples() {
