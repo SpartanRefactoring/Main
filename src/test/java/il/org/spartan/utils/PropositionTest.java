@@ -57,18 +57,21 @@ public class PropositionTest {
 
   @Test public void aa() {
     object = Proposition.T;
+    azzert.that(object, is(T));
     object = Proposition.F;
-    object = Proposition.T;
-    object = Proposition.F;
-    assert Proposition.T != null;
+    azzert.that(object, is(F));
+    object = Proposition.N;
+    azzert.that(object, is(N));
+    object = Proposition.X;
+    azzert.that(object, is(X));
     assert Proposition.T != null;
     assert Proposition.F != null;
-    assert Proposition.T != null;
-    assert Proposition.F != null;
+    assert Proposition.X != null;
+    assert Proposition.N != null;
     supplier = Proposition.T;
+    azzert.that(supplier, is(T));
     supplier = Proposition.F;
-    supplier = Proposition.T;
-    supplier = Proposition.F;
+    azzert.that(supplier, is(F));
     assert ignoreNext() || Proposition.T.getAsBoolean();
     assert ignoreNext() || Proposition.F.getAsBoolean();
     assert ignoreNext() || Proposition.T.getAsBoolean();

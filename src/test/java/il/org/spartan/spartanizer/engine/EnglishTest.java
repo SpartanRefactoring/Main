@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import java.text.*;
-import java.util.stream.IntStream;
+import java.util.stream.*;
 
 import org.junit.*;
 

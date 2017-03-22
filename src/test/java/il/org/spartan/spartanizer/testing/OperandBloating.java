@@ -134,7 +134,7 @@ public class OperandBloating extends TrimmingOperand {
       if (unpeeled.equals(get()))
         azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
       m = getMethod(az.compilationUnit(makeAST.COMPILATION_UNIT.from(unpeeled)), f);
-      String s = m + "";
+      final String s = m + "";
       if (!$.equals(s) && !trivia.essence(s).equals(trivia.essence($))) {
         copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
             trivia.escapeQuotes(trivia.essence(s)), //
@@ -196,8 +196,7 @@ public class OperandBloating extends TrimmingOperand {
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = doc.get();
-      final String peeled = w.off(unpeeled);
+      final String unpeeled = doc.get(), peeled = w.off(unpeeled);
       if (wrap.equals(peeled) || trivia.essence(get()).equals(trivia.essence(peeled)))
         return;
       copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //

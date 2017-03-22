@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.*;
 
 import il.org.spartan.utils.range.*;
 
-/** TODO: Artium Nihamkin please add a description
+/** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin
  * @since 2013/07/01 */
 public final class Nature implements IProjectNature {

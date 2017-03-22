@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -56,7 +57,7 @@ public interface Proposition extends BooleanSupplier {
     return new Or(s1, s2, ss);
   }
 
-  static Proposition OR(String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
+  static Proposition OR(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(toString, s1, s2, ss);
   }
 
@@ -85,7 +86,7 @@ public interface Proposition extends BooleanSupplier {
       add(s, ss);
     }
 
-    And(String toString, BooleanSupplier s1, BooleanSupplier s2, BooleanSupplier[] ss) {
+    And(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
       super(toString);
       add(s1, s2, ss);
     }
@@ -106,7 +107,7 @@ public interface Proposition extends BooleanSupplier {
   abstract class Implementation<Inner> extends Outer<Inner> implements Proposition {
     protected final String toString;
 
-    public Implementation(String toString, Inner inner) {
+    public Implementation(final String toString, final Inner inner) {
       super(inner);
       this.toString = toString;
     }
@@ -120,7 +121,7 @@ public interface Proposition extends BooleanSupplier {
    * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
    * @since 2017-03-19 */
   abstract class C extends Implementation<List<BooleanSupplier>> {
-    public C(String toString) {
+    public C(final String toString) {
       super(toString, new ArrayList<>());
     }
 
@@ -165,7 +166,7 @@ public interface Proposition extends BooleanSupplier {
       add(s1, s2, cs);
     }
 
-    public Or(String toString, BooleanSupplier s1, BooleanSupplier s2, BooleanSupplier[] ss) {
+    public Or(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
       super(toString);
       add(s1, s2, ss);
     }
@@ -192,7 +193,7 @@ public interface Proposition extends BooleanSupplier {
       this(null, inner);
     }
 
-    public P(String toString, final BooleanSupplier inner) {
+    public P(final String toString, final BooleanSupplier inner) {
       super(toString, inner);
     }
 

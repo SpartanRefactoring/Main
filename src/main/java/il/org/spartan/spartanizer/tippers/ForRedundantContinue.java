@@ -35,7 +35,7 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
         if (b == null)
           r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
         else {
-          // TODO: Doron Meshulam: use list rewrite (search for code that does
+          // TODO Doron Meshulam: use list rewrite (search for code that does
           // that) --yg
           statements(b).remove(extract.lastStatement(¢));
           r.replace(b, copy.of(b), g);

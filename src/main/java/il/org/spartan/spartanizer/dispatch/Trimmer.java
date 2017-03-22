@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil please add a description
+/** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {

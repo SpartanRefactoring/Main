@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Ori Roth please add a description
+/** TODO Ori Roth please add a description
  * @author Ori Roth
  * @since 2016_12_14 */
 @Ignore // TODO Yuval: is part of your issue --or

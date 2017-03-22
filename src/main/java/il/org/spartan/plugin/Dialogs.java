@@ -2,6 +2,7 @@ package il.org.spartan.plugin;
 
 import java.net.*;
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.dialogs.*;
@@ -22,25 +23,32 @@ public enum Dialogs {
   private static final String NAME = "Laconic";
   /** Id for run in background button. */
   private static final int RIB_ID = 2;
-  public static final String ICON = "icon-delta";
-  public static final String LOGO = "logo";
-  public static final String CATEGORY = "category-symbol";
+  public static final String ICON = "platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif";
+  public static final String DELTA = "platform:/plugin/org.eclipse.ui/icons/full/obj16/change_obj.png";
+  public static final String LOGO = "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
+  public static final String CATEGORY = "platform:/plugin/org.eclipse.wst.common.snippets/icons/full/elcl16/new_category.gif";
   /** {@link SWT} images, lazy loading. */
   public static final Map<String, Image> images;
   static {
     images = new HashMap<>();
-    images.put(ICON, image("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif"));
-    images.put(LOGO, image("platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png"));
-    images.put(CATEGORY, image("platform:/plugin/org.eclipse.wst.common.snippets/icons/full/elcl16/new_category.gif"));
+    images.put(ICON, image(ICON));
+    images.put(LOGO, image(LOGO));
+    images.put(CATEGORY, image(CATEGORY));
   }
 
   /** Lazy, dynamic loading of an image.
    * @return {@link SWT} image */
   public static Image image(final String $) {
+    return image($, $, λ -> λ);
+  }
+
+  /** Lazy, dynamic loading of an image.
+   * @return {@link SWT} image */
+  public static Image image(final String url, String $, Function<ImageData, ImageData> scale) {
     if (!images.containsKey($))
       try {
-        final ImageData d = ImageDescriptor.createFromURL(new URL($)).getImageData();
-        images.put($, d == null ? null : new Image(null, d));
+        final ImageData d = ImageDescriptor.createFromURL(new URL(url)).getImageData();
+        images.put($, d == null ? null : new Image(null, scale.apply(d)));
       } catch (final MalformedURLException ¢) {
         monitor.log(¢);
         images.put($, null);

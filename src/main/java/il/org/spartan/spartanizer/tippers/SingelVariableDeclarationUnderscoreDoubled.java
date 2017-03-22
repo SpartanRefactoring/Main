@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-05-08 */
 public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
     //
-    implements TipperCategory.Annonimization {
+    implements TipperCategory.Anonymization {
   private static final long serialVersionUID = 2561917041949221850L;
   static final boolean BY_ANNOTATION = false;
 

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch */
 public enum anonymize {
   ;
@@ -148,8 +148,8 @@ public enum anonymize {
         return $ + "  .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t));
-      $ += format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
+          + format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
   }
