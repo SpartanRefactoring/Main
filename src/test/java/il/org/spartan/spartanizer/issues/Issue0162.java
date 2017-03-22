@@ -14,8 +14,9 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0162 {
   @Test public void issue162_02() {
-    trimmingOf("\"I ate\"+(\"an\"+\" ice cream sandwich\")")//
-        .gives("\"I ate\"+\"an\"+\" ice cream sandwich\"")//
+    trimmingOf("\"I ate\"+(\" an\"+\" ice cream sandwich\")")//
+        .gives("\"I ate\"+\" an\"+\" ice cream sandwich\"")//
+        .gives("\"I ate an ice cream sandwich\"")//
         .stays();
   }
 
@@ -50,12 +51,6 @@ public final class Issue0162 {
 
   @Test public void issue162_08() {
     trimmingOf("(f() ? x : y) + \".toString\"")//
-        .stays();
-  }
-
-  @Test public void issue162_09() {
-    trimmingOf("\"I \" + \"ate\"+(\"an\"+\" ice cream sandwich\")")//
-        .gives("\"I \" + \"ate\"+\"an\"+\" ice cream sandwich\"")//
         .stays();
   }
 }
