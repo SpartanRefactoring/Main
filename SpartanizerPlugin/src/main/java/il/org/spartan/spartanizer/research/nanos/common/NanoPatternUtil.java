@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface NanoPatternUtil {
   static boolean excludeMethod(final MethodDeclaration ¢) {
@@ -19,11 +21,11 @@ public interface NanoPatternUtil {
         || anyTips(NanoPatternsConfiguration.skipped, ¢);
   }
 
-  static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
+  static boolean anyTips(@NotNull final Collection<JavadocMarkerNanoPattern> ps, @Nullable final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 
-  static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
+  static <N extends ASTNode> boolean anyTips(@NotNull final Collection<UserDefinedTipper<N>> ts, @Nullable final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
 
@@ -60,9 +62,10 @@ public interface NanoPatternUtil {
     return returns.getMatching(¢, "$X");
   }
 
+  @NotNull
   static Iterable<String> nullCheckees(final IfStatement ¢) {
-    Expression e = expression(¢);
-    final Collection<String> $ = new ArrayList<>();
+    @NotNull Expression e = expression(¢);
+    @NotNull final Collection<String> $ = new ArrayList<>();
     while (nullComparisonIncremental(e)) {
       $.add(left(az.infixExpression(left(az.infixExpression(e)))) + "");
       e = right(az.infixExpression(e));

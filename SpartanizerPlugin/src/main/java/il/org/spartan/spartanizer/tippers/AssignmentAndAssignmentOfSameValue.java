@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** See {@link #examples()} for documentation
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -25,6 +27,7 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 7624011796441469217L;
 
+  @NotNull
   @Override public Example[] examples() {
     return new Example[] { //
         convert("a=3;b=3;").to("b=a=3;"), //
@@ -32,8 +35,9 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
     };
   }
 
+  @Nullable
   private static Expression extractRight(final Assignment ¢) {
-    final Expression $ = from(¢);
+    @Nullable final Expression $ = from(¢);
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 
@@ -41,21 +45,22 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
     return operator(¢) != ASSIGN ? null : extractRight(¢);
   }
 
+  @NotNull
   @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    final ASTNode parent = parent(a);
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+    @NotNull final ASTNode parent = parent(a);
     if (!iz.statement(parent))
       return null;
-    final Expression right = getRight(a);
+    @Nullable final Expression right = getRight(a);
     if (right == null || nodeType(right) == NULL_LITERAL)
       return null;
-    final Assignment a1 = extract.assignment(nextStatement);
+    @Nullable final Assignment a1 = extract.assignment(nextStatement);
     if (a1 == null)
       return null;
-    final Expression right1 = getRight(a1);
+    @Nullable final Expression right1 = getRight(a1);
     if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
     $.remove(parent, g);

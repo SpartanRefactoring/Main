@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
@@ -43,25 +44,26 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     System.err.println("Your output is in: " + system.tmp);
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     compilationUnitRecords.add(foo(¢));
     ¢.accept(new CleanerVisitor());
     return true;
   }
 
-  private CompilationUnitRecord foo(final CompilationUnit ¢) {
-    final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
+  @NotNull
+  private CompilationUnitRecord foo(@NotNull final CompilationUnit ¢) {
+    @NotNull final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
     $.setPath(absolutePath);
     $.setRelativePath(relativePath);
     return $;
   }
 
-  @Override public boolean visit(final PackageDeclaration ¢) {
+  @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
     packages.add(¢.getName().getFullyQualifiedName());
     return true;
   }
 
-  @Override @SuppressWarnings("unused") public boolean visit(final TypeDeclaration $) {
+  @Override @SuppressWarnings("unused") public boolean visit(@NotNull final TypeDeclaration $) {
     // if (!excludeMethod($))
     try {
       final Integer key = box.it(measure.commands($));
@@ -69,15 +71,15 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       CUStatistics.putIfAbsent(key, new ArrayList<>());
       classStatistics.putIfAbsent(key, new ArrayList<>());
       //
-      final ClassRecord c = new ClassRecord($);
+      @NotNull final ClassRecord c = new ClassRecord($);
       classRecords.push(c);
       classStatistics.get(key).add(c);
       findFirst.instanceOf(TypeDeclaration.class).in(ast(Wrap.OUTER.off(spartanalyzer.fixedPoint(Wrap.OUTER.on($ + "")))));
-    } catch (final AssertionError __) {
+    } catch (@NotNull final AssertionError __) {
       System.err.print("X");
-    } catch (final NullPointerException __) {
+    } catch (@NotNull final NullPointerException __) {
       System.err.print("N");
-    } catch (final IllegalArgumentException __) {
+    } catch (@NotNull final IllegalArgumentException __) {
       System.err.print("I");
     }
     return true; // super.visit($);
@@ -113,7 +115,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     return productionCompilationUnits().mapToInt(λ -> λ.linesOfCode).sum();
   }
 
-  private boolean noTests(final CompilationUnitRecord ¢) {
+  private boolean noTests(@NotNull final CompilationUnitRecord ¢) {
     return ¢.noTests();
   }
 

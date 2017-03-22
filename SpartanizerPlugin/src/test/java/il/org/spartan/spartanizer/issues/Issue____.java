@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -62,6 +63,7 @@ import il.org.spartan.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue____ {
+  @NotNull
   private static Object object() {
     return new Object();
   }
@@ -86,6 +88,7 @@ public class Issue____ {
     return true;
   }
 
+  @NotNull
   private Object sameSomeObject() {
     return this;
   }

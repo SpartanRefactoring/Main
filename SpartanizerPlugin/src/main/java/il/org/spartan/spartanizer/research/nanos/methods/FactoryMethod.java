@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Method Creating new object and returning it
  * @author Ori Marcovitch */
@@ -26,6 +27,7 @@ public class FactoryMethod extends JavadocMarkerNanoPattern {
         && anyTips(tippers.get(), onlyStatement(¢));
   }
 
+  @NotNull
   @Override public String nanoName() {
     return "Factory";
   }

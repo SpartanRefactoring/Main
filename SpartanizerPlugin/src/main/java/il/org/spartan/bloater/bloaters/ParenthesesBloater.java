@@ -7,6 +7,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Test case is {@link Issue1045} Issue #1045 Convert: {@code if (a > 1 || b >
  * 2 || c + e > 3) { return 1; } } to: {@code if (((a > 1) || (b > 2)) || ((c +
@@ -19,7 +21,8 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 4274439512923950861L;
 
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (iz.parenthesizedExpression(¢) || !iz.infixExpression(¢.getParent()))
       return null;
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
@@ -27,6 +30,7 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     return $;
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Add parentheses to InfixExpression who's parent is also InfixExpression";
   }

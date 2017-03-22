@@ -8,25 +8,31 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public enum TermsReorganizer {
   ;
+  @Nullable
   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
 
-  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
+  @Nullable
+  private static Expression build(@NotNull final List<Expression> plus, @NotNull final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-  private static Expression build(final TermsCollector ¢) {
+  @Nullable
+  private static Expression build(@NotNull final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
-  private static Expression buildMinus(final Expression first, final List<Expression> rest) {
+  @Nullable
+  private static Expression buildMinus(@Nullable final Expression first, @NotNull final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     if (rest.isEmpty())
@@ -35,7 +41,7 @@ public enum TermsReorganizer {
     return subject.operands(rest).to(wizard.MINUS2);
   }
 
-  private static Expression buildMinus(final List<Expression> ¢) {
+  private static Expression buildMinus(@NotNull final List<Expression> ¢) {
     final Expression $ = subject.operand(first(¢)).to(wizard.MINUS1);
     if (¢.size() == 1)
       return $;
@@ -44,7 +50,7 @@ public enum TermsReorganizer {
     return subject.operands(¢).to(wizard.MINUS2);
   }
 
-  private static Expression buildPlus(final List<Expression> ¢) {
+  private static Expression buildPlus(@NotNull final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:
         return null;

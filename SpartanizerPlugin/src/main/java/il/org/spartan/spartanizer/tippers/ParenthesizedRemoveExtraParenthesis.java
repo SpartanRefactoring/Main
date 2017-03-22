@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Use {@link #examples()} for documentation
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -23,18 +24,21 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 4265122877786904832L;
 
-  @Override public Tip tip(final ParenthesizedExpression x) {
+  @NotNull
+  @Override public Tip tip(@NotNull final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, copy.of(expression(x)), g);
       }
     };
   }
 
+  @NotNull
   @Override public String description(final ParenthesizedExpression ¢) {
     return "remove extra parenthesis " + trivia.gist(¢);
   }
 
+  @NotNull
   @Override public Example[] examples() {
     return new Example[] { //
         convert("((x)).f();") //

@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** @nano for(A a : B ) if(X) S;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -29,14 +31,17 @@ public class ForEachSuchThat extends ForEach {
         && nonTips(rivals, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
+  @NotNull
   @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
 
+  @NotNull
   @Override public String nanoName() {
     return ForEach.class.getSimpleName();
   }

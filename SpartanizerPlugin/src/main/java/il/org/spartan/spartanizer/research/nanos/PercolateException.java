@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Catch exception, then throw it again
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -26,10 +28,12 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parentAsTryStatement(¢));
   }
 
+  @Nullable
   @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parentAsTryStatement(¢));
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Exception;
   }

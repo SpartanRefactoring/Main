@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
@@ -23,6 +25,7 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -4807179505337496498L;
 
+  @Nullable
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixPlus(right(¢))//
@@ -35,6 +38,7 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     return iz.infixLess(¢);
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }

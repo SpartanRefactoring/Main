@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** There are actually few forms of FindFirst<br>
  * If none, can return null,some default value or throw. <br>
@@ -47,6 +48,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     ;
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }

@@ -2,6 +2,7 @@ package il.org.spartan.zoomer.zoomin.expanders;
 
 import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
@@ -80,6 +81,7 @@ public class Issue1001 {
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings({ "unused", "TooBroadScope" })
   public static class Issue1001Aux extends MetaFixture {
+    @NotNull
     public static Issue1001Aux instance() {
       return new Issue1001Aux();
     }

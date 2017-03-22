@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Replaces, e.g., {@code Integer x=new Integer(2);} with
  * {@code Integer x=Integer.valueOf(2);}, more generally new of of any boxed
@@ -21,11 +22,12 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 6308185220779727829L;
 
-  @Override public String description(final ClassInstanceCreation ¢) {
+  @NotNull
+  @Override public String description(@NotNull final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
 
-  @Override public ASTNode replacement(final ClassInstanceCreation c) {
+  @Override public ASTNode replacement(@NotNull final ClassInstanceCreation c) {
     final Expression e = onlyOne(arguments(c));
     if (e == null)
       return null;

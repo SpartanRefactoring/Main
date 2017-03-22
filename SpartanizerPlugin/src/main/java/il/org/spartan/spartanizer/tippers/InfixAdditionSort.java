@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** sorts the arguments of a {@link Operator#PLUS} expression. Extra care is
  * taken to leave intact the use of {@link Operator#PLUS} for the concatenation
@@ -22,11 +23,11 @@ public final class InfixAdditionSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -6659425996990267080L;
 
-  @Override protected boolean sort(final List<Expression> ¢) {
+  @Override protected boolean sort(@NotNull final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
 
-  @Override protected boolean suitable(final InfixExpression ¢) {
+  @Override protected boolean suitable(@NotNull final InfixExpression ¢) {
     return in(¢.getOperator(), PLUS2) && type.isNotString(¢);
   }
 }

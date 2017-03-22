@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** sorts the arguments of a {@link Operator#DIVIDE} expression.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -19,11 +20,11 @@ public final class InfixDivisonSortRest extends InfixExpressionSortingRest//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -727640004713085455L;
 
-  @Override protected boolean sort(final List<Expression> ¢) {
+  @Override protected boolean sort(@NotNull final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);
   }
 
-  @Override protected boolean suitable(final InfixExpression ¢) {
+  @Override protected boolean suitable(@NotNull final InfixExpression ¢) {
     return in(¢.getOperator(), DIVIDE);
   }
 }

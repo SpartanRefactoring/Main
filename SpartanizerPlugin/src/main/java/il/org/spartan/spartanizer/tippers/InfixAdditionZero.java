@@ -23,6 +23,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A {@link Tipper} to convert an expression such as {@code
  * 0 + X = X
@@ -39,18 +41,21 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = 4219806359292635514L;
 
-  private static List<Expression> gather(final Expression x, final List<Expression> $) {
+  @NotNull
+  private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
     if (iz.infixExpression(x))
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
 
+  @NotNull
   private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, new ArrayList<>());
   }
 
-  private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
+  @NotNull
+  private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(operator(x), PLUS, MINUS)) {
@@ -64,7 +69,8 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return $;
   }
 
-  private static List<Expression> gather(final Iterable<Expression> xs, final List<Expression> $) {
+  @NotNull
+  private static List<Expression> gather(@NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
@@ -73,12 +79,13 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return null;
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Remove noop of adding 0 in " + trivia.gist(¢);
   }
 
-  @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
-    final List<Expression> $ = gather(x);
+  @Override public Tip tip(@NotNull final InfixExpression x, @Nullable final ExclusionManager exclude) {
+    @NotNull final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
     final int n = minus.level($);
@@ -87,8 +94,8 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     if (exclude != null)
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = n % 2 == 0 ? null : first($);
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+        @Nullable final Expression first = n % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)
@@ -97,6 +104,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     };
   }
 
+  @NotNull
   @Override public TipperGroup tipperGroup() {
     return TipperGroup.Abbreviation;
   }

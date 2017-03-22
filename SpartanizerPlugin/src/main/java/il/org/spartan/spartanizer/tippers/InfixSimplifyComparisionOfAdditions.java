@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Simplify comparison of additions by moving negative elements sides and by
  * moving integers convert {@code
@@ -23,11 +25,12 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 7585159565469454722L;
 
+  @Nullable
   @Override public ASTNode replacement(final InfixExpression x) {
     if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
       return null;
-    final Expression $ = left(az.infixExpression(left(x))), right;
+    @NotNull final Expression $ = left(az.infixExpression(left(x))), right;
     if (iz.infixPlus(left(x)))
       right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.MINUS);
     else {
@@ -43,11 +46,12 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
-  @Override public boolean prerequisite(final InfixExpression ¢) {
+  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }

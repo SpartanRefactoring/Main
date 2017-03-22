@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** converts {@code try { a;} catch(Exception e) { b;} finally {} } into
  * {@code try { a;} catch(Exception e) { b;} }
@@ -17,7 +18,7 @@ public final class TryFinallyEmptyRemove extends ReplaceCurrentNode<TryStatement
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 3283417047801813557L;
 
-  @Override public boolean prerequisite(final TryStatement ¢) {
+  @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
     return !statements(body(¢)).isEmpty() && ¢.getFinally() != null && statements(¢.getFinally()).isEmpty() && !¢.catchClauses().isEmpty();
   }
 

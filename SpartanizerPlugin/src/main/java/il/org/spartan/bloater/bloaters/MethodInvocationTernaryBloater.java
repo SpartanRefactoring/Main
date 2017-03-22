@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Test case is {@link Issue0984} Issue #984 convert {@code o.f(x ? a : b); }
  * to {@code if (x) o.f(a); else o.f(b); }
@@ -19,8 +21,9 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -373710981362225466L;
 
-  @Override public ASTNode replacement(final ExpressionStatement s) {
-    final MethodInvocation i = az.methodInvocation(s.getExpression());
+  @Nullable
+  @Override public ASTNode replacement(@NotNull final ExpressionStatement s) {
+    @Nullable final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)
       return null;
     final ConditionalExpression $ = findFirst.conditionalArgument(i);
@@ -35,6 +38,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of($.getExpression()));
   }
 
+  @NotNull
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }

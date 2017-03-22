@@ -6,6 +6,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Eliminate conditional continue before last statement in a for loop toList
  * Issue #1014
@@ -15,11 +17,13 @@ public class EnhancedForEliminateConditionalContinue extends EagerTipper<Enhance
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -212967427070060695L;
 
-  @Override public String description(final EnhancedForStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final EnhancedForStatement ¢) {
     return "Eliminate conditional continue before last statement in for about " + ¢.getExpression();
   }
 
-  @Override public Tip tip(final EnhancedForStatement ¢) {
+  @Nullable
+  @Override public Tip tip(@NotNull final EnhancedForStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

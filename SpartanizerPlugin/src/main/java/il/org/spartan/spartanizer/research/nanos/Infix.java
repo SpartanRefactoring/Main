@@ -10,6 +10,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Just another form of {@link SafeNavigation}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -29,14 +31,17 @@ public final class Infix {
       return anyTips(tippers, ¢);
     }
 
+    @Nullable
     @Override public Tip pattern(final InfixExpression ¢) {
       return firstTip(tippers, ¢);
     }
 
+    @NotNull
     @Override public Category category() {
       return Category.Safety;
     }
 
+    @NotNull
     @Override public String description() {
       return "A field access or an invocation where the callee is checked to be non-null and if is, evaluates to a default value";
     }

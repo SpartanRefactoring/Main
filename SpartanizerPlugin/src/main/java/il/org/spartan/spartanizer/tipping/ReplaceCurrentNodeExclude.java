@@ -7,6 +7,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -14,11 +16,11 @@ import il.org.spartan.utils.*;
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
   private static final long serialVersionUID = 8188241616526954088L;
 
-  @Override public final Tip tip(final N n, final ExclusionManager m) {
+  @Override public final Tip tip(@NotNull final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
-    final ASTNode $ = replacement(n, m);
+    @Nullable final ASTNode $ = replacement(n, m);
     return $ == null ? null : new Tip(description(n), n, myClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }
     };
@@ -28,5 +30,6 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
     return true;
   }
 
+  @Nullable
   protected abstract ASTNode replacement(N n, ExclusionManager m);
 }

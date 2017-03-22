@@ -11,6 +11,8 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Generic applicator
  * @author Matteo Orru'
@@ -22,12 +24,12 @@ public class Generic$Applicator {
   private static List<String> selectedTipperGroups;
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
-  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(final String... ss) {
-    final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
+  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(@NotNull final String... ss) {
+    @NotNull final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
       for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
-    } catch (final ClassNotFoundException ¢) {
+    } catch (@NotNull final ClassNotFoundException ¢) {
       ¢.printStackTrace();
     }
     return as.list($); // useless?
@@ -37,7 +39,7 @@ public class Generic$Applicator {
     selectedNodeTypes = setAllNodeTypes();
   }
 
-  public Generic$Applicator(final String... classes) {
+  public Generic$Applicator(@Nullable final String... classes) {
     System.out.println("classes:" + Arrays.toString(classes));
     if (classes == null) {
       selectedNodeTypes = setAllNodeTypes();
@@ -48,7 +50,7 @@ public class Generic$Applicator {
     }
   }
 
-  public Generic$Applicator(final String[] classes, final String... tipperGroups) {
+  public Generic$Applicator(final String[] classes, @Nullable final String... tipperGroups) {
     this(classes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
@@ -96,13 +98,14 @@ public class Generic$Applicator {
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
+  @NotNull
   private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
-    final Collection<String> $ = new ArrayList<>();
+    @NotNull final Collection<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;
   }
 
-  <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  @Nullable <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
     final Tipper<N> $ = toolbox.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();
     if (!selectedTipperGroups.contains(g.name()))

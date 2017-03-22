@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -16,10 +17,13 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
   protected ASTRewrite rewrite;
   protected TextEditGroup editGroup;
 
+  @NotNull
   @Override public abstract String description(VariableDeclarationFragment f);
 
+  @NotNull
   abstract ASTRewrite go();
 
+  @NotNull
   @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement s, final TextEditGroup g) {
     nextStatement = s;
     fragment = f;

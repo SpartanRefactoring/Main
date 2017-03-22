@@ -5,6 +5,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and
  * other conventions
@@ -27,7 +29,7 @@ public enum guessName {
   WEIRDO, //
   UNKNOWN, //
   ;
-  public static boolean isClassName(final ASTNode ¢) {
+  public static boolean isClassName(@Nullable final ASTNode ¢) {
     return ¢ != null && isClassName(hop.lastComponent(az.name(¢)) + "");
   }
 
@@ -35,10 +37,11 @@ public enum guessName {
     return of(e) == CLASS_NAME;
   }
 
-  public static guessName of(final String nameOfSomething) {
+  @Nullable
+  public static guessName of(@Nullable final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
-    for (final guessName $ : guessName.values())
+    for (@NotNull final guessName $ : guessName.values())
       if ($.special(nameOfSomething))
         return $;
     if (nameOfSomething.matches("[_]+")) //

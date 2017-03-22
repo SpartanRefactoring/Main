@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Replace {@code int i = +0} with {@code int i = 0}, {@code int i = +1} with
  * {@code int i = 1} {@code int i = +a} with {@code int i = a}, etc.
@@ -19,11 +20,12 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = -7675038373029859299L;
 
+  @NotNull
   @Override public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }
 
-  @Override public ASTNode replacement(final PrefixExpression ¢) {
+  @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
     return ¢.getOperator() != PLUS ? null : make.plant(copy.of(heart(¢.getOperand()))).into(¢.getParent());
   }
 

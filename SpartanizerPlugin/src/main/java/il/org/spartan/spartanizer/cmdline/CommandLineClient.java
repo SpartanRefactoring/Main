@@ -4,6 +4,7 @@ import static il.org.spartan.external.External.Introspector.*;
 
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Simplified version of command line client that uses spartanizer applicator
  * @author Matteo Orru'
@@ -13,7 +14,7 @@ final class CommandLineClient extends HeadlessSpartanizer {
     new CommandLineClient().go(args);
   }
 
-  private void go(final String... args) {
+  private void go(@NotNull final String... args) {
     if (args.length == 0) {
       System.err.println(usage(this, args, this));
       return;

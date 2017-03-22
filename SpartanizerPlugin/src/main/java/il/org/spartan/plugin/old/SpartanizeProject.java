@@ -14,6 +14,8 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A handler for {@link Tips}. This handler executes all safe Tips on all Java
  * files in the current project.
@@ -37,8 +39,8 @@ public final class SpartanizeProject extends BaseHandler {
   public int countTips() {
     if (todo.isEmpty())
       return 0;
-    final Int $ = new Int();
-    final AbstractGUIApplicator a = new Trimmer();
+    @NotNull final Int $ = new Int();
+    @NotNull final AbstractGUIApplicator a = new Trimmer();
     try {
       eclipse.progressMonitorDialog(true).run(true, true, λ -> {
         λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
@@ -49,12 +51,13 @@ public final class SpartanizeProject extends BaseHandler {
           $.set(0);
         λ.done();
       });
-    } catch (InvocationTargetException | InterruptedException ¢) {
+    } catch (@NotNull InvocationTargetException | InterruptedException ¢) {
       ¢.printStackTrace();
     }
     return $.get();
   }
 
+  @Nullable
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
@@ -63,6 +66,7 @@ public final class SpartanizeProject extends BaseHandler {
     return go();
   }
 
+  @Nullable
   public Void go() {
     start();
     if (initialCount == 0)
@@ -85,16 +89,16 @@ public final class SpartanizeProject extends BaseHandler {
   }
 
   boolean singlePass() {
-    final Trimmer t = new Trimmer();
+    @NotNull final Trimmer t = new Trimmer();
     final IProgressService ps = workench.getProgressService();
-    final Int passNum = new Int(passNumber + 1);
-    final Bool $ = new Bool();
+    @NotNull final Int passNum = new Int(passNumber + 1);
+    @NotNull final Bool $ = new Bool();
     try {
       ps.run(true, true, pm -> {
         pm.beginTask("Spartanizing project '" + javaProject.getElementName() + "' - Pass " + passNum.get() + " out of maximum of " + MAX_PASSES,
             todo.size());
         int n = 0;
-        for (final ICompilationUnit ¢ : todo) {
+        for (@NotNull final ICompilationUnit ¢ : todo) {
           if (pm.isCanceled()) {
             $.set();
             break;
@@ -110,7 +114,7 @@ public final class SpartanizeProject extends BaseHandler {
         done.clear();
         pm.done();
       });
-    } catch (final InterruptedException | InvocationTargetException ¢) {
+    } catch (@NotNull final InterruptedException | InvocationTargetException ¢) {
       monitor.logEvaluationError(this, ¢);
       return true;
     }

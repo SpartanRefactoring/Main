@@ -24,6 +24,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -32,12 +34,13 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3634676628162924936L;
 
+  @NotNull
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
-  @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
-    final ForStatement $ = az.forStatement(parent(x));
+  @Override public Tip tip(@NotNull final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
+    @Nullable final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);

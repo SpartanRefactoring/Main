@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by {@code -X}
  * @author Alex Kopzon
@@ -28,17 +30,17 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = -2150446855942062458L;
 
-  private static List<Expression> minusFirst(final List<Expression> prune) {
+  private static List<Expression> minusFirst(@NotNull final List<Expression> prune) {
     return cons(make.minus(first(prune)), chop(prune));
   }
 
-  private static List<Expression> prune(final Collection<Expression> ¢) {
+  private static List<Expression> prune(@NotNull final Collection<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
     return $.size() != ¢.size() ? $ : null;
   }
 
-  private static ASTNode replacement(final List<Expression> xs) {
-    final List<Expression> $ = prune(xs);
+  private static ASTNode replacement(@NotNull final List<Expression> xs) {
+    @Nullable final List<Expression> $ = prune(xs);
     if ($ == null)
       return null;
     final Expression first = first(xs);
@@ -51,11 +53,12 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(MINUS2);
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;
   }
 
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
     return ¢.getOperator() != MINUS ? null : replacement(operands(¢));
   }
 }

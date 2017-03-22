@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Tested by {@link Issue1115}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -25,18 +27,19 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3240064673505742343L;
 
+  @NotNull
   @Override public String description(final LambdaExpression ¢) {
     return "Rename parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
-  @Override public Tip tip(final LambdaExpression x, final ExclusionManager m) {
-    final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
+  @Override public Tip tip(@NotNull final LambdaExpression x, @Nullable final ExclusionManager m) {
+    @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;
     final SimpleName $ = f.getName();
     if (in($.getIdentifier(), namer.lambda, namer.anonymous, namer.forbidden))
       return null;
-    final Namespace n = Environment.of(x);
+    @Nullable final Namespace n = Environment.of(x);
     if (n.has(namer.lambda) || n.hasChildren())
       return null;
     if (m != null)
