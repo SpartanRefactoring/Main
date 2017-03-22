@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO: Shimon Azulay please add a description
+/** TODO Shimon Azulay please add a description
  * @author Shimon Azulay
  * @author Idan Atias
  * @since 16-11-3 */

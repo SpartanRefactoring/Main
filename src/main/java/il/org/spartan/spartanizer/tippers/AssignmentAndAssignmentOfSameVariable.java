@@ -24,7 +24,7 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -2175075259560385549L;
 
-  @Override public String description(@SuppressWarnings("unused") Assignment __) {
+  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();
   }
 
@@ -43,17 +43,17 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     };
   }
 
-  @Override protected ASTRewrite go(ASTRewrite $, Assignment a, Statement nextStatement, TextEditGroup g) {
-    Assignment nextAssignment = Optional.of(nextStatement) //
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+    final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(λ -> az.expressionStatement(λ)) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
     if (nextAssignment == null || nextAssignment.getOperator() != Operator.ASSIGN)
       return null;
-    Name left1 = az.name(a.getLeftHandSide());
-    Expression right1 = a.getRightHandSide();
+    final Name left1 = az.name(a.getLeftHandSide());
+    final Expression right1 = a.getRightHandSide();
     if (left1 == null || right1 == null)
       return null;
-    Name left2 = az.name(nextAssignment.getLeftHandSide());
+    final Name left2 = az.name(nextAssignment.getLeftHandSide());
     if (left2 == null //
         || !left1.getFullyQualifiedName().equals(left2.getFullyQualifiedName()) //
         || !sideEffects.sink(right1))

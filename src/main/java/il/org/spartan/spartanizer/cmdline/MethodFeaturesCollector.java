@@ -28,7 +28,7 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
     return super.visit(node);
   }
 
-  /** TODO: Ori Roth: Please add here more boolean metrics such as
+  /** TODO Ori Roth: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */

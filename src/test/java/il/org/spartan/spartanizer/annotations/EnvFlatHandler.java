@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 
-/** TODO: Dan Greenstein please add a description Implements the handler of
+/** TODO Dan Greenstein please add a description Implements the handler of
  * flatEnv outer annotation. * @author Dan Greenstein
  * @author Alex Kopzon
  * @since Oct 3, 2016 */

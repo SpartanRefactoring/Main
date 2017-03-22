@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO: Kfir Marx please add a description
+/** TODO Kfir Marx please add a description
  * @author Kfir Marx
  * @since 2016-11-26 */
 @SuppressWarnings("static-method")

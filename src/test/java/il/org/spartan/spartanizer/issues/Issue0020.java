@@ -5,11 +5,11 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Yossi Gil please add a description
+/** See GitHub issue thus numbered
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore // TODO: Doron Mehsulam --yg
+@Ignore // TODO Doron Mehsulam --yg
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0020 {
   /** Correct way of trimming does not change */

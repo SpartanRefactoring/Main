@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
