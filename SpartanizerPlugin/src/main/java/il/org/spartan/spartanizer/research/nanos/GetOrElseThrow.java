@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 2369640174584695552L;
   private static final String description = "replace with azzert.notNull(X)";
-  private static final NotNullOrThrow assertNotNull = new NotNullOrThrow();
+  private static final ThrowOnNull assertNotNull = new ThrowOnNull();
 
   @Override public boolean canTip(final IfStatement ¢) {
     return assertNotNull.check(¢)//

@@ -36,11 +36,7 @@ public final class Constant extends NanoPatternTipper<FieldDeclaration> {
     return "Constant field declaration";
   }
 
-  @Override public String technicalName() {
-    return "constantC";
-  }
-
-  @Override public NanoPatternTipper.Category category() {
-    return Category.Field;
+  @Override public String nanoName() {
+    return "Const";
   }
 }

@@ -40,23 +40,11 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
     };
   }
 
-  @Override public Category category() {
-    return Category.Safety;
-  }
-
   @Override public String description() {
     return description;
   }
 
-  @Override public String technicalName() {
-    return "IfXIsNullReturn";
-  }
-
-  @Override public String example() {
-    return "if(X == null) return;";
-  }
-
-  @Override public String symbolycReplacement() {
-    return "azzert.notNull(X);";
+  @Override public String nanoName() {
+    return "NotNullAssumed";
   }
 }

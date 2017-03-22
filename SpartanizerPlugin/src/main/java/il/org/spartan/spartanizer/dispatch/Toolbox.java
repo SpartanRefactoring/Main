@@ -34,7 +34,7 @@ public class Toolbox {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
         final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
         TipperIDClassTranslationTable.put(id, (Class<? extends Tipper<?>>) t.getClass());
-        TipperIDNameTranslationTable.put(id, t.className());
+        TipperIDNameTranslationTable.put(id, t.nanoName());
         TipperDescriptionCache.put((Class<? extends Tipper<?>>) t.getClass(), t.description());
         TipperExamplesCache.put((Class<? extends Tipper<?>>) t.getClass(), t.examples());
         TipperObjectByClassCache.put((Class<? extends Tipper<?>>) t.getClass(), t);

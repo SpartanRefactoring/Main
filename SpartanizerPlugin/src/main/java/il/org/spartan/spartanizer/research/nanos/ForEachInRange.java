@@ -31,19 +31,7 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @Override public String technicalName() {
-    return "ForEachFromL₁ToL₂ApplyS";
-  }
-
-  @Override public Category category() {
-    return Category.Iterative;
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
+  @Override public String nanoName() {
+    return "ForFromTo";
   }
 }

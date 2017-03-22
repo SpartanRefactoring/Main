@@ -48,7 +48,7 @@ public class ExamplesTests {
     try {
       test.run();
     } catch (final AssertionError x) {
-      throw new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
+      throw new AssertionError("Example failure at " + tipper.nanoName() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }
 

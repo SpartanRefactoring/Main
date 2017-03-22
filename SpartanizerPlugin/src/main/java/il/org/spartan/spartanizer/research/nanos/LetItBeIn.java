@@ -75,8 +75,10 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   }
 
   @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
-    // System.out.println("<<" + extract.containingStatement(¢));
-    // System.out.println(">>" + extract.nextStatement(¢));
     return letInliner.tip(¢);
+  }
+
+  @Override public String nanoName() {
+    return "LetInNext";
   }
 }
