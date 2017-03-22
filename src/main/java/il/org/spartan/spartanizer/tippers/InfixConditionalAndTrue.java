@@ -27,7 +27,7 @@ public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpre
     return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
   }
 
-  @Override public Expression replacement(final InfixExpression ¢) {
+  @Override public Expression replacement(@NotNull final InfixExpression ¢) {
     return Tippers.eliminateLiteral(¢, true);
   }
 }

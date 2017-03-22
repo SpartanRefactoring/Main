@@ -42,7 +42,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
+  @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
     Count.before(¢);
@@ -103,7 +103,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     logNPInfo(n, np);
   }
 
-  private void logNanoContainingMethodInfo(final ASTNode n, final String np) {
+  private void logNanoContainingMethodInfo(@NotNull final ASTNode n, final String np) {
     scope.peek().markNP(n, np);
   }
 

@@ -53,6 +53,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
+  @NotNull
   private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     // TODO Dor: use extract.core
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)

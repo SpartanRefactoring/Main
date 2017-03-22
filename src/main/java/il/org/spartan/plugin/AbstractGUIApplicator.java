@@ -39,6 +39,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
   @Nullable private IMarker marker;
+  @Nullable
   protected String name;
   private ITextSelection selection;
   private final List<Tip> tips = new ArrayList<>();
@@ -169,11 +170,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return a quick fix for this instance */
   @Nullable public IMarkerResolution getFix() {
     return new IMarkerResolution() {
+      @Nullable
       @Override public String getLabel() {
         return getName();
       }
 
-      @Override public void run(final IMarker m) {
+      @Override public void run(@NotNull final IMarker m) {
         try {
           runAsMarkerFix(m);
         } catch (@NotNull final CoreException ¢) {
@@ -216,6 +218,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return iCompilationUnit;
   }
 
+  @Nullable
   @Override public final String getName() {
     return name;
   }
@@ -287,7 +290,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m the marker for which the refactoring needs to system
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */
-  @NotNull public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
+  @NotNull public RefactoringStatus runAsMarkerFix(@NotNull final IMarker ¢) throws CoreException {
     return innerRunAsMarkerFix(¢, false);
   }
 
@@ -314,6 +317,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return tips.size();
   }
 
+  @Nullable
   @Override public String toString() {
     return name;
   }
@@ -331,6 +335,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
+  @Nullable
   protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
 
   public void parse() {
@@ -358,7 +363,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $.get();
   }
 
-  private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+  private void scanCompilationUnitForMarkerFix(@NotNull final IMarker m, final boolean preview) throws CoreException {
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
@@ -422,7 +427,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  @NotNull private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+  @NotNull private RefactoringStatus innerRunAsMarkerFix(@NotNull final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
     scanCompilationUnitForMarkerFix(m, preview);

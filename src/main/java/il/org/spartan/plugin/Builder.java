@@ -84,7 +84,7 @@ public final class Builder extends IncrementalProjectBuilder {
     }
   }
 
-  private static void addMarkers(@NotNull final IResource f, final CompilationUnit u) throws CoreException {
+  private static void addMarkers(@NotNull final IResource f, @NotNull final CompilationUnit u) throws CoreException {
     for (final AbstractGUIApplicator s : Tips.all()) {
       if (s instanceof Trimmer)
         ((Trimmer) s).useProjectPreferences();

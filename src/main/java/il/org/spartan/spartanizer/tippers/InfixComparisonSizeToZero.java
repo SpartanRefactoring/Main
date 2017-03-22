@@ -103,7 +103,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     return replacement(o, $, l, receiver);
   }
 
-  private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
+  private static boolean validTypes(@NotNull final Expression ¢1, @NotNull final Expression ¢2) {
     return iz.pseudoNumber(¢1) && iz.methodInvocation(¢2) //
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }

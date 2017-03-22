@@ -165,7 +165,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           return label;
         }
 
-        @Override public void run(final IMarker m) {
+        @Override public void run(@NotNull final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
           } catch (@NotNull IllegalArgumentException | CoreException ¢) {
@@ -203,14 +203,14 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return toggle(SuppressWarningsLaconicOnOff.ByAnnotation, SuppressWarningsLaconicOnOff.Type.CLASS, "Class under construction");
     }
 
-    @Nullable static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler, final SuppressWarningsLaconicOnOff.Type t,
-        final String label) {
+    @Nullable static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler, @NotNull final SuppressWarningsLaconicOnOff.Type t,
+                                              final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
         }
 
-        @Override public void run(final IMarker m) {
+        @Override public void run(@NotNull final IMarker m) {
           try {
             disabler.deactivate(nullProgressMonitor, m, t);
           } catch (@NotNull IllegalArgumentException | CoreException ¢) {

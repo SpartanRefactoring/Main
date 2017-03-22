@@ -112,7 +112,7 @@ public class Classifier extends ASTVisitor {
   }
 
   /** @param ¢ to classify */
-  private boolean classify(final String ¢) {
+  private boolean classify(@NotNull final String ¢) {
     final String code = format.code(generalize.code(¢));
     System.out.println(code);
     final String classification = input.nextLine();
@@ -124,7 +124,7 @@ public class Classifier extends ASTVisitor {
     return true;
   }
 
-  @NotNull private static String tipperize(final String code, final String classification) {
+  @NotNull private static String tipperize(@NotNull final String code, final String classification) {
     return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
         + "();\", \"" + classification + "\"));";
   }

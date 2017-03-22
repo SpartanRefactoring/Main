@@ -322,7 +322,7 @@ public interface wizard {
     }
   }
 
-  static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
+  static ASTNode commonAncestor(@NotNull final ASTNode n1, @NotNull final ASTNode n2) {
     final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
     for (int $ = 0; $ < Math.min(ns1.size(), ns2.size()); ++$)
       if (ns1.get($) == ns2.get($))

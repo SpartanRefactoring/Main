@@ -16,7 +16,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 public class TrackerSelection extends Selection {
-  ASTNode track;
+  @Nullable ASTNode track;
   int length;
 
   public TrackerSelection(final WrappedCompilationUnit compilationUnit, final ITextSelection textSelection, final String name) {
@@ -57,6 +57,7 @@ public class TrackerSelection extends Selection {
     return $;
   }
 
+  @Nullable
   private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
     return yieldAncestors.untilNodeType(nodeType).from(coveredNode);
   }

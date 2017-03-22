@@ -87,7 +87,7 @@ public class Trimmer extends AbstractGUIApplicator {
         return true;
       }
 
-      @Override protected void initialization(final ASTNode ¢) {
+      @Override protected void initialization(@NotNull final ASTNode ¢) {
         disabling.scan(¢);
       }
     });

@@ -175,7 +175,7 @@ public abstract class StatementReduce<T> {
     }
   }
 
-  @NotNull protected T map(final SuperConstructorInvocation ¢) {
+  @NotNull protected T map(@NotNull final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 

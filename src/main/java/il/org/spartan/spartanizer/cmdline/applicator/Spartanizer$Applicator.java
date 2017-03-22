@@ -139,7 +139,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
@@ -182,7 +182,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
-      @Override protected void initialization(final ASTNode ¢) {
+      @Override protected void initialization(@NotNull final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
@@ -191,7 +191,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
   public void consolidateTips(final ASTRewrite r, @NotNull final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
@@ -234,7 +234,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         spectrum.put(key, spectrum.get(key) + 1);
       }
 
-      @Override protected void initialization(final ASTNode ¢) {
+      @Override protected void initialization(@NotNull final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
