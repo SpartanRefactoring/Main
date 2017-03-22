@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.cmdline.tables.Table_Tippers.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -12,7 +13,6 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Generate a CSV file including all preliminary information we have on
  * patterns, i.e., without applying these.

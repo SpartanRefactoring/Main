@@ -9,7 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;

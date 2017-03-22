@@ -6,10 +6,10 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import org.jetbrains.annotations.NotNull;
 
 /** Compute reusabilty index for methods Meanwhile just computes the index of
  * tokens for methods...

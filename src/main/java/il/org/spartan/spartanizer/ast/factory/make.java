@@ -243,9 +243,9 @@ public enum make {
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
   public static Expression notOf(final Expression ¢) {
-    assert  ¢ !=null;
+    assert ¢ != null;
     final PrefixExpression $ = subject.operand(¢).to(NOT);
-    assert  $ !=null;
+    assert $ != null;
     @Nullable final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }

@@ -36,8 +36,7 @@ public interface containing {
         )).findFirst().orElse(null);
   }
 
-  @Nullable
-  static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
+  @Nullable static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return yieldAncestors.untilClass(BodyDeclaration.class).from(¢);
   }
 

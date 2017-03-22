@@ -890,8 +890,7 @@ public enum step {
    * @return the previous {@link Statement} in the parent {@link Block}. If
    *         parent is not {@link Block} return null, if n is first
    *         {@link Statement} also null. */
-  @Nullable
-  public static Statement previousStatementInBody(final Statement ¢) {
+  @Nullable public static Statement previousStatementInBody(final Statement ¢) {
     return wizard.previous(¢, statements(az.block(parent(¢))));
   }
 

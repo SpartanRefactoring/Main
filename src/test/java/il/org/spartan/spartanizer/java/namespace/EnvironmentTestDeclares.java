@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -78,7 +78,8 @@ public class EnvironmentTestDeclares {
   }
 
   @Test public void declaresDownMethodDeclaration01() {
-    for (@NotNull final Entry<String, Binding> ¢ : Environment.declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
+    for (@NotNull final Entry<String, Binding> ¢ : Environment
+        .declaresDown(makeAST.COMPILATION_UNIT.from(new Document("class A{void foo(int a, int b){}}"))))
       assert ".A.foo.a".equals(¢.getKey()) || ".A.foo.b".equals(¢.getKey());
   }
 
