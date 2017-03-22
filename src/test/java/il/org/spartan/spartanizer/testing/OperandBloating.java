@@ -34,6 +34,7 @@ public class OperandBloating extends TrimmingOperand {
     ast = inner;
   }
 
+  @Override
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
@@ -41,15 +42,14 @@ public class OperandBloating extends TrimmingOperand {
   }
   
   public static String bloat(String source){
-    final Wrap w = Wrap.find(source);
-    final String wrap = w.on(source);
+    final String wrap = Wrap.find(source).on(source);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      final IDocument doc = new Document(wrap);
-      r.rewriteAST(doc, null).apply(doc);
-      return doc.get();
+      final IDocument $ = new Document(wrap);
+      r.rewriteAST($, null).apply($);
+      return $.get();
     } catch (@SuppressWarnings("unused") MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return "Error";
     }
