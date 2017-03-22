@@ -44,11 +44,11 @@ public final class SingleTipperApplicator {
   }
 
   private static ASTRewrite createRewrite(//
-      @NotNull final IProgressMonitor pm, //
-      final IMarker m, //
-      final Type t, //
-      final Tipper<?> w, //
-      @Nullable final IFile f) {
+                                          @NotNull final IProgressMonitor pm, //
+                                          @NotNull final IMarker m, //
+                                          final Type t, //
+                                          final Tipper<?> w, //
+                                          @Nullable final IFile f) {
     return createRewrite(pm, (CompilationUnit) (f != null ? makeAST.COMPILATION_UNIT.from(f) : makeAST.COMPILATION_UNIT.from(m, pm)), m, t, w);
   }
 
@@ -86,7 +86,7 @@ public final class SingleTipperApplicator {
     pm.done();
   }
 
-  @SuppressWarnings("boxing") public void goProject(@NotNull final IProgressMonitor pm, final IMarker m) throws IllegalArgumentException {
+  @SuppressWarnings("boxing") public void goProject(@NotNull final IProgressMonitor pm, @NotNull final IMarker m) throws IllegalArgumentException {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
       return;
