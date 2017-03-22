@@ -1,5 +1,7 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.*;
+
 /** A poor man's approximation of a mutable int, which is so much more
  * convenient than {@link Integer}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -22,7 +24,7 @@ public final class Int {
 
   /** @param ¢ JD
    * @return */
-  public static Int valueOf(final int ¢) {
+  @NotNull public static Int valueOf(final int ¢) {
     final Int $ = new Int();
     $.inner = ¢;
     return $;
@@ -44,7 +46,7 @@ public final class Int {
     this.inner = inner;
   }
 
-  @Override public String toString() {
+  @Override @NotNull public String toString() {
     return inner + "";
   }
 

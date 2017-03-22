@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,7 +28,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   private static final long serialVersionUID = -2855334552468199138L;
 
   // building a replacement
-  private static ASTNode replacement(final MethodInvocation i, final List<Expression> xs) {
+  private static ASTNode replacement(@NotNull final MethodInvocation i, @NotNull final List<Expression> xs) {
     if (xs.isEmpty())
       return make.makeEmptyString(i);
     if (xs.size() == 1)
@@ -54,7 +55,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    * @param x an Expression
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e */
-  private Expression addParenthesisIfNeeded(final Expression x) {
+  private Expression addParenthesisIfNeeded(@NotNull final Expression x) {
     final AST a = x.getAST();
     if (!isParethesisNeeded(x))
       return x;
@@ -78,7 +79,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
   }
 
-  @Override public ASTNode replacement(final MethodInvocation i) {
+  @Override public ASTNode replacement(@NotNull final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
     final List<Expression> $ = new ArrayList<>();

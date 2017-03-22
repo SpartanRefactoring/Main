@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,7 +21,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1007971487834999855L;
 
-  @Override public ASTNode replacement(final TryStatement s) {
+  @Override @Nullable public ASTNode replacement(@NotNull final TryStatement s) {
     final List<CatchClause> catches = step.catchClauses(s);
     CatchClause multiTypeCatch = null;
     int i = 0;
@@ -51,7 +52,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
+  @Override @Nullable public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;
   }
 }

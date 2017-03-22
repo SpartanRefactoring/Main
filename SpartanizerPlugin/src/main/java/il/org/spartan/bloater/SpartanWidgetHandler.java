@@ -10,6 +10,7 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
 
@@ -23,7 +24,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final String IMAGE_ID = "widget";
   static final AtomicBoolean active = new AtomicBoolean(false);
 
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     if (!active.get()) {
       active.set(true);
       launchWidget(λ -> new Point(λ.x - R, λ.y - R));
@@ -31,28 +32,26 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return null;
   }
 
-  public static void launchWidget(Function<Point, Point> startLocation) {
-    IWorkbench w = PlatformUI.getWorkbench();
+  public static void launchWidget(@NotNull final Function<Point, Point> startLocation) {
+    final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return;
     final Display display = w.getDisplay();
     if (display == null)
       return;
-    Shell originalShell = display.getActiveShell();
+    final Shell originalShell = display.getActiveShell();
     if (originalShell == null || originalShell.isDisposed())
       return;
     final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
-    Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
+    final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
     closeButton.setLocation(R / 2, 2 * R - closeButton.getSize().y / 2);
-    closeButton.addListener(SWT.Selection, new Listener() {
-      @Override public void handleEvent(@SuppressWarnings("unused") Event __) {
-        shell.close();
-        active.set(false);
-      }
+    closeButton.addListener(SWT.Selection, (@SuppressWarnings("unused") final Event __) -> {
+      shell.close();
+      active.set(false);
     });
-    AtomicBoolean widgetFocus = new AtomicBoolean(true);
+    final AtomicBoolean widgetFocus = new AtomicBoolean(true);
     final Listener setTransparent = λ -> {
       shell.setAlpha(TRANSPERACY);
       widgetFocus.set(false);
@@ -64,7 +63,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     setControl(shell, setSolid, setTransparent);
     setMovable(display, shell, shell);
     setControl(closeButton, setSolid, setTransparent);
-    Canvas canvas = createImage(shell);
+    final Canvas canvas = createImage(shell);
     setControl(canvas, setSolid, setTransparent);
     setMovable(display, canvas, shell);
     final Region region = new Region();
@@ -77,22 +76,22 @@ public class SpartanWidgetHandler extends AbstractHandler {
     shell.open();
     originalShell.forceFocus();
     originalShell.addShellListener(new ShellListener() {
-      @Override public void shellIconified(@SuppressWarnings("unused") ShellEvent __) {
+      @Override public void shellIconified(@SuppressWarnings("unused") final ShellEvent __) {
         //
       }
 
-      @Override public void shellDeiconified(@SuppressWarnings("unused") ShellEvent __) {
+      @Override public void shellDeiconified(@SuppressWarnings("unused") final ShellEvent __) {
         //
       }
 
-      @Override public void shellDeactivated(@SuppressWarnings("unused") ShellEvent __) {
+      @Override public void shellDeactivated(@SuppressWarnings("unused") final ShellEvent __) {
         if (shell.isDisposed() || widgetFocus.get())
           return;
         shell.setVisible(false);
         widgetFocus.set(false);
       }
 
-      @Override public void shellClosed(@SuppressWarnings("unused") ShellEvent __) {
+      @Override public void shellClosed(@SuppressWarnings("unused") final ShellEvent __) {
         if (shell.isDisposed())
           return;
         shell.setVisible(false);
@@ -101,23 +100,23 @@ public class SpartanWidgetHandler extends AbstractHandler {
         shell.dispose();
       }
 
-      @Override public void shellActivated(@SuppressWarnings("unused") ShellEvent __) {
+      @Override public void shellActivated(@SuppressWarnings("unused") final ShellEvent __) {
         if (!shell.isDisposed())
           shell.setVisible(true);
       }
     });
   }
 
-  private static void setControl(Control c, Listener onEnter, Listener onExit) {
+  private static void setControl(@NotNull final Control c, final Listener onEnter, final Listener onExit) {
     c.addListener(SWT.MouseEnter, onEnter);
     c.addListener(SWT.MouseExit, onExit);
   }
 
-  static void setMovable(Display d, Control source, Shell target) {
+  static void setMovable(@NotNull final Display d, @NotNull final Control source, @NotNull final Shell target) {
     final Listener l = new Listener() {
-      Point origin;
+      @Nullable Point origin;
 
-      @Override public void handleEvent(final Event e) {
+      @Override public void handleEvent(@NotNull final Event e) {
         switch (e.type) {
           case SWT.MouseUp:
             origin = null;
@@ -141,7 +140,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseMove, l);
   }
 
-  static int[] circle(final int r) {
+  @NotNull static int[] circle(final int r) {
     final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
@@ -153,22 +152,20 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return $;
   }
 
-  static void expandControl(Control c, Point minimalButtonSize) {
+  static void expandControl(@Nullable final Control c, @NotNull final Point minimalButtonSize) {
     if (c == null)
       return;
-    Point s = c.getSize();
+    final Point s = c.getSize();
     c.setSize(s == null ? minimalButtonSize : new Point(Math.max(s.x, minimalButtonSize.x), Math.max(s.y, minimalButtonSize.y)));
   }
 
-  static Canvas createImage(Shell s) {
+  @NotNull static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
-    Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
-    Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
-    $.addPaintListener(new PaintListener() {
-      @Override public void paintControl(PaintEvent ¢) {
-        ¢.gc.drawImage(i, 0, 0);
-        $.setSize(w, h);
-      }
+    final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
+    final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
+    $.addPaintListener((@NotNull final PaintEvent ¢) -> {
+      ¢.gc.drawImage(i, 0, 0);
+      $.setSize(w, h);
     });
     $.setLocation(R / 2 - fixX, R / 2);
     $.pack();

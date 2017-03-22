@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class StatementBottomUp<R> extends Reduce<R> {
-  protected R map(final AssertStatement ¢) {
+  protected R map(@NotNull final AssertStatement ¢) {
     return atomic(¢.getExpression(), ¢.getMessage());
   }
 
@@ -27,7 +28,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return $;
   }
 
-  protected R map(final BreakStatement ¢) {
+  protected R map(@NotNull final BreakStatement ¢) {
     return atomic(¢.getLabel());
   }
 
@@ -35,11 +36,11 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduceExpressions(arguments(¢));
   }
 
-  protected R map(final ContinueStatement ¢) {
+  protected R map(@NotNull final ContinueStatement ¢) {
     return atomic(¢.getLabel());
   }
 
-  protected R map(final DoStatement ¢) {
+  protected R map(@NotNull final DoStatement ¢) {
     return map(¢.getBody());
   }
 
@@ -47,7 +48,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return atomic();
   }
 
-  protected R map(final EnhancedForStatement ¢) {
+  protected R map(@NotNull final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
 
@@ -55,7 +56,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce();
   }
 
-  protected R map(final ExpressionStatement ¢) {
+  protected R map(@NotNull final ExpressionStatement ¢) {
     return atomic(¢.getExpression());
   }
 
@@ -63,15 +64,15 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce(map(expression(¢)), map(then(¢)), map(elze(¢)));
   }
 
-  protected R map(final LabeledStatement ¢) {
+  protected R map(@NotNull final LabeledStatement ¢) {
     return reduce(map(¢.getLabel()), map(¢.getBody()));
   }
 
-  protected R map(final ReturnStatement ¢) {
+  protected R map(@NotNull final ReturnStatement ¢) {
     return atomic(¢.getExpression());
   }
 
-  public final R map(final Statement ¢) {
+  public final R map(@Nullable final Statement ¢) {
     if (¢ == null)
       return reduce();
     switch (¢.getNodeType()) {
@@ -131,7 +132,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  protected R reduceExpressions(final Iterable<Expression> xs) {
+  protected R reduceExpressions(@Nullable final Iterable<Expression> xs) {
     R $ = reduce();
     if (xs != null)
       for (final Expression ¢ : xs)
@@ -139,11 +140,11 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return $;
   }
 
-  protected R map(final SynchronizedStatement ¢) {
+  protected R map(@NotNull final SynchronizedStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 
-  protected R map(final TryStatement ¢) {
+  protected R map(@NotNull final TryStatement ¢) {
     return reduce(//
         reduceResources(¢), //
         map(¢.getBody()), //
@@ -160,7 +161,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce(fragments(¢));
   }
 
-  protected R reduce(final Collection<VariableDeclarationFragment> ¢) {
+  protected R reduce(@NotNull final Collection<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclarationFragment::getInitializer).map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
@@ -172,7 +173,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce();
   }
 
-  protected R map(final WhileStatement ¢) {
+  protected R map(@NotNull final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 

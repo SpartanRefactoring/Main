@@ -6,6 +6,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -50,7 +51,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
-    } catch (final AssertionError __) {
+    } catch (@NotNull final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -61,7 +62,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       scope.pop();
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -108,11 +109,11 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     }
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage(@NotNull final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered(@NotNull final Collection<MethodRecord> rs) {
     return rs.stream().map(MethodRecord::numNPStatements).reduce((x, y) -> x + y).get();
   }
 

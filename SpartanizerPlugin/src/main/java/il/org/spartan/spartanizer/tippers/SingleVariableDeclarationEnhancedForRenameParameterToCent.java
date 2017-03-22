@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -28,11 +29,11 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 321955529348174125L;
 
-  @Override public String description(final SingleVariableDeclaration ¢) {
+  @Override @NotNull public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 
-  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager m) {
+  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
     final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
       return null;
@@ -65,7 +66,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     };
   }
 
-  private static boolean isNameDefined(final Statement s, final SimpleName n) {
+  private static boolean isNameDefined(@NotNull final Statement s, final SimpleName n) {
     final Statement $ = az.statement(s.getParent());
     return Environment
         .of($ == null ? s : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)

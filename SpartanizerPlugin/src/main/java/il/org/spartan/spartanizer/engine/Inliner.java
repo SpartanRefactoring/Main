@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -22,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 13, 2016 */
 public final class Inliner {
-  static Wrapper<ASTNode>[] wrap(final ASTNode... ns) {
+  @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode... ns) {
     @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     final Int i = new Int();
     Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
@@ -43,7 +44,7 @@ public final class Inliner {
     this.editGroup = editGroup;
   }
 
-  public InlinerWithValue byValue(final Expression replacement) {
+  @NotNull public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
   }
 
@@ -55,7 +56,7 @@ public final class Inliner {
     return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
-  public static boolean isArrayInitWithUnmatchingTypes(final VariableDeclarationFragment f) {
+  public static boolean isArrayInitWithUnmatchingTypes(@NotNull final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
     final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
@@ -65,7 +66,7 @@ public final class Inliner {
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  public static String getElTypeNameFromArrayType(final Type t) {
+  @Nullable public static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
     final Type et = ((ArrayType) t).getElementType();
@@ -75,7 +76,7 @@ public final class Inliner {
     return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
-  public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
@@ -97,7 +98,7 @@ public final class Inliner {
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }
 
-  public static boolean variableNotUsedAfterStatement(final Statement s, final SimpleName n) {
+  public static boolean variableNotUsedAfterStatement(@NotNull final Statement s, final SimpleName n) {
     final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is not a block";
     final List<Statement> statements = statements(b);
@@ -151,7 +152,7 @@ public final class Inliner {
       Arrays.asList(ns).forEach(λ -> inlineintoSingleton(get(), λ));
     }
 
-    private void inlineintoSingleton(final ASTNode replacement, final Wrapper<ASTNode> n) {
+    private void inlineintoSingleton(final ASTNode replacement, @NotNull final Wrapper<ASTNode> n) {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(n.get());
       n.set(newExpression);
       rewriter.replace(oldExpression, newExpression, editGroup);
@@ -159,11 +160,11 @@ public final class Inliner {
           .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
-    private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
+    @Nullable private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    private Collection<SimpleName> uses(final ASTNode... ¢) {
+    @Nullable private Collection<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

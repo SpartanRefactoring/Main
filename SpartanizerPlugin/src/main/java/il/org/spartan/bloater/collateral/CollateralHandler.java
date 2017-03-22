@@ -1,6 +1,7 @@
 package il.org.spartan.bloater.collateral;
 
 import org.eclipse.core.commands.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
@@ -11,7 +12,7 @@ import il.org.spartan.plugin.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 class CollateralHandler extends AbstractHandler {
-  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     applicator().defaultSelection().go();
     return null;
   }

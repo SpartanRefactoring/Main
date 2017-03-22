@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
@@ -14,12 +15,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Ori Roth
  * @since 2016 */
 public abstract class MethodScanner {
-  protected final MethodDeclaration method;
-  protected final List<Statement> statements;
-  protected Statement currentStatement;
+  @NotNull protected final MethodDeclaration method;
+  @Nullable protected final List<Statement> statements;
+  @Nullable protected Statement currentStatement;
   protected int currentIndex;
 
-  public MethodScanner(final MethodDeclaration method) {
+  public MethodScanner(@NotNull final MethodDeclaration method) {
     assert method != null;
     this.method = method;
     if (body(method) == null) {
@@ -37,7 +38,7 @@ public abstract class MethodScanner {
 
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */
-  public Iterable<Statement> statements() {
+  @NotNull public Iterable<Statement> statements() {
     return () -> new Iterator<Statement>() {
       final Iterator<Statement> i = availableStatements().iterator();
 

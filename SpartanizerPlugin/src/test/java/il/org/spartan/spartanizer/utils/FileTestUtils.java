@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.utils;
 import java.io.*;
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -31,7 +33,7 @@ public class FileTestUtils {
   private static Class<?> asClass(final String $) {
     try {
       return Class.forName($);
-    } catch (final ClassNotFoundException ¢) {
+    } catch (@NotNull final ClassNotFoundException ¢) {
       azzert.fail($ + ": class not found. " + ¢.getMessage());
       return null;
     }
@@ -42,36 +44,36 @@ public class FileTestUtils {
    * @param d
    * @param f
    * @return */
-  static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
+  @NotNull static File createTempFile(final StringBuilder b, final TestDirection d, @NotNull final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
 
-  private static File createTempFile(final TestDirection $, final File f) {
+  private static File createTempFile(final TestDirection $, @NotNull final File f) {
     try {
       return File.createTempFile(f.getName().replace(".", ""), "." + ($ == TestDirection.In ? "in" : "out"));
-    } catch (final IOException e) {
+    } catch (@NotNull final IOException e) {
       return null; // Failed to create temporary file
     }
   }
 
-  private static File createTemporaryRandomAccessFile(final File $, final String s) {
+  @NotNull private static File createTemporaryRandomAccessFile(@NotNull final File $, @NotNull final String s) {
     try (RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
       if ($ != null)
         $.deleteOnExit();
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.log(¢); // Probably permissions problem
     }
     return $;
   }
 
-  private static StringBuilder deleteTestKeyword(final StringBuilder $) {
+  @NotNull private static StringBuilder deleteTestKeyword(@NotNull final StringBuilder $) {
     if ($.indexOf(testKeyword) > 0)
       $.delete($.indexOf(testKeyword), $.length());
     return $;
   }
 
-  private static AbstractGUIApplicator error(final String message, final Class<?> c, final Throwable t) {
+  private static AbstractGUIApplicator error(final String message, @NotNull final Class<?> c, @NotNull final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
   }
@@ -80,31 +82,31 @@ public class FileTestUtils {
    * assertion fault
    * @param commandLineApplicator an arbitrary class object
    * @return an instance of the parameter */
-  public static Object getInstance(final Class<?> $) {
+  public static Object getInstance(@NotNull final Class<?> $) {
     try {
       return $.newInstance();
-    } catch (final SecurityException ¢) {
+    } catch (@NotNull final SecurityException ¢) {
       error("Security exception in instantiating ", $, ¢);
-    } catch (final ExceptionInInitializerError ¢) {
+    } catch (@NotNull final ExceptionInInitializerError ¢) {
       error("Error in instantiating class", $, ¢);
-    } catch (final InstantiationException ¢) {
+    } catch (@NotNull final InstantiationException ¢) {
       error("Nullary constructor threw an exception in class", $, ¢);
-    } catch (final IllegalAccessException ¢) {
+    } catch (@NotNull final IllegalAccessException ¢) {
       error("Missing public constructor (probably) in class", $, ¢);
     }
     return null;
   }
 
   /** Makes an Input file out of a Test file */
-  protected static File makeInFile(final File ¢) {
+  @NotNull protected static File makeInFile(@NotNull final File ¢) {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
-  static AbstractGUIApplicator makeLaconizationObject(final File ¢) {
+  @NotNull static AbstractGUIApplicator makeLaconizationObject(@NotNull final File ¢) {
     return makeLaconizationObject(¢.getName());
   }
 
-  static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
+  @NotNull static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
     final Object $ = getInstance(c);
@@ -113,7 +115,7 @@ public class FileTestUtils {
   }
 
   /** Makes an Output file out of a Test file */
-  protected static File makeOutFile(final File ¢) {
+  @NotNull protected static File makeOutFile(@NotNull final File ¢) {
     final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
     if ($.indexOf(testKeyword) > 0)
       $.delete(0, $.indexOf(testKeyword) + testKeyword.length() + ($.indexOf("\r\n") > 0 ? 2 : 1));
@@ -129,7 +131,7 @@ public class FileTestUtils {
   public abstract static class Directories extends FileTestUtils.Traverse {
     /** Adds a test case to the collection of all test cases generated in the
      * traversal */
-    @Override public final void go(final List<Object[]> $, final File f) {
+    @Override public final void go(@NotNull final List<Object[]> $, @NotNull final File f) {
       if (!f.isDirectory())
         return;
       final Object[] c = makeCase(f);
@@ -137,7 +139,7 @@ public class FileTestUtils {
         $.add(c);
     }
 
-    abstract Object[] makeCase(File d);
+    @NotNull abstract Object[] makeCase(File d);
   }
 
   /** An abstract class to be extended and implemented by client, while
@@ -147,7 +149,7 @@ public class FileTestUtils {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2014/05/24 */
   public abstract static class Files extends FileTestUtils.Traverse {
-    @Override public void go(final List<Object[]> $, final File d) {
+    @Override public void go(@NotNull final List<Object[]> $, @NotNull final File d) {
       for (final File f : d.listFiles()) // NANO
         if (f != null && f.isFile() && f.exists()) {
           final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
@@ -156,7 +158,7 @@ public class FileTestUtils {
         }
     }
 
-    abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
+    @NotNull abstract Object[] makeCase(AbstractGUIApplicator a, File d, File f, String name);
   }
 
   /* Auxiliary function for test suite inherited classes */
@@ -172,7 +174,7 @@ public class FileTestUtils {
    * @since 2014/05/24 */
   public abstract static class Traverse extends FileTestUtils {
     /** @return a collection of all test cases generated in the traversal */
-    public final Collection<Object[]> go() {
+    @NotNull public final Collection<Object[]> go() {
       assert location != null;
       assert location.listFiles() != null;
       final List<Object[]> $ = new ArrayList<>();

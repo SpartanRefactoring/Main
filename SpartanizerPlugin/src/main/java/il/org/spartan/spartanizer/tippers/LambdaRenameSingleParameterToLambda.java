@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -25,11 +26,11 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3240064673505742343L;
 
-  @Override public String description(final LambdaExpression ¢) {
+  @Override @NotNull public String description(final LambdaExpression ¢) {
     return "Rename parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
-  @Override public Tip tip(final LambdaExpression x, final ExclusionManager m) {
+  @Override public Tip tip(@NotNull final LambdaExpression x, @Nullable final ExclusionManager m) {
     final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
@@ -14,11 +15,11 @@ public class IfDeadRemove extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.EmptyCycles {
   private static final long serialVersionUID = -4773914669041733973L;
 
-  @Override public String description(final IfStatement ¢) {
+  @Override @NotNull public String description(final IfStatement ¢) {
     return "Remove :" + ¢;
   }
 
-  @Override public ASTNode replacement(final IfStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
     return !sideEffects.free(¢) ? null : ¢.getAST().newBlock();
   }
 }

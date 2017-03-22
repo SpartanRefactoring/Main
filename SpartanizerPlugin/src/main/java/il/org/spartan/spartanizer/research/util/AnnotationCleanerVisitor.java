@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.util;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -10,7 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-09 */
 public class AnnotationCleanerVisitor extends ASTVisitor {
-  @Override public boolean visit(final SingleMemberAnnotation ¢) {
+  @Override public boolean visit(@NotNull final SingleMemberAnnotation ¢) {
     if (iz.arrayInitializer(value(¢)) && (¢ + "").contains("\""))
       ¢.delete();
     return true;

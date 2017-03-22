@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -12,7 +13,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
 public class UnderstandabilityAnalyzer extends IntegerMetricalAnalyzer {
-  @Override protected int metric(final ASTNode ¢) {
+  @Override protected int metric(@NotNull final ASTNode ¢) {
     return metrics.subtreeUnderstandability(¢);
   }
 

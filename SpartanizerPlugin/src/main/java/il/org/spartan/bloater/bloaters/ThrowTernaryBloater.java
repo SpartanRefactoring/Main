@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,7 +17,7 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 8014414856762598558L;
 
-  private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
+  private static ASTNode innerThrowReplacement(final Expression x, @NotNull final Statement s) {
     final ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
@@ -40,17 +41,17 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     return $;
   }
 
-  private static ASTNode replaceReturn(final Statement ¢) {
+  private static ASTNode replaceReturn(@NotNull final Statement ¢) {
     final ThrowStatement $ = az.throwStatement(¢);
     return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
         : innerThrowReplacement(expression($), ¢);
   }
 
-  @Override public ASTNode replacement(final ThrowStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final ThrowStatement ¢) {
     return replaceReturn(¢);
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ThrowStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ThrowStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
 }

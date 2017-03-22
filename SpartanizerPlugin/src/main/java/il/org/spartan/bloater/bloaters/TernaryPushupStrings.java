@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,7 +24,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -5602484588967209664L;
 
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
     final StringLiteral l;
@@ -66,7 +67,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     return iz.stringLiteral(then($)) && iz.stringLiteral(elze($));
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override @Nullable public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }
 }

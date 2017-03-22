@@ -8,6 +8,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,11 +31,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -4217296742524813844L;
 
-  private static String description(final Expression ¢) {
+  @NotNull private static String description(@Nullable final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
 
-  private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
+  @Nullable private static ASTNode replacement(final Operator o, @NotNull final Expression receiver, final int threshold) {
     assert receiver != null : fault.dump() + //
         "\n threshold='" + threshold + //
         "\n receiver ='" + receiver + //
@@ -45,7 +46,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     return replacement(o, threshold, $);
   }
 
-  private static ASTNode replacement(final Operator o, final int threshold, final MethodInvocation $) {
+  private static ASTNode replacement(final Operator o, final int threshold, @NotNull final MethodInvocation $) {
     if (o == GREATER_EQUALS)
       return replacement(GREATER, threshold - 1, $);
     if (o == LESS_EQUALS)
@@ -66,11 +67,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     return null;
   }
 
-  private static ASTNode replacement(final Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
+  @Nullable private static ASTNode replacement(final Operator o, final int sign, @NotNull final NumberLiteral l, @NotNull final Expression receiver) {
     return replacement(o, receiver, sign * Integer.parseInt(l.getToken()));
   }
 
-  private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
+  private static ASTNode replacement(final Operator o, @NotNull final MethodInvocation i, final Expression x) {
     if (!"size".equals(name(i).getIdentifier()))
       return null;
     int $ = -1;
@@ -107,12 +108,12 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     final Expression $ = left(¢);
     return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }
 
-  @Override public ASTNode replacement(final InfixExpression x) {
+  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     final Operator $ = x.getOperator();
     if (!iz.comparison($))
       return null;

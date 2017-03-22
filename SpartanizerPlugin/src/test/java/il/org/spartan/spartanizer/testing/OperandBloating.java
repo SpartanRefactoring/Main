@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;
@@ -34,14 +35,13 @@ public class OperandBloating extends TrimmingOperand {
     ast = inner;
   }
 
-  @Override
-  protected void copyPasteReformat(final String format, final Object... os) {
+  @Override protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
     System.err.println(NEW_UNIT_TEST + anonymize.makeBloaterUnitTest(get()));
   }
-  
-  public static String bloat(String source){
+
+  public static String bloat(@NotNull final String source) {
     final String wrap = Wrap.find(source).on(source);
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -50,12 +50,12 @@ public class OperandBloating extends TrimmingOperand {
       final IDocument $ = new Document(wrap);
       r.rewriteAST($, null).apply($);
       return $.get();
-    } catch (@SuppressWarnings("unused") MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull @SuppressWarnings("unused") MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return "Error";
     }
   }
-  
-  @Override public OperandBloating gives(final String $) {
+
+  @Override @Nullable public OperandBloating gives(@NotNull final String $) {
     assert $ != null;
     final Wrap w = Wrap.find(get());
     final String wrap = w.on(get());
@@ -81,13 +81,13 @@ public class OperandBloating extends TrimmingOperand {
         azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       }
       return new OperandBloating($1);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
     return null;
   }
 
-  public OperandBloating givesWithBinding(final String $) {
+  @Nullable public OperandBloating givesWithBinding(@NotNull final String $) {
     assert $ != null;
     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
@@ -109,7 +109,7 @@ public class OperandBloating extends TrimmingOperand {
         azzert.that(trivia.essence(unpeeled), is(trivia.essence($1)));
       }
       return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(¢);
     }
     return null;
@@ -118,7 +118,7 @@ public class OperandBloating extends TrimmingOperand {
   /** @param $ java code
    * @param f tested method name. expanders will be applied only for this method
    * @return */
-  public OperandBloating givesWithBinding(final String $, final String f) {
+  @Nullable public OperandBloating givesWithBinding(@NotNull final String $, final String f) {
     assert $ != null;
     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
@@ -144,7 +144,7 @@ public class OperandBloating extends TrimmingOperand {
       final ASTParser p = make.COMPILATION_UNIT.parser(unpeeled);
       p.setResolveBindings(true);
       return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
     return null;
@@ -156,7 +156,7 @@ public class OperandBloating extends TrimmingOperand {
    * @since 19-01-2017
    * @param b
    * @return */
-  private static CompilationUnit rename(final CompilationUnit u) {
+  @Nullable private static CompilationUnit rename(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     TestUtilsBloating.counter = 0;
@@ -179,7 +179,7 @@ public class OperandBloating extends TrimmingOperand {
     return first($);
   }
 
-  private static CompilationUnit createCUWithBinding(final String text) {
+  @Nullable private static CompilationUnit createCUWithBinding(@NotNull final String text) {
     final ASTParser $ = make.COMPILATION_UNIT.parser(text);
     $.setResolveBindings(true);
     return az.compilationUnit($.createAST(null));
@@ -203,7 +203,7 @@ public class OperandBloating extends TrimmingOperand {
           trivia.escapeQuotes(trivia.essence(peeled)), //
           trivia.escapeQuotes(trivia.essence(get())));
       azzert.that(trivia.essence(peeled), is(trivia.essence(get())));
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
   }
@@ -223,7 +223,7 @@ public class OperandBloating extends TrimmingOperand {
           trivia.escapeQuotes(trivia.essence(unpeeled)), //
           trivia.escapeQuotes(trivia.essence(get())));
       azzert.that(trivia.essence(unpeeled), is(trivia.essence(get())));
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
   }

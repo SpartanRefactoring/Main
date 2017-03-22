@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
@@ -21,7 +22,7 @@ public enum TypeNamesCollector {
   static final Map<String, Integer> longNames = new TreeMap<>();
   static final Map<String, Set<String>> shortToFull = new TreeMap<>();
 
-  public static void main(final String[] where) throws IOException {
+  public static void main(@NotNull final String[] where) throws IOException {
     collect(where.length != 0 ? where : as.array("."));
     final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
@@ -37,10 +38,10 @@ public enum TypeNamesCollector {
     System.err.println("Look for your output here: " + w.close());
   }
 
-  private static void collect(final CompilationUnit u) {
+  private static void collect(@NotNull final CompilationUnit u) {
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final SimpleType ¢) {
+      @Override public boolean visit(@NotNull final SimpleType ¢) {
         record(hop.simpleName(¢) + "");
         return true;
       }
@@ -55,15 +56,15 @@ public enum TypeNamesCollector {
     });
   }
 
-  private static void collect(final File f) {
+  private static void collect(@NotNull final File f) {
     try {
       collect(FileUtils.read(f));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void collect(final String javaCode) {
+  private static void collect(@NotNull final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 

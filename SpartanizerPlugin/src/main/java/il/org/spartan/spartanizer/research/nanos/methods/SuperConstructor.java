@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -30,7 +31,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
     return true;
   }
 
-  @Override public String nanoName() {
+  @Override @NotNull public String nanoName() {
     return "Super";
   }
 }

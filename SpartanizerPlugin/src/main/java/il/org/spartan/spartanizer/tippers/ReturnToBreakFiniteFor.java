@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,11 +24,11 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -3493773208955099533L;
 
-  private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
+  private static boolean compareReturnStatements(@Nullable final ReturnStatement r1, @Nullable final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (az.ifStatement(¢) != null)
@@ -70,7 +71,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return null;
   }
 
-  private static boolean isInfiniteLoop(final ForStatement ¢) {
+  private static boolean isInfiniteLoop(@NotNull final ForStatement ¢) {
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -78,15 +79,15 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return "Convert the return inside the loop to break";
   }
 
-  @Override public String description(final ForStatement ¢) {
+  @Override @NotNull public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final ForStatement s, final ExclusionManager exclude) {
+  @Override public Tip tip(@NotNull final ForStatement s, @Nullable final ExclusionManager exclude) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;
@@ -95,7 +96,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     if (exclude != null)
       exclude.exclude(s);
     return $ == null ? null : new Tip(description(), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace($, first(statements(az.block(into.s("break;")))), g);
       }
     };

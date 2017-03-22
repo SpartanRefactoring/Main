@@ -6,8 +6,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,13 +27,13 @@ class Table_Effectiveness extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
-  static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
-    @Override public boolean visit(final CompilationUnit $) {
+  @NotNull static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
+    @Override public boolean visit(@NotNull final CompilationUnit $) {
       try {
         $.accept(new AnnotationCleanerVisitor());
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
-      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+      } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
         ___.unused(__);
       }
       return super.visit($);

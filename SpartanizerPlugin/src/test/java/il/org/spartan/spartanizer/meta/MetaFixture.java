@@ -12,6 +12,7 @@ import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
@@ -33,7 +34,7 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
-  protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+  @Nullable protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -48,7 +49,7 @@ public abstract class MetaFixture {
         .reduce((x, y) -> x + y).get();
   }
 
-  protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
+  @NotNull protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
@@ -60,14 +61,14 @@ public abstract class MetaFixture {
     return $;
   }
 
-  private static IPath getSrcPath(final File ¢) {
+  private static IPath getSrcPath(@NotNull final File ¢) {
     IPath $ = new Path(¢.getAbsolutePath());
     while (!$.isEmpty() && !"src".equals($.lastSegment()))
       $ = $.removeLastSegments(1);
     return $;
   }
 
-  private static CompilationUnit loadAST(final String fileName) {
+  private static CompilationUnit loadAST(@NotNull final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
@@ -79,14 +80,14 @@ public abstract class MetaFixture {
     return null;
   }
 
-  private static String loadText(final String fileName) {
+  private static String loadText(@NotNull final String fileName) {
     for (final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;
   }
 
-  public static int value(final SingleMemberAnnotation ¢) {
+  public static int value(@NotNull final SingleMemberAnnotation ¢) {
     return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
 
@@ -94,28 +95,28 @@ public abstract class MetaFixture {
     return values(step.expressions(¢));
   }
 
-  private static String[] values(final Collection<Expression> xs) {
+  private static String[] values(@NotNull final Collection<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
-  private static String[] values(final Expression $) {
+  @NotNull private static String[] values(@Nullable final Expression $) {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
 
-  protected static String[] values(final SingleMemberAnnotation ¢) {
+  protected static String[] values(@NotNull final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
 
-  private static String[] values(final StringLiteral ¢) {
+  private static String[] values(@NotNull final StringLiteral ¢) {
     return as.array(¢.getLiteralValue());
   }
 
-  public Iterable<Annotation> annotations() {
+  @NotNull public Iterable<Annotation> annotations() {
     return descendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
 
-  public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
+  @NotNull public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
     final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
@@ -151,7 +152,7 @@ public abstract class MetaFixture {
     return classToText.get(c);
   }
 
-  public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
+  @NotNull public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return descendants.whoseClassIs(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 }

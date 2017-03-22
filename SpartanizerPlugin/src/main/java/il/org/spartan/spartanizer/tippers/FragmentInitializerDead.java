@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -24,11 +25,11 @@ public final class FragmentInitializerDead extends ReplaceCurrentNode<VariableDe
     return "Remove default values initiliazing field";
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 
-  @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
+  @Override public VariableDeclarationFragment replacement(@NotNull final VariableDeclarationFragment f) {
     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;

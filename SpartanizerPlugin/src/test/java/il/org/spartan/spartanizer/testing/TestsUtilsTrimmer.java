@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.testing;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -10,15 +11,15 @@ import il.org.spartan.utils.*;
 
 public enum TestsUtilsTrimmer {
   ;
-  public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+  public static int countOpportunities(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u) {
     return a.collectSuggestions(u).size();
   }
 
-  public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
+  @NotNull public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
 
-  public static TrimmingOperand trimmingOf(final String from) {
+  @NotNull public static TrimmingOperand trimmingOf(final String from) {
     return new TrimmingOperand(from);
   }
 
@@ -30,7 +31,7 @@ public enum TestsUtilsTrimmer {
       this.clazz = clazz;
     }
 
-    private N findNode(final Rule<N, Tip> t) {
+    private N findNode(@NotNull final Rule<N, Tip> t) {
       assert t != null;
       final Wrap wrap = Wrap.find(get());
       assert wrap != null;
@@ -41,7 +42,7 @@ public enum TestsUtilsTrimmer {
       return $;
     }
 
-    private N firstInstance(final CompilationUnit u) {
+    private N firstInstance(@NotNull final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor(true) {
         /** The implementation of the visitation procedure in the JDT seems to
@@ -52,7 +53,7 @@ public enum TestsUtilsTrimmer {
          * null, we do not carry out any further tests.
          * @param pattern the node currently being visited.
          * @return whether the sought node is found. */
-        @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
+        @Override @SuppressWarnings("unchecked") public boolean preVisit2(@NotNull final ASTNode ¢) {
           if ($.get() != null)
             return false;
           if (!clazz.isAssignableFrom(¢.getClass()))
@@ -64,12 +65,12 @@ public enum TestsUtilsTrimmer {
       return $.get();
     }
 
-    public OperandToTipper<N> in(final Rule<N, Tip> ¢) {
+    @NotNull public OperandToTipper<N> in(@NotNull final Rule<N, Tip> ¢) {
       assert ¢.check(findNode(¢));
       return this;
     }
 
-    public OperandToTipper<N> notIn(final Rule<N, Tip> ¢) {
+    @NotNull public OperandToTipper<N> notIn(@NotNull final Rule<N, Tip> ¢) {
       assert !¢.check(findNode(¢));
       return this;
     }

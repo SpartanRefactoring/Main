@@ -5,6 +5,8 @@
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.utils;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 
 class A {
@@ -13,7 +15,7 @@ class A {
   }
 
   class B {
-    A f() {
+    @NotNull A f() {
       return A.this;
     }
   }
@@ -44,7 +46,7 @@ public enum ReflectionAnalyzer {
     }.getClass());
   }
 
-  static String toBinary(final int value) {
+  @NotNull static String toBinary(final int value) {
     String $ = "";
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -93,7 +94,7 @@ public final class FuncsTest {
     assert iz.deMorgan(CONDITIONAL_OR);
   }
 
-  private Type t(final String codeFragment) {
+  @NotNull private Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 }

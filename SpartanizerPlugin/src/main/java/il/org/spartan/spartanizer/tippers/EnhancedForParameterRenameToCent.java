@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,11 +27,11 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3945693304397811549L;
 
-  @Override public String description(final EnhancedForStatement ¢) {
+  @Override @NotNull public String description(@NotNull final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
+  @Override public Tip tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
@@ -54,7 +55,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     };
   }
 
-  public static SimpleName newCurrent(final EnhancedForStatement ¢) {
+  public static SimpleName newCurrent(@NotNull final EnhancedForStatement ¢) {
     return ¢.getAST().newSimpleName(namer.it);
   }
 }

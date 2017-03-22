@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -24,15 +25,15 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -2175075259560385549L;
 
-  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();
   }
 
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "eliminate redundant assignment";
   }
 
-  @Override public Example[] examples() {
+  @Override @NotNull public Example[] examples() {
     return new Example[] { //
         convert("x = 1; x = 2;") //
             .to("x = 2;"), //
@@ -43,7 +44,8 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     };
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a, @NotNull final Statement nextStatement,
+      final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(λ -> az.expressionStatement(λ)) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);

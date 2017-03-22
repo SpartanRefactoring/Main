@@ -11,6 +11,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,12 +28,12 @@ public final class FragmentInitializerStatementTerminatingScope extends $Frageme
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -221763355000543721L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
+  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @Nullable final VariableDeclarationFragment f, final SimpleName n,
+      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)

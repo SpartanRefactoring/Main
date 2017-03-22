@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,7 +22,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1472927802038098123L;
 
-  @Override public ASTNode replacement(final IfStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
     final InfixExpression ie = az.infixExpression(¢.getExpression());
@@ -37,17 +38,17 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
 
-  private static InfixExpression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
+  private static InfixExpression getReducedIEFromIEWithExtOp(@NotNull final InfixExpression ¢) {
     final InfixExpression $ = subject.pair(¢.getRightOperand(), first(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢)).extendedOperands().remove(0);
     return $;
   }
 
-  private static boolean shouldTip(final IfStatement ¢) {
+  private static boolean shouldTip(@NotNull final IfStatement ¢) {
     return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd((InfixExpression) ¢.getExpression());
   }
 }

@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
 
@@ -32,7 +33,7 @@ public class CharacterShortcut extends AbstractHandler {
    *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Override public Object execute(final ExecutionEvent e) {
+  @Override @Nullable public Object execute(@Nullable final ExecutionEvent e) {
     if (e == null)
       return null;
     final Object $ = e.getTrigger();
@@ -49,7 +50,7 @@ public class CharacterShortcut extends AbstractHandler {
    * @param c the character to write in the file
    * @param s the file and text location selected
    * @return null [[SuppressWarningsSpartan]] */
-  private static Object insertCharacter(final char c, final Selection s) {
+  @Nullable private static Object insertCharacter(final char c, @Nullable final Selection s) {
     if (s == null || s.isEmpty() || s.textSelection == null)
       return null;
     final List<ICompilationUnit> us = s.getCompilationUnits();
@@ -61,7 +62,7 @@ public class CharacterShortcut extends AbstractHandler {
     m.addChild(new InsertEdit(s.textSelection.getOffset(), c + ""));
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
-    } catch (final JavaModelException x) {
+    } catch (@NotNull final JavaModelException x) {
       monitor.log(x);
       return null;
     }

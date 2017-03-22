@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -19,7 +20,7 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 4091243669569596651L;
 
-  @Override public ASTNode replacement(final EnhancedForStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final EnhancedForStatement s) {
     if (s == null)
       return null;
     // TODO Raviv please use class subject
@@ -40,7 +41,7 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
     return "expand to block";
   }
 }

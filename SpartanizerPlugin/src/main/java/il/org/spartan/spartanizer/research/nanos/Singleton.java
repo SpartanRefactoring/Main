@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -23,7 +24,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Override @Nullable public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -43,7 +44,7 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override public NanoPatternTipper.Category category() {
+  @Override @NotNull public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

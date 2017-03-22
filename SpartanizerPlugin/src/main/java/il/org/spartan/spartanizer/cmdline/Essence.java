@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
@@ -14,7 +16,7 @@ public enum Essence {
     }
   }
 
-  public static String of(final String codeFragment) {
+  public static String of(@NotNull final String codeFragment) {
     return codeFragment//
         .replaceAll("\\r\\n", "\n") // DOS Junk
         .replaceAll("\\n\\r", "\n") // Mac Junk
@@ -36,7 +38,7 @@ public enum Essence {
     ;
   }
 
-  public static String stringRemove(final String $) {
+  public static String stringRemove(@NotNull final String $) {
     return $
         // Unquoted double quote by two consecutive double quotes
         .replaceAll("([^\"])\"", "$1\"\"")

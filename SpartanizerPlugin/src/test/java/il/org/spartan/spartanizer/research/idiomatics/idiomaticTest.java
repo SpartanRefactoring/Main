@@ -6,6 +6,7 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -65,11 +66,11 @@ public class idiomaticTest {
     azzert.isNull(idiomatic.take(null).unless(false));
   }
 
-  String mapper(final String ¢) {
+  @NotNull String mapper(final String ¢) {
     return ¢ + ¢;
   }
 
-  String mapper(final Integer ¢) {
+  @NotNull String mapper(final Integer ¢) {
     return ¢ + "";
   }
 
