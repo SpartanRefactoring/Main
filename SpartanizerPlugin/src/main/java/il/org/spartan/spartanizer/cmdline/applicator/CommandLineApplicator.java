@@ -124,15 +124,15 @@ public class CommandLineApplicator extends Applicator {
     // listener().push(message.report_start.get());
     if (!shouldRun())
       return;
-    final Int totalTipsInvoked = new Int();
+    @NotNull final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
       final int l = passes();
       for (int pass = 1; pass <= l; ++pass) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), dead = new ArrayList<>();
-        for (final WrappedCompilationUnit ¢ : alive) {
+        @NotNull final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), dead = new ArrayList<>();
+        for (@NotNull final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢).intValue();
           System.out.println("tipsInvoked: " + tipsInvoked);
           if (tipsInvoked <= 0)

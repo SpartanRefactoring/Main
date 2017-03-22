@@ -54,10 +54,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param p JD
    * @return null */
   public static Object execute(@NotNull final IProject p) {
-    final SpartanPreferencesDialog d = getDialog(p);
+    @Nullable final SpartanPreferencesDialog d = getDialog(p);
     if (d == null)
       return null;
-    final Set<String> $ = getPreferencesChanges(d);
+    @Nullable final Set<String> $ = getPreferencesChanges(d);
     return $ == null ? null : commit(p, $);
   }
 
@@ -70,10 +70,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @return null */
   public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
       @NotNull final BiFunction<IProject, Set<String>, Void> commit) {
-    final SpartanPreferencesDialog d = getDialog(m);
+    @Nullable final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    final Set<String> $ = getPreferencesChanges(d);
+    @Nullable final Set<String> $ = getPreferencesChanges(d);
     return $ == null ? null : commit.apply(p, $);
   }
 
@@ -118,8 +118,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static SpartanPreferencesDialog getDialog(@Nullable final Map<SpartanCategory, SpartanTipper[]> m) {
     if (Display.getCurrent().getActiveShell() == null || m == null)
       return null;
-    final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
-    final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
+    @NotNull final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
+    @NotNull final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
       @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
@@ -165,10 +165,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setEmptyListMessage("No tippers available...");
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
-    final Collection<SpartanElement> et = new ArrayList<>();
+    @NotNull final Collection<SpartanElement> et = new ArrayList<>();
     for (final SpartanCategory c : m.keySet()) {
       boolean enabled = true;
-      for (final SpartanTipper ¢ : m.get(c))
+      for (@NotNull final SpartanTipper ¢ : m.get(c))
         if (¢.enabled())
           et.add(¢);
         else
@@ -198,8 +198,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
       final CheckboxTreeViewer $ = super.createTreeViewer(parent);
       // addSelectionListener($); // deprecated method- by click
-      final Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
-      final Map<ToolTip, Rectangle> bounds = new HashMap<>();
+      @NotNull final Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
+      @NotNull final Map<ToolTip, Rectangle> bounds = new HashMap<>();
       $.getTree().addListener(SWT.MouseHover, new Listener() {
         @Override public void handleEvent(@Nullable final Event e) {
           if (e == null)
@@ -219,14 +219,14 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         void createTooltip(@NotNull final SpartanTipper t, @NotNull final Rectangle r) {
           tooltips.values().forEach(λ -> λ.setVisible(false));
           if (!tooltips.containsKey(t)) {
-            final ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
+            @NotNull final ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
             tt.setMessage(t.description());
             tt.setAutoHide(true);
             tooltips.put(t, tt);
           }
           final Rectangle tp = $.getTree().getBounds();
           final Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
-          final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
+          @NotNull final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
           final ToolTip tt = tooltips.get(t);
           bounds.put(tt, tr);
           tt.setLocation(tr.x + tr.width, tr.y);
@@ -234,7 +234,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         }
       });
       $.getTree().addListener(SWT.MouseMove, e -> {
-        for (final ToolTip ¢ : tooltips.values())
+        for (@NotNull final ToolTip ¢ : tooltips.values())
           if (¢.isVisible()) {
             final Rectangle tp = $.getTree().getBounds();
             if (!bounds.get(¢).contains(Display.getCurrent().getActiveShell().toDisplay(tp.x + e.x, tp.y + e.y)))
@@ -251,18 +251,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           final Object o = ((IStructuredSelection) s).getFirstElement();
           if (!(o instanceof SpartanTipper))
             return;
-          final SpartanTipper st = (SpartanTipper) o;
-          final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
-          final IDocument d = new Document(before);
+          @NotNull final SpartanTipper st = (SpartanTipper) o;
+          @Nullable final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
+          @NotNull final IDocument d = new Document(before);
           try {
-            final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
+            @Nullable final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();
               }
 
               @Override @NotNull public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
-                @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
+                @Nullable @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
@@ -307,7 +307,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           }
         }.schedule();
       else {
-        final ProgressMonitorDialog d = Dialogs.progress(true);
+        @NotNull final ProgressMonitorDialog d = Dialogs.progress(true);
         d.run(true, true, m -> {
           SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
             final Shell s = d.getShell();
@@ -332,7 +332,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       @NotNull final Function<Example, String> converter) {
     if (preview == null)
       return null;
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0, c = 1; ¢ < preview.length; ++¢)
       if (filter.apply(preview[¢]).booleanValue())
         $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(preview[¢])).append("\n\n");
@@ -345,7 +345,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;
-    final IDocument $ = new Document(code);
+    @NotNull final IDocument $ = new Document(code);
     try {
       e.apply($);
     } catch (@NotNull MalformedTreeException | BadLocationException ¢) {

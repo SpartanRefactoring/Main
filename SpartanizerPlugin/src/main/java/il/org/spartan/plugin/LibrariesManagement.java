@@ -87,7 +87,7 @@ public enum LibrariesManagement {
       monitor.log(¢);
       return false;
     }
-    final List<IClasspathEntry> nes = new ArrayList<>();
+    @NotNull final List<IClasspathEntry> nes = new ArrayList<>();
     if (es != null)
       nes.addAll(as.list(es));
     nes.add(JavaCore.newContainerEntry(LIBRARY_PATH_CONTAINER.getPath(), null, null, false));

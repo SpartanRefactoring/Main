@@ -21,8 +21,8 @@ import il.org.spartan.utils.*;
  * @since 2017-03-08 */
 public interface theSpartanizer {
   static Tipper<?> firstTipper(@NotNull final String from) {
-    final Wrapper<Tipper<?>> $ = new Wrapper<>();
-    final ASTNode n = wizard.ast(from);
+    @NotNull final Wrapper<Tipper<?>> $ = new Wrapper<>();
+    @Nullable final ASTNode n = wizard.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
@@ -46,18 +46,18 @@ public interface theSpartanizer {
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
   @SuppressWarnings("hiding") static String once(@NotNull final String from) {
-    final Trimmer trimmer = new Trimmer(toolbox);
-    final IDocument $ = new Document(from);
-    final ASTNode root = wizard.ast(from);
+    @NotNull final Trimmer trimmer = new Trimmer(toolbox);
+    @NotNull final IDocument $ = new Document(from);
+    @Nullable final ASTNode root = wizard.ast(from);
     if (root != null)
       root.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
           if (!searching)
             return false;
-          final Tipper<N> t = safeFirstTipper(n);
+          @Nullable final Tipper<N> t = safeFirstTipper(n);
           if (t == null)
             return true;
-          final Tip $ = t.tip(n);
+          @Nullable final Tip $ = t.tip(n);
           if ($ == null)
             return true;
           apply($, n);

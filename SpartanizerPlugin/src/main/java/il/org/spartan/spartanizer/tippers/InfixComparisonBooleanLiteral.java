@@ -52,8 +52,8 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
   }
 
   @Override public Expression replacement(@NotNull final InfixExpression x) {
-    final BooleanLiteral $ = literal(x);
-    final Expression nonliteral = core(nonLiteral(x));
+    @Nullable final BooleanLiteral $ = literal(x);
+    @Nullable final Expression nonliteral = core(nonLiteral(x));
     return make.plant(!negating(x, $) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());
   }
 }

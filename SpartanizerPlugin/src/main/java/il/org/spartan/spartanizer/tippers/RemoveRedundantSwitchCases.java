@@ -24,7 +24,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
   private static final long serialVersionUID = -1674967177889976551L;
 
   @Override @NotNull public Tip tip(@NotNull final SwitchCase n, @Nullable final ExclusionManager exclude) {
-    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+    @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
     return new Tip(description(n), n, getClass()) {
@@ -35,7 +35,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
   }
 
   @Override protected boolean prerequisite(@NotNull final SwitchCase n) {
-    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+    @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     return $ != null && ($.isDefault() || n.isDefault());
   }
 

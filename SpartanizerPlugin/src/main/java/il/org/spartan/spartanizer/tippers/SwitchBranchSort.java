@@ -22,7 +22,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
   private static final long serialVersionUID = -3538528399312058847L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
+    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)

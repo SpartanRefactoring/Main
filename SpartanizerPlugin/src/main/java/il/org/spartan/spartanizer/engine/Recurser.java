@@ -25,10 +25,10 @@ public final class Recurser<T> {
       return new ArrayList<>();
     if (iz.block(n))
       return statements(az.block(n));
-    final InfixExpression ¢ = az.infixExpression(n);
+    @Nullable final InfixExpression ¢ = az.infixExpression(n);
     if (¢ == null)
       return march(n);
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     $.add(left(¢));
     $.add(right(¢));
     $.addAll(extendedOperands(¢));
@@ -39,7 +39,7 @@ public final class Recurser<T> {
    * @param ¢
    * @return */
   @SuppressWarnings("unchecked") @Nullable public static List<ASTNode> allChildren(final ASTNode ¢) {
-    final List<ASTNode> $ = (List<ASTNode>) children(¢);
+    @NotNull final List<ASTNode> $ = (List<ASTNode>) children(¢);
     if (iz.methodInvocation(¢)) {
       $.addAll(arguments(az.methodInvocation(¢)));
       if (haz.expression(az.methodInvocation(¢)))
@@ -93,15 +93,15 @@ public final class Recurser<T> {
   }
 
   public void postVisit(@NotNull final Consumer<Recurser<T>> f) {
-    final List<? extends ASTNode> children = children(root);
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty()) {
       f.accept(this);
       return;
     }
-    final List<Recurser<T>> rs = new ArrayList<>();
+    @NotNull final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : rs) {
+    for (@NotNull final Recurser<T> ¢ : rs) {
       ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit(f);
       ++index;
     }
@@ -110,13 +110,13 @@ public final class Recurser<T> {
   }
 
   public T postVisit(@NotNull final Function<Recurser<T>, T> $) {
-    final List<? extends ASTNode> children = children(root);
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current = $.apply(this);
-    final List<Recurser<T>> rs = new ArrayList<>();
+    @NotNull final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : rs) {
+    for (@NotNull final Recurser<T> ¢ : rs) {
       current = ¢.from(index == 0 ? current : rs.get(index - 1).getCurrent()).postVisit($);
       ++index;
     }
@@ -126,23 +126,23 @@ public final class Recurser<T> {
 
   public void preVisit(@NotNull final Consumer<Recurser<T>> f) {
     f.accept(this);
-    final List<? extends ASTNode> children = children(root);
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return;
-    final List<Recurser<T>> rs = new ArrayList<>();
+    @NotNull final List<Recurser<T>> rs = new ArrayList<>();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     rs.forEach(λ -> λ.preVisit(f));
   }
 
   public T preVisit(@NotNull final Function<Recurser<T>, T> f) {
     current = f.apply(this);
-    final List<? extends ASTNode> children = children(root);
+    @Nullable final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current;
-    final List<Recurser<T>> $ = new ArrayList<>();
+    @NotNull final List<Recurser<T>> $ = new ArrayList<>();
     children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
-    for (final Recurser<T> ¢ : $) {
+    for (@NotNull final Recurser<T> ¢ : $) {
       current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(f);
       ++index;
     }

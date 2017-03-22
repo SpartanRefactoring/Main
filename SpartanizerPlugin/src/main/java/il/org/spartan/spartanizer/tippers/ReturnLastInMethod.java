@@ -25,7 +25,7 @@ public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
   @Override public boolean prerequisite(@NotNull final ReturnStatement ¢) {
     if (¢.getExpression() != null)
       return false;
-    final Block $ = az.block(¢.getParent());
+    @Nullable final Block $ = az.block(¢.getParent());
     return $ != null && lastIn(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 }

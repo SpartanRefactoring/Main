@@ -40,7 +40,7 @@ public enum copy {
   }
 
   public static void modifiers(@NotNull final Iterable<IExtendedModifier> from, @NotNull final Collection<IExtendedModifier> to) {
-    for (final IExtendedModifier ¢ : from)
+    for (@NotNull final IExtendedModifier ¢ : from)
       if (¢.isModifier())
         to.add(copy.of((Modifier) ¢));
       else if (¢.isAnnotation())

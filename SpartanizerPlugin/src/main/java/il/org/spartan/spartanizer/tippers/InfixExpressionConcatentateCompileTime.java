@@ -35,7 +35,7 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
   @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
-    final List<Expression> $ = extract.allOperands(x);
+    @Nullable final List<Expression> $ = extract.allOperands(x);
     assert $.size() >= 2;
     boolean clean = true;
     for (int i = 0; i < $.size() - 1;)

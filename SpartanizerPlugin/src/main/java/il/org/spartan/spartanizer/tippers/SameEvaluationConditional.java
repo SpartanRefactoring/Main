@@ -22,7 +22,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
   }
 
   @Override protected boolean prerequisite(@NotNull final ConditionalExpression x) {
-    final InfixExpression $ = az.infixExpression(x.getExpression());
+    @Nullable final InfixExpression $ = az.infixExpression(x.getExpression());
     if (!iz.infixEquals($))
       return false;
     final Expression left = $.getLeftOperand();

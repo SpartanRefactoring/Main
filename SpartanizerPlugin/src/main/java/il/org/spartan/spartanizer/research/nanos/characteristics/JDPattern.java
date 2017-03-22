@@ -30,9 +30,9 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(@NotNull final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;
-    final Collection<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
+    @Nullable final Collection<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
-    final Bool $ = new Bool();
+    @NotNull final Bool $ = new Bool();
     $.inner = true;
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
@@ -77,7 +77,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
    * @param ss variable names which are influenced by parameters
    * @return */
   static boolean containsParameter(@NotNull final ASTNode root, @NotNull final Collection<String> ss) {
-    final Bool $ = new Bool();
+    @NotNull final Bool $ = new Bool();
     $.inner = false;
     // noinspection SameReturnValue
     root.accept(new ASTVisitor(true) {
@@ -90,7 +90,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   }
 
   @NotNull static Collection<String> getInfluenced(final MethodDeclaration root, @NotNull final Collection<String> ps) {
-    final Collection<String> $ = new HashSet<>(ps);
+    @NotNull final Collection<String> $ = new HashSet<>(ps);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     body(root).accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
@@ -115,7 +115,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   }
 
   @NotNull protected static String extractName(@NotNull final Expression root) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     // noinspection SameReturnValue
     root.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {

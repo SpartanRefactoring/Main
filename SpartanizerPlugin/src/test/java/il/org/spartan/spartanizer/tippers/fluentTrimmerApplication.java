@@ -109,7 +109,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
           return true;
         final Tipper<N> w = trimmer().toolbox.firstTipper(n);
         if (w != null) {
-          final Tip make = w.tip(n, exclude);
+          @Nullable final Tip make = w.tip(n, exclude);
           if (make != null)
             make.go(r, null);
         }
@@ -126,7 +126,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   <N extends ASTNode> N firstInstance(@NotNull final Class<N> clazz) {
-    final Wrapper<N> $ = new Wrapper<>();
+    @NotNull final Wrapper<N> $ = new Wrapper<>();
     compilationUnit.accept(new ASTVisitor(true) {
       /** The implementation of the visitation procedure in the JDT seems to be
        * buggy. Each time we find a node which is an instance of the sought
@@ -177,7 +177,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n    as '" + codeFragment + "---the original"//
               + "\n snippet.");
     }
-    final String difference = common(codeFragment);
+    @Nullable final String difference = common(codeFragment);
     if (difference != null)
       azzert.fail(//
           "something ELSE:\n" //
@@ -190,7 +190,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   public void stays() {
-    final String difference = common(codeFragment);
+    @Nullable final String difference = common(codeFragment);
     if (difference != null)
       azzert.fail(//
           "Should not change" //

@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class FuncsTest {
   @Test public void arrayOfInts() {
-    final Type t = t("int[][] __;");
+    @NotNull final Type t = t("int[][] __;");
     assert t != null;
     azzert.that(namer.shorten(t), equalTo("iss"));
   }

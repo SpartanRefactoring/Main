@@ -163,7 +163,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
   /** @param ¢ JD
    * @return furtherest ancestor whose type matches the given type. */
   @Nullable public ASTNode inclusiveLastFrom(final ASTNode ¢) {
-    for (ASTNode $ = inclusiveFrom(¢), p = $;; p = from(p.getParent())) {
+    for (@Nullable ASTNode $ = inclusiveFrom(¢), p = $;; p = from(p.getParent())) {
       if (p == null)
         return $;
       $ = p;
@@ -175,8 +175,8 @@ public abstract class yieldAncestors<N extends ASTNode> {
   @Nullable public ASTNode lastFrom(final ASTNode n) {
     // TODO Alex: Polish this loop manually and add a test case for future
     // generations
-    ASTNode $ = from(n);
-    for (ASTNode p = $; p != null; p = from(p))
+    @Nullable ASTNode $ = from(n);
+    for (@Nullable ASTNode p = $; p != null; p = from(p))
       $ = p;
     return $;
   }

@@ -21,7 +21,7 @@ public interface annotees {
   }
 
   @SuppressWarnings("OverlyComplexMethod") static List<SimpleName> of(final Annotation ¢) {
-    final ASTNode $ = parent(¢);
+    @NotNull final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
       case ASTNode.ANNOTATION_TYPE_DECLARATION:
         return of((AnnotationTypeDeclaration) $);

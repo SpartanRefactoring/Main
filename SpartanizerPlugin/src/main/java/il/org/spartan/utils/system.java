@@ -48,7 +48,7 @@ public interface system {
   @NotNull static Process dumpOutput(@NotNull final Process $) {
     if (windows())
       return $;
-    try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
+    try (@NotNull BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
     } catch (@NotNull final IOException ¢) {
@@ -110,13 +110,13 @@ public interface system {
   }
 
   @NotNull static String read() {
-    try (Scanner $ = new Scanner(System.in)) {
+    try (@NotNull Scanner $ = new Scanner(System.in)) {
       return read($);
     }
   }
 
   @NotNull static String read(@NotNull final Scanner ¢) {
-    String $ = "";
+    @NotNull String $ = "";
     while (¢.hasNext()) // Can be Nano?
       $ += "\n" + ¢.nextLine();
     return $;
@@ -127,9 +127,9 @@ public interface system {
   }
 
   @NotNull static String runScript(@NotNull final Process p) throws IOException {
-    try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
+    try (InputStream s = p.getInputStream(); @NotNull BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
-      for (final StringBuilder $ = new StringBuilder();; $.append(¢))
+      for (@NotNull final StringBuilder $ = new StringBuilder();; $.append(¢))
         if ((¢ = r.readLine()) == null)
           return $ + "";
     }
@@ -146,7 +146,7 @@ public interface system {
 
   static int tokens(@NotNull final String s) {
     int $ = 0;
-    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
+    for (@NotNull final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
       final Token t = tokenizer.next();
       if (t == null || t == Token.EOF)
         return $;

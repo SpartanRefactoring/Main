@@ -32,10 +32,10 @@ public class SpartanMovie extends AbstractHandler {
   @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-    final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
-    final IWorkbenchPage page = window == null ? null : window.getActivePage();
-    final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-    final Trimmer trimmer = new Trimmer();
+    @Nullable final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
+    @Nullable final IWorkbenchPage page = window == null ? null : window.getActivePage();
+    @Nullable final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
+    @NotNull final Trimmer trimmer = new Trimmer();
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     try {
@@ -45,7 +45,7 @@ public class SpartanMovie extends AbstractHandler {
         int changes = 0, filesModified = 0;
         // TODO Ori Roth: this function is much much too large. Try to break it
         // --yg
-        for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+        for (@NotNull final ICompilationUnit currentCompilationUnit : compilationUnits) {
           mightNotBeSlick(page);
           final IResource file = currentCompilationUnit.getResource();
           try {
@@ -146,7 +146,7 @@ public class SpartanMovie extends AbstractHandler {
   }
 
   static void moveProgressDialog() {
-    final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(), parentShell = shell == null ? null : shell.getParent().getShell();
+    @Nullable final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(), parentShell = shell == null ? null : shell.getParent().getShell();
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }

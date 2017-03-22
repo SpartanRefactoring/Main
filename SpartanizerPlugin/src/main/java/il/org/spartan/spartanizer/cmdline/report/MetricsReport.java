@@ -80,7 +80,7 @@ public class MetricsReport implements ConfigurableReport {
   }
 
   public static void write() {
-    final Action wr = settings.getAction();
+    @NotNull final Action wr = settings.getAction();
     wr.initialize();
     wr.go();
   }

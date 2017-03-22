@@ -25,7 +25,7 @@ public class Issue0831 {
   @Nullable final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void fourStatementInScanner() {
-    String body = "";
+    @NotNull String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements()) // NANO
       body += iter + "";
     azzert.that(body, is("int a;\nint b;\nint c;\nint d;\n"));

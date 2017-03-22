@@ -26,7 +26,7 @@ public class range {
   }
 
   @NotNull static Infinite infiniteFrom(final int ¢, final int ¢2) {
-    final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
+    @NotNull final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
     $.step(¢2);
     return $;
   }

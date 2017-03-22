@@ -68,7 +68,7 @@ public enum eclipse {
    * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(@Nullable final IJavaElement u, @NotNull final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
-    final List<ICompilationUnit> $ = new ArrayList<>();
+    @NotNull final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
       return done(m, $, "Cannot find current compilation unit " + null);
     final IJavaProject javaProject = u.getJavaProject();
@@ -79,7 +79,7 @@ public enum eclipse {
     final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
-    for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
+    for (@NotNull final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
       compilationUnits(m, $, ¢);
     return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
@@ -90,7 +90,7 @@ public enum eclipse {
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
       m.worked(1);
     int $ = 0;
-    for (final IJavaElement ¢ : r.getChildren()) {
+    for (@NotNull final IJavaElement ¢ : r.getChildren()) {
       m.worked(1);
       if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT && az.true¢(++$)) {
         ++$;
@@ -197,7 +197,7 @@ public enum eclipse {
   }
 
   @NotNull static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
-    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+    @NotNull final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }

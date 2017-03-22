@@ -48,8 +48,8 @@ public class ASTInFilesVisitor {
    * @param f
    * @return */
   public static boolean containsTestAnnotation(@NotNull final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    final Bool $ = new Bool();
+    @NotNull final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    @NotNull final Bool $ = new Bool();
     cu.accept(new ASTTrotter() {
       @Override public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + ""))) {
@@ -249,13 +249,13 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          final Rule<TypeDeclaration, Object> r = Rule.on((@NotNull final TypeDeclaration t) -> t.isInterface())
+          @NotNull final Rule<TypeDeclaration, Object> r = Rule.on((@NotNull final TypeDeclaration t) -> t.isInterface())
               .go(λ -> System.out.println(λ.getName()));
-          final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
+          @NotNull final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
             System.out.println(λ);
             return λ.isInterface();
           };
-          final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
+          @NotNull final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
           on(TypeDeclaration.class).hook(r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
         }
       });

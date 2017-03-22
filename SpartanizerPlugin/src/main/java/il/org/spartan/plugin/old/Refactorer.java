@@ -134,19 +134,19 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private Void go(final ExecutionEvent e, final IMarker m) {
-    final Selection selection = either(getSelection(), getSelection(m));
-    final AbstractGUIApplicator applicator = either(getApplicator(e), getApplicator(m));
+    @Nullable final Selection selection = either(getSelection(), getSelection(m));
+    @Nullable final AbstractGUIApplicator applicator = either(getApplicator(e), getApplicator(m));
     if (!valid(selection, applicator) || selection.inner.isEmpty())
       return null;
-    final Map<attribute, Object> attributes = unknowns();
+    @NotNull final Map<attribute, Object> attributes = unknowns();
     put(attributes, attribute.EVENT, e);
     put(attributes, attribute.MARKER, m);
     put(attributes, attribute.CU, selection.inner);
     put(attributes, attribute.APPLICATOR, applicator);
     doWork(initialWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
-    final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
-    final IRunnableWithProgress r = runnable(selection, applicator, attributes);
-    final MessageDialog initialDialog = show(getOpeningMessage(attributes));
+    @NotNull final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
+    @NotNull final IRunnableWithProgress r = runnable(selection, applicator, attributes);
+    @Nullable final MessageDialog initialDialog = show(getOpeningMessage(attributes));
     if (hasDisplay())
       initializeProgressDialog(progressMonitorDialog);
     try {
@@ -162,7 +162,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   @NotNull private Map<attribute, Object> unknowns() {
-    final Map<attribute, Object> $ = new HashMap<>();
+    @NotNull final Map<attribute, Object> $ = new HashMap<>();
     Stream.of(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
   }
@@ -186,15 +186,15 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
-      final Collection<ICompilationUnit> doneCompilationUnits = new ArrayList<>(), modifiedCompilationUnits = new HashSet<>();
+      @NotNull final Collection<ICompilationUnit> doneCompilationUnits = new ArrayList<>(), modifiedCompilationUnits = new HashSet<>();
       for (pass = 0; pass < $ && !finish(pm); ++pass) {
         pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
-        final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
+        @NotNull final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
         if (currentCompilationUnits.isEmpty()) {
           finish(pm);
           break;
         }
-        for (final ICompilationUnit u : currentCompilationUnits) {
+        for (@NotNull final ICompilationUnit u : currentCompilationUnits) {
           if (pm.isCanceled())
             break;
           pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
@@ -223,7 +223,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   @Nullable private static MessageDialog show(@Nullable final String ¢) {
     if (¢ == null)
       return null;
-    final MessageDialog $ = eclipse.announceNonBusy(¢);
+    @NotNull final MessageDialog $ = eclipse.announceNonBusy(¢);
     $.open();
     return $;
   }
@@ -241,7 +241,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   @NotNull private static List<ICompilationUnit> currentCompilationUnits(@NotNull final Collection<ICompilationUnit> us,
       @NotNull final Collection<ICompilationUnit> ds) {
-    final List<ICompilationUnit> $ = new ArrayList<>(us);
+    @NotNull final List<ICompilationUnit> $ = new ArrayList<>(us);
     $.removeAll(ds);
     return $;
   }

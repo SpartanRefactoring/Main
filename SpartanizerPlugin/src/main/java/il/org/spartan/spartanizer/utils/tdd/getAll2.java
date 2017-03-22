@@ -27,7 +27,7 @@ public enum getAll2 {
   @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> $ = new ArrayList<>();
+    @NotNull final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
@@ -47,7 +47,7 @@ public enum getAll2 {
   @Nullable public static List<Name> names(@Nullable final Block b) {
     if (b == null)
       return null;
-    final List<Name> $ = new ArrayList<>();
+    @NotNull final List<Name> $ = new ArrayList<>();
     b.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode an) {
         if (iz.name(an))
@@ -63,12 +63,12 @@ public enum getAll2 {
    *        list of it's public fields names.
    * @param d - the TypeDeclaration argument */
   @NotNull public static List<String> publicFields(@Nullable final TypeDeclaration d) {
-    final List<String> $ = new ArrayList<>();
+    @NotNull final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;
-    for (final FieldDeclaration fd : d.getFields()) // TOUGH
+    for (@NotNull final FieldDeclaration fd : d.getFields()) // TOUGH
       if (iz.public¢(fd)) {
-        final String[] field_splitted_to_words = (fd + "").trim().split(" ");
+        @NotNull final String[] field_splitted_to_words = (fd + "").trim().split(" ");
         if (field_splitted_to_words.length >= 1)
           $.add(field_splitted_to_words[field_splitted_to_words.length - 1].replace(";", "").trim());
       }
@@ -81,7 +81,7 @@ public enum getAll2 {
    *        list of it's all String variable declarations.
    * @param ¢ - the MethodDeclaration argument */
   @NotNull public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration ¢) {
-    final List<VariableDeclaration> $ = new ArrayList<>();
+    @NotNull final List<VariableDeclaration> $ = new ArrayList<>();
     if (¢ == null)
       return $;
     // noinspection SameReturnValue

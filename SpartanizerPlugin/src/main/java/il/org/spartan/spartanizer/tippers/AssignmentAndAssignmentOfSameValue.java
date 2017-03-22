@@ -34,7 +34,7 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
   }
 
   @Nullable private static Expression extractRight(final Assignment ¢) {
-    final Expression $ = from(¢);
+    @Nullable final Expression $ = from(¢);
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 
@@ -47,16 +47,16 @@ public final class AssignmentAndAssignmentOfSameValue extends ReplaceToNextState
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    final ASTNode parent = parent(a);
+    @NotNull final ASTNode parent = parent(a);
     if (!iz.statement(parent))
       return null;
-    final Expression right = getRight(a);
+    @Nullable final Expression right = getRight(a);
     if (right == null || nodeType(right) == NULL_LITERAL)
       return null;
-    final Assignment a1 = extract.assignment(nextStatement);
+    @Nullable final Assignment a1 = extract.assignment(nextStatement);
     if (a1 == null)
       return null;
-    final Expression right1 = getRight(a1);
+    @Nullable final Expression right1 = getRight(a1);
     if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
     $.remove(parent, g);

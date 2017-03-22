@@ -36,7 +36,7 @@ public enum into {
    *        "conditional" (also known as "ternary") expression.
    * @return an {@link Statement} data structure representing the parameter. */
   @NotNull public static ConditionalExpression c(@NotNull final String conditionalExpression) {
-    final Expression $ = e(conditionalExpression);
+    @NotNull final Expression $ = e(conditionalExpression);
     assert conditionalExpression != null;
     assert $ != null;
     azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));

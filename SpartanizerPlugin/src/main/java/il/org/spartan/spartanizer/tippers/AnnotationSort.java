@@ -48,7 +48,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
 
   private static int rankAnnotation(final String annotationName) {
     int $ = 0;
-    for (final HashSet<String> ¢ : rankTable) {
+    for (@NotNull final HashSet<String> ¢ : rankTable) {
       ++$;
       if (¢.contains(annotationName))
         return $;
@@ -72,7 +72,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     final List<Annotation> $ = extract.annotations(n);
     if ($ == null || $.isEmpty())
       return null;
-    final List<Annotation> myCopy = new ArrayList<>($);
+    @NotNull final List<Annotation> myCopy = new ArrayList<>($);
     myCopy.sort(comp);
     return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {

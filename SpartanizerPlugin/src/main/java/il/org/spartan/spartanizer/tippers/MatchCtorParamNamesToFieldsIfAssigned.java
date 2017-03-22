@@ -42,22 +42,22 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
-    final List<Statement> bodyStatements = statements(d);
-    final Collection<String> definedLocals = new ArrayList<>();
-    final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
+    @Nullable final List<Statement> bodyStatements = statements(d);
+    @NotNull final Collection<String> definedLocals = new ArrayList<>();
+    @NotNull final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
           definedLocals.addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         continue;
       }
-      final Expression e = expression(az.expressionStatement(s));
+      @NotNull final Expression e = expression(az.expressionStatement(s));
       if (!iz.assignment(e))
         continue;
-      final Assignment a = az.assignment(e);
+      @Nullable final Assignment a = az.assignment(e);
       if (!iz.fieldAccess(left(a)) || !iz.thisExpression(expression(az.fieldAccess(left(a)))))
         continue;
-      final SimpleName fieldName = name(az.fieldAccess(left(a)));
+      @NotNull final SimpleName fieldName = name(az.fieldAccess(left(a)));
       if (!iz.simpleName(right(a)))
         continue;
       final SimpleName paramName = az.simpleName(right(a));

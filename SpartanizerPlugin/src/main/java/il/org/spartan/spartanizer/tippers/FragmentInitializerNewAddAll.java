@@ -33,7 +33,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
   @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
-    final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
+    @Nullable final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
     if (instanceCreation == null)
       return false;
     type = instanceCreation.getType();
@@ -66,21 +66,21 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
         if (containsLambda(nextStatement))
           return null;
     }
-    final Expression initializer = initializer(f);
+    @NotNull final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
-    final Statement parent = az.statement(parent(f));
+    @Nullable final Statement parent = az.statement(parent(f));
     if (parent == null//
         || iz.forStatement(parent))
       return null;
-    final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
+    @NotNull final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
         || leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
-    final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    @Nullable final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
       e = Inliner.protect(e, pp);
     if (pp == null//
@@ -90,7 +90,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
       if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
         return null;
       final VariableDeclarationStatement pn = copy.of(pp);
-      final List<VariableDeclarationFragment> l = fragments(pp);
+      @NotNull final List<VariableDeclarationFragment> l = fragments(pp);
       for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
         if (l.get(¢).equals(f)) {
           fragments(pn).remove(¢);
@@ -110,7 +110,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
   }
 
   private static boolean preOrPostfix(final SimpleName id) {
-    final ASTNode $ = parent(id);
+    @NotNull final ASTNode $ = parent(id);
     return iz.prefixExpression($)//
         || iz.postfixExpression($);
   }
@@ -120,8 +120,8 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
   }
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
-    final ASTNode parent = parent(nextStatement);
+    @NotNull final Bool $ = new Bool();
+    @NotNull final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
         if (parent.equals(¢))
@@ -138,7 +138,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
   }
 
   private static boolean leftSide(@NotNull final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
+    @NotNull final Bool $ = new Bool();
     // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
@@ -152,7 +152,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
   }
 
   private static SimpleName peelIdentifier(final Statement s, final String id) {
-    final List<SimpleName> $ = occurencesOf(s, id);
+    @NotNull final List<SimpleName> $ = occurencesOf(s, id);
     return $.size() != 1 ? null : first($);
   }
 

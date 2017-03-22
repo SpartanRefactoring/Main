@@ -17,7 +17,7 @@ public enum format {
   ;
   public static String code(@NotNull final String code) {
     final TextEdit textEdit = ToolFactory.createCodeFormatter(null).format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
-    final IDocument $ = new Document(code);
+    @NotNull final IDocument $ = new Document(code);
     try {
       if (textEdit != null)
         textEdit.apply($);

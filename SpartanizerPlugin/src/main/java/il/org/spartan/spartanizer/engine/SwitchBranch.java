@@ -118,11 +118,11 @@ public class SwitchBranch {
   // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
   @NotNull @SuppressWarnings("null") public static List<SwitchBranch> intoBranches(@NotNull final SwitchStatement n) {
-    final List<Statement> l = statements(n);
+    @NotNull final List<Statement> l = statements(n);
     assert iz.switchCase(first(l));
-    List<SwitchCase> c = null;
-    List<Statement> s = null;
-    final List<SwitchBranch> $ = new ArrayList<>();
+    @Nullable List<SwitchCase> c = null;
+    @Nullable List<Statement> s = null;
+    @NotNull final List<SwitchBranch> $ = new ArrayList<>();
     boolean nextBranch = true;
     for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
       if (nextBranch) {
@@ -172,9 +172,9 @@ public class SwitchBranch {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST a = s.getAST();
-    Statement $ = null;
+    @Nullable Statement $ = null;
     if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s), f = a.newIfStatement();
+      @Nullable final IfStatement t = az.ifStatement(s), f = a.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
       f.setThenStatement(removeBreakSequencer(step.then(t)));
       f.setElseStatement(removeBreakSequencer(step.elze(t)));
@@ -192,9 +192,9 @@ public class SwitchBranch {
   }
 
   @NotNull public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
-    final Collection<Statement> $ = new ArrayList<>();
-    for (final Statement ¢ : ss) {
-      final Statement s = removeBreakSequencer(¢);
+    @NotNull final Collection<Statement> $ = new ArrayList<>();
+    for (@NotNull final Statement ¢ : ss) {
+      @Nullable final Statement s = removeBreakSequencer(¢);
       if (s != null)
         $.add(s);
     }

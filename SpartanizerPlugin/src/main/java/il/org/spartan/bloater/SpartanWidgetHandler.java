@@ -42,8 +42,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Shell originalShell = display.getActiveShell();
     if (originalShell == null || originalShell.isDisposed())
       return;
-    final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
-    final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
+    @NotNull final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
+    @NotNull final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
     closeButton.setLocation(R / 2, 2 * R - closeButton.getSize().y / 2);
@@ -51,8 +51,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
       shell.close();
       active.set(false);
     });
-    final AtomicBoolean widgetFocus = new AtomicBoolean(true);
-    final Listener setTransparent = λ -> {
+    @NotNull final AtomicBoolean widgetFocus = new AtomicBoolean(true);
+    @NotNull final Listener setTransparent = λ -> {
       shell.setAlpha(TRANSPERACY);
       widgetFocus.set(false);
       originalShell.forceFocus();
@@ -63,10 +63,10 @@ public class SpartanWidgetHandler extends AbstractHandler {
     setControl(shell, setSolid, setTransparent);
     setMovable(display, shell, shell);
     setControl(closeButton, setSolid, setTransparent);
-    final Canvas canvas = createImage(shell);
+    @NotNull final Canvas canvas = createImage(shell);
     setControl(canvas, setSolid, setTransparent);
     setMovable(display, canvas, shell);
-    final Region region = new Region();
+    @NotNull final Region region = new Region();
     region.add(circle(R));
     region.add(closeButton.getBounds());
     final Rectangle size = region.getBounds();
@@ -113,7 +113,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
 
   static void setMovable(@NotNull final Display d, @NotNull final Control source, @NotNull final Shell target) {
-    final Listener l = new Listener() {
+    @Nullable final Listener l = new Listener() {
       @Nullable Point origin;
 
       @Override public void handleEvent(@NotNull final Event e) {
@@ -141,7 +141,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
 
   @NotNull static int[] circle(final int r) {
-    final int[] $ = new int[8 * r + 4];
+    @NotNull final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
       $[2 * i] = r + x;
@@ -162,7 +162,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   @NotNull static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
     final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
-    final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
+    @NotNull final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     $.addPaintListener((@NotNull final PaintEvent ¢) -> {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);

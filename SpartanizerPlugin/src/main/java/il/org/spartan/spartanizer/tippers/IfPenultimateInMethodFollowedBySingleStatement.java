@@ -29,14 +29,14 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
-    final Statement then = then(s);
-    final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
+    @NotNull final Statement then = then(s);
+    @Nullable final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     $.replace(deleteMe, make.emptyStatement(deleteMe), g);
     Tippers.remove($, nextStatement, g);
     final IfStatement newIf = copy.of(s);
-    final Block block = az.block(then(newIf));
+    @Nullable final Block block = az.block(then(newIf));
     if (block != null)
       Tippers.removeLast(statements(block));
     else

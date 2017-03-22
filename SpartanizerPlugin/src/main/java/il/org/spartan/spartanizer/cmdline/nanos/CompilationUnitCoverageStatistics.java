@@ -173,7 +173,7 @@ class CompilationUnitRecord {
   }
 
   public void markNP(@NotNull final ASTNode n, @NotNull final String np) {
-    final MethodDeclaration $ = ancestorMethod(n);
+    @Nullable final MethodDeclaration $ = ancestorMethod(n);
     if ($ == null)
       markRegular(n);
     else

@@ -65,7 +65,7 @@ public enum SuppressWarningsLaconicOnOff {
       throws IllegalArgumentException, CoreException {
     pm.beginTask("Toggling spartanization...", 2);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
     textChange.perform(pm);
@@ -82,13 +82,13 @@ public enum SuppressWarningsLaconicOnOff {
   static boolean disabledByAncestor(@NotNull final ASTNode n) {
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (iz.bodyDeclaration(p)) {
-        final BodyDeclaration d = (BodyDeclaration) p;
+        @NotNull final BodyDeclaration d = (BodyDeclaration) p;
         if (d.getJavadoc() != null) {
-          final String s = d.getJavadoc() + "";
-          for (final String e : disabling.ByComment.enablers) // NANO
+          @NotNull final String s = d.getJavadoc() + "";
+          for (@NotNull final String e : disabling.ByComment.enablers) // NANO
             if (s.contains(e))
               return false;
-          for (final String ds : disabling.ByComment.disablers) // NANO
+          for (@NotNull final String ds : disabling.ByComment.disablers) // NANO
             if (s.contains(ds))
               return true;
         }
@@ -102,8 +102,8 @@ public enum SuppressWarningsLaconicOnOff {
    * @return comment's text, without eneblers identifiers. */
   static String enablersRemoved(@Nullable final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
-    for (final String e : getEnablers($)) {
-      final String qe = Pattern.quote(e);
+    for (@NotNull final String e : getEnablers($)) {
+      @NotNull final String qe = Pattern.quote(e);
       $ = $.replaceAll("(\n(\\s|\\*)*" + qe + ")|" + qe, "");
     }
     return $;
@@ -155,7 +155,7 @@ public enum SuppressWarningsLaconicOnOff {
       @Override public void preVisit(@NotNull final ASTNode n) {
         if (b || facade.isNodeOutsideMarker(n, m))
           return;
-        final BodyDeclaration d;
+        @NotNull final BodyDeclaration d;
         switch (t) {
           case CLASS:
             d = (BodyDeclaration) yieldAncestors.untilClass(AbstractTypeDeclaration.class).inclusiveFrom(n);

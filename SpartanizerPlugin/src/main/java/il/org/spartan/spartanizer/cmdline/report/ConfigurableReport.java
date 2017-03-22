@@ -212,7 +212,7 @@ public interface ConfigurableReport {
 
       // running report
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n) {
-        for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+        for (@NotNull final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
           report().put(¢.name() + "1", ¢.function().run(i));
           report().put(¢.name() + "2", ¢.function().run(n));
         }
@@ -231,7 +231,7 @@ public interface ConfigurableReport {
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
         String a; // TODO Matteo: to be converted to double or float? -- Matteo
-        for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+        for (@NotNull final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
           a = Utils.p(¢.function().run(n1), ¢.function().run(n2));
           report().put(id + ¢.name() + " %", a);
         }

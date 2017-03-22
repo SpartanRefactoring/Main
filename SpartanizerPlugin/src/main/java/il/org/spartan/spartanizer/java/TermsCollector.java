@@ -64,7 +64,7 @@ public final class TermsCollector {
     assert ¢ != null;
     assert !isLeafTerm(¢);
     assert iz.infixMinus(¢);
-    final List<Expression> $ = hop.operands(¢);
+    @Nullable final List<Expression> $ = hop.operands(¢);
     addPositiveTerm(core(first($)));
     return collectNegativeTerms(rest($));
   }
@@ -78,7 +78,7 @@ public final class TermsCollector {
 
   @Nullable private Void addMinusTerm(@NotNull final Expression ¢) {
     assert ¢ != null;
-    final Expression $ = minus.peel(¢);
+    @NotNull final Expression $ = minus.peel(¢);
     return minus.level(¢) % 2 != 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
 
@@ -91,7 +91,7 @@ public final class TermsCollector {
 
   @Nullable private Void addPlusTerm(@NotNull final Expression ¢) {
     assert ¢ != null;
-    final Expression $ = minus.peel(¢);
+    @NotNull final Expression $ = minus.peel(¢);
     return minus.level(¢) % 2 == 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
 
@@ -112,7 +112,7 @@ public final class TermsCollector {
 
   @Nullable private Void collectMinusPrefixMinusExprssion(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
-    final List<Expression> $ = hop.operands(¢);
+    @Nullable final List<Expression> $ = hop.operands(¢);
     collectNegativeTerm(core(first($)));
     return collectPositiveTerms(rest($));
   }

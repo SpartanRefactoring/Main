@@ -44,7 +44,7 @@ public enum Tippers {
   }
 
   public static Expression eliminateLiteral(@NotNull final InfixExpression x, final boolean b) {
-    final List<Expression> $ = extract.allOperands(x);
+    @Nullable final List<Expression> $ = extract.allOperands(x);
     wizard.removeAll(b, $);
     switch ($.size()) {
       case 1:
@@ -76,7 +76,7 @@ public enum Tippers {
   }
 
   public static IfStatement makeShorterIf(@NotNull final IfStatement s) {
-    final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
+    @NotNull final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
     final IfStatement $ = invert(s);
     if (then.isEmpty())
       return $;
@@ -110,8 +110,8 @@ public enum Tippers {
 
   @NotNull public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by,
       final TextEditGroup g) {
-    final Block parent = az.block(what.getParent());
-    final List<Statement> siblings = extract.statements(parent);
+    @Nullable final Block parent = az.block(what.getParent());
+    @NotNull final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
     siblings.remove(i);
     siblings.remove(i);
@@ -128,7 +128,7 @@ public enum Tippers {
   }
 
   public static boolean thenIsShorter(@NotNull final IfStatement s) {
-    final Statement then = then(s), elze = elze(s);
+    @NotNull final Statement then = then(s), elze = elze(s);
     if (elze == null)
       return true;
     final int s1 = count.lines(then), s2 = count.lines(elze);

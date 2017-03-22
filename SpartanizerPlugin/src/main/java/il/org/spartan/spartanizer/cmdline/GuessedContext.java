@@ -90,7 +90,7 @@ public enum GuessedContext {
   }
 
   public static GuessedContext qfind(@NotNull final String codeFragment) {
-    for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
+    for (@NotNull final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
         return $;
     return Stream.of(alternativeContextsToConsiderInThisOrder)
@@ -107,16 +107,16 @@ public enum GuessedContext {
   }
 
   @NotNull static String enumerateFailingAttempts(final String codeFragment) {
-    final StringBuilder $ = new StringBuilder();
+    @NotNull final StringBuilder $ = new StringBuilder();
     int i = 0;
-    for (final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
-      final String on = w.on(codeFragment);
+    for (@NotNull final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
+      @NotNull final String on = w.on(codeFragment);
       $.append("\n\nAttempt #").append(++i).append(" (of ").append(GuessedContext.alternativeContextsToConsiderInThisOrder.length).append("):");
       $.append("\n\t\t Is it a ").append(w).append("?");
       $.append("\n\t Let's see...");
       $.append("\n\t\t What I tried as input was (essentially) this literal:");
       $.append("\n\t```").append(trivia.essence(on)).append("'''");
-      final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+      @NotNull final CompilationUnit u = w.intoCompilationUnit(codeFragment);
       $.append("\n\t\t Alas, what the parser generated ").append(u.getProblems().length).append(" problems on (essentially) this bit of code");
       $.append("\n\t\t\t```").append(trivia.essence(u + "")).append("'''");
       $.append("\n\t\t Properly formatted, this bit should look like so: ");

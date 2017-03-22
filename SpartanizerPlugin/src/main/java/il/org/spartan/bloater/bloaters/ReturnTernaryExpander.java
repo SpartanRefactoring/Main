@@ -26,9 +26,9 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
   @Override @NotNull public Tip tip(@NotNull final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final Expression ee = expression(x);
-        final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
-        final Expression cond = expression(e);
+        @NotNull final Expression ee = expression(x);
+        @Nullable final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
+        @NotNull final Expression cond = expression(e);
         final AST a = x.getAST();
         final ReturnStatement whenTrue = a.newReturnStatement(), whenFalse = a.newReturnStatement();
         whenTrue.setExpression(copy.of(then(e)));
@@ -48,7 +48,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     if ($ == null)
       return false;
     // TODO Raviv Rachmiel: use extract.core --yg
-    final Expression e = expression($);
+    @NotNull final Expression e = expression($);
     return (iz.block($.getParent()) || iz.switchStatement($.getParent()))
         && (iz.conditionalExpression(e) || iz.parenthesizedExpression(e) && iz.conditionalExpression(expression(az.parenthesizedExpression(e))));
   }

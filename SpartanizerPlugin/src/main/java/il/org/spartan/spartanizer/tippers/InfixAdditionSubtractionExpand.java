@@ -21,7 +21,7 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
   @Override public Expression replacement(@NotNull final InfixExpression ¢) {
     if (TermsCollector.isLeafTerm(¢))
       return null;
-    final Expression $ = TermsExpander.simplify(¢);
+    @NotNull final Expression $ = TermsExpander.simplify(¢);
     return !wizard.same2($, ¢) ? $ : null;
   }
 

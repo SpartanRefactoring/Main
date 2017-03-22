@@ -30,7 +30,7 @@ public class CleanerVisitorTest {
   }
 
   @NotNull @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(@NotNull final Predicate<ASTNode> p, @NotNull final ASTNode n) {
-    final ASTNodeWrapper $ = new ASTNodeWrapper();
+    @NotNull final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (p.test(¢))

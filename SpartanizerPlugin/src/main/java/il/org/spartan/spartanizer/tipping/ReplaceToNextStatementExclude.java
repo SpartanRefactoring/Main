@@ -18,12 +18,12 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
   private static final long serialVersionUID = -2896529202034446513L;
 
   @Override public boolean prerequisite(@NotNull final N current) {
-    final Statement $ = extract.nextStatement(current);
+    @Nullable final Statement $ = extract.nextStatement(current);
     return $ != null && go(ASTRewrite.create(current.getAST()), current, $, null, new ExclusionManager()) != null;
   }
 
   @Override @NotNull public Tip tip(final N n, @Nullable final ExclusionManager exclude) {
-    final Statement $ = extract.nextStatement(n);
+    @Nullable final Statement $ = extract.nextStatement(n);
     assert $ != null;
     if (exclude != null)
       exclude.exclude($);

@@ -37,7 +37,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
       return false;
-    final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
@@ -53,7 +53,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   static void addAzMethod(@NotNull final CastExpression ¢, @NotNull final ASTRewrite r, final TextEditGroup g) {
-    final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
+    @NotNull final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
       case API_LEVEL_TYPE:
         addAzMethodToType(¢, r, g);
@@ -90,7 +90,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static void addAzMethodToType(@NotNull final CastExpression ¢, @NotNull final ASTRewrite r, final TextEditGroup g) {
-    final AbstractTypeDeclaration t = containingType(¢);
+    @Nullable final AbstractTypeDeclaration t = containingType(¢);
     wizard.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
   }
 
@@ -117,7 +117,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static AbstractTypeDeclaration containingType(final CastExpression $) {
-    final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
+    @NotNull final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
       case API_LEVEL_FILE:
         return getType(prepareFile(fileAzFile()));

@@ -74,7 +74,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   @Override @NotNull public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
-    final RefactoringStatus $ = new RefactoringStatus();
+    @NotNull final RefactoringStatus $ = new RefactoringStatus();
     if (iCompilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
     return $;
@@ -86,7 +86,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
   @NotNull public final Collection<Tip> collectSuggestions(@NotNull final CompilationUnit ¢) {
-    final List<Tip> $ = new ArrayList<>();
+    @NotNull final List<Tip> $ = new ArrayList<>();
     ¢.accept(makeTipsCollector($));
     return $;
   }
@@ -137,13 +137,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   public boolean follow() throws CoreException {
     progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    for (final Tip ¢ : tips) {
+    for (@NotNull final Tip ¢ : tips) {
       progressMonitor.worked(1);
       ¢.go(astRewrite, new TextEditGroup("spartanization: textEditGroup"));
     }
     progressMonitor.done();
     final TextEdit rewriteAST = astRewrite.rewriteAST();
-    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
+    @NotNull final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textFileChange.setTextType("java");
     textFileChange.setEdit(rewriteAST);
     final boolean $ = textFileChange.getEdit().getLength() != 0;
@@ -234,10 +234,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   public int go() throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
+    @NotNull final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
-    final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
-    final Int $ = new Int();
+    @NotNull final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
+    @NotNull final Int $ = new Int();
     textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
@@ -266,10 +266,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @throws CoreException exception from the {@code pm} */
   private int performRule(@NotNull final ICompilationUnit u) throws CoreException {
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
-    final Int $ = new Int();
+    @NotNull final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
+    @NotNull final Int $ = new Int();
     textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
@@ -351,10 +351,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @throws CoreException */
   private int scanCompilationUnit(@NotNull final ICompilationUnit u, @NotNull final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
-    final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
-    final Int $ = new Int();
+    @NotNull final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
+    @NotNull final Int $ = new Int();
     textChange.setEdit(createRewrite(cu, $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
@@ -367,7 +367,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    @NotNull final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     progressMonitor.beginTask("Collecting tips for " + m, IProgressMonitor.UNKNOWN);
     textChange.setEdit(createRewrite(m).rewriteAST());
@@ -388,7 +388,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @throws CoreException [[SuppressWarningsSpartan]] */
   private void scanCompilationUnits(@NotNull final Collection<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     progressMonitor.beginTask("Iterating over eligible compilation units...", us.size());
-    for (final ICompilationUnit ¢ : us) // NANO - can't, throws...
+    for (@NotNull final ICompilationUnit ¢ : us) // NANO - can't, throws...
       scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));
     progressMonitor.done();
   }
@@ -422,7 +422,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private Collection<ICompilationUnit> getUnits() throws JavaModelException {
     if (!isTextSelected())
       return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
-    final List<ICompilationUnit> $ = new ArrayList<>();
+    @NotNull final List<ICompilationUnit> $ = new ArrayList<>();
     $.add(iCompilationUnit);
     return $;
   }
@@ -458,11 +458,11 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   private int apply(@NotNull final WrappedCompilationUnit u) throws CoreException {
-    final TextFileChange textChange = init(u);
+    @NotNull final TextFileChange textChange = init(u);
     assert textChange != null;
-    final Int $ = new Int();
-    final WrappedCompilationUnit u1 = u.build();
-    final CompilationUnit u2 = u1.compilationUnit;
+    @NotNull final Int $ = new Int();
+    @NotNull final WrappedCompilationUnit u1 = u.build();
+    @Nullable final CompilationUnit u2 = u1.compilationUnit;
     final ASTRewrite r = createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
@@ -490,16 +490,16 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   @NotNull private TextFileChange init(@NotNull final WrappedCompilationUnit ¢) {
     setICompilationUnit(¢.descriptor);
     progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
+    @NotNull final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
     $.setTextType("java");
     return $;
   }
 
   private int apply(@NotNull final WrappedCompilationUnit u, @Nullable final TrackerSelection s) {
     try {
-      final TextFileChange textChange = init(u);
+      @NotNull final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-      final Int $ = new Int();
+      @NotNull final Int $ = new Int();
       textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);

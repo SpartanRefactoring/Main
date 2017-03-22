@@ -27,12 +27,12 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
   @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
-    final Block b = az.block(s.getParent());
+    @Nullable final Block b = az.block(s.getParent());
     if (b == null || !iz.methodDeclaration(b.getParent()) || !iz.voidType(step.returnType(az.methodDeclaration(b.getParent())))
         || last(statements(b)) != s)
       return null;
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
-    for (final switchBranch ¢ : $)
+    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
+    for (@NotNull final switchBranch ¢ : $)
       if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(first(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());

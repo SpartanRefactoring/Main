@@ -28,14 +28,14 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
   @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
-    final Block b = az.block(s.getParent());
+    @Nullable final Block b = az.block(s.getParent());
     if (b == null) {
       if (!iz.loop(s.getParent()))
         return null;
     } else if (!iz.loop(b.getParent()) || last(statements(b)) != s)
       return null;
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
-    for (final switchBranch ¢ : $)
+    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
+    for (@NotNull final switchBranch ¢ : $)
       if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(first(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());

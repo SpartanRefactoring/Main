@@ -33,7 +33,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {
-    final ASTNode $ = parent(¢);
+    @NotNull final ASTNode $ = parent(¢);
     return (step.operator(¢) == PrefixExpression.Operator.INCREMENT || step.operator(¢) == PrefixExpression.Operator.DECREMENT)
         && (iz.expressionStatement($) || iz.forStatement($));
   }

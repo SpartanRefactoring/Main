@@ -42,7 +42,7 @@ public enum SpartanizationComparator {
   }
 
   private static void collect(final String[] where) {
-    for (final File ¢ : new FilesGenerator(".java").from(where)) {
+    for (@NotNull final File ¢ : new FilesGenerator(".java").from(where)) {
       System.out.println(¢.getName());
       presentFile = ¢.getName();
       presentSourcePath = ¢.getPath();
@@ -52,7 +52,7 @@ public enum SpartanizationComparator {
 
   private static void collect(@NotNull final File f) {
     try {
-      final String input = FileUtils.read(f);
+      @NotNull final String input = FileUtils.read(f);
       collect(input, "before");
       collect(new InteractiveSpartanizer().fixedPoint(input), "after");
     } catch (@NotNull final IOException ¢) {
@@ -84,7 +84,7 @@ public enum SpartanizationComparator {
         .put("Path", presentSourcePath) //
         .put("Status", id);
     //
-    for (final NamedFunction f : functions())
+    for (@NotNull final NamedFunction f : functions())
       writer.put(f.name(), f.function().run(¢));
     writer.nl();
   }
@@ -93,7 +93,7 @@ public enum SpartanizationComparator {
 
   @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider2(@NotNull final MethodDeclaration ¢) {
     writer.put("File", presentFile).put("Name", ¢.getName()).put("Path", presentSourcePath);
-    for (final NamedFunction f : functions())
+    for (@NotNull final NamedFunction f : functions())
       writer.put(f.name(), f.function().run(¢));
     writer.nl();
   }

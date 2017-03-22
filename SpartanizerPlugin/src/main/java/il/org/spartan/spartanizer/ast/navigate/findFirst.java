@@ -50,7 +50,7 @@ public interface findFirst {
    *         the parameter given node, or {@code null if no such
    *         value could be found. */
   static ConditionalExpression conditionalExpression(@NotNull final ASTNode n) {
-    final Wrapper<ConditionalExpression> $ = new Wrapper<>();
+    @NotNull final Wrapper<ConditionalExpression> $ = new Wrapper<>();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final ConditionalExpression ¢) {
@@ -102,7 +102,7 @@ public interface findFirst {
    *         parameter given node, or {@code null if no such value
    *         could be found. */
   static InfixExpression infixPlus(@NotNull final ASTNode n) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>();
+    @NotNull final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final InfixExpression ¢) {
         if ($.get() != null)
@@ -125,7 +125,7 @@ public interface findFirst {
     return n -> {
       if (n == null)
         return null;
-      final Wrapper<N> $ = new Wrapper<>();
+      @NotNull final Wrapper<N> $ = new Wrapper<>();
       n.accept(new ASTVisitor(true) {
         @Override @SuppressWarnings("unchecked") public boolean preVisit2(@NotNull final ASTNode ¢) {
           if ($.get() != null)

@@ -31,13 +31,13 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
   }
 
   @Override public Tip tip(@NotNull final LambdaExpression x, @Nullable final ExclusionManager m) {
-    final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
+    @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;
     final SimpleName $ = f.getName();
     if (in($.getIdentifier(), namer.lambda, namer.anonymous, namer.forbidden))
       return null;
-    final Namespace n = Environment.of(x);
+    @Nullable final Namespace n = Environment.of(x);
     if (n.has(namer.lambda) || n.hasChildren())
       return null;
     if (m != null)

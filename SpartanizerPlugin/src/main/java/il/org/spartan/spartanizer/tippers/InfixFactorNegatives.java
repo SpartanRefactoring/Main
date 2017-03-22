@@ -64,7 +64,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
   }
 
   @Override public Tip tip(@NotNull final InfixExpression x, @Nullable final ExclusionManager exclude) {
-    final List<Expression> $ = gather(x);
+    @NotNull final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
@@ -74,7 +74,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = totalNegation % 2 == 0 ? null : first($);
+        @Nullable final Expression first = totalNegation % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)

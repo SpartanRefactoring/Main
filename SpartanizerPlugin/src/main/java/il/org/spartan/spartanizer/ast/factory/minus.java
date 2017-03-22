@@ -36,7 +36,7 @@ public enum minus {
   public static Statement lastStatement(@NotNull final Statement $) {
     if (!iz.block($))
       return make.emptyStatement($);
-    final List<Statement> ss = step.statements(az.block($));
+    @NotNull final List<Statement> ss = step.statements(az.block($));
     if (!ss.isEmpty())
       ss.remove(ss.size() - 1);
     return $;

@@ -38,12 +38,12 @@ public class InflateHandler extends AbstractHandler {
   private static final IPartListener pageListener = pageListener();
 
   @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final Selection $ = Selection.Util.current().setUseBinding();
+    @NotNull final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }
 
   public static Void goWheelAction() {
-    final IPartService s = getPartService();
+    @Nullable final IPartService s = getPartService();
     if (s == null)
       return null;
     if (active.get()) {
@@ -63,7 +63,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   @NotNull protected static List<Listener> getListeners(@Nullable final StyledText t) {
-    final List<Listener> $ = new ArrayList<>();
+    @NotNull final List<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
     final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
@@ -85,7 +85,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static IEditorPart getEditorPart() {
-    final IWorkbenchPage $ = getPage();
+    @Nullable final IWorkbenchPage $ = getPage();
     return $ == null ? null : $.getActiveEditor();
   }
 
@@ -98,7 +98,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static ITextEditor getTextEditor() {
-    final IEditorPart $ = getEditorPart();
+    @NotNull final IEditorPart $ = getEditorPart();
     return !($ instanceof ITextEditor) ? null : (ITextEditor) $;
   }
 
@@ -162,7 +162,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static void addListener(@NotNull final ITextEditor ¢) {
-    final StyledText text = getText(¢);
+    @Nullable final StyledText text = getText(¢);
     if (text == null)
       return;
     final IEditorInput i = ¢.getEditorInput();
@@ -171,16 +171,16 @@ public class InflateHandler extends AbstractHandler {
     final IFile f = ((IFileEditorInput) i).getFile();
     if (f == null)
       return;
-    final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
+    @NotNull final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
     text.addMouseWheelListener(l);
     text.addKeyListener(l);
   }
 
   @SuppressWarnings("boxing") private static void removeListener(final ITextEditor e) {
-    final StyledText text = getText(e);
+    @Nullable final StyledText text = getText(e);
     if (text == null)
       return;
-    final List<Listener> ls = getListeners(text);
+    @NotNull final List<Listener> ls = getListeners(text);
     ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).findFirst()
         .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
     // TODO Ori Roth seems to be a bug --yg
@@ -189,7 +189,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   @NotNull private static Iterable<ITextEditor> getOpenedEditors() {
-    final IWorkbenchPage $ = getPage();
+    @Nullable final IWorkbenchPage $ = getPage();
     return $ == null ? new ArrayList<>()
         : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
             .collect(toList());

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.*;
  * @since 2016-12-23 */
 public interface ancestors {
   @NotNull static List<ASTNode> path(@NotNull final ASTNode n) {
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     for (ASTNode parent = n; parent != null; parent = n.getParent())
       $.add(parent);
     Collections.reverse($);

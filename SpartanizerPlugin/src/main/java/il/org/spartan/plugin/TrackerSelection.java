@@ -37,7 +37,7 @@ public class TrackerSelection extends Selection {
 
   public void update() {
     first(inner).dispose();
-    final ASTNode newTrack = fix(track.getNodeType(),
+    @Nullable final ASTNode newTrack = fix(track.getNodeType(),
         track.getLength() > length
             ? new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
             : new NodeFinder(first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
@@ -51,7 +51,7 @@ public class TrackerSelection extends Selection {
   }
 
   @NotNull private static List<WrappedCompilationUnit> asList(@Nullable final WrappedCompilationUnit ¢) {
-    final List<WrappedCompilationUnit> $ = new ArrayList<>();
+    @NotNull final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(¢);
     return $;

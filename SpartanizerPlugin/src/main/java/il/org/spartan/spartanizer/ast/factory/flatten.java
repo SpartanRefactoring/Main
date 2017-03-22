@@ -38,8 +38,8 @@ public enum flatten {
   }
 
   @NotNull private static List<Expression> into(final Operator o, final Expression x, @NotNull final List<Expression> $) {
-    final Expression core = core(x);
-    final InfixExpression inner = az.infixExpression(core);
+    @Nullable final Expression core = core(x);
+    @Nullable final InfixExpression inner = az.infixExpression(core);
     return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? x : core, $)
         : flatten.into(o, copy.adjust(o, hop.operands(inner)), $);
   }

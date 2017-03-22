@@ -39,8 +39,8 @@ public class CharacterShortcut extends AbstractHandler {
     final Object $ = e.getTrigger();
     if (!($ instanceof Event))
       return null;
-    final ISelection is = Selection.Util.getSelection();
-    final Selection s = Selection.Util.getCurrentCompilationUnit();
+    @NotNull final ISelection is = Selection.Util.getSelection();
+    @Nullable final Selection s = Selection.Util.getCurrentCompilationUnit();
     return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
         : insertCharacter(shortcutsMap.get(((Event) $).character), s.setTextSelection((ITextSelection) is));
   }
@@ -57,7 +57,7 @@ public class CharacterShortcut extends AbstractHandler {
     if (us == null || us.size() != 1)
       return null;
     final ICompilationUnit u = us.get(0);
-    final MultiTextEdit m = new MultiTextEdit();
+    @NotNull final MultiTextEdit m = new MultiTextEdit();
     m.addChild(new DeleteEdit(s.textSelection.getOffset(), s.textSelection.getLength()));
     m.addChild(new InsertEdit(s.textSelection.getOffset(), c + ""));
     try {
@@ -74,10 +74,10 @@ public class CharacterShortcut extends AbstractHandler {
    * @param i text selection required location
    * @return null */
   private static Object fixSelection(final int i) {
-    final IEditorPart p = Selection.Util.getEditorPart();
+    @Nullable final IEditorPart p = Selection.Util.getEditorPart();
     if (!(p instanceof ITextEditor))
       return null;
-    final ITextEditor e = (ITextEditor) p;
+    @NotNull final ITextEditor e = (ITextEditor) p;
     e.getSelectionProvider().setSelection(new TextSelection(i, 0));
     return null;
   }

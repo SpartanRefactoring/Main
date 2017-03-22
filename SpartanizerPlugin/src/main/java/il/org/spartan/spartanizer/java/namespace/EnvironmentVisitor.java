@@ -52,8 +52,8 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @NotNull @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final FieldDeclaration d) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(trivia.condense(d.getType()));
+    @NotNull final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    @NotNull final type t = type.baptize(trivia.condense(d.getType()));
     $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
@@ -63,15 +63,15 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @NotNull @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final VariableDeclarationExpression x) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(trivia.condense(x.getType()));
+    @NotNull final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    @NotNull final type t = type.baptize(trivia.condense(x.getType()));
     $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
   @NotNull @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(@NotNull final VariableDeclarationStatement s) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(trivia.condense(s.getType()));
+    @NotNull final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    @NotNull final type t = type.baptize(trivia.condense(s.getType()));
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
@@ -182,7 +182,7 @@ final class EnvironmentVisitor extends ASTVisitor {
    *
    * If no match is found, return null. */
   Binding getHidden(@NotNull final String ¢) {
-    for (String s = parentNameScope(¢); s != null && !s.isEmpty(); s = parentNameScope(s)) {
+    for (@NotNull String s = parentNameScope(¢); s != null && !s.isEmpty(); s = parentNameScope(s)) {
       final Binding i = get($, s + "." + ¢.substring(¢.lastIndexOf(".") + 1));
       if (i != null)
         return i;
@@ -222,7 +222,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
       return 0;
     int $ = 0;
-    for (final Statement ¢ : iz.block(n) ? statements(az.block(n)) : statements(az.switchStatement(n))) {
+    for (@NotNull final Statement ¢ : iz.block(n) ? statements(az.block(n)) : statements(az.switchStatement(n))) {
       // This is intentionally '==' and not equals, meaning the exact same
       // Statement,
       // not just equivalence.

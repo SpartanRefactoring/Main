@@ -37,7 +37,7 @@ public interface trim {
   }
 
   static String apply(@NotNull final Trimmer t, @NotNull final String from) {
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = trim.rewrite(t, u, new Document(from));
     assert $ != null;
@@ -54,7 +54,7 @@ public interface trim {
   }
 
   static String apply(@NotNull final Tipper<? extends ASTNode> t, @NotNull final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
+    @NotNull final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert $ != null;
     return rewrite(new TipperApplicator(t), $, new Document(from)).get();
   }

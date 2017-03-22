@@ -105,10 +105,10 @@ public interface iz {
   static boolean blockEssential(@Nullable final IfStatement s) {
     if (s == null)
       return false;
-    final Block b = az.block(parent(s));
+    @Nullable final Block b = az.block(parent(s));
     if (b == null)
       return false;
-    final IfStatement $ = az.ifStatement(parent(b));
+    @Nullable final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
         || !same(s, az.astNode(first(statements(az.block(elze($))))))//
         || recursiveElze(s) != null//
@@ -136,7 +136,7 @@ public interface iz {
   static boolean blockRequiredInReplacement(final IfStatement old, @Nullable final IfStatement newIf) {
     if (newIf == null || old != newIf && elze(old) == null == (elze(newIf) == null))
       return false;
-    final IfStatement $ = az.ifStatement(parent(old));
+    @Nullable final IfStatement $ = az.ifStatement(parent(old));
     return $ != null && then($) == old && (elze($) == null || elze(newIf) == null)
         && (elze($) != null || elze(newIf) != null || blockRequiredInReplacement($, newIf));
   }
@@ -301,7 +301,7 @@ public interface iz {
   static boolean definiteLoop(@NotNull final ASTNode n) {
     if (!iz.loop(n))
       return false;
-    final Bool $ = new Bool(true);
+    @NotNull final Bool $ = new Bool(true);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final BreakStatement ¢) {
@@ -482,7 +482,7 @@ public interface iz {
   static boolean expressionOfEnhancedFor(@Nullable final ASTNode child, @Nullable final ASTNode parent) {
     if (child == null || parent == null || !iz.enhancedFor(parent))
       return false;
-    final EnhancedForStatement $ = az.enhancedFor(parent);
+    @Nullable final EnhancedForStatement $ = az.enhancedFor(parent);
     assert $ != null;
     assert step.expression($) != null;
     return step.expression($) == child;
@@ -749,7 +749,7 @@ public interface iz {
    * @param ¢ JD
    * @return whetherthe parameter is a statement which is last in its method */
   static boolean lastInMethod(final Statement ¢) {
-    final Block $ = az.block(parent(¢));
+    @Nullable final Block $ = az.block(parent(¢));
     return last(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 
@@ -768,7 +768,7 @@ public interface iz {
   }
 
   static boolean literal(final ASTNode ¢, final double d) {
-    final NumberLiteral numberLiteral = az.numberLiteral(¢);
+    @Nullable final NumberLiteral numberLiteral = az.numberLiteral(¢);
     if (numberLiteral == null)
       return false;
     final String $ = numberLiteral.getToken();
@@ -776,7 +776,7 @@ public interface iz {
   }
 
   static boolean literal(final ASTNode ¢, final int i) {
-    final NumberLiteral numberLiteral = az.numberLiteral(¢);
+    @Nullable final NumberLiteral numberLiteral = az.numberLiteral(¢);
     if (numberLiteral == null)
       return false;
     final String $ = numberLiteral.getToken();
@@ -784,7 +784,7 @@ public interface iz {
   }
 
   static boolean literal(final ASTNode ¢, final long l) {
-    final NumberLiteral numberLiteral = az.numberLiteral(¢);
+    @Nullable final NumberLiteral numberLiteral = az.numberLiteral(¢);
     if (numberLiteral == null)
       return false;
     final String $ = numberLiteral.getToken();
@@ -1043,7 +1043,7 @@ public interface iz {
         // when adding support for loops, switches etc.
         return statements((Block) ¢).stream().anyMatch(iz::sequencerComplex);
       case IF_STATEMENT:
-        final IfStatement $ = (IfStatement) ¢;
+        @NotNull final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
       default:
         return sequencer(¢);
@@ -1061,7 +1061,7 @@ public interface iz {
       return false;
     switch (¢.getNodeType()) {
       case IF_STATEMENT:
-        final IfStatement $ = (IfStatement) ¢;
+        @NotNull final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
       case BLOCK:
         return statements(az.block(¢)).stream().anyMatch(s -> sequencerComplex(s, type));

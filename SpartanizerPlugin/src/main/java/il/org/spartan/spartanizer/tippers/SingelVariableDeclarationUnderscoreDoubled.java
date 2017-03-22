@@ -29,7 +29,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   public static boolean suppressing(final SingleVariableDeclaration ¢) {
-    for (final Annotation $ : annotations(¢)) {
+    for (@NotNull final Annotation $ : annotations(¢)) {
       if (!"SuppressWarnings".equals($.getTypeName() + ""))
         continue;
       if (iz.singleMemberAnnotation($))
@@ -89,10 +89,10 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   @Override @SuppressWarnings("unused") public ASTNode replacement(@NotNull final SingleVariableDeclaration $, @Nullable final ExclusionManager m) {
-    final MethodDeclaration method = getMethod($);
+    @Nullable final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)
       return null;
-    for (final SingleVariableDeclaration ¢ : parameters(method))
+    for (@NotNull final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))

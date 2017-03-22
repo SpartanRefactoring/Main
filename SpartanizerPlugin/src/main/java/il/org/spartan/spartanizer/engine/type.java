@@ -207,7 +207,7 @@ public interface type {
     }
 
     @Nullable private static implementation lookDown(final Assignment x) {
-      final implementation $ = get(to(x));
+      @Nullable final implementation $ = get(to(x));
       return !$.isNoInfo() ? $ : get(from(x)).isNumeric() ? NUMERIC : get(from(x));
     }
 
@@ -220,7 +220,7 @@ public interface type {
     }
 
     @NotNull private static implementation lookDown(final ConditionalExpression x) {
-      final implementation $ = get(then(x)), ¢ = get(elze(x));
+      @Nullable final implementation $ = get(then(x)), ¢ = get(elze(x));
       return $ == ¢ ? $
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
@@ -268,10 +268,10 @@ public interface type {
     }
 
     @Nullable private static implementation lookDown(final InfixExpression x) {
-      final InfixExpression.Operator o = operator(x);
-      final List<Expression> es = hop.operands(x);
-      implementation $ = get(first(es));
-      for (final Expression ¢ : rest(es))
+      @NotNull final InfixExpression.Operator o = operator(x);
+      @Nullable final List<Expression> es = hop.operands(x);
+      @Nullable implementation $ = get(first(es));
+      for (@NotNull final Expression ¢ : rest(es))
         $ = $.underBinaryOperator(o, get(¢));
       return $;
     }
@@ -304,7 +304,7 @@ public interface type {
     @NotNull private static implementation lookUp(final Expression x, @NotNull final implementation i) {
       if (i.isCertain())
         return i;
-      for (final ASTNode $ : hop.ancestors(x)) {
+      for (@NotNull final ASTNode $ : hop.ancestors(x)) {
         final ASTNode context = $.getParent();
         if (context != null)
           switch (context.getNodeType()) {
@@ -453,7 +453,7 @@ public interface type {
       }
 
       @NotNull default implementation underIntegersOnlyOperator(@NotNull final implementation k) {
-        final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
+        @NotNull final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
         return in(LONG, $, ¢2) ? LONG : !in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
 
@@ -466,7 +466,7 @@ public interface type {
         assert k != null;
         assert this != ALPHANUMERIC : "Don'tipper confuse " + NUMERIC + " with " + ALPHANUMERIC;
         assert isNumeric() : this + ": is for some reason not numeric ";
-        final implementation $ = k.asNumericUnderOperation();
+        @NotNull final implementation $ = k.asNumericUnderOperation();
         assert $ != null;
         assert $.isNumeric() : this + ": is for some reason not numeric ";
         return in(DOUBLE, $, this) ? DOUBLE // Double contaminates Numeric

@@ -62,7 +62,7 @@ public enum AnalyzerOptions {
 
   private static void parseArgument(@NotNull final String s) {
     assert s.charAt(0) == '-' : "property should start with '-'";
-    final String[] li = bisect(s.substring(1), "=");
+    @NotNull final String[] li = bisect(s.substring(1), "=");
     assert li.length == 2 : "property should be of the form -x=y or -x.p=y but was [" + s + "]";
     if (li[0].contains("."))
       setInnerProperty(li[0], li[1]);
@@ -71,7 +71,7 @@ public enum AnalyzerOptions {
   }
 
   @NotNull private static String[] bisect(@NotNull final String s, @NotNull final String by) {
-    final String[] $ = new String[2];
+    @NotNull final String[] $ = new String[2];
     final int i = s.indexOf(by);
     $[0] = s.substring(0, i);
     $[1] = s.substring(i + 1);

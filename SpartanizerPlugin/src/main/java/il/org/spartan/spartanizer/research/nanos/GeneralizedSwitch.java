@@ -62,7 +62,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
 
   @NotNull String createExpressionOns(@NotNull final List<Expression> diffs, @NotNull final List<N> branches) {
     assert diffs.size() == branches.size();
-    String $ = "";
+    @NotNull String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
       $ += ".on(() ->" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
     return $;
@@ -79,7 +79,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
 
   @NotNull String createOns(@NotNull final List<String> diffs, @NotNull final List<? extends N> branches) {
     assert diffs.size() == branches.size();
-    String $ = "";
+    @NotNull String $ = "";
     for (int ¢ = 0; ¢ < diffs.size(); ++¢)
       $ += ".on(" + diffs.get(¢) + ",() -> " + extractSemicolonIfNeeded(thenWrapper(branches.get(¢))) + ")";
     return $;

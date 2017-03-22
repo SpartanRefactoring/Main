@@ -60,7 +60,7 @@ public interface Recursive<@¢ T> extends Streamer<T> {
   interface Postorder<E> extends Compound<E> {
     @Override default Stream<E> stream() {
       Stream<E> $ = Stream.empty();
-      for (final Recursive<E> ¢ : children())
+      for (@NotNull final Recursive<E> ¢ : children())
         $ = Stream.concat(¢.stream(), $);
       return Stream.concat($, streamSelf());
     }
@@ -74,7 +74,7 @@ public interface Recursive<@¢ T> extends Streamer<T> {
   interface Preorder<E> extends Compound<E> {
     @Override default Stream<E> stream() {
       Stream<E> $ = self() == null ? Stream.empty() : Stream.of(self());
-      for (final Recursive<E> ¢ : children())
+      for (@NotNull final Recursive<E> ¢ : children())
         $ = Stream.concat($, ¢.stream());
       return $;
     }/* A compound recurkksive structure enumerating {@link #descendants()} in

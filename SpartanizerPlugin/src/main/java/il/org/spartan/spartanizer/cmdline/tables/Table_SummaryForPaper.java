@@ -51,7 +51,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   }
 
   @NotNull private CompilationUnitRecord foo(@NotNull final CompilationUnit ¢) {
-    final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
+    @NotNull final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
     $.setPath(absolutePath);
     $.setRelativePath(relativePath);
     return $;
@@ -70,7 +70,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       CUStatistics.putIfAbsent(key, new ArrayList<>());
       classStatistics.putIfAbsent(key, new ArrayList<>());
       //
-      final ClassRecord c = new ClassRecord($);
+      @NotNull final ClassRecord c = new ClassRecord($);
       classRecords.push(c);
       classStatistics.get(key).add(c);
       findFirst.instanceOf(TypeDeclaration.class).in(ast(Wrap.OUTER.off(spartanalyzer.fixedPoint(Wrap.OUTER.on($ + "")))));

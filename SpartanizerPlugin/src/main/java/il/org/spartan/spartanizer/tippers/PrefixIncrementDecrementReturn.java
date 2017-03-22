@@ -36,10 +36,10 @@ public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement
       final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
-    final Statement parent = az.statement(x.getParent());
+    @Nullable final Statement parent = az.statement(x.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(operand(x), expression(s)))
       return null;
     $.remove(parent, g);
