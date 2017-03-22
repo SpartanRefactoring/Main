@@ -24,8 +24,7 @@ public interface Nested<@¢ T> {
   interface Compound<@¢ T> extends Nested<T> {
     Nested<T> parent();
 
-    @Override
-    default Stream<T> ancestors() {
+    @Override default Stream<T> ancestors() {
       return Stream.concat(parent().ancestors(), streamSelf());
     }
   }
