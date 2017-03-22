@@ -7,12 +7,12 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** Tests {@link NotHoldsOrReturn}
+/** Tests {@link HoldsOrReturn}
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-03-22 */
 @SuppressWarnings("static-method")
-public class NotHoldsOrReturnTest {
-  private static final NanoPatternTipper<IfStatement> nano = new NotHoldsOrReturn();
+public class HoldsOrReturnTest {
+  private static final NanoPatternTipper<IfStatement> nano = new HoldsOrReturn();
 
   @Test public void a() {
     trimmingOf("if(x.isCute()) return;")//

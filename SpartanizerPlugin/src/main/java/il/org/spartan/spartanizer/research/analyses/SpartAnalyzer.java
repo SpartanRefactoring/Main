@@ -61,7 +61,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new GeneralizedSwitch<>(), //
                 new PreconditionNotNull(), //
                 new ThrowOnFalse(), //
-                new NotHoldsOrReturn(), //
+                new HoldsOrReturn(), //
                 null) //
             .add(InfixExpression.class, //
                 new Infix.SafeNavigation(), //
