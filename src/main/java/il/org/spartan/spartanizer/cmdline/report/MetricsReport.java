@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Collects a set of metrics A wrapper for {@link CSVStatistics}
  * @author Matteo Orru'
@@ -32,6 +33,7 @@ public class MetricsReport implements ConfigurableReport {
     settings.getAction().initialize();
   }
 
+  @NotNull
   public static Settings getSettings() {
     return settings;
   }
@@ -74,12 +76,13 @@ public class MetricsReport implements ConfigurableReport {
         m("tide" + id, λ -> clean(λ + "").length())); //
   }
 
+  @NotNull
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
 
   public static void write() {
-    final Action wr = settings.getAction();
+    @NotNull final Action wr = settings.getAction();
     wr.initialize();
     wr.go();
   }

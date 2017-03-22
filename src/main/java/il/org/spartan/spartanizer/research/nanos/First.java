@@ -10,6 +10,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** @nano first element in collection, lisp style.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -22,10 +24,12 @@ public final class First extends NanoPatternTipper<MethodInvocation> {
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }

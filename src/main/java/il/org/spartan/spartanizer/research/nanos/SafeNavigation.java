@@ -10,6 +10,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** There's also {@link Infix.SafeNavigation} which catches the same
  * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -34,6 +36,7 @@ public final class SafeNavigation extends NanoPatternTipper<ConditionalExpressio
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
@@ -50,6 +53,7 @@ public final class SafeNavigation extends NanoPatternTipper<ConditionalExpressio
     return firstReplacement(tippers);
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Safety;
   }

@@ -7,6 +7,7 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -30,7 +31,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
     this(".");
   }
 
-  HeadlessSpartanizer(final String path) {
+  HeadlessSpartanizer(@NotNull final String path) {
     this(path, system.folder2File(path));
   }
 
@@ -48,7 +49,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".spectrum.CSV", "spectrum");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".tips.CSV", "tips");
       ReportGenerator.initializeReport(ReportGenerator.getOutputFolder() + File.separator + name + ".methods.CSV", "methods");
-      final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
+      @NotNull final CommandLineApplicator defaultApplicator2 = CommandLineApplicator.defaultApplicator(),
           defaultSelection = defaultApplicator2.defaultSelection(CommandLineSelection.Util.get(ReportGenerator.getInputFolder()));
       if (DefaultApplicator) {
         commandLineApplicator.listener(λ -> System.out.println("Running DefaultApplicator: " + Arrays.toString(λ)));
@@ -70,7 +71,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
         defaultApplicator2.defaultListenerNoisy()
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
             .defaultRunAction(new CommandLine$Applicator()).go();
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢);
     }
   }

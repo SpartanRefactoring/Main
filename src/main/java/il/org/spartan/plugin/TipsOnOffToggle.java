@@ -8,6 +8,8 @@ import org.eclipse.core.runtime.*;
 
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A command handler which toggles the spartanization nature
  * @see IHandler
@@ -16,7 +18,7 @@ import il.org.spartan.utils.range.*;
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2013/07/01 */
 public final class TipsOnOffToggle extends AbstractHandler {
-  @SuppressWarnings("boxing") private static void disableNature(final IProject p) throws CoreException {
+  @SuppressWarnings("boxing") private static void disableNature(@NotNull final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     final String[] natures = description.getNatureIds();
     for (final Integer i : range.from(0).to(natures.length))
@@ -31,13 +33,13 @@ public final class TipsOnOffToggle extends AbstractHandler {
       }
   }
 
-  public static void enableNature(final IProject p) throws CoreException {
+  public static void enableNature(@NotNull final IProject p) throws CoreException {
     final IProjectDescription description = p.getDescription();
     description.setNatureIds(append(description.getNatureIds(), Nature.NATURE_ID));
     p.setDescription(description, null);
   }
 
-  public static void toggleNature(final IProject p, final boolean state) throws CoreException {
+  public static void toggleNature(@NotNull final IProject p, final boolean state) throws CoreException {
     // NOTE: In order to ensure that we're not adding the nature when
     // it's
     // already associated with the project, when asked to add the nature
@@ -50,19 +52,19 @@ public final class TipsOnOffToggle extends AbstractHandler {
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final IProject p = getProject();
+    @Nullable final IProject p = getProject();
     if (p == null)
       return null;
     try {
       toggleNature(p, !p.hasNature(Nature.NATURE_ID));
-    } catch (final CoreException ¢) {
+    } catch (@NotNull final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return null;
   }
 
   private static IProject getProject() {
-    final IProject $ = Selection.Util.project();
+    @Nullable final IProject $ = Selection.Util.project();
     return $ != null ? $ : null;
   }
 }

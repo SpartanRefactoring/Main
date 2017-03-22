@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Various methods for comparing
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -21,7 +22,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-19 */
   ADDITION {
-    @Override public int compare(final Expression e1, final Expression e2) {
+    @Override public int compare(@NotNull final Expression e1, @NotNull final Expression e2) {
       int $;
       return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0
           || ($ = alphabeticalCompare(e1, e2)) != 0 ? $ : 0;
@@ -31,7 +32,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-19 */
   PRUDENT {
-    @Override public int compare(final Expression e1, final Expression e2) {
+    @Override public int compare(@NotNull final Expression e1, @NotNull final Expression e2) {
       int $;
       return ($ = literalCompare(e1, e2)) != 0 || ($ = nodesCompare(e1, e2)) != 0 || ($ = characterCompare(e1, e2)) != 0 ? $ : 0;
     }
@@ -41,7 +42,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2015-07-19 */
   MULTIPLICATION {
-    @Override public int compare(final Expression e1, final Expression e2) {
+    @Override public int compare(@NotNull final Expression e1, @NotNull final Expression e2) {
       int $;
       return ($ = literalCompare(e2, e1)) == 0 && ($ = nodesCompare(e1, e2)) == 0 && ($ = characterCompare(e1, e2)) == 0
           && ($ = alphabeticalCompare(e1, e2)) == 0 ? 0 : $;
@@ -102,7 +103,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return -specificity.compare(e1, e2);
   }
 
-  static int nodesCompare(final Expression e1, final Expression e2) {
+  static int nodesCompare(@NotNull final Expression e1, @NotNull final Expression e2) {
     return round(count.nodes(e1) - count.nodes(e2), NODES_THRESHOLD);
   }
 
@@ -110,7 +111,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
     return Math.abs($) > threshold ? $ : 0;
   }
 
-  private static boolean isLonger(final Expression e1, final Expression e2) {
+  private static boolean isLonger(@NotNull final Expression e1, @NotNull final Expression e2) {
     return !hasNull(e1, e2) && (//
     count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD || //
         count.nodes(e1) >= count.nodes(e2) && moreArguments(e1, e2)//
@@ -120,7 +121,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /** Sorts the {@link Expression} list
    * @param xs an {@link Expression} list to sort
    * @return whetherthe list was modified */
-  public boolean sort(final List<Expression> xs) {
+  public boolean sort(@NotNull final List<Expression> xs) {
     boolean $ = false;
     // Bubble sort
     for (int i = 0, size = xs.size(); i < size; ++i)

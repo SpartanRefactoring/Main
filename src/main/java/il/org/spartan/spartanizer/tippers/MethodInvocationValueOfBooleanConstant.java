@@ -9,6 +9,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Removes unnecessary uses of Boolean.valueOf, e.g.,
  * {@code Boolean.valueOf(true) } into {@code Boolean.TRUE}
@@ -18,18 +20,22 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -875185107180196417L;
 
-  private static String asString(final BooleanLiteral ¢) {
+  @NotNull
+  private static String asString(@NotNull final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
 
-  private static Expression replacement(final Expression x, final BooleanLiteral l) {
+  @Nullable
+  private static Expression replacement(final Expression x, @Nullable final BooleanLiteral l) {
     return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
 
-  private static Expression replacement(final Expression x, final Expression $) {
+  @Nullable
+  private static Expression replacement(@Nullable final Expression x, final Expression $) {
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 
+  @NotNull
   @Override public String description(final MethodInvocation ¢) {
     return "Replace valueOf (" + onlyArgument(¢) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(¢)));
   }

@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** if(X == null) throw Exception;
  * @author Ori Marcovitch
@@ -23,6 +24,7 @@ public final class ThrowOnNull extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }

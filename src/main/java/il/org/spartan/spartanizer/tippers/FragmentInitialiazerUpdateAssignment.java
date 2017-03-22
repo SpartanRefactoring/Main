@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * int a;
@@ -27,21 +29,22 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementInitia
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull
+  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
     if (initializer() == null)
       return null;
-    final Assignment a = extract.assignment(nextStatement());
+    @Nullable final Assignment a = extract.assignment(nextStatement());
     if (a == null || !wizard.same(name(), to(a)) || doesUseForbiddenSiblings(fragment(), from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
-    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement(), initializer()) > 0)
       return null;
     $.replace(initializer(), newInitializer, g);

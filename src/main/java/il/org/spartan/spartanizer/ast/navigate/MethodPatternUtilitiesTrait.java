@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Trait with useful fluent conditions on {@link MethodDeclaration}
  * @author Ori Marcovitch
@@ -44,6 +46,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
+  @NotNull
   default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return descendants.whoseClassIs(ReturnStatement.class).from(¢);
   }
@@ -76,7 +79,7 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notStatic(final MethodDeclaration ¢) {
+  default boolean notStatic(@NotNull final MethodDeclaration ¢) {
     return !iz.static¢(¢);
   }
 
@@ -84,15 +87,15 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.voidType(returnType(¢));
   }
 
-  default boolean returnTypeSameAsParameter(final MethodDeclaration ¢) {
+  default boolean returnTypeSameAsParameter(@Nullable final MethodDeclaration ¢) {
     return ¢ != null && (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
-  default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
+  default boolean returnTypeSameAs(@Nullable final MethodDeclaration ¢, @Nullable final Type t) {
     return ¢ != null && t != null && (t + "").equals(returnType(¢) + "");
   }
 
-  default boolean same(final ASTNode n, final ASTNode b) {
+  default boolean same(@Nullable final ASTNode n, @Nullable final ASTNode b) {
     return n != null && b != null && (n + "").equals(b + "");
   }
 
@@ -124,7 +127,7 @@ public interface MethodPatternUtilitiesTrait {
     return second(statements(¢));
   }
 
-  default boolean safeEquals(final Object o1, final Object o2) {
+  default boolean safeEquals(@Nullable final Object o1, @Nullable final Object o2) {
     return o1 != null && o2 != null && o1.equals(o2);
   }
 
@@ -143,12 +146,12 @@ public interface MethodPatternUtilitiesTrait {
   };
 
   default boolean setter(final MethodDeclaration ¢) {
-    final List<String> $ = parametersNames(¢);
+    @Nullable final List<String> $ = parametersNames(¢);
     return statements(¢).stream()
         .allMatch(λ -> setterTippers.canTip(expression(λ)) && isRightSideParameterOrLiteral(right(az.assignment(expression(λ))), $));
   }
 
-  default boolean isRightSideParameterOrLiteral(final Expression $, final Collection<String> paramNames) {
+  default boolean isRightSideParameterOrLiteral(final Expression $, @NotNull final Collection<String> paramNames) {
     return iz.literal($) || paramNames.contains(identifier(az.name($)));
   }
 

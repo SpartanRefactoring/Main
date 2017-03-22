@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** @nano a method returns some constant
  * @author Ori Marcovitch
@@ -20,6 +21,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
         && !rival.get().matches(¢);
   }
 
+  @NotNull
   @Override public String nanoName() {
     return "ConstantValue";
   }

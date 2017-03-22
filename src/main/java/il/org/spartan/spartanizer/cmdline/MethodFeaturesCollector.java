@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Collects boolean features of methods
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -32,7 +33,7 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */
-  private void consider(final MethodDeclaration ¢) {
+  private void consider(@NotNull final MethodDeclaration ¢) {
     dotter.click();
     final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
@@ -75,7 +76,7 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
     writer.nl();
   }
 
-  @Override public void endVisit(final MethodDeclaration node) {
+  @Override public void endVisit(@NotNull final MethodDeclaration node) {
     --methodNesting;
     consider(node);
     super.endVisit(node);

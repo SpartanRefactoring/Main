@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Method delegating to super
  * @author Ori Marcovitch */
@@ -35,6 +36,7 @@ public class SuperDelegator extends Delegator {
         && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.instanceOf(SuperMethodInvocation.class).in(s))));
   }
 
+  @NotNull
   @Override public String nanoName() {
     return Delegator.class.getSimpleName();
   }

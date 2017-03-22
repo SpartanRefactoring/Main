@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Utility class to measure number of statemetns\expressions in an ASTNode's
  * subtree, skipping some ASTNode objects
@@ -16,10 +18,10 @@ import il.org.spartan.utils.*;
  * @since Oct 28, 2016 */
 public enum measure {
   ;
-  public static int allExpressions(final CompilationUnit u) {
+  public static int allExpressions(@Nullable final CompilationUnit u) {
     if (u == null)
       return 0;
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
@@ -29,12 +31,12 @@ public enum measure {
     return $.inner;
   }
 
-  public static int expressions(final ASTNode n) {
+  public static int expressions(@Nullable final ASTNode n) {
     if (iz.compilationUnit(n))
       return allExpressions(az.compilationUnit(n));
     if (n == null)
       return 0;
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.expression(¢) && !excluded(az.expression(¢)))
@@ -45,8 +47,8 @@ public enum measure {
     return $.inner;
   }
 
-  public static int allCommands(final CompilationUnit u) {
-    final Int $ = new Int();
+  public static int allCommands(@Nullable final CompilationUnit u) {
+    @NotNull final Int $ = new Int();
     if (u == null)
       return 0;
     u.accept(new ASTVisitor(true) {
@@ -59,10 +61,10 @@ public enum measure {
     return $.inner;
   }
 
-  public static int commands(final ASTNode n) {
+  public static int commands(@Nullable final ASTNode n) {
     if (iz.compilationUnit(n))
       return allCommands(az.compilationUnit(n));
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     if (n == null)
       return 0;
     n.accept(new ASTVisitor(true) {
@@ -75,7 +77,7 @@ public enum measure {
     return $.inner;
   }
 
-  static boolean excluded(final Statement ¢) {
+  static boolean excluded(@NotNull final Statement ¢) {
     return as.list(//
         Block.class, //
         // BreakStatement.class, //
@@ -91,7 +93,7 @@ public enum measure {
             && initializer(onlyOne(fragments(az.variableDeclarationStatement(¢)))) == null;
   }
 
-  static boolean excluded(final Expression ¢) {
+  static boolean excluded(@NotNull final Expression ¢) {
     return as.list(//
         Annotation.class //
     // ArrayAccess.class, //

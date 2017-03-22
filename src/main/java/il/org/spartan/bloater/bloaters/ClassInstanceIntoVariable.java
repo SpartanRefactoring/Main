@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
  * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
@@ -21,14 +23,16 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 1460785647125371675L;
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
-  @Override public Tip tip(final ExpressionStatement ¢) {
+  @Nullable
+  @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
     return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+        @Nullable final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = cic.getType();
         r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY).replace(¢,
             make.variableDeclarationStatement(copy.of(t), scope.newName(cic, t), copy.of(cic)), g);

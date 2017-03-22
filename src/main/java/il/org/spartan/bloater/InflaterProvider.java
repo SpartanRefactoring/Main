@@ -11,6 +11,7 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** holds the new toolbox for the expanders and returns them
  * @author Raviv Rachmiel
@@ -82,10 +83,11 @@ public class InflaterProvider extends OperationsProvider {
     ;//
   }
 
-  @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  @Override public <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
     return toolbox.firstTipper(¢);
   }
 
+  @NotNull
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(first(λ));
   }

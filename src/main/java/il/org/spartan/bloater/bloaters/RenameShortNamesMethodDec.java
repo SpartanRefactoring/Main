@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a method dec to more common or intuitive names (s.e i for an integer
@@ -33,16 +35,18 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @NotNull
+  @Override public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override @SuppressWarnings("unused") public Tip tip(final MethodDeclaration d, final ExclusionManager __) {
+  @Nullable
+  @Override @SuppressWarnings("unused") public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-    for (final SingleVariableDeclaration parameter : parameters(d)) {
+    @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+    for (@NotNull final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (in($.getIdentifier(), "$")) {

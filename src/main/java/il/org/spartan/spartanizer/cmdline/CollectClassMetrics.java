@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -21,36 +22,37 @@ enum CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static final CSVStatistics output = init();
 
-  public static void main(final String[] where) {
+  public static void main(@NotNull final String[] where) {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
 
-  static CompilationUnit spartanize(final CompilationUnit before) {
-    final Trimmer tr = new Trimmer();
+  @NotNull
+  static CompilationUnit spartanize(@NotNull final CompilationUnit before) {
+    @NotNull final Trimmer tr = new Trimmer();
     assert tr != null;
-    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    @NotNull final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
     tr.setICompilationUnit($);
     assert $ != null;
     try {
       tr.checkAllConditions(null);
-    } catch (OperationCanceledException | CoreException ¢) {
+    } catch (@NotNull OperationCanceledException | CoreException ¢) {
       ¢.printStackTrace();
     }
     return before;
   }
 
-  private static void go(final File f) {
+  private static void go(@NotNull final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void go(final String javaCode) {
+  private static void go(@NotNull final String javaCode) {
     output.put("Characters", javaCode.length());
     report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
@@ -59,10 +61,11 @@ enum CollectClassMetrics {
     new FilesGenerator(".java").from(where).forEach(CollectClassMetrics::go);
   }
 
+  @NotNull
   private static CSVStatistics init() {
     try {
       return new CSVStatistics(OUTPUT, "property");
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       throw new RuntimeException(OUTPUT, ¢);
     }
   }
@@ -73,7 +76,7 @@ enum CollectClassMetrics {
    * these. Note that you have to print the file name which is common to all
    * classes. Turn this if you like into a documentation
    * @param string */
-  private static void report(final String prefix, final CompilationUnit ¢) {
+  private static void report(final String prefix, @NotNull final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
     // Do
     // this by adding stuff to the metrics suite.

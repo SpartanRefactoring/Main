@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Between Nano. Checking if some expression lays between two values
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -33,7 +35,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   }
 
   @Override public boolean canTip(final InfixExpression $) {
-    final List<Expression> os = extendedOperands($);
+    @NotNull final List<Expression> os = extendedOperands($);
     return os.isEmpty() ? between(left($), right($)) : IntStream.range(0, os.size() - 1).anyMatch(λ -> between(os.get(λ), os.get(λ + 1)));
   }
 
@@ -48,24 +50,29 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
 
+  @Nullable
   @Override public Tip pattern(@SuppressWarnings("unused") final InfixExpression $) {
     return null;
   }
 
+  @Nullable
   protected static MethodInvocation replacement(final Expression x1, final Expression x2) {
     return replacement(az.infixExpression(x1), az.infixExpression(x2));
   }
 
+  @Nullable
   private static MethodInvocation replacement(final InfixExpression x1, final InfixExpression x2) {
     return (firstTipper(inEqualities, x1).getMatching(x1, "$X1") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X2") + "")
         ? replacementAux(firstTipper(inEqualities, x1).getMatching(x1, "$X1"), firstTipper(inEqualities, x2).getMatching(x2, "$X2"))
         : replacementAux(firstTipper(inEqualities, x2).getMatching(x2, "$X1"), firstTipper(inEqualities, x1).getMatching(x1, "$X2"));
   }
 
+  @Nullable
   private static MethodInvocation replacementAux(final ASTNode x1, final ASTNode x2) {
     return replacementAux(az.infixExpression(x1), az.infixExpression(x2));
   }
 
+  @Nullable
   private static MethodInvocation replacementAux(final InfixExpression lower, final InfixExpression upper) {
     return az.methodInvocation(wizard.ast("between(" + firstTipper(inEqualities, lower).getMatching(lower, "$X1") + ", "
         + firstTipper(inEqualities, upper).getMatching(upper, "$X2") + ")"));

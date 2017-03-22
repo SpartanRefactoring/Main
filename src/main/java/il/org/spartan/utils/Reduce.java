@@ -1,5 +1,7 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -13,12 +15,14 @@ public abstract class Reduce<@¢ R> {
     return ¢;
   }
 
+  @Nullable
   public abstract R reduce(R r1, R r2);
 
-  public final R reduce(final R[] $) {
+  public final R reduce(@Nullable final R[] $) {
     return $ == null ? reduce() : Stream.of($).filter(Objects::nonNull).reduce(this::reduce).orElse(reduce());
   }
 
+  @Nullable
   @SafeVarargs public final R reduce(final R r1, final R r2, final R... rs) {
     return reduce(r1, reduce(r2, reduce(rs)));
   }

@@ -7,12 +7,14 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** ASTNode trees utils
  * @author Ori Marcovitch */
 public enum ASTutils {
   ;
-  public static ASTNode extractASTNode(final String s, final CompilationUnit u) {
+  public static ASTNode extractASTNode(@NotNull final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -28,7 +30,7 @@ public enum ASTutils {
     }
   }
 
-  public static String extractCode(final String s, final IDocument d) {
+  public static String extractCode(@NotNull final String s, @NotNull final IDocument d) {
     switch (GuessedContext.find(s)) {
       case EXPRESSION_LOOK_ALIKE:
         return d.get().substring(23, d.get().length() - 3);
@@ -41,7 +43,7 @@ public enum ASTutils {
     }
   }
 
-  public static String wrapCode(final String ¢) {
+  public static String wrapCode(@NotNull final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -59,14 +61,15 @@ public enum ASTutils {
     }
   }
 
-  private static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
+  @Nullable
+  private static <N extends ASTNode> N findSecond(@NotNull final Class<?> c, @Nullable final ASTNode n) {
     if (n == null)
       return null;
-    final Wrapper<Boolean> foundFirst = new Wrapper<>();
+    @NotNull final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
-    final Wrapper<ASTNode> $ = new Wrapper<>();
+    @NotNull final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
-      @Override public boolean preVisit2(final ASTNode ¢) {
+      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
@@ -80,7 +83,7 @@ public enum ASTutils {
         return true;
       }
     });
-    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
+    @NotNull @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
   }
 }

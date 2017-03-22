@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
 
 public enum Coupling {
   IFF, IMPLIED, INDEPENDENT,;
@@ -34,6 +35,6 @@ public enum Coupling {
 
   @FunctionalInterface
   interface Inner {
-    Coupling withRespectTo(ASTNode to);
+    @NotNull Coupling withRespectTo(ASTNode to);
   }
 }

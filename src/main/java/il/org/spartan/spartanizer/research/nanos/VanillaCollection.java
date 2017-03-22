@@ -13,6 +13,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Nano matches fields
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -27,9 +28,10 @@ public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration>
         && specificTypes.contains(type(az.parameterizedType(type(az.classInstanceCreation(initializer(onlyOne(fragments($))))))) + "");
   }
 
-  @Override public Tip pattern(final FieldDeclaration ¢) {
+  @NotNull
+  @Override public Tip pattern(@NotNull final FieldDeclaration ¢) {
     return new Tip(description(), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.remove(¢, g);
       }
     };

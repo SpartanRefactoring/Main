@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** {@link HoldsForAny} Nano Pattern - holds P(c) for any c in C
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -30,10 +32,12 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
         || tippers2.canTip(x);
   }
 
+  @Nullable
   @Override public Tip pattern(final EnhancedForStatement x) {
     return !tippers.canTip(az.block(parent(x))) ? tippers2.firstTip(x) : tippers.firstTip(az.block(parent(x)));
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Iterative;
   }

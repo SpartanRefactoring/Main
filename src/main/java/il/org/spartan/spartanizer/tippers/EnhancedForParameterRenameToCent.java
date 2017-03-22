@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -26,12 +28,13 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3945693304397811549L;
 
-  @Override public String description(final EnhancedForStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
-    final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
+  @Override public Tip tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
+    @Nullable final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));
@@ -41,7 +44,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     final SimpleName $ = d.getName();
     if (namer.isSpecial($) || !JohnDoe.property(d))
       return null;
-    final Statement body = body(s);
+    @NotNull final Statement body = body(s);
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = newCurrent(s);
@@ -54,7 +57,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
     };
   }
 
-  public static SimpleName newCurrent(final EnhancedForStatement ¢) {
+  public static SimpleName newCurrent(@NotNull final EnhancedForStatement ¢) {
     return ¢.getAST().newSimpleName(namer.it);
   }
 }

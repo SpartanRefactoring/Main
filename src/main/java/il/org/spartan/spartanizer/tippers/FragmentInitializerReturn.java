@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * int a = 3;
@@ -28,21 +30,22 @@ public final class FragmentInitializerReturn extends $FragementInitializerStatem
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 6714687738774731933L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull
+  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final TextEditGroup g) {
     if (initializer() == null || haz.annotation(fragment()))
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement());
+    @Nullable final ReturnStatement s = az.returnStatement(nextStatement());
     if (s == null)
       return null;
-    final Assignment a = az.assignment(expression(s));
+    @Nullable final Assignment a = az.assignment(expression(s));
     if (a == null || !wizard.same(name(), to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
-    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    @NotNull final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving() - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);

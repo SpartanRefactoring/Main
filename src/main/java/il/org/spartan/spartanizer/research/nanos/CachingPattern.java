@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** A field which is initialized only on first reference
  * @author Ori Marcovitch
@@ -25,10 +27,12 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
     return tipper.check(az.block(parent(x)));
   }
 
+  @Nullable
   @Override public Tip pattern(final IfStatement $) {
     return tipper.tip(az.block(parent($)));
   }
 
+  @NotNull
   @Override public Category category() {
     return Category.Field;
   }

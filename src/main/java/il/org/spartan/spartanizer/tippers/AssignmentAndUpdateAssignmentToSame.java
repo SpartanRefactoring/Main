@@ -19,6 +19,8 @@ import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code
  * a += 3;
@@ -34,24 +36,26 @@ public final class AssignmentAndUpdateAssignmentToSame extends ReplaceToNextStat
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   @Override public Example[] examples() {
     return new Example[] { //
         convert("a+=3;b=6;").to("a+=3+6"), //
     };
   }
 
+  @NotNull
   @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
-    final Assignment a2 = extract.assignment(nextStatement);
+    @Nullable final Assignment a2 = extract.assignment(nextStatement);
     final Assignment.Operator o = a2.getOperator();
     if (o == ASSIGN)
       return null;
-    final Expression to = to(a1);
+    @Nullable final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.replace(from(a1), subject.operands(from(a1), from(a2)).to(assign2infix(o)), g);

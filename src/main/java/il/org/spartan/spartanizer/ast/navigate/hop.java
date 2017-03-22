@@ -13,6 +13,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -44,10 +46,11 @@ public interface hop {
 
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
-  static List<ASTNode> descendants(final ASTNode root) {
+  @Nullable
+  static List<ASTNode> descendants(@Nullable final ASTNode root) {
     if (root == null)
       return null;
-    final List<ASTNode> $ = new ArrayList<>();
+    @NotNull final List<ASTNode> $ = new ArrayList<>();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);
@@ -57,20 +60,21 @@ public interface hop {
     return $;
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, @NotNull final SimpleName n) {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs, @NotNull final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
-    final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
+    @Nullable final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
     return $ == null ? null : $.getName() + "";
   }
 
-  static SimpleName lastComponent(final Name ¢) {
+  @Nullable
+  static SimpleName lastComponent(@Nullable final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 
@@ -82,7 +86,7 @@ public interface hop {
     return last(extract.statements(¢));
   }
 
-  static Name name(final Type ¢) {
+  static Name name(@NotNull final Type ¢) {
     return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
@@ -91,7 +95,8 @@ public interface hop {
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
    * @return a list of all operands of an expression */
-  static List<Expression> operands(final InfixExpression ¢) {
+  @Nullable
+  static List<Expression> operands(@Nullable final InfixExpression ¢) {
     if (¢ == null)
       return null;
     final List<Expression> $ = as.list(left(¢), right(¢));
@@ -103,19 +108,21 @@ public interface hop {
   /** @param ¢ JD
    * @return conversion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
+  @Nullable
   static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
     return penultimate(body(¢));
   }
 
   static VariableDeclarationFragment penultimate(final Statement body) {
     final ASTNode n = hop.lastStatement(copy.of(body));
-    final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
+    @NotNull final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
     return n == null || $ == null ? null : previous($);
   }
 
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
+  @Nullable
   static VariableDeclarationFragment penultimate(final WhileStatement $) {
     return penultimate(body($));
   }
@@ -124,7 +131,8 @@ public interface hop {
     return first(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
 
-  static SimpleName simpleName(final Type ¢) {
+  @Nullable
+  static SimpleName simpleName(@NotNull final Type ¢) {
     return lastComponent(hop.name(¢));
   }
 }

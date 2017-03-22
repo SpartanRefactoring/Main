@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A class which generates a table of all Nano Patterns gathered by categories.
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
@@ -22,17 +23,17 @@ public class Table_NanosByCategories {
 
   public void go() {
     final List<Tipper<? extends ASTNode>>[] implementation = new SpartAnalyzer().toolbox.implementation;
-    final Map<String, Set<String>> categories = new TreeMap<>();
+    @NotNull final Map<String, Set<String>> categories = new TreeMap<>();
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)
         for (final Tipper<?> ¢ : implementation[i])
           if (¢ instanceof NanoPatternTipper) {
-            final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
+            @NotNull final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
             final String category = Category.pretty(np.category() != null ? np.category() + "" : Toolbox.intToClassName(i));
             categories.putIfAbsent(category, new TreeSet<>());
             categories.get(category).add(np.nanoName());
           }
-    try (Table t = new Table(this)) {
+    try (@NotNull Table t = new Table(this)) {
       t.noStatistics().add(Statistic.Σ);
       categories.keySet()
           .forEach(λ -> t//

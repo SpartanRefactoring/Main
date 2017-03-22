@@ -10,6 +10,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -18,7 +20,7 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 719856780934579562L;
 
-  private static Statement replacement(final Statement $) {
+  private static Statement replacement(@Nullable final Statement $) {
     return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : copy.of($);
   }
 
@@ -27,7 +29,7 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block>//
   }
 
   @Override public Statement replacement(final Block ¢) {
-    final ASTNode $ = parent(¢);
+    @NotNull final ASTNode $ = parent(¢);
     return !($ instanceof Statement) || iz.nodeTypeIn($, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(onlyOne(statements(¢)));
   }

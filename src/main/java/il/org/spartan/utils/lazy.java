@@ -1,5 +1,7 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.*;
 
 /** lazy initialization as in {@code
@@ -14,7 +16,8 @@ import java.util.function.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
 public interface lazy<@¢ T> extends Supplier<T> {
-  static <T> lazy<T> get(@¢ final Supplier<T> ¢) {
+  @NotNull
+  static <T> lazy<T> get(@NotNull @¢ final Supplier<T> ¢) {
     return new lazy<T>() {
       /** Cached value; invalid cache if {@code null} */
       T $;

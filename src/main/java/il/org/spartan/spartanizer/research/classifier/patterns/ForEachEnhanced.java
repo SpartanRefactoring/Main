@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** ForEachEnhanced examples
  * @author Ori Marcovitch
@@ -19,10 +21,12 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "ForEach: conevrt to fluent API";
   }
 
+  @Nullable
   @Override public Tip pattern(final ForStatement ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }

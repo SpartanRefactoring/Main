@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a block to more common or intuitive names (s.e i for an integer variable
@@ -32,15 +34,17 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 7211961334502931214L;
 
+  @NotNull
   @Override public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
 
-  @Override @SuppressWarnings("unused") public Tip tip(final VariableDeclarationStatement s, final ExclusionManager __) {
+  @Nullable
+  @Override @SuppressWarnings("unused") public Tip tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-      final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-      for (final Object v : make.variableDeclarationExpression(s).fragments()) {
+      @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+      for (@NotNull final Object v : make.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclaration) v).getName();
         if (!in($.getIdentifier(), namer.specials) && $.getIdentifier().length() > 1)
           return null;
@@ -64,7 +68,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
           }
         }
       };
-    } catch (final Exception ¢) {
+    } catch (@NotNull final Exception ¢) {
       return monitor.logProbableBug(this, ¢);
     }
   }

@@ -13,6 +13,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** converts {@code
  * arr[i++] = y; arr[++i] = z;
@@ -30,16 +32,18 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 3783281424560338347L;
 
+  @Nullable
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }
 
-  @Override public Tip tip(final ArrayAccess a) {
+  @NotNull
+  @Override public Tip tip(@NotNull final ArrayAccess a) {
     final Expression $ = copy.of(a.getIndex());
-    final ASTNode b = extract.containingStatement(a);
+    @Nullable final ASTNode b = extract.containingStatement(a);
     final AST t = b.getAST();
     return new Tip(description(a), a, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = copy.of(a);
         if (iz.postfixExpression($)) {
@@ -55,15 +59,15 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override protected boolean prerequisite(final ArrayAccess a) {
+  @Override protected boolean prerequisite(@NotNull final ArrayAccess a) {
     final Expression e = a.getIndex();
-    final Statement b = extract.containingStatement(a);
+    @Nullable final Statement b = extract.containingStatement(a);
     if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.incrementOrDecrement(e) || iz.assignment(e))
       return false;
     final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
     if (n == null)
       return false;
-    final Assignment $ = az.assignment(expression(az.expressionStatement(b)));
+    @Nullable final Assignment $ = az.assignment(expression(az.expressionStatement(b)));
     return $ != null && left($).equals(a) && iz.plainAssignment($) && !iz.containsName(n, right($));
   }
 }

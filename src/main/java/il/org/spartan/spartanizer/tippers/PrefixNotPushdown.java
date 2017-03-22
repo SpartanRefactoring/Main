@@ -16,6 +16,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** pushes down "{@code !}", the negation operator as much as possible, using
  * the de-Morgan and other simplification rules.
@@ -29,11 +31,12 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
    * top most parameter is logical negation.
    * @param x JD
    * @return simplified parameter */
-  public static Expression simplifyNot(final PrefixExpression ¢) {
+  @Nullable
+  public static Expression simplifyNot(@NotNull final PrefixExpression ¢) {
     return pushdownNot(az.not(core(¢)));
   }
 
-  static Expression notOfLiteral(final BooleanLiteral ¢) {
+  static Expression notOfLiteral(@NotNull final BooleanLiteral ¢) {
     final BooleanLiteral $ = copy.of(¢);
     $.setBooleanValue(!¢.booleanValue());
     return $;
@@ -44,7 +47,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   static Expression pushdownNot(final Expression ¢) {
-    Expression $;
+    @Nullable Expression $;
     return ($ = perhapsNotOfLiteral(¢)) != null//
         || ($ = perhapsDoubleNegation(¢)) != null//
         || ($ = perhapsDeMorgan(¢)) != null//
@@ -53,11 +56,13 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
             ? $ : null;
   }
 
+  @Nullable
   static Expression perhapsTernary(final Expression ¢) {
     return perhapsTernary(az.conditionalExpression(core(¢)));
   }
 
-  static Expression perhapsTernary(final ConditionalExpression ¢) {
+  @Nullable
+  static Expression perhapsTernary(@Nullable final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
     final Expression expression = ¢.getExpression(), then = ¢.getThenExpression(), elze = ¢.getElseExpression(),
@@ -66,7 +71,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return count.nodes($) < count.nodes($2) ? $ : $2;
   }
 
-  private static Expression comparison(final InfixExpression ¢) {
+  private static Expression comparison(@NotNull final InfixExpression ¢) {
     return pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
   }
 
@@ -75,40 +80,48 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
         || az.conditionalExpression(inner) != null;
   }
 
-  private static boolean hasOpportunity(final PrefixExpression ¢) {
+  private static boolean hasOpportunity(@Nullable final PrefixExpression ¢) {
     return ¢ != null && hasOpportunity(core(operand(¢)));
   }
 
+  @Nullable
   private static Expression perhapsComparison(final Expression inner) {
     return perhapsComparison(az.comparison(inner));
   }
 
-  private static Expression perhapsComparison(final InfixExpression inner) {
+  @Nullable
+  private static Expression perhapsComparison(@Nullable final InfixExpression inner) {
     return inner == null ? null : comparison(inner);
   }
 
+  @Nullable
   private static Expression perhapsDeMorgan(final Expression ¢) {
     return perhapsDeMorgan(az.shortcircuit(¢));
   }
 
-  private static Expression perhapsDeMorgan(final InfixExpression ¢) {
+  @Nullable
+  private static Expression perhapsDeMorgan(@Nullable final InfixExpression ¢) {
     return ¢ == null ? null : wizard.applyDeMorgan(¢);
   }
 
+  @Nullable
   private static Expression perhapsDoubleNegation(final Expression ¢) {
     return perhapsDoubleNegation(az.not(¢));
   }
 
-  private static Expression perhapsDoubleNegation(final PrefixExpression ¢) {
+  @Nullable
+  private static Expression perhapsDoubleNegation(@Nullable final PrefixExpression ¢) {
     return ¢ == null ? null : tryToSimplify(operand(¢));
   }
 
-  private static Expression pushdownNot(final PrefixExpression ¢) {
+  @Nullable
+  private static Expression pushdownNot(@Nullable final PrefixExpression ¢) {
     return ¢ == null ? null : pushdownNot(operand(¢));
   }
 
+  @Nullable
   private static Expression tryToSimplify(final Expression ¢) {
-    final Expression $ = pushdownNot(az.not(¢));
+    @Nullable final Expression $ = pushdownNot(az.not(¢));
     return $ != null ? $ : ¢;
   }
 
@@ -116,11 +129,12 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return "Pushdown logical negation ('!')";
   }
 
-  @Override public boolean prerequisite(final PrefixExpression ¢) {
+  @Override public boolean prerequisite(@Nullable final PrefixExpression ¢) {
     return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
   }
 
-  @Override public Expression replacement(final PrefixExpression ¢) {
+  @Nullable
+  @Override public Expression replacement(@NotNull final PrefixExpression ¢) {
     return simplifyNot(¢);
   }
 }

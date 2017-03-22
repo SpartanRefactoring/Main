@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Evaluate the subtraction of numbers according to the following rules {@code
  * int / int --> int
@@ -36,7 +37,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.double¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -48,14 +49,14 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
       if (type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
         throw new NumberFormatException();
       $ = az.throwing.int¢(first(xs));
-      for (final Expression ¢ : rest(xs)) {
+      for (@NotNull final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         if (az.throwing.int¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.int¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -67,14 +68,14 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
       if (type.of(first(xs)) == Certain.DOUBLE)
         throw new NumberFormatException();
       $ = az.throwing.long¢(first(xs));
-      for (final Expression ¢ : rest(xs)) {
+      for (@NotNull final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
         if (az.throwing.long¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.long¢(¢);
       }
-    } catch (final NumberFormatException ¢) {
+    } catch (@NotNull final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.Nullable;
 
 /** X false ? Y : null
  * @author Ori Marcovitch
@@ -26,6 +27,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
+  @Nullable
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }

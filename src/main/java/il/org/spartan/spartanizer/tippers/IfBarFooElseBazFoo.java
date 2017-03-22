@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert {@code if (X) { bar(); foo(); } else { baz(); foo(); } } into {@code
  * if (X)
@@ -32,8 +34,9 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -3692738201124876878L;
 
-  private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = new ArrayList<>();
+  @NotNull
+  private static List<Statement> commmonSuffix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
+    @NotNull final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = last(ss1);
       if (!wizard.same(s1, last(ss2)))
@@ -48,23 +51,23 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     return "Consolidate commmon suffix of then and else branches to just after if statement";
   }
 
-  @Override public Tip tip(final IfStatement s) {
-    final List<Statement> $ = extract.statements(then(s));
+  @Override public Tip tip(@NotNull final IfStatement s) {
+    @NotNull final List<Statement> $ = extract.statements(then(s));
     if ($.isEmpty())
       return null;
-    final List<Statement> elze = extract.statements(elze(s));
+    @NotNull final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
-    final List<Statement> commmonSuffix = commmonSuffix($, elze);
-    for (final Statement st : commmonSuffix) {
-      final DefinitionsCollector c = new DefinitionsCollector($);
+    @NotNull final List<Statement> commmonSuffix = commmonSuffix($, elze);
+    for (@NotNull final Statement st : commmonSuffix) {
+      @NotNull final DefinitionsCollector c = new DefinitionsCollector($);
       st.accept(c);
       if (c.notAllDefined())
         return null;
     }
     return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final IfStatement newIf = replacement();
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+        @Nullable final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
           final ListRewrite lr = insertAfter(s, commmonSuffix, r, g);
           lr.insertAfter(newIf, s, g);
@@ -76,11 +79,11 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
         }
       }
 
-      IfStatement replacement() {
+      @Nullable IfStatement replacement() {
         return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
 
-      IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
+      @Nullable IfStatement replacement(final Expression condition, @Nullable final Statement trimmedThen, @Nullable final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }
@@ -93,9 +96,10 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
 
   private static class DefinitionsCollector extends ASTVisitor {
     private boolean allDefined = true;
+    @NotNull
     private final Statement[] statements;
 
-    DefinitionsCollector(final List<Statement> statements) {
+    DefinitionsCollector(@NotNull final List<Statement> statements) {
       allDefined = true;
       this.statements = statements.toArray(new Statement[statements.size()]);
     }

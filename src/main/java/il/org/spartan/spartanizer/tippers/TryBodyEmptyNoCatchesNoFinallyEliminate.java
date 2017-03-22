@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert pattern <code>try {s} [ finally { <i>empty</i> }]</code>, {@code s}
  * not empty, to {@code {s}}.
@@ -16,12 +17,13 @@ public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTippe
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -8358212771965020073L;
 
-  @Override public boolean prerequisite(final TryStatement ¢) {
+  @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
     final Block $ = ¢.getFinally();
     return statements(body(¢)).isEmpty() && ¢.catchClauses().isEmpty() && ($ == null || statements($).isEmpty());
   }
 
-  @Override public String description(final TryStatement ¢) {
+  @NotNull
+  @Override public String description(@NotNull final TryStatement ¢) {
     return "Eliminate this no-op try block " + trivia.gist(¢.getBody());
   }
 }

@@ -18,6 +18,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.range.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of type String
  * @author Stav Namir
@@ -31,16 +33,17 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
     return "[\"\"+foo]->foo";
   }
 
+  @NotNull
   @Override public String description(final InfixExpression ¢) {
     return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
-  @Override @SuppressWarnings("boxing") public Expression replacement(final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement(@NotNull final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
-    final List<Expression> es = hop.operands(x);
+    @Nullable final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    final List<Expression> $ = new ArrayList<>();
+    @NotNull final List<Expression> $ = new ArrayList<>();
     boolean isArithmetic = true;
     for (final Integer i : range.from(0).to(es.size())) {
       final Expression e = es.get(i);

@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code switch (x) { case a: } switch(x) { default: (some commands) }
  * } into {@code
@@ -28,10 +29,11 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 2775485343542030030L;
 
-  @Override public Tip tip(final SwitchStatement s) {
+  @NotNull
+  @Override public Tip tip(@NotNull final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final List<Statement> ll = statements(s);
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+        @NotNull final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(copy.of(expression(s)));
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
@@ -47,8 +49,9 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     };
   }
 
-  static String statementsToString(final Iterable<Statement> ¢) {
-    final StringBuilder $ = new StringBuilder();
+  @NotNull
+  static String statementsToString(@NotNull final Iterable<Statement> ¢) {
+    @NotNull final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";
   }

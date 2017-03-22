@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** convert <code>
  * <b>if</b> (a) { f(); g(); }
@@ -28,16 +30,17 @@ public final class IfLastInMethod extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = 7913539614277563670L;
 
+  @NotNull
   @Override public String description(final IfStatement ¢) {
     return "Invert conditional " + expression(¢) + " for early return";
   }
 
-  @Override public Tip tip(final IfStatement s) {
+  @Override public Tip tip(@NotNull final IfStatement s) {
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
-    final Block $ = az.block(parent(s));
+    @Nullable final Block $ = az.block(parent(s));
     return $ == null || !lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), s, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         Tippers.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = copy.of(s);
         newIf.setExpression(copy.of(make.notOf(expression(s))));

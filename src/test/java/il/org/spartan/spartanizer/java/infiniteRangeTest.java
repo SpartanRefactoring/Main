@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.java;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.*;
 
 import il.org.spartan.utils.range.*;
@@ -21,7 +22,7 @@ public class infiniteRangeTest {
 
   @Test public void test2() {
     int x = 12;
-    for (final Integer ¢ : range.infinite().from(12)) {
+    for (@NotNull final Integer ¢ : range.infinite().from(12)) {
       assert ¢.intValue() == x;
       ++x;
       if (x == 200)
@@ -32,7 +33,7 @@ public class infiniteRangeTest {
 
   @Test public void test3() {
     int x = 12;
-    for (final Integer ¢ : range.infinite().from(12).step(3)) {
+    for (@NotNull final Integer ¢ : range.infinite().from(12).step(3)) {
       assert ¢.intValue() == x;
       x += 3;
       if (x > 200)
@@ -43,7 +44,7 @@ public class infiniteRangeTest {
 
   @Test public void test4() {
     int x = 12;
-    for (final Integer ¢ : range.from(12).step(3).infinite()) {
+    for (@NotNull final Integer ¢ : range.from(12).step(3).infinite()) {
       assert ¢.intValue() == x;
       x += 3;
       if (x > 200)
@@ -54,7 +55,7 @@ public class infiniteRangeTest {
 
   @Test public void test5() {
     int x = 12;
-    for (final Integer ¢ : range.from(12).infinite()) {
+    for (@NotNull final Integer ¢ : range.from(12).infinite()) {
       assert ¢.intValue() == x;
       ++x;
       if (x > 200)
@@ -65,7 +66,7 @@ public class infiniteRangeTest {
 
   @Test public void test6() {
     int x = 12;
-    for (final Integer ¢ : range.from(12).infinite().step(4)) {
+    for (@NotNull final Integer ¢ : range.from(12).infinite().step(4)) {
       assert ¢.intValue() == x;
       x += 4;
       if (x == 200)

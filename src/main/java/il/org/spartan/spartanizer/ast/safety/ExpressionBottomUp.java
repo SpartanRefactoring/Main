@@ -8,12 +8,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
-  @Override public T map(final Expression ¢) {
+  @Nullable
+  @Override public T map(@Nullable final Expression ¢) {
     if (¢ == null)
       return reduce();
     switch (¢.getNodeType()) {
@@ -61,6 +64,7 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     }
   }
 
+  @Nullable
   private T map(final ArrayInitializer ¢) {
     return reduceExpressions(expressions(¢));
   }
@@ -73,14 +77,17 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  protected T map(final ArrayAccess ¢) {
+  @Nullable
+  protected T map(@NotNull final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  protected T map(final ArrayCreation ¢) {
+  @Nullable
+  protected T map(@NotNull final ArrayCreation ¢) {
     return reduce(reduceExpressions(dimensions(¢)), map(¢.getInitializer()));
   }
 
+  @Nullable
   protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
@@ -89,18 +96,21 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  protected T map(final ClassInstanceCreation ¢) {
+  @Nullable
+  protected T map(@NotNull final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduceExpressions(arguments(¢)));
   }
 
-  protected T map(final ConditionalExpression ¢) {
+  @Nullable
+  protected T map(@NotNull final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  protected T map(final InstanceofExpression ¢) {
+  protected T map(@NotNull final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 
+  @Nullable
   protected T map(final MethodInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
@@ -109,15 +119,17 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
+  @Nullable
   protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
 
+  @Nullable
   protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
 
-  protected T map(final ThisExpression ¢) {
+  protected T map(@NotNull final ThisExpression ¢) {
     return map(¢.getQualifier());
   }
 
@@ -125,7 +137,8 @@ public abstract class ExpressionBottomUp<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  protected T map(final QualifiedName ¢) {
+  @Nullable
+  protected T map(@NotNull final QualifiedName ¢) {
     return reduce(map(¢.getQualifier()), map(¢.getName()));
   }
 }

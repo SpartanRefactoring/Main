@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.research.classifier.patterns.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** NOT ACTIVE RIGHT NOW. <br>
  * NEED TO ADD CATEGORIES.
@@ -50,7 +51,7 @@ public class Classifier extends ASTVisitor {
     return super.visit(node);
   }
 
-  public void analyze(final ASTNode ¢) {
+  public void analyze(@NotNull final ASTNode ¢) {
     ¢.accept(this);
     forLoopsAmount = forLoopsList.size();
     patterns = filterAllIntrestingPatterns();
@@ -67,7 +68,7 @@ public class Classifier extends ASTVisitor {
   }
 
   private void classifyPatterns() {
-    for (final String k : patterns.keySet()) {
+    for (@NotNull final String k : patterns.keySet()) {
       System.out.println(k);
       System.out.println("[Matched " + patterns.get(k).inner + " times]");
       if (!classify(k))
@@ -81,13 +82,14 @@ public class Classifier extends ASTVisitor {
     System.out.println("Lets classify them together!");
   }
 
+  @NotNull
   private Map<String, Int> filterAllIntrestingPatterns() {
-    final Map<String, Int> $ = new HashMap<>();
+    @NotNull final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       for (final ASTNode ¢ : forLoopsList) {
-        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
+        @NotNull final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
+        @NotNull final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
@@ -111,7 +113,7 @@ public class Classifier extends ASTVisitor {
   }
 
   /** @param ¢ to classify */
-  private boolean classify(final String ¢) {
+  private boolean classify(@NotNull final String ¢) {
     final String code = format.code(generalize.code(¢));
     System.out.println(code);
     final String classification = input.nextLine();
@@ -123,7 +125,8 @@ public class Classifier extends ASTVisitor {
     return true;
   }
 
-  private static String tipperize(final String code, final String classification) {
+  @NotNull
+  private static String tipperize(@NotNull final String code, final String classification) {
     return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
         + "();\", \"" + classification + "\"));";
   }

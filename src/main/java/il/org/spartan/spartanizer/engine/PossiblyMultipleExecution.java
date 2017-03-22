@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Determines whether a node can be executed multiple times within a given
  * context side of assignments
@@ -18,6 +19,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-18 */
 public class PossiblyMultipleExecution {
   /** Instantiates this class */
+  @NotNull
   public static PossiblyMultipleExecution of(final ASTNode what) {
     return new PossiblyMultipleExecution(what);
   }
@@ -32,7 +34,7 @@ public class PossiblyMultipleExecution {
     return inContext(as.list(¢));
   }
 
-  public boolean inContext(final Collection<? extends ASTNode> where) {
+  public boolean inContext(@NotNull final Collection<? extends ASTNode> where) {
     for (ASTNode $ = what.getParent(); $ != null; $ = $.getParent()) {
       if (where.contains($))
         return false;
@@ -68,7 +70,7 @@ public class PossiblyMultipleExecution {
     return touched(expression($)) || updaters($).stream().anyMatch(λ -> touched(λ));
   }
 
-  private boolean touched(final ASTNode n) {
+  private boolean touched(@NotNull final ASTNode n) {
     return descendants.streamOf(n).anyMatch(λ -> λ == what);
   }
 }

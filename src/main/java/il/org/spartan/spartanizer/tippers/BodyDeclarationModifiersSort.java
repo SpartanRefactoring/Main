@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Sort the {@link Modifier}s of an entity by the order specified in
  * Modifier.class binary.
@@ -27,7 +28,7 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   private static final long serialVersionUID = 2174891198673495792L;
   private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
 
-  private static boolean isSortedAndDistinct(final Iterable<? extends IExtendedModifier> ms) {
+  private static boolean isSortedAndDistinct(@NotNull final Iterable<? extends IExtendedModifier> ms) {
     int previousRank = -1;
     for (final IExtendedModifier current : ms) {
       final int currentRank = rank(current);
@@ -38,18 +39,21 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return true;
   }
 
-  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
+  @NotNull
+  private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
     return pruneDuplicates(¢.stream().sorted(comp).collect(toList()));
   }
 
-  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> $) {
+  @NotNull
+  private static List<? extends IExtendedModifier> pruneDuplicates(@NotNull final List<? extends IExtendedModifier> $) {
     for (int ¢ = 0; ¢ < $.size(); ++¢)
       while (¢ < $.size() - 1 && comp.compare($.get(¢), $.get(¢ + 1)) == 0)
         $.remove(¢ + 1);
     return $;
   }
 
-  @Override public String description(final N ¢) {
+  @NotNull
+  @Override public String description(@NotNull final N ¢) {
     return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
   }
 
@@ -62,13 +66,14 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private N go(final N $) {
-    final Collection<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
+    @NotNull final Collection<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
     return $;
   }
 
+  @NotNull
   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(extract.modifiers($));
   }

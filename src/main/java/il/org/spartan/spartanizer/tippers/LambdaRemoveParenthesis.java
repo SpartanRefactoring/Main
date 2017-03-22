@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** convert {@code (x)->x} to {@code x->x}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -17,10 +18,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.Inlining {
   private static final long serialVersionUID = 4825405081215291398L;
 
-  @Override protected boolean prerequisite(final LambdaExpression ¢) {
+  @Override protected boolean prerequisite(@NotNull final LambdaExpression ¢) {
     return ¢.hasParentheses() && az.variableDeclrationFragment(onlyOne(parameters(¢))) != null;
   }
 
+  @NotNull
   @Override public String description(final LambdaExpression ¢) {
     return "Remove parenthesis around " + onlyOne(parameters(¢)) + " paramter";
   }

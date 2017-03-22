@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** Convert {@code T extends Object} to {@code T}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -21,16 +22,17 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -8887752937006192444L;
 
+  @NotNull
   @Override public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 
   @Override public TypeParameter replacement(final TypeParameter p) {
     final TypeParameter $ = copy.of(p);
-    final List<Type> ts = typeBounds($);
+    @NotNull final List<Type> ts = typeBounds($);
     if (!haz.hasObject(ts))
       return null;
-    for (final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
+    for (@NotNull final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
       if (isObject(¢.next()))
         ¢.remove();
     return $;

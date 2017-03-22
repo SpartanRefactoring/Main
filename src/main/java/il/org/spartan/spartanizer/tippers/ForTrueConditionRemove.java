@@ -7,6 +7,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** converts 'for(?;true;?)' to 'for(?;;?)'";
  * @author Alex Kopzon
@@ -16,15 +17,18 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
   private static final long serialVersionUID = 7460439456362668944L;
   public static final String DESCRIPTION = "Simplify 'for(?;true;?)' to 'for(?;;?)'";
 
-  private static ForStatement buildForWithoutCondition(final ForStatement $) {
+  @NotNull
+  private static ForStatement buildForWithoutCondition(@NotNull final ForStatement $) {
     $.setExpression(null);
     return $;
   }
 
+  @NotNull
   @Override public String description() {
     return DESCRIPTION;
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return DESCRIPTION;
   }
@@ -33,6 +37,7 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     return iz.literal.true¢(step.expression(¢));
   }
 
+  @NotNull
   @Override public ASTNode replacement(final ForStatement ¢) {
     return buildForWithoutCondition(copy.of(¢));
   }

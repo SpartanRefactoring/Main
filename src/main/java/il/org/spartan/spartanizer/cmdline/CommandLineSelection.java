@@ -12,6 +12,8 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Selection useful to deal with projects using the command line
  * @author Matteo Orru'
@@ -19,7 +21,7 @@ import il.org.spartan.utils.*;
 public final class CommandLineSelection extends AbstractSelection<CommandLineSelection> {
   private List<WrappedCompilationUnit> compilationUnits;
 
-  private CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
+  private CommandLineSelection(@Nullable final List<WrappedCompilationUnit> compilationUnits, final String name) {
     inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
@@ -28,12 +30,14 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     return inner.stream().map(λ -> λ.compilationUnit).collect(toList());
   }
 
+  @Nullable
   public List<WrappedCompilationUnit> get() {
     return inner;
   }
 
   /** Factory method for empty selection
    * @return empty selection */
+  @Nullable
   public static CommandLineSelection empty() {
     return new CommandLineSelection(null, null);
   }
@@ -51,6 +55,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     }
 
     /** @return CommandLineSelection */
+    @Nullable
     public static CommandLineSelection getAllCompilationUnits() {
       return getSelection();
     }
@@ -60,10 +65,12 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       return null;
     }
 
+    @NotNull
     public static AbstractSelection<CommandLineSelection> get() {
       return getFromPath(presentSourcePath);
     }
 
+    @NotNull
     public static AbstractSelection<CommandLineSelection> get(final String from) {
       return getFromPath(from);
     }
@@ -71,6 +78,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     /** @param path
      * @author Matteo Orru'
      * @return */
+    @NotNull
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
       // final List<WrappedCompilationUnit> cuList = new ArrayList<>();
       // for (final File ¢ : new FilesGenerator(".java").from(path))
@@ -83,6 +91,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     /** @param path
      * @author Matteo Orru'
      * @return */
+    @NotNull
     @SuppressWarnings("synthetic-access") public static AbstractSelection<CommandLineSelection> getWrappedCompilationUnitsSelection(
         final String path) {
       return new CommandLineSelection(az.stream(new FilesGenerator(".java").from(path)).filter(λ -> !Utils.isTestFile(λ))
@@ -90,9 +99,10 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
           .collect(toList()), "selection");
     }
 
+    @NotNull
     public static Collection<CompilationUnit> getAllCompilationUnits(final String path) {
-      final Collection<CompilationUnit> $ = new ArrayList<>();
-      for (final File ¢ : new FilesGenerator(".java").from(path)) {
+      @NotNull final Collection<CompilationUnit> $ = new ArrayList<>();
+      for (@NotNull final File ¢ : new FilesGenerator(".java").from(path)) {
         System.out.println(¢.getName());
         // System.out.println("Free memory (bytes): " +
         // Unit.BYTES.format(Runtime.getRuntime().freeMemory()));
@@ -102,10 +112,10 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       return $;
     }
 
-    public static void getCompilationUnit(final File f, final Collection<CompilationUnit> $) {
+    public static void getCompilationUnit(@NotNull final File f, @NotNull final Collection<CompilationUnit> $) {
       try {
         $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢);
       }
     }
@@ -119,12 +129,14 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     System.err.println("Loading selection: done!");
   }
 
+  @NotNull
   public CommandLineSelection buildAll() {
     compilationUnits.forEach(WrappedCompilationUnit::build);
     return this;
   }
 
-  public static AbstractSelection<?> of(final Collection<CompilationUnit> ¢) {
+  @NotNull
+  public static AbstractSelection<?> of(@NotNull final Collection<CompilationUnit> ¢) {
     return new CommandLineSelection(WrappedCompilationUnit.ov(¢), "cuList");
   }
 }

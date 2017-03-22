@@ -11,6 +11,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** converts {@code (a?b:c;)} to {@code (if(a) b; else c;)} relevant for
  * assignment <em>ternary</em> also relevant for assignment (<em>ternary</em>)
@@ -22,7 +24,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
   private static final long serialVersionUID = -9043350929840336722L;
 
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
-    final ConditionalExpression $ = az.conditionalExpression(core(x));
+    @Nullable final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null
         : subject.pair(az.expressionStatement($.getAST().newExpressionStatement(subject.pair(left, then($)).to(o))),
             az.expressionStatement($.getAST().newExpressionStatement(subject.pair(left, elze($)).to(o)))).toIf($.getExpression());
@@ -32,14 +34,16 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);
     if (expressionStatement == null)
       return null;
-    final Assignment $ = az.assignment(expressionStatement.getExpression());
+    @Nullable final Assignment $ = az.assignment(expressionStatement.getExpression());
     return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
   }
 
+  @Nullable
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replaceAssignment(¢);
   }
 
+  @NotNull
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Expanding a ternary operator to a full if-else statement";
   }

@@ -15,6 +15,8 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Assignment then returnStatement or ExpressionsStatement using it, where the
  * assignment could not be inlined
@@ -25,7 +27,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   private static final LetInliner letInliner = new LetInliner();
   private static final FragmentInitializerInlineIntoNext fragmentInliner = new FragmentInitializerInlineIntoNext();
 
-  @Override public boolean canTip(final VariableDeclarationFragment ¢) {
+  @Override public boolean canTip(@NotNull final VariableDeclarationFragment ¢) {
     return letInliner.canTip(¢)//
         && fragmentInliner.cantTip(¢);
   }
@@ -34,16 +36,17 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     private static final long serialVersionUID = 2390117956692878327L;
 
     @Override public boolean prerequisite(final VariableDeclarationFragment f) {
-      final Statement nextStatement = extract.nextStatement(f);
-      final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
+      @Nullable final Statement nextStatement = extract.nextStatement(f);
+      @Nullable final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
       return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && noFurtherUsage(name(f), nextStatement)
           && initializer(f) != null;
     }
 
-    @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
-      final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
-      final Expression initializer = initializer(f);
-      final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    @NotNull
+    @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+      @Nullable final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
+      @NotNull final Expression initializer = initializer(f);
+      @Nullable final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
@@ -54,7 +57,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     }
 
     private static boolean noFurtherUsage(final SimpleName n, final Statement nextStatement) {
-      final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
+      @Nullable final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
       $.remove(n);
       $.removeAll(collect.forAllOccurencesExcludingDefinitions(n).in(nextStatement));
       return $.isEmpty();
@@ -69,11 +72,13 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
+    @NotNull
     @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
   }
 
+  @Nullable
   @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }

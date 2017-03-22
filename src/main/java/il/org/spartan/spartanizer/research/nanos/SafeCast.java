@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A cast which is inside an IfStatement body which checks the casted
  * expression is actually of the casted to type
@@ -21,9 +22,10 @@ public class SafeCast extends NanoPatternTipper<CastExpression> {
     return (expression(yieldAncestors.untilClass(IfStatement.class).from(¢)) + "").contains(expression(¢) + " instanceof " + type(¢));
   }
 
-  @Override public Tip pattern(final CastExpression ¢) {
+  @NotNull
+  @Override public Tip pattern(@NotNull final CastExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, wizard.ast("safeCast(" + expression(¢) + ")"), g);
       }
     };

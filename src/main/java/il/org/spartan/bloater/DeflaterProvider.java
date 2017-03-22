@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import org.jetbrains.annotations.NotNull;
 
 /** a wrapper for the original tippers toolbox
  * @author Raviv Rachmiel
@@ -27,10 +28,11 @@ public class DeflaterProvider extends OperationsProvider {
     toolbox = tb;
   }
 
-  @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+  @Override public <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
     return toolbox.firstTipper(¢);
   }
 
+  @NotNull
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(last(λ));
   }
