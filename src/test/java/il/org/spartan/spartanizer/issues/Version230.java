@@ -1769,12 +1769,13 @@ public final class Version230 {
   @Test public void issue62a() {
     trimmingOf("int f(int ixx){ for(;;++ixx)if(false)break;return ixx;}")//
         .gives("int f(int ixx){ for(;;++ixx){} return ixx;}")//
+        .gives("int f(int ixx){ for(;;++ixx); return ixx;}")//
         .stays();
   }
 
   @Test public void issue62b_1() {
-    trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)break;return ixx;}").gives("int f(int ixx){ for(;ixx<100;ixx+=1){} return ixx;}")//
-        .stays();
+    trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)break;return ixx;}")//
+        .gives("int f(int ixx){ for(;ixx<100;ixx+=1){} return ixx;}");
   }
 
   @Test public void issue62c() {
