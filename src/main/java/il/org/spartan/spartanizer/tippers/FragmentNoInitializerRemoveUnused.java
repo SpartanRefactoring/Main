@@ -1,25 +1,18 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** Remove unused variable
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-23 */
-public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<VariableDeclarationFragment>//
-    implements TipperCategory.Deadcode {
+public final class FragmentNoInitializerRemoveUnused extends $Fragment implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -855471283048149285L;
 
   @Override public String description() {
@@ -27,20 +20,23 @@ public final class FragmentNoInitializerRemoveUnused extends CarefulTipper<Varia
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Remove unused variable: " + trivia.gist(¢);
+    return "Remove unused and unitialized variable: " + trivia.gist(¢);
   }
 
   @Override public Tip tip(final VariableDeclarationFragment f) {
-    return !iz.variableDeclarationStatement(parent(f)) || f.getInitializer() != null || haz.annotation(f)
-        || !collect.usesOf(f.getName()).in(scope.of(f)).isEmpty() ? null : new Tip(description(f), f.getName(), getClass()) {
+    return !collect.usesOf(name()).in(scope.of(f)).isEmpty() ? null : new Tip(description(f), name(), getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            wizard.eliminate(f, r, g);
+            eliminateFragment(r, g);
           }
         };
   }
 
-  @Override protected boolean prerequisite(final VariableDeclarationFragment ¢) {
-    return iz.variableDeclarationStatement(parent(¢)) && ¢.getInitializer() == null && !haz.annotation(¢)
-        && collect.usesOf(¢.getName()).in(scope.of(¢)).isEmpty();
+  @Override
+  public boolean prerequisite(final VariableDeclarationFragment ¢) {
+    return super.prerequisite(¢) && initializer() == null && collect.usesOf(¢.getName()).in(scope.of(¢)).isEmpty();
+  }
+
+  protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+    return null;
   }
 }

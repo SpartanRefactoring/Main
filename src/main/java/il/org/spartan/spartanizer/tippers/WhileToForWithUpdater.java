@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
-public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
+public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -382828224028857273L;
 
   private static ForStatement buildForWhithoutLastStatement(final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(copy.of(¢.getExpression()));
-    updaters($).add(copy.of(az.expressionStatement(lastStatement(¢)).getExpression()));
+    updaters($).add(copy.of(az.expressionStatement(hop.lastStatement(body(¢))).getExpression()));
     $.setBody(minus.lastStatement(copy.of(body(¢))));
     return $;
   }
@@ -31,12 +31,8 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    return az.block(body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && statements(az.block(body(¢))).size() >= 2
-        && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
-  }
-
-  private static ASTNode lastStatement(final WhileStatement ¢) {
-    return hop.lastStatement(body(¢));
+    return az.block(body(¢)) != null && iz.incrementOrDecrement(hop.lastStatement(body(¢))) && statements(az.block(body(¢))).size() >= 2
+        && !ForToForUpdaters.bodyDeclaresElementsOf(hop.lastStatement(body(¢)));
   }
 
   @Override public String description(final WhileStatement ¢) {

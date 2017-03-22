@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.java.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturn extends $FragementAndStatement//
+public final class FragmentInitializerReturn extends $FragementInitializerStatement//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 6714687738774731933L;
 
@@ -32,23 +32,22 @@ public final class FragmentInitializerReturn extends $FragementAndStatement//
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || haz.annotation(f))
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    if (initializer() == null || haz.annotation(fragment()))
       return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement());
     if (s == null)
       return null;
     final Assignment a = az.assignment(expression(s));
-    if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
+    if (a == null || !wizard.same(name(), to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving() - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);
-    wizard.eliminate(f, $, g);
+    eliminateFragment($, g);
     return $;
   }
 }
