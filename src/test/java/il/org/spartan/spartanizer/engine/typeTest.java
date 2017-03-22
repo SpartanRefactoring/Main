@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.engine.type.*;
  * @author Niv Shalmon
  * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc", "static-method", "unused" })
+@SuppressWarnings("ALL")
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
    * @author Yossi Gil */

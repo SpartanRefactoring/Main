@@ -48,6 +48,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public final boolean ok(@NotNull final N ¢) {
+    assert ¢ != null;
     return canTip(¢);
   }
 
@@ -82,6 +83,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
   @Nullable public Tip tip(final N ¢) {
+    assert ¢ != null;
     return tip(¢, null);
   }
 
@@ -93,6 +95,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
   @Nullable public Tip tip(final N n, @Nullable final ExclusionManager m) {
+    assert n != null;
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
