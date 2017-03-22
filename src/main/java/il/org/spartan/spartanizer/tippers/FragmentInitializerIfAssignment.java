@@ -22,8 +22,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerIfAssignment extends $FragementInitializerStatement//
-    implements TipperCategory.Inlining {
+public final class FragmentInitializerIfAssignment extends $FragementInitializerStatement implements TipperCategory.Inlining {
   private static final long serialVersionUID = 748535255358071695L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -41,7 +40,8 @@ public final class FragmentInitializerIfAssignment extends $FragementInitializer
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), name()) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(fragment(), condition, from(a)))
+    if (a == null || !wizard.same(to(a), name()) || a.getOperator() != Assignment.Operator.ASSIGN
+        || doesUseForbiddenSiblings(fragment(), condition, from(a)))
       return null;
     final InlinerWithValue i = new Inliner(name(), $, g).byValue(initializer());
     if (!i.canInlineinto(condition, from(a)))

@@ -27,7 +27,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
       return null;
     if (exclude != null)
       exclude.exclude($);
-    return new Tip(description(n), n, getClass(), $) {
+    return new Tip(description(n), n, myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         ReplaceToNextStatement.this.go(r, n, $, g);
       }
