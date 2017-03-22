@@ -28,17 +28,17 @@ public interface NanoPatternUtil {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
 
-  static boolean nullCheck(final Expression ¢) {
+  static boolean nullCheck(@NotNull final Expression ¢) {
     return nullComparison(¢)//
         || nullComparisonOr.check(¢)//
             && nullCheck(right(az.infixExpression(¢)));
   }
 
-  static boolean nullComparison(final Expression ¢) {
+  static boolean nullComparison(@NotNull final Expression ¢) {
     return nullComparison.check(¢);
   }
 
-  static boolean nullComparisonIncremental(final Expression ¢) {
+  static boolean nullComparisonIncremental(@NotNull final Expression ¢) {
     return nullComparisonOr.check(¢);
   }
 

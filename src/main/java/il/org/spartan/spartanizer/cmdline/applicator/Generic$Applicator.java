@@ -104,7 +104,7 @@ public class Generic$Applicator {
   }
 
   @Nullable <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
-    final Tipper<N> $ = toolbox.firstTipper(¢);
+    @NotNull final Tipper<N> $ = toolbox.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();
     if (!selectedTipperGroups.contains(g.name()))
       return null;

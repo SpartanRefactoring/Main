@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -31,17 +32,17 @@ public final class InfixIndexOfToStringContains extends Tipper<InfixExpression>/
 
   /** Indicates if the infix expression contains two strings with string
    * operation between them */
-  @Override public boolean canTip(final InfixExpression x) {
+  @Override public boolean canTip(@NotNull final InfixExpression x) {
     return tippers.stream().anyMatch(λ -> λ.check(x) && certain.string(λ.getMatching(x, "$X1"), λ.getMatching(x, "$X2")));
   }
 
   /** Operates the first tip that can be implemented. */
-  @Override public Fragment tip(final InfixExpression ¢) {
+  @Override public Fragment tip(@NotNull final InfixExpression ¢) {
     return tippers.stream().filter(λ -> λ.check(¢)).map(λ -> λ.tip(¢)).findFirst().orElse(null);
   }
 
   /** @return the first description of tip that can be implemented. */
-  @Override public String description(final InfixExpression ¢) {
+  @Override public String description(@NotNull final InfixExpression ¢) {
     return tippers.stream().filter(λ -> λ.check(¢)).map(λ -> λ.description(¢)).findFirst().orElse(null);
   }
 }

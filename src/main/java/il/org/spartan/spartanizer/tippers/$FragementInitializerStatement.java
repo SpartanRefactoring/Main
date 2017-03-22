@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
-public abstract class $FragementInitializerStatement extends $Fragment {
+public abstract class $FragementInitializerStatement extends FragmentTipper {
   private static final long serialVersionUID = 7723281513517888L;
 
   @Override public abstract String description(VariableDeclarationFragment f);

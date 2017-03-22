@@ -29,7 +29,7 @@ public final class StatementsThroughStep extends NanoPatternTipper<MethodInvocat
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(final MethodInvocation ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 }

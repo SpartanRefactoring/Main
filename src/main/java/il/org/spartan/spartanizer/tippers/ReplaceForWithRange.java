@@ -53,7 +53,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
         "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
   }
 
-  @Override public boolean canTip(final ForStatement s) {
+  @Override public boolean canTip(@NotNull final ForStatement s) {
     for (@NotNull final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.check(s)) {
         final SimpleName n = az.simpleName(¢.getMatching(s, "$N"));
@@ -94,11 +94,11 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
     return $.inner;
   }
 
-  @Override public Fragment tip(final ForStatement x) {
+  @Override public Fragment tip(@NotNull final ForStatement x) {
     return tippers.stream().filter(λ -> λ.check(x)).map(λ -> λ.tip(x)).findFirst().orElse(null);
   }
 
-  @Override public String description(final ForStatement x) {
+  @Override public String description(@NotNull final ForStatement x) {
     return tippers.stream().filter(λ -> λ.check(x)).map(λ -> λ.description(x)).findFirst().orElse(null);
   }
 }

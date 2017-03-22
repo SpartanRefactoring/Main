@@ -27,7 +27,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(final ConditionalExpression ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 

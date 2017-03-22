@@ -31,11 +31,11 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return n == null || ts.stream().allMatch(λ -> λ.cantTip(n));
   }
 
-  protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+  protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(@NotNull final Collection<UserDefinedTipper<N>> ts, @NotNull final N n) {
     return ts.stream().filter(λ -> λ.check(n)).findFirst().get();
   }
 
-  @Nullable public static <N extends ASTNode> Fragment firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+  @Nullable public static <N extends ASTNode> Fragment firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, @NotNull final N n) {
     return firstTipper(ts, n).tip(n);
   }
 

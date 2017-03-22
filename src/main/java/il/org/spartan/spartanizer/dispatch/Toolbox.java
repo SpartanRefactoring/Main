@@ -72,7 +72,7 @@ public class Toolbox {
           return false;
         if (disabling.on(n))
           return true;
-        final Tipper<?> t = firstTipper(n);
+        @NotNull final Tipper<?> t = firstTipper(n);
         if (t == null)
           return true;
         done.set();
@@ -83,12 +83,12 @@ public class Toolbox {
     return $;
   }
 
-  @Nullable public static Fragment extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+  @Nullable public static Fragment extractTip(final Tipper<? extends ASTNode> t, @NotNull final ASTNode n) {
     @NotNull @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
-  @Nullable public static Fragment extractTip(final ASTNode n, @NotNull final Tipper<ASTNode> t) {
+  @Nullable public static Fragment extractTip(@NotNull final ASTNode n, @NotNull final Tipper<ASTNode> t) {
     return t.tip(n);
   }
 
@@ -104,7 +104,7 @@ public class Toolbox {
     return new Toolbox();
   }
 
-  @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
+  @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(@NotNull final N n, final Tipper<N>... ts) {
     return Stream.of(ts).filter(λ -> λ.check(n)).findFirst().orElse(null);
   }
 
@@ -371,10 +371,9 @@ public class Toolbox {
     }
   }
 
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N n,
-      @NotNull final Collection<Tipper<?>> ts) {
+  private static <N extends ASTNode> Tipper<N> firstTipper(@NotNull final N n, @NotNull final Collection<Tipper<N>> ts) {
     assert n != null;
-    return ts.stream().filter(x -> x != null).filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
+    return ts.stream().filter(x -> x != null).filter(λ -> λ.check(n)).map(λ -> λ).findFirst().orElse(null);
   }
 
   /** Implementation */
@@ -459,8 +458,9 @@ public class Toolbox {
     return (int) Stream.of(implementation).filter(Objects::nonNull).count();
   }
 
-  @NotNull <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(@NotNull final N ¢) {
-    return get(¢.getNodeType());
+  @SuppressWarnings("unchecked") @NotNull <N extends ASTNode> Collection<Tipper<N>> get(@NotNull final N ¢) {
+    final Collection<?> $ = get(¢.getNodeType());
+    return (Collection<Tipper<N>>) $;
   }
 
   public static String intToClassName(final int $) {

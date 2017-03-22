@@ -31,7 +31,7 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(final EnhancedForStatement ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

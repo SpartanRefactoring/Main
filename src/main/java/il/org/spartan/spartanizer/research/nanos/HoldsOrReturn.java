@@ -23,11 +23,11 @@ public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
       patternTipper("if($X1) return;", "holds(!($X1)).orReturn();", "") //
   );
 
-  @Override public boolean canTip(final IfStatement ¢) {
+  @Override public boolean canTip(@NotNull final IfStatement ¢) {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
-  @Nullable @Override public Fragment pattern(final IfStatement ¢) {
+  @Nullable @Override public Fragment pattern(@NotNull final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }
