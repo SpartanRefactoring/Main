@@ -170,8 +170,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return a quick fix for this instance */
   @Nullable public IMarkerResolution getFix() {
     return new IMarkerResolution() {
-      @Nullable
-      @Override public String getLabel() {
+      @Override
+      @Nullable public String getLabel() {
         return getName();
       }
 
@@ -218,8 +218,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return iCompilationUnit;
   }
 
-  @Nullable
-  @Override public final String getName() {
+  @Override
+  @Nullable public final String getName() {
     return name;
   }
 
@@ -317,8 +317,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return tips.size();
   }
 
-  @Nullable
-  @Override public String toString() {
+  @Override
+  @Nullable public String toString() {
     return name;
   }
 

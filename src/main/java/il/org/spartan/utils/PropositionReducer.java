@@ -99,8 +99,8 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
-  @Nullable
-  @Override public R reduce(final R r1, final R r2) {
+  @Override
+  @Nullable public R reduce(final R r1, final R r2) {
     return inner.reduce(r1, r2);
   }
 }
