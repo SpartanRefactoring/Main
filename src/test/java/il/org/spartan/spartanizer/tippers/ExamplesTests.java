@@ -61,11 +61,16 @@ public class ExamplesTests {
     return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
   }
 
-  /** Get all tippers from {@link Toolbox}. Removes duplicated tippers (same
+  /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same
    * class, different templates).
+   * @return 
    * @return all tippers to be tested */
+  @SuppressWarnings("rawtypes")
   private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
-        .stream().collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
+        .stream()
+        .collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass,
+            λ -> λ, (t1, t2) -> t1))
+        .values();
   }
 }
