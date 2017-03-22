@@ -20,7 +20,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
       patternTipper("$X1 ? $D : $X2", "unless($X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"),
       patternTipper("$X1  ? $X2 : $D", "unless(!$X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern")//
   );
-  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = as.list(new DefaultsTo(), new SafeReference());
+  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = as.list(new DefaultsTo(), new SafeNavigation());
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
@@ -34,15 +34,7 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return "Evaluate an expression unless some condition is satisfied";
   }
 
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
-  }
-
-  @Override public Category category() {
-    return Category.Safety;
+  @Override public String nanoName() {
+    return "EvaluateUnlessDefaultsTo";
   }
 }

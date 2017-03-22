@@ -1,4 +1,4 @@
-/* TODO: Ori Roth <ori.rothh@gmail.com> please add a description
+/* TODO Ori Roth <ori.rothh@gmail.com> please add a description
  *
  * @author Ori Roth <ori.rothh@gmail.com>
  *

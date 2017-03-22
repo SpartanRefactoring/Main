@@ -20,4 +20,8 @@ public final class PreconditionNotNull extends NotNullOrReturn {
     return nullCheck(expression(¢))//
         && first(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
   }
+
+  @Override public String nanoName() {
+    return "NotNullRequired";
+  }
 }

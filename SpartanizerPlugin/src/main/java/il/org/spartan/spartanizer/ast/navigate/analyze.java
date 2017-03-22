@@ -60,7 +60,7 @@ public enum analyze {
   }
 
   private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {
-    if (!iz.typeDeclaration(d)) // TODO: Marco support all types of types
+    if (!iz.typeDeclaration(d)) // TODO Marco support all types of types
       return null;
     for (final FieldDeclaration $ : fieldDeclarations(az.typeDeclaration(d)))
       for (final VariableDeclarationFragment ¢ : fragments($))

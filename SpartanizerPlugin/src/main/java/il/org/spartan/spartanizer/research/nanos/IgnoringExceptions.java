@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Catch without body
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-05 */
-public final class SuppressException extends NanoPatternTipper<CatchClause> {
+public final class IgnoringExceptions extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = -8859938289108985941L;
   private static final List<UserDefinedTipper<TryStatement>> tippers = as
       .list(patternTipper("try $B1 catch($T $N){}", "try $B1 catch($T $N){ignore();};", ""));

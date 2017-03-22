@@ -27,7 +27,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
     return super.visit(¢);
   }
 
-  /** TODO: Matteo: Please add here more boolean metrics such as
+  /** TODO Matteo: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */

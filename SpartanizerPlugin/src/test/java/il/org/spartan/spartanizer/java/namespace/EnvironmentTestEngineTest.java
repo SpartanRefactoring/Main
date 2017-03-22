@@ -13,11 +13,12 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO: Dan Greenstein please add a description
+/** TODO Dan Greenstein please add a description
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore("This class should be deprecated")
 @SuppressWarnings({ "unused", "javadoc" })
 public class EnvironmentTestEngineTest {
   private LinkedHashSet<Entry<String, Binding>> s;

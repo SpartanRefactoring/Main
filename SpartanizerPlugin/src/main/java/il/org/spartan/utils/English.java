@@ -7,7 +7,7 @@ import static il.org.spartan.lisp.*;
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.IntStream;
+import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;

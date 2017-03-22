@@ -1,4 +1,4 @@
-/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -343,6 +343,7 @@ public final class EnvironmentTests {
       class Inner {
         final Outer outer = Outer.this;
 
+        /** [[SuppressWarningsSpartan]] */
         @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(final Inner p) {
           @Begin
           class m {}
