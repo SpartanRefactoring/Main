@@ -443,10 +443,10 @@ class ZZZ___Fixture_ModelClass {
     if (new Object().hashCode() == new Object().hashCode() && hashCode() != hashCode()) {
       final int lemon = hashCode();
       try (
-              /** First resource */
-              @NotNull @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
-              /** Second resource */
-              @NotNull @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
+          /** First resource */
+          @NotNull @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
+          /** Second resource */
+          @NotNull @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
       /* Try body */
       {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();

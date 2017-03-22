@@ -2,7 +2,7 @@ package il.org.spartan.tables;
 
 import static il.org.spartan.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;

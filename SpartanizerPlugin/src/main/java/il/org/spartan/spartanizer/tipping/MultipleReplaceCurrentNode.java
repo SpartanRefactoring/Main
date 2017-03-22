@@ -19,8 +19,7 @@ import il.org.spartan.utils.range.*;
 public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1907893259144026175L;
 
-  @Nullable
-  public abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
+  @Nullable public abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
 
   @Override public boolean prerequisite(@NotNull final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, new ArrayList<>(), new ArrayList<>()) != null;
