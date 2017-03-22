@@ -13,6 +13,7 @@ public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
 
   @Override public final boolean canTip(@NotNull final N ¢) {
     assert ¢ != null;
+    System.err.println("Can tip " + myClass());
     return prerequisite(¢) && tip(¢) != null;
   }
 
