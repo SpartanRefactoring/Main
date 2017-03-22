@@ -74,6 +74,7 @@ public interface Proposition extends BooleanSupplier {
 
   @NotNull Proposition or(BooleanSupplier s, BooleanSupplier... ss);
 
+  @NotNull
   default <R> R reduce(@NotNull final PropositionReducer<R> ¢) {
     return ¢.reduce(this);
   }
