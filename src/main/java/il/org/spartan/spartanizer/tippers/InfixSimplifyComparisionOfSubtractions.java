@@ -25,8 +25,7 @@ public class InfixSimplifyComparisionOfSubtractions extends ReplaceCurrentNode<I
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 1584961763997960580L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
+  @Nullable @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     if (!isLiegal(x) || !az.infixExpression(x.getLeftOperand()).extendedOperands().isEmpty()
         || !az.infixExpression(x.getRightOperand()).extendedOperands().isEmpty())
       return null;
@@ -51,8 +50,7 @@ public class InfixSimplifyComparisionOfSubtractions extends ReplaceCurrentNode<I
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
-  @NotNull
-  @Override public String description(final InfixExpression ¢) {
+  @NotNull @Override public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }
 }

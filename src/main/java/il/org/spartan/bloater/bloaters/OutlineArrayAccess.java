@@ -32,13 +32,11 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 3783281424560338347L;
 
-  @Nullable
-  @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
+  @Nullable @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final ArrayAccess a) {
+  @NotNull @Override public Tip tip(@NotNull final ArrayAccess a) {
     final Expression $ = copy.of(a.getIndex());
     @Nullable final ASTNode b = extract.containingStatement(a);
     final AST t = b.getAST();

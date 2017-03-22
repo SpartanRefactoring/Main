@@ -80,8 +80,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @Nullable
-  public static Block body(@Nullable final LambdaExpression ¢) {
+  @Nullable public static Block body(@Nullable final LambdaExpression ¢) {
     return ¢ == null ? null : az.block(¢.getBody());
   }
 
@@ -192,8 +191,7 @@ public enum step {
   /** @param n a node to extract an expression from
    * @return null if the statement is not an expression, nor a return statement,
    *         nor a throw statement. Otherwise, the expression in these. */
-  @Nullable
-  public static Expression expression(@Nullable final ASTNode ¢) {
+  @Nullable public static Expression expression(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return null;
     switch (¢.getNodeType()) {
@@ -331,8 +329,7 @@ public enum step {
   /** FieldDeclarations names of type
    * @param ¢ JD
    * @return */
-  @Nullable
-  public static Collection<String> fieldDeclarationsNames(@Nullable final TypeDeclaration ¢) {
+  @Nullable public static Collection<String> fieldDeclarationsNames(@Nullable final TypeDeclaration ¢) {
     return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(new ArrayList<>(), (x, y) -> {
       x.addAll(y);
       return x;
@@ -357,8 +354,7 @@ public enum step {
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @NotNull
-  @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final VariableDeclarationExpression ¢) {
+  @NotNull @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final VariableDeclarationExpression ¢) {
     return ¢ != null ? ¢.fragments() : new ArrayList<>();
   }
 
@@ -372,13 +368,11 @@ public enum step {
   /** Shorthand for {@link Assignment#getRightHandSide()}
    * @param ¢ JD
    * @return right operand of the parameter */
-  @Nullable
-  public static Expression from(@Nullable final Assignment ¢) {
+  @Nullable public static Expression from(@Nullable final Assignment ¢) {
     return ¢ == null ? null : right(¢);
   }
 
-  @NotNull
-  public static String identifier(@NotNull final AnnotationTypeDeclaration ¢) {
+  @NotNull public static String identifier(@NotNull final AnnotationTypeDeclaration ¢) {
     return ¢.getName() + "";
   }
 
@@ -410,8 +404,7 @@ public enum step {
     return identifier(name(¢));
   }
 
-  @Nullable
-  public static String identifier(@Nullable final VariableDeclarationFragment ¢) {
+  @Nullable public static String identifier(@Nullable final VariableDeclarationFragment ¢) {
     return ¢ == null ? null : identifier(¢.getName());
   }
 
@@ -419,8 +412,7 @@ public enum step {
     return ¢ == null ? null : ¢.imports();
   }
 
-  @Nullable
-  @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(@Nullable final CompilationUnit ¢) {
+  @Nullable @SuppressWarnings("unchecked") public static List<String> importDeclarationsNames(@Nullable final CompilationUnit ¢) {
     return ¢ == null ? null
         : ((List<ImportDeclaration>) ¢.imports()).stream().map(λ -> (!λ.isStatic() ? "" : "static ") + λ.getName() + (!λ.isOnDemand() ? "" : ".*"))
             .collect(toList());
@@ -489,8 +481,7 @@ public enum step {
     return ¢ == null ? null : ¢.getLeftOperand();
   }
 
-  @NotNull
-  public static List<ASTNode> marchingList(@NotNull final ASTNode ¢) {
+  @NotNull public static List<ASTNode> marchingList(@NotNull final ASTNode ¢) {
     @NotNull final List<ASTNode> $ = new ArrayList<>();
     for (final Object s : ¢.structuralPropertiesForType()) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
@@ -502,13 +493,11 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @Nullable
-  private static Collection<String> methodNames(@Nullable final AbstractTypeDeclaration ¢) {
+  @Nullable private static Collection<String> methodNames(@Nullable final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null : methods(¢).stream().map(step::name).map(step::identifier).collect(toList());
   }
 
-  @Nullable
-  public static Collection<String> methodNames(@Nullable final CompilationUnit u) {
+  @Nullable public static Collection<String> methodNames(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     @NotNull final List<String> $ = new ArrayList<>();
@@ -518,8 +507,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @Nullable
-  @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(@Nullable final AbstractTypeDeclaration ¢) {
+  @Nullable @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(@Nullable final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (Collection<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
@@ -535,8 +523,7 @@ public enum step {
   /** get all methods
    * @param u JD
    * @return */
-  @Nullable
-  public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
+  @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
     @NotNull final List<MethodDeclaration> $ = new ArrayList<>();
@@ -608,8 +595,7 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
-  @Nullable
-  private static List<String> names(@Nullable final FieldDeclaration d) {
+  @Nullable private static List<String> names(@Nullable final FieldDeclaration d) {
     return d == null ? null : fragments(d).stream().map(λ -> identifier(name(λ))).collect(toList());
   }
 
@@ -660,16 +646,14 @@ public enum step {
   /** Expose the list of parameters names in a {@link MethodDeclaration}
    * @param d JD
    * @return */
-  @Nullable
-  public static List<String> parametersNames(@Nullable final MethodDeclaration d) {
+  @Nullable public static List<String> parametersNames(@Nullable final MethodDeclaration d) {
     return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(λ -> λ.getName() + "").collect(toList()));
   }
 
   /** Expose the list of parameters types in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return */
-  @NotNull
-  public static List<Type> parametersTypes(final MethodDeclaration ¢) {
+  @NotNull public static List<Type> parametersTypes(final MethodDeclaration ¢) {
     return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(toList()));
   }
 
@@ -730,8 +714,7 @@ public enum step {
     return statements(body(¢));
   }
 
-  @Nullable
-  public static List<Statement> statements(@Nullable final MethodDeclaration ¢) {
+  @Nullable public static List<Statement> statements(@Nullable final MethodDeclaration ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
 
@@ -744,8 +727,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @Nullable
-  public static List<Statement> statements(@Nullable final SynchronizedStatement ¢) {
+  @Nullable public static List<Statement> statements(@Nullable final SynchronizedStatement ¢) {
     return ¢ == null ? null : statements(body(¢));
   }
 
@@ -770,8 +752,7 @@ public enum step {
   /** Shorthand for {@link Assignment#getLeftHandSide()}
    * @param ¢ JD
    * @return left operand of the parameter */
-  @Nullable
-  public static Expression to(@Nullable final Assignment ¢) {
+  @Nullable public static Expression to(@Nullable final Assignment ¢) {
     return ¢ == null ? null : left(¢);
   }
 
@@ -785,8 +766,7 @@ public enum step {
   /** A little hack to get Type out of TypeDeclaration.
    * @param d JD
    * @return */
-  @Nullable
-  public static Type type(@Nullable final AbstractTypeDeclaration d) {
+  @Nullable public static Type type(@Nullable final AbstractTypeDeclaration d) {
     if (d == null)
       return null;
     @NotNull String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
@@ -860,8 +840,7 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @Nullable
-  public static Type type(@Nullable final VariableDeclarationFragment ¢) {
+  @Nullable public static Type type(@Nullable final VariableDeclarationFragment ¢) {
     return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
 
@@ -912,8 +891,7 @@ public enum step {
    * @return the previous {@link Statement} in the parent {@link Block}. If
    *         parent is not {@link Block} return null, if n is first
    *         {@link Statement} also null. */
-  @Nullable
-  public static Statement previousStatementInBody(final Statement ¢) {
+  @Nullable public static Statement previousStatementInBody(final Statement ¢) {
     return wizard.previous(¢, statements(az.block(parent(¢))));
   }
 

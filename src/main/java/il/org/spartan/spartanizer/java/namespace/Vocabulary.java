@@ -17,8 +17,7 @@ public class Vocabulary extends HashMap<String, MethodDeclaration> {
     return mangle(¢.getOperator());
   }
 
-  @NotNull
-  public static String mangle(final Assignment.Operator mangle) {
+  @NotNull public static String mangle(final Assignment.Operator mangle) {
     return mangle + "";
   }
 
@@ -26,8 +25,7 @@ public class Vocabulary extends HashMap<String, MethodDeclaration> {
     return mangle.getSimpleName();
   }
 
-  @NotNull
-  public static String mangle(final InfixExpression.Operator o, final int arity) {
+  @NotNull public static String mangle(final InfixExpression.Operator o, final int arity) {
     return o + "/" + arity;
   }
 
@@ -43,8 +41,7 @@ public class Vocabulary extends HashMap<String, MethodDeclaration> {
     return mangle(¢.getOperator());
   }
 
-  @NotNull
-  public static String mangle(final PostfixExpression.Operator ¢) {
+  @NotNull public static String mangle(final PostfixExpression.Operator ¢) {
     return ¢ + (PrefixExpression.Operator.toOperator(¢ + "") == null ? "" : "(post)");
   }
 
@@ -52,13 +49,11 @@ public class Vocabulary extends HashMap<String, MethodDeclaration> {
     return mangle(¢.getOperator());
   }
 
-  @NotNull
-  public static String mangle(final PrefixExpression.Operator ¢) {
+  @NotNull public static String mangle(final PrefixExpression.Operator ¢) {
     return ¢ + (PostfixExpression.Operator.toOperator(¢ + "") == null ? "" : "(pre)");
   }
 
-  @NotNull
-  public static String mangle(final SimpleName n, final int arity) {
+  @NotNull public static String mangle(final SimpleName n, final int arity) {
     return n + "/" + arity;
   }
 }

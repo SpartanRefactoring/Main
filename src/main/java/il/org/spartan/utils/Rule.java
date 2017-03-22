@@ -60,8 +60,7 @@ import java.util.stream.*;
 public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>> {
   static <T, R> OnApplicator<T, R> on(@NotNull final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
-      @Nullable
-      @Override public R fire() {
+      @Nullable @Override public R fire() {
         c.accept(object());
         return null;
       }
@@ -72,21 +71,18 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
     };
   }
 
-  @NotNull
-  @Check default Rule<T, R> afterCheck(final boolean b) {
+  @NotNull @Check default Rule<T, R> afterCheck(final boolean b) {
     return afterCheck((@NotNull final T t) -> b);
   }
 
-  @NotNull
-  @Check default Rule<T, R> afterCheck(@NotNull final Consumer<T> c) {
+  @NotNull @Check default Rule<T, R> afterCheck(@NotNull final Consumer<T> c) {
     return afterCheck((@NotNull final T t) -> {
       c.accept(t);
       return true;
     });
   }
 
-  @NotNull
-  @Check default Rule<T, R> afterCheck(@NotNull final Predicate<T> p) {
+  @NotNull @Check default Rule<T, R> afterCheck(@NotNull final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T ¢) {
         return inner.check(¢) && p.test(¢);
@@ -95,32 +91,27 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should be overridden */
-  @Nullable
-  default String[] akas() {
+  @Nullable default String[] akas() {
     return new String[] { technicalName() };
   }
 
   /** Apply this instance to a parameter
    * @param ¢ subject of this application
    * @return result of application of this instance on the given subject */
-  @Nullable
-  @Override @Apply R apply(T ¢);
+  @Nullable @Override @Apply R apply(T ¢);
 
-  @NotNull
-  default Rule<T, R> beforeCheck(final boolean b) {
+  @NotNull default Rule<T, R> beforeCheck(final boolean b) {
     return beforeCheck((@NotNull final T t) -> b);
   }
 
-  @NotNull
-  default Rule<T, R> beforeCheck(@NotNull final Consumer<T> c) {
+  @NotNull default Rule<T, R> beforeCheck(@NotNull final Consumer<T> c) {
     return beforeCheck((@NotNull final T t) -> {
       c.accept(t);
       return true;
     });
   }
 
-  @NotNull
-  default Rule<T, R> beforeCheck(@NotNull final Predicate<T> p) {
+  @NotNull default Rule<T, R> beforeCheck(@NotNull final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T ¢) {
         return p.test(¢) && inner.check(¢);
@@ -135,8 +126,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
    *         this instance. */
   @Check boolean check(T n);
 
-  @Nullable
-  default String description() {
+  @Nullable default String description() {
     return format("%s/[%s]%s=", //
         className(Rule.class), //
         className(this), //
@@ -146,8 +136,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should be overridden */
-  @NotNull
-  default Example[] examples() {
+  @NotNull default Example[] examples() {
     return new Example[0];
   }
 
@@ -158,8 +147,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
   }
 
   /** Should not be overridden */
-  @Nullable
-  default String technicalName() {
+  @Nullable default String technicalName() {
     return getClass().getSimpleName();
   }
 
@@ -193,8 +181,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       super(inner);
     }
 
-    @Nullable
-    @Override public Void before(final String key, final Object... arguments) {
+    @Nullable @Override public Void before(final String key, final Object... arguments) {
       count.putIfAbsent(key, Integer.valueOf(0));
       count.put(key, Box.it(count.get(key).intValue() + 1));
       return super.before(key, arguments);
@@ -208,8 +195,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       this.inner = inner;
     }
 
-    @Nullable
-    @SuppressWarnings({ "static-method", "unused" }) public Void before(final String key, final Object... arguments) {
+    @Nullable @SuppressWarnings({ "static-method", "unused" }) public Void before(final String key, final Object... arguments) {
       return null;
     }
 
@@ -217,13 +203,11 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return inner.check(¢);
     }
 
-    @Nullable
-    @Override public T object() {
+    @Nullable @Override public T object() {
       return inner.object();
     }
 
-    @Nullable
-    @Override public R apply(final T ¢) {
+    @Nullable @Override public R apply(final T ¢) {
       return inner.apply(¢);
     }
   }
@@ -233,8 +217,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return ¢.getAsBoolean();
     }
 
-    @NotNull
-    @Override T get();
+    @NotNull @Override T get();
 
     default String[] listenAkas(@NotNull final Supplier<String[]> $) {
       return $.get();
@@ -271,11 +254,9 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R> {
-    @Nullable
-    private T object;
+    @Nullable private T object;
 
-    @Nullable
-    @Override public final R apply(final T ¢) {
+    @Nullable @Override public final R apply(final T ¢) {
       if (!ready())
         return badTypeState(//
             "Attempt to apply rule before previously checking\n" + //
@@ -292,8 +273,7 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return $;
     }
 
-    @Nullable
-    private R badTypeState(@NotNull final String reason, final Object... os) {
+    @Nullable private R badTypeState(@NotNull final String reason, final Object... os) {
       return monitor.logProbableBug(this,
           new IllegalStateException(//
               format(//
@@ -310,11 +290,9 @@ public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>
       return ok(object = ¢);
     }
 
-    @Nullable
-    public abstract R fire();
+    @Nullable public abstract R fire();
 
-    @Nullable
-    @Override public final T object() {
+    @Nullable @Override public final T object() {
       return object;
     }
 

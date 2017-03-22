@@ -34,13 +34,11 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 7211961334502931214L;
 
-  @NotNull
-  @Override public String description(final VariableDeclarationStatement ¢) {
+  @NotNull @Override public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
 
-  @Nullable
-  @Override @SuppressWarnings("unused") public Tip tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
+  @Nullable @Override @SuppressWarnings("unused") public Tip tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
       @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();

@@ -22,8 +22,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2017-01-04 */
 enum EliminateConditionalContinueAux {
   ;
-  @Nullable
-  public static Tip actualReplacement(@Nullable final Block b, @NotNull final Statement s, final Class<? extends Tipper<?>> c) {
+  @Nullable public static Tip actualReplacement(@Nullable final Block b, @NotNull final Statement s, final Class<? extends Tipper<?>> c) {
     if (b == null || statements(b).size() < 2)
       return null;
     @NotNull final List<Statement> $ = statements(b);

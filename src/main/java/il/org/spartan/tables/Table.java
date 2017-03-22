@@ -60,14 +60,12 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   private int length;
-  @NotNull
-  public final String name;
+  @NotNull public final String name;
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
 
-  @NotNull
-  public String baseName() {
+  @NotNull public String baseName() {
     return system.tmp + name + ".*";
   }
 
@@ -87,8 +85,7 @@ public class Table extends Row<Table> implements Closeable {
     writers.forEach(RecordWriter::close);
   }
 
-  @Nullable
-  private String lastEmptyColumn() {
+  @Nullable private String lastEmptyColumn() {
     @Nullable String $ = null;
     for (final String key : keySet()) {
       final RealStatistics r = getRealStatistics(key);
@@ -109,15 +106,13 @@ public class Table extends Row<Table> implements Closeable {
     return super.col(key, value);
   }
 
-  @NotNull
-  @Override public Table col(final String key, final long value) {
+  @NotNull @Override public Table col(final String key, final long value) {
     getRealStatistics(key).record(value);
     super.col(key, value);
     return this;
   }
 
-  @NotNull
-  public String description() {
+  @NotNull public String description() {
     @NotNull String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
         "The table has " + length() + " data rows, each consisting of " + size() + " columns.\n" + //
         "Table header is  " + keySet() + "\n"; //
@@ -141,33 +136,28 @@ public class Table extends Row<Table> implements Closeable {
     reset();
   }
 
-  @NotNull
-  private String path() {
+  @NotNull private String path() {
     return (path != null ? path : system.tmp) + name;
   }
 
-  @NotNull
-  public Table noStatistics() {
+  @NotNull public Table noStatistics() {
     statisics = new Statistic[0];
     return this;
   }
 
-  @NotNull
-  public Table remove(final Statistic... ¢) {
+  @NotNull public Table remove(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.removeAll(as.list(¢));
     return set($);
   }
 
-  @NotNull
-  public Table add(final Statistic... ¢) {
+  @NotNull public Table add(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.addAll(as.list(¢));
     return set($);
   }
 
-  @NotNull
-  @Override protected Table reset() {
+  @NotNull @Override protected Table reset() {
     keySet().forEach(λ -> put(λ, ""));
     put(null, ++length + "");
     return this;
@@ -176,8 +166,7 @@ public class Table extends Row<Table> implements Closeable {
   /* @formatter:off*/ @NotNull@Override
    protected Table self() { return this; } /*@formatter:on*/
 
-  @NotNull
-  private Table set(@NotNull final List<Statistic> ¢) {
+  @NotNull private Table set(@NotNull final List<Statistic> ¢) {
     return set(¢.toArray(new Statistic[¢.size()]));
   }
 

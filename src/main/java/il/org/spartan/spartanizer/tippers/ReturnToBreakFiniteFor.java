@@ -29,8 +29,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-  @Nullable
-  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+  @Nullable private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
     @Nullable Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (az.ifStatement(¢) != null)
@@ -81,8 +80,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return "Convert the return inside the loop to break";
   }
 
-  @NotNull
-  @Override public String description(final ForStatement ¢) {
+  @NotNull @Override public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
 

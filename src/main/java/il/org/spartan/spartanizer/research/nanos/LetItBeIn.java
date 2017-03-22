@@ -42,8 +42,8 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
           && initializer(f) != null;
     }
 
-    @NotNull
-    @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    @NotNull @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement,
+        final TextEditGroup g) {
       @Nullable final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
       @NotNull final Expression initializer = initializer(f);
       @Nullable final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
@@ -72,14 +72,12 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
-    @NotNull
-    @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
+    @NotNull @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
   }
 
-  @Nullable
-  @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
+  @Nullable @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }
 

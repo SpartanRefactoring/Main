@@ -27,13 +27,11 @@ public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  @Nullable
-  @Override public Tip pattern(final CatchClause ¢) {
+  @Nullable @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Exception;
   }
 

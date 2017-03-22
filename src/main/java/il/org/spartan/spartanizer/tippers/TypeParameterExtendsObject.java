@@ -22,8 +22,7 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -8887752937006192444L;
 
-  @NotNull
-  @Override public String description(final TypeParameter ¢) {
+  @NotNull @Override public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 

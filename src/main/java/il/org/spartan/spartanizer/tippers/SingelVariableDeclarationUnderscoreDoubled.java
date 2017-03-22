@@ -81,13 +81,11 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "__";
   }
 
-  @NotNull
-  @Override public String description(@NotNull final SingleVariableDeclaration ¢) {
+  @NotNull @Override public String description(@NotNull final SingleVariableDeclaration ¢) {
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final SingleVariableDeclaration ¢) {
+  @Nullable @Override public ASTNode replacement(@NotNull final SingleVariableDeclaration ¢) {
     return replacement(¢, null);
   }
 

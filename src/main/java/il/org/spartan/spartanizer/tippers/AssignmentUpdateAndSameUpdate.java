@@ -37,8 +37,7 @@ public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 1L;
 
-  @NotNull
-  @Override public String description(final Assignment ¢) {
+  @NotNull @Override public String description(final Assignment ¢) {
     return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";
   }
 

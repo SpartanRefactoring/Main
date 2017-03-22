@@ -45,8 +45,7 @@ class NamespaceFixture {
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
 public class NamespaceTest extends MetaFixture {
-  @Nullable
-  private final Namespace fixture = Environment.of(reflectedCompilationUnit());
+  @Nullable private final Namespace fixture = Environment.of(reflectedCompilationUnit());
 
   @Test public void a01() {
     assert fixture != null;

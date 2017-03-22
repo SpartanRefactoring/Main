@@ -29,8 +29,7 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementInitia
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 

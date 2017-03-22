@@ -27,8 +27,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3240064673505742343L;
 
-  @NotNull
-  @Override public String description(final LambdaExpression ¢) {
+  @NotNull @Override public String description(final LambdaExpression ¢) {
     return "Rename parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 

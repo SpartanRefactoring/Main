@@ -17,19 +17,16 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
   private static final long serialVersionUID = 7460439456362668944L;
   public static final String DESCRIPTION = "Simplify 'for(?;true;?)' to 'for(?;;?)'";
 
-  @NotNull
-  private static ForStatement buildForWithoutCondition(@NotNull final ForStatement $) {
+  @NotNull private static ForStatement buildForWithoutCondition(@NotNull final ForStatement $) {
     $.setExpression(null);
     return $;
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return DESCRIPTION;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return DESCRIPTION;
   }
 
@@ -37,8 +34,7 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     return iz.literal.true¢(step.expression(¢));
   }
 
-  @NotNull
-  @Override public ASTNode replacement(final ForStatement ¢) {
+  @NotNull @Override public ASTNode replacement(final ForStatement ¢) {
     return buildForWithoutCondition(copy.of(¢));
   }
 }

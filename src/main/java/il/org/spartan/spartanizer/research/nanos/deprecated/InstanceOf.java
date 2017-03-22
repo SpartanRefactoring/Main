@@ -31,8 +31,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
-  @NotNull
-  @Override public Tip pattern(@NotNull final InstanceofExpression ¢) {
+  @NotNull @Override public Tip pattern(@NotNull final InstanceofExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
@@ -42,8 +41,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     };
   }
 
-  @NotNull
-  static String izMethodName(final InstanceofExpression ¢) {
+  @NotNull static String izMethodName(final InstanceofExpression ¢) {
     return "iz" + type(¢);
   }
 
@@ -60,20 +58,17 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     wizard.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
-  @Nullable
-  private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
+  @Nullable private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
     return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
 
-  @Nullable
-  private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
+  @Nullable private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // smaybe in the future change to iz.java in package which will
     // be created automatically...
     return yieldAncestors.untilContainingType().from(¢);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
     return "replace instanceof with iz()";
   }
 }

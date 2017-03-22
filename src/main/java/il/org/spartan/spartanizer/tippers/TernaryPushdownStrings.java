@@ -41,8 +41,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
                     : null; //
   }
 
-  @NotNull
-  static String longer(@NotNull final String s1, @NotNull final String s2) {
+  @NotNull static String longer(@NotNull final String s1, @NotNull final String s2) {
     // noinspection StringEquality
     return s1 == shorter(s1, s2) ? s2 : s1;
   }
@@ -102,12 +101,14 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
         : s1.length();
   }
 
-  private static Expression replacementPrefix(@NotNull final String then, @NotNull final String elze, final int commonPrefixIndex, @NotNull final Expression condition) {
+  private static Expression replacementPrefix(@NotNull final String then, @NotNull final String elze, final int commonPrefixIndex,
+      @NotNull final Expression condition) {
     return subject.pair(getPrefix(then, commonPrefixIndex, condition), subject.pair(getSuffix(then, commonPrefixIndex, condition), //
         getSuffix(elze, commonPrefixIndex, condition)).toCondition(condition)).to(PLUS2);
   }
 
-  private static Expression replacementSuffix(@NotNull final String then, @NotNull final String elze, final int commonSuffixLength, @NotNull final Expression condition) {
+  private static Expression replacementSuffix(@NotNull final String then, @NotNull final String elze, final int commonSuffixLength,
+      @NotNull final Expression condition) {
     return subject.pair(
         subject.operand(subject.pair(getPrefix(then, then.length() - commonSuffixLength, condition)//
             , getPrefix(elze, elze.length() - commonSuffixLength, condition)).toCondition(condition)).parenthesis()//
@@ -139,8 +140,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     return subject.operands($).to(PLUS2);
   }
 
-  @NotNull
-  private static String shorter(@NotNull final String s1, @NotNull final String s2) {
+  @NotNull private static String shorter(@NotNull final String s1, @NotNull final String s2) {
     return s1.length() > s2.length() ? s2 : s1;
   }
 
@@ -185,7 +185,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     return simplify(condition, then.getLiteralValue(), elze.getLiteralValue());
   }
 
-  private static Expression simplifyStrings(@NotNull final InfixExpression then, @NotNull final InfixExpression elze, @NotNull final Expression condition) {
+  private static Expression simplifyStrings(@NotNull final InfixExpression then, @NotNull final InfixExpression elze,
+      @NotNull final Expression condition) {
     assert then.getOperator() == PLUS2;
     @Nullable final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == PLUS2;
@@ -216,8 +217,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     return "Replace ternarization with more clever one";
   }
 
-  @Nullable
-  @Override public Expression replacement(final ConditionalExpression ¢) {
+  @Nullable @Override public Expression replacement(final ConditionalExpression ¢) {
     return replacement(expression(¢), then(¢), elze(¢));
   }
 }

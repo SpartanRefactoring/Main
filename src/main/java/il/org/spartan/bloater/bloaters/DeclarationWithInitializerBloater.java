@@ -30,8 +30,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 1100106642368933500L;
 
-  @NotNull
-  @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
+  @NotNull @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration with initialization into two statemenets";
   }
 
@@ -40,8 +39,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
         && ((VariableDeclaration) first(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final VariableDeclarationStatement ¢) {
+  @NotNull @Override public Tip tip(@NotNull final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
     ((VariableDeclaration) first(fragments($))).setInitializer(null);
     final Assignment a = ¢.getAST().newAssignment();

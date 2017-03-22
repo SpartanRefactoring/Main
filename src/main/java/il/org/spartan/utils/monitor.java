@@ -23,13 +23,11 @@ import org.jetbrains.annotations.Nullable;
 public enum monitor {
   /** Log to external file if in debug mode, see issue #196 */
   LOG_TO_FILE {
-    @Nullable
-    @Override public <T> T debugMessage(final String message) {
+    @Nullable @Override public <T> T debugMessage(final String message) {
       return logToFile(message);
     }
 
-    @Nullable
-    @Override public <T> T error(final String message) {
+    @Nullable @Override public <T> T error(final String message) {
       return logToFile(message);
     }
 
@@ -46,29 +44,25 @@ public enum monitor {
     }
   },
   INTERACTIVE_TDD {
-    @Nullable
-    @Override public <T> T debugMessage(final String message) {
+    @Nullable @Override public <T> T debugMessage(final String message) {
       return info(message);
     }
 
-    @Nullable
-    @Override public <T> T error(final String message) {
+    @Nullable @Override public <T> T error(final String message) {
       System.err.println(message);
       return null¢();
     }
   },
   /** Used for real headless system; logs are simply ignored */
   OBLIVIOUS {
-    @Nullable
-    @Override public <T> T error(final String message) {
+    @Nullable @Override public <T> T error(final String message) {
       return null¢(message);
     }
   },
   /** For release versions, we keep a log of errors in stderr, but try to
    * proceed */
   PRODUCTION {
-    @Nullable
-    @Override public <T> T error(final String message) {
+    @Nullable @Override public <T> T error(final String message) {
       System.err.println(message);
       return null¢();
     }
@@ -76,13 +70,11 @@ public enum monitor {
   /** Used for debugging; program exits immediately with the first logged
    * message */
   SUPER_TOUCHY {
-    @Nullable
-    @Override public <T> T debugMessage(final String message) {
+    @Nullable @Override public <T> T debugMessage(final String message) {
       return info(message);
     }
 
-    @NotNull
-    @Override public <T> T error(final String message) {
+    @NotNull @Override public <T> T error(final String message) {
       System.err.println(message);
       System.exit(1);
       throw new RuntimeException(message);
@@ -91,21 +83,18 @@ public enum monitor {
   /** Used for debugging; program throws a {@link RuntimeException} with the
    * first logged message */
   TOUCHY {
-    @Nullable
-    @Override public <T> T debugMessage(final String message) {
+    @Nullable @Override public <T> T debugMessage(final String message) {
       return info(message);
     }
 
-    @NotNull
-    @Override public <T> T error(final String message) {
+    @NotNull @Override public <T> T error(final String message) {
       throw new RuntimeException(message);
     }
   };
   public static final String FILE_SEPARATOR = "######################################################################################################";
   public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
 
-  @Nullable
-  public static <T> T debug(@NotNull final Class<?> o, @NotNull final Throwable t) {
+  @Nullable public static <T> T debug(@NotNull final Class<?> o, @NotNull final Throwable t) {
     return debug(//
         "A static method of " + system.className(o) + //
             "was hit by " + indefinite(t) + "\n" + //
@@ -114,8 +103,7 @@ public enum monitor {
             "o = " + o + "'");
   }
 
-  @Nullable
-  public static <T> T debug(@NotNull final Object o, @NotNull final Throwable t) {
+  @Nullable public static <T> T debug(@NotNull final Object o, @NotNull final Throwable t) {
     return debug(//
         "An instance of " + system.className(o) + //
             "\n was hit by " + indefinite(t) + //
@@ -124,13 +112,11 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  @Nullable
-  public static <T> T debug(final String message) {
+  @Nullable public static <T> T debug(final String message) {
     return now().debugMessage(message);
   }
 
-  @Nullable
-  public static <T> T infoIOException(@NotNull final Exception ¢) {
+  @Nullable public static <T> T infoIOException(@NotNull final Exception ¢) {
     return now().info(//
         "   Got an exception of type : " + system.className(¢) + //
             "\n      (probably I/O exception)" //
@@ -138,8 +124,7 @@ public enum monitor {
     );
   }
 
-  @Nullable
-  public static <T> T infoIOException(@NotNull final Exception x, final String message) {
+  @Nullable public static <T> T infoIOException(@NotNull final Exception x, final String message) {
     return now().info(//
         "   Got an exception of type : " + system.className(x) + //
             "\n      (probably I/O exception)" + //
@@ -149,8 +134,7 @@ public enum monitor {
     );
   }
 
-  @Nullable
-  public static <T> T infoIOException(@NotNull final IOException ¢) {
+  @Nullable public static <T> T infoIOException(@NotNull final IOException ¢) {
     return now().info(//
         "   Got an exception of type : " + system.className(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
@@ -159,16 +143,14 @@ public enum monitor {
 
   /** logs an error in the plugin
    * @param tipper an error */
-  @Nullable
-  public static <T> T log(final Throwable ¢) {
+  @Nullable public static <T> T log(final Throwable ¢) {
     return now().error(¢ + "");
   }
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param ¢ JD */
-  @Nullable
-  public static <T> T logCancellationRequest(@NotNull final Exception ¢) {
+  @Nullable public static <T> T logCancellationRequest(@NotNull final Exception ¢) {
     return now().info(//
         " " + system.className(¢) + //
             " (probably cancellation) exception." + //
@@ -179,8 +161,7 @@ public enum monitor {
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
-  @Nullable
-  public static <T> T logCancellationRequest(@NotNull final Object o, @NotNull final Exception x) {
+  @Nullable public static <T> T logCancellationRequest(@NotNull final Object o, @NotNull final Exception x) {
     return now().info(//
         "An instance of " + system.className(o) + //
             "\n was hit by " + indefinite(x) + //
@@ -189,8 +170,7 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  @Nullable
-  public static <T> T logEvaluationError(@NotNull final Object o, @NotNull final Throwable t) {
+  @Nullable public static <T> T logEvaluationError(@NotNull final Object o, @NotNull final Throwable t) {
     System.err.println(//
         dump() + //
             "An instance of " + system.className(o) + "\n" + //
@@ -203,13 +183,11 @@ public enum monitor {
     return null¢();
   }
 
-  @Nullable
-  public static <T> T logEvaluationError(@NotNull final Throwable ¢) {
+  @Nullable public static <T> T logEvaluationError(@NotNull final Throwable ¢) {
     return logEvaluationError(now(), ¢);
   }
 
-  @Nullable
-  public static <T> T logProbableBug(@NotNull final Object o, @NotNull final Throwable t) {
+  @Nullable public static <T> T logProbableBug(@NotNull final Object o, @NotNull final Throwable t) {
     return now().error(format(//
         "An instance of %s was hit by %s exception.\n" + //
             "This is an indication of a bug.\n", //
@@ -225,8 +203,7 @@ public enum monitor {
     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
   }
 
-  @Nullable
-  public static <T> T logProbableBug(@NotNull final Throwable ¢) {
+  @Nullable public static <T> T logProbableBug(@NotNull final Throwable ¢) {
     return now().error(//
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
@@ -252,36 +229,29 @@ public enum monitor {
     System.out.println(Logger.fileName());
   }
 
-  @Nullable
-  public static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
+  @Nullable public static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
     return null;
   }
 
-  @Nullable
-  @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
+  @Nullable @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
     return null¢(message);
   }
 
-  @Nullable
-  public abstract <T> T error(String message);
+  @Nullable public abstract <T> T error(String message);
 
-  @Nullable
-  @SuppressWarnings("static-method") public <T> T info(final String message) {
+  @Nullable @SuppressWarnings("static-method") public <T> T info(final String message) {
     System.err.println(message);
     return null¢();
   }
 
   private static class Logger {
     private static final String UTF_8 = "utf-8";
-    @Nullable
-    private static OutputStream outputStream;
+    @Nullable private static OutputStream outputStream;
     private static String fileName;
     private static File file;
-    @Nullable
-    private static Writer writer;
+    @Nullable private static Writer writer;
 
-    @NotNull
-    public static File file() {
+    @NotNull public static File file() {
       return file = file != null ? file : new File(fileName());
     }
 
@@ -296,8 +266,7 @@ public enum monitor {
       return fileName;
     }
 
-    @Nullable
-    public static OutputStream outputStream() {
+    @Nullable public static OutputStream outputStream() {
       try {
         return outputStream = outputStream != null ? outputStream : new FileOutputStream(file(), true);
       } catch (@NotNull @SuppressWarnings("unused") final FileNotFoundException __) {
@@ -328,8 +297,7 @@ public enum monitor {
     states.push(interactiveTdd);
   }
 
-  @NotNull
-  public static monitor now() {
+  @NotNull public static monitor now() {
     return !states.empty() ? states.peek() : monitor.PRODUCTION;
   }
 

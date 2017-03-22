@@ -13,8 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-22 */
 public interface members {
-  @NotNull
-  static List<BodyDeclaration> of(final EnumDeclaration ¢) {
+  @NotNull static List<BodyDeclaration> of(final EnumDeclaration ¢) {
     @NotNull final List<BodyDeclaration> $ = new ArrayList<>(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
@@ -28,8 +27,7 @@ public interface members {
     return step.bodyDeclarations(¢);
   }
 
-  @NotNull
-  static List<? extends BodyDeclaration> of(@NotNull final AnonymousClassDeclaration ¢) {
+  @NotNull static List<? extends BodyDeclaration> of(@NotNull final AnonymousClassDeclaration ¢) {
     assert ¢ != null;
     @NotNull final List<BodyDeclaration> $ = step.bodyDeclarations(¢);
     assert $ != null;

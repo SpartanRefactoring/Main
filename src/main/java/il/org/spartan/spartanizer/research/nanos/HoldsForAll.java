@@ -31,13 +31,11 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
         || tippers2.canTip(x);
   }
 
-  @Nullable
-  @Override public Tip pattern(final EnhancedForStatement x) {
+  @Nullable @Override public Tip pattern(final EnhancedForStatement x) {
     return !tippers.canTip(az.block(parent(x))) ? tippers2.firstTip(x) : tippers.firstTip(az.block(parent(x)));
   }
 
-  @NotNull
-  @Override public Category category() {
+  @NotNull @Override public Category category() {
     return Category.Iterative;
   }
 

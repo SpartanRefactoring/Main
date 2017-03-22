@@ -29,8 +29,7 @@ public final class FragmentInitialiazerAssignment extends $FragementInitializerS
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1477509470490701826L;
 
-  @NotNull
-  @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
 

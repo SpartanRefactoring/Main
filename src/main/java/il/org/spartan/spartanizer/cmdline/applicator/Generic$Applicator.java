@@ -98,8 +98,7 @@ public class Generic$Applicator {
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
-  @NotNull
-  private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
+  @NotNull private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
     @NotNull final Collection<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;

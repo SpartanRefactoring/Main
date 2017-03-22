@@ -38,8 +38,7 @@ public final class SingleFlater {
   /** Creates a new for a {@link CompilationUnit}.
    * @param ¢ JD
    * @return new */
-  @NotNull
-  public static SingleFlater in(final ASTNode ¢) {
+  @NotNull public static SingleFlater in(final ASTNode ¢) {
     @NotNull final SingleFlater $ = new SingleFlater();
     $.root = ¢;
     return $;
@@ -48,8 +47,7 @@ public final class SingleFlater {
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
    * @return {@code this} flater */
-  @NotNull
-  public SingleFlater from(final OperationsProvider ¢) {
+  @NotNull public SingleFlater from(final OperationsProvider ¢) {
     operationsProvider = ¢;
     return this;
   }
@@ -57,8 +55,7 @@ public final class SingleFlater {
   /** Sets text selection limits for this flater.
    * @param ¢ JD
    * @return {@code this} flater */
-  @NotNull
-  @Deprecated public SingleFlater limit(final TextSelection ¢) {
+  @NotNull @Deprecated public SingleFlater limit(final TextSelection ¢) {
     textSelection = ¢;
     return this;
   }
@@ -66,16 +63,14 @@ public final class SingleFlater {
   /** Sets text selection limits of window to this flater.
    * @param ¢ JD
    * @return {@code this} flater */
-  @NotNull
-  public SingleFlater limit(final WindowInformation ¢) {
+  @NotNull public SingleFlater limit(final WindowInformation ¢) {
     windowInformation = ¢;
     return this;
   }
 
   /** Set disabling for this flater.
    * @return {@code this} flater */
-  @NotNull
-  public SingleFlater usesDisabling(final boolean ¢) {
+  @NotNull public SingleFlater usesDisabling(final boolean ¢) {
     usesDisabling = ¢;
     return this;
   }
@@ -120,8 +115,8 @@ public final class SingleFlater {
   }
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
-  public static boolean commitChanges(@NotNull final SingleFlater f, @NotNull final ASTRewrite r, @NotNull final WrappedCompilationUnit u, final StyledText t,
-                                      final ITextEditor e, final WindowInformation i) {
+  public static boolean commitChanges(@NotNull final SingleFlater f, @NotNull final ASTRewrite r, @NotNull final WrappedCompilationUnit u,
+      final StyledText t, final ITextEditor e, final WindowInformation i) {
     boolean $ = false;
     try {
       @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
@@ -155,8 +150,8 @@ public final class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(@Nullable final ITextEditor e, @Nullable final StyledText t, @NotNull final TextFileChange tc, @Nullable final WindowInformation i)
-      throws CoreException {
+  private static boolean changeNFocus(@Nullable final ITextEditor e, @Nullable final StyledText t, @NotNull final TextFileChange tc,
+      @Nullable final WindowInformation i) throws CoreException {
     if (i == null || t == null || e == null) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -187,8 +182,7 @@ public final class SingleFlater {
       tipper = t;
     }
 
-    @NotNull
-    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> t) {
+    @NotNull public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> t) {
       return new Operation<>(node, t);
     }
   }
@@ -226,13 +220,11 @@ public final class SingleFlater {
       endChar = ¢.getOffsetAtLine(endLine);
     }
 
-    @NotNull
-    @Deprecated public static WindowInformation of(final ITextEditor ¢) {
+    @NotNull @Deprecated public static WindowInformation of(final ITextEditor ¢) {
       return new WindowInformation(¢);
     }
 
-    @NotNull
-    public static WindowInformation of(@NotNull final StyledText ¢) {
+    @NotNull public static WindowInformation of(@NotNull final StyledText ¢) {
       return new WindowInformation(¢);
     }
 

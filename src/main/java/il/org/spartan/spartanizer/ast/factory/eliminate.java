@@ -59,8 +59,7 @@ public enum eliminate {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  @NotNull
-  public static Expression peel(final Expression $) {
+  @NotNull public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
             : iz.nodeTypeEquals($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
@@ -68,18 +67,15 @@ public enum eliminate {
                     : $;
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final InfixExpression ¢) {
+  @NotNull public static Expression peel(@NotNull final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final NumberLiteral $) {
+  @NotNull public static Expression peel(@NotNull final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
-  @NotNull
-  public static Expression peel(@NotNull final PrefixExpression $) {
+  @NotNull public static Expression peel(@NotNull final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 

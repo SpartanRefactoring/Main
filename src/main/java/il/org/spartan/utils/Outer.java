@@ -7,8 +7,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-21 */
 public abstract class Outer<Inner> {
-  @Nullable
-  public final Inner inner;
+  @Nullable public final Inner inner;
 
   public Outer(@Nullable final Inner inner) {
     this.inner = inner;

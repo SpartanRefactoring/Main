@@ -24,13 +24,11 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -6638105215049141624L;
 
-  @NotNull
-  @Override public String description(@NotNull final CatchClause ¢) {
+  @NotNull @Override public String description(@NotNull final CatchClause ¢) {
     return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
   }
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
             .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //

@@ -37,18 +37,15 @@ final class FactorsCollector {
     /* For internal use only */
   }
 
-  @NotNull
-  public List<Factor> all() {
+  @NotNull public List<Factor> all() {
     return all;
   }
 
-  @NotNull
-  public List<Expression> dividers() {
+  @NotNull public List<Expression> dividers() {
     return dividers;
   }
 
-  @NotNull
-  public List<Expression> multipliers() {
+  @NotNull public List<Expression> multipliers() {
     return multipliers;
   }
 
@@ -66,8 +63,7 @@ final class FactorsCollector {
         : collectTimesPrefixDivdeExpression(¢);
   }
 
-  @Nullable
-  private Void collectTimesPrefixDivdeExpression(@NotNull final InfixExpression ¢) {
+  @Nullable private Void collectTimesPrefixDivdeExpression(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixDivide(¢);
@@ -84,14 +80,12 @@ final class FactorsCollector {
     return null;
   }
 
-  @Nullable
-  private Void addDivideFactor(@NotNull final Expression ¢) {
+  @Nullable private Void addDivideFactor(@NotNull final Expression ¢) {
     assert ¢ != null;
     return collectDividePrefix(¢);
   }
 
-  @Nullable
-  private Void addMultiplierFactor(@NotNull final Expression ¢) {
+  @Nullable private Void addMultiplierFactor(@NotNull final Expression ¢) {
     return isLeafFactor(¢) ? addTimesFactor(¢) : collectTimesNonLeaf(az.infixExpression(¢));
   }
 
@@ -103,43 +97,37 @@ final class FactorsCollector {
     return null;
   }
 
-  @Nullable
-  private Void addTimesFactor(@NotNull final Expression ¢) {
+  @Nullable private Void addTimesFactor(@NotNull final Expression ¢) {
     assert ¢ != null;
     return collectTimesPrefix(¢);
   }
 
-  @Nullable
-  private Void collectDividePrefix(@NotNull final Expression ¢) {
+  @Nullable private Void collectDividePrefix(@NotNull final Expression ¢) {
     assert ¢ != null;
     return isLeafFactor(¢) ? addDivide(¢) : collectDividePrefix(az.infixExpression(¢));
   }
 
-  @Nullable
-  private Void collectDividePrefix(@NotNull final InfixExpression ¢) {
+  @Nullable private Void collectDividePrefix(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     return iz.infixTimes(¢) ? collectDividePrefixTimesExpression(¢) : collectDividePrefixDivideExprssion(¢);
   }
 
-  @Nullable
-  private Void collectDividePrefixDivideExprssion(@NotNull final InfixExpression ¢) {
+  @Nullable private Void collectDividePrefixDivideExprssion(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     @Nullable final List<Expression> $ = hop.operands(¢);
     collectDividerFactor(core(first($)));
     return collectMultiplierFactors(rest($));
   }
 
-  @Nullable
-  private Void collectDividePrefixTimesExpression(@NotNull final InfixExpression ¢) {
+  @Nullable private Void collectDividePrefixTimesExpression(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixTimes(¢);
     return collectDividersFactors(hop.operands(¢));
   }
 
-  @Nullable
-  private Void collectDividerFactor(@NotNull final Expression ¢) {
+  @Nullable private Void collectDividerFactor(@NotNull final Expression ¢) {
     assert ¢ != null;
     return isLeafFactor(¢) ? addDivideFactor(¢) : collectDividePrefix(az.infixExpression(¢));
   }
@@ -156,14 +144,12 @@ final class FactorsCollector {
     return null;
   }
 
-  @Nullable
-  private Void collectTimesPrefix(@NotNull final Expression ¢) {
+  @Nullable private Void collectTimesPrefix(@NotNull final Expression ¢) {
     assert ¢ != null;
     return isLeafFactor(¢) ? addTimes(¢) : collectTimesNonLeaf(az.infixExpression(¢));
   }
 
-  @Nullable
-  private Void collectTimesPrefixTimesExpression(@NotNull final InfixExpression ¢) {
+  @Nullable private Void collectTimesPrefixTimesExpression(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixTimes(¢);

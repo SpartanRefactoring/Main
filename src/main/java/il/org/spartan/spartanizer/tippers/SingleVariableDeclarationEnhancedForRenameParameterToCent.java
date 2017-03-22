@@ -30,8 +30,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 321955529348174125L;
 
-  @NotNull
-  @Override public String description(final SingleVariableDeclaration ¢) {
+  @NotNull @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 

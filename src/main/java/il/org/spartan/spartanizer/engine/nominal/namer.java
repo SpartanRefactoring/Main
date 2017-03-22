@@ -26,8 +26,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {
-  @NotNull
-  static String[] components(final Name ¢) {
+  @NotNull static String[] components(final Name ¢) {
     return components(¢);
   }
 
@@ -55,13 +54,11 @@ public interface namer {
     return make.from(¢).identifier(it);
   }
 
-  @NotNull
-  static String shorten(@NotNull final ArrayType ¢) {
+  @NotNull static String shorten(@NotNull final ArrayType ¢) {
     return shorten(¢.getElementType()) + English.repeat(¢.getDimensions(), 's');
   }
 
-  @NotNull
-  static String shorten(final IntersectionType ¢) {
+  @NotNull static String shorten(final IntersectionType ¢) {
     assert fault.unreachable() : fault.specifically("Should not shorten intersection type", ¢);
     return ¢ + "";
   }
@@ -70,8 +67,7 @@ public interface namer {
     return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
   }
 
-  @Nullable
-  static String shorten(final Name ¢) {
+  @Nullable static String shorten(final Name ¢) {
     return ¢ instanceof SimpleName ? shorten(¢ + "") //
         : ¢ instanceof QualifiedName ? shorten(((QualifiedName) ¢).getName()) //
             : null;
@@ -108,8 +104,7 @@ public interface namer {
     return JavaTypeNameParser.make(¢).shortName();
   }
 
-  @Nullable
-  static String shorten(final Type ¢) {
+  @Nullable static String shorten(final Type ¢) {
     return ¢ instanceof NameQualifiedType ? shorten((NameQualifiedType) ¢)
         : ¢ instanceof PrimitiveType ? shorten((PrimitiveType) ¢)
             : ¢ instanceof QualifiedType ? shorten((QualifiedType) ¢)
@@ -121,18 +116,15 @@ public interface namer {
                                     : ¢ instanceof UnionType ? shortName((UnionType) ¢) : null;
   }
 
-  @Nullable
-  static String shortName(@SuppressWarnings("unused") final UnionType __) {
+  @Nullable static String shortName(@SuppressWarnings("unused") final UnionType __) {
     return null;
   }
 
-  @NotNull
-  static String shortName(@NotNull final WildcardType ¢) {
+  @NotNull static String shortName(@NotNull final WildcardType ¢) {
     return ¢.getBound() == null ? "o" : shorten(¢.getBound());
   }
 
-  @NotNull
-  static String signature(final String code) {
+  @NotNull static String signature(final String code) {
     String $ = code;
     for (@NotNull final String keyword : wizard.keywords)
       $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
@@ -175,7 +167,6 @@ public interface namer {
       return set.contains(¢.getType() + "");
     }
 
-    @NotNull
-    public final Set<String> set;
+    @NotNull public final Set<String> set;
   }
 }

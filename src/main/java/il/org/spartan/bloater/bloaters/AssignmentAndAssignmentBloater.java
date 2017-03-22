@@ -22,14 +22,12 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 121321364655045957L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
   // TODO Doron - I spartanized your code. --yg
-  @Nullable
-  @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
+  @Nullable @Override public Tip tip(@NotNull final ExpressionStatement ¢) {
     @Nullable final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
@@ -44,8 +42,7 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         l.remove(¢, g);
       }
 
-      @Nullable
-      public Assignment rightMost(final Assignment newTail) {
+      @Nullable public Assignment rightMost(final Assignment newTail) {
         for (@Nullable @SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
             return $;

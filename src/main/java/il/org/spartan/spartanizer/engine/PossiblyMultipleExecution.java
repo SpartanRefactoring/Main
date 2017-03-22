@@ -19,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 2017-03-18 */
 public class PossiblyMultipleExecution {
   /** Instantiates this class */
-  @NotNull
-  public static PossiblyMultipleExecution of(final ASTNode what) {
+  @NotNull public static PossiblyMultipleExecution of(final ASTNode what) {
     return new PossiblyMultipleExecution(what);
   }
 

@@ -25,8 +25,7 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final SuperConstructorInvocation i) {
+  @NotNull @Override public Tip tip(@NotNull final SuperConstructorInvocation i) {
     return new Tip(description(i), i, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);

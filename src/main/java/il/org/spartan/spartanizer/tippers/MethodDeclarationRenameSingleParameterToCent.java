@@ -26,8 +26,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 6162035659739185152L;
 
-  @NotNull
-  @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @NotNull @Override public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 

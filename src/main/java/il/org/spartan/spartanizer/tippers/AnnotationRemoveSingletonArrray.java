@@ -21,13 +21,11 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 8349592040340894302L;
 
-  @NotNull
-  @Override public String description(@NotNull final SingleMemberAnnotation ¢) {
+  @NotNull @Override public String description(@NotNull final SingleMemberAnnotation ¢) {
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("@SuppressWarnings({\"unchecked\"}) void f() {}") //
             .to("@SuppressWarnings(\"unchecked\") void f() {}"), //

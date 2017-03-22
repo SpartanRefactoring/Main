@@ -22,8 +22,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1007971487834999855L;
 
-  @Nullable
-  @Override public ASTNode replacement(@NotNull final TryStatement s) {
+  @Nullable @Override public ASTNode replacement(@NotNull final TryStatement s) {
     @NotNull final List<CatchClause> catches = step.catchClauses(s);
     @Nullable CatchClause multiTypeCatch = null;
     int i = 0;
@@ -54,8 +53,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     return $;
   }
 
-  @Nullable
-  @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
+  @Nullable @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;
   }
 }

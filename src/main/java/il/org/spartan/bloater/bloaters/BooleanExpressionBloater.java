@@ -31,8 +31,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
         || ¢.getOperator() == Operator.CONDITIONAL_OR;
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final InfixExpression ¢) {
+  @NotNull @Override public Tip tip(@NotNull final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), ¢, getClass()) {
       @Override @SuppressWarnings("unused") public void go(final ASTRewrite __, final TextEditGroup g) {
@@ -54,8 +53,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return $;
   }
 
-  @Nullable
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Nullable @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }
 }

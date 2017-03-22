@@ -27,8 +27,7 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement>//
     return ¢ != null && (literal.true¢(expression(¢)) || literal.false¢(expression(¢)));
   }
 
-  @NotNull
-  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+  @NotNull @Override public Statement replacement(@NotNull final IfStatement ¢) {
     return literal.true¢(expression(¢)) ? then(¢) //
         : elze(¢) != null ? elze(¢) //
             : ¢.getAST().newBlock();

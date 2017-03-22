@@ -24,8 +24,7 @@ public final class LazyInitializer extends NanoPatternTipper<Assignment> {
     return anyTips(tippers, x);
   }
 
-  @Nullable
-  @Override public Tip pattern(final Assignment x) {
+  @Nullable @Override public Tip pattern(final Assignment x) {
     return firstTip(tippers, x);
   }
 

@@ -6,13 +6,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-19 */
 public class ReduceStringConcatenate extends Reduce<String> {
-  @NotNull
-  @Override public String reduce(final String s1, final String s2) {
+  @NotNull @Override public String reduce(final String s1, final String s2) {
     return s1 + s2;
   }
 
-  @NotNull
-  @Override public String reduce() {
+  @NotNull @Override public String reduce() {
     return "";
   }
 }

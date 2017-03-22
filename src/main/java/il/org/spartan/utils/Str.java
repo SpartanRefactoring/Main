@@ -6,8 +6,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Ori Marcovitch
  * @since Oct 18, 2016 */
 public final class Str {
-  @Nullable
-  public String inner;
+  @Nullable public String inner;
 
   public Str() {
     inner = null;
@@ -21,8 +20,7 @@ public final class Str {
     inner = ¢ + "";
   }
 
-  @Nullable
-  public String inner() {
+  @Nullable public String inner() {
     return inner;
   }
 

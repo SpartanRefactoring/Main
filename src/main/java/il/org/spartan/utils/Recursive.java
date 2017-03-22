@@ -39,13 +39,11 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-11 */
 public interface Recursive<@¢ T> {
-  @NotNull
-  default Stream<T> streamSelf() {
+  @NotNull default Stream<T> streamSelf() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
 
-  @Nullable
-  default T self() {
+  @Nullable default T self() {
     return null;
   }
 
@@ -57,8 +55,7 @@ public interface Recursive<@¢ T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Atomic<@¢ T> extends Recursive<T> {
-    @NotNull
-    @Override default Stream<T> descendants() {
+    @NotNull @Override default Stream<T> descendants() {
       return streamSelf();
     }
   }
@@ -69,8 +66,7 @@ public interface Recursive<@¢ T> {
   interface Compound<@¢ T> extends Recursive<T> {
     @NotNull Iterable<Recursive<T>> children();
 
-    @Nullable
-    @Override default T self() {
+    @Nullable @Override default T self() {
       return null;
     }
   }

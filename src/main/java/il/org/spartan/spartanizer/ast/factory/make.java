@@ -124,8 +124,7 @@ public enum make {
     return parser(text.toCharArray());
   }
 
-  @Nullable
-  public static VariableDeclarationExpression variableDeclarationExpression(@Nullable final VariableDeclarationStatement ¢) {
+  @Nullable public static VariableDeclarationExpression variableDeclarationExpression(@Nullable final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
     final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
@@ -153,8 +152,7 @@ public enum make {
     ;
   }
 
-  @NotNull
-  static List<Expression> minus(final List<Expression> ¢) {
+  @NotNull static List<Expression> minus(final List<Expression> ¢) {
     @NotNull final List<Expression> $ = new ArrayList<>();
     $.add(first(¢));
     $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
@@ -171,8 +169,7 @@ public enum make {
     return $;
   }
 
-  @NotNull
-  private static String signAdjust(@NotNull final String token) {
+  @NotNull private static String signAdjust(@NotNull final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(as.bit(token.startsWith("+")));
   }
@@ -198,8 +195,7 @@ public enum make {
     return ¢.getAST().newEmptyStatement();
   }
 
-  @NotNull
-  public static make.FromAST from(@NotNull final AST t) {
+  @NotNull public static make.FromAST from(@NotNull final AST t) {
     return new make.FromAST() {
       @Override public SimpleName identifier(final String identifier) {
         return t.newSimpleName(identifier);
@@ -268,15 +264,13 @@ public enum make {
    * This function is a factory method recording the expression that might be
    * wrapped.
    * @param inner JD */
-  @NotNull
-  public static make.PlantingExpression plant(final Expression ¢) {
+  @NotNull public static make.PlantingExpression plant(final Expression ¢) {
     return new make.PlantingExpression(¢);
   }
 
   /** Factory method recording the statement might be wrapped.
    * @param inner JD */
-  @NotNull
-  public static make.PlantingStatement plant(final Statement inner) {
+  @NotNull public static make.PlantingStatement plant(final Statement inner) {
     return new make.PlantingStatement(inner);
   }
 

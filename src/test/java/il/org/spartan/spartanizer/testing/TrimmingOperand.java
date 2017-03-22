@@ -25,8 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public class TrimmingOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
   protected static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
-  @NotNull
-  private final Trimmer trimmer;
+  @NotNull private final Trimmer trimmer;
   private static int rerunsLeft = 5;
 
   public TrimmingOperand(final String inner) {
@@ -64,8 +63,7 @@ public class TrimmingOperand extends Wrapper<String> {
     return trim.apply(trimmer, Wrap.find(get()).on(get()));
   }
 
-  @Nullable
-  public TrimmingOperand gives(@NotNull final String $) {
+  @Nullable public TrimmingOperand gives(@NotNull final String $) {
     @NotNull final Wrap w = Wrap.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
@@ -97,8 +95,7 @@ public class TrimmingOperand extends Wrapper<String> {
    * @return Operand
    * @author Dor Ma'ayan
    * @since 09-12-2016 */
-  @Nullable
-  public TrimmingOperand givesEither(@NotNull final String... options) {
+  @Nullable public TrimmingOperand givesEither(@NotNull final String... options) {
     assert options != null;
     @NotNull final Wrap w = Wrap.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
@@ -146,14 +143,12 @@ public class TrimmingOperand extends Wrapper<String> {
     System.err.printf("*** %d reruns left \n ", box.it(--rerunsLeft));
   }
 
-  @NotNull
-  public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
+  @NotNull public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
     trimmer.fix(c, ¢);
     return this;
   }
 
-  @NotNull
-  @SafeVarargs public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
+  @NotNull @SafeVarargs public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
     as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
     return this;
   }

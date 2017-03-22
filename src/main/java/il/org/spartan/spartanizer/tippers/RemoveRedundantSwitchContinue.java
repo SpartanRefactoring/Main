@@ -26,8 +26,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -3105580838354601588L;
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final SwitchStatement s) {
+  @Nullable @Override public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
     @Nullable final Block b = az.block(s.getParent());
@@ -45,8 +44,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     return null;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

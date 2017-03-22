@@ -57,8 +57,7 @@ public final class Inliner2 {
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
 
-  @NotNull
-  public ASTRewrite fire(@NotNull final ASTRewrite $, final TextEditGroup g) {
+  @NotNull public ASTRewrite fire(@NotNull final ASTRewrite $, final TextEditGroup g) {
     for (final SimpleName ¢ : spots)
       $.replace(¢, copy.of(replacement), g);
     return $;

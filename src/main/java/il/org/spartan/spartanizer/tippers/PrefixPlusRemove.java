@@ -20,8 +20,7 @@ public final class PrefixPlusRemove extends ReplaceCurrentNode<PrefixExpression>
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = -7675038373029859299L;
 
-  @NotNull
-  @Override public String description(final PrefixExpression ¢) {
+  @NotNull @Override public String description(final PrefixExpression ¢) {
     return "Remove unary + in " + ¢;
   }
 

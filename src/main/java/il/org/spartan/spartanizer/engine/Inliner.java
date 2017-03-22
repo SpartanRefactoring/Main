@@ -24,8 +24,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 13, 2016 */
 public final class Inliner {
-  @NotNull
-  static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode... ns) {
+  @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode... ns) {
     @NotNull @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
     @NotNull final Int i = new Int();
     Arrays.asList(ns).forEach(λ -> $[i.inner++] = new Wrapper<>(λ));
@@ -46,8 +45,7 @@ public final class Inliner {
     this.editGroup = editGroup;
   }
 
-  @NotNull
-  public InlinerWithValue byValue(final Expression replacement) {
+  @NotNull public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
   }
 
@@ -69,8 +67,7 @@ public final class Inliner {
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  @Nullable
-  public static String getElTypeNameFromArrayType(final Type t) {
+  @Nullable public static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
     final Type et = ((ArrayType) t).getElementType();
@@ -164,13 +161,11 @@ public final class Inliner {
           .forEach(λ -> rewriter.replace(λ, !iz.expression(λ) ? replacement : make.plant((Expression) replacement).into(λ.getParent()), editGroup));
     }
 
-    @Nullable
-    private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
+    @Nullable private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    @Nullable
-    private Collection<SimpleName> uses(final ASTNode... ¢) {
+    @Nullable private Collection<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

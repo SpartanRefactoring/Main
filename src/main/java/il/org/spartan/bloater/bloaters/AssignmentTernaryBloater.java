@@ -38,13 +38,11 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
   }
 
-  @Nullable
-  @Override public ASTNode replacement(final ExpressionStatement ¢) {
+  @Nullable @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replaceAssignment(¢);
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Expanding a ternary operator to a full if-else statement";
   }
 }

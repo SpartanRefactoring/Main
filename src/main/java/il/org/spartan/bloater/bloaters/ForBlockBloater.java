@@ -21,8 +21,7 @@ public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -2414682418747217785L;
 
-  @Nullable
-  @Override public ASTNode replacement(@Nullable final ForStatement s) {
+  @Nullable @Override public ASTNode replacement(@Nullable final ForStatement s) {
     if (s == null)
       return null;
     final ForStatement $ = copy.of(s);
@@ -43,8 +42,7 @@ public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "expand to block";
   }
 }

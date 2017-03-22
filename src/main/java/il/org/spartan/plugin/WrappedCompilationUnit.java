@@ -19,8 +19,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 2016 */
 public class WrappedCompilationUnit {
   public ICompilationUnit descriptor;
-  @Nullable
-  public CompilationUnit compilationUnit;
+  @Nullable public CompilationUnit compilationUnit;
   public String fileName;
   public String filePath;
   public boolean useBinding;
@@ -45,8 +44,7 @@ public class WrappedCompilationUnit {
     compilationUnit = cu;
   }
 
-  @NotNull
-  public WrappedCompilationUnit build() {
+  @NotNull public WrappedCompilationUnit build() {
     if (compilationUnit == null)
       try {
         compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
@@ -57,29 +55,25 @@ public class WrappedCompilationUnit {
     return this;
   }
 
-  @NotNull
-  public WrappedCompilationUnit buildWithBinding() {
+  @NotNull public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
       compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
 
-  @NotNull
-  public WrappedCompilationUnit dispose() {
+  @NotNull public WrappedCompilationUnit dispose() {
     compilationUnit = null;
     return this;
   }
 
-  @Nullable
-  public String name() {
+  @Nullable public String name() {
     return descriptor == null ? null : descriptor.getElementName();
   }
 
   /** Factory method
    * @param ¢ JD
    * @return an instance created by the parameter */
-  @NotNull
-  public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
+  @NotNull public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }
 
@@ -95,13 +89,11 @@ public class WrappedCompilationUnit {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
 
-  @NotNull
-  public static WrappedCompilationUnit of(final CompilationUnit from) {
+  @NotNull public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
   }
 
-  @NotNull
-  public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
+  @NotNull public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
     return new WrappedCompilationUnit(from, name, absolutePath);
   }
 

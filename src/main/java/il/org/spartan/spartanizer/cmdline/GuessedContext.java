@@ -106,8 +106,7 @@ public enum GuessedContext {
     return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
 
-  @NotNull
-  static String enumerateFailingAttempts(final String codeFragment) {
+  @NotNull static String enumerateFailingAttempts(final String codeFragment) {
     @NotNull final StringBuilder $ = new StringBuilder();
     int i = 0;
     for (@NotNull final GuessedContext w : GuessedContext.alternativeContextsToConsiderInThisOrder) {
@@ -141,8 +140,7 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull
-  public CompilationUnit intoCompilationUnit(final String codeFragment) {
+  @NotNull public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
 
@@ -150,8 +148,7 @@ public enum GuessedContext {
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
    *         of the wrapped parameter. */
-  @NotNull
-  public Document intoDocument(final String codeFragment) {
+  @NotNull public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
 
@@ -165,8 +162,7 @@ public enum GuessedContext {
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
-  @NotNull
-  public String on(final String codeFragment) {
+  @NotNull public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
 

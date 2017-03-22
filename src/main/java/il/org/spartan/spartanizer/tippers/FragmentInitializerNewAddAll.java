@@ -43,12 +43,12 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
 
   private static final long serialVersionUID = -228096256168103399L;
 
-  @NotNull
-  @Override public String description(final VariableDeclarationFragment ¢) {
+  @NotNull @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable '" + name(¢) + "' into next statement";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final Statement nextStatement,
+      final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
         || wizard.forbiddenOpOnPrimitive(f, nextStatement))
       return null;
@@ -157,8 +157,7 @@ public final class FragmentInitializerNewAddAll extends ReplaceToNextStatement<V
     return $.size() != 1 ? null : first($);
   }
 
-  @NotNull
-  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+  @NotNull static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

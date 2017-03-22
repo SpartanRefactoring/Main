@@ -22,8 +22,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 1374481738232963085L;
 
-  @NotNull
-  @Override public String description(final Modifier ¢) {
+  @NotNull @Override public String description(final Modifier ¢) {
     return "Remove redundant [" + ¢ + "] modifier";
   }
 
@@ -31,8 +30,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     return "Remove redundant modifier";
   }
 
-  @NotNull
-  @Override public Tip tip(@NotNull final Modifier ¢) {
+  @NotNull @Override public Tip tip(@NotNull final Modifier ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);

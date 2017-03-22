@@ -28,8 +28,7 @@ public interface ExpanderCategory {
     return ExpanderGroup.find(this);
   }
 
-  @NotNull
-  static String getLabel(@NotNull final Class<? extends ExpanderCategory> ¢) {
+  @NotNull static String getLabel(@NotNull final Class<? extends ExpanderCategory> ¢) {
     return system.className(¢);
   }
 
@@ -42,8 +41,7 @@ public interface ExpanderCategory {
   interface Clearification extends Nominal {
     String label = "adding brackets or some chars which might make the code clearer";
 
-    @NotNull
-    @Override default String description() {
+    @NotNull @Override default String description() {
       return label;
     }
   }
@@ -51,8 +49,7 @@ public interface ExpanderCategory {
   interface Explanation extends Nominal {
     String label = "expanding a statement to clearer information, though longer";
 
-    @NotNull
-    @Override default String description() {
+    @NotNull @Override default String description() {
       return label;
     }
   }
@@ -60,8 +57,7 @@ public interface ExpanderCategory {
   interface Ternarization extends Nominal {
     String label = "ternary arguments";
 
-    @NotNull
-    @Override default String description() {
+    @NotNull @Override default String description() {
       return label;
     }
   }
@@ -85,11 +81,9 @@ public interface ExpanderCategory {
       return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-    @NotNull
-    private final Class<? extends ExpanderCategory> clazz;
+    @NotNull private final Class<? extends ExpanderCategory> clazz;
     final String id;
-    @NotNull
-    final String label;
+    @NotNull final String label;
 
     ExpanderGroup(@NotNull final Class<? extends ExpanderCategory> clazz) {
       this.clazz = clazz;

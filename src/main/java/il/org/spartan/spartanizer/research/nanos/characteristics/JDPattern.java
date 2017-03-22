@@ -90,8 +90,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $.inner;
   }
 
-  @NotNull
-  static Collection<String> getInfluenced(final MethodDeclaration root, @NotNull final Collection<String> ps) {
+  @NotNull static Collection<String> getInfluenced(final MethodDeclaration root, @NotNull final Collection<String> ps) {
     @NotNull final Collection<String> $ = new HashSet<>(ps);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     body(root).accept(new ASTVisitor(true) {
@@ -116,8 +115,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $;
   }
 
-  @NotNull
-  protected static String extractName(@NotNull final Expression root) {
+  @NotNull protected static String extractName(@NotNull final Expression root) {
     @NotNull final StringBuilder $ = new StringBuilder();
     // noinspection SameReturnValue
     root.accept(new ASTVisitor(true) {

@@ -22,8 +22,7 @@ public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpr
     return ¢.hasParentheses() && az.variableDeclrationFragment(onlyOne(parameters(¢))) != null;
   }
 
-  @NotNull
-  @Override public String description(final LambdaExpression ¢) {
+  @NotNull @Override public String description(final LambdaExpression ¢) {
     return "Remove parenthesis around " + onlyOne(parameters(¢)) + " paramter";
   }
 

@@ -29,8 +29,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     implements TipperCategory.Dollarization {
   private static final long serialVersionUID = 5418563334058087855L;
 
-  @NotNull
-  @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @NotNull @Override public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
@@ -71,12 +70,9 @@ abstract class AbstractRenamePolicy {
   }
 
   private final MethodDeclaration inner;
-  @NotNull
-  final List<SimpleName> localVariables;
-  @NotNull
-  final List<SingleVariableDeclaration> parameters;
-  @Nullable
-  final List<ReturnStatement> returnStatements;
+  @NotNull final List<SimpleName> localVariables;
+  @NotNull final List<SingleVariableDeclaration> parameters;
+  @Nullable final List<ReturnStatement> returnStatements;
 
   AbstractRenamePolicy(final MethodDeclaration inner) {
     @NotNull final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
@@ -85,8 +81,7 @@ abstract class AbstractRenamePolicy {
     returnStatements = prune(explorer.returnStatements());
   }
 
-  @Nullable
-  abstract SimpleName innerSelectReturnVariable();
+  @Nullable abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
@@ -107,7 +102,8 @@ class Aggressive extends AbstractRenamePolicy {
     return $;
   }
 
-  private static boolean noRivals(final SimpleName candidate, @NotNull final Collection<SimpleName> ns, @NotNull final Collection<ReturnStatement> ss) {
+  private static boolean noRivals(final SimpleName candidate, @NotNull final Collection<SimpleName> ns,
+      @NotNull final Collection<ReturnStatement> ss) {
     return ns.stream().allMatch(λ -> λ == candidate || score(λ, ss) < score(candidate, ss));
   }
 
@@ -119,8 +115,7 @@ class Aggressive extends AbstractRenamePolicy {
     super(inner);
   }
 
-  @Nullable
-  @Override SimpleName innerSelectReturnVariable() {
+  @Nullable @Override SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
 }

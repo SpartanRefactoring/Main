@@ -12,13 +12,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-02-02 */
 class Factor {
-  @NotNull
-  static Factor divide(final Expression ¢) {
+  @NotNull static Factor divide(final Expression ¢) {
     return new Factor(true, ¢);
   }
 
-  @NotNull
-  static Factor times(final Expression ¢) {
+  @NotNull static Factor times(final Expression ¢) {
     return new Factor(false, ¢);
   }
 

@@ -26,18 +26,15 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -2175075259560385549L;
 
-  @NotNull
-  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
+  @NotNull @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();
   }
 
-  @NotNull
-  @Override public String description() {
+  @NotNull @Override public String description() {
     return "eliminate redundant assignment";
   }
 
-  @NotNull
-  @Override public Example[] examples() {
+  @NotNull @Override public Example[] examples() {
     return new Example[] { //
         convert("x = 1; x = 2;") //
             .to("x = 2;"), //
@@ -48,8 +45,8 @@ public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatemen
     };
   }
 
-  @Nullable
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a, @NotNull final Statement nextStatement, final TextEditGroup g) {
+  @Nullable @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a, @NotNull final Statement nextStatement,
+      final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(λ -> az.expressionStatement(λ)) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);

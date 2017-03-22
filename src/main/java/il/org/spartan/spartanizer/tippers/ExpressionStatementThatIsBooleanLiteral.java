@@ -25,12 +25,10 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   private List<Expression> arguments;
   private MethodInvocation methodInvocation;
   private Expression first;
-  @Nullable
-  private BooleanLiteral booleanLiteral;
+  @Nullable private BooleanLiteral booleanLiteral;
   private ExpressionStatement expressionStatement;
 
-  @NotNull
-  @Override public String description(final ExpressionStatement ¢) {
+  @NotNull @Override public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
 

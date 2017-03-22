@@ -48,8 +48,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     return $;
   }
 
-  @NotNull
-  @Override public String description(final Block ¢) {
+  @NotNull @Override public String description(final Block ¢) {
     return "Simplify block with  " + extract.statements(¢).size() + " sideEffects";
   }
 
