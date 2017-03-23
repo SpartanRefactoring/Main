@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @since 2016-12-27 */
 @Deprecated
 public class Table1To3Statements extends DeprecatedFolderASTVisitor {
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   protected static final int MIN_STATEMENTS_REPORTED = 1;
   protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();

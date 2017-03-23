@@ -22,7 +22,7 @@ public class Table_NanosByCategories {
   }
 
   public void go() {
-    final List<Tipper<? extends ASTNode>>[] implementation = new SpartAnalyzer().toolbox.implementation;
+    final List<Tipper<? extends ASTNode>>[] implementation = new SpartanAnalyzer().toolbox.implementation;
     @NotNull final Map<String, Set<String>> categories = new TreeMap<>();
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)

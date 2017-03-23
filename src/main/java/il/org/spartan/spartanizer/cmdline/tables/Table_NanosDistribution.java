@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-29 */
 public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
-  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   private static final Map<Integer, Table> writers = new HashMap<>();
   private static final NanoPatternsOccurencesStatistics npStatistics = new NanoPatternsOccurencesStatistics();
   private static final CleanerVisitor cleanerVisitor = new CleanerVisitor();

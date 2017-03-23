@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
-  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   private static final Collection<JavadocMarkerNanoPattern> excluded = as.list(new HashCodeMethod(), new ToStringMethod());
