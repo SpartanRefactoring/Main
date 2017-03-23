@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-03 */
-public abstract class $FragementInitializerAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $FragementInitializerAndStatement extends GoToNextStatement<VariableDeclarationFragment> {
   private static final long serialVersionUID = 1L;
   protected VariableDeclarationFragment fragment;
   protected Statement nextStatement;

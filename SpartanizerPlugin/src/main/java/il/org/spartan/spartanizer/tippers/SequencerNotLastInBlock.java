@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** Convert {@code throw X;statement;} to {@code throw X;}.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
-public final class SequencerNotLastInBlock<S extends Statement> extends ReplaceToNextStatement<S>//
+public final class SequencerNotLastInBlock<S extends Statement> extends GoToNextStatement<S>//
     implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -7502939324573443092L;
 

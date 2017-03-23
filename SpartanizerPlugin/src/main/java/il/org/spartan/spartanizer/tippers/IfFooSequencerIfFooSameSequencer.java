@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
-public final class IfFooSequencerIfFooSameSequencer extends ReplaceToNextStatement<IfStatement>//
+public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<IfStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 627788367860581003L;
 
