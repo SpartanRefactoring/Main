@@ -19,6 +19,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -541,15 +542,11 @@ public enum az {
    * minus.
    * @author Yossi Gil */
   public interface throwing {
-    static String chop¢necessaryQuestionMark(@NotNull final String ¢) {
-      return ¢.substring(0, ¢.length() - 1);
-    }
-
     static double double¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
-          : iz.numberLiteral(¢) ? double¢(chop¢necessaryQuestionMark(token(az.numberLiteral(¢))))
-              : -double¢(chop¢necessaryQuestionMark(token(az.prefixExpression(¢))));
+          : iz.numberLiteral(¢) ? double¢(system.chopLast(token(az.numberLiteral(¢))))
+              : -double¢(system.chopLast(token(az.prefixExpression(¢))));
     }
 
     static double double¢(@NotNull final String token) throws NumberFormatException {
@@ -568,8 +565,8 @@ public enum az {
     static long long¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
-          : !iz.numberLiteral(¢) ? -long¢(chop¢necessaryQuestionMark(token(¢)))
-              : long¢(iz.intType(¢) ? token(¢) : chop¢necessaryQuestionMark(token(¢)));
+          : !iz.numberLiteral(¢) ? -long¢(system.chopLast(token(¢)))
+              : long¢(iz.intType(¢) ? token(¢) : system.chopLast(token(¢)));
     }
 
     static long long¢(@NotNull final String token) throws NumberFormatException {

@@ -307,6 +307,7 @@ public class Toolbox {
         .add(FieldDeclaration.class, //
             new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
+            new FieldSerialVersionUIDToHexadecimal(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
