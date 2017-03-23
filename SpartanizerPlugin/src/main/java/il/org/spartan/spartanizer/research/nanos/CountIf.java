@@ -34,18 +34,6 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return "Count elements in collection that satisfy some predicate";
   }
 
-  @Override @NotNull public String technicalName() {
-    return "CountEInCSatisfyingX";
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
-  }
-
   @Override @NotNull public String nanoName() {
     return Aggregate.class.getSimpleName();
   }

@@ -39,4 +39,13 @@ public class HoldsForAllTest {
         .gives("$ = Y.stream().allMatch(λ -> !(whatever));")//
         .stays();
   }
+
+  @Test public void e() {
+    trimmingOf("  for (BroadcasterCacheInspector ¢ : inspectors) if (!¢.inspect(m)) return false;")//
+        .using(EnhancedForStatement.class, new HoldsForAll())//
+        .gives("returnIf(inspectors.stream().allMatch(¢->!(!¢.inspect(m))));") //
+        .gives("returnIf(inspectors.stream().allMatch(λ->!(!λ.inspect(m))));") //
+        .gives("returnIf(inspectors.stream().allMatch(λ->λ.inspect(m)));") //
+        .stays();
+  }
 }
