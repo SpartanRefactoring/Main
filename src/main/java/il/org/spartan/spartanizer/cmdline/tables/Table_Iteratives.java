@@ -7,7 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -48,7 +47,7 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
     summaryWriter.close();
   }
 
-  public static void logNPInfo(@NotNull final ASTNode n, final String np) {
+  public static void logNPInfo(final ASTNode n, final String np) {
     if (!iz.loop(n))
       return;
     all.logNPInfo(n, np);
@@ -62,7 +61,7 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
     if (!excludeMethod(¢))
       try {
         log(spartanalyze(¢ + ""));
-      } catch (@NotNull @SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
+      } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
         System.out.print("X");
       }
     return false;
@@ -70,7 +69,7 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
 
   private static void log(final String spartanized) {
     into.cu(spartanized).accept(new ASTVisitor(true) {
-      @Override public void preVisit(@NotNull final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (!iz.loop(¢))
           return;
         all.logNode(¢);

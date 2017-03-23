@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -98,7 +97,7 @@ public final class izTest {
   }
 
   @Test public void comparisonTest() {
-    @Nullable final Expression e = null;
+    final Expression e = null;
     assert !iz.comparison(e);
     assert iz.comparison(e("x==5"));
     assert iz.comparison(e("x!=5"));
@@ -138,7 +137,7 @@ public final class izTest {
   }
 
   @Test public void emptyStringLiteral3() {
-    @Nullable final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
+    final StringLiteral ¢ = az.stringLiteral(e(EMPTY_STRING));
     assert ¢ != null && ¢.getLiteralValue() != null && ¢.getLiteralValue().isEmpty();
   }
 

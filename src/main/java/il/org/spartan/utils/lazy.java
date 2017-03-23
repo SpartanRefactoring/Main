@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 /** lazy initialization as in {@code
     static final lazy<Collection<Thing>> things = lazy.get(() -> as.list(//
       new Thing("one"), //
@@ -16,7 +14,7 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
 public interface lazy<@¢ T> extends Supplier<T> {
-  @NotNull static <T> lazy<T> get(@NotNull @¢ final Supplier<T> ¢) {
+  static <T> lazy<T> get(@¢ final Supplier<T> ¢) {
     return new lazy<T>() {
       /** Cached value; invalid cache if {@code null} */
       T $;

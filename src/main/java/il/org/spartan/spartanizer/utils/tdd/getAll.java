@@ -7,12 +7,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO Ori Marcovitch please add a description
+/** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @author Dor Ma'ayan
  * @author Raviv Rachmiel
@@ -28,10 +27,10 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  @Nullable public static Set<String> invocations(@Nullable final MethodInvocation ¢) {
+  public static Set<String> invocations(final MethodInvocation ¢) {
     if (¢ == null)
       return null;
-    @NotNull final Set<String> $ = new TreeSet<>();
+    final Set<String> $ = new TreeSet<>();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢¢) {
@@ -48,15 +47,15 @@ public enum getAll {
    * @author Dor Ma'ayan
    * @param d JD
    * @return List of the names of the methods */
-  @Nullable public static Set<String> invocations(@Nullable final MethodDeclaration ¢) {
+  public static Set<String> invocations(final MethodDeclaration ¢) {
     if (¢ == null)
       return null;
-    @NotNull final Set<String> $ = new TreeSet<>();
+    final Set<String> $ = new TreeSet<>();
     if (statements(body(¢)).isEmpty())
       return $;
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final MethodInvocation ¢¢) {
+      @Override public boolean visit(final MethodInvocation ¢¢) {
         $.add(¢¢.getName() + "");
         return true;
       }
@@ -69,10 +68,10 @@ public enum getAll {
    * @author Kfir Marx
    * @param ¢ Block
    * @return List of the names in the block */
-  @Nullable public static List<Name> names(@Nullable final Block b) {
+  public static List<Name> names(final Block b) {
     if (b == null)
       return null;
-    @NotNull final List<Name> $ = new ArrayList<>();
+    final List<Name> $ = new ArrayList<>();
     // noinspection SameReturnValue
     b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
@@ -87,10 +86,10 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  @Nullable public static List<InstanceofExpression> instanceofs(@Nullable final MethodDeclaration d) {
+  public static List<InstanceofExpression> instanceofs(final MethodDeclaration d) {
     if (d == null)
       return null;
-    @NotNull final List<InstanceofExpression> $ = new ArrayList<>();
+    final List<InstanceofExpression> $ = new ArrayList<>();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final InstanceofExpression node) {
@@ -107,10 +106,10 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  @Nullable public static Collection<CastExpression> casts(@Nullable final MethodDeclaration d) {
+  public static Collection<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    @NotNull final Collection<CastExpression> $ = new ArrayList<>();
+    final Collection<CastExpression> $ = new ArrayList<>();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final CastExpression node) {
@@ -126,10 +125,10 @@ public enum getAll {
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
-  @Nullable public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration d) {
+  public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
     if (d == null)
       return null;
-    @NotNull final List<VariableDeclaration> $ = new ArrayList<>();
+    final List<VariableDeclaration> $ = new ArrayList<>();
     d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
@@ -145,18 +144,18 @@ public enum getAll {
    * @param ¢ TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  @Nullable public static List<String> publicFields(@Nullable final TypeDeclaration ¢) {
+  public static List<String> publicFields(final TypeDeclaration ¢) {
     if (¢ == null)
       return null;
-    @NotNull final List<String> $ = new ArrayList<>();
+    final List<String> $ = new ArrayList<>();
     ¢.accept(publicFieldsCollector($));
     return $;
   }
 
-  @NotNull private static ASTVisitor publicFieldsCollector(@NotNull final Collection<String> $) {
+  private static ASTVisitor publicFieldsCollector(final Collection<String> $) {
     // noinspection SameReturnValue
     return new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final FieldDeclaration d) {
+      @Override public boolean visit(final FieldDeclaration d) {
         if (iz.public¢(d))
           $.addAll(fragments(d).stream().map(λ -> step.name(λ) + "").collect(toList()));
         return true;
@@ -169,10 +168,10 @@ public enum getAll {
    * @param CompilationUnit
    * @author RoeiRaz
    * @author RoeyMaor */
-  @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
+  public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    @NotNull final List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = new ArrayList<>();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
@@ -188,13 +187,13 @@ public enum getAll {
    * @author yonzarecki
    * @author rodedzats
    * @author zivizhar */
-  @NotNull public static List<String> privateFields(@Nullable final TypeDeclaration d) {
-    @NotNull final List<String> $ = new ArrayList<>();
+  public static List<String> privateFields(final TypeDeclaration d) {
+    final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) { // traverse all FieldDeclaration
-      @Override public boolean visit(@NotNull final FieldDeclaration current) {
+      @Override public boolean visit(final FieldDeclaration current) {
         if (current.getModifiers() == Modifier.PRIVATE)
           $.addAll(fragments(current).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         return true;

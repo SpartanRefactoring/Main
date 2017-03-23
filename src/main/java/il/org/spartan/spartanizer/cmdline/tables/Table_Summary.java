@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -51,20 +50,20 @@ public class Table_Summary extends NanoTable {
           writer = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+      @Override public boolean visit(final CompilationUnit ¢) {
         try {
           ¢.accept(new AnnotationCleanerVisitor());
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
           logAfterSpartanization(into.cu(spartanzied));
           analyze.apply(spartanzied);
-        } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+        } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           ___.unused(__);
         }
         return true;
       }
 
-      void logAfterSpartanization(@NotNull final CompilationUnit ¢) {
+      void logAfterSpartanization(final CompilationUnit ¢) {
         statistics.logAfterSpartanization(¢);
         npDistributionStatistics.logNode(¢);
       }

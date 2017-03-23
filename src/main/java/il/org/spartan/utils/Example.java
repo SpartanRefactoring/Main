@@ -2,11 +2,9 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 public interface Example {
   interface Converts extends Example {
-    @NotNull String from();
+    String from();
 
     String to();
   }
@@ -15,12 +13,12 @@ public interface Example {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-07 */
   interface Converter {
-    @NotNull Converts to(String to);
+    Converts to(String to);
   }
 
-  static Converter convert(@NotNull final String from) {
+  static Converter convert(final String from) {
     return to -> new Converts() {
-      @NotNull @Override public String from() {
+      @Override public String from() {
         return from;
       }
 

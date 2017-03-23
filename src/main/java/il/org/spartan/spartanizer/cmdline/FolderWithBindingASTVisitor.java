@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -18,37 +17,37 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Dec 16, 2016 */
 public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVisitor implements IApplication {
-  @Override void visit(@NotNull final File ¢) {
+  @Override void visit(final File ¢) {
     dotter.click();
     collect(¢);
   }
 
-  void collect(@NotNull final File f) {
+  void collect(final File f) {
     try {
       final ICompilationUnit u = openCompilationUnit(f);
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setResolveBindings(true);
       parser.setSource(u);
       collect(az.compilationUnit(parser.createAST(null)));
-    } catch (@NotNull final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       ¢.printStackTrace();
-    } catch (@NotNull final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, f + "");
     }
   }
 
-  static String getPackageNameFromSource(@NotNull final String source) {
+  static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource($.createAST(null));
   }
 
-  private static String getPackageNameFromSource(@NotNull final ASTNode n) {
-    @NotNull final Wrapper<String> $ = new Wrapper<>("");
+  private static String getPackageNameFromSource(final ASTNode n) {
+    final Wrapper<String> $ = new Wrapper<>("");
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
+      @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -66,7 +65,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     ___.unused(arg0);
     try {
       prepareTempIJavaProject();
-    } catch (@NotNull final CoreException ¢) {
+    } catch (final CoreException ¢) {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
@@ -81,13 +80,13 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     try {
       javaProject.close();
       javaProject.getProject().delete(true, null);
-    } catch (@NotNull final CoreException ¢) {
+    } catch (final CoreException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws IOException, JavaModelException {
-    @NotNull final String $ = FileUtils.read(¢);
+  ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
+    final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
@@ -107,7 +106,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-    @NotNull final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }

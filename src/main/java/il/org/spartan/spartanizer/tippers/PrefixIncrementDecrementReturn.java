@@ -8,7 +8,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -28,18 +27,17 @@ public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -7169963565517331905L;
 
-  @NotNull @Override public String description(final PrefixExpression ¢) {
+  @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;
-    @Nullable final Statement parent = az.statement(x.getParent());
+    final Statement parent = az.statement(x.getParent());
     if (parent == null || parent instanceof ForStatement)
       return null;
-    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(operand(x), expression(s)))
       return null;
     $.remove(parent, g);

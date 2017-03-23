@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,21 +21,21 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends Replac
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = -9215176071220857924L;
 
-  @NotNull @Override public String description(@NotNull final IfStatement ¢) {
+  @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
-    @NotNull final Statement then = then(s);
-    @Nullable final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
+    final Statement then = then(s);
+    final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     $.replace(deleteMe, make.emptyStatement(deleteMe), g);
     Tippers.remove($, nextStatement, g);
     final IfStatement newIf = copy.of(s);
-    @Nullable final Block block = az.block(then(newIf));
+    final Block block = az.block(then(newIf));
     if (block != null)
       Tippers.removeLast(statements(block));
     else

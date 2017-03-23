@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -25,14 +24,14 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   @Override public boolean canTip(final InstanceofExpression ¢) {
     if (!(type(¢) instanceof SimpleType))
       return false;
-    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+    final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
-  @NotNull @Override public Fragment pattern(@NotNull final InstanceofExpression ¢) {
-    return new Fragment(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @Override public Tip pattern(final InstanceofExpression ¢) {
+    return new Tip(description(¢), ¢, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
         if (!izMethodExist(¢))
           addizMethod(¢, r, g);
@@ -40,7 +39,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     };
   }
 
-  @NotNull static String izMethodName(final InstanceofExpression ¢) {
+  static String izMethodName(final InstanceofExpression ¢) {
     return "iz" + type(¢);
   }
 
@@ -53,21 +52,21 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return "boolean".equals(returnType + "");
   }
 
-  static void addizMethod(final InstanceofExpression ¢, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     wizard.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
-  @Nullable private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
+  private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
     return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
 
-  @Nullable private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
+  private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // smaybe in the future change to iz.java in package which will
     // be created automatically...
     return yieldAncestors.untilContainingType().from(¢);
   }
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
     return "replace instanceof with iz()";
   }
 }

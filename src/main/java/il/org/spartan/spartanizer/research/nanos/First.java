@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -23,11 +22,11 @@ public final class First extends NanoPatternTipper<MethodInvocation> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final MethodInvocation ¢) {
+  @Override public Tip pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull @Override public Category category() {
+  @Override public Category category() {
     return Category.Iterative;
   }
 

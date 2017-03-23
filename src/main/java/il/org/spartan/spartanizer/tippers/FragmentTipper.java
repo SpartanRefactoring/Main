@@ -31,9 +31,7 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
   private static final long serialVersionUID = 1L;
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
-    if (haz.annotation(f))
-      return false;
-    if (f == null)
+    if (haz.annotation(f) || f == null)
       return false;
     name = object().getName();
     parent = az.variableDeclarationStatement(f.getParent());
@@ -42,7 +40,7 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
     return true;
   }
 
-  @Nullable @Override public Fragment tip(@Nullable final VariableDeclarationFragment ¢) {
+  @Override @Nullable public Fragment tip(@Nullable final VariableDeclarationFragment ¢) {
     System.err.println("Tipping " + ¢ + ":" + myClass());
     assert ¢ != null;
     assert ¢ == object();

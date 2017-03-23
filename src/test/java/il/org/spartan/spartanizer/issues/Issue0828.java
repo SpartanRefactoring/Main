@@ -5,7 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,7 +18,7 @@ public class Issue0828 {
   ForStatement simpleFor, trueFor, trueStatementFor, obviouseTrueStatement, numEqualTrueStatement, strEqualTrueStatement, falseFor;
   ForTrueConditionRemove forTrueConditionRemove;
 
-  @NotNull String description() {
+  String description() {
     return forTrueConditionRemove.description();
   }
 

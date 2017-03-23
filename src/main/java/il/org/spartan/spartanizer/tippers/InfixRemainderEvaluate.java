@@ -8,7 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -36,7 +35,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
       if (type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
         throw new NumberFormatException();
       $ = az.throwing.int¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for (final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         final int int¢ = az.throwing.int¢(¢);
@@ -44,26 +43,26 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= int¢;
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
   }
 
-  @Override long evaluateLong(@NotNull final List<Expression> xs) throws IllegalArgumentException {
-    for (@NotNull final Expression ¢ : xs)
+  @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
+    for (final Expression ¢ : xs)
       if (type.of(¢) == Certain.DOUBLE)
         throw new NumberFormatException("Expected long or int in " + xs + " but found: " + ¢);
     long $ = 0;
     try {
       $ = az.throwing.long¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for (final Expression ¢ : rest(xs)) {
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)
           throw new IllegalArgumentException("Remainder in division by zero is undefined");
         $ %= long¢;
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

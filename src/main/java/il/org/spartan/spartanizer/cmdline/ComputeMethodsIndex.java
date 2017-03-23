@@ -6,7 +6,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -41,7 +40,7 @@ public class ComputeMethodsIndex extends DeprecatedFolderASTVisitor {
   @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);
-    @NotNull final CSVLineWriter writer = new CSVLineWriter(makeFile("node-types"));
+    final CSVLineWriter writer = new CSVLineWriter(makeFile("node-types"));
     int n = 0;
     for (final String key : methods.keySet()) {
       writer//

@@ -24,7 +24,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final String IMAGE_ID = "widget";
   static final AtomicBoolean active = new AtomicBoolean(false);
 
-  @Nullable @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     if (!active.get()) {
       active.set(true);
       launchWidget(λ -> new Point(λ.x - R, λ.y - R));

@@ -5,7 +5,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -35,6 +34,6 @@ public enum Coupling {
 
   @FunctionalInterface
   interface Inner {
-    @NotNull Coupling withRespectTo(ASTNode to);
+    Coupling withRespectTo(ASTNode to);
   }
 }

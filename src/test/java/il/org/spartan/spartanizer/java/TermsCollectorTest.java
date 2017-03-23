@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -13,7 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -50,7 +49,7 @@ public final class TermsCollectorTest {
   }
 
   @Test public void test04() {
-    @NotNull final InfixExpression i = i("a-c");
+    final InfixExpression i = i("a-c");
     azzert.that(i.getOperator(), is(wizard.MINUS2));
     azzert.that(left(i), iz("a"));
     azzert.that(right(i), iz("c"));
@@ -60,7 +59,7 @@ public final class TermsCollectorTest {
   }
 
   @Test public void test05() {
-    @NotNull final InfixExpression i = i("a-c");
+    final InfixExpression i = i("a-c");
     azzert.that(i.getOperator(), is(wizard.MINUS2));
     azzert.that(left(i), iz("a"));
     azzert.that(right(i), iz("c"));
@@ -70,7 +69,7 @@ public final class TermsCollectorTest {
   }
 
   @Test public void test06() {
-    @NotNull final InfixExpression i = i("a + b -c");
+    final InfixExpression i = i("a + b -c");
     azzert.that(i.getOperator(), is(wizard.MINUS2));
     azzert.that(az.infixExpression(left(i)).getOperator(), is(wizard.PLUS2));
     c.collect(i);

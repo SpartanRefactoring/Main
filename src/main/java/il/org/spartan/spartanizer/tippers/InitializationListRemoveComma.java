@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -27,7 +26,7 @@ public final class InitializationListRemoveComma extends ReplaceCurrentNode<Arra
     return "Remove Unecessary ','";
   }
 
-  @NotNull @Override public ASTNode replacement(@NotNull final ArrayInitializer $) {
+  @Override public ASTNode replacement(final ArrayInitializer $) {
     final List<?> expressions = $.expressions();
     if (!expressions.isEmpty())
       expressions.remove(expressions.size() - 1);

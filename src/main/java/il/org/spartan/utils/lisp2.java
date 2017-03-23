@@ -2,23 +2,21 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
-  @NotNull static String nth(final int i, @NotNull final Collection<?> os) {
+  static String nth(final int i, final Collection<?> os) {
     return lisp2.nth(i, os.size());
   }
 
-  @NotNull static String nth(final int i, final int n) {
+  static String nth(final int i, final int n) {
     return nth(i + "", n + "");
   }
 
-  @NotNull static String nth(final String s, final String n) {
+  static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
   }
 
@@ -27,7 +25,7 @@ public interface lisp2 extends lisp {
    * @param i1 the index of the first element
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
-  @NotNull static <T> List<T> swap(@NotNull final List<T> $, final int i1, final int i2) {
+  static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
     if (i1 < $.size() && i2 < $.size()) {
       final T t = $.get(i1);
       lisp.replace($, $.get(i2), i1);

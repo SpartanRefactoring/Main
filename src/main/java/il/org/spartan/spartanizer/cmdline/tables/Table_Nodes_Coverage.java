@@ -4,7 +4,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -32,14 +31,14 @@ public class Table_Nodes_Coverage {
         statistics.clear();
       }
     }.fire(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+      @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new AnnotationCleanerVisitor());
         try {
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
           statistics.logAfterSpartanization(into.cu(spartanzied));
           analyze.apply(spartanzied);
-        } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+        } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           ___.unused(__);
         }
         return true;

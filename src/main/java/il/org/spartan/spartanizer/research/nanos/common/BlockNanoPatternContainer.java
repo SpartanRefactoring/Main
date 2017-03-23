@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.nanos.common;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.*;
 
@@ -17,8 +16,7 @@ public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
     addAll(Arrays.asList(ts));
   }
 
-  @NotNull public BlockNanoPatternContainer statementsPattern(@NotNull final String pattern, @NotNull final String replacement,
-      @NotNull final String description) {
+  public BlockNanoPatternContainer statementsPattern(final String pattern, final String replacement, final String description) {
     add(TipperFactory.statementsPattern(pattern, replacement, description));
     return this;
   }

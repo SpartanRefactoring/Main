@@ -1,34 +1,32 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.utils.Proposition.*;
 
 /** Render {@link Proposition} using Java/C/C++ notation.
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-19 */
 public class PropositionJavaNotation extends PropositionInfixNotation {
-  @NotNull @Override protected String close() {
+  @Override protected String close() {
     return ")";
   }
 
-  @NotNull @Override protected String empty() {
+  @Override protected String empty() {
     return "";
   }
 
-  @NotNull @Override protected String inter(@SuppressWarnings("unused") final And __) {
+  @Override protected String inter(@SuppressWarnings("unused") And __) {
     return " && ";
   }
 
-  @NotNull @Override protected String inter(@SuppressWarnings("unused") final Or __) {
+  @Override protected String inter(@SuppressWarnings("unused") Or __) {
     return " || ";
   }
 
-  @NotNull @Override protected String negation() {
+  @Override protected String negation() {
     return "!";
   }
 
-  @NotNull @Override protected String open() {
+  @Override protected String open() {
     return "(";
   }
 }

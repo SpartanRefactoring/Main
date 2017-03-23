@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -26,11 +25,11 @@ public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parent(¢));
   }
 
-  @Nullable @Override public Fragment pattern(final CatchClause ¢) {
+  @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
 
-  @NotNull @Override public Category category() {
+  @Override public Category category() {
     return Category.Exception;
   }
 

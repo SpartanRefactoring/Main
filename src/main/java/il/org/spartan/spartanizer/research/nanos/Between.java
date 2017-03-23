@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -34,7 +33,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   }
 
   @Override public boolean canTip(final InfixExpression $) {
-    @NotNull final List<Expression> os = extendedOperands($);
+    final List<Expression> os = extendedOperands($);
     return os.isEmpty() ? between(left($), right($)) : IntStream.range(0, os.size() - 1).anyMatch(λ -> between(os.get(λ), os.get(λ + 1)));
   }
 
@@ -42,32 +41,32 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
     return between(az.infixExpression(x1), az.infixExpression(x2));
   }
 
-  private static boolean between(@NotNull final InfixExpression x1, @NotNull final InfixExpression x2) {
+  private static boolean between(final InfixExpression x1, final InfixExpression x2) {
     return anyTips(inEqualities, x1) //
         && anyTips(inEqualities, x2) //
         && ((firstTipper(inEqualities, x1).getMatching(x1, "$X1") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X2") + "")
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
 
-  @Nullable @Override public Fragment pattern(@SuppressWarnings("unused") final InfixExpression $) {
+  @Override public Tip pattern(@SuppressWarnings("unused") final InfixExpression $) {
     return null;
   }
 
-  @Nullable protected static MethodInvocation replacement(final Expression x1, final Expression x2) {
+  protected static MethodInvocation replacement(final Expression x1, final Expression x2) {
     return replacement(az.infixExpression(x1), az.infixExpression(x2));
   }
 
-  @Nullable private static MethodInvocation replacement(@NotNull final InfixExpression x1, @NotNull final InfixExpression x2) {
+  private static MethodInvocation replacement(final InfixExpression x1, final InfixExpression x2) {
     return (firstTipper(inEqualities, x1).getMatching(x1, "$X1") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X2") + "")
         ? replacementAux(firstTipper(inEqualities, x1).getMatching(x1, "$X1"), firstTipper(inEqualities, x2).getMatching(x2, "$X2"))
         : replacementAux(firstTipper(inEqualities, x2).getMatching(x2, "$X1"), firstTipper(inEqualities, x1).getMatching(x1, "$X2"));
   }
 
-  @Nullable private static MethodInvocation replacementAux(final ASTNode x1, final ASTNode x2) {
+  private static MethodInvocation replacementAux(final ASTNode x1, final ASTNode x2) {
     return replacementAux(az.infixExpression(x1), az.infixExpression(x2));
   }
 
-  @Nullable private static MethodInvocation replacementAux(@NotNull final InfixExpression lower, @NotNull final InfixExpression upper) {
+  private static MethodInvocation replacementAux(final InfixExpression lower, final InfixExpression upper) {
     return az.methodInvocation(wizard.ast("between(" + firstTipper(inEqualities, lower).getMatching(lower, "$X1") + ", "
         + firstTipper(inEqualities, upper).getMatching(upper, "$X2") + ")"));
   }

@@ -7,7 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,19 +26,19 @@ public final class BlockSingletonVariableDeclarationStatementRemoveBuggy extends
     return "Remove the block";
   }
 
-  @NotNull @Override public String description(final Block ¢) {
+  @Override public String description(final Block ¢) {
     return "Remove the block: " + trivia.gist(¢);
   }
 
-  @Override public Fragment tip(@NotNull final Block n) {
-    @NotNull final List<Statement> $ = statements(n);
+  @Override public Tip tip(final Block n) {
+    final List<Statement> $ = statements(n);
     if ($.isEmpty())
       return null;
     for (final Statement ¢ : $)
       if (!iz.variableDeclarationStatement(¢))
         return null;
-    return new Fragment(description(), n, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+    return new Tip(description(), n, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         $.forEach(λ -> r.remove(λ, g));
       }
     };

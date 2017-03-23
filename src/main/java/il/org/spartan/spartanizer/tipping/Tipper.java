@@ -7,7 +7,6 @@ import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -20,109 +19,105 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
-public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Fragment> //
+public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
   // TODO Yossi: decide whether to move this to {@link Example} --or
   public static Example.Ignores ignores(final String code) {
     return () -> code;
   }
 
-  @Override public boolean equals(@NotNull final Object ¢) {
+  @SuppressWarnings("unchecked")
+  protected Class<Tipper<N>> myClass() {
+    return (Class<Tipper<N>>) getClass();
+  }
+
+  @Override public boolean equals(final Object ¢) {
     return getClass().equals(¢.getClass());
   }
 
   private static final long serialVersionUID = -2252675511987504571L;
 
-  @NotNull @Override public String[] akas() {
-    return new String[] { nanoName() };
+  @Override public String[] akas() {
+    return new String[] { className() };
   }
 
-  /** Determines whether this instance can make a {@link Fragment} for the
-   * parameter instance.
+  /** Determines whether this instance can make a {@link Tip} for the parameter
+   * instance.
    * @param e JD
    * @return whether the argument is noneligible for the simplification offered
    *         by this object.
    * @see #check(InfixExpression) */
-  public final boolean cantTip(@NotNull final N ¢) {
+  public final boolean cantTip(final N ¢) {
     return !check(¢);
   }
 
-  @Override public final boolean ok(@NotNull final N ¢) {
-    assert ¢ != null;
-    System.err.println("Running in " + myClass());
+  @Override public final boolean ok(final N ¢) {
     return canTip(¢);
   }
 
   public abstract boolean canTip(N n);
 
-  @NotNull public String nanoName() {
+  public String className() {
     return getClass().getSimpleName();
   }
 
-  @Nullable @Override public String description() {
+  @Override public String description() {
     return super.description();
   }
 
-  @Nullable public abstract String description(N n);
+  public abstract String description(N n);
 
-  @NotNull @Override public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] {};
   }
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
-  @NotNull public final Class<N> myAbstractOperandsClass() {
+  public final Class<N> myAbstractOperandsClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
-  @Nullable public Class<N> myActualOperandsClass() {
-    @NotNull final Class<N> $ = myAbstractOperandsClass();
+  public Class<N> myActualOperandsClass() {
+    final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Fragment tip(@NotNull final N ¢) {
-System.err.println("Tipping of " + ¢ +": " + myClass());
-    assert ¢ != null;
+  public Tip tip(final N ¢) {
     return tip(¢, null);
   }
 
-  @Nullable @Override public final Fragment fire() {
+  @Override public final Tip fire() {
     return tip(object());
   }
 
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Fragment tip(@NotNull final N n, @Nullable final ExclusionManager m) {
-    assert n != null;
+  public Tip tip(final N n, final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  @NotNull @SuppressWarnings("unchecked") private Class<N> castClass(@NotNull final Class<?> c2) {
+  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
     return (Class<N>) c2;
   }
 
-  @NotNull private Class<N> initializeMyOperandsClass() {
-    @Nullable Class<N> $ = null;
-    for (@NotNull final Method ¢ : getClass().getMethods())
+  private Class<N> initializeMyOperandsClass() {
+    Class<N> $ = null;
+    for (final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
         $ = lowest($, ¢.getParameterTypes()[0]);
     return $ != null ? $ : castClass(ASTNode.class);
   }
 
-  private boolean isDefinedHere(@NotNull final Method ¢) {
+  private boolean isDefinedHere(final Method ¢) {
     return ¢.getDeclaringClass() == getClass();
   }
 
-  @NotNull private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
+  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
-  }
-
-  @NotNull @SuppressWarnings("unchecked") protected final Class<? extends Tipper<N>> myClass() {
-    return (Class<? extends Tipper<N>>) getClass();
   }
 
   private Class<N> myOperandsClass;

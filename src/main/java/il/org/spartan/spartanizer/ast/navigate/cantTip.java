@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -17,21 +16,21 @@ import il.org.spartan.spartanizer.tippers.*;
 public enum cantTip {
   ;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
-    @Nullable final VariableDeclarationFragment $ = hop.penultimateFragment(¢);
+    final VariableDeclarationFragment $ = hop.penultimateFragment(¢);
     return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
-    @Nullable final VariableDeclarationFragment $ = hop.penultimate(¢);
+    final VariableDeclarationFragment $ = hop.penultimate(¢);
     return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
-    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentFieldInitializerDefaultValue().check(λ));
+    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().check(λ));
   }
 
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
-    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentFieldInitializerDefaultValue().check(λ));
+    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().check(λ));
   }
 
   public static boolean forRenameInitializerToCent(final ForStatement ¢) {

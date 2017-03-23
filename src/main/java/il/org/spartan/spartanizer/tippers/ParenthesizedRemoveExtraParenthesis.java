@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -24,19 +23,19 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 4265122877786904832L;
 
-  @NotNull @Override public Fragment tip(@NotNull final ParenthesizedExpression x) {
-    return new Fragment(description(x), x, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @Override public Tip tip(final ParenthesizedExpression x) {
+    return new Tip(description(x), x, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, copy.of(expression(x)), g);
       }
     };
   }
 
-  @NotNull @Override public String description(final ParenthesizedExpression ¢) {
+  @Override public String description(final ParenthesizedExpression ¢) {
     return "remove extra parenthesis " + trivia.gist(¢);
   }
 
-  @NotNull @Override public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("((x)).f();") //
             .to("(x).f();"), //

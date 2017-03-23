@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
@@ -37,7 +36,7 @@ public class Table_RawNanoStatistics extends NanoTable {
 
   static void fillAbsents() {
     spartanalyzer.allNanoPatterns().stream()//
-        .map(Tipper::nanoName)//
+        .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> writer.col(λ, 0));
   }
@@ -56,11 +55,11 @@ public class Table_RawNanoStatistics extends NanoTable {
           writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final CompilationUnit $) {
+      @Override public boolean visit(final CompilationUnit $) {
         try {
           $.accept(new AnnotationCleanerVisitor());
           spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
-        } catch (@NotNull final IllegalArgumentException | AssertionError __) {
+        } catch (final IllegalArgumentException | AssertionError __) {
           ___.unused(__);
         }
         return super.visit($);

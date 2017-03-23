@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
@@ -26,13 +25,13 @@ class Table_Effectiveness extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
-  @NotNull static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
-    @Override public boolean visit(@NotNull final CompilationUnit $) {
+  static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
+    @Override public boolean visit(final CompilationUnit $) {
       try {
         $.accept(new AnnotationCleanerVisitor());
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
-      } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
         ___.unused(__);
       }
       return super.visit($);
@@ -73,7 +72,7 @@ class Table_Effectiveness extends NanoTable {
 
   static void fillAbsents() {
     spartanalyzer.allNanoPatterns().stream()//
-        .map(Tipper::nanoName)//
+        .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> writer.put(λ, "-"));
   }

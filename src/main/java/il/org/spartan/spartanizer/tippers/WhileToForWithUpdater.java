@@ -36,7 +36,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
         && !ForToForUpdaters.bodyDeclaresElementsOf(hop.lastStatement(body(¢)));
   }
 
-  @NotNull @Override public String description(@NotNull final WhileStatement ¢) {
+  @Override @NotNull public String description(@NotNull final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
@@ -44,7 +44,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     return ¢ != null && fitting(¢);
   }
 
-  @Nullable @Override public ASTNode replacement(@NotNull final WhileStatement ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

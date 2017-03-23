@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -15,7 +14,7 @@ public class Up {
     private static final long serialVersionUID = -1694223804190471571L;
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-      @NotNull final Expression $ = expression(az.returnStatement(onlyStatement(¢)));
+      final Expression $ = expression(az.returnStatement(onlyStatement(¢)));
       return hazOneParameter(¢)//
           && hazOneStatement(¢)//
           && notConstructor(¢)//
