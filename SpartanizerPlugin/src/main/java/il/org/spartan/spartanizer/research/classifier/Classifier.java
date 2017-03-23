@@ -24,13 +24,13 @@ public class Classifier extends ASTVisitor {
   private int forLoopsAmount;
   private static final Scanner input = new Scanner(System.in);
   private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = 1L;
+    
     {
       add(new ForEach());
     }
   };
   private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
-    static final long serialVersionUID = 1L;
+    
     {
       add(new CopyArray());
       add(new ForEachEnhanced());
