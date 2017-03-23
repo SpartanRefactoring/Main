@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.java.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturn extends $FragementAndStatement//
+public final class FragmentInitializerReturn extends $FragmentAndStatement//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 6714687738774731933L;
 
