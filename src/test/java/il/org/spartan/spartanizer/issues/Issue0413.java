@@ -63,8 +63,6 @@ public class Issue0413 {
   static class WorkInProgress {
     /** We only need this field, to keep Eclipse happy about the class not being
      * empty. */
-    
-
     /** Flavor sour is for a bit tricky case */
     @Test public void sour() {
       azzert.that(
