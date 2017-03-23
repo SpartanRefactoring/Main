@@ -6,12 +6,10 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.Proposition.*;
 
-/**
- * TODO Yossi Gil: document class 
+/** TODO Yossi Gil: document class
  * @param <R>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2017-03-19
- */
+ * @since 2017-03-19 */
 public abstract class PropositionReducer<R> extends Reduce<R> {
   public final Reduce<R> inner;
 
@@ -23,6 +21,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   protected R post(@SuppressWarnings("unused") final Proposition.P __) {
     return reduce();
   }
+
   protected R post(@SuppressWarnings("unused") final Proposition.Not __) {
     return reduce();
   }

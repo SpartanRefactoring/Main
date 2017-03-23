@@ -8,8 +8,8 @@ import org.junit.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Checking that the tipper of removing 
- * unmeaningful statements from blocks is working properly
+/** Checking that the tipper of removing unmeaningful statements from blocks is
+ * working properly
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 @SuppressWarnings({ "static-method", "javadoc" })

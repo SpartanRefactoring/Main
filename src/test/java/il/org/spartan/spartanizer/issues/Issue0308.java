@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** Test cases for validating that centification 
- * works properly with try/catch statements
+/** Test cases for validating that centification works properly with try/catch
+ * statements
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
 @SuppressWarnings("static-method")
