@@ -8,8 +8,8 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** Test Cases for Checking the Recurder Mechanism 
- * for Passing Recursively Over the AST
+/** Test Cases for Checking the Recurder Mechanism for Passing Recursively Over
+ * the AST
  * @author Dor Ma'ayan
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" })

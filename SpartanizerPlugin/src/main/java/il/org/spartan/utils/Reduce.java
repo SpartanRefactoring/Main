@@ -24,5 +24,4 @@ public abstract class Reduce<@¢ R> {
   @SafeVarargs @Nullable public final R reduce(final R r1, final R r2, final R... rs) {
     return reduce(r1, reduce(r2, reduce(rs)));
   }
-
 }
