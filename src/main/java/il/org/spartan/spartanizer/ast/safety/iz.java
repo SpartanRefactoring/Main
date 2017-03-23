@@ -901,7 +901,7 @@ public interface iz {
 
   /** Determine whether a node is the {@code null keyword
    * @param pattern JD
-   * @return whetheris thee {@code null
+   * @return whether it is the {@code null
    *         literal */
   static boolean nullLiteral(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, NULL_LITERAL);
