@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
@@ -21,10 +22,10 @@ public class SpartAnalyzer extends AgileSpartanizer {
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
-  private SpartAnalyzer addNanoPatterns() {
+  @NotNull private SpartAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new IgnoringExceptions(), //
+        new SuppressException(), //
         null)//
             .add(CastExpression.class, //
                 new SafeCast(), //
@@ -33,7 +34,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new DefaultsTo(), //
                 new GeneralizedSwitch<>(), //
                 new Unless(), //
-                new SafeNavigation(), //
+                new SafeReference(), //
                 new TakeDefaultTo(), //
                 null) //
             .add(EnhancedForStatement.class, //
@@ -55,19 +56,18 @@ public class SpartAnalyzer extends AgileSpartanizer {
                 new ForEachInRange(), //
                 null) //
             .add(IfStatement.class, //
-                new ThrowOnNull(), //
+                new NotNullOrThrow(), //
                 new NotNullOrReturn(), //
                 new ExecuteUnless(), //
                 new GeneralizedSwitch<>(), //
                 new PreconditionNotNull(), //
-                new ThrowOnFalse(), //
-                new HoldsOrReturn(), //
+                new NotHoldsOrThrow(), //
                 null) //
             .add(InfixExpression.class, //
                 new Infix.SafeNavigation(), //
                 null)//
             .add(MethodInvocation.class, //
-                new MyName(), //
+                new Reduction(), //
                 null) //
             .add(VariableDeclarationFragment.class, //
                 new LetItBeIn(), //
@@ -79,7 +79,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  public SpartAnalyzer addRejected() {
+  @NotNull public SpartAnalyzer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
         new PercolateException(), // R.I.P
@@ -120,7 +120,6 @@ public class SpartAnalyzer extends AgileSpartanizer {
         new DoNothingReturnParam(), // R.I.P
         new DoNothingReturnThis(), //
         new Down.Caster(), // rare
-        new Empty(), // merged into default
         new ForEachApplier(), // rare + we have ForEach
         new SelfCaster(), // rare
         new TypeChecker(), // rare --> merged into examiner
@@ -130,15 +129,16 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  private SpartAnalyzer addMethodPatterns() {
+  @NotNull private SpartAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
-        new MyArguments(), //
+        new ArgumentsTuple(), //
         new ConstantReturner(), //
         new FactoryMethod(), //
         new Default(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
+        new Empty(), //
         new Examiner(), //
         new Getter(), //
         new LetItBeInMethod(), //
@@ -153,7 +153,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  protected SpartAnalyzer addCharacteristicMethodPatterns() {
+  @NotNull protected SpartAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted, actually skipped
@@ -165,13 +165,13 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @Override public String fixedPoint(final ASTNode ¢) {
+  @Override public String fixedPoint(@NotNull final ASTNode ¢) {
     ¢.accept(new AnnotationCleanerVisitor());
     return super.fixedPoint(¢);
   }
 
-  public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
-    final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
+  @NotNull public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
+    @NotNull final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }

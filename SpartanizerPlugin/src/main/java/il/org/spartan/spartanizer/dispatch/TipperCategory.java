@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 /** Classification of tippers
@@ -7,7 +9,7 @@ import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
  * @since Sep 28, 2016 */
 @FunctionalInterface
 public interface TipperCategory {
-  String description();
+  @Nullable String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
@@ -20,15 +22,15 @@ public interface TipperCategory {
   interface Abbreviation extends Nominal {
     String toString = "Abbreviation";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
 
-  interface Anonymization extends Nominal {
+  interface Annonimization extends Nominal {
     String toString = "Unused arguments";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -36,7 +38,7 @@ public interface TipperCategory {
   interface Arithmetic extends TipperCategory {
     String toString = "Change expression to a more familiar structure (often shorter)";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -44,7 +46,7 @@ public interface TipperCategory {
   interface Bloater extends TipperCategory {
     String toString = "Make the code as verbose as possible";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -52,7 +54,7 @@ public interface TipperCategory {
   interface Centification extends Nominal {
     String toString = "Centification";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -62,7 +64,7 @@ public interface TipperCategory {
   interface CommnonFactoring extends Unite { // S2
     String toString = "Distributive refactoring";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -70,7 +72,7 @@ public interface TipperCategory {
   interface Deadcode extends Structural {
     String toString = "Eliminate code that is never executed";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -78,7 +80,7 @@ public interface TipperCategory {
   interface Dollarization extends Nominal {
     String toString = "Dollarization";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -86,7 +88,7 @@ public interface TipperCategory {
   interface EarlyReturn extends Structural {
     String toString = "Early return";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -99,7 +101,7 @@ public interface TipperCategory {
   interface Idiomatic extends TipperCategory {
     String toString = "Change expression to a more familiar structure (often shorter)";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -107,7 +109,7 @@ public interface TipperCategory {
   interface Inlining extends Structural {
     String toString = "Structural";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -116,7 +118,7 @@ public interface TipperCategory {
   interface Modular extends TipperCategory {
     String toString = "Make modular changes to code";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -124,7 +126,7 @@ public interface TipperCategory {
   interface Nanos extends TipperCategory {
     String toString = "Nanos";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -132,7 +134,7 @@ public interface TipperCategory {
   interface NOP extends Structural {
     String toString = "Eliminate an operation whose computation does nothing";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
 
@@ -152,7 +154,7 @@ public interface TipperCategory {
   interface ScopeReduction extends Structural {
     String toString = "Scope reduction";
 
-    @Override default String description() {
+    @Override @NotNull default String description() {
       return toString;
     }
   }
@@ -160,7 +162,7 @@ public interface TipperCategory {
   interface Shortcircuit extends Structural {
     String toString = "Shortcut of control flow by combining unconditional sequencers, e.g., converting break into return";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -169,7 +171,7 @@ public interface TipperCategory {
   interface Sorting extends Idiomatic {
     String toString = "Sorting";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -177,7 +179,7 @@ public interface TipperCategory {
   interface SyntacticBaggage extends Structural {// S1
     String toString = "Remove syntactical element that contributes nothing to semantics";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -185,7 +187,7 @@ public interface TipperCategory {
   interface Ternarization extends CommnonFactoring { // S3
     String toString = "Convert conditional statement to the conditional, ?:, operator";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }
@@ -193,7 +195,7 @@ public interface TipperCategory {
   interface Unite extends Structural {
     String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
-    @Override default String description() {
+    @Override @Nullable default String description() {
       return toString;
     }
   }

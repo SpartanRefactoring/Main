@@ -3,32 +3,33 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Yossi Gil please add a description
+/** TODO: Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Matteo Orru'
  * @since 2016 */
 public class InteractiveSpartanizer {
   /** @param fileNames if present, will process these as batch */
-  public static void main(final String[] fileNames) {
+  public static void main(@NotNull final String[] fileNames) {
     if (fileNames.length != 0)
       BatchSpartanizer.fire(fileNames); // change from main to fire
     else {
       System.err.println("input: "); //
-      final String input = read();
+      @NotNull final String input = read();
       final GuessedContext c = GuessedContext.find(input);
       System.err.println("output: " + new InteractiveSpartanizer()
           .fixedPoint(c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE) ? input : c.intoCompilationUnit(input) + ""));
     }
   }
 
-  static String read() {
-    String $ = "";
-    try (Scanner s = new Scanner(System.in)) {
+  @NotNull static String read() {
+    @NotNull String $ = "";
+    try (@NotNull Scanner s = new Scanner(System.in)) {
       for (s.useDelimiter("\n"); s.hasNext(); $ += s.next() + "\n")
         if (!s.hasNext())
           return $;
@@ -38,7 +39,7 @@ public class InteractiveSpartanizer {
 
   public Toolbox toolbox = Toolbox.defaultInstance();
 
-  public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
+  @NotNull public InteractiveSpartanizer disable(@NotNull final Class<? extends TipperCategory> ¢) {
     toolbox.disable(¢);
     return this;
   }
@@ -58,7 +59,7 @@ public class InteractiveSpartanizer {
     return new Trimmer(toolbox).once(from);
   }
 
-  ASTVisitor collect(final List<Tip> $) {
+  @NotNull ASTVisitor collect(@NotNull final List<Tip> $) {
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         final Tipper<N> t = toolbox.firstTipper(n);
@@ -69,7 +70,7 @@ public class InteractiveSpartanizer {
 
   boolean changed;
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
@@ -77,7 +78,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;
@@ -85,7 +86,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
+  @SafeVarargs @NotNull public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
       toolbox = Toolbox.mutableDefaultInstance();
     changed = true;

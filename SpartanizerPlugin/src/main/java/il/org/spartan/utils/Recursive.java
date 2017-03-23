@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.java.namespace.*;
 import junit.framework.*;
 
@@ -48,9 +50,9 @@ public interface Recursive<@¢ T> extends Streamer<T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Compound<@¢ T> extends Recursive<T>, Streamer.Compound<T> {
-    Iterable<Recursive<T>> children();
+    @NotNull Iterable<Recursive<T>> children();
 
-    @Override default Iterable<? extends Streamer<T>> next() {
+    @Override @NotNull default Iterable<? extends Streamer<T>> next() {
       return children();
     }
   }
@@ -58,7 +60,7 @@ public interface Recursive<@¢ T> extends Streamer<T> {
   interface Postorder<E> extends Compound<E> {
     @Override default Stream<E> stream() {
       Stream<E> $ = Stream.empty();
-      for (final Recursive<E> ¢ : children())
+      for (@NotNull final Recursive<E> ¢ : children())
         $ = Stream.concat(¢.stream(), $);
       return Stream.concat($, streamSelf());
     }
@@ -72,7 +74,7 @@ public interface Recursive<@¢ T> extends Streamer<T> {
   interface Preorder<E> extends Compound<E> {
     @Override default Stream<E> stream() {
       Stream<E> $ = self() == null ? Stream.empty() : Stream.of(self());
-      for (final Recursive<E> ¢ : children())
+      for (@NotNull final Recursive<E> ¢ : children())
         $ = Stream.concat($, ¢.stream());
       return $;
     }/* A compound recurkksive structure enumerating {@link #descendants()} in

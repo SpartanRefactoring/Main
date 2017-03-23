@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -52,15 +53,31 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   private static boolean throwing(final Statement ¢) {
     if (yieldAncestors.untilClass(TryStatement.class).from(¢) != null)
       return true;
-    final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
+    @Nullable final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override @Nullable public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
   @Override public String description() {
     return "Execute a statement only if condition holds";
+  }
+
+  @Override public String technicalName() {
+    return "IfXThenExecuteS";
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public NanoPatternTipper.Category category() {
+    return Category.Conditional;
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }

@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.utils.Proposition.*;
 
 /** TODO Yossi Gil: document class
@@ -48,14 +50,14 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce();
   }
 
-  protected abstract R map(BooleanSupplier ¢);
+  @NotNull protected abstract R map(BooleanSupplier ¢);
 
   @Override public R reduce() {
     return inner.reduce();
   }
 
-  private R reduce(final And a) {
-    R $ = ante(a);
+  @Nullable private R reduce(@NotNull final And a) {
+    @Nullable R $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(a.inner.get(¢)));
       if (¢ < size - 1)
@@ -64,7 +66,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(a));
   }
 
-  public final R reduce(final BooleanSupplier ¢) {
+  @NotNull public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
         : ¢ instanceof P ? reduce((P) ¢) //
@@ -73,12 +75,12 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
                     : map(¢);
   }
 
-  private R reduce(final Not ¢) {
+  @Nullable private R reduce(@NotNull final Not ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
-  private R reduce(final Or o) {
-    R $ = ante(o);
+  @Nullable private R reduce(@NotNull final Or o) {
+    @Nullable R $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(o.inner.get(¢)));
       if (¢ < size - 1)
@@ -87,11 +89,11 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(o));
   }
 
-  private R reduce(final P ¢) {
+  @Nullable private R reduce(@NotNull final P ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
-  @Override public R reduce(final R r1, final R r2) {
+  @Override @Nullable public R reduce(final R r1, final R r2) {
     return inner.reduce(r1, r2);
   }
 }

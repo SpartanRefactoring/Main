@@ -1,4 +1,4 @@
-/* TODO alexkopzon <alexkopzon@192.168.1.10> please add a description
+/* TODO: alexkopzon <alexkopzon@192.168.1.10> please add a description
  *
  * @author alexkopzon <alexkopzon@192.168.1.10>
  *

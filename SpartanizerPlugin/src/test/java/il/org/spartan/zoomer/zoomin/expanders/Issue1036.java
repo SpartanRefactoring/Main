@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.meta.*;
@@ -23,10 +24,10 @@ public class Issue1036 {
 
   static class TestClass extends MetaFixture {
     final List<Integer> children1 = new ArrayList<>();
-    List<Integer> children2 = new ArrayList<>();
-    String $ = "";
+    @NotNull List<Integer> children2 = new ArrayList<>();
+    @NotNull String $ = "";
 
-    public String check1() {
+    @NotNull public String check1() {
       return "";
     }
   }

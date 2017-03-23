@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -25,7 +26,7 @@ public class KnowsTest extends MetaFixture {
   }
 
   public static Double g(final double y) {
-    final DoubleFunction<Double> $ = ¢ -> Double.valueOf(Math.sin(¢ * new Object() {
+    @NotNull final DoubleFunction<Double> $ = ¢ -> Double.valueOf(Math.sin(¢ * new Object() {
       @Override @knows({ "$", "g/1", "f/1", "y" }) public int hashCode() {
         return g(y).hashCode();
       }

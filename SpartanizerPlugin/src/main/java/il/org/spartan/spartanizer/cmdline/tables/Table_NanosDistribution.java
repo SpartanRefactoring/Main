@@ -8,6 +8,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-29 */
 public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
@@ -48,17 +49,17 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
       try {
         npStatistics
             .logNode(findFirst.instanceOf(MethodDeclaration.class).in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
+      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
+      } catch (@NotNull @SuppressWarnings("unused") final NullPointerException ¢) {
         System.err.print("N");
-      } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
+      } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException ¢) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     ¢.accept(cleanerVisitor);
     return true;
   }
@@ -73,7 +74,7 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
   }
 
   public static void summarize(final String path) {
-    for (final Integer boxedType : npStatistics.keySet()) {
+    for (@NotNull final Integer boxedType : npStatistics.keySet()) {
       if (!writers.containsKey(boxedType))
         initializeWriter(boxedType.intValue());
       @SuppressWarnings("resource") final Table writer = writers.get(boxedType);

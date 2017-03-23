@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,12 +20,12 @@ public class InfixPlusToMinus extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 2753862216811010879L;
 
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     return !iz.prefixMinus(¢.getRightOperand()) || !iz.infixPlus(¢) ? null
         : subject.pair(¢.getLeftOperand(), az.prefixExpression(¢.getRightOperand()).getOperand()).to(Operator.MINUS);
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "replace the plus in: " + ¢ + " to minus";
   }
 }
