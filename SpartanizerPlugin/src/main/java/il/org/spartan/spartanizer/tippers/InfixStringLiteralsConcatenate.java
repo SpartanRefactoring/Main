@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO Doron Mehsulam: document class
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-22 */
-public class ConcatenateStringLiterals extends Tipper<InfixExpression> {
+public class InfixStringLiteralsConcatenate extends Tipper<InfixExpression> {
   private static final long serialVersionUID = -8989985850043975664L;
 
   @Override public Tip tip(final InfixExpression ¢) {
