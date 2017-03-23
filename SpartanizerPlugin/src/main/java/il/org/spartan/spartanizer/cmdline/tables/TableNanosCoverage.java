@@ -19,7 +19,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** Table representing coverage for methods up to 30 statements
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-25 */
 @Deprecated
 public class TableNanosCoverage extends DeprecatedFolderASTVisitor {

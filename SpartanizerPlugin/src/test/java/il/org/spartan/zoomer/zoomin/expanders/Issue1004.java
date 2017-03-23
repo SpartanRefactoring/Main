@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Test case for {@link OutlineArrayAccess}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
 public class Issue1004 {

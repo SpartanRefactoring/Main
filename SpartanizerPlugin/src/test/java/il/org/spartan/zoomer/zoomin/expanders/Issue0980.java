@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 import org.junit.*;
 
 /** Test Class for Expand boolean expressions
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-13 */
 @Ignore
 @SuppressWarnings("static-method")

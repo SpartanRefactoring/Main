@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** link {@Issue1000}
- * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2017-01-07 */
 public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {

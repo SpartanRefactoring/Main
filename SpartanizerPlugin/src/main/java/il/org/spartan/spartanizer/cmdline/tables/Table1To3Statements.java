@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
 
 /** Table representing coverage for methods with 1 to 3 statements
  * @deprecated
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-27 */
 @Deprecated
 public class Table1To3Statements extends DeprecatedFolderASTVisitor {

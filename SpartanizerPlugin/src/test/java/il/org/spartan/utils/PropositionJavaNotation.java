@@ -5,7 +5,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.utils.Proposition.*;
 
 /** Render {@link Proposition} using Java/C/C++ notation.
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
 public class PropositionJavaNotation extends PropositionInfixNotation {
   @Override @NotNull protected String close() {

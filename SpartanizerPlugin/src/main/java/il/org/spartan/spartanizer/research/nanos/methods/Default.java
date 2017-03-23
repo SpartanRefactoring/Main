@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano a method which is empty or contains one statement which return a
  *       default value of some type.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -8671479380276353771L;

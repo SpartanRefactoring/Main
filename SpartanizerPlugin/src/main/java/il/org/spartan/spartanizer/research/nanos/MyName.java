@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Match invocation for a method with same name of containing method but
  * different number of parameters (overloading).
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-01 */
 public final class MyName extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 4064181238809686028L;

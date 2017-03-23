@@ -128,14 +128,14 @@ public final class Inliner2 {
   }
 
   /** FAPI factory chain
-   * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 */
   public interface Of {
     @NotNull By by(Expression by);
   }
 
   /** FAPI factory chain
-   * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 */
   public interface By {
     @NotNull Inliner2 in(List<? extends ASTNode> ns);

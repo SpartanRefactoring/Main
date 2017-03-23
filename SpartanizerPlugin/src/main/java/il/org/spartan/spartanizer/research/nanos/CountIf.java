@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano for(A a : B ) if(X) ++Y;
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = 7795065631998358969L;

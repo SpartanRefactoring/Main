@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Between Nano. Checking if some expression lays between two values
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
 public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   private static final long serialVersionUID = 3728204247529612309L;

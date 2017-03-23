@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Unit test for {@link CasesSplit}.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
 public class Issue0977 {

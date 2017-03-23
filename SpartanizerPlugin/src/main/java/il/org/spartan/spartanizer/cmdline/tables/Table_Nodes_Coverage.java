@@ -16,7 +16,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** Generates table presenting {@link ASTNode}s coverage
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class Table_Nodes_Coverage {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();

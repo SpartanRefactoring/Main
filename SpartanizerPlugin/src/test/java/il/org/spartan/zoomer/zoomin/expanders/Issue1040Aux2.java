@@ -5,7 +5,7 @@ import java.util.stream.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Example for testing with binding
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-07 */
 // TODO Yuval Simon --make this into an inner class
 @SuppressWarnings({ "static-method", "unused" })

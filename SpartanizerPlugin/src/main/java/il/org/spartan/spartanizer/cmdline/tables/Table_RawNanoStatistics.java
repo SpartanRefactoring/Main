@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 
 /** Generates a table that shows how many times each nano occurred in each
  * project
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public class Table_RawNanoStatistics extends NanoTable {
   static {
@@ -25,13 +25,13 @@ public class Table_RawNanoStatistics extends NanoTable {
   }
 
   public static void summarize(final String path) {
-    writer.col("Project", path);
+    table.col("Project", path);
     npStatistics.keySet().stream()//
         .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
         .map(npStatistics::get)//
-        .forEach(λ -> writer.col(λ.name, λ.occurences));
+        .forEach(λ -> table.col(λ.name, λ.occurences));
     fillAbsents();
-    writer.nl();
+    table.nl();
     reset();
   }
 
@@ -39,7 +39,7 @@ public class Table_RawNanoStatistics extends NanoTable {
     spartanalyzer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
-        .forEach(λ -> writer.col(λ, 0));
+        .forEach(λ -> table.col(λ, 0));
   }
 
   public static void main(final String[] args) {
@@ -52,8 +52,8 @@ public class Table_RawNanoStatistics extends NanoTable {
       }
 
       void initializeWriter() {
-        if (writer == null)
-          writer = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
+        if (table == null)
+          table = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final CompilationUnit $) {
@@ -71,6 +71,6 @@ public class Table_RawNanoStatistics extends NanoTable {
         return true;
       }
     });
-    writer.close();
+    table.close();
   }
 }

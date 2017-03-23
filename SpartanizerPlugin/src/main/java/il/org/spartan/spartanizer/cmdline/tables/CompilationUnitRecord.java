@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 
 /** TODO Matteo Orru': document class {@link }
- * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
+ * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}
  * @since 2017-02-10 */
 public class CompilationUnitRecord {
   @NotNull public final CompilationUnit inner;

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code while(b) { switch(x) { case 1: x=2; break; default: continue; } } } to
  * {@code while(b) { switch(x) { case 1: x=2; break; } } } Test case is
  * {@link Issue1070}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {

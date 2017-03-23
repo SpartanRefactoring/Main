@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Use {@link #examples()} for documentation
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
