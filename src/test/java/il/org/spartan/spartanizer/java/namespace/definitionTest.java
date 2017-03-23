@@ -40,6 +40,7 @@ public class definitionTest extends MetaFixture {
     @field static final long serialVersionUID = 1;
     {
       put("@Test", null);
+      put("@NotNull", null);
       put("@Ignore", null);
       put("@Override", null);
       put("@annotation", null);
