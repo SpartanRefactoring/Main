@@ -2,12 +2,9 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -17,11 +14,11 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -8671479380276353771L;
-  private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("return $D;", "", ""));
+  private static final UserDefinedTipper<Statement> returnDefault = patternTipper("return $D;", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return empty(¢)//
-        || anyTips(tippers, onlyStatement(¢));
+        || returnDefault.canTip(onlyStatement(¢));
   }
 
   @Override @NotNull public String nanoName() {
