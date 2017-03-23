@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
-  private static final long serialVersionUID = 3552466561840604448L;
+  private static final long serialVersionUID = 0x314CE58426F66520L;
 
   @Override double evaluateDouble(final List<Expression> xs) throws IllegalArgumentException {
     double $ = 0;

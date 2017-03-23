@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @since Nov 14, 2016 */
 public interface ConfigurableReport {
   class Settings extends Listener.S {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
     private static String reportFileName;
     private static String header;
     private static ArrayList<ASTNode> inputList = new ArrayList<>();
@@ -150,7 +150,7 @@ public interface ConfigurableReport {
     @SuppressWarnings("TooBroadScope")
     public class Action extends Settings {
       /** real serialVersionUID comes much later in production code */
-      private static final long serialVersionUID = 1L;
+      private static final long serialVersionUID = 1;
 
       public void close() {
         report().close();

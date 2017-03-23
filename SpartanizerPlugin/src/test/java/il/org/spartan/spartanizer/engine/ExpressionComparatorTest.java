@@ -157,7 +157,7 @@ public final class ExpressionComparatorTest {
 
   @Test public void prudentSortTest() {
     assert !ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
-      static final long serialVersionUID = 8950439215040830144L;
+      static final long serialVersionUID = 0x7C36590B6C3C1AC0L;
       {
         add(e("a"));
         add(e("d"));

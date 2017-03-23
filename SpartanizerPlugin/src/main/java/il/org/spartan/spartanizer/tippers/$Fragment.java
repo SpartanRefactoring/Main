@@ -26,7 +26,7 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
     System.err.println("Constructing " + myClass());
   }
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
     if (haz.annotation(¢) || ¢ == null)

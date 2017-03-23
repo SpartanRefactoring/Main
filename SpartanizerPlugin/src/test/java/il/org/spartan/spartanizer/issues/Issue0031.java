@@ -13,7 +13,7 @@ import org.junit.runners.*;
 public class Issue0031 {
   @Test public void a() {
     trimmingOf(
-        " static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(now.modifiers());\n" + "    }")
+        " static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(now.modifiers());\n    }")
             .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
                 + "      return hasAnnotation(now.modifiers());\n    }");
   }

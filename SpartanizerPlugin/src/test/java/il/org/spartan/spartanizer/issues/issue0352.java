@@ -27,7 +27,7 @@ public class issue0352 {
         + "        }      };")
             .gives("@Override    Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {      if (restriction.isEmpty())"
                 + "        return Iterators.emptyIterator();      final Iterator<Range<C>> $;"
-                + "      if (lowerBoundWindow.upperBound.isLessThan(restriction.lowerBound))        return Iterators.emptyIterator();" + "    else"
+                + "      if (lowerBoundWindow.upperBound.isLessThan(restriction.lowerBound))        return Iterators.emptyIterator();    else"
                 + "        $ = ((lowerBoundWindow.lowerBound.isLessThan(restriction.lowerBound)"
                 + "                ? rangesByUpperBound.tailMap(restriction.lowerBound, false)"
                 + "                : rangesByLowerBound.tailMap(lowerBoundWindow.lowerBound.endpoint(),"
@@ -35,7 +35,7 @@ public class issue0352 {
                 + "      final Cut<Cut<C>> upperBoundOnLowerBounds =          Ordering.natural()"
                 + "              .min(lowerBoundWindow.upperBound, Cut.belowValue(restriction.upperBound));"
                 + "      return new AbstractIterator<Entry<Cut<C>, Range<C>>>() {        @Override"
-                + "        protected Entry<Cut<C>, Range<C>> computeNext() {            if (!$.hasNext())" + "                return endOfData();"
+                + "        protected Entry<Cut<C>, Range<C>> computeNext() {            if (!$.hasNext())                return endOfData();"
                 + "            Range<C> nextRange = $.next();            if (upperBoundOnLowerBounds.isLessThan(nextRange.lowerBound))"
                 + "                return endOfData();            nextRange = nextRange.intersection(restriction);"
                 + "            return Maps.immutableEntry(nextRange.lowerBound, nextRange);        }      };")

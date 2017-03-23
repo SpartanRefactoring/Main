@@ -23,7 +23,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-24 */
 public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 3775670587866472032L;
+  private static final long serialVersionUID = 0x3465E06532ABDE60L;
 
   @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();

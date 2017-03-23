@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method with one statement which matches the {@link ForEach} nano
  * @author Ori Marcovitch */
 public class ForEachApplier extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 7757408278399587177L;
+  private static final long serialVersionUID = 0x6BA7D9BA8BAE9369L;
   private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("for($N1 $N2 : $X) $N2.$N3($A);", "", ""), //
       patternTipper("for($N1 $N2 : $X) $N3($N2);", "", ""), //
       patternTipper("$X1.stream().forEach($X2);", "", ""), //

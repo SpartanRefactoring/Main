@@ -126,5 +126,5 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
   @NotNull protected abstract Self self();
 
   public static final String ARRAY_SEPARATOR = "; ";
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 }

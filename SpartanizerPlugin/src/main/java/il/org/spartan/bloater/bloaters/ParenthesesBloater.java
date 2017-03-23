@@ -18,7 +18,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-11 */
 public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 4274439512923950861L;
+  private static final long serialVersionUID = 0x3B51DC170DB9CF0DL;
 
   @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (iz.parenthesizedExpression(¢) || !iz.infixExpression(¢.getParent()))

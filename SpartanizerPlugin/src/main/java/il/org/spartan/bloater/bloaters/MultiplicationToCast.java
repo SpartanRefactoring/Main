@@ -24,7 +24,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-11 */
 public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 6335095460390231348L;
+  private static final long serialVersionUID = 0x57EAC7C1A6BFDD34L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)

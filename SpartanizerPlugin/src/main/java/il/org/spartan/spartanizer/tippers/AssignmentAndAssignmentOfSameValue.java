@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
  * @since 2015-08-28 */
 public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = 7624011796441469217L;
+  private static final long serialVersionUID = 0x69CDEE55CA481121L;
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //

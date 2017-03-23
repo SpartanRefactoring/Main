@@ -17,7 +17,7 @@ import il.org.spartan.utils.range.*;
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-25 */
 public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = 1907893259144026175L;
+  private static final long serialVersionUID = 0x1A7A32CF8CA4583FL;
 
   @Nullable public abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
 

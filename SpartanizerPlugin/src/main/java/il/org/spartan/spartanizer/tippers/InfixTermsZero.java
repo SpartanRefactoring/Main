@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  private static final long serialVersionUID = 5746921500852829859L;
+  private static final long serialVersionUID = 0x4FC12AA812633EA3L;
 
   private static ASTNode replacement(@NotNull final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());

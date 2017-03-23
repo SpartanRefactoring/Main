@@ -26,7 +26,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 5172128174751851623L;
+  private static final long serialVersionUID = 0x47C7172BFCDFA467L;
 
   @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";

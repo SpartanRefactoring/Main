@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method returning parameter without doing anything else
  * @author Ori Marcovitch */
 public class DoNothingReturnParam extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 5255790606867281484L;
+  private static final long serialVersionUID = 0x48F051B5E828B64CL;
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneParameter(¢)//

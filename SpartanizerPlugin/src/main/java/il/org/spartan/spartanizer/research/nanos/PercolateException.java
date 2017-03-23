@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public final class PercolateException extends NanoPatternTipper<CatchClause> {
-  private static final long serialVersionUID = 3602550060640108032L;
+  private static final long serialVersionUID = 0x31FED4316A03FE00L;
   private static final List<UserDefinedTipper<TryStatement>> tippers = as
       .list(patternTipper("try $B1 catch($T $N1){ throw $N2;}", "try $B1 catch($T $N1){percolate($N2);};", ""));
 

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-10 */
 public class SuperConstructor extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 4539488441119715890L;
+  private static final long serialVersionUID = 0x3EFF80AF9AEEB232L;
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     return iz.constructor(¢) //

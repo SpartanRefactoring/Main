@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method which is independent on he parameters
  * @author Ori Marcovitch */
 public class Oblivious extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 2377142689255053588L;
+  private static final long serialVersionUID = 0x20FD4EAE6576D914L;
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     @Nullable final List<String> $ = parametersNames(d);

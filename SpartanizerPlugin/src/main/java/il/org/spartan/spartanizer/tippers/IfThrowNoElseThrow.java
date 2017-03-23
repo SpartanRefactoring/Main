@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class IfThrowNoElseThrow extends GoToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
-  private static final long serialVersionUID = 8876424452340040075L;
+  private static final long serialVersionUID = 0x7B2F65029551C18BL;
 
   static Expression getThrowExpression(final Statement ¢) {
     @Nullable final ThrowStatement $ = extract.throwStatement(¢);
