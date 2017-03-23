@@ -229,7 +229,7 @@ public class Toolbox {
             new InfixIndexOfToStringContains(), // v 2.7
             new InfixSimplifyComparisionOfAdditions(), //
             new InfixSimplifyComparisionOfSubtractions(), //
-            new ConcatenateStringLiterals(),//
+            new InfixStringLiteralsConcatenate(),//
             null)
         .add(MethodDeclaration.class, //
             new AnnotationSort<>(), //
