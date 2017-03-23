@@ -56,8 +56,12 @@ public class PropositionTest {
     azzert.that(B2_OR_B1.reduce(java), is(""));
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   @Test public void aa() {
     object = Proposition.T;
+    assert object != null;
     object = Proposition.F;
     object = Proposition.N;
     object = Proposition.X;
