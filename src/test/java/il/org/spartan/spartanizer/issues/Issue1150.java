@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
-/** unit tests for {@link ConcatenateStringLiterals}
+/** unit tests for {@link InfixStringLiteralsConcatenate}
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-22 */
