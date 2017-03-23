@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** TODO dormaayn: test class for {@link PlusAssignToPostfix}
