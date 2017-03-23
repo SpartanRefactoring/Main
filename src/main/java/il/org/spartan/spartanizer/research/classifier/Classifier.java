@@ -24,7 +24,7 @@ public class Classifier extends ASTVisitor {
   private final Collection<ASTNode> forLoopsList = new ArrayList<>();
   private int forLoopsAmount;
   private static final Scanner input = new Scanner(System.in);
-  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<>(as.list(new ForEach()));
+  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = as.list(new ForEach());
   private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<>(
       as.list(new CopyArray(), new ForEachEnhanced(), new InitArray()));
   private Map<String, Int> patterns;

@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 /** Tests {@link SuperConstructorTest}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-10 */
 @SuppressWarnings("static-method")
 public class SuperConstructorTest extends JavadocerTest {

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Assignment then returnStatement or ExpressionsStatement using it, where the
  * assignment could not be inlined
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-01 */
 public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = -7580396559433880409L;

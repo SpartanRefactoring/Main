@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** sequence of parameters which occur few times together in a method
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 public class MyArguments extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -6753982059151484641L;

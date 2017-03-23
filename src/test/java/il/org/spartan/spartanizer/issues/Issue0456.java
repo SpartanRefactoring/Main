@@ -9,7 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for the GitHub issue thus numbered: of inlining into for
- * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-16 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore("This requires more work")

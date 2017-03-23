@@ -14,7 +14,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** A class which generates a table of all Nano Patterns gathered by categories.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
 public class Table_NanosByCategories {
   public static void main(final String[] args) {

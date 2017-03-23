@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** There's also {@link Infix.SafeNavigation} which catches the same
- * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * pattern @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -4108306692245103780L;

@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.research.methods.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
 /** Tests {@link MyArguments}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 @SuppressWarnings("static-method")
 public class MyArgumentsTest extends JavadocerTest {

@@ -35,8 +35,8 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   private static final long serialVersionUID = 1656113602362467840L;
 
   /** Consider an expression {@code
-                                       * a ? b : c
-                                       * } in a sense it is the same as {@code
+                                         * a ? b : c
+                                         * } in a sense it is the same as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>
@@ -58,7 +58,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return simplifyTernary(¢.getThenExpression(), ¢.getElseExpression(), copy.of(¢.getExpression()));
   }
 
-  private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
+  private static Expression simplifyTernary(final Expression then, final Expression elze, @NotNull final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();

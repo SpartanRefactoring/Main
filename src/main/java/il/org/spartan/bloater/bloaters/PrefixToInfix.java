@@ -19,7 +19,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * i+=1; i-=1;
  *
  * } Test case is {@link Issue1005}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-24 */
 public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Bloater {

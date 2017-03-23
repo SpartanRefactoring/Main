@@ -26,7 +26,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
  * {@code int f(int ret) { int a = 5; x(a); ret = a; return ret; } } ==>
  * {@code int f(int ret) { int i1 = 5; x(i1); ret = i1; return ret; } }
- * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
+ * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: Raviv Rachmiel take care of single var decleration, tests
 public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement>//

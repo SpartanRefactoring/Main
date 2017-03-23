@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** if(X) [return | return null];
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-22 */
 public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = -5274202747883054963L;

@@ -35,7 +35,7 @@ import il.org.spartan.utils.Example.*;
 
 /** An handler for project configuration. User configuration is saved in a
  * designated XML file, see {@link XMLSpartan}.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
   private static final boolean REFRESH_OPENS_DIALOG = false;
@@ -183,7 +183,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   }
 
   /** Dialog used for the plugin's preferences change by the user.
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-10 */
   static class SpartanPreferencesDialog extends CheckedTreeSelectionDialog {
     public SpartanPreferencesDialog(final Shell parent, final ILabelProvider labelProvider, final ITreeContentProvider contentProvider) {

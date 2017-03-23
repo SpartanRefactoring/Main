@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 
 /** A test class for {@link ParenthesizedRemoveExtraParenthesis}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
 @SuppressWarnings("static-method")
 public class ParenthesizedRemoveExtraParenthesisTest {

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** List that can contain {@link NanoPatternTipper<Block>}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
   private static final long serialVersionUID = 1L;

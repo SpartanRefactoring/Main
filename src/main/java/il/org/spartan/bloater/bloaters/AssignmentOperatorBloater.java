@@ -19,7 +19,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * inclusion and all operator types: {@code a |= b &= c} ->
  * {@code a = a | (b &= c)} -> {@code a = a | (b = b & c)} Test file:
  * {@link Issue1001}
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-28 */
 public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     implements TipperCategory.Bloater {
