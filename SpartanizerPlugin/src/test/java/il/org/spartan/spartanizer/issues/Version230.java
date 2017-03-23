@@ -1275,7 +1275,6 @@ public final class Version230 {
     trimmingOf(" public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives(" public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
-  
   @Test public void inlineArrayInitialization2() {
     trimmingOf("public double[] solve(){ " //
         + " final SimpleRegression regress=new SimpleRegression(true); " //
@@ -3391,8 +3390,6 @@ public final class Version230 {
     trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;"
         + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}");
   }
-
-
 
   @Test public void switchSimplifyWithDefault2() {
     trimmingOf("switch(a){case \"-E\":optIndividualStatistics=true;break;case \"-N\":optDoNotOverwrite=true;break;"
