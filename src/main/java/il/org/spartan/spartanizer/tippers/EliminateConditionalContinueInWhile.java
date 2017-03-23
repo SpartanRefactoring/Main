@@ -21,6 +21,6 @@ public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatem
   }
 
   @Override @Nullable public Tip tip(@NotNull final WhileStatement ¢) {
-    return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
+    return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }
