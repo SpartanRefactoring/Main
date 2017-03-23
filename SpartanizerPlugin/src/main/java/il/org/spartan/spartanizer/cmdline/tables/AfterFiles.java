@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @since Dec 14, 2016 */
 @Deprecated
 public class AfterFiles extends DeprecatedFolderASTVisitor {
-  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(Integer::compareTo);
   static {
