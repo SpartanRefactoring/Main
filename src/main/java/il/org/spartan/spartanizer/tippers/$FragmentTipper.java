@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-22 */
-abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment> {
-  public FragmentTipper() {
+abstract class $FragmentTipper extends CarefulTipper<VariableDeclarationFragment> {
+  public $FragmentTipper() {
     System.err.println("Constructing " + myClass());
   }
 
@@ -44,7 +44,7 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
     assert ¢ == object();
     return new Tip(description(), object(), myClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        FragmentTipper.this.go(r, g);
+        $FragmentTipper.this.go(r, g);
       }
     };
   }
