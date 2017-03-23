@@ -250,6 +250,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     }
 
+    @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
     @Override @NotNull protected Changes clone() {
       @NotNull final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
