@@ -28,13 +28,13 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
 
   private static final long serialVersionUID = 1L;
 
-  @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {
-    if (haz.annotation(f) || f == null)
+  @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
+    if (haz.annotation(¢) || ¢ == null)
       return false;
     name = object().getName();
-    parent = az.variableDeclarationStatement(f.getParent());
-    nextStatement = extract.nextStatement(f);
-    initializer = f.getInitializer();
+    parent = az.variableDeclarationStatement(¢.getParent());
+    nextStatement = extract.nextStatement(¢);
+    initializer = ¢.getInitializer();
     return true;
   }
 
@@ -58,17 +58,17 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
    * containing node is eliminated as well.
    * @return */
-  @NotNull protected final ASTRewrite eliminateFragment(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @NotNull protected final ASTRewrite eliminateFragment(@NotNull final ASTRewrite $, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = otherSiblings();
     if (live.isEmpty()) {
-      r.remove(parent(), g);
-      return r;
+      $.remove(parent(), g);
+      return $;
     }
     final VariableDeclarationStatement newParent = copy.of(parent());
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
-    r.replace(parent(), newParent, g);
-    return r;
+    $.replace(parent(), newParent, g);
+    return $;
   }
 
   protected int eliminationSaving() {
@@ -105,8 +105,8 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
   }
 
   protected boolean usedInSubsequentInitializers() {
-    for (@NotNull final VariableDeclarationFragment f : youngerSiblings())
-      if (!collect.usesOf(name()).in(f.getInitializer()).isEmpty())
+    for (@NotNull final VariableDeclarationFragment ¢ : youngerSiblings())
+      if (!collect.usesOf(name()).in(¢.getInitializer()).isEmpty())
         return true;
     return false;
   }
@@ -114,11 +114,11 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
   @NotNull protected final Collection<VariableDeclarationFragment> youngerSiblings() {
     @NotNull final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
-    for (final VariableDeclarationFragment f : fragments(parent()))
-      if (f == object())
+    for (final VariableDeclarationFragment ¢ : fragments(parent()))
+      if (¢ == object())
         collecting = true;
       else if (collecting)
-        $.add(f);
+        $.add(¢);
     return $;
   }
 
