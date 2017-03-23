@@ -7,6 +7,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -39,7 +40,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     return true;
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -59,17 +60,17 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null;
   }
 
-  public static CSVStatistics openSummaryFile(final String $) {
+  public static CSVStatistics openSummaryFile(@NotNull final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
   }
 
   public void summarizeNumbers() {
-    final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
+    @Nullable final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
     if (report == null)
       return;
     methods.keySet().forEach(λ -> {

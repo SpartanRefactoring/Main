@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
@@ -19,10 +20,11 @@ public class Default extends JavadocMarkerNanoPattern {
   private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("return $D;", "", ""));
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return empty(¢) || anyTips(tippers, onlyStatement(¢));
+    return empty(¢)//
+        || anyTips(tippers, onlyStatement(¢));
   }
 
-  @Override public Category category() {
-    return Category.Default;
+  @Override @NotNull public String nanoName() {
+    return "DefaultValue";
   }
 }

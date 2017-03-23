@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -207,17 +208,17 @@ public final class GuessedContextTest {
   }
 
   @Test public void intoCompilationUnit() {
-    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
-    final String codeFragment = "a + b * c";
-    final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+    @NotNull final GuessedContext w = EXPRESSION_LOOK_ALIKE;
+    @NotNull final String codeFragment = "a + b * c";
+    @NotNull final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
     azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
-    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
-    final String codeFragment = "a + b * c";
-    final Document d = w.intoDocument(codeFragment);
+    @NotNull final GuessedContext w = EXPRESSION_LOOK_ALIKE;
+    @NotNull final String codeFragment = "a + b * c";
+    @NotNull final Document d = w.intoDocument(codeFragment);
     assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }

@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -25,15 +26,15 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override public Tip pattern(final EnhancedForStatement ¢) {
+  @Override @Nullable public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Count elements in collection that satisfy some predicate";
   }
 
-  @Override public String technicalName() {
+  @Override @NotNull public String technicalName() {
     return "CountEInCSatisfyingX";
   }
 
@@ -45,7 +46,7 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return firstReplacement(tippers);
   }
 
-  @Override public String className() {
+  @Override @NotNull public String nanoName() {
     return Aggregate.class.getSimpleName();
   }
 }

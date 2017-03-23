@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -15,11 +16,11 @@ public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatem
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -2214012312380722330L;
 
-  @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";
   }
 
-  @Override public Tip tip(final WhileStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final WhileStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

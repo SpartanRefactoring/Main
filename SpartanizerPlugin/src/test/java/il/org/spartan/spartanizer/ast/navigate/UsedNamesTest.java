@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -35,7 +36,7 @@ public class UsedNamesTest {
   }
 
   @Test public void f() {
-    final List<String> usedNames = extract.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
+    @Nullable final List<String> usedNames = extract.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
     azzert.that(usedNames + "", usedNames.size(), is(0));
   }
 }

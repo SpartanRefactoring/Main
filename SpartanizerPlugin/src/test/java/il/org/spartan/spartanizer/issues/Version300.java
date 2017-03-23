@@ -26,7 +26,28 @@ public final class Version300 {
         .gives("a=b?!c:!d") //
     ;
   }
-
+  @Ignore @Test public void inlineArrayInitialization1() {
+    trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
+        + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
+        + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
+        + " assertArrayEquals(int1, int2); " //
+        + "}")
+            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
+                + " int[][] int1={{1, 2, 3}, {4, 5, 6}}" //
+                + " , int2={{1, 2, 3}, {4, 5, 6}}; " //
+                + " assertArrayEquals(int1, int2); " //
+                + "}")
+            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
+                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}}); " //
+                + "}");
+  }
+  @Ignore("Yuval Simon") // trimmer wraps with void method so it is tipped by {@link
+  // RemoveRedundantSwitchReturn}
+  @Test public void switchSimplifyCaseAfterDefault1() {
+    trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
+        + "case THROW_STATEMENT:return 3;default:return-1;}")//
+            .stays();
+  }
   @Test public void myClassName() {
     azzert.that(system.callingClassName(), is(getClass().getCanonicalName()));
   }
@@ -167,8 +188,7 @@ public final class Version300 {
   @Test public void x() {
     trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
         .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)break;return ¢;}") //
-        .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}") //
-        .stays();
+        .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}");
   }
 
   /** Introduced by Yossi on Thu-Mar-16-12:37:12-IST-2017 (code automatically
@@ -178,9 +198,7 @@ public final class Version300 {
         .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
-        .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
-        .stays() //
-    ;
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}");
   }
 
   @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
@@ -188,8 +206,7 @@ public final class Version300 {
         .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
-        .gives("int a(int b){for(;b<100;b+=1){}return b;}") //
-        .stays() //
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}")//
     ;
   }
 }

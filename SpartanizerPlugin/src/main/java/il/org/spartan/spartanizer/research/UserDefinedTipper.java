@@ -6,6 +6,7 @@ package il.org.spartan.spartanizer.research;
  *
  * @since 2016 */
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -14,7 +15,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
   private static final long serialVersionUID = -4559537421155078857L;
 
-  @Override public final boolean canTip(final N ¢) {
+  @Override public final boolean canTip(@Nullable final N ¢) {
     return ¢ != null && prerequisite(¢);
   }
 
@@ -30,7 +31,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
 
   public abstract ASTNode getMatching(ASTNode n);
 
-  public abstract String pattern();
+  @NotNull public abstract String pattern();
 
-  public abstract String replacement();
+  @NotNull public abstract String replacement();
 }

@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -14,11 +15,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface containing {
-  static CompilationUnit compilationUnit(final ASTNode ¢) {
+  @Nullable static CompilationUnit compilationUnit(final ASTNode ¢) {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
 
-  static String package¢(final CastExpression ¢) {
+  @NotNull static String package¢(final CastExpression ¢) {
     return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 
@@ -35,7 +36,7 @@ public interface containing {
         )).findFirst().orElse(null);
   }
 
-  static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
+  @Nullable static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return yieldAncestors.untilClass(BodyDeclaration.class).from(¢);
   }
 

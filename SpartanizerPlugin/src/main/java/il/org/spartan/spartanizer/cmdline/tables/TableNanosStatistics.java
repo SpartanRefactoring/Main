@@ -6,7 +6,9 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -27,13 +29,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
-  private static final Collection<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(new HashCodeMethod());
-      add(new ToStringMethod());
-    }
-  };
+  private static final Collection<JavadocMarkerNanoPattern> excluded = as.list(new HashCodeMethod(), new ToStringMethod());
   static {
     clazz = TableNanosStatistics.class;
     Logger.subscribe(npStatistics::logNPInfo);
@@ -54,15 +50,15 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
+      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException __) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -96,7 +92,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
         .forEach(λ -> pWriter.col(λ, 0));
   }
 
-  private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
+  private static boolean anyTips(@NotNull final Collection<JavadocMarkerNanoPattern> ps, @Nullable final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 }

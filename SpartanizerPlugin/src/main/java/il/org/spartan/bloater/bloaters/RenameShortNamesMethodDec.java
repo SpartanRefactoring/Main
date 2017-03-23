@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -33,16 +34,16 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override @SuppressWarnings("unused") public Tip tip(final MethodDeclaration d, final ExclusionManager __) {
+  @Override @SuppressWarnings("unused") @Nullable public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-    for (final SingleVariableDeclaration parameter : parameters(d)) {
+    @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+    for (@NotNull final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (in($.getIdentifier(), "$")) {

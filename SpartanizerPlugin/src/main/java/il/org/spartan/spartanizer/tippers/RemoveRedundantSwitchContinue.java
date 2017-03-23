@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -24,17 +25,17 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -3105580838354601588L;
 
-  @Override public ASTNode replacement(final SwitchStatement s) {
+  @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
     if (s == null)
       return null;
-    final Block b = az.block(s.getParent());
+    @Nullable final Block b = az.block(s.getParent());
     if (b == null) {
       if (!iz.loop(s.getParent()))
         return null;
     } else if (!iz.loop(b.getParent()) || last(statements(b)) != s)
       return null;
-    final List<switchBranch> $ = switchBranch.intoBranches(s);
-    for (final switchBranch ¢ : $)
+    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
+    for (@NotNull final switchBranch ¢ : $)
       if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(first(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
@@ -42,7 +43,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     return null;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

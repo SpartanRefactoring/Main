@@ -23,7 +23,7 @@ public final class Issue0107 {
 
   @Test public void e() {
     trimmingOf("for(String a ; a.length()<3 ; (a = \"\")+=1){}")//
-        .stays();
+        .gives("for(String a ; a.length()<3 ; (a = \"\")+=1);").stays();
   }
 
   @Test public void f() {
@@ -43,8 +43,8 @@ public final class Issue0107 {
   }
 
   @Test public void j() {
-    trimmingOf("for(int a ; a<10 ; a-=1){}")//
-        .gives("for(int a ; a<10 ; --a){}");
+    trimmingOf("for(int a ; a<10 ; a-=1);")//
+        .gives("for(int a ; a<10 ; --a);");
   }
 
   @Test public void k() {
@@ -53,8 +53,8 @@ public final class Issue0107 {
   }
 
   @Test public void l() {
-    trimmingOf("while((x-=1) > 0){}")//
-        .gives("while((--x) > 0){}");
+    trimmingOf("while((x-=1) > 0);")//
+        .gives("while((--x) > 0);");
   }
 
   @Test public void m() {
@@ -63,7 +63,7 @@ public final class Issue0107 {
   }
 
   @Test public void o() {
-    trimmingOf("for(int a ; a<3 ; a+=1){}")//
+    trimmingOf("for(int a ; a<3 ; a+=1);")//
         .stays();
   }
 
