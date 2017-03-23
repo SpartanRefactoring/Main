@@ -50,10 +50,6 @@ public enum Analyze {
     summarizeMethodStatistics(outputDir);
   }
 
-  private static double min(final double a, final double d) {
-    return a < d ? a : d;
-  }
-
   @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
@@ -82,16 +78,16 @@ public enum Analyze {
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements()) //
-          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements(), m.numStatements))) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : Math.min(1, safe.div(m.numNPStatements(), m.numStatements))) //
           .put("#Expressions", m.numExpressions) //
           .put("#NP expressions", m.numNPExpressions()) //
-          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions(), m.numExpressions))) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : Math.min(1, safe.div(m.numNPExpressions(), m.numExpressions))) //
           .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
-      sumSratio += m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements(), m.numStatements));
-      sumEratio += m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions(), m.numExpressions));
+      sumSratio += m.numStatements == 0 ? 1 : Math.min(1, safe.div(m.numNPStatements(), m.numStatements));
+      sumEratio += m.numExpressions == 0 ? 1 : Math.min(1, safe.div(m.numNPExpressions(), m.numExpressions));
     }
     System.out.println("Total methods: " + Logger.numMethods);
     System.out.println("Average statement ratio: " + safe.div(sumSratio, Logger.numMethods));

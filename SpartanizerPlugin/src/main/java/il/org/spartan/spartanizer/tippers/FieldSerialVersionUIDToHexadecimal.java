@@ -67,8 +67,8 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       token = system.chopLast(token);
     try {
       replacement = Long.parseLong(token);
-    } catch (@NotNull final NumberFormatException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (@NotNull final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return false;
     }
     return true;
@@ -82,7 +82,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
         Long.valueOf(replacement));
   }
 
-  @Override public String description(@SuppressWarnings("unused") final FieldDeclaration d) {
+  @Override public String description(@SuppressWarnings("unused") final FieldDeclaration __) {
     return description();
   }
 }
