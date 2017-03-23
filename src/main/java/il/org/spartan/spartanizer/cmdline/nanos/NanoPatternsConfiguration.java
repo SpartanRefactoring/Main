@@ -7,5 +7,5 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 public interface NanoPatternsConfiguration {
-  Collection<JavadocMarkerNanoPattern> skipped = new HashSet<JavadocMarkerNanoPattern>(as.list(new HashCodeMethod(), new ToStringMethod()));
+  Collection<JavadocMarkerNanoPattern> skipped = new HashSet<>(as.list(new HashCodeMethod(), new ToStringMethod()));
 }
