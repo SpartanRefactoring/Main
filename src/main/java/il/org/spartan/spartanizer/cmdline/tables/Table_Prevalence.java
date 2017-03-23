@@ -64,7 +64,7 @@ class Table_Prevalence extends NanoTable {
           writer = new Table(Table.classToNormalizedFileName(Table_Prevalence.class) + "-" + corpus, outputFolder);
       }
     }.fire(visitor);
-    for (String ¢ : prevalence.keySet()) {
+    for (final String ¢ : prevalence.keySet()) {
       writer.put("Nano", ¢);
       writer.put("Prevalence", Double.valueOf(format.decimal(prevalence.get(¢).inner / 6.0)));
       writer.nl();

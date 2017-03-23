@@ -61,11 +61,11 @@ public class PossiblyMultipleExecution {
     return false;
   }
 
-  private boolean multiple(EnhancedForStatement $) {
+  private boolean multiple(final EnhancedForStatement $) {
     return touched(body($));
   }
 
-  private boolean multiple(ForStatement $) {
+  private boolean multiple(final ForStatement $) {
     return touched(expression($)) || updaters($).stream().anyMatch(λ -> touched(λ));
   }
 
