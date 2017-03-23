@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;
@@ -17,7 +18,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public class WrappedCompilationUnit {
   public ICompilationUnit descriptor;
-  public CompilationUnit compilationUnit;
+  @Nullable public CompilationUnit compilationUnit;
   public String fileName;
   public String filePath;
   public boolean useBinding;
@@ -42,36 +43,36 @@ public class WrappedCompilationUnit {
     compilationUnit = cu;
   }
 
-  public WrappedCompilationUnit build() {
+  @NotNull public WrappedCompilationUnit build() {
     if (compilationUnit == null)
       try {
         compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
             : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
-      } catch (final Throwable x) {
+      } catch (@NotNull final Throwable x) {
         monitor.log(x);
       }
     return this;
   }
 
-  public WrappedCompilationUnit buildWithBinding() {
+  @NotNull public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
       compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
 
-  public WrappedCompilationUnit dispose() {
+  @NotNull public WrappedCompilationUnit dispose() {
     compilationUnit = null;
     return this;
   }
 
-  public String name() {
+  @Nullable public String name() {
     return descriptor == null ? null : descriptor.getElementName();
   }
 
   /** Factory method
    * @param ¢ JD
    * @return an instance created by the parameter */
-  public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
+  @NotNull public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }
 
@@ -79,19 +80,19 @@ public class WrappedCompilationUnit {
    * @author matteo
    * @param ¢ JD
    * @return an instance created by the parameter */
-  public static List<WrappedCompilationUnit> ov(final Collection<CompilationUnit> ¢) {
+  public static List<WrappedCompilationUnit> ov(@NotNull final Collection<CompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
 
-  public static List<WrappedCompilationUnit> of(final Collection<ICompilationUnit> ¢) {
+  public static List<WrappedCompilationUnit> of(@NotNull final Collection<ICompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
 
-  public static WrappedCompilationUnit of(final CompilationUnit from) {
+  @NotNull public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
   }
 
-  public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
+  @NotNull public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
     return new WrappedCompilationUnit(from, name, absolutePath);
   }
 

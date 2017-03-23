@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -12,7 +13,6 @@ import il.org.spartan.spartanizer.meta.*;
 @Ignore
 @RunWith(Parameterized.class)
 public class Issue1090 extends MetaFixture {
-  @UnderConstruction("yogi -- 22/03/2017")
   static class Fixture {
     byte byteField;
     char charField;
@@ -21,7 +21,7 @@ public class Issue1090 extends MetaFixture {
     int intField;
     long longField;
     short shortField;
-    AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
+    @NotNull AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField = 0;
@@ -32,7 +32,7 @@ public class Issue1090 extends MetaFixture {
         intField = charField = 0;
       }
     };
-    AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
+    @NotNull AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField++;
@@ -59,6 +59,9 @@ public class Issue1090 extends MetaFixture {
       return shortField;
     }
 
+    /**
+     * [[SuppressWarningsSpartan]]
+     */
     void go() {
       byteField = getByteField();
       // byteField = 2* charField;

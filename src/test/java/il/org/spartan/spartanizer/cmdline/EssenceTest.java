@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** TODO Shay Segal please add a description
+/** TODO: Shay Segal please add a description
  * @author Shay Segal
  * @author Sefi Albo
  * @author Daniel Shames

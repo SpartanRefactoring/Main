@@ -3,10 +3,11 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import java.util.*;
-import java.util.function.Function;
+import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -28,26 +29,26 @@ public class ExamplesTests {
 
   /** Redirects examples to tests according to type */
   @Test public void converts() {
-    Arrays.stream(tipper.examples()).filter(Converts.class::isInstance).forEachOrdered(λ -> testConverts((Converts) λ));
+    Stream.of(tipper.examples()).filter(Converts.class::isInstance).map(Converts.class::cast).forEachOrdered(this::converts);
   }
 
   /** Redirects examples to tests according to type */
   @Test public void ignores() {
-    Arrays.stream(tipper.examples()).filter(Ignores.class::isInstance).forEachOrdered(λ -> ignores((Ignores) λ));
+    Stream.of(tipper.examples()).filter(Ignores.class::isInstance).map(Ignores.class::cast).forEachOrdered(this::ignores);
   }
 
-  private void ignores(final Ignores ¢) {
+  private void ignores(@NotNull final Ignores ¢) {
     wrap(() -> trimmingOf(¢.get()).stays());
   }
 
-  private void testConverts(final Converts ¢) {
+  private void converts(@NotNull final Converts ¢) {
     wrap(() -> trimmingOf(¢.from()).gives(¢.to()));
   }
 
-  private void wrap(final Runnable test) {
+  private void wrap(@NotNull final Runnable test) {
     try {
       test.run();
-    } catch (final AssertionError x) {
+    } catch (@NotNull final AssertionError x) {
       throw new AssertionError("Example failure at " + tipper.nanoName() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }
@@ -63,10 +64,9 @@ public class ExamplesTests {
 
   /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same
    * class, different templates).
-   * @return 
+   * @return
    * @return all tippers to be tested */
-  @SuppressWarnings("rawtypes")
-  private static Collection<?> allTippers() {
+  @SuppressWarnings("rawtypes") private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
         .stream()
         .collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass,

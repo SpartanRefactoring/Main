@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Tipper disabled due to inefficiency --or
+/** TODO: Tipper disabled due to inefficiency --or
  * @author Ori Marcovitch
  * @since 2016 */
 @Ignore

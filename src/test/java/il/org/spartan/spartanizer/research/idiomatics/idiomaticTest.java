@@ -6,6 +6,7 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -65,48 +66,48 @@ public class idiomaticTest {
     azzert.isNull(idiomatic.take(null).unless(false));
   }
 
-  String mapper(final String ¢) {
+  @NotNull String mapper(final String ¢) {
     return ¢ + ¢;
   }
 
-  String mapper(final Integer ¢) {
+  @NotNull String mapper(final Integer ¢) {
     return ¢ + "";
   }
 
   @Test public void useMapper() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
-    final List<String> after = idiomatic.on(before).map(this::mapper);
+    @NotNull final List<String> after = idiomatic.on(before).map(this::mapper);
     azzert.that(first(after), is("11"));
     azzert.that(after.get(1), is("22"));
     azzert.that(after.get(2), is("33"));
   }
 
   @Test @SuppressWarnings("boxing") public void useMapper2() {
-    final List<Integer> before = new ArrayList<>();
+    @NotNull final List<Integer> before = new ArrayList<>();
     before.add(1);
     before.add(2);
     before.add(3);
-    final List<String> after = idiomatic.on(before).map(this::mapper);
+    @NotNull final List<String> after = idiomatic.on(before).map(this::mapper);
     azzert.that(first(after), is("1"));
     azzert.that(after.get(1), is("2"));
     azzert.that(after.get(2), is("3"));
   }
 
   @Test @SuppressWarnings("boxing") public void useFilter() {
-    final List<Integer> before = new ArrayList<>();
+    @NotNull final List<Integer> before = new ArrayList<>();
     before.add(1);
     before.add(2);
     before.add(3);
-    final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
+    @NotNull final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
     azzert.that(first(after).intValue(), is(1));
     azzert.that(after.get(1).intValue(), is(3));
   }
 
   @Test public void useReduce() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -114,7 +115,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMax() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -122,16 +123,15 @@ public class idiomaticTest {
   }
 
   @Test public void useMin() {
-    final List<String> before = new ArrayList<>();
+    @NotNull final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
     azzert.that(idiomatic.on(before).min(String::compareTo), is("1"));
   }
 
-  // TODO Yossi: compilation error, not sure where "when" is from --or
   @Test public void whenNullsEval() {
-    // final Object o = new Object();
-    // when(o).nulls().eval(() -> o.hashCode()).elze(() -> o.hashCode());
+     final Object o = new Object();
+     idiomatic.when(o).nulls().eval(o::hashCode).elze(o::hashCode);
   }
 }

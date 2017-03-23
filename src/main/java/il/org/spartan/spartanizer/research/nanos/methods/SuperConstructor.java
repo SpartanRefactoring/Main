@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -22,7 +23,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
   }
 
   private boolean delegating(final MethodDeclaration ¢) {
-    final List<String> ps = parametersNames(¢);
+    @Nullable final List<String> ps = parametersNames(¢);
     final Iterable<Expression> as = arguments(az.superConstructorInvocation(onlyStatement(¢)));
     for (final Expression a : as)
       if (!iz.name(¢) && !ps.contains(identifier(az.name(a))))
@@ -30,7 +31,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
     return true;
   }
 
-  @Override public String nanoName() {
+  @Override @NotNull public String nanoName() {
     return "Super";
   }
 }

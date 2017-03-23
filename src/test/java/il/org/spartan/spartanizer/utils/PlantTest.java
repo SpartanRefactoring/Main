@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -24,8 +25,8 @@ public final class PlantTest {
   }
 
   @Test public void plantIntoNull() {
-    final String s = "a?b:c";
-    final Expression e = e(s);
+    @NotNull final String s = "a?b:c";
+    @NotNull final Expression e = e(s);
     assert e != null;
     final Expression e1 = make.plant(e).into(null);
     assert e1 != null;
@@ -33,14 +34,14 @@ public final class PlantTest {
   }
 
   @Test public void plantIntoReturn() {
-    final Expression e = into.e("2");
-    final make.PlantingExpression plant = make.plant(e);
+    @NotNull final Expression e = into.e("2");
+    @NotNull final make.PlantingExpression plant = make.plant(e);
     plant.into(e.getAST().newReturnStatement());
     azzert.that(plant.into(e.getAST().newReturnStatement()), iz("2"));
   }
 
   @Test public void plus() {
-    final Expression e = into.e("a + 2 <b"), plus = findFirst.infixPlus(e);
+    @NotNull final Expression e = into.e("a + 2 <b"), plus = findFirst.infixPlus(e);
     azzert.that(plus + "", type.isNotString(plus), is(true));
     azzert.that(e + "", type.isNotString(plus), is(true));
   }

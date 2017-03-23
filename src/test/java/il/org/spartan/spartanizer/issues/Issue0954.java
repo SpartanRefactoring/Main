@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-01-20 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public class Issue0954 {
-  // @Ignore // TODO Yossi Gil
   @Test public void a() {
     trimmingOf("" //
         + "void f() {\n" //

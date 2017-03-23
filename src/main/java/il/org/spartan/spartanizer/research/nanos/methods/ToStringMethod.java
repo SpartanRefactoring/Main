@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO Ori Marcovitch please add a description
+/** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
 public class ToStringMethod extends JavadocMarkerNanoPattern {

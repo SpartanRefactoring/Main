@@ -5,6 +5,7 @@ import java.io.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
@@ -25,42 +26,42 @@ enum CollectMetrics {
   private static final CSVStatistics output = init(OUTPUT, "property");
   private static final CSVStatistics Tips = init(OUTPUT_Tips, "tips");
 
-  public static void main(final String[] where) {
+  public static void main(@NotNull final String[] where) {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
 
-  public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
+  public static Document rewrite(@NotNull final AbstractGUIApplicator a, @NotNull final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
-    } catch (MalformedTreeException | BadLocationException ¢) {
+    } catch (@NotNull MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
   }
 
   // TODO Yossi Gil: eliminate warning
-  private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
+  private static void collectTips(@SuppressWarnings("unused") final String __, @NotNull final CompilationUnit before) {
     reportTips(new Trimmer().collectSuggestions(before));
   }
 
-  private static void go(final File f) {
+  private static void go(@NotNull final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
       Tips.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void go(final String javaCode) {
+  private static void go(@NotNull final String javaCode) {
     output.put("Characters", javaCode.length());
-    final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    @NotNull final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     report("Before-", before);
     collectTips(javaCode, before);
-    final CompilationUnit after = spartanize(javaCode);
+    @NotNull final CompilationUnit after = spartanize(javaCode);
     assert after != null;
     report("After-", after);
     output.nl();
@@ -70,10 +71,10 @@ enum CollectMetrics {
     new FilesGenerator(".java").from(where).forEach(CollectMetrics::go);
   }
 
-  private static CSVStatistics init(final String $, final String property) {
+  @NotNull private static CSVStatistics init(@NotNull final String $, final String property) {
     try {
       return new CSVStatistics($, property);
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       throw new RuntimeException(OUTPUT, ¢);
     }
   }
@@ -84,10 +85,9 @@ enum CollectMetrics {
    * these. Note that you have to print the file name which is common to all
    * classes. Turn this if you like into a documentation
    * @param string */
-  private static void report(final String prefix, final CompilationUnit ¢) {
+  private static void report(final String prefix, @NotNull final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
-    // Do
-    // this by adding stuff to the metrics suite.
+    // Do this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
     output.put(prefix + "Count", count.nodes(¢));
     output.put(prefix + "Non whites", count.nonWhiteCharacters(¢));
@@ -103,8 +103,8 @@ enum CollectMetrics {
     output.put(prefix + "No Imports", count.noimports(¢));
   }
 
-  private static void reportTips(final Iterable<Tip> ¢) {
-    for (final Tip $ : ¢) {
+  private static void reportTips(@NotNull final Iterable<Tip> ¢) {
+    for (@NotNull final Tip $ : ¢) {
       Tips.put("description", $.description);
       Tips.put("from", $.from);
       Tips.put("to", $.to);
@@ -113,7 +113,7 @@ enum CollectMetrics {
     }
   }
 
-  private static CompilationUnit spartanize(final String javaCode) {
+  @NotNull private static CompilationUnit spartanize(final String javaCode) {
     final String $ = new Trimmer().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);

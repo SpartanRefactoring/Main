@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -32,19 +33,19 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
     ;
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override @NotNull public Tip pattern(@NotNull final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }
 
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return description;
   }
 
-  @Override public String nanoName() {
+  @Override @NotNull public String nanoName() {
     return "NotNullAssumed";
   }
 }

@@ -13,6 +13,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -30,12 +31,12 @@ import junit.framework.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  @External(alias = "o", value = "output folder") protected String outputFolder = system.tmp;
-  @External(alias = "i", value = "input folder") protected String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "c", value = "corpus name") protected String corpus = "";
+  @External(alias = "o", value = "output folder") @NotNull protected String outputFolder = system.tmp;
+  @External(alias = "i", value = "input folder") @NotNull protected String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "c", value = "corpus name") @NotNull protected String corpus = "";
   @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
-  static BufferedWriter out;
+  @Nullable static BufferedWriter out;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
@@ -46,9 +47,9 @@ public class ASTInFilesVisitor {
    * <p>
    * @param f
    * @return */
-  public static boolean containsTestAnnotation(final String javaCode) {
-    final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
-    final Bool $ = new Bool();
+  public static boolean containsTestAnnotation(@NotNull final String javaCode) {
+    @NotNull final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
+    @NotNull final Bool $ = new Bool();
     cu.accept(new ASTTrotter() {
       @Override public boolean visit(final MethodDeclaration node) {
         if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + ""))) {
@@ -61,7 +62,7 @@ public class ASTInFilesVisitor {
     return $.get();
   }
 
-  static boolean letItBeIn(final List<Statement> ¢) {
+  static boolean letItBeIn(@NotNull final List<Statement> ¢) {
     return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
   }
 
@@ -77,10 +78,10 @@ public class ASTInFilesVisitor {
    * production code does not contain {@code @}{@link Test} annotations
    * <p>
    * @return */
-  public static boolean productionCode(@¢ final File $) {
+  public static boolean productionCode(@NotNull @¢ final File $) {
     try {
       return !containsTestAnnotation(FileUtils.read($));
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, "File = " + $);
       return false;
     }
@@ -89,7 +90,7 @@ public class ASTInFilesVisitor {
   protected String absolutePath;
   private ASTVisitor astVisitor;
   protected Dotter dotter;
-  private final List<String> locations;
+  @NotNull private final List<String> locations;
   protected File presentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
@@ -99,16 +100,16 @@ public class ASTInFilesVisitor {
     this(null);
   }
 
-  public ASTInFilesVisitor(final String[] args) {
+  public ASTInFilesVisitor(@Nullable final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
-  private void collect(final CompilationUnit ¢) {
+  private void collect(@Nullable final CompilationUnit ¢) {
     if (¢ != null)
       ¢.accept(astVisitor);
   }
 
-  void collect(final String javaCode) {
+  void collect(@NotNull final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
@@ -125,7 +126,7 @@ public class ASTInFilesVisitor {
     ___.______unused(path);
   }
 
-  void visit(final File f) {
+  void visit(@NotNull final File f) {
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
@@ -136,7 +137,7 @@ public class ASTInFilesVisitor {
         collect(FileUtils.read(f));
         if (!silent)
           dotter.click();
-      } catch (final IOException ¢) {
+      } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
   }
@@ -152,7 +153,7 @@ public class ASTInFilesVisitor {
   }
 
   public static class BucketMethods {
-    static boolean letItBeIn(final List<Statement> ¢) {
+    static boolean letItBeIn(@NotNull final List<Statement> ¢) {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
 
@@ -164,11 +165,11 @@ public class ASTInFilesVisitor {
           silent = true;
         }
       }.fire(new ASTTrotter() {
-        boolean interesting(final List<Statement> ¢) {
+        boolean interesting(@Nullable final List<Statement> ¢) {
           return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
         }
 
-        @Override boolean interesting(final MethodDeclaration ¢) {
+        @Override boolean interesting(@NotNull final MethodDeclaration ¢) {
           return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
         }
 
@@ -177,14 +178,14 @@ public class ASTInFilesVisitor {
               SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);
         }
 
-        boolean leaking(final Stream<ASTNode> ¢) {
+        boolean leaking(@NotNull final Stream<ASTNode> ¢) {
           return ¢.noneMatch(this::leaking);
         }
 
-        @Override protected void record(final String summary) {
+        @Override protected void record(@NotNull final String summary) {
           try {
             out.write(summary);
-          } catch (final IOException ¢) {
+          } catch (@NotNull final IOException ¢) {
             System.err.println("Error: " + ¢.getMessage());
           }
           super.record(summary);
@@ -204,20 +205,20 @@ public class ASTInFilesVisitor {
       }.fire(new ASTTrotter() {
         {
           hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
-            @Override public Void fire() {
+            @Override @Nullable public Void fire() {
               return null;
             }
 
-            @Override public boolean ok(final ExpressionStatement ¢) {
+            @Override public boolean ok(@NotNull final ExpressionStatement ¢) {
               return extract.usedNames(¢.getExpression()).size() == 1;
             }
           });
         }
 
-        @Override protected void record(final String summary) {
+        @Override protected void record(@NotNull final String summary) {
           try {
             out.write(summary);
-          } catch (final IOException ¢) {
+          } catch (@NotNull final IOException ¢) {
             System.err.println("Error: " + ¢.getMessage());
           }
           super.record(summary);
@@ -248,12 +249,13 @@ public class ASTInFilesVisitor {
         }
       }.fire(new ASTTrotter() {
         {
-          final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(λ -> System.out.println(λ.getName()));
-          final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
+          @NotNull final Rule<TypeDeclaration, Object> r = Rule.on((@NotNull final TypeDeclaration t) -> t.isInterface())
+              .go(λ -> System.out.println(λ.getName()));
+          @NotNull final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
             System.out.println(λ);
             return λ.isInterface();
           };
-          final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
+          @NotNull final Consumer<TypeDeclaration> c = λ -> System.out.println(λ);
           on(TypeDeclaration.class).hook(r.beforeCheck(c).beforeCheck(q).afterCheck(c).beforeCheck(p).afterCheck(q).afterCheck(p));
         }
       });

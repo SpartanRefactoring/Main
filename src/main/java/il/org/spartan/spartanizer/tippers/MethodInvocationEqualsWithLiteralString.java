@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -21,7 +22,7 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   private static final long serialVersionUID = -318973030784465509L;
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
-  private static ASTNode replacement(final SimpleName n, final Expression ¢, final Expression x) {
+  private static ASTNode replacement(@NotNull final SimpleName n, final Expression ¢, final Expression x) {
     final MethodInvocation $ = n.getAST().newMethodInvocation();
     $.setExpression(copy.of(¢));
     $.setName(copy.of(n));
@@ -29,18 +30,18 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
     return $;
   }
 
-  @Override public String description(final MethodInvocation ¢) {
+  @Override @NotNull public String description(final MethodInvocation ¢) {
     return "Write " + first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
-    final SimpleName $ = name(i);
+    @NotNull final SimpleName $ = name(i);
     if (!mns.contains($ + ""))
       return null;
     final Expression ¢ = onlyOne(arguments(i));
     if (!(¢ instanceof StringLiteral))
       return null;
-    final Expression e = receiver(i);
+    @NotNull final Expression e = receiver(i);
     return e == null || e instanceof StringLiteral ? null : replacement($, ¢, e);
   }
 }

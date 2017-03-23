@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing resources in try statement
@@ -10,12 +12,12 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("InfiniteRecursion")
 public class FixtureTryResources extends MetaFixture {
   @knows("f/0") int f() throws IOException {
-    try (@knows("$") FileReader $ = new FileReader(toString())) {
-      try (@knows({ "b", "$" }) FileReader b = new FileReader(toString())) {
+    try (@NotNull @knows("$") FileReader $ = new FileReader(toString())) {
+      try (@NotNull @knows({ "b", "$" }) FileReader b = new FileReader(toString())) {
         if (f() == 3)
           return $.hashCode();
-        try (@knows({ "c", "b", "$" }) FileReader c = new FileReader(toString())) {
-          try (@knows({ "f/0", "c", "b", "$", "d" }) FileReader d = new FileReader(toString())) {
+        try (@NotNull @knows({ "c", "b", "$" }) FileReader c = new FileReader(toString())) {
+          try (@NotNull @knows({ "f/0", "c", "b", "$", "d" }) FileReader d = new FileReader(toString())) {
             if (f() == 3)
               return c.hashCode();
           }

@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,9 +28,9 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -6131575687350461523L;
 
-  private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
-    for (final Expression ¢ : xs)
+  private static List<Expression> dropAnyIfSame(@NotNull final List<Expression> xs, @NotNull final Expression left) {
+    @NotNull final List<Expression> $ = new ArrayList<>(xs);
+    for (@NotNull final Expression ¢ : xs)
       if (same(¢, left)) {
         $.remove(¢);
         return $;
@@ -37,27 +38,27 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     return null;
   }
 
-  private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
+  private static List<Expression> dropFirstIfSame(@NotNull final Expression ¢, @NotNull final List<Expression> xs) {
     return !same(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
   }
 
-  private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
-    final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
+  private static Expression reduce(final InfixExpression x, @NotNull final Expression deleteMe) {
+    @Nullable final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
     return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
   }
 
-  private static ASTNode replacement(final Expression to, final InfixExpression from) {
+  private static ASTNode replacement(@NotNull final Expression to, final InfixExpression from) {
     if (iz.arrayAccess(to) || !sideEffects.free(to))
       return null;
-    final Expression $ = reduce(from, to);
+    @Nullable final Expression $ = reduce(from, to);
     return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
   }
 
-  @Override public String description(final Assignment ¢) {
+  @Override @NotNull public String description(final Assignment ¢) {
     return "Replace x = x " + operator(¢) + "a; with x " + operator(¢) + "= a;";
   }
 
-  @Override public ASTNode replacement(final Assignment ¢) {
+  @Override public ASTNode replacement(@NotNull final Assignment ¢) {
     return ¢.getOperator() != ASSIGN || az.infixExpression(from(¢)) == null ? null : replacement(to(¢), az.infixExpression(from(¢)));
   }
 }

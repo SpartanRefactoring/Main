@@ -4,6 +4,7 @@ import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Type;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -28,11 +29,11 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
     return super.visit(node);
   }
 
-  /** TODO Ori Roth: Please add here more boolean metrics such as
+  /** TODO: Ori Roth: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */
-  private void consider(final MethodDeclaration ¢) {
+  private void consider(@NotNull final MethodDeclaration ¢) {
     dotter.click();
     final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
@@ -75,7 +76,7 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
     writer.nl();
   }
 
-  @Override public void endVisit(final MethodDeclaration node) {
+  @Override public void endVisit(@NotNull final MethodDeclaration node) {
     --methodNesting;
     consider(node);
     super.endVisit(node);
