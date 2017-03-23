@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
-/** TODO Sharon Kuninin please add a description
+/** TODO: Sharon Kuninin please add a description
  * @author Sharon Kuninin
  * @author Yarden Lev
  * @since Nov 12, 2016 */

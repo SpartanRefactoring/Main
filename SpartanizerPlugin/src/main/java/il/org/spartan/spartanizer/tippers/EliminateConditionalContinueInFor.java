@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,11 +15,11 @@ public class EliminateConditionalContinueInFor extends EagerTipper<ForStatement>
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 1319731512145811654L;
 
-  @NotNull @Override public String description(@NotNull final ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Eliminate conditional continue before last statement in the for loop about " + ¢.getExpression();
   }
 
-  @Nullable @Override public Fragment tip(@NotNull final ForStatement ¢) {
+  @Override public Tip tip(final ForStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

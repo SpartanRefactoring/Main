@@ -3,7 +3,6 @@ package il.org.spartan.plugin.old;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
@@ -17,13 +16,13 @@ public final class RefreshAll extends BaseHandler {
     as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(λ -> go(λ));
   }
 
-  public static void go(@NotNull final IProject p) {
-    @NotNull final IProgressMonitor npm = new NullProgressMonitor();
+  public static void go(final IProject p) {
+    final IProgressMonitor npm = new NullProgressMonitor();
     new Thread(() -> {
       try {
         if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
           p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
-      } catch (@NotNull final CoreException ¢) {
+      } catch (final CoreException ¢) {
         monitor.logEvaluationError(new RefreshAll(), ¢);
       }
     }).run();

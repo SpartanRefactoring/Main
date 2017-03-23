@@ -9,7 +9,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -94,22 +93,22 @@ final class BatchSpartanizerApplication implements IApplication {
     return IApplication.EXIT_OK;
   }
 
-  ICompilationUnit openCompilationUnit(@NotNull final File ¢) throws JavaModelException, IOException {
-    @NotNull final String $ = FileUtils.read(¢);
+  ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
+    final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private static String getPackageNameFromSource(@NotNull final String source) {
+  private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
 
-  private static String getPackageNameFromSource(@NotNull final Wrapper<String> $, @NotNull final ASTNode n) {
+  private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
+      @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -123,11 +122,11 @@ final class BatchSpartanizerApplication implements IApplication {
 
   /** Discard compilation unit u
    * @param u */
-  void discardCompilationUnit(@NotNull final ICompilationUnit u) {
+  void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
-    } catch (@NotNull final NullPointerException | JavaModelException ¢) {
+    } catch (final NullPointerException | JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
   }
@@ -147,7 +146,7 @@ final class BatchSpartanizerApplication implements IApplication {
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-    @NotNull final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
@@ -185,8 +184,8 @@ final class BatchSpartanizerApplication implements IApplication {
   // }
   // }
   // }
-  @NotNull public static ProcessBuilder runScript¢(final String pathname) {
-    @NotNull final ProcessBuilder $ = system.runScript();
+  public static ProcessBuilder runScript¢(final String pathname) {
+    final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
@@ -207,17 +206,17 @@ final class BatchSpartanizerApplication implements IApplication {
   private PrintWriter afters;
   private CSVStatistics report;
 
-  private BatchSpartanizerApplication(@NotNull final String path) {
+  private BatchSpartanizerApplication(final String path) {
     this(path, system.folder2File(path));
   }
 
   @SuppressWarnings("unused") private BatchSpartanizerApplication(final String presentSourcePath, final String name) {
-    @NotNull final File dir = new File(folder + outputDir);
+    final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
 
-  boolean collect(@NotNull final AbstractTypeDeclaration in) {
+  boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");

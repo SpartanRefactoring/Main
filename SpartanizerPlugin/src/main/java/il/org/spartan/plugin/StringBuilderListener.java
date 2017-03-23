@@ -2,8 +2,6 @@ package il.org.spartan.plugin;
 
 import static il.org.spartan.plugin.Listener.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.Separator;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -16,7 +14,7 @@ public class StringBuilderListener implements Listener {
   private static final Tab tab = new Tab();
   private final StringBuilder $ = new StringBuilder();
 
-  @NotNull public String $() {
+  public String $() {
     return $ + "";
   }
 

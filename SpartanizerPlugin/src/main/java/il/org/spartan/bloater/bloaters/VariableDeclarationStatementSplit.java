@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -26,7 +25,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 2701028813439219141L;
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
     return "Split initialization statement";
   }
 
@@ -34,14 +33,14 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     return fragments(¢).stream().filter(VariableDeclarationStatementSplit::isFragmentApplicable).count() >= 2;
   }
 
-  @NotNull @Override public Fragment tip(@NotNull final VariableDeclarationStatement ¢) {
+  @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢), first = copy.of(¢);
     final VariableDeclarationFragment fs = getFirstAssignment($), ff = fragments(first).get(fragments($).indexOf(fs));
     fragments($).remove(fs);
     fragments(first).clear();
     fragments(first).add(ff);
-    return new Fragment(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+    return new Tip(description(¢), ¢, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(parent(¢), Block.STATEMENTS_PROPERTY);
         l.insertAfter($, ¢, g);
         l.insertAfter(first, ¢, g);

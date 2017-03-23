@@ -48,7 +48,7 @@ public class InfixAdditionSubtractionExpandTest {
         .gives("1 - a - b").stays();
   }
 
-  // TODO Matteo (for himself) this is not working properly
+  // TODO: Matteo (for himself) this is not working properly
   @Test @SuppressWarnings("static-method") public void test08() {
     trimmingOf("1 - (a+1)")//
         .gives("1 - a - 1").stays();

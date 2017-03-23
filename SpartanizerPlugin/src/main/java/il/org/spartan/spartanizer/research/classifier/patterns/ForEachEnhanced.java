@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.classifier.patterns;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -20,11 +19,11 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "ForEach: conevrt to fluent API";
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ForStatement ¢) {
+  @Override public Tip pattern(final ForStatement ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }
 }

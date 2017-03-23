@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -27,7 +26,7 @@ public class Issue0810 {
   }
 
   @Test public void test1() {
-    @NotNull final Collection<SimpleName> lst = new ArrayList<>();
+    final Collection<SimpleName> lst = new ArrayList<>();
     lst.add(az.simpleName(wizard.ast("abc")));
     assert !haz.dollar(lst);
     lst.add(az.simpleName(wizard.ast("$")));

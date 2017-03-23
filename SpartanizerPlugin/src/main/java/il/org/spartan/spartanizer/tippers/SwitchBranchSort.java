@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -21,8 +20,8 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -3538528399312058847L;
 
-  @Nullable @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
-    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
+  @Override public ASTNode replacement(final SwitchStatement s) {
+    final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
     for (int ¢ = 0; ¢ < $.size() - 1; ++¢)
@@ -35,7 +34,7 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Sort switch branches";
   }
 }

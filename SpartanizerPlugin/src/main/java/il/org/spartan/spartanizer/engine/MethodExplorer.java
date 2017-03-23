@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -28,15 +27,15 @@ public final class MethodExplorer {
    * also correctly adds variables declared within plain and extended for loops,
    * just as local variables defined within a try and catch clauses.
    * @return a list of {@link SimpleName} from the given method. */
-  @NotNull public List<SimpleName> localVariables() {
-    @NotNull final List<SimpleName> $ = new ArrayList<>();
+  public List<SimpleName> localVariables() {
+    final List<SimpleName> $ = new ArrayList<>();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
-      @Override public boolean visit(@NotNull final CatchClause ¢) {
+      @Override public boolean visit(final CatchClause ¢) {
         return add(¢.getException());
       }
 
-      @Override public boolean visit(@NotNull final EnhancedForStatement ¢) {
+      @Override public boolean visit(final EnhancedForStatement ¢) {
         return add(¢.getParameter());
       }
 
@@ -53,17 +52,17 @@ public final class MethodExplorer {
         return true;
       }
 
-      boolean add(@NotNull final Iterable<? extends Expression> xs) {
+      boolean add(final Iterable<? extends Expression> xs) {
         xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
 
-      boolean add(@NotNull final SingleVariableDeclaration ¢) {
+      boolean add(final SingleVariableDeclaration ¢) {
         $.add(¢.getName());
         return true;
       }
 
-      void addFragments(@NotNull final Iterable<VariableDeclarationFragment> fs) {
+      void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> $.add(λ.getName()));
       }
     });
@@ -75,8 +74,8 @@ public final class MethodExplorer {
    * <p>
    * This method correctly ignores return sideEffects found within nested types.
    * @return a list of {@link ReturnStatement} from the given method. */
-  @NotNull public List<ReturnStatement> returnStatements() {
-    @NotNull final List<ReturnStatement> $ = new ArrayList<>();
+  public List<ReturnStatement> returnStatements() {
+    final List<ReturnStatement> $ = new ArrayList<>();
     // noinspection SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final ReturnStatement ¢) {

@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -27,15 +26,15 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }
 
-  @NotNull @Override public String description() {
+  @Override public String description() {
     return "Casting a boolean into an int";
   }
 
-  @NotNull @Override public String technicalName() {
+  @Override public String technicalName() {
     return "CastXFromBooleanToInt";
   }
 
@@ -47,7 +46,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @NotNull @Override public Category category() {
+  @Override public Category category() {
     return Category.Functional;
   }
 }

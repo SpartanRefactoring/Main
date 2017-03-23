@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -19,19 +18,19 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -875185107180196417L;
 
-  @NotNull private static String asString(@NotNull final BooleanLiteral ¢) {
+  private static String asString(final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
 
-  @Nullable private static Expression replacement(final Expression x, @Nullable final BooleanLiteral l) {
+  private static Expression replacement(final Expression x, final BooleanLiteral l) {
     return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
 
-  @Nullable private static Expression replacement(@Nullable final Expression x, final Expression $) {
+  private static Expression replacement(final Expression x, final Expression $) {
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 
-  @NotNull @Override public String description(final MethodInvocation ¢) {
+  @Override public String description(final MethodInvocation ¢) {
     return "Replace valueOf (" + onlyArgument(¢) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(¢)));
   }
 

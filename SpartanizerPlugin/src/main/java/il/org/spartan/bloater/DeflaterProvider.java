@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -28,11 +27,11 @@ public class DeflaterProvider extends OperationsProvider {
     toolbox = tb;
   }
 
-  @NotNull @Override public <N extends ASTNode> Tipper<N> getTipper(@NotNull final N ¢) {
+  @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return toolbox.firstTipper(¢);
   }
 
-  @NotNull @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+  @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(last(λ));
   }
 }

@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,7 +21,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 8867383151468342949L;
 
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
+  private static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
     $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
@@ -38,22 +37,22 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
 
-  // TODO now fitting returns true iff all fragments fitting. We
+  // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return fragments(vds).stream()
         .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  @Nullable private static Expression Initializers(final VariableDeclarationFragment ¢) {
+  private static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  @Nullable private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
-  @NotNull private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     // TODO Dor: use extract.core
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
@@ -71,18 +70,18 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
-  @NotNull @Override public String description(final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Nullable @Override protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
-      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
+      final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    @Nullable final VariableDeclarationStatement vds = parent(f);
+    final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
       return null;
-    @Nullable final WhileStatement s = az.whileStatement(nextStatement);
+    final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null || !fitting(vds, s))
       return null;
     exclude.excludeAll(fragments(vds));

@@ -18,7 +18,7 @@ public interface Nested<@¢ T> {
   }
 
   interface Root<@¢ T> extends Nested<T> {
-    @NotNull @Override default Stream<T> ancestors() {
+    @Override @NotNull default Stream<T> ancestors() {
       return streamSelf();
     }
   }

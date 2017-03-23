@@ -1,11 +1,9 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
  * @since Sep 7, 2016 */
 package il.org.spartan.spartanizer.utils;
-
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 
@@ -15,7 +13,7 @@ class A {
   }
 
   class B {
-    @NotNull A f() {
+    A f() {
       return A.this;
     }
   }
@@ -46,8 +44,8 @@ public enum ReflectionAnalyzer {
     }.getClass());
   }
 
-  @NotNull static String toBinary(final int value) {
-    @NotNull String $ = "";
+  static String toBinary(final int value) {
+    String $ = "";
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;
     return $;

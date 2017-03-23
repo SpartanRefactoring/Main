@@ -4,7 +4,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 
-/** TODO Matteo Orru' please add a description
+/** TODO: Matteo Orru' please add a description
  * @author Matteo Orru'
  * @since 2016 */
 @SuppressWarnings("static-method")

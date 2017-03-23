@@ -11,7 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -34,30 +33,30 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return false;
   }
 
-  @NotNull @Override public String description(final MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Nullable @Override public Fragment tip(@NotNull final MethodDeclaration d) {
+  @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
-    @Nullable final List<Statement> bodyStatements = statements(d);
-    @NotNull final Collection<String> definedLocals = new ArrayList<>();
-    @NotNull final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
+    final List<Statement> bodyStatements = statements(d);
+    final Collection<String> definedLocals = new ArrayList<>();
+    final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
           definedLocals.addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         continue;
       }
-      @NotNull final Expression e = expression(az.expressionStatement(s));
+      final Expression e = expression(az.expressionStatement(s));
       if (!iz.assignment(e))
         continue;
-      @Nullable final Assignment a = az.assignment(e);
+      final Assignment a = az.assignment(e);
       if (!iz.fieldAccess(left(a)) || !iz.thisExpression(expression(az.fieldAccess(left(a)))))
         continue;
-      @NotNull final SimpleName fieldName = name(az.fieldAccess(left(a)));
+      final SimpleName fieldName = name(az.fieldAccess(left(a)));
       if (!iz.simpleName(right(a)))
         continue;
       final SimpleName paramName = az.simpleName(right(a));
@@ -66,7 +65,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       $.add(paramName);
       newNames.add(fieldName);
     }
-    return $.isEmpty() ? null : new Fragment(description(d), d, getClass()) {
+    return $.isEmpty() ? null : new Tip(description(d), d, getClass()) {
       final List<SimpleName> on = new ArrayList<>($);
       final List<SimpleName> nn = new ArrayList<>(newNames);
 

@@ -19,4 +19,13 @@ public class AdvancedGivesTests {
     trimmingOf("1+2+a")//
         .givesEither("a+3", "3+a");
   }
+
+  @SuppressWarnings("unused")
+  private static class NotWorking {
+    @Test public void test2() {
+      trimmingOf("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢; continue;}")//
+          .givesEither("for (int ¢ = 0 ; ¢ < 5 ; ++¢) {++¢;}", //
+              "for (int ¢ = 0 ; ¢ < 5 ; ++¢) ++¢;");
+    }
+  }
 }

@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -29,19 +28,19 @@ public final class stepTest {
   }
 
   @Test public void imports() {
-    @NotNull final List<ImportDeclaration> li = step.importDeclarations(cu("import a.b.c; class c{}"));
+    final List<ImportDeclaration> li = step.importDeclarations(cu("import a.b.c; class c{}"));
     azzert.that(li.size(), is(1));
     azzert.that(first(li).getName() + "", is("a.b.c"));
   }
 
   @Test public void importsNames() {
-    @Nullable final List<String> li = step.importDeclarationsNames(cu("import a.b.c; class c{}"));
+    final List<String> li = step.importDeclarationsNames(cu("import a.b.c; class c{}"));
     azzert.that(li.size(), is(1));
     azzert.that(first(li), is("a.b.c"));
   }
 
   @Test public void importsNames2() {
-    @Nullable final List<String> li = step.importDeclarationsNames(cu("import a.b.c; import static f.g.*; import java.util.*; class c{}"));
+    final List<String> li = step.importDeclarationsNames(cu("import a.b.c; import static f.g.*; import java.util.*; class c{}"));
     azzert.that(li.size(), is(3));
     azzert.that(first(li), is("a.b.c"));
     azzert.that(li.get(1), is("static f.g.*"));

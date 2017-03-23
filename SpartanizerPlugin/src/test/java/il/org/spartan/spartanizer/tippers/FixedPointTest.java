@@ -5,7 +5,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -21,16 +20,16 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class FixedPointTest {
-  private static void assertConvertsTo(@NotNull final String from, @NotNull final String expected) {
+  private static void assertConvertsTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Statement);
   }
 
-  private static void assertSimplifiesTo(@NotNull final String from, @NotNull final String expected) {
+  private static void assertSimplifiesTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, Wrap.Expression);
   }
 
-  private static void assertWrappedTranslation(@NotNull final String from, @NotNull final String expected, @NotNull final Wrap w) {
-    @NotNull final String wrap = w.on(from);
+  private static void assertWrappedTranslation(final String from, final String expected, final Wrap w) {
+    final String wrap = w.on(from);
     azzert.that(w.off(wrap), is(from));
     final String unpeeled = new InteractiveSpartanizer().fixedPoint(wrap);
     if (wrap.equals(unpeeled))

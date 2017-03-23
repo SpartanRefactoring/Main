@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,45 +24,45 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 2369640174584695552L;
   private static final String description = "replace with azzert.notNull(X)";
-  private static final ThrowOnNull assertNotNull = new ThrowOnNull();
+  private static final NotNullOrThrow assertNotNull = new NotNullOrThrow();
 
-  @Override public boolean canTip(@NotNull final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return assertNotNull.check(¢)//
         && iz.returnStatement(next(¢))//
     ;
   }
 
-  @Nullable static Statement next(final IfStatement ¢) {
+  static Statement next(final IfStatement ¢) {
     return extract.nextStatement(¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final IfStatement ¢) {
-    return new Fragment(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final Statement next = next(¢);
+  @Override public Tip pattern(final IfStatement ¢) {
+    return new Tip(description(¢), ¢, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final Statement next = next(¢);
         r.remove(next, g);
         r.replace(¢, extract.singleStatement(ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }
     };
   }
 
-  @NotNull @Override public Category category() {
+  @Override public Category category() {
     return Category.Safety;
   }
 
-  @NotNull @Override public String description() {
+  @Override public String description() {
     return description;
   }
 
-  @NotNull @Override public String technicalName() {
+  @Override public String technicalName() {
     return "IfXIsNullThrowElseReturnY";
   }
 
-  @NotNull @Override public String example() {
+  @Override public String example() {
     return "if(X == null) throw new RuntimeException(); return Y;";
   }
 
-  @NotNull @Override public String symbolycReplacement() {
+  @Override public String symbolycReplacement() {
     return "notNull(X).get(Y);";
   }
 }

@@ -3,11 +3,9 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import java.util.*;
-import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -37,19 +35,19 @@ public class ExamplesTests {
     Arrays.stream(tipper.examples()).filter(Ignores.class::isInstance).forEachOrdered(λ -> ignores((Ignores) λ));
   }
 
-  private void ignores(@NotNull final Ignores ¢) {
+  private void ignores(final Ignores ¢) {
     wrap(() -> trimmingOf(¢.get()).stays());
   }
 
-  private void testConverts(@NotNull final Converts ¢) {
+  private void testConverts(final Converts ¢) {
     wrap(() -> trimmingOf(¢.from()).gives(¢.to()));
   }
 
-  private void wrap(@NotNull final Runnable test) {
+  private void wrap(final Runnable test) {
     try {
       test.run();
-    } catch (@NotNull final AssertionError x) {
-      throw new AssertionError("Example failure at " + tipper.nanoName() + ":\n" + x.getMessage().trim(), x.getCause());
+    } catch (final AssertionError x) {
+      throw new AssertionError("Example failure at " + tipper.className() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }
 
@@ -62,15 +60,11 @@ public class ExamplesTests {
     return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
   }
 
-  /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same
+  /** Get all tippers from {@link Toolbox}. Removes duplicated tippers (same
    * class, different templates).
-   * @return
    * @return all tippers to be tested */
-  @SuppressWarnings("rawtypes") private static Collection<?> allTippers() {
+  private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
-        .stream()
-        .collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass,
-            λ -> λ, (t1, t2) -> t1))
-        .values();
+        .stream().collect(Collectors.toMap(λ -> λ.getClass(), λ -> λ, (t1, t2) -> t1)).values();
   }
 }

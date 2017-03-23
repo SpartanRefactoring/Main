@@ -2,14 +2,14 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.utils.Proposition.*;
 
-/** TODO Yossi Gil: document class
+/**
+ * TODO Yossi Gil: document class 
  * @param <R>
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
- * @since 2017-03-19 */
+ * @since 2017-03-19
+ */
 public abstract class PropositionReducer<R> extends Reduce<R> {
   public final Reduce<R> inner;
 
@@ -21,7 +21,6 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   protected R post(@SuppressWarnings("unused") final Proposition.P __) {
     return reduce();
   }
-
   protected R post(@SuppressWarnings("unused") final Proposition.Not __) {
     return reduce();
   }
@@ -50,14 +49,14 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce();
   }
 
-  @NotNull protected abstract R map(BooleanSupplier ¢);
+  protected abstract R map(BooleanSupplier ¢);
 
   @Override public R reduce() {
     return inner.reduce();
   }
 
-  @Nullable private R reduce(@NotNull final And a) {
-    @Nullable R $ = ante(a);
+  private R reduce(final And a) {
+    R $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(a.inner.get(¢)));
       if (¢ < size - 1)
@@ -66,7 +65,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(a));
   }
 
-  @NotNull public final R reduce(final BooleanSupplier ¢) {
+  public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
         : ¢ instanceof P ? reduce((P) ¢) //
@@ -75,12 +74,12 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
                     : map(¢);
   }
 
-  @Nullable private R reduce(@NotNull final Not ¢) {
+  private R reduce(final Not ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
-  @Nullable private R reduce(@NotNull final Or o) {
-    @Nullable R $ = ante(o);
+  private R reduce(final Or o) {
+    R $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
       $ = reduce($, reduce(o.inner.get(¢)));
       if (¢ < size - 1)
@@ -89,11 +88,11 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(o));
   }
 
-  @Nullable private R reduce(@NotNull final P ¢) {
+  private R reduce(final P ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
-  @Nullable @Override public R reduce(final R r1, final R r2) {
+  @Override public R reduce(final R r1, final R r2) {
     return inner.reduce(r1, r2);
   }
 }

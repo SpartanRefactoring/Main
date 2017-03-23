@@ -5,7 +5,6 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,23 +21,23 @@ public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assign
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -1964351676264169946L;
 
-  private static boolean isIncrement(@NotNull final Assignment ¢) {
+  private static boolean isIncrement(final Assignment ¢) {
     return ¢.getOperator() == Assignment.Operator.PLUS_ASSIGN;
   }
 
-  private static boolean provablyNotString(@NotNull final Assignment ¢) {
+  private static boolean provablyNotString(final Assignment ¢) {
     return type.isNotString(subject.pair(left(¢), right(¢)).to(wizard.assign2infix(¢.getOperator())));
   }
 
-  private static ASTNode replace(@NotNull final Assignment ¢) {
+  private static ASTNode replace(final Assignment ¢) {
     return subject.operand(left(¢)).to(isIncrement(¢) ? INCREMENT : DECREMENT);
   }
 
-  @NotNull @Override public String description(@NotNull final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Replace " + ¢ + " to " + right(¢) + (isIncrement(¢) ? "++" : "--");
   }
 
-  @Override public ASTNode replacement(@NotNull final Assignment ¢) {
+  @Override public ASTNode replacement(final Assignment ¢) {
     return !iz.isPlusAssignment(¢) && !iz.isMinusAssignment(¢) || !iz.literal1(right(¢)) || !provablyNotString(¢) ? null : replace(¢);
   }
 }

@@ -4,8 +4,9 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** Test cases for checking that the tipper for removing unecessry paranthesis
- * from if statements with a single statement is working properly
+/** Test cases for checking that the tipper for removing 
+ * unecessry paranthesis from if statements with a single statement is 
+ * working properly
  * @author Dor Ma'ayan
  * @since 23-11-2016 */
 @SuppressWarnings("static-method")

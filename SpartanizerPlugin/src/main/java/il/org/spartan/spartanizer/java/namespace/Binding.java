@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
@@ -11,22 +10,22 @@ import il.org.spartan.spartanizer.engine.*;
  * now, clients should not be messing with it
  * @since 2016 */
 public class Binding {
-  private static boolean eq(@Nullable final Object o1, @Nullable final Object o2) {
+  private static boolean eq(final Object o1, final Object o2) {
     return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
   }
 
   /** For Information purposes, {@link type}s are equal if their key is
    * equal. */
-  private static boolean eq(@Nullable final type t1, @Nullable final type t2) {
+  private static boolean eq(final type t1, final type t2) {
     return t1 == null ? t2 == null : t2 != null && t1.key().equals(t2.key());
   }
 
   /** What do we know about an entry hidden by this one */
-  @Nullable final Binding hiding;
+  final Binding hiding;
   /** The node at which this entry was created */
-  @Nullable private final ASTNode self;
+  private final ASTNode self;
   /** What do we know about the type of this definition */
-  @Nullable private final type type;
+  private final type type;
 
   public Binding() {
     hiding = null;
@@ -34,7 +33,7 @@ public class Binding {
     self = null;
   }
 
-  @NotNull @Override public String toString() {
+  @Override public String toString() {
     return type + "";
   }
 
@@ -62,7 +61,7 @@ public class Binding {
     type = null;
   }
 
-  private boolean equals(@NotNull final Binding ¢) {
+  private boolean equals(final Binding ¢) {
     return eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
   }
 
@@ -72,7 +71,7 @@ public class Binding {
    *         hidden are equal. */
   // Required for MapEntry equality, which is, in turn, required for Set
   // containment check, which is required for testing.
-  @Override public boolean equals(@Nullable final Object ¢) {
+  @Override public boolean equals(final Object ¢) {
     return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Binding) ¢);
   }
 

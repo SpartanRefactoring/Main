@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -45,16 +44,28 @@ public final class ForLoop {
       ;
     }
 
-    @Nullable @Override public Fragment pattern(final ForStatement $) {
+    @Override public Tip pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @NotNull @Override public String nanoName() {
-      return "FirstSuchThat";
+    @Override public Category category() {
+      return Category.Iterative;
     }
 
-    @NotNull @Override public String description() {
+    @Override public String description() {
       return "Iterate a collection for the first element matching some predicate";
+    }
+
+    @Override public String technicalName() {
+      return "ReturnFirstInCSatisfyingXIfNoneY";
+    }
+
+    @Override public String example() {
+      return firstPattern(tippers);
+    }
+
+    @Override public String symbolycReplacement() {
+      return firstReplacement(tippers);
     }
   }
 }

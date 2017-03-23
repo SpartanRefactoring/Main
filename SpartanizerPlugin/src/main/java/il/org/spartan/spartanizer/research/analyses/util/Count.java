@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.analyses.util;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
@@ -42,7 +41,7 @@ public enum Count {
         + " ratio: [" + safe.div(ternaries.second.inner, ternaries.first.inner) + "]");
   }
 
-  @NotNull private static Pair<Int, Int> newPair() {
+  private static Pair<Int, Int> newPair() {
     return new Pair<>(new Int(), new Int());
   }
 }

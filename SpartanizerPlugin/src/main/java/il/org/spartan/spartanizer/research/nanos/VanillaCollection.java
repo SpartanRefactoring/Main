@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -28,9 +27,9 @@ public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration>
         && specificTypes.contains(type(az.parameterizedType(type(az.classInstanceCreation(initializer(onlyOne(fragments($))))))) + "");
   }
 
-  @NotNull @Override public Fragment pattern(@NotNull final FieldDeclaration ¢) {
-    return new Fragment(description(), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @Override public Tip pattern(final FieldDeclaration ¢) {
+    return new Tip(description(), ¢, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(¢, g);
       }
     };

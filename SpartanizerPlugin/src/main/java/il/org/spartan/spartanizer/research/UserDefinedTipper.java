@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.research;
 
-/* TODO Ori Marcovitch please add a description
+/* TODO: Ori Marcovitch please add a description
  *
  * @author Ori Marcovitch
  *
  * @since 2016 */
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -15,7 +14,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
   private static final long serialVersionUID = -4559537421155078857L;
 
-  @Override public final boolean canTip(@Nullable final N ¢) {
+  @Override public final boolean canTip(final N ¢) {
     return ¢ != null && prerequisite(¢);
   }
 
@@ -31,7 +30,7 @@ public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
 
   public abstract ASTNode getMatching(ASTNode n);
 
-  @NotNull public abstract String pattern();
+  public abstract String pattern();
 
-  @NotNull public abstract String replacement();
+  public abstract String replacement();
 }

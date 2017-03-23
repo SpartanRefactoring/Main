@@ -1,4 +1,4 @@
-/* TODO orimarco <marcovitch.ori@gmail.com> please add a description
+/* TODO: orimarco <marcovitch.ori@gmail.com> please add a description
  *
  * @author orimarco <marcovitch.ori@gmail.com>
  *
@@ -11,7 +11,6 @@ import java.lang.reflect.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -24,16 +23,16 @@ import il.org.spartan.utils.*;
 public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
   static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
-  static final File out = new File(system.tmp + File.separator + nano.nanoName() + ".txt");
+  static final File out = new File(system.tmp + File.separator + nano.className() + ".txt");
 
-  public static void main(@NotNull final String[] args)
+  public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
       static final long serialVersionUID = -8053877776935099016L;
 
-      @NotNull @Override public Fragment pattern(@NotNull final EnhancedForStatement ¢) {
-        return new Fragment("", ¢, getClass()) {
+      @Override public Tip pattern(final EnhancedForStatement ¢) {
+        return new Tip("", ¢, getClass()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
             nano.tip(¢).go(r, g);
@@ -41,7 +40,7 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
         };
       }
 
-      @Override public boolean canTip(@NotNull final EnhancedForStatement ¢) {
+      @Override public boolean canTip(final EnhancedForStatement ¢) {
         return nano.check(¢);
       }
 
@@ -52,7 +51,7 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     spartanalyzer.fixedPoint(¢);
     return true;

@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -24,11 +23,11 @@ public class Min extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "ForEach: conevrt to fluent API";
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ForStatement ¢) {
+  @Override public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }

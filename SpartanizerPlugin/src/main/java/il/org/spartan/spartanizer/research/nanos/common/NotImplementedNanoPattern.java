@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -6,18 +6,17 @@
 package il.org.spartan.spartanizer.research.nanos.common;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 
 public class NotImplementedNanoPattern<N extends ASTNode> extends NanoPatternTipper<N> {
   private static final long serialVersionUID = -7953784585309364300L;
 
-  @Nullable @Override public String technicalName() {
+  @Override public String technicalName() {
     return null;
   }
 
-  @Nullable @Override protected Fragment pattern(@SuppressWarnings("unused") final N ¢) {
+  @Override protected Tip pattern(@SuppressWarnings("unused") final N ¢) {
     return null;
   }
 

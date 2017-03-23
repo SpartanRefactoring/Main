@@ -3,13 +3,12 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.util.*;
 
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/** TODO Dan Greenstein please add a description
+/** TODO: Dan Greenstein please add a description
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
@@ -22,20 +21,19 @@ public class EnvironmentTestUse {
   }
 
   @Test public void useTestUsesAndDefinitions() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int i = 3; x.foo()").get()));
     assert $.contains("x");
     assert $.contains("i");
   }
 
   @Test public void useTestUsesAndDefinitions2() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment
-        .uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i <10; ++i)x+=i").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("for(int i = 0; i <10; ++i)x+=i").get()));
     assert $.contains("x");
     assert $.contains("i");
   }
 
   @Test public void useTestUsesAndDefinitions3() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment
+    final Set<Map.Entry<String, Binding>> $ = Environment
         .uses(makeAST.COMPILATION_UNIT.from(new Document("x=3; try{y=13; foo(x,y);}catch(final UnsupportedOperationException e){z=3;}").get()));
     assert $.contains("x");
     assert $.contains("y");
@@ -47,22 +45,21 @@ public class EnvironmentTestUse {
   }
 
   @Test public void useTestWithDefinitionsOnly2() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = 5,y=3,z;").get()));
     assert $.contains("x");
     assert $.contains("y");
     assert $.contains("z");
   }
 
   @Test public void useTestWithDefinitionsOnly3() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5;").get()));
     assert $.contains("x");
     assert $.contains("y");
     assert $.contains("z");
   }
 
   @Test public void useTestWithDefinitionsOnly4() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment
-        .uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("int x = y = z =5; double k;").get()));
     assert $.contains("x");
     assert $.contains("y");
     assert $.contains("z");
@@ -70,7 +67,7 @@ public class EnvironmentTestUse {
   }
 
   @Test public void useTestWithUsesOnly() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("x=5; y=3.5").get()));
     assert $.contains("x");
     assert $.contains("y");
   }
@@ -80,14 +77,13 @@ public class EnvironmentTestUse {
   }
 
   @Test public void useTestWithUsesOnly3() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(x,y)").get()));
     assert $.contains("x");
     assert $.contains("y");
   }
 
   @Test public void useTestWithUsesOnly4() {
-    @NotNull final Set<Map.Entry<String, Binding>> $ = Environment
-        .uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
+    final Set<Map.Entry<String, Binding>> $ = Environment.uses(makeAST.COMPILATION_UNIT.from(new Document("foo(goo(q,x),hoo(x,y,z))").get()));
     assert $.contains("q");
     assert $.contains("x");
     assert $.contains("y");
