@@ -44,7 +44,7 @@ import org.jetbrains.annotations.*;
  * {@code @}{@link Check}.
  * <p>
  * TODO:
- * <nl>
+ * <nlProposition.T>
  * <li>List of descriptive qualities requires re-thinking.
  * <li>Convert {@code @}{@link Check} and {@code @}{@link Apply} into a single
  * annotation, that takes an {@code enum} defined to include all state .

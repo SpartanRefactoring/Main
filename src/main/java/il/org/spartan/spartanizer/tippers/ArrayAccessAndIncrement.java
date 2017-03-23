@@ -35,8 +35,8 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return new Example[] { //
         convert("array[i] = 1; ++i;") //
             .to("array[i++] = 1;"), //
-        Example.ignores("array[i].f(); ++i;"), //
-        Example.ignores("f(array[i]); ++i;") };
+        ignores("array[i].f(); ++i;"), //
+        ignores("f(array[i]); ++i;") };
   }
 
   @Override public Tip tip(@NotNull final ArrayAccess a) {
