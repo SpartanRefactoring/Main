@@ -14,6 +14,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -36,8 +37,8 @@ public final class SingleFlater {
   /** Creates a new for a {@link CompilationUnit}.
    * @param ¢ JD
    * @return new */
-  public static SingleFlater in(final ASTNode ¢) {
-    final SingleFlater $ = new SingleFlater();
+  @NotNull public static SingleFlater in(final ASTNode ¢) {
+    @NotNull final SingleFlater $ = new SingleFlater();
     $.root = ¢;
     return $;
   }
@@ -45,7 +46,7 @@ public final class SingleFlater {
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
    * @return {@code this} flater */
-  public SingleFlater from(final OperationsProvider ¢) {
+  @NotNull public SingleFlater from(final OperationsProvider ¢) {
     operationsProvider = ¢;
     return this;
   }
@@ -53,7 +54,7 @@ public final class SingleFlater {
   /** Sets text selection limits for this flater.
    * @param ¢ JD
    * @return {@code this} flater */
-  @Deprecated public SingleFlater limit(final TextSelection ¢) {
+  @Deprecated @NotNull public SingleFlater limit(final TextSelection ¢) {
     textSelection = ¢;
     return this;
   }
@@ -61,14 +62,14 @@ public final class SingleFlater {
   /** Sets text selection limits of window to this flater.
    * @param ¢ JD
    * @return {@code this} flater */
-  public SingleFlater limit(final WindowInformation ¢) {
+  @NotNull public SingleFlater limit(final WindowInformation ¢) {
     windowInformation = ¢;
     return this;
   }
 
   /** Set disabling for this flater.
    * @return {@code this} flater */
-  public SingleFlater usesDisabling(final boolean ¢) {
+  @NotNull public SingleFlater usesDisabling(final boolean ¢) {
     usesDisabling = ¢;
     return this;
   }
@@ -83,15 +84,15 @@ public final class SingleFlater {
     if (root == null || operationsProvider == null)
       return false;
     disabling.scan(root);
-    final List<Operation<?>> operations = new ArrayList<>();
+    @NotNull final List<Operation<?>> operations = new ArrayList<>();
     root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
-        Tipper<N> w = null;
+        @Nullable Tipper<N> w = null;
         try {
           w = operationsProvider.getTipper(n);
-        } catch (final Exception ¢) {
+        } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.log(¢);
         }
@@ -103,28 +104,28 @@ public final class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    for (final Operation o : operationsProvider.getFunction().apply(operations))
+    for (@NotNull final Operation o : operationsProvider.getFunction().apply(operations))
       try {
         o.tipper.tip(o.node).go(r, g);
-      } catch (final Exception ¢) {
+      } catch (@NotNull final Exception ¢) {
         monitor.debug(this, ¢);
       }
     return true;
   }
 
   /** @param wcu - the WrappedCompilationUnit which is worked on */
-  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final StyledText t,
-      final ITextEditor e, final WindowInformation i) {
+  public static boolean commitChanges(@NotNull final SingleFlater f, @NotNull final ASTRewrite r, @NotNull final WrappedCompilationUnit u,
+      final StyledText t, final ITextEditor e, final WindowInformation i) {
     boolean $ = false;
     try {
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       if (f.go(r, null)) {
         textChange.setEdit(r.rewriteAST());
         if (textChange.getEdit().getLength() != 0)
           $ = changeNFocus(e, t, textChange, i);
       }
-    } catch (final CoreException ¢) {
+    } catch (@NotNull final CoreException ¢) {
       monitor.log(¢);
     }
     u.dispose();
@@ -133,7 +134,7 @@ public final class SingleFlater {
 
   /** @param ¢ JD
    * @return true iff node is inside predeclared range */
-  @Deprecated boolean inRange(final ASTNode ¢) {
+  @Deprecated boolean inRange(@NotNull final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
   }
@@ -148,8 +149,8 @@ public final class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange tc, final WindowInformation i)
-      throws CoreException {
+  private static boolean changeNFocus(@Nullable final ITextEditor e, @Nullable final StyledText t, @NotNull final TextFileChange tc,
+      @Nullable final WindowInformation i) throws CoreException {
     if (i == null || t == null || e == null) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -161,7 +162,7 @@ public final class SingleFlater {
     return false;
   }
 
-  private boolean inWindow(final ASTNode ¢) {
+  private boolean inWindow(@Nullable final ASTNode ¢) {
     return windowInformation == null || windowInformation.invalid()
         || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
   }
@@ -180,7 +181,7 @@ public final class SingleFlater {
       tipper = t;
     }
 
-    public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> t) {
+    @NotNull public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> t) {
       return new Operation<>(node, t);
     }
   }
@@ -211,18 +212,18 @@ public final class SingleFlater {
       endLine = v.getBottomIndex();
     }
 
-    public WindowInformation(final StyledText ¢) {
+    public WindowInformation(@NotNull final StyledText ¢) {
       startLine = ¢.getTopIndex();
       endLine = JFaceTextUtil.getBottomIndex(¢);
       startChar = ¢.getOffsetAtLine(startLine);
       endChar = ¢.getOffsetAtLine(endLine);
     }
 
-    @Deprecated public static WindowInformation of(final ITextEditor ¢) {
+    @Deprecated @NotNull public static WindowInformation of(final ITextEditor ¢) {
       return new WindowInformation(¢);
     }
 
-    public static WindowInformation of(final StyledText ¢) {
+    @NotNull public static WindowInformation of(@NotNull final StyledText ¢) {
       return new WindowInformation(¢);
     }
 

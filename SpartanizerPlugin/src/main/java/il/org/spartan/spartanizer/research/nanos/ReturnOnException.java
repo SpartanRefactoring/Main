@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,11 +28,11 @@ public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parentAsTryStatement(¢));
   }
 
-  @Override public Tip pattern(final CatchClause ¢) {
+  @Override @Nullable public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parentAsTryStatement(¢));
   }
 
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Exception;
   }
 

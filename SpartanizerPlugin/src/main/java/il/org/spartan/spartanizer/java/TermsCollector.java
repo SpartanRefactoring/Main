@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -33,25 +34,25 @@ public final class TermsCollector {
     /* For internal use only */
   }
 
-  public List<Term> all() {
+  @NotNull public List<Term> all() {
     return all;
   }
 
-  public List<Expression> minus() {
+  @NotNull public List<Expression> minus() {
     return negative;
   }
 
-  public List<Expression> plus() {
+  @NotNull public List<Expression> plus() {
     return positive;
   }
 
-  TermsCollector collect(final InfixExpression ¢) {
+  @NotNull TermsCollector collect(@Nullable final InfixExpression ¢) {
     if (¢ != null && !isLeafTerm(¢))
       collectPlusNonLeaf(¢);
     return this;
   }
 
-  Void collectPlusNonLeaf(final InfixExpression ¢) {
+  @Nullable Void collectPlusNonLeaf(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafTerm(¢);
     assert iz.infixPlus(¢) || iz.infixMinus(¢);
@@ -59,94 +60,94 @@ public final class TermsCollector {
         : collectPlusPrefixMinusExpression(¢);
   }
 
-  Void collectPlusPrefixMinusExpression(final InfixExpression ¢) {
+  @Nullable Void collectPlusPrefixMinusExpression(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafTerm(¢);
     assert iz.infixMinus(¢);
-    final List<Expression> $ = hop.operands(¢);
+    @Nullable final List<Expression> $ = hop.operands(¢);
     addPositiveTerm(core(first($)));
     return collectNegativeTerms(rest($));
   }
 
-  private Void addMinus(final Expression ¢) {
+  private Void addMinus(@NotNull final Expression ¢) {
     assert ¢ != null;
     all.add(Term.minus(¢));
     negative.add(¢);
     return null;
   }
 
-  private Void addMinusTerm(final Expression ¢) {
+  @Nullable private Void addMinusTerm(@NotNull final Expression ¢) {
     assert ¢ != null;
-    final Expression $ = minus.peel(¢);
+    @NotNull final Expression $ = minus.peel(¢);
     return minus.level(¢) % 2 != 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
 
-  private Void addPlus(final Expression ¢) {
+  private Void addPlus(@NotNull final Expression ¢) {
     assert ¢ != null;
     positive.add(¢);
     all.add(Term.plus(¢));
     return null;
   }
 
-  private Void addPlusTerm(final Expression ¢) {
+  @Nullable private Void addPlusTerm(@NotNull final Expression ¢) {
     assert ¢ != null;
-    final Expression $ = minus.peel(¢);
+    @NotNull final Expression $ = minus.peel(¢);
     return minus.level(¢) % 2 == 0 ? collectPlusPrefix($) : collectMinusPrefix($);
   }
 
-  private Void addPositiveTerm(final Expression ¢) {
+  @Nullable private Void addPositiveTerm(@NotNull final Expression ¢) {
     return isLeafTerm(¢) ? addPlusTerm(¢) : collectPlusNonLeaf(az.infixExpression(¢));
   }
 
-  private Void collectMinusPrefix(final Expression ¢) {
+  @Nullable private Void collectMinusPrefix(@NotNull final Expression ¢) {
     assert ¢ != null;
     return isLeafTerm(¢) ? addMinus(¢) : collectMinusPrefix(az.infixExpression(¢));
   }
 
-  private Void collectMinusPrefix(final InfixExpression ¢) {
+  @Nullable private Void collectMinusPrefix(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafTerm(¢);
     return iz.infixPlus(¢) ? collectMinusPrefixPlusExpression(¢) : collectMinusPrefixMinusExprssion(¢);
   }
 
-  private Void collectMinusPrefixMinusExprssion(final InfixExpression ¢) {
+  @Nullable private Void collectMinusPrefixMinusExprssion(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
-    final List<Expression> $ = hop.operands(¢);
+    @Nullable final List<Expression> $ = hop.operands(¢);
     collectNegativeTerm(core(first($)));
     return collectPositiveTerms(rest($));
   }
 
-  private Void collectMinusPrefixPlusExpression(final InfixExpression ¢) {
+  @Nullable private Void collectMinusPrefixPlusExpression(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafTerm(¢);
     assert iz.infixPlus(¢);
     return collectNegativeTerms(hop.operands(¢));
   }
 
-  private Void collectNegativeTerm(final Expression ¢) {
+  @Nullable private Void collectNegativeTerm(@NotNull final Expression ¢) {
     assert ¢ != null;
     return isLeafTerm(¢) ? addMinusTerm(¢) : collectMinusPrefix(az.infixExpression(¢));
   }
 
-  private Void collectNegativeTerms(final Iterable<Expression> xs) {
+  private Void collectNegativeTerms(@NotNull final Iterable<Expression> xs) {
     assert xs != null;
     xs.forEach(λ -> collectNegativeTerm(core(λ)));
     return null;
   }
 
-  private Void collectPlusPrefix(final Expression ¢) {
+  @Nullable private Void collectPlusPrefix(@NotNull final Expression ¢) {
     assert ¢ != null;
     return isLeafTerm(¢) ? addPlus(¢) : collectPlusNonLeaf(az.infixExpression(¢));
   }
 
-  private Void collectPlusPrefixPlusExpression(final InfixExpression ¢) {
+  @Nullable private Void collectPlusPrefixPlusExpression(@NotNull final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafTerm(¢);
     assert iz.infixPlus(¢);
     return collectPositiveTerms(hop.operands(¢));
   }
 
-  private Void collectPositiveTerms(final Iterable<Expression> xs) {
+  private Void collectPositiveTerms(@NotNull final Iterable<Expression> xs) {
     assert xs != null;
     xs.forEach(λ -> addPositiveTerm(core(λ)));
     return null;

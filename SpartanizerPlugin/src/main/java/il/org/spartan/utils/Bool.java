@@ -1,11 +1,13 @@
 package il.org.spartan.utils;
 
+import org.jetbrains.annotations.*;
+
 /** A poor man's approximation of a mutable boolean, which is so much more
  * convenient than {@link Boolean}
  * @author Ori Marcovitch
  * @since Oct 16, 2016 */
 public final class Bool {
-  public static Bool valueOf(final boolean ¢) {
+  @NotNull public static Bool valueOf(final boolean ¢) {
     return new Bool(¢);
   }
 
@@ -17,7 +19,7 @@ public final class Bool {
     inner = b;
   }
 
-  public Bool clear() {
+  @NotNull public Bool clear() {
     return set(false);
   }
 
@@ -30,11 +32,11 @@ public final class Bool {
     return Boolean.valueOf(inner);
   }
 
-  public Bool set() {
+  @NotNull public Bool set() {
     return set(true);
   }
 
-  public Bool set(final boolean ¢) {
+  @NotNull public Bool set(final boolean ¢) {
     inner = ¢;
     return this;
   }

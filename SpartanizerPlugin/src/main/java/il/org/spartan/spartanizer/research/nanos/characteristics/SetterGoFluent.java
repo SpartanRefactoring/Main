@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,14 +17,14 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** TODO Ori Marcovitch please add a description
+/** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since 2016 */
 public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
   private static final long serialVersionUID = -7203054410598850023L;
   private static final UserDefinedTipper<Expression> tipper = TipperFactory.patternTipper("this.$N", "", "");
 
-  @Override public boolean canTip(final MethodDeclaration ¢) {
+  @Override public boolean canTip(@NotNull final MethodDeclaration ¢) {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     final List<Statement> ss = statements(¢.getBody());
@@ -32,16 +33,16 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     final Expression e = az.expressionStatement(first(ss)).getExpression();
     if (!iz.assignment(e))
       return false;
-    final Assignment $ = az.assignment(e);
+    @Nullable final Assignment $ = az.assignment(e);
     return (iz.name(left($)) || tipper.check(left($))) && wizard.same(right($), first(parameters(¢)).getName());
   }
 
-  @Override public Tip pattern(final MethodDeclaration d) {
+  @Override @Nullable public Tip pattern(@NotNull final MethodDeclaration d) {
     return new Tip(description(d), d, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(returnType(d)))
           return;
-        final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
+        @Nullable final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
         n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(yieldAncestors.untilContainingType().from(d)))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());
@@ -51,11 +52,11 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     };
   }
 
-  protected static Type getType(final AbstractTypeDeclaration ¢) {
+  @Nullable protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }
 
-  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Make setter fluent";
   }
 }

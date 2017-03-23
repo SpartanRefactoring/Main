@@ -11,6 +11,7 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -35,7 +36,7 @@ public enum Analyze {
   }
   private static InteractiveSpartanizer spartanizer;
   @SuppressWarnings("rawtypes") private static final Map<String, Analyzer> analyses = new HashMap<String, Analyzer>() {
-    static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1318990517359365384L;
     {
       put("AvgIndicatorMetrical", new AvgIndicatorMetricalAnalyzer());
       put("understandability", new UnderstandabilityAnalyzer());
@@ -53,25 +54,25 @@ public enum Analyze {
     return a < d ? a : d;
   }
 
-  public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  public static CSVStatistics openNPSummaryFile(final String outputDir) {
+  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
-  public static CSVStatistics openSummaryFile(final String $) {
+  public static CSVStatistics openSummaryFile(@NotNull final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
+    } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
   }
 
   private static void summarizeMethodStatistics(final String outputDir) {
-    final CSVStatistics report = openMethodSummaryFile(outputDir);
+    @Nullable final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
     double sumSratio = 0, sumEratio = 0;
@@ -125,20 +126,20 @@ public enum Analyze {
 
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
-    final List<MethodDeclaration> methods = new ArrayList<>();
-    for (final File f : inputFiles()) {
-      final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+    @NotNull final List<MethodDeclaration> methods = new ArrayList<>();
+    for (@NotNull final File f : inputFiles()) {
+      @Nullable final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
         for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(toList()))
           try {
             Count.before(¢);
-            final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
+            @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
                 .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
-          } catch (@SuppressWarnings("unused") final AssertionError __) {
+          } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
             //
           }
         Logger.finishedType();
@@ -170,14 +171,14 @@ public enum Analyze {
   private static void analyze() {
     AnalyzerOptions.setVerbose();
     deleteOutputFile();
-    for (final File ¢ : inputFiles()) {
+    for (@NotNull final File ¢ : inputFiles()) {
       System.out.println("\nnow: " + ¢.getPath());
-      final ASTNode cu = compilationUnit(¢);
+      @NotNull final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
       try {
         appendFile(new File(outputDir() + "/after.java"), spartanize(cu));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
+      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         //
       }
       // @author matteo append also before */
@@ -204,7 +205,7 @@ public enum Analyze {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
                         .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
-                  } catch (final AssertionError __) {
+                  } catch (@NotNull final AssertionError __) {
                     ___.unused(__);
                     //
                   }

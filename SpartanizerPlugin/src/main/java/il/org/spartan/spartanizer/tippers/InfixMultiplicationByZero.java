@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,19 +20,19 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = 6129844664553603029L;
 
-  private static boolean containsZero(final InfixExpression x) {
+  private static boolean containsZero(@NotNull final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> iz.numberLiteral(λ) && "0".equals(az.numberLiteral(λ).getToken()));
   }
 
-  private static boolean isContainsSideEffect(final InfixExpression x) {
+  private static boolean isContainsSideEffect(@NotNull final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> !sideEffects.free(λ));
   }
 
-  @Override public String description(final InfixExpression ¢) {
+  @Override @NotNull public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
 
-  @Override public ASTNode replacement(final InfixExpression ¢) {
+  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();

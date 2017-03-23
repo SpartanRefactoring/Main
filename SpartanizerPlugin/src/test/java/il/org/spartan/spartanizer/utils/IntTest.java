@@ -1,4 +1,4 @@
-/* TODO YuvalSimon <yuvaltechnion@gmail.com> please add a description
+/* TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
  *
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  *
@@ -7,6 +7,7 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -15,7 +16,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("static-method")
 public class IntTest {
   @Test public void testInner() {
-    final Int $ = new Int();
+    @NotNull final Int $ = new Int();
     $.inner = 4;
     assert $.inner() == Integer.valueOf(4);
     $.inner += 3;

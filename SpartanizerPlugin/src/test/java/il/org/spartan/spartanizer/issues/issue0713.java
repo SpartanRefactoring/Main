@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -37,7 +38,7 @@ public class issue0713 {
   }
 
   @Test public void listContainsRightNames() {
-    final List<String> names = new ArrayList<>();
+    @NotNull final List<String> names = new ArrayList<>();
     names.add("x");
     names.add("y");
     azzert.that(getAll.publicFields(notCountingMethods), is(names));
@@ -72,7 +73,7 @@ public class issue0713 {
   }
 
   @Test public void rightNamesReturned() {
-    final List<String> names = new ArrayList<>();
+    @NotNull final List<String> names = new ArrayList<>();
     names.add("x");
     names.add("ch");
     azzert.that(getAll.publicFields(notOnlyPublic), is(names));

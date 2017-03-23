@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.io.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.meta.*;
 
 /** Fixture for testing plain for testing resources in try statement
@@ -11,7 +13,7 @@ import il.org.spartan.spartanizer.meta.*;
 public class FixtureFinally extends MetaFixture {
   int simple(@knows("p") final int p) throws IOException {
     final int x = 2 * p;
-    try (FileReader r = new FileReader(toString())) {
+    try (@NotNull FileReader r = new FileReader(toString())) {
       r.read();
       if (simple(2 * p * p) < 0)
         return simple(hashCode());

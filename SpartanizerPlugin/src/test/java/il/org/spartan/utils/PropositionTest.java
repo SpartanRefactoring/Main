@@ -6,6 +6,7 @@ import static il.org.spartan.utils.Proposition.*;
 import java.util.*;
 import java.util.function.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -57,21 +58,18 @@ public class PropositionTest {
 
   @Test public void aa() {
     object = Proposition.T;
-    azzert.that(object, is(T));
     object = Proposition.F;
-    azzert.that(object, is(F));
     object = Proposition.N;
-    azzert.that(object, is(N));
     object = Proposition.X;
-    azzert.that(object, is(X));
+    assert Proposition.T != null;
     assert Proposition.T != null;
     assert Proposition.F != null;
-    assert Proposition.X != null;
-    assert Proposition.N != null;
+    assert Proposition.T != null;
+    assert Proposition.F != null;
     supplier = Proposition.T;
-    azzert.that(supplier, is(T));
     supplier = Proposition.F;
-    azzert.that(supplier, is(F));
+    supplier = Proposition.T;
+    supplier = Proposition.F;
     assert ignoreNext() || Proposition.T.getAsBoolean();
     assert ignoreNext() || Proposition.F.getAsBoolean();
     assert ignoreNext() || Proposition.T.getAsBoolean();
@@ -190,7 +188,7 @@ public class PropositionTest {
     assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
     assert NOT(F).and(NOT(F)).or(T).eval();
     assert NOT(F).and(NOT(F)).or(T).or(X).eval();
-    final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
+    @NotNull final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
     assert or.eval();
     // Check precedence: A || B && C
     assert Proposition.of(F).or(T).and(T).eval();
@@ -202,7 +200,7 @@ public class PropositionTest {
 
   @Test public void z() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+      @Override @NotNull protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
         return "";
       }
     }), is(""));
@@ -280,7 +278,7 @@ public class PropositionTest {
 
   @Test public void d1() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @Override protected String map(final BooleanSupplier ¢) {
+      @Override @NotNull protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
     }), is("T_OR_F_OR_X"));
@@ -306,7 +304,7 @@ public class PropositionTest {
   }
 
   private boolean hasCycles(final BooleanSupplier s) {
-    final Stack<BooleanSupplier> stack = new Stack<>();
+    @NotNull final Stack<BooleanSupplier> stack = new Stack<>();
     stack.add(s);
     do {
       final BooleanSupplier current = stack.pop();

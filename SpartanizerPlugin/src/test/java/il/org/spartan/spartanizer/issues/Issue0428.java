@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Alex Kopzon please add a description
+/** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016 */
 @SuppressWarnings("static-method")

@@ -6,6 +6,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -40,17 +41,17 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
+  @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
     try {
       final Integer key = Integer.valueOf(measure.commands(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
-      final MethodRecord m = new MethodRecord(¢);
+      @NotNull final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
-    } catch (final AssertionError __) {
+    } catch (@NotNull final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -61,7 +62,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       scope.pop();
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
+  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -77,7 +78,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
-  private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
+  private static void logNanoContainingMethodInfo(@NotNull final ASTNode n, final String np) {
     if (!containedInInstanceCreation(n))
       scope.peek().markNP(n, np);
   }
@@ -108,11 +109,11 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     }
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage(@NotNull final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered(@NotNull final Collection<MethodRecord> rs) {
     return rs.stream().map(MethodRecord::numNPStatements).reduce((x, y) -> x + y).get();
   }
 

@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Example.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -20,20 +21,20 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 8349592040340894302L;
 
-  @Override public String description(final SingleMemberAnnotation ¢) {
+  @Override @NotNull public String description(@NotNull final SingleMemberAnnotation ¢) {
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @Override public Example[] examples() {
+  @Override @NotNull public Example[] examples() {
     return new Example[] { //
         convert("@SuppressWarnings({\"unchecked\"}) void f() {}") //
             .to("@SuppressWarnings(\"unchecked\") void f() {}"), //
-        ignores("@SuppressWarnings(\"unchecked\") void f() {}"), //
-        ignores("@SuppressWarnings() void f() {}"), //
-        ignores("@SuppressWarnings void f() {}") };
+        Example.ignores("@SuppressWarnings(\"unchecked\") void f() {}"), //
+        Example.ignores("@SuppressWarnings() void f() {}"), //
+        Example.ignores("@SuppressWarnings void f() {}") };
   }
 
-  @Override public ASTNode replacement(final SingleMemberAnnotation a) {
+  @Override public ASTNode replacement(@NotNull final SingleMemberAnnotation a) {
     final Expression x = lisp.onlyOne(expressions(az.arrayInitializer(a.getValue())));
     if (x == null)
       return null;
