@@ -133,15 +133,12 @@ public interface MethodPatternUtilitiesTrait {
     return onlyStatement(az.synchronizedStatement(onlyStatement(¢)));
   }
 
-  NanoPatternContainer<Expression> setterTippers = new NanoPatternContainer<Expression>() {
-    static final long serialVersionUID = 1L;
-    {
-      add("this.$N1 = $N2", "", "");
-      add("this.$N1 = $L", "", "");
-      add("$N1 = $N2", "", "");
-      add("$N1 = $L", "", "");
-    }
-  };
+  NanoPatternContainer<Expression> setterTippers = new NanoPatternContainer<Expression>()//
+      .add("this.$N1 = $N2", "", "") //
+      .add("this.$N1 = $L", "", "") //
+      .add("$N1 = $N2", "", "") //
+      .add("$N1 = $L", "", "") //
+  ;
 
   default boolean setter(final MethodDeclaration ¢) {
     @Nullable final List<String> $ = parametersNames(¢);

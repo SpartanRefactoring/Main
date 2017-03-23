@@ -23,15 +23,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExpressionComparatorTest {
   @Test public void additionSortTest() {
-    assert ExpressionComparator.ADDITION.sort(new ArrayList<Expression>() {
-      
-      {
-        add(e("-a"));
-        add(e("d+b"));
-        add(e("a+b+c"));
-        add(e("f"));
-      }
-    });
+    assert ExpressionComparator.ADDITION.sort(as.list(e("-a"), e("d+b"), e("a+b+c"), e("f")));
   }
 
   @Test public void alphabeticalCompare() {
@@ -165,7 +157,7 @@ public final class ExpressionComparatorTest {
 
   @Test public void prudentSortTest() {
     assert !ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
-      
+      private static final long serialVersionUID = 8950439215040830144L;
       {
         add(e("a"));
         add(e("d"));
@@ -176,16 +168,7 @@ public final class ExpressionComparatorTest {
   }
 
   @Test public void prudentSortTest2() {
-    assert ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
-      
-      {
-        add(e("a"));
-        add(e("ds+fe"));
-        add(e("d"));
-        add(e("a"));
-        add(e("-f"));
-      }
-    });
+    assert ExpressionComparator.PRUDENT.sort(as.list(e("a"), e("ds+fe"), e("d"), e("a"), e("-f")));
   }
 
   @Test public void twoClassConstants() {
