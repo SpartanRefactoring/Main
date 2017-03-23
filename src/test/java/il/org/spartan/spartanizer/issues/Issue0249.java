@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -43,10 +44,10 @@ public class Issue0249 {
   }
 
   @Test public void a06() {
-    final Statement s = into.s("{}");
+    @NotNull final Statement s = into.s("{}");
     assert s != null;
     azzert.that(s, instanceOf(Block.class));
-    final Block b = az.block(s);
+    @Nullable final Block b = az.block(s);
     assert b != null;
     assert statements(b) != null;
     azzert.that(statements(b).size(), is(0));
@@ -64,7 +65,7 @@ public class Issue0249 {
     azzert.that(az.block(into.s("{}")), iz("{}"));
   }
 
-  public int metricUnderTest(final String javaStatements) {
+  public int metricUnderTest(@Nullable final String javaStatements) {
     return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }
 }

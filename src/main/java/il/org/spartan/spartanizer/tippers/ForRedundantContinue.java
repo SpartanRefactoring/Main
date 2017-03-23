@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,18 +21,18 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 2135500968807051621L;
 
-  @Override public String description(final ForStatement ¢) {
+  @Override @NotNull public String description(final ForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
 
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Prune redundant continue";
   }
 
-  @Override public Tip tip(final ForStatement ¢) {
+  @Override @Nullable public Tip tip(@NotNull final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Block b = az.block(body(¢));
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+        @Nullable final Block b = az.block(body(¢));
         if (b == null)
           r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
         else {
@@ -44,10 +45,10 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     };
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
+  @Override public boolean prerequisite(@NotNull final ForStatement ¢) {
     final Statement s = extract.lastStatement(¢);
     if (iz.continueStatement(s)) {
-      final SimpleName n = label(az.continueStatement(s));
+      @NotNull final SimpleName n = label(az.continueStatement(s));
       if (n == null || iz.labeledStatement(parent(¢)) && n.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier()))
         return true;
     }

@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -35,5 +36,9 @@ public class LetItBeInMethod extends JavadocMarkerNanoPattern {
   private static boolean preDelegation(final Statement secondStatement) {
     return iz.expressionStatement(secondStatement) //
         || iz.returnStatement(secondStatement);
+  }
+
+  @Override @NotNull public String nanoName() {
+    return "LetIn";
   }
 }

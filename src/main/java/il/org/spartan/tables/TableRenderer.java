@@ -2,6 +2,8 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.*;
 
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
@@ -11,35 +13,37 @@ import il.org.spartan.*;
 public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {
-      @Override public String afterHeader() {
+      @Override @NotNull public String afterHeader() {
         return "\\midrule" + NL;
       }
 
-      @Override public String afterTable() {
+      @Override @NotNull public String afterTable() {
         return "\\bottomrule" + NL;
       }
 
       // @formatter:off
-      @Override public String arraySeparator() { return ", "; }
-      @Override public String beforeFooter() { return "\\midrule" + NL; }
+      @Override
+      @NotNull public String arraySeparator() { return ", "; }
+      @Override
+      @NotNull public String beforeFooter() { return "\\midrule" + NL; }
     // @formatter:on
-      @Override public String beforeTable() {
+      @Override @NotNull public String beforeTable() {
         return "\\toprule" + NL;
       }
 
-      @Override public String null¢() {
+      @Override @NotNull public String null¢() {
         return "$\\#$";
       }
 
-      @Override public String recordEnd() {
+      @Override @NotNull public String recordEnd() {
         return " \\\\" + NL;
       }
 
-      @Override public String recordSeparator() {
+      @Override @NotNull public String recordSeparator() {
         return "\t&\t";
       }
 
-      @Override public String render(final Statistic ¢) {
+      @Override @NotNull public String render(@NotNull final Statistic ¢) {
         switch (¢) {
           case Σ:
             return "\\hfill$\\Sum$";
@@ -54,39 +58,42 @@ public interface TableRenderer {
       }
     },
     TEX2 {
-      @Override public String afterHeader() {
+      @Override @NotNull public String afterHeader() {
         return "\\hline" + NL;
       }
 
-      @Override public String afterTable() {
+      @Override @NotNull public String afterTable() {
         return "\\hline" + NL;
       }
 
     // @formatter:off
-    @Override public String arraySeparator() { return ", "; }
-    @Override public String beforeFooter() { return "\\hline" + NL; }
+    @Override
+    @NotNull public String arraySeparator() { return ", "; }
+    @Override
+    @NotNull public String beforeFooter() { return "\\hline" + NL; }
   // @formatter:on
-      @Override public String beforeTable() {
+      @Override @NotNull public String beforeTable() {
         return "\\hline" + NL;
       }
 
-      @Override public String footerEnd() {
+      @Override @NotNull public String footerEnd() {
         return "\\\\" + NL;
       }
 
-      @Override public String recordSeparator() {
+      @Override @NotNull public String recordSeparator() {
         return "\t&\t";
       }
     },
     CSV {
     // @formatter:off
     @Override public String footerEnd() { return NL; }
-    @Override public String recordSeparator() { return ","; }
+    @Override
+    @NotNull public String recordSeparator() { return ","; }
     // @formatter:on
     },
     MARKDOWN {
-      @Override public String afterHeader() {
-        String $ = "| ";
+      @Override @NotNull public String afterHeader() {
+        @NotNull String $ = "| ";
         for (int ¢ = 0; ¢ < lastSize; ++¢)
           $ += "--- |";
         return $ + NL;
@@ -98,9 +105,12 @@ public interface TableRenderer {
 
       // @formatter:off
       @Override public String beforeTable() { return NL; }
-      @Override public String recordBegin() { return "|" ; }
-      @Override public String recordEnd() { return " |" + NL; }
-      @Override public String recordSeparator() { return " | "; }
+      @Override
+      @NotNull public String recordBegin() { return "|" ; }
+      @Override
+      @NotNull public String recordEnd() { return " |" + NL; }
+      @Override
+      @NotNull public String recordSeparator() { return " | "; }
     // @formatter:on
     };
     static int lastSize;
@@ -112,7 +122,7 @@ public interface TableRenderer {
 
   String NL = System.getProperty("line.separator");
 
-  default String cellReal(final Double ¢) {
+  @NotNull default String cellReal(@NotNull final Double ¢) {
     return ¢.longValue() != ¢.doubleValue() ? ¢ + "" : cellInt(Long.valueOf(¢.longValue()));
   }
 
@@ -124,11 +134,11 @@ public interface TableRenderer {
     return "\t";
   }
 
-  default String afterFooter() {
+  @NotNull default String afterFooter() {
     return empty();
   }
 
-  default String afterHeader() {
+  @NotNull default String afterHeader() {
     return empty();
   }
 
@@ -137,26 +147,36 @@ public interface TableRenderer {
   }
 
   // @formatter:off
+  @NotNull
   default String arraySeparator() { return "; "; }
+  @NotNull
   default String beforeFooter() { return empty(); }
+  @NotNull
   default String beforeHeader() { return empty(); }
   default String beforeTable() { return empty(); }
   default String cellArray(final Object[] ¢) {
     return separate.these(¢).by(arraySeparator());
   }
+  @NotNull
   default String cellInt(final Long ¢) { return ¢ + ""; }
+  @NotNull
   default String extension() {
     return toString().toLowerCase();
   }
+  @NotNull
   default String footerBegin() { return recordBegin();}
   default String footerEnd() { return recordEnd();}
+  @NotNull
   default String footerSeparator() { return recordSeparator(); }
+  @NotNull
   default String headerLineBegin() { return recordBegin(); }
   default String headerLineEnd() { return recordEnd(); }
+  @NotNull
   default String headerSeparator() { return recordSeparator(); }
+  @NotNull
   default String null¢() { return "Nº"; }
   // @formatter:on
-  default String recordBegin() {
+  @NotNull default String recordBegin() {
     return empty();
   }
 
@@ -164,17 +184,17 @@ public interface TableRenderer {
     return NL;
   }
 
-  default String recordSeparator() {
+  @NotNull default String recordSeparator() {
     return tab();
   }
 
-  default String render(final Statistic ¢) {
+  @NotNull default String render(final Statistic ¢) {
     return ¢ + "";
   }
 
-  default String renderRow(final Collection<Object> values) {
-    final StringBuilder $ = new StringBuilder(recordBegin());
-    final Separator s = new Separator(recordSeparator());
+  @NotNull default String renderRow(@NotNull final Collection<Object> values) {
+    @NotNull final StringBuilder $ = new StringBuilder(recordBegin());
+    @NotNull final Separator s = new Separator(recordSeparator());
     values.forEach(λ -> $.append(s)
         .append(λ instanceof Object[] ? cellArray((Object[]) λ)
             : λ instanceof Integer ? cellInt(Long.valueOf(((Integer) λ).intValue())) : λ instanceof Long ? cellInt((Long) λ) //

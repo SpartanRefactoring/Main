@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,12 +21,12 @@ import il.org.spartan.spartanizer.tipping.*;
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 8015068204117686495L;
 
-  @Override public Tip tip(final IfStatement s) {
+  @Override @Nullable public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final IfStatement $ = copy.of(s);
         r.getListRewrite(then($), Block.STATEMENTS_PROPERTY).remove(extract.lastStatement(then($)), g);
-        final Block b = az.block(parent(s));
+        @Nullable final Block b = az.block(parent(s));
         final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
         // This is buggy
         lr.remove(b, g);
@@ -46,7 +47,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<I
     return super.description();
   }
 
-  @Override public String description(final IfStatement ¢) {
+  @Override @NotNull public String description(final IfStatement ¢) {
     return "Consolidate " + ¢ + " with next statements";
   }
 }

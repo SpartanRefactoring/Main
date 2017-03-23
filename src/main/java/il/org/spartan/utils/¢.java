@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import java.lang.annotation.*;
 
+import org.jetbrains.annotations.*;
+
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Short name of {@link JohnDoe} parameter
@@ -11,5 +13,5 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @Target({ ElementType.PARAMETER, ElementType.TYPE_PARAMETER })
 public @interface ¢ {
   /** Add here brief documentation if you like; return type may change though */
-  String value() default "J(ohn)|(ane) Doe";
+  @NotNull String value() default "J(ohn)|(ane) Doe";
 }

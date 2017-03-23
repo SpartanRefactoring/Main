@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.annotations;
 
+import org.jetbrains.annotations.*;
+
 public @interface End {
-  Id[] value();
+  @NotNull Id[] value();
 }

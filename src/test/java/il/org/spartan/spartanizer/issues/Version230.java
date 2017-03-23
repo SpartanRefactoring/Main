@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -36,9 +37,9 @@ public final class Version230 {
   }
 
   @Test public void actualExampleForSortAdditionInContext() {
-    final String from = "2 + a<b";
-    final Wrap w = Wrap.Expression;
-    final String wrap = w.on(from);
+    @NotNull final String from = "2 + a<b";
+    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final String unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
@@ -509,7 +510,7 @@ public final class Version230 {
   }
 
   @Test public void comaprisonWithSpecific0Legibiliy00() {
-    final InfixExpression e = i("this !=a");
+    @NotNull final InfixExpression e = i("this !=a");
     assert in(e.getOperator(), Operator.EQUALS, Operator.NOT_EQUALS);
     assert !iz.booleanLiteral(right(e));
     assert !iz.booleanLiteral(left(e));
@@ -1274,22 +1275,7 @@ public final class Version230 {
     trimmingOf(" public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives(" public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
-  @Ignore @Test public void inlineArrayInitialization1() {
-    trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
-        + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
-        + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
-        + " assertArrayEquals(int1, int2); " //
-        + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
-                + " int[][] int1={{1, 2, 3}, {4, 5, 6}}" //
-                + " , int2={{1, 2, 3}, {4, 5, 6}}; " //
-                + " assertArrayEquals(int1, int2); " //
-                + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
-                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}}); " //
-                + "}");
-  }
-
+  
   @Test public void inlineArrayInitialization2() {
     trimmingOf("public double[] solve(){ " //
         + " final SimpleRegression regress=new SimpleRegression(true); " //
@@ -1389,7 +1375,7 @@ public final class Version230 {
   }
 
   @Test public void isGreaterTrue() {
-    final InfixExpression e = i("f(a,b,c,d,e)* f(a,b,c)");
+    @NotNull final InfixExpression e = i("f(a,b,c,d,e)* f(a,b,c)");
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d,e)"));
@@ -1397,19 +1383,19 @@ public final class Version230 {
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
-    final Expression e1 = left(e), e2 = right(e);
+    @NotNull final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
-    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d,e)"));
   }
 
   @Test public void isGreaterTrueButAlmostNot() {
-    final InfixExpression e = i("f(a,b,c,d)* f(a,b,c)");
+    @NotNull final InfixExpression e = i("f(a,b,c,d)* f(a,b,c)");
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d)"));
@@ -1417,13 +1403,13 @@ public final class Version230 {
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
-    final Expression e1 = left(e), e2 = right(e);
+    @NotNull final Expression e1 = left(e), e2 = right(e);
     assert !hasNull(e1, e2);
     assert count.nodes(e1) <= count.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
-    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d)"));
   }
@@ -1769,12 +1755,13 @@ public final class Version230 {
   @Test public void issue62a() {
     trimmingOf("int f(int ixx){ for(;;++ixx)if(false)break;return ixx;}")//
         .gives("int f(int ixx){ for(;;++ixx){} return ixx;}")//
+        .gives("int f(int ixx){ for(;;++ixx); return ixx;}")//
         .stays();
   }
 
   @Test public void issue62b_1() {
-    trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)break;return ixx;}").gives("int f(int ixx){ for(;ixx<100;ixx+=1){} return ixx;}")//
-        .stays();
+    trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)break;return ixx;}")//
+        .gives("int f(int ixx){ for(;ixx<100;ixx+=1){} return ixx;}");
   }
 
   @Test public void issue62c() {
@@ -2898,12 +2885,12 @@ public final class Version230 {
   }
 
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
-    final InfixExpression e = i("null !=a");
+    @NotNull final InfixExpression e = i("null !=a");
     final Tipper<InfixExpression> w = Toolbox.defaultInstance().firstTipper(e);
     assert w != null;
     assert w.check(e);
     assert w.check(e);
-    final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
+    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("a != null"));
   }
@@ -3011,7 +2998,7 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
+    @NotNull final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
         .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')   u +=2;else if(s.charAt(i)=='d')u -=1;return u; "));
     assert f != null;
     azzert.that(f, iz(" u=0"));
@@ -3405,13 +3392,7 @@ public final class Version230 {
         + "case RETURN_STATEMENT:return 2;case THROW_STATEMENT:return 3;default:return-1;}");
   }
 
-  @Ignore // trimmer wraps with void method so it is tipped by {@link
-  // RemoveRedundantSwitchReturn}
-  @Test public void switchSimplifyCaseAfterDefault1() {
-    trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
-        + "case THROW_STATEMENT:return 3;default:return-1;}")//
-            .stays();
-  }
+
 
   @Test public void switchSimplifyWithDefault2() {
     trimmingOf("switch(a){case \"-E\":optIndividualStatistics=true;break;case \"-N\":optDoNotOverwrite=true;break;"
@@ -3563,14 +3544,44 @@ public final class Version230 {
         .stays();
   }
 
-  @Test public void ternarize42() {
-    trimmingOf(" int a, b;a=3;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;} else if(b==3)b=2;else{ b=a*a; b=3;}")
-        .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}")
-        .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}")
-        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}")
-        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=9;b=3;}")
-        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=9;b=3;}")//
-        .stays();
+  /** Introduced by Yossi on Wed-Mar-22-21:22:15-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
+    trimmingOf("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
+        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
+        .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
+        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
+        .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
+        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope()) //
+        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .using(Assignment.class, new AssignmentAndAssignmentOfSameValue()) //
+        .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}") //
+        .using(Assignment.class, new AssignmentAndAssignmentOfSameVariable()) //
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3;}") //
+        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .gives("int b=5;if(3==4)b=b==3?2:(b=3);else b=b==3?2:3;") //
+        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .gives("int b=5;b=3==4?b==3?2:(b=3):b==3?2:3;") //
+        .using(ConditionalExpression.class, new TernaryShortestFirst()) //
+        .gives("int b=5;b=3!=4?b==3?2:3:b==3?2:(b=3);") //
+        .using(ConditionalExpression.class, new TernaryShortestFirst()) //
+        .gives("int b=5;b=3!=4?b==3?2:3:b!=3?(b=3):2;") //
+        .stays() //
+    ;
+  }
+
+  /** Introduced by Yossi on Wed-Mar-22-21:27:17-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_inta0b0cd0e0fabIfabcdceg() {
+    trimmingOf("int a = 0, b = 0, c, d = 0, e = 0; f(a, b); if (a < b) { c = d; c = e; } g();") //
+        .using(Assignment.class, new AssignmentAndAssignmentOfSameVariable()) //
+        .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b){c=e;}g();") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b)c=e;g();") //
+        .stays() //
+    ;
   }
 
   @Test public void ternarize45() {
@@ -3590,6 +3601,8 @@ public final class Version230 {
 
   @Test public void ternarize52() {
     trimmingOf("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b){c=d;c=e;} f();")//
+        .gives("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b){c=e;}f();") //
+        .gives("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b)c=e;f();") //
         .stays();
   }
 

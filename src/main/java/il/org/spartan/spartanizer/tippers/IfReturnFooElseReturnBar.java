@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,13 +28,13 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     return "Replace if with a return of a conditional statement";
   }
 
-  @Override public boolean prerequisite(final IfStatement ¢) {
+  @Override public boolean prerequisite(@Nullable final IfStatement ¢) {
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override public Statement replacement(final IfStatement s) {
-    final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
+  @Override public Statement replacement(@NotNull final IfStatement s) {
+    @NotNull final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(s.getExpression())).toReturn();
   }
 }

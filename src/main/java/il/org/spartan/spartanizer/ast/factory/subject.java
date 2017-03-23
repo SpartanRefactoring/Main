@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,8 +28,8 @@ public enum subject {
     return $;
   }
 
-  public static InfixExpression append(final InfixExpression base, final Iterable<Expression> adds) {
-    final Wrapper<InfixExpression> $ = new Wrapper<>(base);
+  public static InfixExpression append(final InfixExpression base, @NotNull final Iterable<Expression> adds) {
+    @NotNull final Wrapper<InfixExpression> $ = new Wrapper<>(base);
     adds.forEach(λ -> $.set(append($.get(), λ)));
     return $.get();
   }
@@ -36,7 +37,7 @@ public enum subject {
   /** Create a new Operand
    * @param inner the expression of the operand
    * @return the new operand */
-  public static Operand operand(final Expression inner) {
+  @NotNull public static Operand operand(final Expression inner) {
     return new Operand(inner);
   }
 
@@ -44,7 +45,7 @@ public enum subject {
    * expressions in separate and not as a list
    * @param xs JD
    * @return a new instance using the given expressions */
-  public static Several operands(final Expression... ¢) {
+  @NotNull public static Several operands(final Expression... ¢) {
     return new Several(as.list(¢));
   }
 
@@ -52,7 +53,7 @@ public enum subject {
    * expressions as a list
    * @param xs a list of expressions
    * @return a new Several instance using the given list of expressions */
-  public static Several operands(final List<Expression> ¢) {
+  @NotNull public static Several operands(@NotNull final List<Expression> ¢) {
     return new Several(¢);
   }
 
@@ -60,7 +61,7 @@ public enum subject {
    * @param left the left expression
    * @param right the right expression
    * @return a new instance of the class pair */
-  public static Pair pair(final Expression left, final Expression right) {
+  @NotNull public static Pair pair(final Expression left, final Expression right) {
     return new Pair(left, right);
   }
 
@@ -68,7 +69,7 @@ public enum subject {
    * @param s1 the first statement
    * @param s2 the second statement
    * @return a new instance of the class StatementPair */
-  public static StatementPair pair(final Statement s1, final Statement s2) {
+  @NotNull public static StatementPair pair(final Statement s1, final Statement s2) {
     return new StatementPair(s1, s2);
   }
 
@@ -76,7 +77,7 @@ public enum subject {
    * sideEffects as a list
    * @param ss a list of sideEffects
    * @return a new instance using the given sideEffects */
-  public static SeveralStatements ss(final List<Statement> ¢) {
+  @NotNull public static SeveralStatements ss(@NotNull final List<Statement> ¢) {
     return new SeveralStatements(¢);
   }
 
@@ -84,7 +85,7 @@ public enum subject {
    * statement
    * @param context JD
    * @return a new instance using the given statement */
-  public static SeveralStatements statement(final Statement ¢) {
+  @NotNull public static SeveralStatements statement(final Statement ¢) {
     return statements(¢);
   }
 
@@ -92,16 +93,16 @@ public enum subject {
    * sideEffects in separate and not as a list
    * @param ss JD
    * @return a new instance using the given sideEffects */
-  public static SeveralStatements statements(final Statement... ¢) {
+  @NotNull public static SeveralStatements statements(final Statement... ¢) {
     return ss(as.list(¢));
   }
 
   public static class Claimer {
-    protected final AST ast;
+    @Nullable protected final AST ast;
 
     /** Assign to ast the AST that owns the node n (the parameter)
      * @param n an AST node */
-    public Claimer(final ASTNode n) {
+    public Claimer(@Nullable final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
 
@@ -110,7 +111,7 @@ public enum subject {
      * @return a copy of the expression e
      * @see #rebase
      * @see copy#duplicate */
-    Expression claim(final Expression ¢) {
+    @NotNull Expression claim(final Expression ¢) {
       return wizard.rebase(copy.of(extract.core(¢)), ast);
     }
 
@@ -119,15 +120,15 @@ public enum subject {
      * @return a copy of the statement s if it is'nt null, else returns null
      * @see rebase
      * @see copy */
-    Statement claim(final Statement ¢) {
-      final Statement $ = extract.core(¢);
+    @Nullable Statement claim(final Statement ¢) {
+      @Nullable final Statement $ = extract.core(¢);
       return $ == null ? null : wizard.rebase(copy.of($), ast);
     }
   }
 
   /** All the expressions that use a single operand */
   public static class Operand extends Claimer {
-    private final Expression inner;
+    @NotNull private final Expression inner;
 
     /** Assign the expression inner to the parameter inner
      * @param inner an Expression */
@@ -235,7 +236,7 @@ public enum subject {
   /** All the expressions that use two operands */
   public static class Pair extends Claimer {
     /** The two expressions in the pair */
-    final Expression left, right;
+    @NotNull final Expression left, right;
 
     /** Assign the expressions left and right to the parameters, the newly-
      * created ast will own the left node
@@ -251,7 +252,7 @@ public enum subject {
      * of the assignment expression is the field left/right respectively,
      * @param o an assignment operator
      * @return an assignment expression with operator o */
-    public Assignment to(final Assignment.Operator ¢) {
+    public Assignment to(@NotNull final Assignment.Operator ¢) {
       assert ¢ != null;
       final Assignment $ = ast.newAssignment();
       $.setOperator(¢);
@@ -301,12 +302,12 @@ public enum subject {
 
   public static class Several extends Claimer {
     /** To deal with more than 2 operands, we maintain a list */
-    private final List<Expression> operands;
+    @NotNull private final List<Expression> operands;
 
     /** assign each of the given operands to the operands list the left operand
      * is the owner
      * @param operands a list of expression, these are the operands */
-    public Several(final List<Expression> operands) {
+    public Several(@NotNull final List<Expression> operands) {
       super(first(operands));
       this.operands = new ArrayList<>();
       this.operands.addAll(operands.stream().map(this::claim).collect(toList()));
@@ -328,15 +329,15 @@ public enum subject {
 
   /** Some Statements */
   public static class SeveralStatements extends Claimer {
-    private final List<Statement> inner; // here we work with several
-                                         // sideEffects
-                                         // so we have a sideEffects
-                                         // list
+    @NotNull private final List<Statement> inner; // here we work with several
+                                                  // sideEffects
+                                                  // so we have a sideEffects
+                                                  // list
 
     /** assign each of the given operands to the inner list the left operand is
      * the owner
      * @param inner a list of sideEffects */
-    public SeveralStatements(final List<Statement> inner) {
+    public SeveralStatements(@NotNull final List<Statement> inner) {
       super(first(inner));
       this.inner = new ArrayList<>();
       this.inner.addAll(inner.stream().map(this::claim).collect(toList()));
@@ -352,7 +353,7 @@ public enum subject {
 
     /** Transform the inner into a block if it's possible
      * @return a Block statement {@code or} a {@code null} */
-    public Statement toOneStatementOrNull() {
+    @Nullable public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
 
@@ -379,8 +380,8 @@ public enum subject {
 
   /** A pair of sideEffects */
   public static class StatementPair extends Claimer {
-    private final Statement elze;
-    private final Statement then;
+    @Nullable private final Statement elze;
+    @Nullable private final Statement then;
 
     /** assign then and elze to the matching fields the then operand is the
      * owner

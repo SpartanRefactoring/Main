@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
@@ -16,10 +17,11 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
   );
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
-    return tippers.get().canTip(onlyStatement(¢)) && !rival.get().matches(¢);
+    return tippers.get().canTip(onlyStatement(¢))//
+        && !rival.get().matches(¢);
   }
 
-  @Override public Category category() {
-    return Category.Default;
+  @Override @NotNull public String nanoName() {
+    return "ConstantValue";
   }
 }
