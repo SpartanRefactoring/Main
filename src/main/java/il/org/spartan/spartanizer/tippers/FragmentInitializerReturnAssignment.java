@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Converts {@code int a=3;return a;} into {@code return 3;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturnAssignment extends $FragementAndStatement//
+public final class FragmentInitializerReturnAssignment extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 1334179326644184831L;
 
