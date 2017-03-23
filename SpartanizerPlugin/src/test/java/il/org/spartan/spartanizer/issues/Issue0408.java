@@ -100,7 +100,7 @@ public class Issue0408 {
         .stays();
   }
 
-  @Test  public void issue408_07() {
+  @Test public void issue408_07() {
     trimmingOf("0+(0+x+y+(4))")//
         .gives("x+y+4")//
         .stays();

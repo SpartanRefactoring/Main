@@ -242,7 +242,7 @@ public enum make {
 
   /** @param ¢ JD
    * @return parameter, but logically negated and simplified */
-  public static Expression notOf(final Expression ¢) {
+  public static Expression notOf(@NotNull final Expression ¢) {
     assert ¢ != null;
     final PrefixExpression $ = subject.operand(¢).to(NOT);
     assert $ != null;

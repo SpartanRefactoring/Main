@@ -32,7 +32,7 @@ public class ForAndReturnToFor extends GoToNextStatement<ForStatement>//
     if (s == null || nextStatement == null || !iz.returnStatement(nextStatement) || !iz.emptyStatement(body(s)))
       return null;
     final ForStatement f = copy.of(s);
-    final Expression expression = expression(f);
+    @NotNull final Expression expression = expression(f);
     if (expression == null)
       return null;
     $.replace(s, f, g);
