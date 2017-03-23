@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** A Spartanizer without heavy or buggy tippers
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class AgileSpartanizer extends InteractiveSpartanizer {
   public AgileSpartanizer() {

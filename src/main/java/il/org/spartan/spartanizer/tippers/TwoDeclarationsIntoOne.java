@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
  * } to: {@code
  * int a = 0, b = 1, c = 2;
  * }
- * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
+ * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclarationStatement>//
     implements TipperCategory.Unite {

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** A cast which is inside an IfStatement body which checks the casted
  * expression is actually of the casted to type
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-23 */
 public class SafeCast extends NanoPatternTipper<CastExpression> {
   private static final long serialVersionUID = -7268393430507206430L;

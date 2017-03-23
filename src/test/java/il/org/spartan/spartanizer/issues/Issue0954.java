@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** A test case for {@link FragmentInitializerInlineIntoNext}. See issue #954.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-20 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public class Issue0954 {

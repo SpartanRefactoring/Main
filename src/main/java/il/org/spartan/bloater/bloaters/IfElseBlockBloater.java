@@ -14,7 +14,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Convert : {@code
  * if(condition) block1 else block2
  * } to : {@code if(condition){block1}else{block2} } Tested in {@link Issue0971}
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-27 */
 public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-22 */
 abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   public $Fragment() {

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /* Tests {@link Exhaust}
  *
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  *
  * @since 2017-01-01 */
 @SuppressWarnings("static-method")

@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
 
 /** replaces a do statement followed by an empty block with a do statement
  * followed by a semicolon. in development, see issue #1125
- * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
+ * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
 public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStatement> //
     implements TipperCategory.SyntacticBaggage {

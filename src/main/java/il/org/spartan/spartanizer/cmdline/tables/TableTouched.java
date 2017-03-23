@@ -12,7 +12,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** Old table presenting touched methods (%)
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt> Infix
+ * @author orimarco {@code marcovitch.ori@gmail.com} Infix
  * @since 2016-12-25 */
 @Deprecated
 @SuppressWarnings("deprecation")

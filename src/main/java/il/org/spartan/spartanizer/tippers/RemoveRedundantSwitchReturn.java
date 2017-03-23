@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** remove redundant return from switch in void method. convert {@code void a()
  * { switch(x) { case 1: y=2; break; default: return; } } } to {@code void a() {
  * switch(x) { case 1: y=2; break; } } } Test case is {@link Issue1070}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-15 */
 public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Shortcircuit {

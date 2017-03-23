@@ -3,7 +3,7 @@ package il.org.spartan.zoomer.zoomin.expanders;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Example for testing with binding
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-07 */
 // TODO: Yuval Simon: make this inner static or not-static class of Issue1040
 @SuppressWarnings("static-method")

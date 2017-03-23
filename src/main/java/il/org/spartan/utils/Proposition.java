@@ -121,7 +121,7 @@ public interface Proposition extends BooleanSupplier {
   }
 
   /** A compound {@link Proposition}
-   * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+   * @author Yossi Gil {@code yossi.gil@gmail.com}
    * @since 2017-03-19 */
   abstract class C extends Implementation<List<BooleanSupplier>> {
     public C(final String toString) {
@@ -189,7 +189,7 @@ public interface Proposition extends BooleanSupplier {
   }
 
   /** A parenthesized {@link Proposition}
-   * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-19 */
   class P extends Implementation<BooleanSupplier> implements Recursive.Atomic<Proposition> {
     public P(final BooleanSupplier inner) {

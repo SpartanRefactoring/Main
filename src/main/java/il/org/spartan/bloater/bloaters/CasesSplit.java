@@ -22,7 +22,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * case 2: f(2); throw new Exception(); default: f(3); } } turns into
  * {@code switch (x) { case 1: f(1); f(2); throw new Exception(); case 2: f(2);
  * throw new Exception(); default: f(3); } } Test file: {@link Issue0977}
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {

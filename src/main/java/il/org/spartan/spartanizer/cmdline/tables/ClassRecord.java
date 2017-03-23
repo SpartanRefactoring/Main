@@ -6,7 +6,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** TODO Matteo Orru': document class {@link }
- * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
+ * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}
  * @since 2017-02-10 */
 public class ClassRecord {
   public static TypeDeclaration before;

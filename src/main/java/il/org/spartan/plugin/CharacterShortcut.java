@@ -18,7 +18,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.utils.*;
 
 /** A shortcut to textually insert a new special character/s.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-02-10 */
 @SuppressWarnings("boxing")
 public class CharacterShortcut extends AbstractHandler {

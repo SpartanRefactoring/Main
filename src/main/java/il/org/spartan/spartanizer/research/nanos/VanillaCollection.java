@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Nano matches fields
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration> {
   private static final long serialVersionUID = 7636169535439478114L;

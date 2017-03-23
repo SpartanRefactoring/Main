@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * int i = 1 + a[j];
  * f(i);
  * }
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
     implements TipperCategory.Bloater {

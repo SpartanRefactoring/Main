@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** \@{"a","b"} to @{a}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-09 */
 public class AnnotationCleanerVisitor extends ASTVisitor {
   @Override public boolean visit(@NotNull final SingleMemberAnnotation ¢) {

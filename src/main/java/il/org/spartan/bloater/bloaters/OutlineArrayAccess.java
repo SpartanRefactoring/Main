@@ -25,7 +25,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * in arr[i]=i. works only on ExpressionStatement, varible declaration with
  * assignment will be treated after outlining by other expanders . Test case is
  * {@link Issue1004}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {

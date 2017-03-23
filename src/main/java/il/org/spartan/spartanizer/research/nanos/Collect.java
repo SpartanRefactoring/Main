@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** Actually contains {@link Select} and {@link CopyCollection}
  * @nano for(X x : Y) if(Z) w.add(x);
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-18 */
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = -2812051728758407982L;

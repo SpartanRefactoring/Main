@@ -12,7 +12,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** Generates a table summarizing important statistics about nano patterns
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-13 */
 public class Table_Summary extends NanoTable {
   static {
@@ -31,7 +31,7 @@ public class Table_Summary extends NanoTable {
 
       public void summarize(final String path) {
         initializeWriter();
-        writer//
+        table//
             .col("Project", path)//
             .col("Commands", statementsCoverage())//
             .col("Expressions", expressionsCoverage())//
@@ -47,8 +47,8 @@ public class Table_Summary extends NanoTable {
       }
 
       void initializeWriter() {
-        if (writer == null)
-          writer = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
+        if (table == null)
+          table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final CompilationUnit ¢) {
@@ -69,7 +69,7 @@ public class Table_Summary extends NanoTable {
         npDistributionStatistics.logNode(¢);
       }
     });
-    writer.close();
+    table.close();
   }
 
   static int commands() {

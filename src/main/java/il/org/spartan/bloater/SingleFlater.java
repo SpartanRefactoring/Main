@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-20 */
 public final class SingleFlater {
   private ASTNode root;
@@ -170,7 +170,7 @@ public final class SingleFlater {
   /** describes a single change operation, containing both an {@link ASTNode}
    * and a matching {@link Tipper}.
    * @param <N> JD
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2016-12-20 */
   protected static final class Operation<N extends ASTNode> {
     public final N node;
@@ -187,7 +187,7 @@ public final class SingleFlater {
   }
 
   /** Contains information about the current window
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-01-10 */
   protected static class WindowInformation {
     private static final int INVALID = -1;

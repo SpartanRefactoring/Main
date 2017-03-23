@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** X == null ? Y : Z
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -2244844927280034691L;

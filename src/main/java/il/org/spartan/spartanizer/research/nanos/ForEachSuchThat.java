@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** @nano for(A a : B ) if(X) S;
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public class ForEachSuchThat extends ForEach {
   private static final long serialVersionUID = -1275196391208545377L;
