@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -28,13 +29,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
   private static Table pWriter;
   private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
-  private static final Collection<JavadocMarkerNanoPattern> excluded = new HashSet<JavadocMarkerNanoPattern>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(new HashCodeMethod());
-      add(new ToStringMethod());
-    }
-  };
+  private static final Collection<JavadocMarkerNanoPattern> excluded = as.list(new HashCodeMethod(), new ToStringMethod());
   static {
     clazz = TableNanosStatistics.class;
     Logger.subscribe(npStatistics::logNPInfo);

@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.patterns.*;
@@ -23,20 +24,10 @@ public class Classifier extends ASTVisitor {
   private final Collection<ASTNode> forLoopsList = new ArrayList<>();
   private int forLoopsAmount;
   private static final Scanner input = new Scanner(System.in);
-  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
-    
-    {
-      add(new ForEach());
-    }
-  };
-  private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
-    
-    {
-      add(new CopyArray());
-      add(new ForEachEnhanced());
-      add(new InitArray());
-    }
-  };
+  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<>(
+      as.list(new ForEach()));
+  private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<>(
+      as.list(new CopyArray(), new ForEachEnhanced(), new InitArray()));
   private Map<String, Int> patterns;
 
   @Override public boolean visit(final ForStatement node) {
