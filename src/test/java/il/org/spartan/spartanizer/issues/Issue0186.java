@@ -11,11 +11,9 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0186 {
   @Test public void test0() {
-    trimmingOf(
-        "public void o(Object ¢) {if (¢ == null)System.out.println(\"null\");else {if (\"true\".equals(¢)) System.out.println(\"true\");}}")
-            .gives("public void o(Object ¢) {if (¢ == null)System.out.println(\"null\");else if (\"true\".equals(¢))"
-                + " System.out.println(\"true\");}")
-            .stays();
+    trimmingOf("public void o(Object ¢) {if (¢ == null)System.out.println(\"null\");else {if (\"true\".equals(¢)) System.out.println(\"true\");}}")
+        .gives("public void o(Object ¢) {if (¢ == null)System.out.println(\"null\");else if (\"true\".equals(¢))" + " System.out.println(\"true\");}")
+        .stays();
   }
 
   @Test public void test1() {
