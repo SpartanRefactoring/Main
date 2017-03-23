@@ -31,7 +31,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
         && fragmentInliner.cantTip(¢);
   }
 
-  static class LetInliner extends ReplaceToNextStatement<VariableDeclarationFragment> {
+  static class LetInliner extends GoToNextStatement<VariableDeclarationFragment> {
     private static final long serialVersionUID = 2390117956692878327L;
 
     @Override public boolean prerequisite(final VariableDeclarationFragment f) {

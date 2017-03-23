@@ -10,7 +10,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
-/** TODO Yossi Gil: document class {@link }
+/** Applies bottom up reduction of the statements treee
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
