@@ -22,40 +22,39 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     implements TipperCategory.NOP {
   private static final long serialVersionUID = -4282740939895750794L;
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression n) {
-    @Nullable final List<Expression> es = hop.operands(n);
+  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
+    @Nullable final List<Expression> es = hop.operands(x);
     Expression prev = copy.of(lisp.first(es));
-    @Nullable final CompilationUnit u = az.compilationUnit(n.getRoot());
+    @Nullable final CompilationUnit u = az.compilationUnit(x.getRoot());
     @NotNull final List<Expression> es2 = new LinkedList<>();
     for (@NotNull final Expression e : lisp.rest(es))
-      if (u.getLineNumber(prev.getStartPosition()) == u.getLineNumber(e.getStartPosition()) && iz.stringLiteral(prev) && iz.stringLiteral(e)) {
-        @Nullable final StringLiteral l = az.stringLiteral(prev);
-        @Nullable final StringLiteral l2 = az.stringLiteral(e);
-        l.setLiteralValue(l.getLiteralValue() + l2.getLiteralValue());
-      } else {
+      if (u.getLineNumber(prev.getStartPosition()) != u.getLineNumber(e.getStartPosition()) || !iz.stringLiteral(prev) || !iz.stringLiteral(e)) {
         es2.add(prev);
         prev = copy.of(e);
+      } else {
+        @Nullable final StringLiteral l = az.stringLiteral(prev);
+        l.setLiteralValue(l.getLiteralValue() + az.stringLiteral(e).getLiteralValue());
       }
     es2.add(prev);
     if (es2.size() >= 2)
       return subject.operands(es2).to(wizard.PLUS2);
-    final StringLiteral $ = n.getAST().newStringLiteral();
+    final StringLiteral $ = x.getAST().newStringLiteral();
     $.setLiteralValue(az.stringLiteral(lisp.first(es2)).getLiteralValue());
     return $;
   }
 
-  @Override protected boolean prerequisite(@NotNull final InfixExpression n) {
-    if (operator(n) != wizard.PLUS2)
+  @Override protected boolean prerequisite(@NotNull final InfixExpression x) {
+    if (operator(x) != wizard.PLUS2)
       return false;
-    @Nullable final List<Expression> es = hop.operands(n);
+    @Nullable final List<Expression> es = hop.operands(x);
     Expression prev = lisp.first(es);
-    if (!iz.compilationUnit(n.getRoot()))
+    if (!iz.compilationUnit(x.getRoot()))
       return false;
-    @Nullable final CompilationUnit u = az.compilationUnit(n.getRoot());
-    for (@NotNull final Expression e : lisp.rest(es)) {
-      if (u.getLineNumber(prev.getStartPosition()) == u.getLineNumber(e.getStartPosition()) && iz.stringLiteral(prev) && iz.stringLiteral(e))
+    @Nullable final CompilationUnit u = az.compilationUnit(x.getRoot());
+    for (@NotNull final Expression ¢ : lisp.rest(es)) {
+      if (u.getLineNumber(prev.getStartPosition()) == u.getLineNumber(¢.getStartPosition()) && iz.stringLiteral(prev) && iz.stringLiteral(¢))
         return true;
-      prev = e;
+      prev = ¢;
     }
     return false;
   }

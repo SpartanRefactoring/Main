@@ -54,7 +54,7 @@ class Table_Prevalence extends NanoTable {
             .map(npStatistics::get)//
             .forEach(λ -> {
               prevalence.putIfAbsent(λ.name, new Int());
-              prevalence.get(λ.name).inner += λ.occurences > rMethod ? 6 : λ.occurences > rInternal ? 3 : λ.occurences > rExternal ? 2 : 0;
+              prevalence.get(λ.name).inner += λ.occurences > rMethod ? 6 : λ.occurences > rInternal ? 3 : λ.occurences > rExternal ? 3.0 : 0;
             });
       }
 
