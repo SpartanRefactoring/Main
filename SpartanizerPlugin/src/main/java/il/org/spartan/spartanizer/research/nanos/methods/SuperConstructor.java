@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Constructor invoking super constructor
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-10 */
 public class SuperConstructor extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 4539488441119715890L;

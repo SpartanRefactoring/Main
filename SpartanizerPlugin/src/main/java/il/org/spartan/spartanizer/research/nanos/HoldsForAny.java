@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** {@link HoldsForAny} Nano Pattern - holds P(c) for any c in C
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-05 */
 public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
   private static final long serialVersionUID = 3787670358656343399L;

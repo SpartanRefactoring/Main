@@ -9,7 +9,7 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /* Tests {@link CopyCollection}
  *
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  *
  * @since 2017-01-03 */
 @SuppressWarnings("static-method")

@@ -2,11 +2,9 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-/**
- * Demonstrates lambda  
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
- * @since 2017-03-23
- */
+/** Demonstrates lambda
+ * @author Yossi Gil {@code yogi@cs.technion.ac.il}
+ * @since 2017-03-23 */
 public interface DemonsrateLambdaChains {
   Consumer<String> c = λ -> {/**/};
   Consumer<Consumer<String>> cc = λ -> {/**/};

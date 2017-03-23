@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Like {@link FindFirst} but for ForStatement
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-25 */
 public final class ForLoop {
   public static class FindFirst extends NanoPatternTipper<ForStatement> {

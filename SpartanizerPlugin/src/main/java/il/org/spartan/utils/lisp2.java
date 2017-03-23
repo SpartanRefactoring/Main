@@ -8,7 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.utils.range.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
   @NotNull static String nth(final int i, @NotNull final Collection<?> os) {

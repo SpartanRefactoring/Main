@@ -20,7 +20,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * (double) x
  * (long) x
  * } Tested in {@link Issue1007}
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-11 */
 public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {

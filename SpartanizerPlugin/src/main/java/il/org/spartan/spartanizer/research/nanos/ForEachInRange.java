@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** For each element in range (a,b) apply some method
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-12 */
 public class ForEachInRange extends NanoPatternTipper<ForStatement> {
   private static final long serialVersionUID = 8025191112596638412L;

@@ -4,8 +4,9 @@ package il.org.spartan.plugin;
 
 import org.jetbrains.annotations.*;
 
-/** DemonsrateLambdaChains of recommended use of {@link Listener.S} Copy the code, changing the
- * name {@link ConfigurableObjectTemplate} to whatever you need. provide.
+/** DemonsrateLambdaChains of recommended use of {@link Listener.S} Copy the
+ * code, changing the name {@link ConfigurableObjectTemplate} to whatever you
+ * need. provide.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Oct 19, 2016 */
 public interface ConfigurableObjectTemplate {
@@ -43,7 +44,8 @@ public interface ConfigurableObjectTemplate {
     /* below v V V v */ public Add getAs() {return as; /* etc., etc. */}
     //@formatter:on
 
-    /** DemonsrateLambdaChains of the implementation. Don't change the name. Just change services
+    /** DemonsrateLambdaChains of the implementation. Don't change the name.
+     * Just change services
      * @see #go() the only service provided by this template
      * @author Yossi Gil */
     class Action extends Settings {

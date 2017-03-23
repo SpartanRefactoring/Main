@@ -27,7 +27,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * {@link https://github.com/SpartanRefactoring/Spartanizer/wiki/Naming-Rules}
  * {@code int f(int ¢) { int $ = ¢; x($); return $; } } ==> {@code int f(int i)
  * { int res = i; x(res); return res; } }
- * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
+ * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: Raviv Rachmiel take care of single var declaration, tests
 public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//

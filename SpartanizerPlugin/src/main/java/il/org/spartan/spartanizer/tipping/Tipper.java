@@ -24,7 +24,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
   private static final long serialVersionUID = -2252675511987504571L;
 
-  @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
+  @NotNull @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
     return (Class<Tipper<N>>) getClass();
   }
 
@@ -117,7 +117,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  public String className() {
+  @NotNull public String className() {
     return system.className(this);
   }
 }

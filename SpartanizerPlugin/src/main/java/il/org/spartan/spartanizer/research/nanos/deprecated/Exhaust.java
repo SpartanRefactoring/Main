@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Exhaust an iterator but do nothing with elements
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 public class Exhaust extends NanoPatternTipper<WhileStatement> {
   private static final long serialVersionUID = -4404219080361481179L;

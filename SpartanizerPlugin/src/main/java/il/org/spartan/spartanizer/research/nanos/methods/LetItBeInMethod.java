@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Let x in S <br>
  * {@link Assignment} followed by {@link ExpressionStatement} or
  * {@link ReturnStatement}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 public class LetItBeInMethod extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 8849848153637800009L;

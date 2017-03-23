@@ -17,7 +17,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * } To : {@code
  * i=i+1 / i=i-1 ;
  * } Test class is {@link Issue0974}
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-09 */
 public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression>//
     implements TipperCategory.Bloater {

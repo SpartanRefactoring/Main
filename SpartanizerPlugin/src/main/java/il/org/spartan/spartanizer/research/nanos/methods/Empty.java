@@ -6,7 +6,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Method with empty body
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 public class Empty extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -4795965741088687841L;

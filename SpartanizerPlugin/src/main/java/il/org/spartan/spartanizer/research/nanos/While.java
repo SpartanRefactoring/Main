@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** like {@link CountIf but for while loops}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-29 */
 public class While {
   public static class CountIf extends NanoPatternTipper<WhileStatement> {

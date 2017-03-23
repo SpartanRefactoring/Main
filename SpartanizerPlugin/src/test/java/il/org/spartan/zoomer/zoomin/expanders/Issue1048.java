@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Test case for bug in {@link AssignmentTernaryBloater} .
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-07 */
 @SuppressWarnings("static-method")
 public class Issue1048 {

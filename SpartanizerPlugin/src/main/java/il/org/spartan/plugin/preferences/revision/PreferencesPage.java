@@ -25,12 +25,13 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Revised global preferences page for the plugin.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-02-24 */
 public class PreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   private final Bool refreshNeeded = new Bool();
@@ -108,7 +109,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * user to define enabled tippers for the project (see
    * {@link ProjectPreferencesHandler}). "en/disable" button allows the user to
    * toggle spartanization nature for the project.
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   static class ListSelectionEditor extends ListEditor {
     static final String DELIMETER = ",";
@@ -226,7 +227,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** Used to document preferences changes for projects, allowing lazy
    * configuration changes.
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   static class Changes implements Cloneable {
     @NotNull private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;

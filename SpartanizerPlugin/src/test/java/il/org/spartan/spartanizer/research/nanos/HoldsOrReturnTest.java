@@ -8,7 +8,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Tests {@link HoldsOrReturn}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-22 */
 @SuppressWarnings("static-method")
 public class HoldsOrReturnTest {

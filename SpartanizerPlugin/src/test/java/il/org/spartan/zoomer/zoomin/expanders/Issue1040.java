@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.testing.*;
 
 /** Example for using givesWithBinding(String p, String f) from class
  * {@link TestUtilsBloating} .
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-07 */
 // TODO: Yuval Simon: use fixture or inline.
 @Ignore // This is only for demonstration it doesn't suppose to work
