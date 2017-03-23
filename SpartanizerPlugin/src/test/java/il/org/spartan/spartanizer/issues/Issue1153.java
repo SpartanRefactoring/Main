@@ -50,10 +50,12 @@ public class Issue1153 {
     trimmingOf("class A { private static final long serialVersionUID = 02;}")//
         .stays();
   }
+
   @Test public void f() {
     trimmingOf("class A { private static final long serialVersionUID = 1;}")//
         .stays();
   }
+
   @Test public void f1() {
     trimmingOf("class A { private static final long serialVersionUID = 2;}")//
         .stays();

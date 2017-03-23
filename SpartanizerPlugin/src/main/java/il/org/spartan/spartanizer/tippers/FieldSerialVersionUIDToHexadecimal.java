@@ -38,26 +38,26 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     return String.format("Convert %s to hexadecimal", initializer == null ? "initializer" : "'" + initializer.getToken() + "'");
   }
 
-  @Override public Tip tip(FieldDeclaration ¢) {
+  @Override public Tip tip(final FieldDeclaration ¢) {
     canTip(¢);
     assert ¢ == fragment.getParent();
     return new Tip(description(), initializer, getClass()) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
-        NumberLiteral $ = copy.of(initializer);
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final NumberLiteral $ = copy.of(initializer);
         $.setToken(asLiteral());
         r.replace(initializer, $, g);
       }
     };
   }
 
-  static VariableDeclarationFragment findFragment(FieldDeclaration d) {
-    for (VariableDeclarationFragment f : fragments(d))
+  static VariableDeclarationFragment findFragment(final FieldDeclaration d) {
+    for (final VariableDeclarationFragment f : fragments(d))
       if (f.getName().toString().equals(SERIAL_VERSION_UID))
         return f;
     return null;
   }
 
-  @Override public boolean canTip(FieldDeclaration d) {
+  @Override public boolean canTip(final FieldDeclaration d) {
     if ((fragment = findFragment(d)) == null || (initializer = az.numberLiteral(fragment.getInitializer())) == null)
       return false;
     String token = initializer.getToken();
@@ -67,7 +67,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       token = system.chopLast(token);
     try {
       replacement = Long.parseLong(token);
-    } catch (NumberFormatException x) {
+    } catch (final NumberFormatException x) {
       monitor.logEvaluationError(this, x);
       return false;
     }
@@ -82,7 +82,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
         Long.valueOf(replacement));
   }
 
-  @Override public String description(@SuppressWarnings("unused") FieldDeclaration d) {
+  @Override public String description(@SuppressWarnings("unused") final FieldDeclaration d) {
     return description();
   }
 }

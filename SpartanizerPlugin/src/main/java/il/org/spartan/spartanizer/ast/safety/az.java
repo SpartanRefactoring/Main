@@ -545,8 +545,7 @@ public enum az {
     static double double¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
-          : iz.numberLiteral(¢) ? double¢(system.chopLast(token(az.numberLiteral(¢))))
-              : -double¢(system.chopLast(token(az.prefixExpression(¢))));
+          : iz.numberLiteral(¢) ? double¢(system.chopLast(token(az.numberLiteral(¢)))) : -double¢(system.chopLast(token(az.prefixExpression(¢))));
     }
 
     static double double¢(@NotNull final String token) throws NumberFormatException {
@@ -565,8 +564,7 @@ public enum az {
     static long long¢(@NotNull final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
-          : !iz.numberLiteral(¢) ? -long¢(system.chopLast(token(¢)))
-              : long¢(iz.intType(¢) ? token(¢) : system.chopLast(token(¢)));
+          : !iz.numberLiteral(¢) ? -long¢(system.chopLast(token(¢))) : long¢(iz.intType(¢) ? token(¢) : system.chopLast(token(¢)));
     }
 
     static long long¢(@NotNull final String token) throws NumberFormatException {
