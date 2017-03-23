@@ -20,7 +20,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -5988111426167317498L;
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = as.list(//
       patternTipper("$X ? 1 : 0", "as.bit($X)", ""), //
-      patternTipper("$X ? 0 : 1", "as.bit(!($X)", "")//
+      patternTipper("$X ? 0 : 1", "as.bit(!($X))", "")//
   );
 
   @Override public boolean canTip(final ConditionalExpression ¢) {

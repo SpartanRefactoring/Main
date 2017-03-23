@@ -62,6 +62,10 @@ public class MatcherTest {
     assert patternMatcher("$D", "").matches(findFirst.expression(ast("false")));
   }
 
+  @Test public void d6() {
+    assert patternMatcher("return $D;", "").matches(findFirst.returnStatement(ast("return false;")));
+  }
+
   @Test public void e() {
     assert patternMatcher("if($X1)throw $X2; ", "").matches(findFirst.ifStatement(ast("if(x == null) throw new RuntimeError();")));
   }

@@ -212,4 +212,12 @@ public interface findFirst {
   static ConditionalExpression conditionalArgument(final MethodInvocation ¢) {
     return arguments(¢).stream().filter(iz::conditionalExpression).map(az::conditionalExpression).findFirst().orElse(null);
   }
+
+  static ASTNode statement(final ASTNode ¢) {
+    return instanceOf(Statement.class).in(¢);
+  }
+
+  static ASTNode returnStatement(final ASTNode ¢) {
+    return instanceOf(ReturnStatement.class).in(¢);
+  }
 }

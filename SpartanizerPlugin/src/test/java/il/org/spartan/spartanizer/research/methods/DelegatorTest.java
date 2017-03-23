@@ -123,8 +123,4 @@ public class DelegatorTest extends JavadocerTest {
   @Test public void basic9() {
     assert is("void foo(int a){return bar(a);}");
   }
-
-  @Test public void constructor() {
-    assert is("public class Foo{ Foo(Whatever o) {this(o);}}");
-  }
 }
