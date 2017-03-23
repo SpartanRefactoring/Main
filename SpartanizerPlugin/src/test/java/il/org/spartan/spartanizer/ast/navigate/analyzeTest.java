@@ -9,21 +9,20 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO Vivian Shehadeh please add a description
+/** TODO: Vivian Shehadeh please add a description
  * @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
-  @Nullable private static final ASTNode AST = wizard.ast("public void m(int y){ y=5;}");
+  private static final ASTNode AST = wizard.ast("public void m(int y){ y=5;}");
 
   @Test public void a() {
     final List<String> s = analyze.dependencies(wizard.ast("return x + y;")).stream().collect(toList());

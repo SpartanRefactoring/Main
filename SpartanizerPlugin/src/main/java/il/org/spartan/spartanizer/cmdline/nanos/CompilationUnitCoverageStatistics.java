@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -32,7 +31,7 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
     last(this).logAfterSpartanization(¢);
   }
 
-  public void markNP(@NotNull final ASTNode n, @NotNull final String np) {
+  public void markNP(final ASTNode n, final String np) {
     last(this).markNP(n, np);
   }
 
@@ -166,14 +165,14 @@ class CompilationUnitRecord {
     return (int) methods.values().stream().filter(LightWeightMethodRecord::fullyCovered).count();
   }
 
-  public void markContainedInMethod(@NotNull final MethodDeclaration ¢, @NotNull final ASTNode n, @NotNull final String np) {
+  public void markContainedInMethod(final MethodDeclaration ¢, final ASTNode n, final String np) {
     final String mangle = Vocabulary.mangle(¢);
     methods.putIfAbsent(mangle, new LightWeightMethodRecord(¢));
     methods.get(mangle).mark(n, np);
   }
 
-  public void markNP(@NotNull final ASTNode n, @NotNull final String np) {
-    @Nullable final MethodDeclaration $ = ancestorMethod(n);
+  public void markNP(final ASTNode n, final String np) {
+    final MethodDeclaration $ = ancestorMethod(n);
     if ($ == null)
       markRegular(n);
     else
@@ -198,22 +197,22 @@ class CompilationUnitRecord {
 }
 
 class LightWeightMethodRecord {
-  @NotNull final NanoPatternCounter nodes;
-  @NotNull final NanoPatternCounter commands;
-  @NotNull final NanoPatternCounter expressions;
+  final NanoPatternCounter nodes;
+  final NanoPatternCounter commands;
+  final NanoPatternCounter expressions;
   private boolean fullyCovered;
 
-  public LightWeightMethodRecord(@NotNull final MethodDeclaration ¢) {
+  public LightWeightMethodRecord(final MethodDeclaration ¢) {
     nodes = NanoPatternCounter.init(count.nodes(¢));
     commands = NanoPatternCounter.init(measure.commands(¢));
     expressions = NanoPatternCounter.init(measure.expressions(¢));
   }
 
   /** makes sure we don't exceed 100% of nodes of a method */
-  public void mark(@NotNull final ASTNode ¢, @NotNull final String np) {
+  public void mark(final ASTNode ¢, final String np) {
     if (np.equals(LetItBeIn.class.getSimpleName()))
       markLetItBeIn(¢);
-    else if (np.equals(MyArguments.class.getSimpleName()))
+    else if (np.equals(ArgumentsTuple.class.getSimpleName()))
       markArgumentsTuple();
     else {
       mark(¢);
@@ -227,12 +226,12 @@ class LightWeightMethodRecord {
     expressions.inc(4);
   }
 
-  private void markLetItBeIn(@NotNull final ASTNode ¢) {
+  private void markLetItBeIn(final ASTNode ¢) {
     mark(extract.nextStatement(¢));
     mark(¢);
   }
 
-  private void mark(@NotNull final ASTNode ¢) {
+  private void mark(final ASTNode ¢) {
     nodes.inc(count.nodes(¢));
     commands.inc(measure.commands(¢));
     expressions.inc(measure.expressions(¢));
@@ -250,7 +249,7 @@ class LightWeightMethodRecord {
     private final int total;
     private int np;
 
-    @NotNull static NanoPatternCounter init(final int ¢) {
+    static NanoPatternCounter init(final int ¢) {
       return new NanoPatternCounter(¢);
     }
 

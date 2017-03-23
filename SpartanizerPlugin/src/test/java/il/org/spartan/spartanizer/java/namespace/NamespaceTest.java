@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -45,7 +44,7 @@ class NamespaceFixture {
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
 public class NamespaceTest extends MetaFixture {
-  @Nullable private final Namespace fixture = Environment.of(reflectedCompilationUnit());
+  private final Namespace fixture = Environment.of(reflectedCompilationUnit());
 
   @Test public void a01() {
     assert fixture != null;

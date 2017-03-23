@@ -2,14 +2,13 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** Checking that the tipper of removing unmeaningful statements from blocks is
- * working properly
+/** Checking that the tipper of removing 
+ * unmeaningful statements from blocks is working properly
  * @author Dor Ma'ayan
  * @since 2016-09-26 */
 @SuppressWarnings({ "static-method", "javadoc" })
@@ -114,7 +113,7 @@ public class Issue0251 {
   }
 
   @Test public void t17() {
-    @NotNull final String variable = "while(b==q){if(tipper==q()){int i;}}";
+    final String variable = "while(b==q){if(tipper==q()){int i;}}";
     assert !sideEffects.free(into.s(variable));
     trimmingOf(variable)//
         .gives("while(b==q)if(tipper==q()){int i;}")//

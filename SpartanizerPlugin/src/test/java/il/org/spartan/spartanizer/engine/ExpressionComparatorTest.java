@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -107,7 +106,7 @@ public final class ExpressionComparatorTest {
     azzert.that(cs("for (;;) { i++; }"), is(7));
   }
 
-  private int cs(@NotNull final String statement) {
+  private int cs(final String statement) {
     return count.lines(s(statement));
   }
 

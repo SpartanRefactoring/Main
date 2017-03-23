@@ -10,7 +10,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -29,15 +28,15 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 5853683693900339864L;
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
 
-  // TODO Yuval Simon: this is one of the worst bits of code I have seen.
+  // TODO: Yuval Simon: this is one of the worst bits of code I have seen.
   // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
   // transformation --yg
-  @Nullable @Override public ASTNode replacement(@NotNull final SwitchStatement s) {
-    @NotNull final List<switchBranch> bs = switchBranch.intoBranches(s);
+  @Override public ASTNode replacement(final SwitchStatement s) {
+    final List<switchBranch> bs = switchBranch.intoBranches(s);
     if (bs.size() != 2)
       return null;
     final switchBranch first = first(bs);
@@ -58,9 +57,9 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return $;
   }
 
-  @Nullable private static InfixExpression makeFrom(final SwitchStatement s, @NotNull final Iterable<SwitchCase> cs) {
-    @Nullable InfixExpression $ = null;
-    for (@NotNull final SwitchCase c : cs) {
+  private static InfixExpression makeFrom(final SwitchStatement s, final Iterable<SwitchCase> cs) {
+    InfixExpression $ = null;
+    for (final SwitchCase c : cs) {
       if (c.isDefault())
         continue;
       final InfixExpression n = subject.pair(expression(s), expression(c)).to(Operator.EQUALS);

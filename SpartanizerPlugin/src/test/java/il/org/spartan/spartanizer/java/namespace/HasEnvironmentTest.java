@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -24,9 +23,9 @@ import il.org.spartan.spartanizer.meta.*;
 public class HasEnvironmentTest extends MetaFixture {
   private static final Collection<String> signature = new HashSet<>();
 
-  @NotNull private static Collection<Object[]> collect(final MetaFixture... fs) {
+  private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
-    @NotNull final Collection<Object[]> $ = new ArrayList<>();
+    final Collection<Object[]> $ = new ArrayList<>();
     as.list(fs).forEach(t -> descendants.whoseClassIs(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
         .filter(λ -> !signature.contains(signature(λ))).forEach(λ -> {
           signature.add(signature(λ));
@@ -35,7 +34,7 @@ public class HasEnvironmentTest extends MetaFixture {
     return $;
   }
 
-  @NotNull @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
+  @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
     return collect(new NamespaceTest(), new definitionTest());
   }
 

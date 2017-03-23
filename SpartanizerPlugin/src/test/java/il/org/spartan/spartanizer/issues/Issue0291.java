@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** Check that the basic cases of arithmetic evaluation combined with parameters
- * are working well
+/** Check that the basic cases of arithmetic evaluation combined
+ * with parameters are working well
  * @author Dor Ma'ayan
  * @since 18-11-2016 */
 @SuppressWarnings("static-method")

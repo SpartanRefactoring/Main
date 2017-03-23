@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -38,7 +37,7 @@ public class Table_Constants extends DeprecatedFolderASTVisitor {
     System.err.println(" " + path + " Done");
   }
 
-  @Override public boolean visit(@NotNull final FieldDeclaration ¢) {
+  @Override public boolean visit(final FieldDeclaration ¢) {
     if (iz.constant(¢))//
       if (iz.intType(type(¢)))
         ++ints;

@@ -7,7 +7,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,7 +15,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 
-/** TODO orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
+/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
  * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2016-12-19 */
 public class MethodsCounter extends DeprecatedFolderASTVisitor {
@@ -40,7 +39,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     return true;
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -60,17 +59,17 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null;
   }
 
-  public static CSVStatistics openSummaryFile(@NotNull final String $) {
+  public static CSVStatistics openSummaryFile(final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch (@NotNull final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
   }
 
   public void summarizeNumbers() {
-    @Nullable final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
+    final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
     if (report == null)
       return;
     methods.keySet().forEach(λ -> {

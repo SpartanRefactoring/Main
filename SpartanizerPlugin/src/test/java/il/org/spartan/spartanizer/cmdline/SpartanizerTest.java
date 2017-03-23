@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -26,52 +25,52 @@ public class SpartanizerTest {
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        @NotNull final List<?> $ = modifiers(d);
+        final List<?> $ = modifiers(d);
         return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
 
-      @Override public boolean visit(@NotNull final AnnotationTypeDeclaration node) {
+      @Override public boolean visit(final AnnotationTypeDeclaration node) {
         print("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true;// super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final AnnotationTypeMemberDeclaration node) {
+      @Override public boolean visit(final AnnotationTypeMemberDeclaration node) {
         print(AnnotationTypeMemberDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final Assignment node) {
+      @Override public boolean visit(final Assignment node) {
         print(node.getOperator());
         return super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final ImportDeclaration node) {
+      @Override public boolean visit(final ImportDeclaration node) {
         print(ImportDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final MarkerAnnotation node) {
+      @Override public boolean visit(final MarkerAnnotation node) {
         print("MarkerAnnotation: " + node.getTypeName());
         print("parent: " + node.getParent().getNodeType());
         return super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         print(MethodDeclaration.class + ": " + node.getName());
         return !hasTestAnnotation(node);
       }
 
-      @Override public boolean visit(@NotNull final MethodInvocation node) {
+      @Override public boolean visit(final MethodInvocation node) {
         print(MethodInvocation.class + ": " + node.getName());
         return super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final NormalAnnotation node) {
+      @Override public boolean visit(final NormalAnnotation node) {
         print("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
 
-      @Override public boolean visit(@NotNull final PackageDeclaration node) {
+      @Override public boolean visit(final PackageDeclaration node) {
         print(PackageDeclaration.class + ": " + node.getName());
         return super.visit(node);
       }
@@ -82,7 +81,7 @@ public class SpartanizerTest {
     ___.______unused(¢);
   }
 
-  @NotNull String method = "";
+  String method = "";
   private final String test1 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
       + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
       + " @Ignore(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
@@ -204,7 +203,7 @@ public class SpartanizerTest {
   }
 
   @Test public void testSpartanizerCheckMethod_03() {
-    @NotNull final String test4 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
+    final String test4 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
         + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{public void method1(){int i = 1; assert (i>0);} }";
     print(test4);
     final ASTNode u = makeAST.COMPILATION_UNIT.from(test4);
@@ -216,7 +215,7 @@ public class SpartanizerTest {
         return false;
       }
 
-      @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
+      @Override public boolean visit(final MethodDeclaration ¢) {
         return storeMethodName(¢.getName());
       }
     });
@@ -274,14 +273,14 @@ public class SpartanizerTest {
         .matches("[/A-Za-z0-9-_.]*test[/A-Za-z0-9-_.]*");
   }
 
-  private void visitASTNode(@NotNull final ASTNode u1) {
+  private void visitASTNode(final ASTNode u1) {
     u1.accept(new ASTVisitor(true) {
       boolean hasTestAnnotation(final MethodDeclaration d) {
-        @NotNull final List<?> $ = modifiers(d);
+        final List<?> $ = modifiers(d);
         return $.stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
 
-      @Override public boolean visit(@NotNull final MethodDeclaration node) {
+      @Override public boolean visit(final MethodDeclaration node) {
         print("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node) && countMethods();
       }

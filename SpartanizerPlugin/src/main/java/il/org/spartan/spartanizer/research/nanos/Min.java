@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -25,7 +24,7 @@ public final class Min extends NanoPatternTipper<ConditionalExpression> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 

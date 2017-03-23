@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO Oren Afek please add a description
+/** TODO: Oren Afek please add a description
  * @author Oren Afek
  * @since 2016 Testing {@link LambdaRemoveRedundantCurlyBraces } */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -69,7 +69,7 @@ public class Issue0455 {
   @Test public void nestedLambdaExpression() {
     trimmingOf("x -> y -> {return -y;}")//
         .gives("x -> y -> -y") //
-    // TODO Yossi Gil, the next two lines regard #1115 - uncomment when fixed
+    // TODO: Yossi Gil, the next two lines regard #1115 - uncomment when fixed
     // .gives("x -> ¢ -> -¢") //
     // .stays() //
     ;

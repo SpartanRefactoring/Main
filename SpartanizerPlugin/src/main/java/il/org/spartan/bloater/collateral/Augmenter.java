@@ -15,7 +15,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
@@ -30,11 +29,11 @@ public class Augmenter implements Application {
   private final IProgressMonitor npm = new NullProgressMonitor();
   private static final int MIN_STATEMENTS_COUNT = 2;
 
-  @Override public Integer commitChanges(@NotNull final WrappedCompilationUnit u, @NotNull final AbstractSelection<?> s) {
+  @Override public Integer commitChanges(final WrappedCompilationUnit u, final AbstractSelection<?> s) {
     if (!checkServiceAvailableBeforeCalculation())
       return Integer.valueOf(0);
     try {
-      @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
       if (rewrite(r, getSelection(u.compilationUnit, getTextSelection(u.compilationUnit, s.textSelection)), null)
@@ -45,7 +44,7 @@ public class Augmenter implements Application {
           textChange.perform(npm);
       }
       return Integer.valueOf(0);
-    } catch (@NotNull final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return Integer.valueOf(0);
@@ -53,8 +52,8 @@ public class Augmenter implements Application {
 
   /** @param u JD
    * @return selection as list of lists of statements */
-  @NotNull private static List<List<Statement>> getSelection(@NotNull final CompilationUnit u, final ITextSelection s) {
-    @NotNull final List<List<Statement>> $ = new ArrayList<>();
+  private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
+    final List<List<Statement>> $ = new ArrayList<>();
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Block b) {
@@ -63,7 +62,7 @@ public class Augmenter implements Application {
         if (inRange(b, s))
           $.add(statements(b));
         else {
-          @NotNull final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
+          final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
@@ -73,14 +72,13 @@ public class Augmenter implements Application {
     return $;
   }
 
-  // TODO Ori Roth Ori Roth clear and complete
+  // TODO: Ori Roth Ori Roth clear and complete
   /** Main function of the application.
    * @param r JD
    * @param sss selection as list of lists of statements
    * @param textEditGroup JD
    * @return true iff rewrite object should be applied */
-  private static boolean rewrite(@NotNull final ASTRewrite r, @NotNull final List<List<Statement>> sss,
-      @SuppressWarnings("unused") final TextEditGroup __) {
+  private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
     if (sss.isEmpty() || first(sss).isEmpty())
       return false;
     r.replace(((TypeDeclaration) first(types((CompilationUnit) first(first(sss)).getRoot()))).getName(),
@@ -93,7 +91,7 @@ public class Augmenter implements Application {
    * as list of lists of statements.
    * @param ss statements to be collateralized
    * @return collateralization output as list of lists of statements */
-  @Nullable public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
+  public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
 
@@ -101,10 +99,10 @@ public class Augmenter implements Application {
    * @param r JD
    * @param u JD
    * @param g JD */
-  private static void addCollateralImport(@Nullable final ASTRewrite r, @Nullable final CompilationUnit u, final TextEditGroup g) {
+  private static void addCollateralImport(final ASTRewrite r, final CompilationUnit u, final TextEditGroup g) {
     if (u == null || r == null)
       return;
-    @NotNull final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
+    final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
     if (hasImportIncluded(u, i))
       return;
     final ListRewrite l = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);
@@ -127,7 +125,7 @@ public class Augmenter implements Application {
    * allow several projects within selection (?)
    * @param ¢ JD
    * @return true iff service is available */
-  private static boolean checkServiceAvailableAfterCalculation(@NotNull final AbstractSelection<?> ¢) {
+  private static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
     return LibrariesManagement.checkLibrary(first(¢.inner).descriptor.getJavaProject());
   }
 
@@ -144,7 +142,7 @@ public class Augmenter implements Application {
   /** @param n JD
    * @param s JD
    * @return true iff node is inside selection */
-  static boolean inRange(@Nullable final ASTNode n, @Nullable final ITextSelection s) {
+  static boolean inRange(final ASTNode n, final ITextSelection s) {
     if (n == null || s == null)
       return false;
     final int $ = n.getStartPosition();
@@ -155,7 +153,7 @@ public class Augmenter implements Application {
    * less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
    * @return true iff block should be discarded */
-  static boolean discardOptimization(@Nullable final Block ¢) {
+  static boolean discardOptimization(final Block ¢) {
     return ¢ == null || statements(¢) == null || statements(¢).size() < MIN_STATEMENTS_COUNT;
   }
 
@@ -163,7 +161,7 @@ public class Augmenter implements Application {
    * when it has less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
    * @return true iff list of statements should be discarded */
-  static boolean discardOptimization(@Nullable final Collection<Statement> ¢) {
+  static boolean discardOptimization(final Collection<Statement> ¢) {
     return ¢ == null || ¢.size() < MIN_STATEMENTS_COUNT;
   }
 
@@ -171,7 +169,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
-  @NotNull private static ITextSelection getTextSelection(@NotNull final CompilationUnit u, @Nullable final ITextSelection s) {
+  private static ITextSelection getTextSelection(final CompilationUnit u, final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }

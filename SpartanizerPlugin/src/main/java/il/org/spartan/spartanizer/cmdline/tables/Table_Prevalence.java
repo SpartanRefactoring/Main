@@ -6,10 +6,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
@@ -23,13 +21,13 @@ class Table_Prevalence extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
-  @NotNull static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
-    @Override public boolean visit(@NotNull final CompilationUnit $) {
+  static RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
+    @Override public boolean visit(final CompilationUnit $) {
       try {
         $.accept(new AnnotationCleanerVisitor());
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
-      } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
         ___.unused(__);
       }
       return super.visit($);
@@ -64,7 +62,7 @@ class Table_Prevalence extends NanoTable {
           writer = new Table(Table.classToNormalizedFileName(Table_Prevalence.class) + "-" + corpus, outputFolder);
       }
     }.fire(visitor);
-    for (final String ¢ : prevalence.keySet()) {
+    for (String ¢ : prevalence.keySet()) {
       writer.put("Nano", ¢);
       writer.put("Prevalence", Double.valueOf(format.decimal(prevalence.get(¢).inner / 6.0)));
       writer.nl();

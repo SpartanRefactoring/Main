@@ -4,7 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** Check that the tipper of unifying identical catch blocks is working properly
+/** Check that the tipper of unifying identical
+ * catch blocks is working properly
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
 @SuppressWarnings("static-method")

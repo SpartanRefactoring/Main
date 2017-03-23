@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 /** Class to count statement inside a method before and after refactoring +
  * patterning
  * @author Ori Marcovitch
@@ -38,7 +36,7 @@ public abstract class MetricalAnalyzer<T> extends Analyzer<T> {
             + tidy(acc2 += !afterHistogram.containsKey(¢) ? 0 : enumElement(afterHistogram.get(¢))));
   }
 
-  private void printMap(@NotNull final Map<Integer, T> m) {
+  private void printMap(final Map<Integer, T> m) {
     m.keySet().forEach(λ -> System.out.println(λ.intValue() + " : " + tidy(enumElement(m.get(λ)))));
   }
 }

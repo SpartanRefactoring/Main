@@ -6,7 +6,6 @@ import java.io.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
@@ -30,16 +29,16 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   private static String inputDir;
   private static boolean defaultDir;
   private int classesDone;
-  @NotNull private final String beforeFileName;
-  @NotNull private final String afterFileName;
+  private final String beforeFileName;
+  private final String afterFileName;
   private PrintWriter befores;
   private PrintWriter afters;
   private CSVStatistics report;
-  @NotNull private final String reportFileName;
+  private final String reportFileName;
 
   /** Main method used to run BatchSpartanizer as a stand alone application
    * @param args */
-  public static void main(@NotNull final String[] args) {
+  public static void main(final String[] args) {
     if (args.length == 0)
       printHelpPrompt();
     else {
@@ -55,7 +54,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   private static void spartanize() {
-    @NotNull final File input = new File(inputDir);
+    final File input = new File(inputDir);
     if (input.isDirectory()) {
       System.out.println(" ---- Analyzing directory: " + input.getAbsolutePath() + " -------- ");
       spartanizeDir(input);
@@ -65,20 +64,20 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     }
   }
 
-  private static void spartanizeFile(@NotNull final File input) {
+  private static void spartanizeFile(final File input) {
     new BatchSpartanizer(input.getAbsolutePath()).fire();
   }
 
-  private static void spartanizeDir(@NotNull final File input) {
-    for (@NotNull final File ¢ : input.listFiles())
+  private static void spartanizeDir(final File input) {
+    for (final File ¢ : input.listFiles())
       if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
         System.out.println(¢.getAbsolutePath());
         spartanizeFile(¢);
       }
   }
 
-  @NotNull public static ProcessBuilder runScript¢(final String pathname) {
-    @NotNull final ProcessBuilder $ = system.runScript();
+  public static ProcessBuilder runScript¢(final String pathname) {
+    final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
@@ -94,7 +93,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     System.out.println("");
   }
 
-  private static void parseCommandLineArgs(@NotNull final String... args) {
+  private static void parseCommandLineArgs(final String... args) {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
         outputDir = args[¢ + 1];
@@ -115,7 +114,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       }
   }
 
-  BatchSpartanizer(@NotNull final String path) {
+  BatchSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
 
@@ -124,12 +123,12 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     beforeFileName = outputDir + File.separator + name + ".before.java";
     afterFileName = outputDir + File.separator + name + ".after.java";
     reportFileName = outputDir + File.separator + name + ".CSV";
-    @NotNull final File dir = new File(folder + outputDir);
+    final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
 
-  boolean collect(@NotNull final AbstractTypeDeclaration in) {
+  boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
@@ -185,7 +184,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     return false;
   }
 
-  @Override void collect(@NotNull final CompilationUnit u) {
+  @Override void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return collect(¢);
@@ -201,16 +200,16 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     });
   }
 
-  private void collect(@NotNull final File f) {
+  private void collect(final File f) {
     if (!Utils.isTestFile(f))
       try {
         collect(FileUtils.read(f));
-      } catch (@NotNull final IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
   }
 
-  @Override void collect(@NotNull final String javaCode) {
+  @Override void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
@@ -236,7 +235,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       System.err.println("Word Count Essentialized before: " + numWordEssentialBefore);
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
-    } catch (@NotNull final IOException ¢) {
+    } catch (final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
@@ -250,13 +249,13 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         presentSourcePath, //
         beforeFileName, //
         afterFileName);
-    try (@NotNull PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
-        @NotNull PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
+    try (PrintWriter b = new PrintWriter(new FileWriter(beforeFileName)); //
+        PrintWriter a = new PrintWriter(new FileWriter(afterFileName))) {
       befores = b;
       afters = a;
       report = new CSVStatistics(reportFileName, "property");
       new FilesGenerator(".java").from(presentSourcePath).forEach(this::collect);
-    } catch (@NotNull final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, beforeFileName + "|" + afterFileName);
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
@@ -269,11 +268,11 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     system.bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
 
-  @NotNull public static String runScript(final String pathname) throws IOException {
+  public static String runScript(final String pathname) throws IOException {
     return system.runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
 
-  private static boolean containsJavaFileOrJavaFileItSelf(@NotNull final File f) {
+  private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
     return f.getName().endsWith(".java") || f.isDirectory()
         && Stream.of(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java"));
   }

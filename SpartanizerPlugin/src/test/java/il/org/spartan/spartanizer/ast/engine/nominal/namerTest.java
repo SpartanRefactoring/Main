@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.ast.engine.nominal;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -83,7 +82,7 @@ public final class namerTest {
   }
 
   @Test public void test2() {
-    @NotNull final String[] components = namer.components("Table_NanosByCategories");
+    final String[] components = namer.components("Table_NanosByCategories");
     azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
     azzert.that(separate.these(lisp.rest(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
   }

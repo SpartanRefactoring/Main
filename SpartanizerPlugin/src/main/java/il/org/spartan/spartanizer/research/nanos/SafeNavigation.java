@@ -35,7 +35,7 @@ public final class SafeNavigation extends NanoPatternTipper<ConditionalExpressio
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
+  @Override @Nullable public Tip pattern(@NotNull final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -51,7 +51,7 @@ public final class SafeNavigation extends NanoPatternTipper<ConditionalExpressio
     return firstReplacement(tippers);
   }
 
-  @NotNull @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Safety;
   }
 }

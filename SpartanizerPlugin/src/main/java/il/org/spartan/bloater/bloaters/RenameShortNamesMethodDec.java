@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -29,21 +28,21 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * { int res = i; x(res); return res; } }
  * @author Raviv Rachmiel <tt> raviv.rachmiel@gmail.com </tt>
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-// TODO Raviv Rachmiel take care of single var declaration, tests
+// TODO: Raviv Rachmiel take care of single var declaration, tests
 public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;
 
-  @NotNull @Override public String description(@NotNull final MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Nullable @Override @SuppressWarnings("unused") public Fragment tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
+  @Override @SuppressWarnings("unused") public Tip tip(final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-    for (@NotNull final SingleVariableDeclaration parameter : parameters(d)) {
+    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+    for (final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (in($.getIdentifier(), "$")) {
@@ -55,7 +54,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
       prev.add($);
       after.add(¢);
     }
-    return prev.isEmpty() ? null : new Fragment("Rename paraemters", d, getClass()) {
+    return prev.isEmpty() ? null : new Tip("Rename paraemters", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {

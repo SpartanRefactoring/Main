@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -43,7 +42,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
         && nonTips(rivals, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final EnhancedForStatement ¢) {
+  @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -51,7 +50,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @NotNull @Override public String technicalName() {
+  @Override public String technicalName() {
     return "foreach C [s.t. P(·)] do S(·)";
   }
 

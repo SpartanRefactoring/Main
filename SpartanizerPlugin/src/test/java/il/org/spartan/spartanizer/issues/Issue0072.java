@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -22,8 +21,8 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
   @Test public void ma() {
-    @NotNull final String s = "0-x";
-    @NotNull final InfixExpression i = into.i(s);
+    final String s = "0-x";
+    final InfixExpression i = into.i(s);
     azzert.that(i, iz(s));
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));

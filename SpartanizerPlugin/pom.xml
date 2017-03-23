@@ -24,12 +24,6 @@
 	</repositories>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.intellij/annotations -->
-		<dependency>
-			<groupId>com.intellij</groupId>
-			<artifactId>annotations</artifactId>
-			<version>12.0</version>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -165,10 +159,10 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
 					</execution>
 				</executions>
 			</plugin>

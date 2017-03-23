@@ -2,9 +2,7 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
-/** TODO
+/** TODO  
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-19 */
 public abstract class PropositionInfixNotation extends PropositionReducer<String> {
@@ -12,35 +10,35 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
     super(new ReduceStringConcatenate());
   }
 
-  @NotNull @Override protected final String ante(@NotNull final Proposition.Not ¢) {
+  @Override protected final String ante(Proposition.Not ¢) {
     return negation() + (¢.inner instanceof Proposition.C ? open() : empty());
   }
 
-  @NotNull @Override protected final String ante(@NotNull final Proposition.P ¢) {
+  @Override protected final String ante(Proposition.P ¢) {
     return ¢.inner instanceof Proposition.C ? open() : empty();
   }
 
-  @NotNull protected abstract String close();
+  protected abstract String close();
 
-  @NotNull protected abstract String empty();
+  protected abstract String empty();
 
-  @NotNull @Override protected abstract String inter(Proposition.And a);
+  @Override protected abstract String inter(Proposition.And a);
 
-  @NotNull @Override protected abstract String inter(Proposition.Or o);
+  @Override protected abstract String inter(Proposition.Or o);
 
-  @NotNull @Override protected String map(final BooleanSupplier ¢) {
+  @Override protected String map(final BooleanSupplier ¢) {
     return ¢ + "";
   }
 
-  @NotNull protected abstract String negation();
+  protected abstract String negation();
 
-  @NotNull protected abstract String open();
+  protected abstract String open();
 
-  @NotNull @Override protected final String post(@NotNull final Proposition.Not ¢) {
+  @Override protected final String post(Proposition.Not ¢) {
     return ¢.inner instanceof Proposition.C ? close() : empty();
   }
 
-  @NotNull @Override protected String post(@NotNull final Proposition.P ¢) {
+  @Override protected String post(Proposition.P ¢) {
     return ¢.inner instanceof Proposition.C ? close() : empty();
   }
 }

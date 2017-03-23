@@ -5,7 +5,6 @@ import static il.org.spartan.lisp.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
@@ -17,14 +16,14 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 16-11-10 */
 public class Issue0814 {
   @Test @SuppressWarnings("static-method") public void nullTest() {
-    @NotNull final Assignment a = into.a("a = 3");
-    @NotNull final Statement s = into.s("f();");
+    final Assignment a = into.a("a = 3");
+    final Statement s = into.s("f();");
     a.getParent().delete();
     assert new AssignmentAndReturn().go(null, a, s, null) == null;
   }
 
   @Test @SuppressWarnings("static-method") public void simpleTest() {
-    @NotNull final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
+    final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
     final ReturnStatement s = first(new MethodExplorer(m).returnStatements());
     // noinspection SameReturnValue
     m.accept(new ASTVisitor(true) {

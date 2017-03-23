@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -45,13 +44,13 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
-    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      @NotNull final Collection<Object[]> $ = new ArrayList<>();
+    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+      final Collection<Object[]> $ = new ArrayList<>();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
 
-    @NotNull public static Object[] ____(@NotNull final MethodDeclaration changes) {
+    public static Object[] ____(final MethodDeclaration changes) {
       return new Object[] { changes.getName() + "", changes };
     }
 
@@ -59,7 +58,7 @@ public enum SentenceTestTemplate {
     @Parameter(0) @SuppressWarnings("CanBeFinal") public String name;
 
     @Test public void changes() {
-      @NotNull final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
+      final String from = changes + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = Wrap.Method.off(unpeeled);
       azzert.that("No trimming of " + name, peeled, is(not(from)));
@@ -74,16 +73,16 @@ public enum SentenceTestTemplate {
   @Ignore
   @RunWith(Parameterized.class)
   public static class ChangesTo {
-    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      @NotNull final Collection<Object[]> $ = new ArrayList<>();
-      for (@NotNull final List<MethodDeclaration> sentence : allSentences())
+    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+      final Collection<Object[]> $ = new ArrayList<>();
+      for (final List<MethodDeclaration> sentence : allSentences())
         for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
           if (disabling.specificallyDisabled(sentence.get(¢)))
             $.add(____(sentence.get(¢), sentence.get(¢ + 1)));
       return $;
     }
 
-    @NotNull public static Object[] ____(@NotNull final MethodDeclaration from, @NotNull final MethodDeclaration to) {
+    public static Object[] ____(final MethodDeclaration from, final MethodDeclaration to) {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
 
@@ -101,7 +100,7 @@ public enum SentenceTestTemplate {
       return (first + "").replace(disabling.ByComment.disabler, "");
     }
 
-    @NotNull CharSequence firstName() {
+    CharSequence firstName() {
       return first.getName() + "";
     }
 
@@ -109,7 +108,7 @@ public enum SentenceTestTemplate {
       return (second + "").replace(secondName(), firstName()).replace(disabling.ByComment.disabler, "");
     }
 
-    @NotNull CharSequence secondName() {
+    CharSequence secondName() {
       return second.getName() + "";
     }
   }
@@ -120,14 +119,14 @@ public enum SentenceTestTemplate {
    * @since 2017-01-18 */
   @RunWith(Parameterized.class)
   public static class Stays {
-    @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      @NotNull final Collection<Object[]> $ = new ArrayList<>();
+    @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
+      final Collection<Object[]> $ = new ArrayList<>();
       allSentences()
           .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
     }
 
-    @NotNull public static Object[] ____(@NotNull final MethodDeclaration stays) {
+    public static Object[] ____(final MethodDeclaration stays) {
       return new Object[] { stays.getName() + "", stays, };
     }
 
@@ -135,7 +134,7 @@ public enum SentenceTestTemplate {
     @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration stays;
 
     @Test public void stays() {
-      @NotNull final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
+      final String from = stays + "", wrap = Wrap.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = Wrap.Method.off(unpeeled);

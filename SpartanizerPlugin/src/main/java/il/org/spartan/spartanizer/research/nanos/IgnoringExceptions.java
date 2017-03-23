@@ -27,11 +27,11 @@ public final class IgnoringExceptions extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parentAsTryStatement(¢));
   }
 
-  @Nullable @Override public Fragment pattern(final CatchClause ¢) {
+  @Override @Nullable public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parentAsTryStatement(¢));
   }
 
-  @NotNull @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Exception;
   }
 

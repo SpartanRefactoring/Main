@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -28,11 +27,19 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
     return tippers.canTip(¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return tippers2.cantTip(containingBlock(¢)) ? tippers.firstTip(¢) : tippers2.firstTip(containingBlock(¢));
   }
 
   @Override public String description() {
     return "Evaluate expression, if null- replace with default value";
+  }
+
+  @Override public String technicalName() {
+    return "IfX₁IsNullX₁ElseX₂";
+  }
+
+  @Override public NanoPatternTipper.Category category() {
+    return Category.Default;
   }
 }

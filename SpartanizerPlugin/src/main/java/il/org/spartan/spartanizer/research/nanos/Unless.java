@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,13 +20,13 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
       patternTipper("$X1 ? $D : $X2", "unless($X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern"),
       patternTipper("$X1  ? $X2 : $D", "unless(!$X1).eval(() -> $X2).defaultTo($D)", "Go fluent: Unless pattern")//
   );
-  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = as.list(new DefaultsTo(), new SafeNavigation());
+  private static final Collection<NanoPatternTipper<ConditionalExpression>> rivals = as.list(new DefaultsTo(), new SafeReference());
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ConditionalExpression ¢) {
+  @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
@@ -35,7 +34,15 @@ public final class Unless extends NanoPatternTipper<ConditionalExpression> {
     return "Evaluate an expression unless some condition is satisfied";
   }
 
-  @Override public String nanoName() {
-    return "EvaluateUnlessDefaultsTo";
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
+  }
+
+  @Override public Category category() {
+    return Category.Safety;
   }
 }

@@ -3,13 +3,12 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
 
-/** Test Cases for Checking the Recurder Mechanism for Passing Recursively Over
- * the AST
+/** Test Cases for Checking the Recurder Mechanism 
+ * for Passing Recursively Over the AST
  * @author Dor Ma'ayan
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc", "boxing" })
@@ -31,7 +30,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_13() {
-    @NotNull final Expression ¢ = into.e("56");
+    final Expression ¢ = into.e("56");
     new Recurser<>(¢, 0).postVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");
@@ -44,7 +43,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_15() {
-    @NotNull final Expression ¢ = into.e("56+87");
+    final Expression ¢ = into.e("56+87");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");
@@ -53,7 +52,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_16() {
-    @NotNull final Expression ¢ = into.e("b==true ? 67 : 7");
+    final Expression ¢ = into.e("b==true ? 67 : 7");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("56");
@@ -62,7 +61,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_17() {
-    @NotNull final Expression ¢ = into.e("b==true ? 67 : 7");
+    final Expression ¢ = into.e("b==true ? 67 : 7");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.BOOLEAN_LITERAL)
         ((BooleanLiteral) λ.getRoot()).setBooleanValue(false);
@@ -71,7 +70,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_18() {
-    @NotNull final Expression ¢ = into.e("b==true ? 67 : 7");
+    final Expression ¢ = into.e("b==true ? 67 : 7");
     new Recurser<>(¢, 0).postVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.BOOLEAN_LITERAL)
         ((BooleanLiteral) λ.getRoot()).setBooleanValue(false);
@@ -80,7 +79,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_19() {
-    @NotNull final Expression ¢ = into.e("56+87*234+21l");
+    final Expression ¢ = into.e("56+87*234+21l");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");
@@ -117,7 +116,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_9() {
-    @NotNull final Expression ¢ = into.e("56");
+    final Expression ¢ = into.e("56");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");

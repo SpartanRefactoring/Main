@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,13 +20,13 @@ public final class SuperConstructorInvocationRemover extends CarefulTipper<Super
     return "Remove vacuous 'super()' invocation";
   }
 
-  @Override public boolean prerequisite(@NotNull final SuperConstructorInvocation ¢) {
+  @Override public boolean prerequisite(final SuperConstructorInvocation ¢) {
     return ¢.getExpression() == null && ¢.arguments().isEmpty();
   }
 
-  @NotNull @Override public Fragment tip(@NotNull final SuperConstructorInvocation i) {
-    return new Fragment(description(i), i, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @Override public Tip tip(final SuperConstructorInvocation i) {
+    return new Tip(description(i), i, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(i, g);
       }
     };

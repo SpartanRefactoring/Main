@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -32,64 +31,11 @@ public final class Inliner2 {
   /** Occurrences of {@link #what} in {@link #where} */
   public final Collection<? extends SimpleName> spots;
 
-  private Inliner2(final SimpleName what, @NotNull final Expression replacement, final List<? extends ASTNode> where) {
-    this.replacement = protect(replacement);
-    spots = collect.usesOf(this.what = what).in(this.where = where);
-  }
-
   /** Factory method: FAPI factory chain
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 [[SuppressWarningsSpartan]] */
   public static Of of(final SimpleName of) {
     return by -> location -> new Inliner2(of, by, location);
-  }
-
-  private static boolean isLeftValue(@NotNull final SimpleName ¢) {
-    @NotNull final ASTNode $ = parent(¢);
-    return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
-  }
-
-  public static int removalSaving(@NotNull final VariableDeclarationFragment f) {
-    @NotNull final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final int $ = metrics.size(parent);
-    if (parent.fragments().size() <= 1)
-      return $;
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    newParent.fragments().remove(parent.fragments().indexOf(f));
-    return $ - metrics.size(newParent);
-  }
-
-  public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
-    if (!iz.arrayInitializer(initializer))
-      return initializer;
-    final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType(az.arrayType(copy.of(type(currentStatement))));
-    // TODO causes IllsegalArgumentException (--om)
-    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
-    return $;
-  }
-
-  public static boolean leftSide(@NotNull final Statement nextStatement, final String id) {
-    @NotNull final Bool $ = new Bool();
-    // noinspection SameReturnValue
-    nextStatement.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
-          $.inner = true;
-        return true;
-      }
-    });
-    return $.inner;
-  }
-
-  public static Expression protect(@NotNull final Expression ¢) {
-    switch (¢.getNodeType()) {
-      case ARRAY_CREATION:
-      case CAST_EXPRESSION:
-        return subject.operand(¢).parenthesis();
-      default:
-        return ¢;
-    }
   }
 
   public boolean ok() {
@@ -105,10 +51,20 @@ public final class Inliner2 {
     }
   }
 
-  @NotNull public ASTRewrite fire(@NotNull final ASTRewrite $, final TextEditGroup g) {
+  private static boolean isLeftValue(final SimpleName ¢) {
+    final ASTNode $ = parent(¢);
+    return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
+  }
+
+  public ASTRewrite fire(final ASTRewrite $, final TextEditGroup g) {
     for (final SimpleName ¢ : spots)
       $.replace(¢, copy.of(replacement), g);
     return $;
+  }
+
+  private Inliner2(final SimpleName what, final Expression replacement, final List<? extends ASTNode> where) {
+    this.replacement = protect(replacement);
+    spots = collect.usesOf(this.what = what).in(this.where = where);
   }
 
   /** Computes the number of AST nodes added as a result of the replacement
@@ -137,17 +93,50 @@ public final class Inliner2 {
     return sideEffects.sink(replacement);
   }
 
+  public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+    if (!iz.arrayInitializer(initializer))
+      return initializer;
+    final ArrayCreation $ = initializer.getAST().newArrayCreation();
+    $.setType(az.arrayType(copy.of(type(currentStatement))));
+    // TODO: causes IllsegalArgumentException (--om)
+    $.setInitializer(copy.of(az.arrayInitializer(initializer)));
+    return $;
+  }
+
+  public static boolean leftSide(final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
+    // noinspection SameReturnValue
+    nextStatement.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final Assignment ¢) {
+        if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
+          $.inner = true;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
+  public static Expression protect(final Expression ¢) {
+    switch (¢.getNodeType()) {
+      case ARRAY_CREATION:
+      case CAST_EXPRESSION:
+        return subject.operand(¢).parenthesis();
+      default:
+        return ¢;
+    }
+  }
+
   /** FAPI factory chain
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-16 */
   public interface Of {
-    @NotNull By by(Expression by);
+    By by(Expression by);
   }
 
   /** FAPI factory chain
    * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
    * @since 2017-03-16 */
   public interface By {
-    @NotNull Inliner2 in(List<? extends ASTNode> ns);
+    Inliner2 in(List<? extends ASTNode> ns);
   }
 }
