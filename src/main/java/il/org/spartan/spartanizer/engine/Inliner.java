@@ -144,8 +144,8 @@ public final class Inliner {
       return metrics.size(¢) + uses(¢).size() * (metrics.size(get()) - 1);
     }
 
-    @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      Stream.of(ns).forEach(this::inlineIntoSingleton);
+    @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ¢) {
+      Stream.of(¢).forEach(this::inlineIntoSingleton);
     }
 
     private void inlineIntoSingleton(@NotNull final Wrapper<ASTNode> n) {
