@@ -33,18 +33,6 @@ public interface Example {
   @FunctionalInterface
   interface Ignores extends Example, Supplier<String> { /**/ }
 
-  interface Demo {
-    Consumer<String> c = λ -> {/**/};
-    Consumer<Consumer<String>> cc = λ -> {/**/};
-    Consumer<Consumer<Consumer<String>>> ccc = λ -> {/**/};
-    Supplier<String> s = () -> "s";
-    Supplier<Supplier<String>> ss = () -> () -> "ss";
-    Supplier<Supplier<Supplier<String>>> sss = () -> () -> () -> "AS";
-    Supplier<Consumer<String>> sc = () -> λ -> {/**/};
-    Consumer<Supplier<String>> cs = λ -> {/**/};
-  }
-
-  // TODO Yossi: decide whether to move this to {@link Example} --or
   static Ignores ignores(final String code) {
     return () -> code;
   }

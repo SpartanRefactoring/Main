@@ -5,6 +5,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.range.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
@@ -34,5 +35,12 @@ public interface lisp2 extends lisp {
       lisp.replace($, t, i2);
     }
     return $;
+  }
+
+  @SuppressWarnings("boxing") static int index(final int i, @NotNull final int... is) {
+    for (final Integer $ : range.from(0).to(is.length))
+      if (is[$] == i)
+        return $;
+    return -1;
   }
 }

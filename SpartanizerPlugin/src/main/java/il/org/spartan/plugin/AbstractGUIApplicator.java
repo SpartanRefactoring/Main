@@ -251,7 +251,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   /** @param m marker which represents the range to apply the tipper within
    * @param n the node which needs to be within the range of {@code m}
-   * @return whetherthe node is within range */
+   * @return whether the node is within range */
   public final boolean inRange(@Nullable final IMarker m, @NotNull final ASTNode n) {
     return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
   }
@@ -325,7 +325,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** Determines if the node is outside of the selected text.
-   * @return whetherthe node is not inside selection. If there is no selection
+   * @return whether the node is not inside selection. If there is no selection
    *         at all will return false. */
   private boolean isNotSelected(@NotNull final ASTNode ¢) {
     return !isSelected(¢.getStartPosition());

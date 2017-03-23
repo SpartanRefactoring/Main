@@ -145,7 +145,7 @@ public final class Inliner {
     }
 
     @SuppressWarnings("unchecked") private void inlineinto(final Wrapper<ASTNode>... ns) {
-      Stream.of(ns).forEach(λ -> inlineIntoSingleton(λ));
+      Stream.of(ns).forEach(this::inlineIntoSingleton);
     }
 
     private void inlineIntoSingleton(@NotNull final Wrapper<ASTNode> n) {
