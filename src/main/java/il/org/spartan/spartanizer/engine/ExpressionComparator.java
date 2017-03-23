@@ -120,7 +120,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
 
   /** Sorts the {@link Expression} list
    * @param xs an {@link Expression} list to sort
-   * @return whetherthe list was modified */
+   * @return whether the list was modified */
   public boolean sort(@NotNull final List<Expression> xs) {
     boolean $ = false;
     // Bubble sort

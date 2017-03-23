@@ -58,7 +58,7 @@ public final class JavaTypeNameParser {
    * contained within the other, or it is an abbreviation of the type name (For
    * example: {@code sb} is a generic variation of {@link StringBuilder})
    * @param variableName the name of the variable
-   * @return whetherthe variable name is a generic variation of the type name,
+   * @return whether the variable name is a generic variation of the type name,
    *         false otherwise */
   public boolean isGenericVariation(@NotNull final String variableName) {
     return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName)
@@ -67,7 +67,7 @@ public final class JavaTypeNameParser {
 
   /** Shorthand for n.equals(this.shortName())
    * @param subject JD
-   * @return whetherthe provided name equals the type's short name */
+   * @return whether the provided name equals the type's short name */
   public boolean isShort(@NotNull final String ¢) {
     return ¢.equals(shortName());
   }
