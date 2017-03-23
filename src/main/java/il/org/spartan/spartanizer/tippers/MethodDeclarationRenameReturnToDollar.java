@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,15 +28,15 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     implements TipperCategory.Dollarization {
   private static final long serialVersionUID = 5418563334058087855L;
 
-  @Override public String description(final MethodDeclaration ¢) {
+  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip tip(@NotNull final MethodDeclaration d, @Nullable final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    final SimpleName $ = new Conservative(d).selectReturnVariable();
+    @Nullable final SimpleName $ = new Conservative(d).selectReturnVariable();
     if ($ == null)
       return null;
     if (exclude != null)
@@ -53,10 +54,10 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
 }
 
 abstract class AbstractRenamePolicy {
-  private static List<ReturnStatement> prune(final List<ReturnStatement> $) {
+  private static List<ReturnStatement> prune(@NotNull final List<ReturnStatement> $) {
     if ($.isEmpty())
       return null;
-    for (final Iterator<ReturnStatement> i = $.iterator(); i.hasNext();) {
+    for (@NotNull final Iterator<ReturnStatement> i = $.iterator(); i.hasNext();) {
       final ReturnStatement r = i.next();
       // Empty returns stop the search. Something wrong is going on.
       if (r.getExpression() == null)
@@ -68,18 +69,18 @@ abstract class AbstractRenamePolicy {
   }
 
   private final MethodDeclaration inner;
-  final List<SimpleName> localVariables;
-  final List<SingleVariableDeclaration> parameters;
-  final List<ReturnStatement> returnStatements;
+  @NotNull final List<SimpleName> localVariables;
+  @NotNull final List<SingleVariableDeclaration> parameters;
+  @Nullable final List<ReturnStatement> returnStatements;
 
   AbstractRenamePolicy(final MethodDeclaration inner) {
-    final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
+    @NotNull final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
     localVariables = explorer.localVariables();
     parameters = step.parameters(inner);
     returnStatements = prune(explorer.returnStatements());
   }
 
-  abstract SimpleName innerSelectReturnVariable();
+  @Nullable abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
@@ -88,23 +89,24 @@ abstract class AbstractRenamePolicy {
 }
 
 class Aggressive extends AbstractRenamePolicy {
-  private static SimpleName bestCandidate(final Collection<SimpleName> ns, final Collection<ReturnStatement> ss) {
+  private static SimpleName bestCandidate(@NotNull final Collection<SimpleName> ns, @NotNull final Collection<ReturnStatement> ss) {
     final int $ = bestScore(ns, ss);
     return $ <= 0 ? null : ns.stream().filter(λ -> $ == score(λ, ss)).findFirst().filter(λ -> noRivals(λ, ns, ss)).orElse(null);
   }
 
-  private static int bestScore(final Iterable<SimpleName> ns, final Collection<ReturnStatement> ss) {
+  private static int bestScore(@NotNull final Iterable<SimpleName> ns, @NotNull final Collection<ReturnStatement> ss) {
     int $ = 0;
     for (final SimpleName ¢ : ns)
       $ = Math.max($, score(¢, ss));
     return $;
   }
 
-  private static boolean noRivals(final SimpleName candidate, final Collection<SimpleName> ns, final Collection<ReturnStatement> ss) {
+  private static boolean noRivals(final SimpleName candidate, @NotNull final Collection<SimpleName> ns,
+      @NotNull final Collection<ReturnStatement> ss) {
     return ns.stream().allMatch(λ -> λ == candidate || score(λ, ss) < score(candidate, ss));
   }
 
-  @SuppressWarnings("boxing") private static int score(final SimpleName n, final Collection<ReturnStatement> ss) {
+  @SuppressWarnings("boxing") private static int score(final SimpleName n, @NotNull final Collection<ReturnStatement> ss) {
     return ss.stream().map(λ -> collect.BOTH_LEXICAL.of(n).in(λ).size()).reduce((x, y) -> x + y).get();
   }
 
@@ -112,7 +114,7 @@ class Aggressive extends AbstractRenamePolicy {
     super(inner);
   }
 
-  @Override SimpleName innerSelectReturnVariable() {
+  @Override @Nullable SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
 }
@@ -123,7 +125,7 @@ class Conservative extends AbstractRenamePolicy {
   }
 
   @Override SimpleName innerSelectReturnVariable() {
-    for (final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
+    for (@NotNull final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
       if (unused($.next()))
         $.remove();
     return !localVariables.isEmpty() ? first(localVariables)

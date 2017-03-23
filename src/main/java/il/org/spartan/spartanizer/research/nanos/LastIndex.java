@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -26,11 +27,11 @@ public final class LastIndex extends NanoPatternTipper<InfixExpression> {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
 
-  @Override public Tip pattern(final InfixExpression ¢) {
+  @Override @Nullable public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override public Category category() {
+  @Override @NotNull public Category category() {
     return Category.Functional;
   }
 

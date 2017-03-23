@@ -5,16 +5,53 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** See GitHub issue with thus numbered
+import il.org.spartan.spartanizer.tippers.*;
+
+/** See GitHub issue with thus numbered unit test for
+ * {@link ForEmptyBlockToEmptyStatement},
+ * {@link WhileEmptyBlockToEmptyStatement} and
+ * {@link DoWhileEmptyBlockToEmptyStatement}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@Ignore
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1125 {
-  @Test public void a() {
+  @Test public void forLoop() {
     trimmingOf("for(x();y();z()){}")//
         .gives("for(x();y();z());")//
+        .stays()//
+    ;
+  }
+
+  @Test public void forLoop2() {
+    trimmingOf("for(x();y();z()){f();g();}")//
+        .stays()//
+    ;
+  }
+
+  @Test public void whileLoop() {
+    trimmingOf("while(x()){}")//
+        .gives("while(x());")//
+        .stays()//
+    ;
+  }
+
+  @Test public void whileLoop2() {
+    trimmingOf("while(x()){f();g();}")//
+        .stays()//
+    ;
+  }
+
+  @Test public void doLoop() {
+    trimmingOf("do{}while(x());")//
+        .gives("do;while(x());")//
+        .stays()//
+    ;
+  }
+
+  @Test public void doLoop2() {
+    trimmingOf("do{f();g();}while(x());")//
         .stays()//
     ;
   }

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -21,7 +22,7 @@ public abstract class IndicatorMetricalAnalyzer extends Analyzer<List<Int>> {
     getSafe(histogram, measure.commands(before)).add(Int.valueOf(as.bit(metric(before) >= metric(after))));
   }
 
-  private static Collection<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
+  private static Collection<Int> getSafe(@NotNull final Map<Integer, List<Int>> m, final Integer i) {
     m.putIfAbsent(i, new ArrayList<>());
     return m.get(i);
   }

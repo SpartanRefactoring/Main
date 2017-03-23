@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -24,26 +25,26 @@ public enum flatten {
    * @param $ JD
    * @return a duplicate of the argument, with the a flattened list of
    *         operands. */
-  public static InfixExpression of(final InfixExpression $) {
+  public static InfixExpression of(@NotNull final InfixExpression $) {
     assert $ != null;
     final Operator o = $.getOperator();
     assert o != null;
     return subject.operands(flatten.into(o, hop.operands($), new ArrayList<>())).to(copy.of($).getOperator());
   }
 
-  private static List<Expression> add(final Expression x, final List<Expression> $) {
+  @NotNull private static List<Expression> add(final Expression x, @NotNull final List<Expression> $) {
     $.add(x);
     return $;
   }
 
-  private static List<Expression> into(final Operator o, final Expression x, final List<Expression> $) {
-    final Expression core = core(x);
-    final InfixExpression inner = az.infixExpression(core);
+  @NotNull private static List<Expression> into(final Operator o, final Expression x, @NotNull final List<Expression> $) {
+    @Nullable final Expression core = core(x);
+    @Nullable final InfixExpression inner = az.infixExpression(core);
     return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? x : core, $)
         : flatten.into(o, copy.adjust(o, hop.operands(inner)), $);
   }
 
-  private static List<Expression> into(final Operator o, final Iterable<Expression> xs, final List<Expression> $) {
+  @NotNull private static List<Expression> into(final Operator o, @NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
     xs.forEach(λ -> into(o, λ, $));
     return $;
   }

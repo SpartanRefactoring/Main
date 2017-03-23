@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** There's also {@link Infix.SafeReference} which catches the same
+/** There's also {@link Infix.SafeNavigation} which catches the same
  * pattern @author orimarco <tt>marcovitch.ori@gmail.com</tt>
  * @since 2017-01-03 */
 public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {

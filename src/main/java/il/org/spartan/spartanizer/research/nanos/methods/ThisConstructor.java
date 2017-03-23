@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -14,5 +15,9 @@ public class ThisConstructor extends JavadocMarkerNanoPattern {
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     return iz.constructor(¢)//
         && iz.constructorInvocation(onlyStatement(¢));
+  }
+
+  @Override @NotNull public String nanoName() {
+    return "This";
   }
 }

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,12 +17,12 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     implements TipperCategory.EmptyCycles {
   private static final long serialVersionUID = -5409462387889550538L;
 
-  @Override public ASTNode replacement(final ConditionalExpression ¢) {
+  @Override public ASTNode replacement(@NotNull final ConditionalExpression ¢) {
     return copy.of(¢.getElseExpression());
   }
 
-  @Override protected boolean prerequisite(final ConditionalExpression x) {
-    final InfixExpression $ = az.infixExpression(x.getExpression());
+  @Override protected boolean prerequisite(@NotNull final ConditionalExpression x) {
+    @Nullable final InfixExpression $ = az.infixExpression(x.getExpression());
     if (!iz.infixEquals($))
       return false;
     final Expression left = $.getLeftOperand();
@@ -37,7 +38,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     return wizard.same(elze, left) || wizard.same(elze, right);
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
+  @Override @NotNull public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate ternary expression that evaluates to the same value";
   }
 }

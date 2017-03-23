@@ -10,6 +10,7 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -73,40 +74,40 @@ public final class MethodExplorerTest {
   }
 
   @Test public void returnStatementsExists() {
-    final MethodDeclaration d = into.d("int f() { return a; }");
-    final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
+    @NotNull final MethodDeclaration d = into.d("int f() { return a; }");
+    @NotNull final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
     assert a != null;
     azzert.that(a.size(), is(1));
   }
 
   @Test public void returnStatementsExistsNestedType() {
-    final MethodDeclaration d = into.d("int f() { class B {}; return a; }");
-    final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
+    @NotNull final MethodDeclaration d = into.d("int f() { class B {}; return a; }");
+    @NotNull final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
     assert a != null;
     azzert.that(a.size(), is(1));
   }
 
   @Test public void returnStatementsExistsNestedTypeAnnotation() {
-    final MethodDeclaration d = into.d("  boolean f() {\n" + //
+    @NotNull final MethodDeclaration d = into.d("  boolean f() {\n" + //
         "    @interface C{static class X{boolean f(){return f();}}}" + //
         "    if (f())\n" + //
         "      return f();\n" + //
         "    return new B().g();\n" + //
         "  }"); //
-    final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
+    @NotNull final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
     assert a != null;
     azzert.that(a.size(), is(2));
   }
 
   @Test public void returnStatementsExistsNestedTypeWithReturn() {
-    final MethodDeclaration d = into.d("int f() { class B {int g() { return c; } }; return a; }");
-    final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
+    @NotNull final MethodDeclaration d = into.d("int f() { class B {int g() { return c; } }; return a; }");
+    @NotNull final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
     assert a != null;
     azzert.that(a.size(), is(1));
   }
 
   @Test public void returnStatementsExistsNestedTypeWithReturn1() {
-    final MethodDeclaration d = into.d("  boolean f() {\n" + //
+    @NotNull final MethodDeclaration d = into.d("  boolean f() {\n" + //
         "    if (f())\n" + //
         "      return f();\n" + //
         "    class B {\n" + //
@@ -116,14 +117,14 @@ public final class MethodExplorerTest {
         "    }\n" + //
         "    return new B().g();\n" + //
         "  }"); //
-    final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
+    @NotNull final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
     assert a != null;
     azzert.that(a.size(), is(2));
   }
 
   @Test public void returnStatementsTwoReturns() {
-    final MethodDeclaration d = into.d("int f() { if (b) ; else return c; return a; }");
-    final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
+    @NotNull final MethodDeclaration d = into.d("int f() { if (b) ; else return c; return a; }");
+    @NotNull final List<ReturnStatement> a = new MethodExplorer(d).returnStatements();
     assert a != null;
     azzert.that(a.size(), is(2));
   }

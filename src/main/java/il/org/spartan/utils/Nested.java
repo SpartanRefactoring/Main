@@ -1,33 +1,29 @@
 package il.org.spartan.utils;
 
+import java.util.*;
 import java.util.stream.*;
 
 import org.jetbrains.annotations.*;
 
-public interface Nested<@¢ T> {
-  default Stream<T> ancestors() {
-    return Stream.empty();
+public interface Nested<@¢ T> extends Streamer<T> {
+  interface Root<@¢ T> extends Nested<T>, Streamer.Atomic<T> {
+    //
   }
 
-  @Nullable default T self() {
-    return null;
+  @Override @NotNull default Compounder<T> compounder() {
+    return (self, others) -> {
+      Stream<T> $ = Stream.empty();
+      for (@NotNull final Streamer<T> ¢ : others)
+        $ = Stream.concat(¢.stream(), streamSelf());
+      return $;
+    };
   }
 
-  @NotNull default Stream<T> streamSelf() {
-    return self() == null ? Stream.empty() : Stream.of(self());
-  }
-
-  interface Root<@¢ T> extends Nested<T> {
-    @Override @NotNull default Stream<T> ancestors() {
-      return streamSelf();
-    }
-  }
-
-  interface Compound<@¢ T> extends Nested<T> {
+  interface Compound<@¢ T> extends Nested<T>, Streamer.Compound<T> {
     @NotNull Nested<T> parent();
 
-    @Override default Stream<T> ancestors() {
-      return Stream.concat(parent().ancestors(), streamSelf());
+    @Override @NotNull default Iterable<Streamer<T>> next() {
+      return Arrays.asList(parent());
     }
   }
 }

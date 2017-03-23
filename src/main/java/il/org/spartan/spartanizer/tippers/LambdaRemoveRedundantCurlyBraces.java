@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -23,16 +24,16 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -574482795207645961L;
 
-  @Override public Tip tip(final LambdaExpression x) {
+  @Override @NotNull public Tip tip(@NotNull final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, replacement(x, r, g), g);
       }
     };
   }
 
-  public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
+  public static ASTNode replacement(@NotNull final LambdaExpression x, @NotNull final ASTRewrite r, final TextEditGroup g) {
     if (onlyOne(statements(body(x))) == null)
       return null;
     final Statement s = first(statements(x));
@@ -44,7 +45,7 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     return $;
   }
 
-  @Override public String description(final LambdaExpression ¢) {
+  @Override @NotNull public String description(final LambdaExpression ¢) {
     return "remove curly braces from " + trivia.gist(¢);
   }
 

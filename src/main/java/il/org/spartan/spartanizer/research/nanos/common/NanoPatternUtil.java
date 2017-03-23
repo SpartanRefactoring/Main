@@ -7,7 +7,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
@@ -19,11 +21,11 @@ public interface NanoPatternUtil {
         || anyTips(NanoPatternsConfiguration.skipped, ¢);
   }
 
-  static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
+  static boolean anyTips(@NotNull final Collection<JavadocMarkerNanoPattern> ps, @Nullable final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 
-  static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
+  static <N extends ASTNode> boolean anyTips(@NotNull final Collection<UserDefinedTipper<N>> ts, @Nullable final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
 
@@ -43,13 +45,7 @@ public interface NanoPatternUtil {
 
   UserDefinedTipper<Expression> nullComparison = patternTipper("$X == null", "", "");
   UserDefinedTipper<Expression> nullComparisonOr = patternTipper("$X1 == null || $X2", "", "");
-  Collection<UserDefinedTipper<Statement>> defaultReturns = new ArrayList<UserDefinedTipper<Statement>>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("return;", "", ""));
-      add(patternTipper("return null;", "", ""));
-    }
-  };
+  Collection<UserDefinedTipper<Statement>> defaultReturns = as.list(patternTipper("return;", "", ""), patternTipper("return null;", "", ""));
   UserDefinedTipper<Statement> returns = patternTipper("return $X;", "", "");
 
   static boolean returnsDefault(final Statement ¢) {
@@ -60,9 +56,9 @@ public interface NanoPatternUtil {
     return returns.getMatching(¢, "$X");
   }
 
-  static Iterable<String> nullCheckees(final IfStatement ¢) {
-    Expression e = expression(¢);
-    final Collection<String> $ = new ArrayList<>();
+  @NotNull static Iterable<String> nullCheckees(final IfStatement ¢) {
+    @NotNull Expression e = expression(¢);
+    @NotNull final Collection<String> $ = new ArrayList<>();
     while (nullComparisonIncremental(e)) {
       $.add(left(az.infixExpression(left(az.infixExpression(e)))) + "");
       e = right(az.infixExpression(e));
