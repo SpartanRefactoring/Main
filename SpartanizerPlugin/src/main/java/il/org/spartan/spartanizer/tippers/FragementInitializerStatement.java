@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class FragementInitializerStatement extends FragmentTipper {
-  @Override public boolean prerequisite(VariableDeclarationFragment f) {
+  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
     return super.prerequisite(f) && initializer() != null;
   }
 
