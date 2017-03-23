@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -16,13 +17,13 @@ public class Issue0871 {
   }
 
   @Test public void test1() {
-    final ParameterInt i = new ParameterInt();
+    @NotNull final ParameterInt i = new ParameterInt();
     i.set(3);
     azzert.that(i.intValue(), is(3));
   }
 
   @Test(expected = IllegalArgumentException.class) public void test2() {
-    final ParameterInt i = new ParameterInt();
+    @NotNull final ParameterInt i = new ParameterInt();
     i.set(3);
     azzert.that(i.intValue(), is(3));
     i.set(4);
@@ -33,7 +34,7 @@ public class Issue0871 {
   }
 
   @Test public void test4() {
-    final ParameterInt i = new ParameterInt();
+    @NotNull final ParameterInt i = new ParameterInt();
     i.set(3);
     assert i.hasValue();
   }

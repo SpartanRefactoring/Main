@@ -5,7 +5,9 @@ import static java.util.stream.Collectors.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.classifier.patterns.*;
@@ -22,20 +24,10 @@ public class Classifier extends ASTVisitor {
   private final Collection<ASTNode> forLoopsList = new ArrayList<>();
   private int forLoopsAmount;
   private static final Scanner input = new Scanner(System.in);
-  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<Tipper<EnhancedForStatement>>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(new ForEach());
-    }
-  };
-  private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<Tipper<ForStatement>>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(new CopyArray());
-      add(new ForEachEnhanced());
-      add(new InitArray());
-    }
-  };
+  private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = new ArrayList<>(
+      as.list(new ForEach()));
+  private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<>(
+      as.list(new CopyArray(), new ForEachEnhanced(), new InitArray()));
   private Map<String, Int> patterns;
 
   @Override public boolean visit(final ForStatement node) {
@@ -50,7 +42,7 @@ public class Classifier extends ASTVisitor {
     return super.visit(node);
   }
 
-  public void analyze(final ASTNode ¢) {
+  public void analyze(@NotNull final ASTNode ¢) {
     ¢.accept(this);
     forLoopsAmount = forLoopsList.size();
     patterns = filterAllIntrestingPatterns();
@@ -67,7 +59,7 @@ public class Classifier extends ASTVisitor {
   }
 
   private void classifyPatterns() {
-    for (final String k : patterns.keySet()) {
+    for (@NotNull final String k : patterns.keySet()) {
       System.out.println(k);
       System.out.println("[Matched " + patterns.get(k).inner + " times]");
       if (!classify(k))
@@ -81,13 +73,13 @@ public class Classifier extends ASTVisitor {
     System.out.println("Lets classify them together!");
   }
 
-  private Map<String, Int> filterAllIntrestingPatterns() {
-    final Map<String, Int> $ = new HashMap<>();
+  @NotNull private Map<String, Int> filterAllIntrestingPatterns() {
+    @NotNull final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       for (final ASTNode ¢ : forLoopsList) {
-        final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
+        @NotNull final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
+        @NotNull final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
@@ -111,7 +103,7 @@ public class Classifier extends ASTVisitor {
   }
 
   /** @param ¢ to classify */
-  private boolean classify(final String ¢) {
+  private boolean classify(@NotNull final String ¢) {
     final String code = format.code(generalize.code(¢));
     System.out.println(code);
     final String classification = input.nextLine();
@@ -123,7 +115,7 @@ public class Classifier extends ASTVisitor {
     return true;
   }
 
-  private static String tipperize(final String code, final String classification) {
+  @NotNull private static String tipperize(@NotNull final String code, final String classification) {
     return "add(TipperFactory.patternTipper(\"" + format.code(generalize.code(code)).replace("\n", "").replace("\r", "") + "\", \"" + classification
         + "();\", \"" + classification + "\"));";
   }

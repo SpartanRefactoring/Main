@@ -1,8 +1,10 @@
 package il.org.spartan.spartanizer.annotation;
 
-/** @TODO: real documentation here.
+import org.jetbrains.annotations.*;
+
+/** @TODO real documentation here.
  * @author Alex Kopakzon
  * @since 2016 */
 public @interface NestedENV {
-  String[] value();
+  @NotNull String[] value();
 }

@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
@@ -23,7 +24,7 @@ public class ASTTrotter extends ASTVisitor {
       dispatch = (List<Rule<? extends ASTNode, ?>>[]) new List<?>[nodeTypesCount()];
   }
 
-  <N extends ASTNode, T> ASTTrotter hookClassOnRule(final Class<N> c, final Rule<N, T> r) {
+  @NotNull <N extends ASTNode, T> ASTTrotter hookClassOnRule(final Class<N> c, final Rule<N, T> r) {
     init();
     final Integer nodeType = wizard.classToNodeType.get(c);
     assert nodeType != null : fault.specifically("Unrecongized class", c);
@@ -35,12 +36,12 @@ public class ASTTrotter extends ASTVisitor {
     return folding;
   }
 
-  @SuppressWarnings("unchecked") private <N extends ASTNode, T> Collection<Rule<N, T>> get(final N ¢) {
+  @SuppressWarnings("unchecked") private <N extends ASTNode, T> Collection<Rule<N, T>> get(@NotNull final N ¢) {
     @SuppressWarnings("rawtypes") final Collection $ = get(¢.getNodeType());
     return $;
   }
 
-  private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
+  @NotNull private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
     return dispatch[¢] = dispatch[¢] != null ? dispatch[¢] : new ArrayList<>();
   }
 
@@ -110,9 +111,9 @@ public class ASTTrotter extends ASTVisitor {
   private int interesting;
   private int total;
 
-  public <N extends ASTNode> Hookable<N> on(final Class<N> c) {
+  @NotNull public <N extends ASTNode> Hookable<N> on(final Class<N> c) {
     return new Hookable<N>() {
-      @Override public Hookable<N> hook(final Rule<N, Object> ¢) {
+      @Override @NotNull public Hookable<N> hook(final Rule<N, Object> ¢) {
         hookClassOnRule(c, ¢);
         return this;
       }
@@ -121,5 +122,5 @@ public class ASTTrotter extends ASTVisitor {
 }
 
 interface Hookable<T> {
-  Hookable<T> hook(Rule<T, Object> o);
+  @NotNull Hookable<T> hook(Rule<T, Object> o);
 }

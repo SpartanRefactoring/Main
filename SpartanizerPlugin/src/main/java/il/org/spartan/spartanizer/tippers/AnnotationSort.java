@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -47,7 +48,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
 
   private static int rankAnnotation(final String annotationName) {
     int $ = 0;
-    for (final HashSet<String> ¢ : rankTable) {
+    for (@NotNull final HashSet<String> ¢ : rankTable) {
       ++$;
       if (¢.contains(annotationName))
         return $;
@@ -58,23 +59,23 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
   private static final Comparator<IExtendedModifier> comp = (m1, m2) -> rankAnnotation(m1) - rankAnnotation(m2) == 0 ? (m1 + "").compareTo(m2 + "")
       : rankAnnotation(m1) - rankAnnotation(m2);
 
-  public static int compare(final String annotation1, final String annotation2) {
+  public static int compare(@NotNull final String annotation1, @NotNull final String annotation2) {
     return rankAnnotation(annotation1) - rankAnnotation(annotation2) == 0 ? annotation1.compareTo(annotation2)
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
 
-  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
+  private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
     return ¢.stream().sorted(comp).collect(toList());
   }
 
-  @Override public Tip tip(final N n) {
+  @Override @Nullable public Tip tip(@NotNull final N n) {
     final List<Annotation> $ = extract.annotations(n);
     if ($ == null || $.isEmpty())
       return null;
-    final List<Annotation> myCopy = new ArrayList<>($);
+    @NotNull final List<Annotation> myCopy = new ArrayList<>($);
     myCopy.sort(comp);
     return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < $.size(); ++i) {
           final ASTNode oldNode = $.get(i), newNode = myCopy.get(i);
@@ -85,7 +86,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
     };
   }
 
-  @Override public String description(final N ¢) {
+  @Override @NotNull public String description(@NotNull final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
   }

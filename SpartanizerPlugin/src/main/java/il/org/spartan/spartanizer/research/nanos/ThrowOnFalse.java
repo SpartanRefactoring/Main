@@ -21,11 +21,11 @@ public final class ThrowOnFalse extends NanoPatternTipper<IfStatement> {
   private static final List<UserDefinedTipper<IfStatement>> tippers = as.list(//
       patternTipper("if($X1) throw $X2;", "holds(!($X1)).orThrow(()->$X2);", "IfThrow pattern. Go fluent!"));
 
-  @Override public boolean canTip(@NotNull final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
-  @Override @Nullable public Tip pattern(@NotNull final IfStatement ¢) {
+  @Override @Nullable public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

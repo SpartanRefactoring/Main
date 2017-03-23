@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNode<S> {
   private static final long serialVersionUID = 648254692142989542L;
   protected Statement body;
-  protected Block block;
+  @Nullable protected Block block;
   protected List<Statement> statements;
   protected Statement lastStatement;
   protected Expression updater;

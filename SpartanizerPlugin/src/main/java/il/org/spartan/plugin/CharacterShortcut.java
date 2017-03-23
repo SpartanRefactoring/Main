@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
 
@@ -32,14 +33,14 @@ public class CharacterShortcut extends AbstractHandler {
    *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Override public Object execute(final ExecutionEvent e) {
+  @Override @Nullable public Object execute(@Nullable final ExecutionEvent e) {
     if (e == null)
       return null;
     final Object $ = e.getTrigger();
     if (!($ instanceof Event))
       return null;
-    final ISelection is = Selection.Util.getSelection();
-    final Selection s = Selection.Util.getCurrentCompilationUnit();
+    @NotNull final ISelection is = Selection.Util.getSelection();
+    @Nullable final Selection s = Selection.Util.getCurrentCompilationUnit();
     return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
         : insertCharacter(shortcutsMap.get(((Event) $).character), s.setTextSelection((ITextSelection) is));
   }
@@ -49,19 +50,19 @@ public class CharacterShortcut extends AbstractHandler {
    * @param c the character to write in the file
    * @param s the file and text location selected
    * @return null [[SuppressWarningsSpartan]] */
-  private static Object insertCharacter(final char c, final Selection s) {
+  @Nullable private static Object insertCharacter(final char c, @Nullable final Selection s) {
     if (s == null || s.isEmpty() || s.textSelection == null)
       return null;
     final List<ICompilationUnit> us = s.getCompilationUnits();
     if (us == null || us.size() != 1)
       return null;
     final ICompilationUnit u = us.get(0);
-    final MultiTextEdit m = new MultiTextEdit();
+    @NotNull final MultiTextEdit m = new MultiTextEdit();
     m.addChild(new DeleteEdit(s.textSelection.getOffset(), s.textSelection.getLength()));
     m.addChild(new InsertEdit(s.textSelection.getOffset(), c + ""));
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
-    } catch (final JavaModelException x) {
+    } catch (@NotNull final JavaModelException x) {
       monitor.log(x);
       return null;
     }
@@ -73,10 +74,10 @@ public class CharacterShortcut extends AbstractHandler {
    * @param i text selection required location
    * @return null */
   private static Object fixSelection(final int i) {
-    final IEditorPart p = Selection.Util.getEditorPart();
+    @Nullable final IEditorPart p = Selection.Util.getEditorPart();
     if (!(p instanceof ITextEditor))
       return null;
-    final ITextEditor e = (ITextEditor) p;
+    @NotNull final ITextEditor e = (ITextEditor) p;
     e.getSelectionProvider().setSelection(new TextSelection(i, 0));
     return null;
   }

@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -76,7 +77,7 @@ public class switchBranch {
   /** @param ¢
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
-  private boolean compare(final switchBranch ¢) {
+  private boolean compare(@NotNull final switchBranch ¢) {
     if (hasDefault())
       return false;
     if (¢.hasDefault())
@@ -90,33 +91,33 @@ public class switchBranch {
     return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
   }
 
-  public boolean compareTo(final switchBranch ¢) {
+  public boolean compareTo(@NotNull final switchBranch ¢) {
     final boolean $ = compare(¢);
     return $ != ¢.compare(this) ? $ : (first(cases) + "").compareTo(first(¢.cases) + "") < 0;
   }
 
-  private void addAll(final Collection<Statement> ¢) {
+  private void addAll(@NotNull final Collection<Statement> ¢) {
     ¢.addAll(cases.stream().map(copy::of).collect(toList()));
     ¢.addAll(statements.stream().map(copy::of).collect(toList()));
   }
 
-  private static void addAll(final Collection<Statement> ss, final Iterable<switchBranch> bs) {
+  private static void addAll(@NotNull final Collection<Statement> ss, @NotNull final Iterable<switchBranch> bs) {
     bs.forEach(λ -> λ.addAll(ss));
   }
 
-  public static SwitchStatement makeSwitchStatement(final Iterable<switchBranch> bs, final Expression x, final AST t) {
+  public static SwitchStatement makeSwitchStatement(@NotNull final Iterable<switchBranch> bs, final Expression x, @NotNull final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
     return $;
   }
 
-  @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
-    final List<Statement> l = step.statements(n);
+  @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
+    @NotNull final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
-    List<SwitchCase> c = null;
-    List<Statement> s = null;
-    final List<switchBranch> $ = new ArrayList<>();
+    @Nullable List<SwitchCase> c = null;
+    @Nullable List<Statement> s = null;
+    @NotNull final List<switchBranch> $ = new ArrayList<>();
     boolean nextBranch = true;
     for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
       if (nextBranch) {
@@ -146,7 +147,7 @@ public class switchBranch {
     return $;
   }
 
-  public boolean hasSameBody(final switchBranch ¢) {
+  public boolean hasSameBody(@NotNull final switchBranch ¢) {
     return wizard.same(functionalCommands(), ¢.functionalCommands());
   }
 
@@ -161,12 +162,12 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
 
-  public static Statement removeBreakSequencer(final Statement s) {
+  @Nullable public static Statement removeBreakSequencer(@NotNull final Statement s) {
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST $ = s.getAST();
     if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
+      @Nullable final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
       f.setExpression(copy.of(step.expression(t)));
       f.setThenStatement(removeBreakSequencer(step.then(t)));
       f.setElseStatement(removeBreakSequencer(step.elze(t)));
@@ -179,10 +180,10 @@ public class switchBranch {
     return b;
   }
 
-  public static Collection<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
-    final Collection<Statement> $ = new ArrayList<>();
-    for (final Statement ¢ : ss) {
-      final Statement s = removeBreakSequencer(¢);
+  @NotNull public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
+    @NotNull final Collection<Statement> $ = new ArrayList<>();
+    for (@NotNull final Statement ¢ : ss) {
+      @Nullable final Statement s = removeBreakSequencer(¢);
       if (s != null)
         $.add(s);
     }

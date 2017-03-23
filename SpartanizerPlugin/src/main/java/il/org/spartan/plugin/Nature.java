@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.range.*;
 
@@ -19,7 +20,7 @@ public final class Nature implements IProjectNature {
   @Override public void configure() throws CoreException {
     final IProjectDescription d = project.getDescription();
     final ICommand[] cs = d.getBuildSpec();
-    for (final ICommand ¢ : cs) // NANO
+    for (@NotNull final ICommand ¢ : cs) // NANO
       if (¢.getBuilderName().equals(Builder.BUILDER_ID))
         return;
     set(d, cs);
@@ -44,7 +45,7 @@ public final class Nature implements IProjectNature {
     project = ¢;
   }
 
-  private void set(final IProjectDescription d, final ICommand... cs) throws CoreException {
+  private void set(@NotNull final IProjectDescription d, @NotNull final ICommand... cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);
     d.setBuildSpec(append(cs, c));

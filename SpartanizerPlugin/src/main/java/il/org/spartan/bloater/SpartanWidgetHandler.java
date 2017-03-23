@@ -113,7 +113,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
 
   static void setMovable(@NotNull final Display d, @NotNull final Control source, @NotNull final Shell target) {
-    @NotNull final Listener l = new Listener() {
+    @Nullable final Listener l = new Listener() {
       @Nullable Point origin;
 
       @Override public void handleEvent(@NotNull final Event e) {
@@ -163,7 +163,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final int w = R, h = R, fixX = -10 * R / 100;
     final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
     @NotNull final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
-    $.addPaintListener(¢ -> {
+    $.addPaintListener((@NotNull final PaintEvent ¢) -> {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);
     });

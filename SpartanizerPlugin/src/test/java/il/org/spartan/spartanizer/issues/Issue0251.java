@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
@@ -113,7 +114,7 @@ public class Issue0251 {
   }
 
   @Test public void t17() {
-    final String variable = "while(b==q){if(tipper==q()){int i;}}";
+    @NotNull final String variable = "while(b==q){if(tipper==q()){int i;}}";
     assert !sideEffects.free(into.s(variable));
     trimmingOf(variable)//
         .gives("while(b==q)if(tipper==q()){int i;}")//

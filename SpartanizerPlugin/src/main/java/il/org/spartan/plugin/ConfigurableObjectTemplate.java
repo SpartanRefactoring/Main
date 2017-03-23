@@ -2,6 +2,8 @@ package il.org.spartan.plugin;
 // TODO: Matteo: check this out, its Yossi's example for a configurable object.
 // See what you can get out of it.
 
+import org.jetbrains.annotations.*;
+
 /** Demo of recommended use of {@link Listener.S} Copy the code, changing the
  * name {@link ConfigurableObjectTemplate} to whatever you need. provide.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -9,7 +11,7 @@ package il.org.spartan.plugin;
 public interface ConfigurableObjectTemplate {
   @SuppressWarnings({ "ClassWithTooManyFields", "CanBeFinal" })
   class Settings extends Listener.S {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -465808551880648371L;
     //@formatter:off
     /* default access */ int howMany;
     /* required here! */ boolean robustMode;
@@ -18,11 +20,13 @@ public interface ConfigurableObjectTemplate {
     /* (extending our */ Some fields;
     /* current class) */ May be;
     /* may then write */
+    @Nullable
     final If changes = null;
     /* or read any of */ Other might, assume, the, form, of;
     /* the Settings's */ static When its, appropriate;
     /* fields without */ Or even;
     /* any setters or */
+    @Nullable
     static final If particular = null;
     /* any getters... */ Or these, occassions, in, which,it, makes, sense;
 
@@ -43,8 +47,8 @@ public interface ConfigurableObjectTemplate {
      * @see #go() the only service provided by this template
      * @author Yossi Gil */
     class Action extends Settings {
-      /** real serialVersionUID comes much later in production code */
-      private static final long serialVersionUID = 1L;
+      private static final long serialVersionUID = -1563529531663481546L;
+
 
       int go() {
         listeners().push("started going");

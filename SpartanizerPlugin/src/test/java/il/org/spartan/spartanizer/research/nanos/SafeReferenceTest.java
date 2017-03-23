@@ -33,14 +33,14 @@ public class SafeReferenceTest {
 
   @Test public void field4() {
     trimmingOf("return x != null && x.y;")//
-        .using(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field5() {
     trimmingOf("return x != null && x.y.z.w;")//
-        .using(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).get(()->x.y.z.w);")//
         .stays();
   }
@@ -82,21 +82,21 @@ public class SafeReferenceTest {
 
   @Test public void method5() {
     trimmingOf("return x != null && x.z();")//
-        .using(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method6() {
     trimmingOf("return x != null && x.y.z();")//
-        .using(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method7() {
     trimmingOf("(x != null) && x.y()")//
-        .using(InfixExpression.class, new Infix.SafeReference())//
+        .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("safe(x).invoke(()->x.y())")//
         .stays();
   }
