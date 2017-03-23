@@ -31,9 +31,11 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragementAndSta
   @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
+
   @Override @NotNull public String description() {
     return "Consolidate declaration of variable with its subsequent initialization";
   }
+
   @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, @NotNull final SimpleName n,
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
