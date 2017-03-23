@@ -316,10 +316,8 @@ public class PropositionTest {
         stack.addAll(((Proposition.C) current).inner);
         continue;
       }
-      if (current instanceof Proposition.P) {
+      if (current instanceof Proposition.P)
         stack.push(((Proposition.P) current).inner);
-        continue;
-      }
     } while (!stack.isEmpty());
     return false;
   }
