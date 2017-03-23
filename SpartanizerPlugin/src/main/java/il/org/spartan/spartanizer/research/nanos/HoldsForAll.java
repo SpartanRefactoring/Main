@@ -34,23 +34,11 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
     return !tippers.canTip(az.block(parent(x))) ? tippers2.firstTip(x) : tippers.firstTip(az.block(parent(x)));
   }
 
-  @Override @NotNull public Category category() {
-    return Category.Iterative;
-  }
-
   @Override public String description() {
     return "Return whether all elements in collection match predicate";
   }
 
-  @Override public String example() {
-    return tippers.firstPattern();
-  }
-
-  @Override public String symbolycReplacement() {
-    return tippers.firstReplacement();
-  }
-
-  @Override public String className() {
+  @Override public String nanoName() {
     return Aggregate.class.getSimpleName();
   }
 }
