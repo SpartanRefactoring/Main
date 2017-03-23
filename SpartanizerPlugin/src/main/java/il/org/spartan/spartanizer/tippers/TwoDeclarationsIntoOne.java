@@ -29,7 +29,7 @@ import il.org.spartan.utils.*;
  * }
  * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
  * @since 2017-01-13 */
-public class TwoDeclarationsIntoOne extends ReplaceToNextStatement<VariableDeclarationStatement>//
+public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclarationStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -401300117746539825L;
 

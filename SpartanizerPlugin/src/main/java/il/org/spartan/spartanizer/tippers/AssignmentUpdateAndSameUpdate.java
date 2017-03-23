@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Tested by {@link Issue1132}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-04 */
-public final class AssignmentUpdateAndSameUpdate extends ReplaceToNextStatement<Assignment>//
+public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 1L;
 

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
-public abstract class $FragementAndStatement extends ReplaceToNextStatement<VariableDeclarationFragment> {
+public abstract class $FragementAndStatement extends GoToNextStatement<VariableDeclarationFragment> {
   private static final long serialVersionUID = 7723281513517888L;
 
   @Override public boolean prerequisite(@Nullable final VariableDeclarationFragment ¢) {

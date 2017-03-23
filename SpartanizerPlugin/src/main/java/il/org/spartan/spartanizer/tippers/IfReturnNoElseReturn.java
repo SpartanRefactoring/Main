@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } return a; g(); }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
-public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement>//
+public final class IfReturnNoElseReturn extends GoToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
   private static final long serialVersionUID = -1169329057289882569L;
 

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-28 */
-public final class AssignmentAndReturn extends ReplaceToNextStatement<Assignment>//
+public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -1263526923784459386L;
 
