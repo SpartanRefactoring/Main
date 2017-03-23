@@ -58,11 +58,13 @@ public interface Recursive<@¢ T> extends Streamer<T> {
   }
 
   interface Postorder<E> extends Compound<E> {
-    @Override default Stream<E> stream() {
-      Stream<E> $ = Stream.empty();
-      for (@NotNull final Recursive<E> ¢ : children())
-        $ = Stream.concat(¢.stream(), $);
-      return Stream.concat($, streamSelf());
+    @Override @NotNull default Compounder<E> compounder() {
+      return (self, others) -> {
+        Stream<E> $ = Stream.empty();
+        for (@NotNull final Streamer<E> ¢ : others)
+          $ = Stream.concat(¢.stream(), $);
+        return self == null ? $ : Stream.concat($, Stream.of(self));
+      };
     }
   }
 
@@ -72,11 +74,13 @@ public interface Recursive<@¢ T> extends Streamer<T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Preorder<E> extends Compound<E> {
-    @Override default Stream<E> stream() {
-      Stream<E> $ = self() == null ? Stream.empty() : Stream.of(self());
-      for (@NotNull final Recursive<E> ¢ : children())
-        $ = Stream.concat($, ¢.stream());
-      return $;
+    @Override @NotNull default Compounder<E> compounder() {
+      return (self, others) -> {
+        Stream<E> $ = self == null ? Stream.empty() : Stream.of(self);
+        for (@NotNull final Streamer<E> ¢ : others)
+          $ = Stream.concat($, ¢.stream());
+        return $;
+      };
     }
   }
 }
