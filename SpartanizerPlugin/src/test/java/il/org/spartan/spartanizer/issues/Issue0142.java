@@ -12,80 +12,72 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0142 {
   @Test public void disableSpartanizaionInClass() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /***/ int g() {\n    int $ = 2;\n    return $;\n  }\n}").stays();
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } " + " /***/ int g() { int $ = 2; return $; } }")
+        .stays();
   }
 
   @Test public void disableSpartanizaionInClass1() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /***/ int g() {\n    int $ = 2;\n    return $;\n  }\n}").stays();
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } " + " /***/ int g() { int $ = 2; return $; } }")
+        .stays();
   }
 
   @Test public void disableSpartanizaionInMethod() {
-    trimmingOf("/***/ class A {\n  /**[[SuppressWarningsSpartan]]*/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /***/ int g() {\n    int $ = 2;\n    return $;\n  }\n}")
-            .gives("/***/ class A {\n  /**[[SuppressWarningsSpartan]]*/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /***/ int g() {\n    return 2;\n  }\n}");
+    trimmingOf("/***/ class A { /**[[SuppressWarningsSpartan]]*/ int f() { int $ = 1; return $; } " + " /***/ int g() { int $ = 2; return $; } }")
+        .gives("/***/ class A { /**[[SuppressWarningsSpartan]]*/ int f() { int $ = 1; return $; } " + " /***/ int g() { return 2; } }");
   }
 
   @Test public void disableSpartanizaionInMethod1() {
-    trimmingOf("/***/ class A {\n  /**[[SuppressWarningsSpartan]]*/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /***/ int g() {\n    int $ = 2;\n    return $;\n  }\n}")
-            .gives("/***/ class A {\n  /**[[SuppressWarningsSpartan]]*/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /***/ int g() {\n    return 2;\n  }\n}");
+    trimmingOf("/***/ class A { /**[[SuppressWarningsSpartan]]*/ int f() { int $ = 1; return $; } " + " /***/ int g() { int $ = 2; return $; } }")
+        .gives("/***/ class A { /**[[SuppressWarningsSpartan]]*/ int f() { int $ = 1; return $; } " + " /***/ int g() { return 2; } }");
   }
 
   @Test public void disableSpartanizaionWithEnabler() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    int $ = 2;\n    return $;\n  }\n}")
-            .gives("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    return 2;\n  }\n}");
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ int g() { int $ = 2; return $; } }")
+            .gives("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+                + " /**[[EnableWarningsSpartan]]*/ int g() { return 2; } }");
   }
 
   @Test public void disableSpartanizaionWithEnabler1() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    int $ = 2;\n    return $;\n  }\n}")
-            .gives("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    return 2;\n  }\n}");
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ int g() { int $ = 2; return $; } }")
+            .gives("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+                + " /**[[EnableWarningsSpartan]]*/ int g() { return 2; } }");
   }
 
   @Test public void disableSpartanizaionWithEnablerDepthInClass() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    int $ = 2;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ class B {\n    /***/ int f() {\n      int $ = 1;\n      return $;\n    }\n"
-        + "    /***/ int g() {\n      int $ = 2;\n      return $;\n    }\n  }\n}")
-            .gives("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    return 2;\n  }\n  /**[[EnableWarningsSpartan]]*/ class B {\n"
-                + "    /***/ int f() {\n      return 1;\n    }\n    /***/ int g() {\n      return 2;\n    }\n  }\n" + "}");
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ int g() { int $ = 2; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ class B { /***/ int f() { int $ = 1; return $; } " + " /***/ int g() { int $ = 2; return $; } } }")
+            .gives("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+                + " /**[[EnableWarningsSpartan]]*/ int g() { return 2; } /**[[EnableWarningsSpartan]]*/ class B { "
+                + " /***/ int f() { return 1; } /***/ int g() { return 2; } } " + "}");
   }
 
   @Test public void disableSpartanizaionWithEnablerDepthInClass1() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    int $ = 2;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ class B {\n    /***/ int f() {\n      int $ = 1;\n      return $;\n    }\n"
-        + "    /***/ int g() {\n      int $ = 2;\n      return $;\n    }\n  }\n}")
-            .gives("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    return 2;\n  }\n  /**[[EnableWarningsSpartan]]*/ class B {\n"
-                + "    /***/ int f() {\n      return 1;\n    }\n    /***/ int g() {\n      return 2;\n    }\n  }\n" + "}");
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ int g() { int $ = 2; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ class B { /***/ int f() { int $ = 1; return $; } " + " /***/ int g() { int $ = 2; return $; } } }")
+            .gives("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+                + " /**[[EnableWarningsSpartan]]*/ int g() { return 2; } /**[[EnableWarningsSpartan]]*/ class B { "
+                + " /***/ int f() { return 1; } /***/ int g() { return 2; } } " + "}");
   }
 
   @Test public void disableSpartanizaionWithEnablerDepthInMethod() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    int $ = 2;\n    return $;\n  }\n  /***/ class B {\n"
-        + "    /***/ int f() {\n      int $ = 1;\n      return $;\n    }\n    /**[[EnableWarningsSpartan]]*/ int g() {\n"
-        + "      int $ = 2;\n      return $;\n    }\n  }\n}")
-            .gives("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    return 2;\n  }\n  /***/ class B {\n    /***/ int f() {\n"
-                + "      int $ = 1;\n      return $;\n    }\n    /**[[EnableWarningsSpartan]]*/ int g() {\n      return 2;\n" + "    }\n  }\n}");
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ int g() { int $ = 2; return $; } /***/ class B { "
+        + " /***/ int f() { int $ = 1; return $; } /**[[EnableWarningsSpartan]]*/ int g() { " + " int $ = 2; return $; } } }")
+            .gives("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+                + " /**[[EnableWarningsSpartan]]*/ int g() { return 2; } /***/ class B { /***/ int f() { "
+                + " int $ = 1; return $; } /**[[EnableWarningsSpartan]]*/ int g() { return 2; " + " } } }");
   }
 
   @Test public void disableSpartanizaionWithEnablerDepthInMethod1() {
-    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-        + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    int $ = 2;\n    return $;\n  }\n  /***/ class B {\n"
-        + "    /***/ int f() {\n      int $ = 1;\n      return $;\n    }\n    /**[[EnableWarningsSpartan]]*/ int g() {\n"
-        + "      int $ = 2;\n      return $;\n    }\n  }\n}")
-            .gives("/**[[SuppressWarningsSpartan]]*/ class A {\n  /***/ int f() {\n    int $ = 1;\n    return $;\n  }\n"
-                + "  /**[[EnableWarningsSpartan]]*/ int g() {\n    return 2;\n  }\n  /***/ class B {\n    /***/ int f() {\n"
-                + "      int $ = 1;\n      return $;\n    }\n    /**[[EnableWarningsSpartan]]*/ int g() {\n      return 2;\n" + "    }\n  }\n}");
+    trimmingOf("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+        + " /**[[EnableWarningsSpartan]]*/ int g() { int $ = 2; return $; } /***/ class B { "
+        + " /***/ int f() { int $ = 1; return $; } /**[[EnableWarningsSpartan]]*/ int g() { " + " int $ = 2; return $; } } }")
+            .gives("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; } "
+                + " /**[[EnableWarningsSpartan]]*/ int g() { return 2; } /***/ class B { /***/ int f() { "
+                + " int $ = 1; return $; } /**[[EnableWarningsSpartan]]*/ int g() { return 2; " + " } } }");
   }
 }
