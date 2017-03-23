@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
 
 /** Including static setters.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-10-22 */
 public class Setter extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -4815724471383478205L;

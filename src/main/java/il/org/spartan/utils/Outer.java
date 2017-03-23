@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 import org.jetbrains.annotations.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-21 */
 public abstract class Outer<Inner> {
   @Nullable public final Inner inner;

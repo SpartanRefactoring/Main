@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 /** Tests {@link Default}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
 @SuppressWarnings("static-method")
 public class DefaultTest extends JavadocerTest {

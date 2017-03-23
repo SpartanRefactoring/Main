@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for {@link TwoDeclarationsIntoOne}
- * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
+ * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-13 */
 @SuppressWarnings("static-method")
 public class Issue1012 {

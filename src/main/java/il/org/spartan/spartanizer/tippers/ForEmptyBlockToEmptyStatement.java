@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
 
 /** replaces a for statement followed by an empty block with a for statement
  * followed by a semicolon
- * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
+ * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
 public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStatement> //
     implements TipperCategory.SyntacticBaggage {

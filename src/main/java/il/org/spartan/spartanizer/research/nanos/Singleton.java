@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** collection.size() == 1
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-28 */
 public final class Singleton extends NanoPatternTipper<InfixExpression> {
   private static final long serialVersionUID = 6833387526348076529L;

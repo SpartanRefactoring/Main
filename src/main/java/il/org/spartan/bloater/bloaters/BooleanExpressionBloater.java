@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *  boolean b = y();
  *  a && b
  * }
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-13 */
 public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Bloater {

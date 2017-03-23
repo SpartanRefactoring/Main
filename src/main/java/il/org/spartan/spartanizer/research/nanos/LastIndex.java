@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano last index in collection, lisp style
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-20 */
 public final class LastIndex extends NanoPatternTipper<InfixExpression> {
   private static final long serialVersionUID = -5764445432502726533L;

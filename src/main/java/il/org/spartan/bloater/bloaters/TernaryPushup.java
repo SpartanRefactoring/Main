@@ -19,7 +19,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * cond ? a + b : a + c
  *
  * } Test case is {@link Issue1049}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-18 */
 public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {

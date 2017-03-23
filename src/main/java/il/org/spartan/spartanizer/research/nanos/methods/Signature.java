@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Method signature (no body)
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 public class Signature extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -8025741216295644939L;

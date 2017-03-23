@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * a.toString();
  * } Important : Works only in cases where binding exists, otherwise does
  * nothing Tested in {@link Issue096}
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-20 */
 public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {

@@ -131,7 +131,7 @@ public class idiomaticTest {
   }
 
   @Test public void whenNullsEval() {
-     final Object o = new Object();
-     idiomatic.when(o).nulls().eval(o::hashCode).elze(o::hashCode);
+    @NotNull final Object o = new Object();
+    idiomatic.when(o).nulls().eval(o::hashCode).elze(o::hashCode);
   }
 }

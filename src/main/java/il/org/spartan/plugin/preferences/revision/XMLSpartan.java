@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
  * describes what tippers are enabled for the project.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-02-01 */
 public class XMLSpartan {
   private static final String CURRENT_VERSION = "2.0";
@@ -266,7 +266,7 @@ public class XMLSpartan {
   }
 
   /** Describes an XML element for plugin's XML file.
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   public abstract static class SpartanElement {
     public static final SpartanElement[] EMPTY = new SpartanElement[0];
@@ -301,7 +301,7 @@ public class XMLSpartan {
 
   /** Describes an XML tipper element for plugin's XML file. The tipper is
    * connected to {@link SpartanCategory}, and has a description.
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   public static class SpartanTipper extends SpartanElement {
     private final SpartanCategory parent;
@@ -330,7 +330,7 @@ public class XMLSpartan {
 
   /** Describes an XML category element for plugin's XML file. The category has
    * a list of its {@link SpartanElement} children.
-   * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+   * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   public static class SpartanCategory extends SpartanElement {
     @NotNull private final List<SpartanElement> children;

@@ -14,7 +14,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * e) > 3)) { return 1; } } Currently the expander goes over expressions and for
  * each InfixExpression who's parent is also an InfixExpression, It will make it
  * parenthesized.
- * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
+ * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-11 */
 public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {

@@ -415,7 +415,7 @@ public enum subject {
      * @return an If statement with the logical not of the given condition
      * @see toIf
      * @see logicalNot */
-    public IfStatement toNot(final Expression condition) {
+    public IfStatement toNot(@NotNull final Expression condition) {
       return toIf(make.notOf(condition));
     }
   }

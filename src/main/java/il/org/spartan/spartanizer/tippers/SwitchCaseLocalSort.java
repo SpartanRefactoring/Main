@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** sorts cases of a local branch {@code switch(x) { case 2: case 1: break; }}
  * to {@code switch(x) { case 1: case 2: break; } } Tests are in
  * {@link Issue0860}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-09 */
 public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {

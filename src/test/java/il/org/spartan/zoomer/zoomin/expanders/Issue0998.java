@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Unit test for {@link ThrowTernaryBloater}
- * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 @SuppressWarnings("static-method")
 public class Issue0998 {

@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** Tests {@link ReturnOnException}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-27 */
 @SuppressWarnings("static-method")
 public class ReturnOnExceptionTest {
