@@ -20,7 +20,7 @@ import il.org.spartan.utils.Example.*;
 
 /** A test generator for {@link Tipper}s, creating tests from their declared
  * examples (see {@link Tipper#examples}).
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-03-09 */
 @RunWith(Parameterized.class)
 public class ExamplesTests {

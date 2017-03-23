@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** new Z(); >> Z z1 = new Z(); {@link Issue0978}
- * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-24 */
 public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement>//
     implements TipperCategory.Bloater {

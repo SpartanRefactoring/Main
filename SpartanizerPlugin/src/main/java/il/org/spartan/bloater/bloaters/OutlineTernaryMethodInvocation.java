@@ -20,7 +20,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * cond ? f(a) : f(b)
  *
  * } Test case is {@link Issue1091}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Bloater {

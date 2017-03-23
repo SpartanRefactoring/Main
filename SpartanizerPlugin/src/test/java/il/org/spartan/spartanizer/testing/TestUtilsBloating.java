@@ -6,7 +6,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Testing utils for expanders Issue #961
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-19 */
 public enum TestUtilsBloating {
   ;

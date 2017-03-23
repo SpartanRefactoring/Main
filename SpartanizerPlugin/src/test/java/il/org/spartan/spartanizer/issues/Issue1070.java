@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Test case for {@link RemoveRedundantSwitchReturn} and
  * {@link RemoveRedundantSwitchContinue}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-15 */
 @SuppressWarnings("static-method")
 public class Issue1070 {

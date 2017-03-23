@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 /** Tests {@link LetItBeInMethod}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 @SuppressWarnings("static-method")
 public class LetItBeInMethodTest extends JavadocerTest {

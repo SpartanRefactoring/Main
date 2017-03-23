@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Create a collection out of a copy of another
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreation> {
   private static final long serialVersionUID = 5603169704272959211L;

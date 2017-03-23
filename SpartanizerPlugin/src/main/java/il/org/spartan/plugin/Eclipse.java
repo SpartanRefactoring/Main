@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.*;
 import org.jetbrains.annotations.*;
 
 /** Eclipse common utilities.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-03-21 */
 public class Eclipse {
   // TODO Roth: switch from system user to eclipse template user

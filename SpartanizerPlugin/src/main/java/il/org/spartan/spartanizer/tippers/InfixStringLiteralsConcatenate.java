@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** concate same line string literal
- * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
- * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
+ * @author Doron Mehsulam {@code doronmmm@hotmail.com}
+ * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
 public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpression> //
     implements TipperCategory.NOP {

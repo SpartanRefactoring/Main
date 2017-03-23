@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 /** Unit test for the GitHub issue thus numbered. case of inlining into the
  * expression of an enhanced for
- * @author Yossi Gil <tt>Yossi.Gil@GMail.COM</tt>
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-16 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

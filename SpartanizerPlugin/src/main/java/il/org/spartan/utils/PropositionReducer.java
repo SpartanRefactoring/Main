@@ -8,7 +8,7 @@ import il.org.spartan.utils.Proposition.*;
 
 /** TODO Yossi Gil: document class
  * @param <R>
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
 public abstract class PropositionReducer<R> extends Reduce<R> {
   public final Reduce<R> inner;

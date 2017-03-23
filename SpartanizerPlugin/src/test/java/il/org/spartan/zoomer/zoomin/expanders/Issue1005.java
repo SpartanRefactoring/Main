@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 import org.junit.*;
 
 /** Test case for @link PrefixToPostfix}
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-24 */
 @SuppressWarnings("static-method")
 public class Issue1005 {

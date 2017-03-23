@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Test class for InfixAdditionSubtractionExpand
- * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
+ * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}
  * @since 2017-03-16 */
 public class InfixAdditionSubtractionExpandTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";

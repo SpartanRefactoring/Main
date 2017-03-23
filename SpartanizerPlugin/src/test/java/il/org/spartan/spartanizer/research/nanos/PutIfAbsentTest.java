@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco {@code marcovitch.ori@gmail.com} please add a description
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-04 */
 @SuppressWarnings("static-method")
 public class PutIfAbsentTest {
