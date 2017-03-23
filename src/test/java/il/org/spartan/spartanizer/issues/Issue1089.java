@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Testing disabling lambda expression tipping
  * {@link FragmentInitializerStatementTerminatingScope}
- * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
+ * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-22 */
 @SuppressWarnings("static-method")
 public class Issue1089 {

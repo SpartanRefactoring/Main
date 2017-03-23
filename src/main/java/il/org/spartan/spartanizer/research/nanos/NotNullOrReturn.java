@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 
 /** @nano if(X = null) return; <br>
  *       if(X = null) return null;
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 3915101342508232691L;

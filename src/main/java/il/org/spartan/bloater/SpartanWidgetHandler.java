@@ -15,7 +15,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.plugin.*;
 
 /** TODO Ori Roth: document class
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-03-21 */
 public class SpartanWidgetHandler extends AbstractHandler {
   private static final int R = 70;

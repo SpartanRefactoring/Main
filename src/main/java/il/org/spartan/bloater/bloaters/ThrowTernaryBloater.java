@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Same as ReturnTernaryExpander just for "throw" {@link Issue #998}
- * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     implements TipperCategory.Bloater {

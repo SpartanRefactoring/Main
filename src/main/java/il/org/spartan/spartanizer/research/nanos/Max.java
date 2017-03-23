@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Max between two expressions
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-12 */
 public final class Max extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -5168213016271470822L;

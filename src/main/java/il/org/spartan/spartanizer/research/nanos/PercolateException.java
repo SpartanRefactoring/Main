@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Catch exception, then throw it again
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public final class PercolateException extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = 3602550060640108032L;

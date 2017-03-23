@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Min between two expressions
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-12 */
 public final class Min extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = 6090319353585840250L;

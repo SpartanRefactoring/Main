@@ -9,7 +9,7 @@ import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Unit test for {@link AssignmentOperatorBloater}.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @Ignore // TODO Ori ROth
 @SuppressWarnings("static-method")

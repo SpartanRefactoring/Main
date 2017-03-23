@@ -6,8 +6,8 @@ import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.tables.*;
 
-/** Base class for nano anlysis
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** Base class for nano analysis
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-17 */
 public abstract class NanoTable {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
@@ -16,7 +16,7 @@ public abstract class NanoTable {
   static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();
-  static Table writer;
+  static Table table;
   static String tableName;
 
   // static void initializeWriter() {

@@ -21,7 +21,18 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil please add a description
+/** A smorgasboard containing lots of stuff, but its main purpose, which should
+ * be factored out somewhere is to apply a {@link Toolbox} to a tree. The main
+ * difficulties are:
+ * <ol>
+ * <li>Top down or bottom up traversal
+ * <li>Overlapping in the domain of distinct tippers
+ * <li>Progress monitoring
+ * <li>Fault recovery, not all tippers are bug free
+ * <li>Configuration: sometime you wish to disable some of the tippers.
+ * <li>Consolidation: it does not make sense to apply one tipper after the
+ * other. Batch processing is required.
+ * </ol>
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {

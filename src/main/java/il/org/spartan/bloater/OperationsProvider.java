@@ -10,7 +10,7 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A provider of matching {@link Tipper} for an {@link ASTNode}.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-20 */
 public abstract class OperationsProvider {
   /** @param n JD

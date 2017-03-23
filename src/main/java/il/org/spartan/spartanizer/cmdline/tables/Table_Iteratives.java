@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
 
 /** Generates a table for analyzing loops distribution and nano pattern applied
  * to loops.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-21 */
 public class Table_Iteratives extends DeprecatedFolderASTVisitor {
   private static final int ENHANCED = ASTNode.ENHANCED_FOR_STATEMENT;

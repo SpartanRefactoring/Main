@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: YuvalSimon <tt>yuvaltechnion@gmail.com</tt> please add a description
- * @author YuvalSimon <tt>yuvaltechnion@gmail.com</tt>
+/** TODO: YuvalSimon {@code yuvaltechnion@gmail.com} please add a description
+ * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-17 */
 @SuppressWarnings("static-method")
 public class Issue1067 {

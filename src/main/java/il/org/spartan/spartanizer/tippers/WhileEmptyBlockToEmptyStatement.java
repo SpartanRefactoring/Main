@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
 
 /** replaces a while statement followed by an while block with a for statement
  * followed by a semicolon
- * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
+ * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
 public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileStatement> //
     implements TipperCategory.SyntacticBaggage {

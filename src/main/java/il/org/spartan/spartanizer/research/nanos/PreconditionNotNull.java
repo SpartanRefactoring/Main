@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Like {@link NotNullOrReturn} but in the beginning of a method.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public final class PreconditionNotNull extends NotNullOrReturn {
   private static final long serialVersionUID = -1274198165790503754L;

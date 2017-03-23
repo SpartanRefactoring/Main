@@ -9,14 +9,13 @@ import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** Generates a table that shows for every nano it's prevalence in corpus
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-20 */
 class Table_Prevalence extends NanoTable {
   static final Map<String, Int> prevalence = new HashMap<>();
@@ -60,15 +59,15 @@ class Table_Prevalence extends NanoTable {
       }
 
       void initializeWriter() {
-        if (writer == null)
-          writer = new Table(Table.classToNormalizedFileName(Table_Prevalence.class) + "-" + corpus, outputFolder);
+        if (table == null)
+          table = new Table(Table.classToNormalizedFileName(Table_Prevalence.class) + "-" + corpus, outputFolder);
       }
     }.fire(visitor);
     for (final String ¢ : prevalence.keySet()) {
-      writer.put("Nano", ¢);
-      writer.put("Prevalence", Double.valueOf(format.decimal(prevalence.get(¢).inner / 6.0)));
-      writer.nl();
+      table.put("Nano", ¢);
+      table.put("Prevalence", Double.valueOf(format.decimal(prevalence.get(¢).inner / 6.0)));
+      table.nl();
     }
-    writer.close();
+    table.close();
   }
 }

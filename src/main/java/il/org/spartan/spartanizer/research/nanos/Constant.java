@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Constant nano - public static final field
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-09 */
 public final class Constant extends NanoPatternTipper<FieldDeclaration> {
   private static final long serialVersionUID = 2694420776077369062L;
