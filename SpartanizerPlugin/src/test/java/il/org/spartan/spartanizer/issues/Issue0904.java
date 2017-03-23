@@ -27,7 +27,7 @@ public class Issue0904 {
   @Test public void d() {
     trimmingOf("int i = +0;")//
         .gives("int i = 0;")//
-        .gives("");
+        .stays();
   }
 
   @Test public void t08() {
