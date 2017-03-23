@@ -149,7 +149,7 @@ public class Toolbox {
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
             new ForDeadRemove(), //
-            new ContinueContinuInForEliminate(), //
+            new ContinueCoditinalInForEliminate(), //
             new BlockBreakToReturnInfiniteFor(), //
             new ReturnToBreakFiniteFor(), //
             new ForToForUpdaters(), //
