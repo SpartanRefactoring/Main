@@ -36,8 +36,9 @@ public class Issue0970 {
   }
 
   @Test public void test4() {
-    bloatingOf("try{int a; a=a+1;}catch(Type1 | Type2 e){int z;z=2;return z;}catch (Exception e){f();g();}finally {return t;}").gives(
-        "try{int a;a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;z=2;return z;}catch(Exception e){f();g();}finally{return t;}")
+    bloatingOf("try{int a; a=a+1;}catch(Type1 | Type2 e){int z;z=2;return z;}catch (Exception e){f();g();}finally {return t;}")
+        .gives(
+            "try{int a;a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;z=2;return z;}catch(Exception e){f();g();}finally{return t;}")
         .stays();
   }
 

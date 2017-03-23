@@ -1007,8 +1007,7 @@ public final class Version230 {
 
   @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
     trimmingOf("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');  ++i;} else { i +=2;System.h('@');System.h('@');++i;} }")//
-        .gives(
-            "public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');  } else { i +=2;System.h('@');System.h('@');} ++i;}");
+        .gives("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');  } else { i +=2;System.h('@');System.h('@');} ++i;}");
   }
 
   @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
