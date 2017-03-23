@@ -130,9 +130,8 @@ public class idiomaticTest {
     azzert.that(idiomatic.on(before).min(String::compareTo), is("1"));
   }
 
-  // TODO Yossi: compilation error, not sure where "when" is from --or
   @Test public void whenNullsEval() {
-    // final Object o = new Object();
-    // when(o).nulls().eval(() -> o.hashCode()).elze(() -> o.hashCode());
+     final Object o = new Object();
+     idiomatic.when(o).nulls().eval(o::hashCode).elze(o::hashCode);
   }
 }

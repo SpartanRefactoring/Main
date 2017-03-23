@@ -221,11 +221,6 @@ public enum subject {
       return $;
     }
 
-    /** TODO Yossi Gil: Stub 'Operand::toAssert' (created on 2017-02-11)." );
-     * <p>
-     * @return
-     *         <p>
-     *         [[SuppressWarningsSpartan]] */
     public AssertStatement toAssert() {
       final AssertStatement $ = ast.newAssertStatement();
       $.setExpression(inner);

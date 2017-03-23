@@ -627,12 +627,6 @@ public interface wizard {
     return in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
-  /** TODO Yossi Gil: Stub 'wizard::isString' (created on 2017-02-08)." );
-   * <p>
-   * @param type
-   * @return
-   *         <p>
-   *         [[SuppressWarningsSpartan]] */
   static boolean isString(@Nullable final String typeName) {
     if (typeName == null)
       return false;

@@ -25,7 +25,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.range.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -118,7 +117,7 @@ public interface iz {
   }
 
   /** @param subject JD
-   * @return whetherthe parameter is an essential block or false otherwise */
+   * @return whether the parameter is an essential block or false otherwise */
   static boolean blockEssential(final Statement ¢) {
     return blockEssential(az.ifStatement(¢));
   }
@@ -153,7 +152,7 @@ public interface iz {
   }
 
   /** @param ¢ node to check
-   * @return whetherthe given node is a boolean or null literal or false
+   * @return whether the given node is a boolean or null literal or false
    *         otherwise */
   static boolean booleanOrNullLiteral(final ASTNode ¢) {
     return iz.nodeTypeIn(¢, BOOLEAN_LITERAL, NULL_LITERAL);
@@ -591,16 +590,8 @@ public interface iz {
     }
   }
 
-  // TODO Yossi: Move to lisp
-  @SuppressWarnings("boxing") static int index(final int i, @NotNull final int... is) {
-    for (final Integer $ : range.from(0).to(is.length))
-      if (is[$] == i)
-        return $;
-    return -1;
-  }
-
   /** @param ¢ JD
-   * @return whetherthe given node is an infix expression or false otherwise */
+   * @return whether the given node is an infix expression or false otherwise */
   static boolean infix(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, INFIX_EXPRESSION);
   }
@@ -656,7 +647,7 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return whetherthe given node is an interface or false otherwise */
+   * @return whether the given node is an interface or false otherwise */
   static boolean interface¢(@NotNull final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
@@ -670,13 +661,13 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return whetherthe given node is a method decleration or false otherwise */
+   * @return whether the given node is a method decleration or false otherwise */
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
 
   /** @param ¢ node to check
-   * @return whetherthe given node is a method invocation or false otherwise */
+   * @return whether the given node is a method invocation or false otherwise */
   static boolean isMethodInvocation(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_INVOCATION);
   }
@@ -704,7 +695,7 @@ public interface iz {
   }
 
   /** @param ¢ node to check
-   * @return whetherthe given node is a variable declaration statement or false
+   * @return whether the given node is a variable declaration statement or false
    *         otherwise */
   static boolean isVariableDeclarationStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
@@ -747,7 +738,7 @@ public interface iz {
 
   /** Determines whether a statement is last statement in its containing method
    * @param ¢ JD
-   * @return whetherthe parameter is a statement which is last in its method */
+   * @return whether the parameter is a statement which is last in its method */
   static boolean lastInMethod(final Statement ¢) {
     @Nullable final Block $ = az.block(parent(¢));
     return last(¢, statements($)) && iz.methodDeclaration(parent($));
@@ -814,13 +805,13 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return whetherthe given node is a literal 0 or false otherwise */
+   * @return whether the given node is a literal 0 or false otherwise */
   static boolean literal0(final ASTNode ¢) {
     return literal(¢, 0);
   }
 
   /** @param ¢ JD
-   * @return whetherthe given node is a literal 1 or false otherwise */
+   * @return whether the given node is a literal 1 or false otherwise */
   static boolean literal1(final ASTNode ¢) {
     return literal(¢, 1);
   }
@@ -1118,7 +1109,7 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return whetherthe given node is a statement or false otherwise */
+   * @return whether the given node is a statement or false otherwise */
   static boolean statement(final ASTNode ¢) {
     return ¢ instanceof Statement;
   }
@@ -1283,7 +1274,7 @@ public interface iz {
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   /** @param ¢ JD
-   * @return whetherthe given node is a literal or false otherwise */
+   * @return whether the given node is a literal or false otherwise */
   default boolean parsesTo(@NotNull final String $, final double d) {
     try {
       return Double.parseDouble($) == d;
@@ -1322,7 +1313,7 @@ public interface iz {
     }
 
     /** @param ¢ JD
-     * @return whetherthe given node is a literal false or false otherwise */
+     * @return whether the given node is a literal false or false otherwise */
     static boolean false¢(final ASTNode ¢) {
       return iz.literal(¢, false);
     }

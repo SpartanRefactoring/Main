@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * allow inlining if the modifiers are different.
  * @author Dan Greenstein
  * @since 2016 */
-@Ignore // TODO Yossi Gil
 @SuppressWarnings("static-method")
 public class Issue0402 {
   @Test public void a() {
