@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression {
-  private static final long serialVersionUID = 8014753129449325929L;
+  private static final long serialVersionUID = 0x6F3A1F81DB470569L;
 
   @Override @SuppressWarnings("boxing") double evaluateDouble(@NotNull final List<Expression> $) {
     try {

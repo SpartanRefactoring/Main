@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * (usually with same name) and just adds parameters to the method.
  * @author Ori Marcovitch */
 public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 749438291743116142L;
+  private static final long serialVersionUID = 0xA668A27D86C8B6EL;
   private static final Collection<UserDefinedTipper<Expression>> tippers = as.list( //
       patternTipper("$N($A)", "", ""), //
       patternTipper("$N1.$N2($A)", "", "")) //

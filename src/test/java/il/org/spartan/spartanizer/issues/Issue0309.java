@@ -10,7 +10,7 @@ import org.junit.*;
 public class Issue0309 {
   @Test @SuppressWarnings("static-method") public void a() {
     trimmingOf("public String abbreviate() { String ¢ = \"\"; "
-        + "for (final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName); ; ¢ += m.group()) if (!m.find()) return ¢.toLowerCase(); " + "}")
+        + "for (final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName); ; ¢ += m.group()) if (!m.find()) return ¢.toLowerCase(); }")
             .gives("public String abbreviate() { String $ = \"\"; "
                 + "for (final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName); ; $ += m.group()) if (!m.find()) "
                 + "return $.toLowerCase(); }")
@@ -20,8 +20,8 @@ public class Issue0309 {
   }
 
   @Test @SuppressWarnings("static-method") public void b() {
-    trimmingOf("int checkIfCentChangesToDollarWhenNeeded() { Integer ¢ = 2; for (int i = 1; i < 7; ++i) ¢ *= i; " + "return ¢.intValue(); }")
-        .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int i = 1; i < 7; ++i) $ *= i; " + "return $.intValue(); }")
-        .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int ¢ = 1; ¢ < 7; ++¢) $ *= ¢; " + "return $.intValue(); }");
+    trimmingOf("int checkIfCentChangesToDollarWhenNeeded() { Integer ¢ = 2; for (int i = 1; i < 7; ++i) ¢ *= i; return ¢.intValue(); }")
+        .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int i = 1; i < 7; ++i) $ *= i; return $.intValue(); }")
+        .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int ¢ = 1; ¢ < 7; ++¢) $ *= ¢; return $.intValue(); }");
   }
 }

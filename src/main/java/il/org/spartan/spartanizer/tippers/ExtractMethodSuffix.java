@@ -27,7 +27,7 @@ import il.org.spartan.utils.range.*;
  * @since 2016 */
 public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaration>//
     implements TipperCategory.Modular {
-  private static final long serialVersionUID = 1078908162909095501L;
+  private static final long serialVersionUID = 0xEF90D420377464DL;
   // TODO Ori Roth: get more suitable names for constants
   private static final int MINIMAL_STATEMENTS_COUNT = 6;
 

@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
 public final class Between extends NotImplementedNanoPattern<InfixExpression> {
-  private static final long serialVersionUID = 3728204247529612309L;
+  private static final long serialVersionUID = 0x33BD3E02A01AE415L;
   private static final Collection<UserDefinedTipper<InfixExpression>> inEqualities = as.list(//
       patternTipper("$X1 < $X2", "", ""), //
       patternTipper("$X1 <= $X2", "", ""), //

@@ -37,7 +37,7 @@ public class definitionTest extends MetaFixture {
   @field private final Initializer initializer = find(Initializer.class);
   @field private final TypeDeclaration clazz = find(TypeDeclaration.class);
   @field private final Map<String, MarkerAnnotation> annotations = new LinkedHashMap<String, MarkerAnnotation>() {
-    @field static final long serialVersionUID = 1L;
+    @field static final long serialVersionUID = 1;
     {
       put("@Test", null);
       put("@Ignore", null);

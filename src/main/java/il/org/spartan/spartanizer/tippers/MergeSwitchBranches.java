@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-26 */
 public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = 7233894972736348329L;
+  private static final long serialVersionUID = 0x6463F526A06F20A9L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final SwitchStatement s) {
     @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);

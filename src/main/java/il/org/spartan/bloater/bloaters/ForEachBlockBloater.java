@@ -18,7 +18,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 10-01-17 */
 public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 4091243669569596651L;
+  private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
   @Override @Nullable public ASTNode replacement(@Nullable final EnhancedForStatement s) {
     if (s == null)

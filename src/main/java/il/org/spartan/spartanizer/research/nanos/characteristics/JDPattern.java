@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 /** Catches methods which their control flow is not affected by parameters
  * @author Ori Marcovitch */
 public class JDPattern extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 4470044117997306565L;
+  private static final long serialVersionUID = 0x3E08C971278DC2C5L;
   static final Collection<UserDefinedTipper<Expression>> tippers = as.list( //
       patternTipper("$X == null", "", ""), //
       patternTipper("$X != null", "", ""), //

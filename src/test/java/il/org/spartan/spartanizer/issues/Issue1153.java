@@ -71,7 +71,6 @@ public class Issue1153 {
 
   @Test public void i() {
     trimmingOf("class A { private static final long serialVersionUID = 10;}")//
-    .gives("class A { private static final long serialVersionUID = 0xA;}")//
         .stays();
   }
 

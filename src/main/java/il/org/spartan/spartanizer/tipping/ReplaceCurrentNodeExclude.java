@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
-  private static final long serialVersionUID = 8188241616526954088L;
+  private static final long serialVersionUID = 0x71A27A5DF828CE68L;
 
   @Override public final Tip tip(@NotNull final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();

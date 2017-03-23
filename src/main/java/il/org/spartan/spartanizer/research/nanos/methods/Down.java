@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch */
 public class Down {
   public static class Caster extends JavadocMarkerNanoPattern {
-    private static final long serialVersionUID = 8599941166712977656L;
+    private static final long serialVersionUID = 0x775920ED3B2F78F8L;
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
       if (!hazOneStatement(¢))

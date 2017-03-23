@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-09 */
 public class PojoConstructor extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = 4172021544627831813L;
+  private static final long serialVersionUID = 0x39E5FF7D92D18405L;
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     return iz.constructor(¢)//

@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturn extends $FragmentAndStatement//
     implements TipperCategory.Shortcircuit {
-  private static final long serialVersionUID = 6714687738774731933L;
+  private static final long serialVersionUID = 0x5D2F5CEC2756BC9DL;
 
   @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";

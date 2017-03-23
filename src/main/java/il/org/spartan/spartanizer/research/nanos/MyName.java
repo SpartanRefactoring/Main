@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-01 */
 public final class MyName extends NanoPatternTipper<MethodInvocation> {
-  private static final long serialVersionUID = 4064181238809686028L;
+  private static final long serialVersionUID = 0x3866DF4DC20EF00CL;
 
   @Override public boolean canTip(final MethodInvocation ¢) {
     @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);

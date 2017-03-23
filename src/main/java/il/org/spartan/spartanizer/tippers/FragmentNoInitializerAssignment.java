@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @since 2015-08-07 */
 public final class FragmentNoInitializerAssignment extends $FragmentAndStatement//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = 929095358016977298L;
+  private static final long serialVersionUID = 0xCE4CF4E3910F992L;
 
   private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
     final VariableDeclarationFragment $ = copy.of(f);

@@ -29,7 +29,7 @@ import il.org.spartan.utils.*;
  * @since 2016-09-1 */
 public final class TernaryPushdownStrings extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.Ternarization {
-  private static final long serialVersionUID = 4375161244863616313L;
+  private static final long serialVersionUID = 0x3CB7B1F8BB26D539L;
 
   public static Expression replacement(@NotNull final Expression condition, final Expression then, final Expression elze) {
     return iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))

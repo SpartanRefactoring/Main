@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @since 2017-02-10 */
 public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<SingleMemberAnnotation>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 8349592040340894302L;
+  private static final long serialVersionUID = 0x73DFB5B8FFF2B25EL;
 
   @Override @NotNull public String description(@NotNull final SingleMemberAnnotation ¢) {
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";

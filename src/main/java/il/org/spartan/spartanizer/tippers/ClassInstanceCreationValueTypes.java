@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-04-06 */
 public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = 6308185220779727829L;
+  private static final long serialVersionUID = 0x578B2D093DF1DBD5L;
 
   @Override @NotNull public String description(@NotNull final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";

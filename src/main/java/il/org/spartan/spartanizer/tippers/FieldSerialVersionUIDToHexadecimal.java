@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 
 public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
   private static final String SERIAL_VERSION_UID = "serialVersionUID";
-  private static final long serialVersionUID = 918113390332393279L;
+  private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
   private VariableDeclarationFragment fragment;
   NumberLiteral initializer;
   long replacement;
@@ -27,6 +27,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   }
 
   @Override public Tip tip(FieldDeclaration ¢) {
+    canTip(¢);
     assert ¢ == fragment.getParent();
     return new Tip(description(), initializer, getClass()) {
       @Override public void go(ASTRewrite r, TextEditGroup g) {
@@ -37,22 +38,18 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     };
   }
 
-  static VariableDeclarationFragment findFragment(FieldDeclaration n) {
-    for (VariableDeclarationFragment f : fragments(n))
+  static VariableDeclarationFragment findFragment(FieldDeclaration d) {
+    for (VariableDeclarationFragment f : fragments(d))
       if (f.getName().toString().equals(SERIAL_VERSION_UID))
         return f;
     return null;
   }
 
-  @Override public boolean canTip(FieldDeclaration n) {
-    if ((fragment = findFragment(n)) == null)
-      return false;
-    if ((initializer = az.numberLiteral(fragment.getInitializer())) == null)
+  @Override public boolean canTip(FieldDeclaration d) {
+    if ((fragment = findFragment(d)) == null || (initializer = az.numberLiteral(fragment.getInitializer())) == null)
       return false;
     String token = initializer.getToken();
-    if (!iz.in(NumericLiteralClassifier.of(token), Certain.CHAR, Certain.INT, Certain.LONG))
-      return false;
-    if (token.matches("^0[xX]?.*"))
+    if (NumericLiteralClassifier.of(token) != Certain.LONG || token.matches("^0[xX]?.*"))
       return false;
     if (token.matches(".*[lL]$"))
       token = system.chopLast(token);
@@ -65,15 +62,15 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     return true;
   }
 
-  @Override public String description(FieldDeclaration n) {
-    return null;
+  String asLiteral() {
+    return String.format(//
+        replacement < 10 && replacement > -10 ? "%d" //
+            : replacement < Integer.MAX_VALUE && replacement > Integer.MIN_VALUE ? "0x%X" //
+                : "0x%XL",
+        Long.valueOf(replacement));
   }
 
-  private String asLiteral() {
-    if (replacement < 10 && replacement > -10)
-      return String.format("%d", Long.valueOf(replacement));
-    if (replacement < Integer.MAX_VALUE && replacement > Integer.MIN_VALUE)
-      return String.format("0x%X", Long.valueOf(replacement));
-    return String.format("0x%XL", Long.valueOf(replacement));
+  @Override public String description(FieldDeclaration n) {
+    return description(); 
   }
 }

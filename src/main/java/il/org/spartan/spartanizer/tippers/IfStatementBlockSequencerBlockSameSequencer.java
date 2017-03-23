@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-22 */
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = 8015068204117686495L;
+  private static final long serialVersionUID = 0x6F3B3E10E4F678DFL;
 
   @Override @Nullable public Tip tip(@NotNull final IfStatement s) {
     return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {

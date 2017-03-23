@@ -30,7 +30,7 @@ public enum TipperFactory {
       @NotNull final String description, final Option... os) {
     @NotNull final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
     return new UserDefinedTipper<Block>() {
-      static final long serialVersionUID = 4793662826325577880L;
+      static final long serialVersionUID = 0x428682F150219098L;
 
       @Override @NotNull public Tip tip(final Block n) {
         return new Tip(description(n), n, getClass(), $.getMatchedNodes(az.block(n))) {
@@ -83,7 +83,7 @@ public enum TipperFactory {
       @NotNull final String description) {
     @NotNull final Matcher $ = Matcher.patternMatcher(pattern, replacement);
     return new UserDefinedTipper<N>() {
-      static final long serialVersionUID = 2503735679621778024L;
+      static final long serialVersionUID = 0x22BF0E55D353CA68L;
 
       @Override @NotNull public String description(@SuppressWarnings("unused") final N __) {
         return description;

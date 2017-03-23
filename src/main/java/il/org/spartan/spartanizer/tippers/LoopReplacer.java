@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-05 */
 public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNode<S> {
-  private static final long serialVersionUID = 648254692142989542L;
+  private static final long serialVersionUID = 0x8FF10353929C0E6L;
   protected Statement body;
   @Nullable protected Block block;
   protected List<Statement> statements;

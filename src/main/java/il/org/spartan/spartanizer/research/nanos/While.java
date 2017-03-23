@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-29 */
 public class While {
   public static class CountIf extends NanoPatternTipper<WhileStatement> {
-    private static final long serialVersionUID = 1576383489015990127L;
+    private static final long serialVersionUID = 0x15E0706E6496C76FL;
     private static final String description = "CountIf pattern: conevrt to fluent API";
     private static final List<UserDefinedTipper<WhileStatement>> tippers = as.list(
         patternTipper("while($X1) if($X2) ++$N3;", "$N3 += countWhile(()->$X1).If(()->$X2);", description),

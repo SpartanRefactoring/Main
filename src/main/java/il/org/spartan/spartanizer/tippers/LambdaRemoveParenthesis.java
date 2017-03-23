@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
 public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 4825405081215291398L;
+  private static final long serialVersionUID = 0x42F7485AF333D006L;
 
   @Override protected boolean prerequisite(@NotNull final LambdaExpression ¢) {
     return ¢.hasParentheses() && az.variableDeclrationFragment(onlyOne(parameters(¢))) != null;

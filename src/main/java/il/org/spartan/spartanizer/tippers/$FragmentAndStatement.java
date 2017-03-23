@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDeclarationFragment> {
-  private static final long serialVersionUID = 7723281513517888L;
+  private static final long serialVersionUID = 0x1B70489B1D1340L;
 
   @Override public boolean prerequisite(@Nullable final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;

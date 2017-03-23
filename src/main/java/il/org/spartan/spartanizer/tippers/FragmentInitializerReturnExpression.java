@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnExpression extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 1067290925840665930L;
+  private static final long serialVersionUID = 0xECFC7713ABB0D4AL;
 
   @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";

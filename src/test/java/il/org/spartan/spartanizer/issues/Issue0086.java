@@ -120,7 +120,7 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void doubleVanillaThrow() {
     A$04_init();
-    trimmingOf("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f();" + " a = 3; return 2;}")//
+    trimmingOf("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
         .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();}")//
