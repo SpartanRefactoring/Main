@@ -22,11 +22,11 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-22 */
 abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
+  private static final long serialVersionUID = 6120092571084023313L;
   public $Fragment() {
     System.err.println("Constructing " + myClass());
   }
 
-  private static final long serialVersionUID = 1;
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
     if (haz.annotation(¢) || ¢ == null)
