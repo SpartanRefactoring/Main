@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-22 */
-public class ConcatenateStringLiterals extends ReplaceCurrentNode<InfixExpression> //
+public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpression> //
     implements TipperCategory.NOP {
   private static final long serialVersionUID = -4282740939895750794L;
 
