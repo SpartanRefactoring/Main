@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM} */
 public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {
-  private static final long serialVersionUID = 8781877067464919917L;
+  private static final long serialVersionUID = 0x79DF7EAA1B654B6DL;
 
   @Override @NotNull public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;

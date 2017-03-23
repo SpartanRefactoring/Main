@@ -28,7 +28,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 23-12-2016 */
 public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 1100106642368933500L;
+  private static final long serialVersionUID = 0xF445D29A172AE7CL;
 
   @Override @NotNull @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration with initialization into two statemenets";

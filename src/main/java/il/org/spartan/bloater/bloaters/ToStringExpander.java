@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-20 */
 public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 2259745231803950939L;
+  private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
   @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
     if (¢.getOperator() != Operator.PLUS || ¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null

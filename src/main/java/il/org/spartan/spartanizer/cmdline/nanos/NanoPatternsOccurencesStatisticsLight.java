@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 2, 2017 */
 public class NanoPatternsOccurencesStatisticsLight extends HashMap<String, NanoPatternRecord> {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   public void logNPInfo(@NotNull final ASTNode n, final String np) {
     if (!containsKey(np))

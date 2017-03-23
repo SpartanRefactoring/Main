@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since Sep 25, 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Arithmetic {
-  private static final long serialVersionUID = 1256631384728667790L;
+  private static final long serialVersionUID = 0x11707396245C068EL;
 
   private static int indexForLeftEvaluation(@NotNull final InfixExpression x) {
     int $ = 0;

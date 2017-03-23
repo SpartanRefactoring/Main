@@ -22,6 +22,6 @@ public class measureTest {
   }
 
   @Test public void c() {
-    azzert.that(measure.commands(ast("public void foo(){int x;" + "foo(x,x);}")), is(1));
+    azzert.that(measure.commands(ast("public void foo(){int x;foo(x,x);}")), is(1));
   }
 }

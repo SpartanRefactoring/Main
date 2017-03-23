@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = 5806282917111501608L;
+  private static final long serialVersionUID = 0x50940F8CD3D99328L;
 
   @Nullable public abstract ASTNode replacement(N n);
 

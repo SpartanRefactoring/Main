@@ -68,6 +68,6 @@ public class Issue0686 {
   }
 
   public static class NotAString<T> extends ArrayList<T> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
   }
 }

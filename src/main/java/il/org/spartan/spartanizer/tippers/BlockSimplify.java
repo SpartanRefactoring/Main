@@ -22,7 +22,7 @@ import il.org.spartan.utils.range.*;
  * @since 2015-07-29 */
 public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 5922696779617973428L;
+  private static final long serialVersionUID = 0x5231A5575D7AB4B4L;
 
   static Statement reorganizeNestedStatement(@NotNull final Statement ¢) {
     @NotNull final List<Statement> $ = extract.statements(¢);

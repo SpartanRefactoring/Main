@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-15 */
 public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = 1791362595323626807L;
+  private static final long serialVersionUID = 0x18DC32CA162FC537L;
 
   @Override @NotNull public final Tip tip(@NotNull final N n) {
     return new Tip(description(n), n, getClass()) {

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = 5265347217554350758L;
+  private static final long serialVersionUID = 0x49124565B96B22A6L;
 
   @Override public boolean prerequisite(@NotNull final N current) {
     @Nullable final Statement $ = extract.nextStatement(current);

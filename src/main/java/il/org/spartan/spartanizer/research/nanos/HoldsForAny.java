@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-05 */
 public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
-  private static final long serialVersionUID = 3787670358656343399L;
+  private static final long serialVersionUID = 0x3490821F8DFCDD67L;
   private static final String description = "Any matches pattern. Consolidate into one statement";
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer()
       .statementsPattern("for($T $N1 : $X1) if($X2) return true; return false;", //

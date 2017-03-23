@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTipper<N> {
-  private static final long serialVersionUID = 8457801982809504043L;
+  private static final long serialVersionUID = 0x756026178DF4792BL;
 
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "Go Fluent: Generalized Switch";

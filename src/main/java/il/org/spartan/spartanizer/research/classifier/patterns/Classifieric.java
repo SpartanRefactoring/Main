@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2016 */
 public class Classifieric {
   public static class Contains extends NanoPatternTipper<ForStatement> {
-    private static final long serialVersionUID = 5116513590957590562L;
+    private static final long serialVersionUID = 0x47018200A57C4822L;
     final Collection<UserDefinedTipper<ForStatement>> tippers = as.list(//
         patternTipper("for (int $N0 = $N1; $N0 < $N2; ++$N0)  if ($N3[$N0] == $N4)    return $N0;", "contains();", "contains"));
 

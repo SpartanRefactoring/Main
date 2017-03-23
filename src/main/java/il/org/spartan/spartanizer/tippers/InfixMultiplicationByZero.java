@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @see {@link sideEffects} */
 public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  private static final long serialVersionUID = 6129844664553603029L;
+  private static final long serialVersionUID = 0x5511953EBF0A7FD5L;
 
   private static boolean containsZero(@NotNull final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> iz.numberLiteral(λ) && "0".equals(az.numberLiteral(λ).getToken()));

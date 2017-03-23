@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
-  private static final long serialVersionUID = 1656113602362467840L;
+  private static final long serialVersionUID = 0x16FBB28C0081E600L;
 
   /** Consider an expression {@code
                                          * a ? b : c

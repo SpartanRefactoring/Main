@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * @since 2017-01-02 */
 public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 4265122877786904832L;
+  private static final long serialVersionUID = 0x3B30C2A8E5E15900L;
 
   @Override @NotNull public Tip tip(@NotNull final ParenthesizedExpression x) {
     return new Tip(description(x), x, getClass()) {

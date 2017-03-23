@@ -176,7 +176,7 @@ public class Table extends Row<Table> implements Closeable {
     return this;
   }
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   public static String classToNormalizedFileName(@NotNull final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());

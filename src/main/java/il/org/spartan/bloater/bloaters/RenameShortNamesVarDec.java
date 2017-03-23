@@ -31,7 +31,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 // TODO: Raviv Rachmiel take care of single var decleration, tests
 public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 7211961334502931214L;
+  private static final long serialVersionUID = 0x6416089F84E63B0EL;
 
   @Override @NotNull public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";

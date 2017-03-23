@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-19 */
 public final class TryBodyNotEmptyNoCatchesNoFinallyRemove extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 8032399675463811972L;
+  private static final long serialVersionUID = 0x6F78D0F285FBC384L;
 
   @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
     return !statements(body(¢)).isEmpty() && ¢.resources().isEmpty() && ¢.catchClauses().isEmpty()

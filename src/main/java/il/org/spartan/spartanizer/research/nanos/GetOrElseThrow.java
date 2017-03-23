@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-29 */
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
-  private static final long serialVersionUID = 2369640174584695552L;
+  private static final long serialVersionUID = 0x20E2A72F139D8B00L;
   private static final String description = "replace with azzert.notNull(X)";
   private static final NotNullOrThrow assertNotNull = new NotNullOrThrow();
 

@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class FragmentInitializerReturnAssignment extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 1334179326644184831L;
+  private static final long serialVersionUID = 0x1283F5075F4BE6FFL;
 
   @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";

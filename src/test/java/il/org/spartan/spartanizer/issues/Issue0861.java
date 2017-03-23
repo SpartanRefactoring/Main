@@ -14,13 +14,13 @@ public class Issue0861 {
   @Test public void t1() {
     trimmingOf("switch(x) {case 1:x=2;y=1;z=3;break;case 2:y=1;break;case 3:y=2;throw new Exception();case 4:y=3;continue;case 5:y=1+x+y+z;break;")
         .gives(
-            "switch(x) {case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 3:y=2;throw new Exception();" + "case 4:y=3;continue;case 5:y=1+x+y+z;break;")
+            "switch(x) {case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 3:y=2;throw new Exception();case 4:y=3;continue;case 5:y=1+x+y+z;break;")
         .gives(
-            "switch(x) {case 2:y=1;break;case 3:y=2;throw new Exception();case 1:x=2;y=1;z=3;break;" + "case 4:y=3;continue;case 5:y=1+x+y+z;break;")
+            "switch(x) {case 2:y=1;break;case 3:y=2;throw new Exception();case 1:x=2;y=1;z=3;break;case 4:y=3;continue;case 5:y=1+x+y+z;break;")
         .gives(
-            "switch(x) {case 3:y=2;throw new Exception();case 2:y=1;break;case 1:x=2;y=1;z=3;break;" + "case 4:y=3;continue;case 5:y=1+x+y+z;break;")
+            "switch(x) {case 3:y=2;throw new Exception();case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 4:y=3;continue;case 5:y=1+x+y+z;break;")
         .gives(
-            "switch(x) {case 3:y=2;throw new Exception();case 2:y=1;break;case 1:x=2;y=1;z=3;break;" + "case 5:y=1+x+y+z;break;case 4:y=3;continue;")
+            "switch(x) {case 3:y=2;throw new Exception();case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 5:y=1+x+y+z;break;case 4:y=3;continue;")
         .stays();
   }
 

@@ -13,12 +13,12 @@ import il.org.spartan.bloater.bloaters.*;
 public class Issue0970 {
   @Test public void test0() {
     bloatingOf("try{int a; a=a+1;}catch(Type1 | Type2 e){int z;z=2;return z;}")
-        .gives("try{int a; a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;" + "z=2;return z;}").stays();
+        .gives("try{int a; a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;z=2;return z;}").stays();
   }
 
   @Test public void test1() {
     bloatingOf("try{int a; a=a+1;}catch(Type1 | Type2 e){int z;z=2;return z;}finally {return t;}")
-        .gives("try{int a; a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;" + "z=2;return z;}finally {return t;}").stays();
+        .gives("try{int a; a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;z=2;return z;}finally {return t;}").stays();
   }
 
   @Test public void test2() {
@@ -29,15 +29,15 @@ public class Issue0970 {
   }
 
   @Test public void test3() {
-    bloatingOf("try{int a; a=a+1;}catch (Exception e){f();g();}catch(Type1 | Type2 e){int z;z=2;" + "return z;}finally {return t;}")
+    bloatingOf("try{int a; a=a+1;}catch (Exception e){f();g();}catch(Type1 | Type2 e){int z;z=2;return z;}finally {return t;}")
         .gives("try{int a; a=a+1;}catch (Exception e){f();g();}catch(Type1 e){int z;z=2;return z;"
             + "}catch(Type2 e){int z;z=2;return z;}finally {return t;}")
         .stays();
   }
 
   @Test public void test4() {
-    bloatingOf("try{int a; a=a+1;}catch(Type1 | Type2 e){int z;z=2;return z;}" + "catch (Exception e){f();g();}finally {return t;}").gives(
-        "try{int a;a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e)" + "{int z;z=2;return z;}catch(Exception e){f();g();}finally{return t;}")
+    bloatingOf("try{int a; a=a+1;}catch(Type1 | Type2 e){int z;z=2;return z;}catch (Exception e){f();g();}finally {return t;}").gives(
+        "try{int a;a=a+1;}catch(Type1 e){int z;z=2;return z;}catch(Type2 e){int z;z=2;return z;}catch(Exception e){f();g();}finally{return t;}")
         .stays();
   }
 

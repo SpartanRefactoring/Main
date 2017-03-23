@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 18-11-2016 */
 public class InfixSimplifyComparisionOfSubtractions extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = 1584961763997960580L;
+  private static final long serialVersionUID = 0x15FEEA53ADACC984L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression x) {
     if (!isLiegal(x) || !az.infixExpression(x.getLeftOperand()).extendedOperands().isEmpty()

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016/05/08 */
 public final class MethodInvocationEqualsWithLiteralString2 extends ReplaceCurrentNode<MethodInvocation>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = 5039278220973820474L;
+  private static final long serialVersionUID = 0x45EF1CD7BD81CA3AL;
   static final List<String> mns = as.list("equals", "equalsIgnoreCase");
 
   private static ASTNode replacement(@NotNull final SimpleName n, final Expression ¢, final Expression x) {

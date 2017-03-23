@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<IfStatement>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = 627788367860581003L;
+  private static final long serialVersionUID = 0x8B65A31C473C28BL;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";

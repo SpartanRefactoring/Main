@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 7460439456362668944L;
+  private static final long serialVersionUID = 0x6788CE2890CE2390L;
   public static final String DESCRIPTION = "Simplify 'for(?;true;?)' to 'for(?;;?)'";
 
   @NotNull private static ForStatement buildForWithoutCondition(@NotNull final ForStatement $) {

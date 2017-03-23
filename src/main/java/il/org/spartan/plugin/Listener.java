@@ -53,7 +53,7 @@ public interface Listener {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2.6 */
   class S extends ArrayList<Listener> implements Listener {
-    private static final long serialVersionUID = 8279888509256023167L;
+    private static final long serialVersionUID = 0x72E812BAFE0B3C7FL;
 
     /** for fluent API use, i.e., <code>
                                             *
