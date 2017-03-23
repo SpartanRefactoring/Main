@@ -10,8 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0292 {
   @Test public void stringfFinalStringBuffersbNewStringBufferStringlineForlinereaderreadLineNullsbappendlineReturnsb() {
-    trimmingOf(
-        //
+    trimmingOf( //
         "A a() {" + //
             " final B b = new B();" + //
             " A c;" + //
@@ -19,7 +18,7 @@ public class Issue0292 {
             "   ;" + //
             " return b + \"\";" + //
             "}"//
-    ).gives( // Edit this to reflect your expectation
+    ).gives( //
         "A a() {" + //
             " final B b = new B();" + //
             " for (A c; (c = d.e()) != null; b.f(c))" + //
