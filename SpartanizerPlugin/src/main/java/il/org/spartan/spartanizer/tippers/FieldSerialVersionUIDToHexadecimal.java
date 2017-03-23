@@ -1,10 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,6 +24,15 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   private VariableDeclarationFragment fragment;
   NumberLiteral initializer;
   long replacement;
+
+  @Override @NotNull public Example[] examples() {
+    return new Example[] { //
+        convert("private long " + SERIAL_VERSION_UID + " = 1234567799L;")//
+            .to("private long " + SERIAL_VERSION_UID + " = 1234567799;"),
+        ignores("private long int a = 3;"), //
+        ignores("long int a = 3;"), //
+    };
+  }
 
   @Override public String description() {
     return String.format("Convert %s to hexadecimal", initializer == null ? "initializer" : "'" + initializer.getToken() + "'");
@@ -71,6 +83,6 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   }
 
   @Override public String description(@SuppressWarnings("unused") FieldDeclaration d) {
-    return description(); 
+    return description();
   }
 }

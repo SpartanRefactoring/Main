@@ -5,7 +5,8 @@ import java.util.stream.*;
 
 import org.jetbrains.annotations.*;
 
-/** An abstract reducer
+/** An abstract reducer of an associative, but not necessarily commutative
+ * operation. This operation must also have a neutral element (#{@link Reduce}).
  * @param <R>
  * @since 2017-01-29 */
 public abstract class Reduce<@¢ R> {
