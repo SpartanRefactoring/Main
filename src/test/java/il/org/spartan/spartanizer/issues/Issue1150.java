@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
+import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+
 import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
-
-import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 /** unit tests for {@link InfixStringLiteralsConcatenate}
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>

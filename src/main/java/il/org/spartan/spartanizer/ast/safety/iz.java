@@ -661,7 +661,8 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return whether the given node is a method decleration or false otherwise */
+   * @return whether the given node is a method decleration or false
+   *         otherwise */
   static boolean isMethodDeclaration(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, METHOD_DECLARATION);
   }
