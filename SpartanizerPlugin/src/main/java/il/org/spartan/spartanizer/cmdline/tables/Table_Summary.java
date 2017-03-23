@@ -57,13 +57,7 @@ public class Table_Summary extends NanoTable {
           statistics.logCompilationUnit(¢);
           final String spartanzied = spartanizer.fixedPoint(¢);
           logAfterSpartanization(into.cu(spartanzied));
-          final String analyzed = analyze.apply(spartanzied);
-          into.cu(analyzed).accept(new ASTVisitor() {
-            @Override public boolean visit(EnhancedForStatement node) {
-              System.out.println(node);
-              return super.visit(node);
-            }
-          });
+          analyze.apply(spartanzied);
         } catch (@NotNull final AssertionError | MalformedTreeException | IllegalArgumentException __) {
           ___.unused(__);
         }
