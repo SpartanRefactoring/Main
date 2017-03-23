@@ -52,7 +52,9 @@ public class InflaterProvider extends OperationsProvider {
         .add(SwitchStatement.class, //
             new CasesSplit())//
         .add(Assignment.class, //
-            new AssignmentOperatorBloater())//
+            new AssignmentOperatorBloater()//
+            //new PlusAssignToPostfix())//
+            )
         .add(TryStatement.class, //
             new MultiTypeCatchClause())//
         .add(VariableDeclarationStatement.class, //
