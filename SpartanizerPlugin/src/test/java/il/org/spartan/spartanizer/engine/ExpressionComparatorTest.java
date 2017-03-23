@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public final class ExpressionComparatorTest {
   @Test public void additionSortTest() {
     assert ExpressionComparator.ADDITION.sort(new ArrayList<Expression>() {
-      static final long serialVersionUID = 1L;
+      
       {
         add(e("-a"));
         add(e("d+b"));
@@ -165,7 +165,7 @@ public final class ExpressionComparatorTest {
 
   @Test public void prudentSortTest() {
     assert !ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
-      static final long serialVersionUID = 1L;
+      
       {
         add(e("a"));
         add(e("d"));
@@ -177,7 +177,7 @@ public final class ExpressionComparatorTest {
 
   @Test public void prudentSortTest2() {
     assert ExpressionComparator.PRUDENT.sort(new ArrayList<Expression>() {
-      static final long serialVersionUID = 1L;
+      
       {
         add(e("a"));
         add(e("ds+fe"));
