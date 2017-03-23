@@ -34,8 +34,8 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     return new Example[] {
         convert("do{}while(x();y();z());")//
             .to("do;while(x();y();z());"), //
-        Example.ignores("do{f();g();}while(x();y();z());"), //
-        Example.ignores("do;while(x();y();z());")//
+        ignores("do{f();g();}while(x();y();z());"), //
+        ignores("do;while(x();y();z());")//
     };
   }
 

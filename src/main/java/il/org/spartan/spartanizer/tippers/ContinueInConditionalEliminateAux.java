@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Auxilary class for all tippers toList Issue #1014
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */
-enum EliminateConditionalContinueAux {
+enum ContinueInConditionalEliminateAux {
   ;
   @SuppressWarnings("rawtypes") @Nullable public static Tip actualReplacement(@Nullable final Block b, @NotNull final Statement s,
       final Class<? extends Tipper> c) {
