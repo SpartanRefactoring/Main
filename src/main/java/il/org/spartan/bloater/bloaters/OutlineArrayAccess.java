@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -31,16 +30,16 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 3783281424560338347L;
 
-  @Nullable @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
+  @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }
 
-  @NotNull @Override public Fragment tip(@NotNull final ArrayAccess a) {
+  @Override public Tip tip(final ArrayAccess a) {
     final Expression $ = copy.of(a.getIndex());
-    @Nullable final ASTNode b = extract.containingStatement(a);
+    final ASTNode b = extract.containingStatement(a);
     final AST t = b.getAST();
-    return new Fragment(description(a), a, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+    return new Tip(description(a), a, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(b.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = copy.of(a);
         if (iz.postfixExpression($)) {
@@ -56,15 +55,15 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override protected boolean prerequisite(@NotNull final ArrayAccess a) {
+  @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
-    @Nullable final Statement b = extract.containingStatement(a);
+    final Statement b = extract.containingStatement(a);
     if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.incrementOrDecrement(e) || iz.assignment(e))
       return false;
     final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
     if (n == null)
       return false;
-    @Nullable final Assignment $ = az.assignment(expression(az.expressionStatement(b)));
+    final Assignment $ = az.assignment(expression(az.expressionStatement(b)));
     return $ != null && left($).equals(a) && iz.plainAssignment($) && !iz.containsName(n, right($));
   }
 }

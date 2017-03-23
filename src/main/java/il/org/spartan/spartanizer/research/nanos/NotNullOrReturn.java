@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -26,26 +25,38 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   private static final String description = "replace with azzert.notNull(X)";
   private static final lazy<PreconditionNotNull> rival = lazy.get(PreconditionNotNull::new);
 
-  @Override public boolean canTip(@NotNull final IfStatement ¢) {
+  @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
         && returnsDefault(then(¢)) //
         && rival.get().cantTip(¢)//
     ;
   }
 
-  @NotNull @Override public Fragment pattern(@NotNull final IfStatement ¢) {
-    return new Fragment(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+  @Override public Tip pattern(final IfStatement ¢) {
+    return new Tip(description(¢), ¢, getClass()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }
 
-  @NotNull @Override public String description() {
+  @Override public Category category() {
+    return Category.Safety;
+  }
+
+  @Override public String description() {
     return description;
   }
 
-  @NotNull @Override public String nanoName() {
-    return "NotNullAssumed";
+  @Override public String technicalName() {
+    return "IfXIsNullReturn";
+  }
+
+  @Override public String example() {
+    return "if(X == null) return;";
+  }
+
+  @Override public String symbolycReplacement() {
+    return "azzert.notNull(X);";
   }
 }

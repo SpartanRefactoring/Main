@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -28,7 +27,7 @@ public final class IfEmptyThen extends ReplaceCurrentNode<IfStatement>//
     return iz.vacuousThen(¢) && !iz.vacuousElse(¢);
   }
 
-  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+  @Override public Statement replacement(final IfStatement ¢) {
     final IfStatement $ = subject.pair(elze(¢), null).toNot(¢.getExpression());
     return !iz.blockRequiredInReplacement(¢, $) ? $ : subject.statement($).toBlock();
   }

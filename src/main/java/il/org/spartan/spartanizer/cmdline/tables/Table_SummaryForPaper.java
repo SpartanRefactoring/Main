@@ -9,7 +9,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -44,25 +43,25 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     System.err.println("Your output is in: " + system.tmp);
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     compilationUnitRecords.add(foo(¢));
     ¢.accept(new CleanerVisitor());
     return true;
   }
 
-  @NotNull private CompilationUnitRecord foo(@NotNull final CompilationUnit ¢) {
-    @NotNull final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
+  private CompilationUnitRecord foo(final CompilationUnit ¢) {
+    final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
     $.setPath(absolutePath);
     $.setRelativePath(relativePath);
     return $;
   }
 
-  @Override public boolean visit(@NotNull final PackageDeclaration ¢) {
+  @Override public boolean visit(final PackageDeclaration ¢) {
     packages.add(¢.getName().getFullyQualifiedName());
     return true;
   }
 
-  @Override @SuppressWarnings("unused") public boolean visit(@NotNull final TypeDeclaration $) {
+  @Override @SuppressWarnings("unused") public boolean visit(final TypeDeclaration $) {
     // if (!excludeMethod($))
     try {
       final Integer key = box.it(measure.commands($));
@@ -70,15 +69,15 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       CUStatistics.putIfAbsent(key, new ArrayList<>());
       classStatistics.putIfAbsent(key, new ArrayList<>());
       //
-      @NotNull final ClassRecord c = new ClassRecord($);
+      final ClassRecord c = new ClassRecord($);
       classRecords.push(c);
       classStatistics.get(key).add(c);
       findFirst.instanceOf(TypeDeclaration.class).in(ast(Wrap.OUTER.off(spartanalyzer.fixedPoint(Wrap.OUTER.on($ + "")))));
-    } catch (@NotNull final AssertionError __) {
+    } catch (final AssertionError __) {
       System.err.print("X");
-    } catch (@NotNull final NullPointerException __) {
+    } catch (final NullPointerException __) {
       System.err.print("N");
-    } catch (@NotNull final IllegalArgumentException __) {
+    } catch (final IllegalArgumentException __) {
       System.err.print("I");
     }
     return true; // super.visit($);
@@ -114,7 +113,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     return productionCompilationUnits().mapToInt(λ -> λ.linesOfCode).sum();
   }
 
-  private boolean noTests(@NotNull final CompilationUnitRecord ¢) {
+  private boolean noTests(final CompilationUnitRecord ¢) {
     return ¢.noTests();
   }
 

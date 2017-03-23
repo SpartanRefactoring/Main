@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -26,11 +25,11 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
     return tipper.check(az.block(parent(x)));
   }
 
-  @Nullable @Override public Fragment pattern(final IfStatement $) {
+  @Override public Tip pattern(final IfStatement $) {
     return tipper.tip(az.block(parent($)));
   }
 
-  @NotNull @Override public Category category() {
+  @Override public Category category() {
     return Category.Field;
   }
 

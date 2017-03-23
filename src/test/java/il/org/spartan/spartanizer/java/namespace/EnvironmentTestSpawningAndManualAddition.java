@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -54,7 +54,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
     azzert.that(e0.name(), is(""));
   }
 
-  // TODO Yossi Gil
+  // TODO: Yossi Gil
   @Ignore @Test public void defaultSize() {
     azzert.that(e0.size(), is(0));
     azzert.that(e0.fullSize(), is(0));
@@ -93,7 +93,7 @@ public final class EnvironmentTestSpawningAndManualAddition {
     assert !ee1.empty();
   }
 
-  // TODO Yossi Gil
+  // TODO: Yossi Gil
   @Ignore @Test public void fullSize() {
     azzert.that(e0.fullSize(), is(0));
   }

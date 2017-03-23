@@ -3,9 +3,8 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import java.text.*;
-import java.util.stream.*;
+import java.util.stream.IntStream;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -65,7 +64,7 @@ public class EnglishTest {
   }
 
   @Test public void testTrimAbsoluteTrimsOnLongStrings() {
-    @NotNull final StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     IntStream.rangeClosed(0, English.TRIM_THRESHOLD).forEach(λ -> sb.append("a"));
     azzert.that(English.trimAbsolute(sb + "", English.TRIM_THRESHOLD, English.TRIM_SUFFIX),
         is((sb + "").substring(0, (sb + "").length() - 4) + English.TRIM_SUFFIX));
@@ -82,8 +81,8 @@ public class EnglishTest {
   }
 
   @Test @SuppressWarnings("boxing") public void testUnknownIfNullWithFunction() {
-    azzert.that(English.unknownIfNull(Integer.valueOf(1), (@NotNull final Integer ¢) -> ¢ + 1), is("2"));
-    azzert.that(English.unknownIfNull(new Int(1), (@NotNull final Int ¢) -> Integer.valueOf(2)), is("2"));
-    azzert.that(English.unknownIfNull(null, (@NotNull final Integer ¢) -> ¢ + 1), is(English.UNKNOWN));
+    azzert.that(English.unknownIfNull(Integer.valueOf(1), (final Integer ¢) -> ¢ + 1), is("2"));
+    azzert.that(English.unknownIfNull(new Int(1), (final Int ¢) -> Integer.valueOf(2)), is("2"));
+    azzert.that(English.unknownIfNull(null, (final Integer ¢) -> ¢ + 1), is(English.UNKNOWN));
   }
 }

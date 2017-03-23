@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -15,7 +14,7 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -6688424526648227862L;
 
-  @Override public ASTNode replacement(@NotNull final TypeDeclaration ¢) {
+  @Override public ASTNode replacement(final TypeDeclaration ¢) {
     if (¢.isInterface() || !wizard.isObject(¢.getSuperclassType()))
       return null;
     final TypeDeclaration $ = copy.of(¢);
@@ -23,7 +22,7 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
     return $;
   }
 
-  @NotNull @Override public String description(@NotNull final TypeDeclaration ¢) {
+  @Override public String description(final TypeDeclaration ¢) {
     return "Trim implicit extends " + ¢.getSuperclassType();
   }
 

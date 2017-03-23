@@ -5,7 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -20,11 +19,11 @@ public final class AnnotationDiscardValueName extends ReplaceCurrentNode<NormalA
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 8644185174325773037L;
 
-  @NotNull @Override public String description(@NotNull final NormalAnnotation ¢) {
+  @Override public String description(final NormalAnnotation ¢) {
     return "Remove the \"value\" member from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @Override public ASTNode replacement(@NotNull final NormalAnnotation a) {
+  @Override public ASTNode replacement(final NormalAnnotation a) {
     final MemberValuePair p = onlyOne(values(a));
     if (p == null || !"value".equals(p.getName() + ""))
       return null;

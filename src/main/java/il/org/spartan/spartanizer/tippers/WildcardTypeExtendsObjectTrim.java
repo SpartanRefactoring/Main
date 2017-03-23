@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,11 +15,11 @@ public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<Wild
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 6954094761117949540L;
 
-  @NotNull @Override public String description(final WildcardType ¢) {
+  @Override public String description(final WildcardType ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 
-  @Override public WildcardType replacement(@NotNull final WildcardType ¢) {
+  @Override public WildcardType replacement(final WildcardType ¢) {
     if (!¢.isUpperBound() || !wizard.isObject(¢.getBound()))
       return null;
     final WildcardType $ = copy.of(¢);

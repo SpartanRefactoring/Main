@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -18,7 +17,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
     return tippers.canTip(¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final InfixExpression ¢) {
+  @Override public Tip pattern(final InfixExpression ¢) {
     return tippers.firstTip(¢);
   }
 
@@ -38,7 +37,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @NotNull @Override public NanoPatternTipper.Category category() {
+  @Override public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

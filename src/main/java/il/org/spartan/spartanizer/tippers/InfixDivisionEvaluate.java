@@ -8,7 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -32,12 +31,12 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
     double $ = 0;
     try {
       $ = az.throwing.double¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for (final Expression ¢ : rest(xs)) {
         if (az.throwing.double¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.double¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -49,14 +48,14 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
       if (type.of(first(xs)) == Certain.DOUBLE || type.of(first(xs)) == Certain.LONG)
         throw new NumberFormatException();
       $ = az.throwing.int¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for (final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         if (az.throwing.int¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.int¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -68,14 +67,14 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
       if (type.of(first(xs)) == Certain.DOUBLE)
         throw new NumberFormatException();
       $ = az.throwing.long¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for (final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
         if (az.throwing.long¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
         $ /= az.throwing.long¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.util.*;
 
@@ -14,7 +13,7 @@ public class ClassRecord {
   public static int numStatements;
   public static int numExpressions;
 
-  public ClassRecord(@NotNull final TypeDeclaration t) {
+  public ClassRecord(final TypeDeclaration t) {
     before = t;
     className = t.getName() + "";
     numStatements = measure.commands(t);

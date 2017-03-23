@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -15,7 +14,7 @@ public class DoNothingReturnThis extends JavadocMarkerNanoPattern {
         && returnsThis(¢);
   }
 
-  @NotNull @Override public Category category() {
+  @Override public Category category() {
     return Category.Default;
   }
 }

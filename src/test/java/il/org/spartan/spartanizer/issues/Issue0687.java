@@ -7,7 +7,6 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -30,7 +29,7 @@ public class Issue0687 {
 
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
-    @Nullable final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
+    final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
     azzert.that(first(n), iz("a"));
     azzert.that(n.get(1), iz("b"));
     azzert.that(n.get(2), iz("System"));
@@ -43,7 +42,7 @@ public class Issue0687 {
   }
 
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
-    @Nullable final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
+    final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
     assert "aba".equals(first(names) + "") && "ima".equals(names.get(1) + "");
   }
 

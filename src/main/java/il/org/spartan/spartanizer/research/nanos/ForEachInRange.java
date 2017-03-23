@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -24,15 +23,27 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Nullable @Override public Fragment pattern(@NotNull final ForStatement ¢) {
+  @Override public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @NotNull @Override public String description() {
+  @Override public String description() {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @NotNull @Override public String nanoName() {
-    return "ForFromTo";
+  @Override public String technicalName() {
+    return "ForEachFromL₁ToL₂ApplyS";
+  }
+
+  @Override public Category category() {
+    return Category.Iterative;
+  }
+
+  @Override public String example() {
+    return firstPattern(tippers);
+  }
+
+  @Override public String symbolycReplacement() {
+    return firstReplacement(tippers);
   }
 }

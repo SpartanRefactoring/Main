@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -29,17 +28,17 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 321955529348174125L;
 
-  @NotNull @Override public String description(final SingleVariableDeclaration ¢) {
+  @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 
-  @Override public Fragment tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
-    @Nullable final EnhancedForStatement $ = az.enhancedFor(parent(d));
+  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager m) {
+    final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
       return null;
-    @Nullable final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
+    final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
     if (p1 instanceof MethodDeclaration)
-      for (@NotNull final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
+      for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
         if (in(sn.getIdentifier(), namer.it))
@@ -59,15 +58,15 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToCent ext
     if (m != null)
       m.exclude(body);
     final SimpleName ¢ = namer.newCurrent(d);
-    return isNameDefined($, ¢) ? null : new Fragment("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
+    return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Tippers.rename(n, ¢, $, r, g);
       }
     };
   }
 
-  private static boolean isNameDefined(@NotNull final Statement s, final SimpleName n) {
-    @Nullable final Statement $ = az.statement(s.getParent());
+  private static boolean isNameDefined(final Statement s, final SimpleName n) {
+    final Statement $ = az.statement(s.getParent());
     return Environment
         .of($ == null ? s : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)
         .has(identifier(n));

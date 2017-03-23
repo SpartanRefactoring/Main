@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -19,13 +18,13 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -2161530114677301355L;
 
-  @Nullable @Override public ASTNode replacement(@Nullable final WhileStatement s) {
+  @Override public ASTNode replacement(final WhileStatement s) {
     if (s == null)
       return null;
     final WhileStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
-    @NotNull final Collection<Boolean> cc = new ArrayList<>();
+    final Collection<Boolean> cc = new ArrayList<>();
     // noinspection SameReturnValue
     body(s).accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
@@ -39,7 +38,7 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     return $;
   }
 
-  @NotNull @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "expand to block";
   }
 }

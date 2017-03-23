@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -17,12 +16,11 @@ public abstract class $FragementInitializerAndStatement extends ReplaceToNextSta
   protected ASTRewrite rewrite;
   protected TextEditGroup editGroup;
 
-  @NotNull @Override public abstract String description(VariableDeclarationFragment f);
+  @Override public abstract String description(VariableDeclarationFragment f);
 
-  @NotNull abstract ASTRewrite go();
+  abstract ASTRewrite go();
 
-  @NotNull @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement s,
-      final TextEditGroup g) {
+  @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement s, final TextEditGroup g) {
     nextStatement = s;
     fragment = f;
     rewrite = r;

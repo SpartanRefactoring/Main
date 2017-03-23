@@ -10,7 +10,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Annotation;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -84,7 +83,7 @@ public class definitionTest extends MetaFixture {
 
   @Test public void a09() {
     for (final MarkerAnnotation a : markers())
-      for (@NotNull final SimpleName ¢ : annotees.of(a))
+      for (final SimpleName ¢ : annotees.of(a))
         assert ¢ != null;
   }
 
@@ -101,7 +100,7 @@ public class definitionTest extends MetaFixture {
 
   @Test public void a12() {
     for (@foreach final Annotation a : annotations())
-      for (@NotNull @foreach final SimpleName ¢ : annotees.of(a))
+      for (@foreach final SimpleName ¢ : annotees.of(a))
         assert ¢ != null : a;
   }
 
@@ -137,7 +136,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a19() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ != null)
         assert first(annotees.of(az.singleMemberAnnotation(¢))) != null : ¢;
     }
@@ -175,7 +174,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a27() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
         azzert.that(x + ": " + annotees.of(x) + ancestry(first(annotees.of(x))), scope.of(first(annotees.of(x))).size(),
             is(value(x)));
@@ -184,14 +183,14 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a28() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ == null)
         continue;
       final List<SimpleName> ns = annotees.of(¢);
       assert ns != null;
       final SimpleName n = first(ns);
       assert n != null;
-      @Nullable final List<? extends ASTNode> s = scope.of(n);
+      final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
           "\n\t scope = " + s + //
           "\n\t ¢ = " + ¢ + //
@@ -203,7 +202,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a29() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ == null)
         continue;
       final List<SimpleName> ns = annotees.of(¢);
@@ -212,7 +211,7 @@ public class definitionTest extends MetaFixture {
       assert n != null;
       if (!"hashCode".equals(n + ""))
         continue;
-      @Nullable final List<? extends ASTNode> s = scope.of(n);
+      final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
           "\n\t scope = " + s + //
           "\n\t ¢ = " + ¢ + //
@@ -224,7 +223,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a30() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ == null)
         continue;
       final List<SimpleName> ns = annotees.of(¢);
@@ -233,7 +232,7 @@ public class definitionTest extends MetaFixture {
       assert n != null;
       if (!"raisin".equals(n + ""))
         continue;
-      @Nullable final List<? extends ASTNode> s = scope.of(n);
+      final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
           "\n\t scope = " + s + //
           "\n\t ¢ = " + ¢ + //
@@ -245,7 +244,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a31() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ == null)
         continue;
       final List<SimpleName> ns = annotees.of(¢);
@@ -254,7 +253,7 @@ public class definitionTest extends MetaFixture {
       assert n != null;
       if (!"enumConstant1".equals(n + ""))
         continue;
-      @Nullable final List<? extends ASTNode> s = scope.of(n);
+      final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
           "\n\t scope = " + s + //
           "\n\t ¢ = " + ¢ + //
@@ -266,7 +265,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a32() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ == null)
         continue;
       final List<SimpleName> ns = annotees.of(¢);
@@ -275,7 +274,7 @@ public class definitionTest extends MetaFixture {
       assert n != null;
       if (!"annotation".equals(n + ""))
         continue;
-      @Nullable final List<? extends ASTNode> s = scope.of(n);
+      final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
           "\n\t scope = " + s + //
           "\n\t ¢ = " + ¢ + //
@@ -287,7 +286,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a33() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
         if (!"fenum".equals(n + ""))
@@ -299,7 +298,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a34() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
         if (!InterfaceInAnEnum.class.getSimpleName().equals(n + ""))
@@ -313,7 +312,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a35() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
         if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
@@ -325,7 +324,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a37() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
         if (!DummyInterface.class.getSimpleName().equals(n + ""))
@@ -337,7 +336,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a38() {
     for (final Annotation a : annotations()) {
-      @Nullable final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
+      final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
         final SimpleName n = first(annotees.of(x));
         if (!DummyClass.class.getSimpleName().equals(n + ""))
@@ -347,13 +346,13 @@ public class definitionTest extends MetaFixture {
     }
   }
 
-  @NotNull Collection<MarkerAnnotation> markers() {
+  Collection<MarkerAnnotation> markers() {
     return descendants.whoseClassIs(MarkerAnnotation.class).from(reflectedCompilationUnit());
   }
 }
 // @formatter:off
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE })
-@annotation @interface delme { @NotNull String[] value(); }
+@annotation @interface delme { String[] value(); }
 // @formatter:on
 @ScopeSize(23)
 @annotation
@@ -444,9 +443,9 @@ class ZZZ___Fixture_ModelClass {
       final int lemon = hashCode();
       try (
           /** First resource */
-          @NotNull @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
+          @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
           /** Second resource */
-          @NotNull @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
+          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
       /* Try body */
       {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
@@ -456,8 +455,8 @@ class ZZZ___Fixture_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-            @NotNull @local final Function<Object, String> $ = (@NotNull @ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
-                something = (@NotNull @ScopeSize(1) @lambda final Object ¢) -> {
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
+                something = (@ScopeSize(1) @lambda final Object ¢) -> {
                   ¢.getClass();
                   return ¢ + "";
                 };
@@ -481,7 +480,7 @@ class ZZZ___Fixture_ModelClass {
         c8 = ++raisin;
         if (localVariableInTryBlock == c8 * localVariableNewClass)
           throw new CloneNotSupportedException(c0 * raisin + "");
-      } catch (@NotNull @knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
+      } catch (@knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
         for (@foreign("resourceInTry") @knows({ "myIgnoredException", "water" }) @ScopeSize(3) @for¢ int water = 0; water < 10; --water) {
           @knows({ "water", "myIgnoredException", "fig" }) @local @ScopeSize(2) final int fig = 2 * water + hashCode();
           q(fig * fig + water * hashCode());
@@ -514,7 +513,7 @@ class ZZZ___Fixture_ModelClass {
           q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
-      } catch (@NotNull @catch¢ final IOException | CloneNotSupportedException ¢) {
+      } catch (@catch¢ final IOException | CloneNotSupportedException ¢) {
         monitor.infoIOException(¢);
       }
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
@@ -542,7 +541,7 @@ class ZZZ___Fixture_ModelClass {
       abra, @ScopeSize(3)
       @enumConstant
       cadabra;
-      @NotNull @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
+      @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
         return vaz();
       }
     }

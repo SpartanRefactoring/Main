@@ -5,15 +5,14 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** Check that the functions which returns all the methods invoked in a scope is
- * working well
+/** Check that the functions which returns all the
+ * methods invoked in a scope is working well
  * @author Dor Ma'ayan
  * @author Omri Ben- Shmuel
  * @since 01-11-2016 */
@@ -28,34 +27,34 @@ public class Issue0691 {
   }
 
   @Test public void test2() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     azzert.that(res, is(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a;int b;y.t(a,b);}")))));
   }
 
   @Test public void test3() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("g");
     azzert.that(res, is(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {t(); g();}")))));
   }
 
   @Test public void test4() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("q");
     azzert.that(res, is(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {t(); q();}")))));
   }
 
   @Test public void test5() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("q");
     azzert.that(res, is(getAll.invocations(az.methodDeclaration(wizard.ast("static void test() {int a = t(); q();}")))));
   }
 
   @Test public void test6() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("x");
     res.add("q");
@@ -63,7 +62,7 @@ public class Issue0691 {
   }
 
   @Test public void test7() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("x");
     res.add("q");
@@ -72,7 +71,7 @@ public class Issue0691 {
   }
 
   @Test public void test8() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("t");
     res.add("x");
     res.add("q");
@@ -82,7 +81,7 @@ public class Issue0691 {
   }
 
   @Test public void test9() {
-    @NotNull final Set<String> res = new TreeSet<>();
+    final Set<String> res = new TreeSet<>();
     res.add("body");
     res.add("statements");
     res.add("isEmpty");

@@ -5,7 +5,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -13,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** See GitHub issue thus numbered
+/** TODO: Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @Ignore
@@ -44,10 +43,10 @@ public class Issue0249 {
   }
 
   @Test public void a06() {
-    @NotNull final Statement s = into.s("{}");
+    final Statement s = into.s("{}");
     assert s != null;
     azzert.that(s, instanceOf(Block.class));
-    @Nullable final Block b = az.block(s);
+    final Block b = az.block(s);
     assert b != null;
     assert statements(b) != null;
     azzert.that(statements(b).size(), is(0));
@@ -65,7 +64,7 @@ public class Issue0249 {
     azzert.that(az.block(into.s("{}")), iz("{}"));
   }
 
-  public int metricUnderTest(@Nullable final String javaStatements) {
+  public int metricUnderTest(final String javaStatements) {
     return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }
 }

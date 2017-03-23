@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 /** tests of ParameterBool according to issue 872
@@ -15,13 +14,13 @@ public class Issue0872 {
   }
 
   @Test public void test1() {
-    @NotNull final ParameterBool b = new ParameterBool();
+    final ParameterBool b = new ParameterBool();
     b.set(true);
     assert b.boolValue();
   }
 
   @Test(expected = IllegalArgumentException.class) public void test2() {
-    @NotNull final ParameterBool b = new ParameterBool();
+    final ParameterBool b = new ParameterBool();
     b.set(false);
     final boolean generateName = b.boolValue();
     assert !generateName;
@@ -33,7 +32,7 @@ public class Issue0872 {
   }
 
   @Test public void test4() {
-    @NotNull final ParameterBool b = new ParameterBool();
+    final ParameterBool b = new ParameterBool();
     b.set(true);
     assert b.hasValue();
   }

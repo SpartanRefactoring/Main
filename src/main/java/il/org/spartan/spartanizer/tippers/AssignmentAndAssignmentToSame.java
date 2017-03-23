@@ -10,7 +10,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -31,33 +30,33 @@ public final class AssignmentAndAssignmentToSame extends ReplaceToNextStatement<
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 1L;
 
-  @NotNull @Override public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("s=s.f();s=s.f();").to("s=s.f().f()"), //
     };
   }
 
-  @NotNull @Override public String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into subsequent assignment";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
-    @Nullable final Assignment a2 = extract.assignment(nextStatement);
+    final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a2) != ASSIGN)
       return null;
     final SimpleName to = az.simpleName(to(a1));
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
-    @Nullable final Expression from1 = from(a1), from2 = from(a2);
+    final Expression from1 = from(a1), from2 = from(a2);
     final List<SimpleName> uses = collect.usesOf(to).in(from2);
     return uses.size() > 1 ? !sideEffects.free(from1) || !iz.deterministic(from1) ? null : go($, a1, g, to, from1, from2)
         : sideEffects.free(from1) && iz.deterministic(from1) && uses.size() == 1 ? go($, a1, g, to, from1, from2) : null;
   }
 
-  @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
-      final Expression from1, final Expression from2) {
+  private static ASTRewrite go(final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,
+      final Expression from2) {
     $.remove(a1, g);
     final Expression newFrom = copy.of(from2);
     new Inliner(to, $, g).byValue(from1).inlineInto(newFrom);

@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.dispatch;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -22,14 +21,14 @@ public final class Issue0214 {
   }
 
   private final Tipper<?> blockSimplify = new BlockSimplify();
-  @Nullable private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
+  private final Tipper<?> tipper = new EagerTipper<ASTNode>() {
     static final long serialVersionUID = 7928987767029492793L;
 
     @Override public String description() {
       return null;
     }
 
-    @Nullable @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
+    @Override public String description(@SuppressWarnings("unused") final ASTNode __) {
       return null;
     }
   };

@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,11 +15,11 @@ public class EnhancedForEliminateConditionalContinue extends EagerTipper<Enhance
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -212967427070060695L;
 
-  @NotNull @Override public String description(@NotNull final EnhancedForStatement ¢) {
+  @Override public String description(final EnhancedForStatement ¢) {
     return "Eliminate conditional continue before last statement in for about " + ¢.getExpression();
   }
 
-  @Nullable @Override public Fragment tip(@NotNull final EnhancedForStatement ¢) {
+  @Override public Tip tip(final EnhancedForStatement ¢) {
     return EliminateConditionalContinueAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

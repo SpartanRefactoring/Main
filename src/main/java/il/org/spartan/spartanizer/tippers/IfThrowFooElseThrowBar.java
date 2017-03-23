@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,7 +24,7 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
     implements TipperCategory.Ternarization {
   private static final long serialVersionUID = -7106502252108749001L;
 
-  @NotNull @Override public String description(@NotNull final IfStatement ¢) {
+  @Override public String description(final IfStatement ¢) {
     return "Consolidate 'if' " + trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
   }
 
@@ -33,7 +32,7 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
     return extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
 
-  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+  @Override public Statement replacement(final IfStatement ¢) {
     return make.throwOf(subject.pair(extract.throwExpression(then(¢)), extract.throwExpression(elze(¢))).toCondition(¢.getExpression()));
   }
 }

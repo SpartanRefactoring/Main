@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.java.namespace.*;
 import junit.framework.*;
 
@@ -39,11 +37,11 @@ import junit.framework.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-11 */
 public interface Recursive<@¢ T> {
-  @NotNull default Stream<T> streamSelf() {
+  default Stream<T> streamSelf() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
 
-  @Nullable default T self() {
+  default T self() {
     return null;
   }
 
@@ -55,7 +53,7 @@ public interface Recursive<@¢ T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Atomic<@¢ T> extends Recursive<T> {
-    @NotNull @Override default Stream<T> descendants() {
+    @Override default Stream<T> descendants() {
       return streamSelf();
     }
   }
@@ -64,9 +62,9 @@ public interface Recursive<@¢ T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Compound<@¢ T> extends Recursive<T> {
-    @NotNull Iterable<Recursive<T>> children();
+    Iterable<Recursive<T>> children();
 
-    @Nullable @Override default T self() {
+    @Override default T self() {
       return null;
     }
   }
@@ -74,7 +72,7 @@ public interface Recursive<@¢ T> {
   interface Postorder<E> extends Compound<E> {
     @Override default Stream<E> descendants() {
       Stream<E> $ = Stream.empty();
-      for (@NotNull final Recursive<E> ¢ : children())
+      for (final Recursive<E> ¢ : children())
         $ = Stream.concat(¢.descendants(), $);
       return Stream.concat($, streamSelf());
     }
@@ -88,7 +86,7 @@ public interface Recursive<@¢ T> {
   interface Preorder<E> extends Compound<E> {
     @Override default Stream<E> descendants() {
       Stream<E> $ = self() == null ? Stream.empty() : Stream.of(self());
-      for (@NotNull final Recursive<E> ¢ : children())
+      for (final Recursive<E> ¢ : children())
         $ = Stream.concat($, ¢.descendants());
       return $;
     }/* A compound recurkksive structure enumerating {@link #descendants()} in

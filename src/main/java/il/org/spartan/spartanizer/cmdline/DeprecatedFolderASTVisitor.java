@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -29,8 +28,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
-  @NotNull @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
-  @NotNull @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") protected static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "o", value = "output folder") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor;
@@ -54,14 +53,14 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     }
     try {
       return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
-    } catch (@NotNull NoSuchMethodException | SecurityException ¢) {
+    } catch (NoSuchMethodException | SecurityException ¢) {
       monitor.logProbableBug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
       throw new RuntimeException();
     }
   }
 
-  public static void main(@NotNull final String[] args)
+  public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);
   }
@@ -79,7 +78,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     ___.______unused(path);
   }
 
-  @NotNull protected static String makeFile(final String fileName) {
+  protected static String makeFile(final String fileName) {
     return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
@@ -93,19 +92,19 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     done(path);
   }
 
-  void collect(@NotNull final CompilationUnit u) {
+  void collect(final CompilationUnit u) {
     try {
       u.accept(this);
-    } catch (@NotNull final NullPointerException ¢) {
+    } catch (final NullPointerException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  void collect(@NotNull final String javaCode) {
+  void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
-  void visit(@NotNull final File f) {
+  void visit(final File f) {
     if (!silent)
       dotter.click();
     if (!Utils.isTestFile(f) && ASTInFilesVisitor.productionCode(f))
@@ -115,13 +114,13 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
         collect(FileUtils.read(f));
         if (!silent)
           dotter.click();
-      } catch (@NotNull final IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢, "File = " + f);
       }
   }
 
   public static class FieldsOnly extends DeprecatedFolderASTVisitor {
-    public static void main(@NotNull final String[] args)
+    public static void main(final String[] args)
         throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       clazz = FieldsOnly.class;
       DeprecatedFolderASTVisitor.main(args);
@@ -138,46 +137,46 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     private int interesting;
     private int total;
 
-    public static void main(@NotNull final String[] args)
+    public static void main(final String[] args)
         throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
       clazz = BucketMethods.class;
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
-      } catch (@NotNull final IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢);
         return;
       }
       DeprecatedFolderASTVisitor.main(args);
     }
 
-    @Override @SuppressWarnings("boxing") public boolean visit(@NotNull final MethodDeclaration d) {
+    @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
       ++total;
       if (interesting(d)) {
         ++interesting;
-        @NotNull final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
+        final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
         System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
         try {
           out.write(summary);
-        } catch (@NotNull final IOException ¢) {
+        } catch (final IOException ¢) {
           System.err.println("Error: " + ¢.getMessage());
         }
       }
       return true;
     }
 
-    private static boolean interesting(@NotNull final MethodDeclaration ¢) {
+    private static boolean interesting(final MethodDeclaration ¢) {
       return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
     }
 
-    private static boolean leaking(@NotNull final Stream<ASTNode> ¢) {
+    private static boolean leaking(final Stream<ASTNode> ¢) {
       return ¢.noneMatch(BucketMethods::leaking);
     }
 
-    private static boolean interesting(@Nullable final List<Statement> ¢) {
+    private static boolean interesting(final List<Statement> ¢) {
       return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
     }
 
-    static boolean letItBeIn(@NotNull final List<Statement> ¢) {
+    static boolean letItBeIn(final List<Statement> ¢) {
       return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
 

@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,7 +24,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 3775670587866472032L;
 
-  @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
+  @Override public ASTNode replacement(final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
     return subject.pair(step.operand(¢), $)
@@ -33,12 +32,12 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {
-    @NotNull final ASTNode $ = parent(¢);
+    final ASTNode $ = parent(¢);
     return (step.operator(¢) == PrefixExpression.Operator.INCREMENT || step.operator(¢) == PrefixExpression.Operator.DECREMENT)
         && (iz.expressionStatement($) || iz.forStatement($));
   }
 
-  @Nullable @Override @SuppressWarnings("unused") public String description(final PrefixExpression __) {
+  @Override @SuppressWarnings("unused") public String description(final PrefixExpression __) {
     return null;
   }
 }

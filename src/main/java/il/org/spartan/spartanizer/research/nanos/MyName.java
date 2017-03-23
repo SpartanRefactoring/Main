@@ -33,8 +33,8 @@ public final class MyName extends NanoPatternTipper<MethodInvocation> {
         && arguments.size() != parameters.size();
   }
 
-  @NotNull @Override public Fragment pattern(@NotNull final MethodInvocation ¢) {
-    return new Fragment(description(¢), ¢, getClass()) {
+  @Override @NotNull public Tip pattern(@NotNull final MethodInvocation ¢) {
+    return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final MethodInvocation $ = copy.of(¢);
         $.setName($.getAST().newSimpleName("reduce¢"));
