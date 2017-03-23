@@ -11,7 +11,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-18 */
 public class Vocabulary extends HashMap<String, MethodDeclaration> {
-  private static final long serialVersionUID = 1;
+
+  private static final long serialVersionUID = -6053017568518719756L;
 
   public static String mangle(@NotNull final Assignment ¢) {
     return mangle(¢.getOperator());
