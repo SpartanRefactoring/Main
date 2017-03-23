@@ -81,7 +81,8 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
         return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
 
-      @Nullable IfStatement replacement(final Expression condition, @Nullable final Statement trimmedThen, @Nullable final Statement trimmedElse) {
+      @Nullable IfStatement replacement(@NotNull final Expression condition, @Nullable final Statement trimmedThen,
+          @Nullable final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }

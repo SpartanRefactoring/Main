@@ -59,9 +59,7 @@ public class Issue1090 extends MetaFixture {
       return shortField;
     }
 
-    /**
-     * [[SuppressWarningsSpartan]]
-     */
+    /** [[SuppressWarningsSpartan]] */
     void go() {
       byteField = getByteField();
       // byteField = 2* charField;
