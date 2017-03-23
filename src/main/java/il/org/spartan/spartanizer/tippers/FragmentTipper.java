@@ -26,7 +26,6 @@ abstract class FragmentTipper extends CarefulTipper<VariableDeclarationFragment>
     System.err.println("Constructing " + myClass());
   }
 
-
   private static final long serialVersionUID = 1L;
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment f) {

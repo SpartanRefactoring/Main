@@ -11,9 +11,9 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** The Recurser gives programmer the option to scan 
- * the AST while doing operations over the nodes.
- * the recurser currently offers pre-visit and post-visit options.
+/** The Recurser gives programmer the option to scan the AST while doing
+ * operations over the nodes. the recurser currently offers pre-visit and
+ * post-visit options.
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class Recurser<T> {

@@ -81,7 +81,6 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return "";
   }
 
-
   @Override @NotNull public String[] akas() {
     return new String[] { nanoName() };
   }

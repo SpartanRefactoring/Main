@@ -62,7 +62,7 @@ public class PossiblyMultipleExecution {
   }
 
   private boolean multiple(EnhancedForStatement $) {
-    return touched(body($)); 
+    return touched(body($));
   }
 
   private boolean multiple(ForStatement $) {
