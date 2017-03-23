@@ -49,7 +49,6 @@ public interface ConfigurableObjectTemplate {
     class Action extends Settings {
       private static final long serialVersionUID = -1563529531663481546L;
 
-
       int go() {
         listeners().push("started going");
         if (Settings.this.robustMode) {
