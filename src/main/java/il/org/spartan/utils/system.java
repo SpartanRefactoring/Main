@@ -13,6 +13,10 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface system {
+  static String chopLast(@NotNull final String ¢) {
+    return ¢.substring(0, ¢.length() - 1);
+  }
+
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
   static Process bash(@NotNull final String shellCommand) {
