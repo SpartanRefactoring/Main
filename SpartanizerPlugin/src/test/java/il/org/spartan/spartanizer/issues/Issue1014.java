@@ -6,7 +6,7 @@ import org.junit.*;
 
 /** Test Class For Issue #1014 (Eliminate conditional continue before last
  * statement in loop)
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-04 */
 @SuppressWarnings("static-method")
 public class Issue1014 {

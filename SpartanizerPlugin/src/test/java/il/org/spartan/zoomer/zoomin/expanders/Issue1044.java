@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Test class for name generation from Namespace (Environments)
- * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2017-01-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
@@ -46,7 +46,7 @@ public class Issue1044 extends MetaFixture {
 }
 
 /** This class' only purpose is for the testing above.
- * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Mehsulam {@code doronmmm@hotmail.com}
  * @since 2017-01-26 */
 @SuppressWarnings("TooBroadScope")
 class NamespaceFixture {

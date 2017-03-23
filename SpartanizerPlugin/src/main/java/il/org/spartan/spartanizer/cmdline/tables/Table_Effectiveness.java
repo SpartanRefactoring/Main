@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * 'M' - more occurrences than Method r-index.<br>
  * 'I' - more than Internal. <br>
  * 'X' - more than External.<br>
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-25 */
 class Table_Effectiveness extends NanoTable {
   static {
@@ -55,27 +55,27 @@ class Table_Effectiveness extends NanoTable {
 
       void summarize(final String path) {
         final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
-        writer.put("Project", path);
+        table.put("Project", path);
         npStatistics.keySet().stream()//
             .sorted(Comparator.comparing(λ -> npStatistics.get(λ).name))//
             .map(npStatistics::get)//
-            .forEach(λ -> writer.put(λ.name, λ.occurences > rMethod ? "M" : λ.occurences > rInternal ? "I" : λ.occurences > rExternal ? "X" : "-"));
+            .forEach(λ -> table.put(λ.name, λ.occurences > rMethod ? "M" : λ.occurences > rInternal ? "I" : λ.occurences > rExternal ? "X" : "-"));
         fillAbsents();
-        writer.nl();
+        table.nl();
       }
 
       void initializeWriter() {
-        if (writer == null)
-          writer = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + corpus, outputFolder);
+        if (table == null)
+          table = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + corpus, outputFolder);
       }
     }.fire(visitor);
-    writer.close();
+    table.close();
   }
 
   static void fillAbsents() {
     spartanalyzer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
-        .forEach(λ -> writer.put(λ, "-"));
+        .forEach(λ -> table.put(λ, "-"));
   }
 }

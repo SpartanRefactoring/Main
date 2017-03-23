@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  *    throw Y
  *  return Z;
  * }
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-29 */
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 2369640174584695552L;

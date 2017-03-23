@@ -7,8 +7,8 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** unit tests for {@link InfixStringLiteralsConcatenate}
- * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
- * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
+ * @author Doron Mehsulam {@code doronmmm@hotmail.com}
+ * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
 @SuppressWarnings("static-method")
 public class Issue1150 {

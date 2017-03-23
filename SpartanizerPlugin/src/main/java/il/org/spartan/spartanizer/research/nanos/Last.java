@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano last element in collection, lisp style.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-20 */
 public final class Last extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = -3498399643413388965L;

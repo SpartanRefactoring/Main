@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Catch(...) { return;}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-27 */
 public final class ReturnOnException extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = -5974484928980948225L;

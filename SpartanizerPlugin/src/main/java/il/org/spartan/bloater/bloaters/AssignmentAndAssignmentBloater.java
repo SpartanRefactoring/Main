@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
- * @author Doron Meshulam <tt>doronmmm@hotmail.com</tt>
+ * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-24 */
 public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement>//
     implements TipperCategory.Bloater {

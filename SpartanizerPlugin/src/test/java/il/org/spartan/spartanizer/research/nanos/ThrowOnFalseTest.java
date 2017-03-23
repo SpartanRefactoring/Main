@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 /** Tests {@link ThrowOnFalse}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-04 */
 @SuppressWarnings("static-method")
 public class ThrowOnFalseTest {

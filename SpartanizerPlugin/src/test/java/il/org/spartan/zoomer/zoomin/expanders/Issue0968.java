@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Unit tests for {@link VariableDeclarationStatementSplit}
- * @author tomerdragucki <tt>tomerd@campus.technion.ac.il</tt>
+ * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2016-12-25 */
 @Ignore // TODO Tomer Dragucki
 @SuppressWarnings("static-method")

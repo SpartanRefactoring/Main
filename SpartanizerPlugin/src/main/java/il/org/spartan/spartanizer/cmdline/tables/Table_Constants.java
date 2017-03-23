@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
 
 /** Generates a table, counting constants in repositories
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-08 */
 public class Table_Constants extends DeprecatedFolderASTVisitor {
   private static Table writer;

@@ -15,8 +15,8 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco {@code marcovitch.ori@gmail.com} please add a description
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-22 */
 public enum find {
   ;

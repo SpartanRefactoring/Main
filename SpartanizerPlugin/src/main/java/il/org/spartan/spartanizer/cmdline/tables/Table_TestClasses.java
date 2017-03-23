@@ -7,7 +7,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** TODO Matteo Orru': document class {@link }
- * @author Matteo Orru' <tt>matteo.orru@cs.technion.ac.il</tt>
+ * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}
  * @since 2017-02-21 */
 public class Table_TestClasses extends Table_SummaryForPaper {
   private static Table testClassesWriter;

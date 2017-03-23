@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 import org.junit.*;
 
 /** Test case for @link MultiplicationToDoubleCast} covers also Issue #1006
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-01-11 */
 @SuppressWarnings("static-method")
 public class Issue1007 {

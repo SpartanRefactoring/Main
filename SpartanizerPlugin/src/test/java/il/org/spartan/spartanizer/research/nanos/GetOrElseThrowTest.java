@@ -7,7 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Tests {@link GetOrElseThrow}
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-29 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")

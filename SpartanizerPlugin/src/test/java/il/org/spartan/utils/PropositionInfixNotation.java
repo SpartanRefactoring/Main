@@ -5,7 +5,7 @@ import java.util.function.*;
 import org.jetbrains.annotations.*;
 
 /** TODO
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
 public abstract class PropositionInfixNotation extends PropositionReducer<String> {
   protected PropositionInfixNotation() {

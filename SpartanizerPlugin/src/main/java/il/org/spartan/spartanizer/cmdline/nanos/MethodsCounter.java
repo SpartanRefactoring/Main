@@ -16,8 +16,8 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 
-/** TODO: orimarco <tt>marcovitch.ori@gmail.com</tt> please add a description
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+/** TODO: orimarco {@code marcovitch.ori@gmail.com} please add a description
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-19 */
 public class MethodsCounter extends DeprecatedFolderASTVisitor {
   private final SortedMap<Integer, Int> methods = new TreeMap<>();

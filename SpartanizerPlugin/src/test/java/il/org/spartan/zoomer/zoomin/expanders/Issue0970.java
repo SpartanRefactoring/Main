@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.bloater.bloaters.*;
 
 /** Test class for {@link MultiTypeCatchClause}
- * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
+ * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-25 */
 @SuppressWarnings("static-method")
 public class Issue0970 {

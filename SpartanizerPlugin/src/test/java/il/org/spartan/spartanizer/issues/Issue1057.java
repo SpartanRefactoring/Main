@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Test class for issue #1057, see
  * {@link FragmentInitializerToForInitializers}.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-16 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public class Issue1057 {

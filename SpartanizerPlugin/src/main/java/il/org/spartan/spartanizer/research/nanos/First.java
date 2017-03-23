@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano first element in collection, lisp style.
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-20 */
 public final class First extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 7012364337198315285L;

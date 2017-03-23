@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Delegate to another method but apply some method on a parameter
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-22 */
 public class Adjuster extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -6381093865952528751L;

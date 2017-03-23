@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 
 /** Removes redundant assignment- an assignment with same variable subsequent
  * assignment.
- * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-03-20
  * @see issue #1110 */
 public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Assignment> //

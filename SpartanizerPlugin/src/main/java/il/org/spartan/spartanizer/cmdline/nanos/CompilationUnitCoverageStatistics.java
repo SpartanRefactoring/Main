@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
 
 /** Collects statistics about {@link CompilationUnit}s NanoPatterns coverage
- * @author orimarco <tt>marcovitch.ori@gmail.com</tt>
+ * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnitRecord> {
   private static final long serialVersionUID = -7244420312239137288L;
