@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-09-09 */
-public final class IfThrowNoElseThrow extends ReplaceToNextStatement<IfStatement>//
+public final class IfThrowNoElseThrow extends GoToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
   private static final long serialVersionUID = 8876424452340040075L;
 

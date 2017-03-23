@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * (x) { f(); return a; } g(); }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
-public final class IfCommandsSequencerNoElseSingletonSequencer extends ReplaceToNextStatement<IfStatement>//
+public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = -5423686618924537619L;
 

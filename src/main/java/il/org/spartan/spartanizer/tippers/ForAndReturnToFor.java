@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
-public class ForAndReturnToFor extends ReplaceToNextStatement<ForStatement>//
+public class ForAndReturnToFor extends GoToNextStatement<ForStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 3971327019011226138L;
 

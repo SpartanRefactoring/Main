@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * method.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
-public final class IfPenultimateInMethodFollowedBySingleStatement extends ReplaceToNextStatement<IfStatement>//
+public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = -9215176071220857924L;
 

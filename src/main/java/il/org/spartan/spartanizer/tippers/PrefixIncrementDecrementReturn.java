@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-28 */
-public final class PrefixIncrementDecrementReturn extends ReplaceToNextStatement<PrefixExpression>//
+public final class PrefixIncrementDecrementReturn extends GoToNextStatement<PrefixExpression>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -7169963565517331905L;
 

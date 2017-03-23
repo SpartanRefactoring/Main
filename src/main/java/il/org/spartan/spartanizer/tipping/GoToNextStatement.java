@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 /** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
-public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
+public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 5265347217554350758L;
 
   @Override public boolean prerequisite(@NotNull final N current) {
@@ -28,7 +28,7 @@ public abstract class ReplaceToNextStatement<N extends ASTNode> extends CarefulT
       exclude.exclude($);
     return new Tip(description(n), n, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        ReplaceToNextStatement.this.go(r, n, $, g);
+        GoToNextStatement.this.go(r, n, $, g);
       }
     };
   }

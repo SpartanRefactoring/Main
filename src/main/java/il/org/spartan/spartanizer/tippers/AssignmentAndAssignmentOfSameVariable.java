@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-03-20
  * @see issue #1110 */
-public class AssignmentAndAssignmentOfSameVariable extends ReplaceToNextStatement<Assignment> //
+public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Assignment> //
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -2175075259560385549L;
 
