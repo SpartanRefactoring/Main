@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class FragementInitializerStatement extends FragmentTipper {
-  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
-    return super.prerequisite(f) && initializer() != null;
+  @Override public boolean prerequisite(final VariableDeclarationFragment ¢) {
+    return super.prerequisite(¢) && initializer() != null;
   }
 
   private static final long serialVersionUID = 7723281513517888L;
