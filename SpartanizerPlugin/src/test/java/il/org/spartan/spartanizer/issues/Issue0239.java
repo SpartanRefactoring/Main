@@ -108,6 +108,6 @@ public class Issue0239 {
     assert use != null;
     assert !Coupling.unknownNumberOfEvaluations(use, nextStatement);
     assert !Inliner.never(name, nextStatement);
-    assert $FragementAndStatement.removalSaving(f) > 0;
+    assert $FragmentAndStatement.removalSaving(f) > 0;
   }
 }
