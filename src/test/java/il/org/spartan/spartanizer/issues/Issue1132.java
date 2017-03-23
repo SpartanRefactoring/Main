@@ -74,7 +74,7 @@ public class Issue1132 {
     ;
   }
 
-  @Ignore @Test public void xor() {
+  @Test public void xor() {
     trimmingOf("a ^= 2; a ^= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a ^= 2 ^ 3;")//
