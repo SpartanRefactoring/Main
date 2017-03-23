@@ -155,7 +155,7 @@ public enum Analyze {
   }
 
   private static void initializeSpartanizer() {
-    spartanizer = new SpartAnalyzer();
+    spartanizer = new SpartanAnalyzer();
   }
 
   /** run an interactive classifier to classify nanos! */
