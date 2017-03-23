@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * Issue #1014
  * @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-01-04 */
-public class ContinueContinuInForEliminate extends EagerTipper<ForStatement>//
+public class ContinueCoditinalInForEliminate extends EagerTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 1319731512145811654L;
 
