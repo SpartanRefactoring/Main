@@ -13,13 +13,10 @@ import org.junit.runners.*;
 @SuppressWarnings("static-method")
 public class GetOrElseThrowTest {
   @Test public void a() {
-    String s = "Hello";
     trimmingOf("if(x == null) throw new Error(); return x;")//
         .using(IfStatement.class, new GetOrElseThrow())//
         .gives("notNull(x).get(x);")//
         .stays();
-    s = "Hello";
-    s = s.replaceAll("", "");
   }
 
   @Test public void b() {

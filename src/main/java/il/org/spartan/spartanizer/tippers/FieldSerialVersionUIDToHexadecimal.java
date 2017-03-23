@@ -70,7 +70,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
         Long.valueOf(replacement));
   }
 
-  @Override public String description(FieldDeclaration n) {
+  @Override public String description(@SuppressWarnings("unused") FieldDeclaration d) {
     return description(); 
   }
 }
