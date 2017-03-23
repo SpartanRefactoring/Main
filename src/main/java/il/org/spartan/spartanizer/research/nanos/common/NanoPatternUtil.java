@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.research.*;
@@ -44,13 +45,7 @@ public interface NanoPatternUtil {
 
   UserDefinedTipper<Expression> nullComparison = patternTipper("$X == null", "", "");
   UserDefinedTipper<Expression> nullComparisonOr = patternTipper("$X1 == null || $X2", "", "");
-  Collection<UserDefinedTipper<Statement>> defaultReturns = new ArrayList<UserDefinedTipper<Statement>>() {
-    static final long serialVersionUID = 1L;
-    {
-      add(patternTipper("return;", "", ""));
-      add(patternTipper("return null;", "", ""));
-    }
-  };
+  Collection<UserDefinedTipper<Statement>> defaultReturns = as.list(patternTipper("return;", "", ""), patternTipper("return null;", "", ""));
   UserDefinedTipper<Statement> returns = patternTipper("return $X;", "", "");
 
   static boolean returnsDefault(final Statement ¢) {
