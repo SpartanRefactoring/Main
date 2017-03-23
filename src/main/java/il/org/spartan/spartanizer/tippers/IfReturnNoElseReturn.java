@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } return a; g(); }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
-public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStatement>//
+public final class IfReturnNoElseReturn extends GoToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
   private static final long serialVersionUID = -1169329057289882569L;
 
@@ -29,16 +30,16 @@ public final class IfReturnNoElseReturn extends ReplaceToNextStatement<IfStateme
     return "Consolidate into a single 'return'";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    final ReturnStatement r1 = extract.returnStatement(then(s));
+    @Nullable final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
       return null;
     final Expression $ = extract.core(r1.getExpression());
     if ($ == null)
       return null;
-    final ReturnStatement r2 = extract.returnStatement(nextStatement);
+    @Nullable final ReturnStatement r2 = extract.returnStatement(nextStatement);
     if (r2 == null)
       return null;
     final Expression e2 = extract.core(r2.getExpression());

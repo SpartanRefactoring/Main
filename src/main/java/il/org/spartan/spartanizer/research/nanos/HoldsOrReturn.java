@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -26,7 +27,7 @@ public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
 
-  @Override public Tip pattern(final IfStatement ¢) {
+  @Override @Nullable public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 }

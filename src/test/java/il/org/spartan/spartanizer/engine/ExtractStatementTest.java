@@ -10,7 +10,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

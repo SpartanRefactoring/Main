@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,17 +20,17 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -5595277222526598517L;
 
-  @Override public String description(final EnhancedForStatement ¢) {
+  @Override @NotNull public String description(final EnhancedForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
 
-  @Override public String description() {
+  @Override @NotNull public String description() {
     return "Prune redundant continue";
   }
 
-  @Override public Tip tip(final EnhancedForStatement ¢) {
+  @Override @NotNull public Tip tip(@NotNull final EnhancedForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         remove(r, extract.lastStatement(¢), g);
       }
     };
@@ -39,7 +40,7 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
     return iz.continueStatement(extract.lastStatement(¢));
   }
 
-  static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
+  static void remove(@NotNull final ASTRewrite r, final Statement s, final TextEditGroup g) {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 }

@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -21,19 +22,20 @@ public final class MyName extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 4064181238809686028L;
 
   @Override public boolean canTip(final MethodInvocation ¢) {
-    final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
 
-  private static boolean sameSize(final Collection<SingleVariableDeclaration> parameters, final Collection<Expression> arguments) {
+  private static boolean sameSize(@Nullable final Collection<SingleVariableDeclaration> parameters,
+      @Nullable final Collection<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();
   }
 
-  @Override public Tip pattern(final MethodInvocation ¢) {
+  @Override @NotNull public Tip pattern(@NotNull final MethodInvocation ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final MethodInvocation $ = copy.of(¢);
         $.setName($.getAST().newSimpleName("reduce¢"));
         r.replace(¢, $, g);

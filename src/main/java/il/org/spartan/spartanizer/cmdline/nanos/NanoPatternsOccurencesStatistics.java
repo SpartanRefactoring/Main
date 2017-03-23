@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -26,7 +27,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     ++typeHistogram(type).inner;
   }
 
-  public void logNPInfo(final ASTNode n, final String np) {
+  public void logNPInfo(@NotNull final ASTNode n, final String np) {
     final Integer type = Integer.valueOf(nodeType(n));
     if (!iz.methodDeclaration(n))
       putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
@@ -35,7 +36,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     countSubtree(n, np);
   }
 
-  private void countSubtree(final ASTNode n, final String np) {
+  private void countSubtree(@NotNull final ASTNode n, final String np) {
     if (!excludeSubtree(np))
       n.accept(new ASTVisitor() {
         @Override public boolean preVisit2(final ASTNode $) {
@@ -54,7 +55,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     // return np.equals(FactoryMethod.class.getSimpleName());
   }
 
-  Int typeHistogram(final Integer type) {
+  @NotNull Int typeHistogram(final Integer type) {
     return get(type) == null ? new Int() : get(type).first;
   }
 
@@ -63,7 +64,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     return get(type).second;
   }
 
-  public void logNode(final ASTNode ¢) {
+  public void logNode(@NotNull final ASTNode ¢) {
     ¢.accept(typesDistributionCounter);
   }
 
@@ -79,7 +80,7 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     return format.perc(covered(type), total(type));
   }
 
-  public double coverage(final int type0, final int type1, final int... types) {
+  public double coverage(final int type0, final int type1, @NotNull final int... types) {
     int $ = total(type0) + total(type1), covered = covered(type0) + covered(type1);
     for (final int ¢ : types) {
       $ += total(¢);

@@ -5,6 +5,7 @@ import static il.org.spartan.tide.*;
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,11 +28,11 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
     return super.visit(¢);
   }
 
-  /** TODO Matteo: Please add here more boolean metrics such as
+  /** TODO: Matteo: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */
-  private void consider(final TypeDeclaration ¢) {
+  private void consider(@NotNull final TypeDeclaration ¢) {
     dotter.click();
     writer //
         .put("File", presentFile) //
@@ -67,7 +68,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
     writer.nl();
   }
 
-  @Override public void endVisit(final TypeDeclaration node) {
+  @Override public void endVisit(@NotNull final TypeDeclaration node) {
     --classNesting;
     consider(node);
     super.endVisit(node);
@@ -107,7 +108,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
         m("static", λ -> iz.static¢((BodyDeclaration) λ)));
   }
 
-  @Override public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
+  @Override @Nullable public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
     // TODO Auto-generated method stub
     return null;
   }

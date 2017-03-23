@@ -6,6 +6,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -19,17 +20,17 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
     implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = -1555771651723844992L;
 
-  private static NumberLiteral literal(final Expression ¢) {
+  private static NumberLiteral literal(@NotNull final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1.");
     return $;
   }
 
-  private static InfixExpression replacement(final Expression $) {
+  private static InfixExpression replacement(@NotNull final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @Override public String description(final CastExpression ¢) {
+  @Override @NotNull public String description(final CastExpression ¢) {
     return "Use 1.*" + expression(¢) + " instead of (double)" + expression(¢);
   }
 

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.engine.nominal;
 import static il.org.spartan.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -13,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-19 */
 public interface trivia {
-  static String accurateEssence(final String codeFragment) {
+  static String accurateEssence(@NotNull final String codeFragment) {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }
 
@@ -39,11 +40,11 @@ public interface trivia {
   /** escapes all "s
    * @param ¢
    * @return */
-  static String escapeQuotes(final String ¢) {
+  static String escapeQuotes(@NotNull final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
 
-  static String essence(final String codeFragment) {
+  static String essence(@NotNull final String codeFragment) {
     return trivia.fixTideClean(tide.clean(trivia.removeComments(codeFragment)));
   }
 
@@ -51,51 +52,51 @@ public interface trivia {
    * [^]
    * @param ¢
    * @return */
-  static String fixTideClean(final String ¢) {
+  static String fixTideClean(@NotNull final String ¢) {
     return ¢.replaceAll("\\[\\^\\]", "\\^");
   }
 
-  static String gist(final ASTNode ¢) {
+  static String gist(@NotNull final ASTNode ¢) {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
-  static String gist(final Object ¢) {
+  @NotNull static String gist(@Nullable final Object ¢) {
     return ¢ == null ? "null" : gist(¢ + "");
   }
 
-  static String gist(final String ¢) {
+  static String gist(@NotNull final String ¢) {
     return (¢.length() < 35 ? ¢ : ¢.substring(0, 35)).trim().replaceAll("[\r\n\f]", " ").replaceAll("\\s\\s", " ");
   }
 
-  static <N extends ASTNode> N removeComments(final N n) {
+  @NotNull static <N extends ASTNode> N removeComments(@NotNull final N n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
-      boolean delete(final ASTNode ¢) {
+      boolean delete(@NotNull final ASTNode ¢) {
         ¢.delete();
         return true;
       }
 
-      @Override public boolean visit(final BlockComment ¢) {
+      @Override public boolean visit(@NotNull final BlockComment ¢) {
         return delete(¢);
       }
 
-      @Override public boolean visit(final Javadoc ¢) {
+      @Override public boolean visit(@NotNull final Javadoc ¢) {
         return delete(¢);
       }
 
-      @Override public boolean visit(final LineComment ¢) {
+      @Override public boolean visit(@NotNull final LineComment ¢) {
         return delete(¢);
       }
     });
     return n;
   }
 
-  static String removeComments(final String codeFragment) {
+  static String removeComments(@NotNull final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
-  static String squeeze(final String ¢) {
+  static String squeeze(@NotNull final String ¢) {
     return ¢.trim().replaceAll("\\s+", " ");
   }
 }

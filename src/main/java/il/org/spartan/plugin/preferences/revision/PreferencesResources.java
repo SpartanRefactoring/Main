@@ -3,13 +3,14 @@ package il.org.spartan.plugin.preferences.revision;
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
-/** TODO Daniel Mittelman please add a description
+/** TODO: Daniel Mittelman please add a description
  * @author Daniel Mittelman
  * @since Jan 11, 2017 */
 public enum PreferencesResources {
@@ -30,7 +31,7 @@ public enum PreferencesResources {
                                                                         // SAFE
   public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
 
-  public static String getLabel(final Class<? extends ExpanderCategory> $) {
+  @NotNull public static String getLabel(@NotNull final Class<? extends ExpanderCategory> $) {
     return system.className($);
   }
 
@@ -39,7 +40,7 @@ public enum PreferencesResources {
   public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
     Arithmetic(TipperCategory.Arithmetic.class), //
-    Anonymization(TipperCategory.Anonymization.class), //
+    Annonimaization(TipperCategory.Annonimization.class), //
     Canonicalization(TipperCategory.Unite.class), //
     CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
@@ -61,7 +62,7 @@ public enum PreferencesResources {
     NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
     NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
     ;
-    public static TipperGroup find(final TipperCategory ¢) {
+    public static TipperGroup find(@NotNull final TipperCategory ¢) {
       return find(¢.getClass());
     }
 
@@ -69,15 +70,15 @@ public enum PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
+    private static TipperGroup find(@NotNull final Class<? extends TipperCategory> ¢) {
       return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-    private final Class<? extends TipperCategory> clazz;
+    @NotNull private final Class<? extends TipperCategory> clazz;
     public final String id;
-    public final String label;
+    @NotNull public final String label;
 
-    TipperGroup(final Class<? extends TipperCategory> clazz) {
+    TipperGroup(@NotNull final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = clazz.getSimpleName();

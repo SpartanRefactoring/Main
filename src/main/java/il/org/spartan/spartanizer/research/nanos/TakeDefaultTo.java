@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -23,7 +24,7 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
         && rival.cantTip(¢);
   }
 
-  @Override public Tip pattern(final ConditionalExpression ¢) {
+  @Override @Nullable public Tip pattern(final ConditionalExpression ¢) {
     return tippers.firstTip(¢);
   }
 
@@ -31,7 +32,15 @@ public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression
     return "Evaluate expression, if null take some expression, otherwise take another";
   }
 
-  @Override public String nanoName() {
-    return "QuestionQuestion";
+  @Override public String example() {
+    return tippers.firstPattern();
+  }
+
+  @Override public String symbolycReplacement() {
+    return tippers.firstReplacement();
+  }
+
+  @Override public Category category() {
+    return Category.Default;
   }
 }

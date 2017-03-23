@@ -11,6 +11,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -64,23 +65,23 @@ public final class Matcher {
     return _pattern != null ? _pattern : (_pattern = patternSupplier.get());
   }
 
-  public static Matcher patternMatcher(final String p, final String s) {
+  @NotNull public static Matcher patternMatcher(@NotNull final String p, @NotNull final String s) {
     return patternMatcher(p, s, new Option[0]);
   }
 
-  public static Matcher patternMatcher(final String p, final String s, final Option... _options) {
+  @NotNull public static Matcher patternMatcher(@NotNull final String p, @NotNull final String s, final Option... _options) {
     return new Matcher(() -> extractStatementIfOne(ast(reformat(p))), s, _options);
   }
 
-  public static Matcher blockMatcher(final String p, final String s) {
+  @NotNull public static Matcher blockMatcher(@NotNull final String p, @NotNull final String s) {
     return blockMatcher(p, s, new Option[0]);
   }
 
-  public static Matcher blockMatcher(final String p, final String s, final Option... _options) {
+  @NotNull public static Matcher blockMatcher(@NotNull final String p, @NotNull final String s, final Option... _options) {
     return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
   }
 
-  private Matcher(final Supplier<ASTNode> _patternSupplier, final String r, final Option[] _options) {
+  private Matcher(final Supplier<ASTNode> _patternSupplier, @NotNull final String r, final Option[] _options) {
     patternSupplier = _patternSupplier;
     replacement = reformat(r);
     options = _options;
@@ -95,12 +96,12 @@ public final class Matcher {
         && (!containsOption(Option.FIRST_IN_BLOCK) || firstInBlock(¢));
   }
 
-  private static Block wrapStatementIfOne(final ASTNode pattern) {
+  @Nullable private static Block wrapStatementIfOne(final ASTNode pattern) {
     return az.block(iz.block(pattern) ? pattern : ast("{" + pattern + "}"));
   }
 
   private boolean lastInBlock(final Block ¢) {
-    final ASTNode[] $ = getMatchedNodes(¢);
+    @NotNull final ASTNode[] $ = getMatchedNodes(¢);
     return $[$.length - 1].equals(last(statements(¢)));
   }
 
@@ -115,7 +116,7 @@ public final class Matcher {
   private static boolean blockMatches(final ASTNode p, final Block n) {
     if (!iz.block(p))
       return false;
-    final List<Statement> $ = statements(az.block(p)), sn = statements(n);
+    @NotNull final List<Statement> $ = statements(az.block(p)), sn = statements(n);
     return $.size() <= sn.size() && IntStream.rangeClosed(0, sn.size() - $.size()).anyMatch(λ -> statementsMatch($, sn.subList(λ, λ + $.size())));
   }
 
@@ -130,31 +131,31 @@ public final class Matcher {
   }
 
   @SuppressWarnings("boxing") public static Pair<Integer, Integer> getBlockMatching(final Block p, final Block n) {
-    final List<Statement> $ = statements(p), sn = statements(n);
+    @NotNull final List<Statement> $ = statements(p), sn = statements(n);
     for (int ¢ = 0; ¢ <= sn.size() - $.size(); ++¢)
       if (statementsMatch($, sn.subList(¢, ¢ + $.size())))
         return new Pair<>(¢, ¢ + $.size());
     return null;
   }
 
-  private static boolean statementsMatch(final List<Statement> sp, final List<Statement> subList) {
+  private static boolean statementsMatch(@NotNull final List<Statement> sp, @NotNull final List<Statement> subList) {
     return IntStream.range(0, sp.size()).allMatch(λ -> matchesAux(sp.get(λ), subList.get(λ), new HashMap<>()));
   }
 
   /** Validates that matched variables are the same in all matching places. */
-  private static boolean consistent(final Map<String, String> ids, final String id, final String s) {
+  private static boolean consistent(@NotNull final Map<String, String> ids, final String id, final String s) {
     ids.putIfAbsent(id, s);
     return ids.get(id).equals(s);
   }
 
-  private static boolean consistent(final Map<String, String> ids, final String id, final ASTNode n) {
+  private static boolean consistent(@NotNull final Map<String, String> ids, final String id, final ASTNode n) {
     return consistent(ids, id, n + "");
   }
 
-  private static boolean matchesAux(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
+  private static boolean matchesAux(@Nullable final ASTNode $, @Nullable final ASTNode n, @NotNull final Map<String, String> ids) {
     if ($ == null || n == null)
       return false;
-    final String $1 = $ + "", n1 = n + "";
+    @NotNull final String $1 = $ + "", n1 = n + "";
     if (is$X($))
       return iz.expression(n) && consistent(ids, $1, n1);
     if (is$T($))
@@ -177,13 +178,13 @@ public final class Matcher {
       return false;
     if (iz.infixExpression($) && !iz.parenthesizedExpression($))
       return sameOperator($, n) && sameOperands($, n, ids);
-    final List<ASTNode> pChildren = allChildren($, $), nChildren = allChildren(n, $);
+    @Nullable final List<ASTNode> pChildren = allChildren($, $), nChildren = allChildren(n, $);
     return nChildren.size() == pChildren.size()
         && IntStream.range(0, pChildren.size()).allMatch(λ -> matchesAux(pChildren.get(λ), nChildren.get(λ), ids));
   }
 
-  private static boolean sameOperands(final ASTNode $, final ASTNode n, final Map<String, String> ids) {
-    final List<Expression> $Operands = extract.allOperands(az.infixExpression($)), nOperands = extract.allOperands(az.infixExpression(n));
+  private static boolean sameOperands(final ASTNode $, final ASTNode n, @NotNull final Map<String, String> ids) {
+    @Nullable final List<Expression> $Operands = extract.allOperands(az.infixExpression($)), nOperands = extract.allOperands(az.infixExpression(n));
     return $Operands.size() == nOperands.size()
         && IntStream.range(0, $Operands.size()).allMatch(λ -> matchesAux($Operands.get(λ), nOperands.get(λ), ids));
   }
@@ -196,8 +197,8 @@ public final class Matcher {
     return iz.assignment($) && !operator(az.assignment($)).equals(operator(az.assignment(n)));
   }
 
-  @SuppressWarnings("unchecked") private static List<ASTNode> allChildren(final ASTNode ¢, final ASTNode p) {
-    final List<ASTNode> $ = (List<ASTNode>) Recurser.children(¢);
+  @SuppressWarnings("unchecked") @Nullable private static List<ASTNode> allChildren(final ASTNode ¢, final ASTNode p) {
+    @Nullable final List<ASTNode> $ = (List<ASTNode>) Recurser.children(¢);
     if (iz.methodInvocation(¢)) {
       if (!isMethodInvocationAndHas$AArgument(p))
         $.addAll(arguments(az.methodInvocation(¢)));
@@ -226,15 +227,15 @@ public final class Matcher {
     return iz.methodInvocation(p) && matches$X(p + "");
   }
 
-  private static boolean matches$X(final String p) {
+  private static boolean matches$X(@NotNull final String p) {
     return p.matches($X_pattern);
   }
 
-  private static boolean matches$T(final String p) {
+  private static boolean matches$T(@NotNull final String p) {
     return p.matches($T_pattern);
   }
 
-  private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
+  private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, @NotNull final Map<String, String> ids) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
         && consistent(ids, first(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
   }
@@ -247,8 +248,8 @@ public final class Matcher {
     return isClassInstanceCreationAndConsistentWith$AArgument(n, az.classInstanceCreation(p));
   }
 
-  public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c,
-      final Map<String, String> ids) {
+  public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, @NotNull final ClassInstanceCreation c,
+      @NotNull final Map<String, String> ids) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
         && consistent(ids, first(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
   }
@@ -262,7 +263,7 @@ public final class Matcher {
     return iz.literal(n) && (p + "").equals(n + "");
   }
 
-  private static boolean differentTypes(final ASTNode p, final ASTNode n) {
+  private static boolean differentTypes(@NotNull final ASTNode p, @NotNull final ASTNode n) {
     return n.getNodeType() != p.getNodeType();
   }
 
@@ -284,8 +285,8 @@ public final class Matcher {
     return iz.block(¢) || iz.statement(¢);
   }
 
-  private static boolean sameName(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
-    final String $ = p + "";
+  private static boolean sameName(final ASTNode p, final ASTNode n, @NotNull final Map<String, String> ids) {
+    @NotNull final String $ = p + "";
     if ($.startsWith("$")) {
       if ($.startsWith($M))
         return iz.methodInvocation(n) && consistent(ids, $, n);
@@ -334,11 +335,11 @@ public final class Matcher {
    * @param enviroment
    * @return Mapping between variables and their corresponding elements (both as
    *         strings). */
-  public Map<String, String> collectEnviroment(final ASTNode n, final Map<String, String> enviroment) {
+  @NotNull public Map<String, String> collectEnviroment(final ASTNode n, @NotNull final Map<String, String> enviroment) {
     return collectEnviroment(pattern(), n, enviroment);
   }
 
-  private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, final Map<String, String> $) {
+  @NotNull private static Map<String, String> collectEnviroment(final ASTNode p, final ASTNode n, @NotNull final Map<String, String> $) {
     if (startsWith$notBlock(p))
       $.put(p + "", n + "");
     else if (isBlockVariable(p))
@@ -346,14 +347,14 @@ public final class Matcher {
     else {
       if (isMethodInvocationAndHas$AArgument(p))
         $.put(argumentsId(p), matchingArguments(n));
-      final List<ASTNode> pChildren = !iz.infixExpression(p) ? allChildren(p, p) : infixExpressionOperands(p);
+      @Nullable final List<ASTNode> pChildren = !iz.infixExpression(p) ? allChildren(p, p) : infixExpressionOperands(p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviroment(pChildren.get(¢), (!iz.infixExpression(p) ? allChildren(n, p) : infixExpressionOperands(n)).get(¢), $);
     }
     return $;
   }
 
-  @SuppressWarnings("unchecked") private static List<ASTNode> infixExpressionOperands(final ASTNode p) {
+  @SuppressWarnings("unchecked") @Nullable private static List<ASTNode> infixExpressionOperands(final ASTNode p) {
     return (List<ASTNode>) (List<?>) extract.allOperands(az.infixExpression(p));
   }
 
@@ -368,11 +369,11 @@ public final class Matcher {
                 || (p + "").startsWith($D));
   }
 
-  public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, final Map<String, ASTNode> enviroment) {
+  @NotNull public Map<String, ASTNode> collectEnviromentNodes(final ASTNode n, @NotNull final Map<String, ASTNode> enviroment) {
     return collectEnviromentNodes(pattern(), n, enviroment);
   }
 
-  private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, final Map<String, ASTNode> $) {
+  @NotNull private static Map<String, ASTNode> collectEnviromentNodes(final ASTNode p, final ASTNode n, @NotNull final Map<String, ASTNode> $) {
     if (is$X(p))
       $.put(name(az.methodInvocation(p)) + "", n);
     else if (startsWith$notBlock(p))
@@ -380,23 +381,23 @@ public final class Matcher {
     else if (isBlockVariable(p))
       $.put(blockVariableName(p), n);
     else {
-      final List<ASTNode> pChildren = allChildren(p, p);
+      @Nullable final List<ASTNode> pChildren = allChildren(p, p);
       for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
         collectEnviromentNodes(pChildren.get(¢), allChildren(n, p).get(¢), $);
     }
     return $;
   }
 
-  private static String argumentsId(final ASTNode p) {
+  @NotNull private static String argumentsId(final ASTNode p) {
     return first(arguments(az.methodInvocation(p))) + "";
   }
 
   private static String matchingArguments(final ASTNode ¢) {
-    final String $ = arguments(az.methodInvocation(¢)) + "";
+    @NotNull final String $ = arguments(az.methodInvocation(¢)) + "";
     return $.substring(1, $.length() - 1);
   }
 
-  static String reformat(final String ¢) {
+  static String reformat(@NotNull final String ¢) {
     return ¢.replaceAll("\\$B\\d*", "{$0\\(\\);}").replaceAll("\\$X\\d*", "$0\\(\\)");
   }
 
@@ -405,15 +406,15 @@ public final class Matcher {
   }
 
   <N extends ASTNode> ASTNode replacement(final N n) {
-    final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
-    final Wrapper<String> $ = new Wrapper<>();
+    @NotNull final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
+    @NotNull final Wrapper<String> $ = new Wrapper<>();
     $.set(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
     assert replacement != null;
-    final ASTNode ast = ast(replacement);
+    @Nullable final ASTNode ast = ast(replacement);
     assert ast != null : "Cannot parse [[ " + replacement + " ]]";
     ast.accept(new ASTVisitor(true) {
-      @Override public boolean preVisit2(final ASTNode ¢) {
+      @Override public boolean preVisit2(@NotNull final ASTNode ¢) {
         assert ¢ != null;
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
           $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
@@ -423,19 +424,19 @@ public final class Matcher {
     return extractStatementIfOne(ast($.get()));
   }
 
-  @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
-    final Pair<Integer, Integer> idxs = getBlockMatching(wrapStatementIfOne(pattern()), b);
-    final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
+  @NotNull @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
+    @Nullable final Pair<Integer, Integer> idxs = getBlockMatching(wrapStatementIfOne(pattern()), b);
+    @NotNull final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
     for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
       $[¢ - idxs.first] = statements(b).get(idxs.first);
     return $;
   }
 
-  ASTNode blockReplacement(final Block n) {
-    final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
-    final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
-    final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
-    final Wrapper<String> $ = new Wrapper<>(replacement);
+  @Nullable ASTNode blockReplacement(final Block n) {
+    @Nullable final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
+    @NotNull final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
+    @NotNull final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
+    @NotNull final Wrapper<String> $ = new Wrapper<>(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
     ast(replacement).accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -447,16 +448,16 @@ public final class Matcher {
     return ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
   }
 
-  private static boolean needsSpecialReplacement(final String ¢) {
+  private static boolean needsSpecialReplacement(@NotNull final String ¢) {
     return ¢.startsWith($B) || matches$X(¢);
   }
 
-  private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
+  @NotNull private static <N extends ASTNode> String stringifySubBlock(final N n, final int start) {
     final int $ = statements(az.block(n)).size();
     return start >= $ ? "" : stringifySubBlock(n, start, $);
   }
 
-  private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
+  @NotNull private static <N extends ASTNode> String stringifySubBlock(final N n, final int start, final int end) {
     return start >= end ? "" : statements(az.block(n)).subList(start, end).stream().map(ASTNode::toString).reduce("", (x, y) -> x + y);
   }
 
