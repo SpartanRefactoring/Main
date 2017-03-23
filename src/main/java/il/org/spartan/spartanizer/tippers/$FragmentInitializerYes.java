@@ -9,7 +9,7 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-03 */
 public abstract class $FragmentInitializerYes extends $Fragment {
-  private static final long serialVersionUID = 1;
+  private static final long serialVersionUID = 4670996089257708020L;
   protected VariableDeclarationFragment fragment;
   protected Statement nextStatement;
   protected ASTRewrite rewrite;

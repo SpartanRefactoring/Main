@@ -16,6 +16,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
+  private static final long serialVersionUID = 5379477492497508468L;
   String path;
 
   public Table(@NotNull final Object o) {
@@ -176,7 +177,6 @@ public class Table extends Row<Table> implements Closeable {
     return this;
   }
 
-  private static final long serialVersionUID = 1;
 
   public static String classToNormalizedFileName(@NotNull final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
