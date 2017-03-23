@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 11, 2017 */
 public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
-  private static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   private static final File out = new File(system.tmp + File.separator + "loops.txt");
 
   public static void main(@NotNull final String[] args)

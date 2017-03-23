@@ -11,7 +11,7 @@ import il.org.spartan.tables.*;
  * @since 2017-03-17 */
 public abstract class NanoTable {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   protected static final Function<String, String> analyze = spartanalyzer::fixedPoint;
   static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();

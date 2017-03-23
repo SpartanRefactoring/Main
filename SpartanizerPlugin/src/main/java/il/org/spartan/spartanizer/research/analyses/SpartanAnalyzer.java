@@ -15,14 +15,14 @@ import il.org.spartan.spartanizer.research.util.*;
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
  * @since Dec 15, 2016 */
-public class SpartAnalyzer extends AgileSpartanizer {
-  public SpartAnalyzer() {
+public class SpartanAnalyzer extends AgileSpartanizer {
+  public SpartanAnalyzer() {
     addNanoPatterns();
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
-  @NotNull private SpartAnalyzer addNanoPatterns() {
+  @NotNull private SpartanAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
         new SuppressException(), //
@@ -79,7 +79,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @NotNull public SpartAnalyzer addRejected() {
+  @NotNull public SpartanAnalyzer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
         new PercolateException(), // R.I.P
@@ -129,7 +129,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @NotNull private SpartAnalyzer addMethodPatterns() {
+  @NotNull private SpartanAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
         new ArgumentsTuple(), //
@@ -153,7 +153,7 @@ public class SpartAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @NotNull protected SpartAnalyzer addCharacteristicMethodPatterns() {
+  @NotNull protected SpartanAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted, actually skipped
