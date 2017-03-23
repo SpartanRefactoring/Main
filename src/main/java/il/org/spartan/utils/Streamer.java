@@ -40,11 +40,7 @@ public interface Streamer<@¢ T> {
     @NotNull Stream<T> compound(T self, Iterable<? extends Streamer<T>> others);
 
     @NotNull static <T> Compounder<T> empty() {
-      return new Compounder<T>() {
-        @Override @NotNull @SuppressWarnings("unused") public Stream<T> compound(final T self, final Iterable<? extends Streamer<T>> others) {
-          return Stream.empty();
-        }
-      };
+      return (self, others) -> Stream.empty();
     }
   }
 }

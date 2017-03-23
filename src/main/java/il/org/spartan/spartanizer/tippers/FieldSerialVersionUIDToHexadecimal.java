@@ -21,8 +21,8 @@ import il.org.spartan.utils.*;
 public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
   private static final String SERIAL_VERSION_UID = "serialVersionUID";
   private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
-  private VariableDeclarationFragment fragment;
-  NumberLiteral initializer;
+  @Nullable private VariableDeclarationFragment fragment;
+  @Nullable NumberLiteral initializer;
   long replacement;
 
   @Override @NotNull public Example[] examples() {
@@ -42,7 +42,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     canTip(¢);
     assert ¢ == fragment.getParent();
     return new Tip(description(), initializer, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final NumberLiteral $ = copy.of(initializer);
         $.setToken(asLiteral());
         r.replace(initializer, $, g);
@@ -50,10 +50,10 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     };
   }
 
-  static VariableDeclarationFragment findFragment(final FieldDeclaration d) {
-    for (final VariableDeclarationFragment f : fragments(d))
-      if (f.getName().toString().equals(SERIAL_VERSION_UID))
-        return f;
+  static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
+    for (@NotNull final VariableDeclarationFragment $ : fragments(¢))
+      if (($.getName() + "").equals(SERIAL_VERSION_UID))
+        return $;
     return null;
   }
 
@@ -67,7 +67,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       token = system.chopLast(token);
     try {
       replacement = Long.parseLong(token);
-    } catch (final NumberFormatException x) {
+    } catch (@NotNull final NumberFormatException x) {
       monitor.logEvaluationError(this, x);
       return false;
     }

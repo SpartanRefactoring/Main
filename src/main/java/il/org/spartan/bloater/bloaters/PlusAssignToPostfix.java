@@ -28,7 +28,7 @@ public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
             : subject.operand(¢.getLeftHandSide()).to(PostfixExpression.Operator.INCREMENT);
   }
 
-  @Override public String description(@SuppressWarnings("unused") Assignment __) {
+  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return null;
   }
 }
