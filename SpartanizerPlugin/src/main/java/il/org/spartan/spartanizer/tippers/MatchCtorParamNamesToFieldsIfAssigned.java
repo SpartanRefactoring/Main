@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("unused")
 public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = 4669973864090408581L;
+  private static final long serialVersionUID = 0x40CF147C9F779685L;
 
   @Override protected boolean prerequisite(final MethodDeclaration __) {
     return false;

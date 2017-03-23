@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class ModifierFinalAbstractMethodRedundant extends RemovingTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 217715865763761857L;
+  private static final long serialVersionUID = 0x3057B6D28D0CEC1L;
 
   @Override public String description() {
     return "Remove redundant final modifier of paramaeter to abstract method";

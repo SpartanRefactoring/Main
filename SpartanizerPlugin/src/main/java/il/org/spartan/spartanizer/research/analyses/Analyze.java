@@ -36,7 +36,7 @@ public enum Analyze {
   }
   private static InteractiveSpartanizer spartanizer;
   @SuppressWarnings("rawtypes") private static final Map<String, Analyzer> analyses = new HashMap<String, Analyzer>() {
-    static final long serialVersionUID = 1318990517359365384L;
+    static final long serialVersionUID = 0x124DFEE321504D08L;
     {
       put("AvgIndicatorMetrical", new AvgIndicatorMetricalAnalyzer());
       put("understandability", new UnderstandabilityAnalyzer());

@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration> {
-  private static final long serialVersionUID = 7636169535439478114L;
+  private static final long serialVersionUID = 0x69F91FBBFC879D62L;
   private static final List<String> abstractTypes = Arrays.asList("List", "Set", "Map");
   private static final List<String> specificTypes = Arrays.asList("ArrayList", "HashSet", "TreeSet", "HashMap");
 

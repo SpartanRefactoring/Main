@@ -32,7 +32,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
   }
 
   static class LetInliner extends GoToNextStatement<VariableDeclarationFragment> {
-    private static final long serialVersionUID = 2390117956692878327L;
+    private static final long serialVersionUID = 0x212B679E43F623F7L;
 
     @Override public boolean prerequisite(final VariableDeclarationFragment f) {
       @Nullable final Statement nextStatement = extract.nextStatement(f);

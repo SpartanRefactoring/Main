@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 2775485343542030030L;
+  private static final long serialVersionUID = 0x26848136FD202ECEL;
 
   @Override @NotNull public Tip tip(@NotNull final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {

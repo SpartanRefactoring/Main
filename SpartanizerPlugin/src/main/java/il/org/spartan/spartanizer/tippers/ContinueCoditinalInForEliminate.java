@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 public class ContinueCoditinalInForEliminate extends EagerTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
-  private static final long serialVersionUID = 1319731512145811654L;
+  private static final long serialVersionUID = 0x1250A0D16C5718C6L;
 
   @Override @NotNull public String description(@NotNull final ForStatement ¢) {
     return "Eliminate conditional continue before last statement in the for loop about " + ¢.getExpression();

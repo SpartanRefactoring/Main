@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-05 */
 public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  private static final long serialVersionUID = 8840150087715615432L;
+  private static final long serialVersionUID = 0x7AAE85AAEB6D72C8L;
 
   private static ASTNode replacement(@NotNull final List<Expression> ¢) {
     @NotNull final List<Expression> $ = new ArrayList<>(¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList()));

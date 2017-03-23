@@ -8,12 +8,12 @@ package il.org.spartan.spartanizer.tipping;
 import org.jetbrains.annotations.*;
 
 public abstract class TipperFailure extends Exception {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   @NotNull public abstract String what();
 
   public static class TipNotImplementedException extends TipperFailure {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @Override @NotNull public String what() {
       return "NotImplemented";

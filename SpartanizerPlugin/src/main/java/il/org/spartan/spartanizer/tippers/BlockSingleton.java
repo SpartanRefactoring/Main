@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class BlockSingleton extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 719856780934579562L;
+  private static final long serialVersionUID = 0x9FD71EDA4C3056AL;
 
   private static Statement replacement(@Nullable final Statement $) {
     return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : copy.of($);

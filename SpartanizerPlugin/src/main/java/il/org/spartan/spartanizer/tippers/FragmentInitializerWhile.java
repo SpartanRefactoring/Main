@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class FragmentInitializerWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = 8867383151468342949L;
+  private static final long serialVersionUID = 0x7B0F45FEAE8DEEA5L;
 
   private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();

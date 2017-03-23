@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-01 */
 public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
-  private static final long serialVersionUID = 1021331023364143022L;
+  private static final long serialVersionUID = 0xE2C7F278DB4B7AEL;
   private static final NanoPatternContainer<InfixExpression> tippers = new NanoPatternContainer<InfixExpression>()
       .add("$X.size() == 0", "empty($X)", "is empty").add("0 == $X.size()", "empty($X)", "is empty").add("$X.isEmpty()", "empty($X)", "is empty");
 

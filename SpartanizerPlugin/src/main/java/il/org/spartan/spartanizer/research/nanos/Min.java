@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-12 */
 public final class Min extends NanoPatternTipper<ConditionalExpression> {
-  private static final long serialVersionUID = 6090319353585840250L;
+  private static final long serialVersionUID = 0x5485292F272BB07AL;
   private static final Collection<UserDefinedTipper<ConditionalExpression>> tippers = as.list(
       patternTipper("$X1 > $X2 ? $X2 : $X1", "min($X1,$X2)", "min"), patternTipper("$X2 < $X1 ? $X2 : $X1", "min($X1,$X2)", "min"),
       patternTipper("$X1 >= $X2 ? $X2 : $X1", "min($X1,$X2)", "min"), patternTipper("$X2 <= $X1 ? $X2 : $X1", "min($X1,$X2)", "min"));

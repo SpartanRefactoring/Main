@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @since 2016-12-14 */
 public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 5103878942470840938L;
+  private static final long serialVersionUID = 0x46D49EDB4E92226AL;
 
   @Override public String description(final Javadoc ¢) {
     return String.format("Remove empty Javadoc comment of %d characters", box.it(metrics.length(¢)));

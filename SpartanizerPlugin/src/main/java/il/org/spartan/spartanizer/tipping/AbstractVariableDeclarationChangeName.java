@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016/05/08
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment */
 public abstract class AbstractVariableDeclarationChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
-  private static final long serialVersionUID = 4679082575406204375L;
+  private static final long serialVersionUID = 0x40EF70CFBDCE85D7L;
 
   @Override @Nullable public ASTRewrite go(final ASTRewrite r, @NotNull final N n, @SuppressWarnings("unused") final TextEditGroup __,
       @NotNull final List<ASTNode> uses, @NotNull final List<ASTNode> replacement) {

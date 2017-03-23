@@ -14,7 +14,7 @@ public abstract class FragmentInitializerStatement extends $Fragment {
     return super.prerequisite(¢) && initializer() != null;
   }
 
-  private static final long serialVersionUID = 7723281513517888L;
+  private static final long serialVersionUID = 0x1B70489B1D1340L;
 
   @Override public abstract String description(VariableDeclarationFragment f);
 

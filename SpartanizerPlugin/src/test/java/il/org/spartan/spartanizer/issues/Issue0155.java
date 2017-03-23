@@ -38,7 +38,7 @@ public final class Issue0155 {
   }
 
   @Test public void issue64c() {
-    trimmingOf("void f(int x) {    ++x;\n    final int a = x;\n    new Object() {\n" + "      @Override public int hashCode() { return a; }\n    };}")//
+    trimmingOf("void f(int x) {    ++x;\n    final int a = x;\n    new Object() {\n      @Override public int hashCode() { return a; }\n    };}")//
         .stays();
   }
 }

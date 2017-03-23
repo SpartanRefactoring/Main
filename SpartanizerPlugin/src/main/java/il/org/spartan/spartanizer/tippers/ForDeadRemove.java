@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-26 */
 public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.EmptyCycles {
-  private static final long serialVersionUID = 1956893636347087064L;
+  private static final long serialVersionUID = 0x1B284864E9B0C8D8L;
 
   @Override @NotNull public String description(final ForStatement ¢) {
     return "remove :" + ¢;

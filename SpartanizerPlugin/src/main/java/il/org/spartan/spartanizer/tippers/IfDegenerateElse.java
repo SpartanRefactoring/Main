@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-01 */
 public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 7639783379834141872L;
+  private static final long serialVersionUID = 0x6A05F681B3F27CB0L;
 
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);

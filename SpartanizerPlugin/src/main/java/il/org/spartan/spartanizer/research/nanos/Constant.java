@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-09 */
 public final class Constant extends NanoPatternTipper<FieldDeclaration> {
-  private static final long serialVersionUID = 2694420776077369062L;
+  private static final long serialVersionUID = 0x2564816B91861EE6L;
 
   @Override public boolean canTip(@NotNull final FieldDeclaration ¢) {
     return iz.constant(¢)//

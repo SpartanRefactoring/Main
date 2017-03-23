@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 7117505785157896738L;
+  private static final long serialVersionUID = 0x62C675CD2B1FCA22L;
 
   @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
     @NotNull final List<Expression> xs = getAllExpressions(¢);

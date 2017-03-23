@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-8-27 */
 public final class InitializationListRemoveComma extends ReplaceCurrentNode<ArrayInitializer>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 8727573654609518857L;
+  private static final long serialVersionUID = 0x791E91FF8A0EE109L;
 
   @Override public String description() {
     return "Remove Unecessary ','";

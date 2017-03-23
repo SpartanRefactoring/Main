@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since Dec 17, 2016 */
 public class Select extends NanoPatternTipper<EnhancedForStatement> {
   private static final String DESCRIPTION = "Go Fluent: filter pattern";
-  private static final long serialVersionUID = 3386684152020169902L;
+  private static final long serialVersionUID = 0x2EFFEB4AF79B74AEL;
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
       patternTipper("for($T $N1 : $X1) if($X2) $N2.add($N3);", //
           "$N2.addAll($X1.stream().filter($N1 -> $X2).collect(toList()));", //

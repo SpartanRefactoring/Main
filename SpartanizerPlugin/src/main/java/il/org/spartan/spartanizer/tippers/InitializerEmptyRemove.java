@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @since 2017-01-21 */
 public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 8587376936334392420L;
+  private static final long serialVersionUID = 0x772C7DD36297FC64L;
 
   @Override protected boolean prerequisite(@NotNull final Initializer ¢) {
     final Block $ = ¢.getBody();

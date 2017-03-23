@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-7-17 */
 public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 7689054690155443332L;
+  private static final long serialVersionUID = 0x6AB5028099443484L;
 
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
