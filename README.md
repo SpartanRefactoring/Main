@@ -327,13 +327,3 @@ The project is available under the **[MIT License]**
 |178 | SyntacticBaggage | LambdaRemoveRedundantCurlyBraces | 86 | LambdaExpression | LambdaExpression | LambdaExpression |
 |179 | Inlining | LambdaRemoveParenthesis | 86 | LambdaExpression | LambdaExpression | LambdaExpression |
 |180 | Centification | LambdaRenameSingleParameterToLambda | 86 | LambdaExpression | LambdaExpression | LambdaExpression |
-
-
-|median |  |  | 27.0 |  |  |  |
-|M.A.D |  |  | 10.0 |  |  |  |
-|min |  |  | 2.0 |  |  |  |
-|max |  |  | 86.0 |  |  |  |
-|range |  |  | 84.0 |  |  |  |
-
-
-
