@@ -110,10 +110,7 @@ public class Issue0311 {
         .stays();
   }
 
-  @Test public void for_4() {
-    trimmingOf("c(N i){N p=i;int a=5;++a;for(;p<10;)p=p.e();return false;}")//
-        .stays();
-  }
+
 
   @Test public void for_5() {
     trimmingOf("c(int i){int p=i;for(int k=2;p<10;){++nE;++p;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;){++nE;++p;}return false;}")
@@ -217,10 +214,7 @@ public class Issue0311 {
         .stays();
   }
 
-  @Test public void t03b() {
-    trimmingOf("S t(S g){int $=0,one=1;for(;$<one;){if($==0)$=7;++$;}return $;}")//
-        .stays();
-  }
+
 
   @Test public void t03c() {
     trimmingOf("S t(S s){int $=0,one=1;while($<one){if($==0)$=7;++$;}return $;}")

@@ -1782,8 +1782,8 @@ public final class Version230 {
   }
 
   @Test public void issue73c() {
-    trimmingOf("void foo(Integer integer, ASTNode astn){}")//
-        .gives("void foo(Integer i, ASTNode astn){}");
+    trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
+        .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}");
   }
 
   @Test public void linearTransformation() {
