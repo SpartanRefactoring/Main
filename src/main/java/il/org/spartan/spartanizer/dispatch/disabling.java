@@ -70,11 +70,11 @@ public interface disabling {
   }
 
   static boolean specificallyDisabled(final BodyDeclaration ¢) {
-    return disabling.ByComment.specificallyDisabled(¢);
+    return disabling.ByComment.specificallyDisabled(¢) || disabling.ByAnnotation.specificallyDisabled(¢);
   }
 
   static boolean specificallyEnabled(final BodyDeclaration ¢) {
-    return !disabling.ByComment.specificallyDisabled(¢) && disabling.ByComment.specificallyDisabled(¢);
+    return !disabling.ByComment.specificallyDisabled(¢) && disabling.ByComment.specificallyEnabled(¢);
   }
 
   static boolean hasJavaDocIdentifier(@Nullable final BodyDeclaration d, final String... ids) {
