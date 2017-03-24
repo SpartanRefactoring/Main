@@ -33,18 +33,15 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> collect.variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  @Nullable
-  public static Expression Initializers(final VariableDeclarationFragment ¢) {
+  @Nullable public static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  @Nullable
-  public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  @Nullable public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
-  @NotNull
-  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  @NotNull public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)

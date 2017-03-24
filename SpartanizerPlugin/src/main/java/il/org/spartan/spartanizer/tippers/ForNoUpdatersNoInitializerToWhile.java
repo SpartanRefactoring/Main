@@ -16,7 +16,7 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
   Expression condition;
 
   @Override @NotNull public String description() {
-    String $ = condition == null ? "C" : trivia.gist(condition);
+    final String $ = condition == null ? "C" : trivia.gist(condition);
     return String.format("Convert 'for(;%s;)' to 'while(%s)'", $, $);
   }
 
@@ -36,7 +36,7 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
   }
 
   @Override @NotNull public WhileStatement replacement(final ForStatement ¢) {
-    WhileStatement $ = ¢.getAST().newWhileStatement();
+    final WhileStatement $ = ¢.getAST().newWhileStatement();
     $.setExpression(¢.getExpression());
     $.setBody(¢.getBody());
     return $;
