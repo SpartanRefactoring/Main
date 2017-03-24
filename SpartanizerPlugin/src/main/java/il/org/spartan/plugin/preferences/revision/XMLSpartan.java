@@ -39,18 +39,18 @@ public class XMLSpartan {
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
-        CatchClauseRenameParameterToCent.class, //
-        EnhancedForParameterRenameToCent.class, //
-        ForRenameInitializerToCent.class, //
+        CatchClauseRenameParameterToIt.class, //
+        EnhancedForParameterRenameToIt.class, //
+        ForRenameInitializerToIt.class, //
         ForToForUpdaters.class, //
         InfixExpressionConcatentateCompileTime.class, //
         LambdaRenameSingleParameterToLambda.class, //
         MethodDeclarationRenameReturnToDollar.class, //
-        MethodDeclarationRenameSingleParameterToCent.class, //
+        MethodDeclarationRenameSingleParameterToIt.class, //
         MethodInvocationToStringToEmptyStringAddition.class, //
         ModifierRedundant.class, //
         SingelVariableDeclarationUnderscoreDoubled.class, //
-        SingleVariableDeclarationEnhancedForRenameParameterToCent.class //
+        SingleVariableDeclarationEnhancedForRenameParameterToIt.class //
     );
   }
 

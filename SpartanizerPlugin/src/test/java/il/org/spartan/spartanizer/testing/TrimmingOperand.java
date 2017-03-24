@@ -85,7 +85,7 @@ public class TrimmingOperand extends Wrapper<String> {
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + TestCaseFacotry.makeTipperUnitTest(get()));
+    System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeTipperUnitTest(get()));
   }
 
   /** Check whether one of the code options is correct

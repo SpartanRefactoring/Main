@@ -27,7 +27,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   private static final long serialVersionUID = -8610595251612382642L;
 
   private static boolean fitting(@NotNull final VariableDeclarationStatement s, @NotNull final ForStatement ¢) {
-    return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
+    return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToIt(¢);
   }
 
   /** final modifier is the only legal modifier inside a for loop, thus we push

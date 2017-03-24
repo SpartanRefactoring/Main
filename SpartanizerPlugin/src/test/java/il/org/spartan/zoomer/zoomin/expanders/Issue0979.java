@@ -6,8 +6,8 @@ import org.junit.*;
 
 import il.org.spartan.bloater.bloaters.*;
 
-/** Unit test for {@link RenameShortNamesMethodDec} also Unit test for
- * {@link RenameShortNamesVarDec}
+/** Unit test for {@link MethodDeclarationNameExpander} also Unit test for
+ * {@link VariableDeclarationStatementExpand}
  * @author Raviv Rachmiel
  * @since 15-01-2017 */
 @Ignore

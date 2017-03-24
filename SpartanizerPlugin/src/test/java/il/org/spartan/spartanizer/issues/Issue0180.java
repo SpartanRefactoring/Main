@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for: {@link MethodDeclarationRenameReturnToDollar}
- * {@link MethodDeclarationRenameSingleParameterToCent} Checks \@param tag value
+ * {@link MethodDeclarationRenameSingleParameterToIt} Checks \@param tag value
  * in javadoc is changed with dollar/cent renaming.
  * @author Ori Roth
  * @since 2016
