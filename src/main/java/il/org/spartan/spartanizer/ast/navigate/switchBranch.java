@@ -4,6 +4,8 @@ import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -111,7 +113,9 @@ public class switchBranch {
     addAll(step.statements($), bs);
     return $;
   }
-
+  
+  //TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
+  // --yg
   @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
     @NotNull final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
@@ -125,6 +129,7 @@ public class switchBranch {
         s = new ArrayList<>();
         $.add(new switchBranch(c, s));
         nextBranch = false;
+     // TODO: Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)
@@ -164,27 +169,31 @@ public class switchBranch {
   public boolean hasFallThrough() {
     return statements.stream().anyMatch(iz::switchCase);
   }
-
-  @Nullable public static Statement removeBreakSequencer(@NotNull final Statement s) {
+  
+  @Nullable public static Statement removeBreakSequencer(@Nullable final Statement s) {
+    if(s == null)
+      return null;
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
-    final AST $ = s.getAST();
+    final AST a = s.getAST();
+    @Nullable Statement $ = null;
     if (iz.ifStatement(s)) {
-      @Nullable final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
-      f.setExpression(copy.of(step.expression(t)));
-      f.setThenStatement(removeBreakSequencer(step.then(t)));
-      f.setElseStatement(removeBreakSequencer(step.elze(t)));
-      return f;
+      @Nullable final IfStatement t = az.ifStatement(s);
+      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t)))
+          .toIf(copy.of(step.expression(t)));
+    } else if (!iz.block(s)) {
+      if (iz.breakStatement(s) && iz.block(s.getParent()))
+        $ = a.newEmptyStatement();
+    } else {
+      final Block b = subject.ss(removeBreakSequencer(statements(az.block(s)))).toBlock();
+      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
+      $ = b;
     }
-    if (!iz.block(s))
-      return !iz.breakStatement(s) || !iz.block(s.getParent()) ? null : $.newEmptyStatement();
-    final Block b = $.newBlock();
-    step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
-    return b;
+    return $;
   }
 
-  @NotNull public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
-    @NotNull final Collection<Statement> $ = new ArrayList<>();
+  @NotNull public static List<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
+    @NotNull final List<Statement> $ = new ArrayList<>();
     for (@NotNull final Statement ¢ : ss) {
       @Nullable final Statement s = removeBreakSequencer(¢);
       if (s != null)
