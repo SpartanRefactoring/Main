@@ -132,7 +132,6 @@ public class XMLSpartan {
       return getFileInner($);
     } catch (@NotNull final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
       monitor.log(¢);
-      ¢.printStackTrace();
       return null;
     }
   }
@@ -162,7 +161,7 @@ public class XMLSpartan {
       @Nullable final Document i = initialize(b.newDocument());
       if (i == null)
         return null;
-      fl.create(new ByteArrayInputStream("".getBytes()), false, new NullProgressMonitor());
+      fl.create(new ByteArrayInputStream("".getBytes()), true, new NullProgressMonitor());
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
