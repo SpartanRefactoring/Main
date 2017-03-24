@@ -50,7 +50,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
       m.exclude(s);
     return new Tip(description(s), s, getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename($, ¢, s, r, g);
+        Tricks.rename($, ¢, s, r, g);
       }
     };
   }

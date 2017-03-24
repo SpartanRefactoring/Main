@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
-public enum Tippers {
+public enum Tricks {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void addAllReplacing(final Collection<Statement> to, @NotNull final Iterable<Statement> from, final Statement substitute,
       final Statement by1, final Iterable<Statement> by2) {
@@ -80,8 +80,8 @@ public enum Tippers {
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Tippers.sequencerRank(last(then)), rankElse = Tippers.sequencerRank(last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
+    final int rankThen = Tricks.sequencerRank(last(then)), rankElse = Tricks.sequencerRank(last(elze));
+    return rankElse > rankThen || rankThen == rankElse && !Tricks.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean mixedLiteralKind(@NotNull final Collection<Expression> xs) {
@@ -121,7 +121,7 @@ public enum Tippers {
 
   public static boolean shoudlInvert(@NotNull final IfStatement s) {
     final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > $ || $ == rankElse && !Tippers.thenIsShorter(s);
+    return rankElse > $ || $ == rankElse && !Tricks.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(@NotNull final IfStatement s) {

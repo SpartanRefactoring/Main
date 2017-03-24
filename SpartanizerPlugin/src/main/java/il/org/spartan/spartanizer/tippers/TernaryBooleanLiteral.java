@@ -34,25 +34,21 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     implements TipperCategory.NOP.onBooleans {
   private static final long serialVersionUID = 0x16FBB28C0081E600L;
 
-  /** Consider an expression {@code
-                                                 * a ? b : c
-                                                 * } in a sense it is the same
-   * as {@code
-  * (a && b) || (!a && c)
-  * }
+  /** Consider an expression {@code a ? b : c}. It is logically equivalent to
+   * {@code (a && b) || (!a && c)}
    * <ol>
    * <li>if b is false then: {@code
-   * (a && false) || (!a && c) == !a && c
-   * }
+    (a && false) || (!a && c) == !a && c
+    }
    * <li>if b is true then: {@code
-   * (a && true) || (!a && c) == a || (!a && c) == a || c
-   * }
+    (a && true) || (!a && c) == a || (!a && c) == a || c
+    }
    * <li>if c is false then: {@code
-   * (a && b) || (!a && false) == a && b
-   * }
+    (a && b) || (!a && false) == a && b
+    }
    * <li>if c is true then {@code
-   * (a && b) || (!a && true) == !a || b
-   * }
+    (a && b) || (!a && true) == !a || b
+    }
    * </ol>
   */
   private static Expression simplifyTernary(@NotNull final ConditionalExpression ¢) {
@@ -65,7 +61,6 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
     return subject.pair(literal != $ ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert conditional expression into logical expression";
   }

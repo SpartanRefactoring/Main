@@ -27,7 +27,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
   private static final long serialVersionUID = -3240064673505742343L;
 
   @Override @NotNull public String description(final LambdaExpression ¢) {
-    return "Rename parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
+    return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
   @Override public Tip tip(@NotNull final LambdaExpression x, @Nullable final ExclusionManager m) {
@@ -45,7 +45,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     final SimpleName ¢ = x.getAST().newSimpleName(namer.lambda);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename($, ¢, x, r, g);
+        Tricks.rename($, ¢, x, r, g);
       }
     };
   }
