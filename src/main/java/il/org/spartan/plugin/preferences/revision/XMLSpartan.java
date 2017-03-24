@@ -31,7 +31,7 @@ public class XMLSpartan {
   private static final String CURRENT_VERSION = "2.0";
   private static final String BASE = "spartan";
   private static final String VERSION = "version";
-  private static final String FILE_NAME = "spartan.xml";
+  private static final String FILE_NAME = "spartanizer.xml";
   private static final String TIPPER = "tipper";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
