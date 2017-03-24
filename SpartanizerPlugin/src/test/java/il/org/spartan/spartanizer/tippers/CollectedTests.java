@@ -21,7 +21,7 @@ public final class CollectedTests {
 
   @Test public void b() {
     trimmingOf("int a  = f(); for (int i = a; i <100; i++) b[i] = 3;")//
-        .gives(" for (int i = f(); i <100; i++) b[i] = 3;");
+        .gives("for (int i = f(); i <100; i++) b[i] = 3;");
   }
 
   @Test public void c() {
@@ -31,7 +31,7 @@ public final class CollectedTests {
   }
 
   @Test public void d() {
-    trimmingOf("    final W s = new W(\"bob\");\n    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
+    trimmingOf("   final W s = new W(\"bob\");\n    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
         .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 

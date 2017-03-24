@@ -21,7 +21,7 @@ public class Issue0312 {
   }
 
   @Test public void bugInLastIfInMethod1() {
-    trimmingOf("        @Override public void f() {\n          if (!isMessageSuppressed(message)) {\n"
+    trimmingOf("       @Override public void f() {\n          if (!isMessageSuppressed(message)) {\n"
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n            if (listener != null)\n"

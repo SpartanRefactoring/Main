@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class HoldsForAnyTest {
   @Test public void _a() {
-    trimmingOf(" for (final UserDefinedTipper<Statement> ¢ : tippers) if (¢.canTip(s)) return true; return false;")
+    trimmingOf("for (final UserDefinedTipper<Statement> ¢ : tippers) if (¢.canTip(s)) return true; return false;")
         .using(EnhancedForStatement.class, new HoldsForAny())//
         .gives("return tippers.stream().anyMatch(¢ -> ¢.canTip(s));");
   }
@@ -89,7 +89,7 @@ public class HoldsForAnyTest {
   }
 
   @Test public void j() {
-    trimmingOf(" for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
+    trimmingOf("for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
         .using(EnhancedForStatement.class, new HoldsForAny())//
         .gives("$=f.modifiers().stream().anyMatch(¢->((Modifier)¢).isFinal());")//
     ;
