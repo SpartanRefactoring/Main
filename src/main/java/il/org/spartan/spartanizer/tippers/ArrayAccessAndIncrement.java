@@ -62,9 +62,9 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
     @NotNull final Int $ = new Int();
-    @Nullable final List<Expression> lst = extract.allOperands(az.infixExpression(a.getParent()));
-    lst.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
-    lst.stream().filter(iz::arrayAccess).forEach(λ -> ++$.inner);
+    @Nullable final List<Expression> xs = extract.allOperands(az.infixExpression(a.getParent()));
+    xs.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
+    xs.stream().filter(iz::arrayAccess).forEach(λ -> ++$.inner);
     return $.inner != 1;
   }
 
