@@ -14,8 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-19 */
 public enum trivia {
-  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS//
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static String accurateEssence(@NotNull final String codeFragment) {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }

@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since Sep 20, 2016 */
 public enum TrimmerLog {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   private static CSVStatistics output;
   private static int maxVisitations = 30;
   private static int maxTips = 20;

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public enum Essence {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void main(final String[] args) {
     for (@NotNull final Scanner ¢ = new Scanner(System.in);;) {
       System.out.print("Enter some code: ");

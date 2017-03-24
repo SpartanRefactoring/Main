@@ -162,7 +162,7 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   public enum Util {
-    ;
+    DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
     /** Default name for marker selections. */
     private static final String MARKER_NAME = "marker";
     /** Default name for text selections. */

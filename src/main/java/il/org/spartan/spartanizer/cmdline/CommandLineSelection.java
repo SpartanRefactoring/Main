@@ -40,7 +40,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   }
 
   public enum Util {
-    ;
+    DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
     private static String presentSourcePath = "."; // default input path
 
     public static String getPresentSourcePath() {

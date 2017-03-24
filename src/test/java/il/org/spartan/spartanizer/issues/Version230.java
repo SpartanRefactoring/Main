@@ -3638,10 +3638,10 @@ public final class Version230 {
   }
 
   @Test public void twoOpportunityExample() {
-    azzert.that(countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
-    azzert.that(countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+    azzert.that(countOpportunities(new Trimmer(), (CompilationUnit) makeAST.COMPILATION_UNIT
+        .from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+    azzert.that(countOpportunities(new Trimmer(), (CompilationUnit) makeAST.COMPILATION_UNIT
+        .from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
   }
 
   @Test public void unsafeBlockSimlify() {
