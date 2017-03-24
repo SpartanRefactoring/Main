@@ -4,9 +4,15 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+import il.org.spartan.spartanizer.tippers.*;
+
+// TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+// XXX: Description added by Ori Roth
+/** Test for {@link IfCommandsSequencerNoElseSingletonSequencer}. Examine cases
+ * where the last statement in the if statement then section is not an immediate
+ * sequencer, or not a sequencer at all.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since Jan 6, 2017 */
+ * @since Jan 6, 2017 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public final class Issue0194 {
   // Couple of tests to check that the tipper is safe with empty values, etc.
@@ -288,5 +294,28 @@ public final class Issue0194 {
                 + "y=7;"//
                 + "return g();" //
                 + "}");
+  }
+
+  @Test public void test15() {
+    trimmingOf("" //
+        + "if (a != null) {\n" //
+        + "  final X a = f();\n" //
+        + "  if (g())\n" //
+        + "    return f();\n" //
+        + "  if (f() && g())  {\n" //
+        + "    return a;\n" //
+        + "  }\n" //
+        + "}\n" //
+        + "return null;")
+            .gives("" //
+                + "if (a == null)\n" //
+                + "  return null;\n" //
+                + "final X a = f();\n" //
+                + "if (g())\n" //
+                + "  return f();\n" //
+                + "if (f() && g())  {\n" //
+                + "  return a;\n" //
+                + "}\n" //
+                + "return null;");
   }
 }
