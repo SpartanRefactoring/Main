@@ -21,14 +21,16 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** TODO Ori Marcovitch please add a description
- * @author Ori Marcovitch */
-public enum anonymize {
+ * @author Ori Marcovitch
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-03-24 */
+public enum TestCaseFacotry {
   ;
-  public static String testcase(final String name, @NotNull final String raw) {
+  static String from(final String name, @NotNull final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
-  @NotNull public static String unwarpedTestcase(@NotNull final String raw) {
+  @NotNull public static String unWrapedTestCase(@NotNull final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
@@ -124,42 +126,49 @@ public enum anonymize {
       System.out.println("twice: " + theSpartanizer.twice(s));
       System.out.println("thrice: " + theSpartanizer.thrice(s));
       System.out.println("fixed: " + theSpartanizer.repetitively(s));
-      System.out.println(anonymize.testcase(namer.signature(s), s));
+      System.out.println(TestCaseFacotry.from(namer.signature(s), s));
     }
   }
 
-  @NotNull public static String makeTipperUnitTest(@NotNull final String codeFragment) {
+  @NotNull
+  public static String makeTipperUnitTest(@NotNull final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
+    return comment() + format("  @Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
   }
 
-  @NotNull public static String makeBloaterUnitTest(@NotNull final String codeFragment) {
+  @NotNull
+  public static String makeBloaterUnitTest(@NotNull final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
   }
 
-  public static String comment() {
-    return format("/** Introduced by %s on %s \n(code automatically generated in '%s.java')*/\n", //
+  static String comment() {
+    return format("/** Introduced by %s on %s \n(code automatically in class '%s')*/\n", //
         system.userName(), //
         system.now(), //
-        system.callingClassName() //
+        system.callingClassName().replaceAll("[a-z0-9A-Z]*\\.", "") //
     );
   }
 
-  @NotNull public static String tipperBody(final String input) {
-    for (String $ = format("  trimmingOf(\"%s\") //\n", input), from = input;;) {
+  @NotNull static String tipperBody(final String input) {
+    for (String $ = format("    trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
-        return $ + "  .stays() //\n  ;";
+        return $ + "         .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;
-      $ += format(" .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
-          + format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      $ += //
+          format("") + // Stub for alignment of strings below
+              format(//
+                  "         .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
+              + //
+              format(//
+                  "         .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
       from = to;
     }
   }
 
-  @NotNull public static String bloaterBody(final String input) {
+  @NotNull static String bloaterBody(final String input) {
     for (String $ = format("  bloatingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(from);
       if (to.equals(from))
