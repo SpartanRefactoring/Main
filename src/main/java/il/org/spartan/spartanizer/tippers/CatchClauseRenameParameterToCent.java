@@ -24,15 +24,18 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
   private static final long serialVersionUID = -6638105215049141624L;
 
   @Override @NotNull public String description(@NotNull final CatchClause ¢) {
-    return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
+    return  String.format("Rename caught %s (%s) to %s",
+        ¢.getException().getName(), //
+        ¢.getException().getType(), // 
+       namer.lambda); 
   }
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //
         convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
             .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //
-        Example.ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}"), //
-        Example.ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
+        ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}"), //
+        ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
   }
 
   @Override public Tip tip(@NotNull final CatchClause c, @Nullable final ExclusionManager m) {
@@ -50,7 +53,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     final SimpleName ¢ = namer.newCurrent(c);
     return new Tip(description(c), c.getException().getName(), getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename($, ¢, c, r, g);
+        Tricks.rename($, ¢, c, r, g);
       }
     };
   }
