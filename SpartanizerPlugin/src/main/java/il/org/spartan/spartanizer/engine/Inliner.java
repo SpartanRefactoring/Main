@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.utils.*;
 
 /** Replace a variable with an expression
  * @year 2015
@@ -153,8 +154,14 @@ public final class Inliner {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(oldExpression);
       assert oldExpression != null;
       final Expression replacement = get();
+      assert rewriter !=null;
+      assert replacement !=null;
+      try {
       rewriter.replace(oldExpression, newExpression, editGroup);
-      collect.usesOf(name).in(newExpression).forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
+      } catch (NullPointerException x) {
+       System.out.println(x); 
+      }
+      collect.usesOf(name).in(newExpression).stream().filter(Objects::nonNull).forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
       n.set(newExpression);
     }
 
