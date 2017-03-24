@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-22 */
 abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
-  private static final long serialVersionUID = 6120092571084023313L;
+  private static final long serialVersionUID = 0x54EEEFC48BF86611L;
 
   public $Fragment() {}
 
