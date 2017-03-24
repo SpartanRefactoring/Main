@@ -166,8 +166,6 @@ public class Issue0455 {
   @Test public void singleSwitchCaseStatementShouldntTip() {
     trimmingOf("x -> {switch(x){ case 0: ++x; break; default: --x;}}") //
         .gives("λ -> {switch(λ){ case 0: ++λ; break; default: --λ;}}") //
-        .gives("λ->{{if(λ==0) ++λ; else --λ;}}") //
-        .gives("λ->{if(λ==0)++λ;else--λ;}") //
         .stays();
   }
 

@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Test case for {@link SwitchBranchSort}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-14 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0861 {
   @Test public void t1() {
