@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.dispatch.Tippers.*;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -24,6 +25,6 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
   }
 
   @Override public Statement replacement(@NotNull final IfStatement ¢) {
-    return thenIsShorter(¢) ? null : invert(¢);
+    return thenIsShorter(¢) ? null : wizard.invert(¢);
   }
 }
