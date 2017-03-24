@@ -108,11 +108,11 @@ public class fluentTrimmerApplication extends Trimmer.With {
         if (!trimmer().inRange(m, n))
           return true;
         final Tipper<N> w = trimmer().toolbox.firstTipper(n);
-        if (w != null) {
-          @Nullable final Tip make = w.tip(n, exclude);
-          if (make != null)
-            make.go(r, null);
-        }
+        if (w == null)
+          return true;
+        @Nullable final Tip make = w.tip(n, exclude);
+        if (make != null)
+          make.go(r, null);
         return true;
       }
     });

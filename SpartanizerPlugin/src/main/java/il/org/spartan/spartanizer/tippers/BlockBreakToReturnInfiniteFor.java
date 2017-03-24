@@ -40,12 +40,10 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
       return null;
     if (iz.breakStatement(elze))
       return elze;
-    if (iz.block(elze)) {
-      @Nullable final Statement $ = handleBlock(az.block(elze), nextReturn);
-      if ($ != null)
-        return $;
-    }
-    return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
+    if (!iz.block(elze))
+      return iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
+    @Nullable final Statement $ = handleBlock(az.block(elze), nextReturn);
+    return $ != null ? $ : iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
   }
 
   private static Statement make(final Statement s, final ReturnStatement nextReturn) {

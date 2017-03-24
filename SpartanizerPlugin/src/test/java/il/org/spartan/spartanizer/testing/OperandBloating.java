@@ -73,12 +73,11 @@ public class OperandBloating extends TrimmingOperand {
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
       if (tide.clean(peeled1).equals(tide.clean(get())))
         azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
-      if (!$1.equals(peeled1) && !trivia.essence(peeled1).equals(trivia.essence($1))) {
-        copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
-            trivia.escapeQuotes(trivia.essence(peeled1)), //
-            trivia.escapeQuotes(trivia.essence($1)));
-        azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
-      }
+      if ($1.equals(peeled1) || trivia.essence(peeled1).equals(trivia.essence($1)))
+        return new OperandBloating($1);
+      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled1)),
+          trivia.escapeQuotes(trivia.essence($1)));
+      azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       return new OperandBloating($1);
     } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);

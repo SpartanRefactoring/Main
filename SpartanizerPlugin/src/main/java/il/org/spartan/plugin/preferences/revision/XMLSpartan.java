@@ -173,10 +173,10 @@ public class XMLSpartan {
       return null;
     e.normalize();
     final NodeList bs = $.getElementsByTagName(BASE);
-    if (bs == null || bs.getLength() != 1 || !validate($, ((Element) bs.item(0)).getAttribute(VERSION))) {
-      $ = initialize(b.newDocument());
-      commit(fl, $);
-    }
+    if (bs != null && bs.getLength() == 1 && validate($, ((Element) bs.item(0)).getAttribute(VERSION)))
+      return $;
+    $ = initialize(b.newDocument());
+    commit(fl, $);
     return $;
   }
 

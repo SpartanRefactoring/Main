@@ -59,18 +59,14 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     }
     if (az.ifStatement(then) != null)
       return handleIf(then, nextReturn);
-    if (elze != null) {
-      if (compareReturnStatements(az.returnStatement(elze), nextReturn))
-        return elze;
-      if (iz.block(elze)) {
-        @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
-        if ($ != null)
-          return $;
-      }
-      if (az.ifStatement(elze) != null)
-        return handleIf(elze, nextReturn);
-    }
-    return null;
+    if (elze == null)
+      return null;
+    if (compareReturnStatements(az.returnStatement(elze), nextReturn))
+      return elze;
+    if (!iz.block(elze))
+      return az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
+    @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
+    return $ != null ? $ : az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
   }
 
   private static boolean isInfiniteLoop(@NotNull final WhileStatement ¢) {

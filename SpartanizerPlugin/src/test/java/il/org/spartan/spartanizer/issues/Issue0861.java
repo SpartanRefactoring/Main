@@ -30,6 +30,6 @@ public class Issue0861 {
   }
 
   @Test public void t3() {
-    trimmingOf("switch (state) {" + "case DONE:" + "return false;" + "case READY:" + "return true;" + "default:" + "}").stays();
+    trimmingOf("switch (state) {case DONE:return false;case READY:return true;default:}").stays();
   }
 }
