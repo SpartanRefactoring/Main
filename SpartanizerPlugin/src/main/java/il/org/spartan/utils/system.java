@@ -175,9 +175,9 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  @SuppressWarnings("boxing") static boolean isBalanced(String s) {
-    Stack<Character> $ = new Stack<>();
-    for (char ¢ : s.toCharArray())
+  @SuppressWarnings("boxing") static boolean isBalanced(final String s) {
+    final Stack<Character> $ = new Stack<>();
+    for (final char ¢ : s.toCharArray())
       switch (¢) {
         case '(':
         case '[':

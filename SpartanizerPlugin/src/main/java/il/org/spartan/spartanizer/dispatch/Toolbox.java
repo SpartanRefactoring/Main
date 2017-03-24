@@ -173,14 +173,14 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
-//            new RemoveRedundantSwitchReturn(), //
-//            new RemoveRedundantSwitchContinue(), //
-//            new SwitchWithOneCaseToIf(), //
-//            new SwitchBranchSort(), //
+            // new RemoveRedundantSwitchReturn(), //
+            // new RemoveRedundantSwitchContinue(), //
+            // new SwitchWithOneCaseToIf(), //
+            // new SwitchBranchSort(), //
             null)
         .add(SwitchCase.class, //
             new RemoveRedundantSwitchCases(), //
-//            new SwitchCaseLocalSort(), //
+            // new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignmentOfSameValue(), //
