@@ -83,15 +83,14 @@ public class switchBranch {
   }
 
   public int sequencerLevel() {
-    if (sequencerLevel < 0) {
-      final int th = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
-          re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
-          br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
-          co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = th + re + br + co;
-      assert sum > 0;
-      sequencerLevel = sum > th && sum > re && sum > br && sum > co ? 0 : th > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
-    }
-    return sequencerLevel;
+    if (sequencerLevel >= 0)
+      return sequencerLevel;
+    final int $ = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
+        re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
+        br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
+        co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = $ + re + br + co;
+    assert sum > 0;
+    return sequencerLevel = sum > $ && sum > re && sum > br && sum > co ? 0 : $ > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
   }
 
   /** @param ¢
