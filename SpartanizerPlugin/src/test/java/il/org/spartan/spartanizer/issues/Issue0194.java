@@ -29,11 +29,18 @@ public final class Issue0194 {
         + "return g();" //
         + "}" //
         + "return h();")
-            .gives("if(b1){"//
+            .gives("if(!b1)"//
+                + "return h();" //
+                + "x=13.5;"//
+                + "if(b2){}\n"//
+                + "else\n"//
+                + "return g();" //
+                + "return h();")
+            .gives("if(!b1)"//
+                + "return h();" //
                 + "x=13.5;"//
                 + "if(!b2)\n"//
                 + "return g();" //
-                + "}" //
                 + "return h();");
   }
 
@@ -47,18 +54,31 @@ public final class Issue0194 {
         + "else{}"//
         + "}" //
         + "return h();")
-            .gives("if(b1){"//
+            .gives("if(!b1)"//
+                + "return h();" //
                 + "x=13.5;"//
                 + "if(b2)\n"//
                 + "return g();"//
-                + "}" //
-                + "return h();");
+                + "else{}"//
+                + "return h();")
+            .givesEither(
+                "if(!b1)"//
+                    + "return h();" //
+                    + "x=13.5;"//
+                    + "if(b2)\n"//
+                    + "return g();"//
+                    + "return h();", //
+                "if(!b1)"//
+                    + "return h();" //
+                    + "x=13.5;"//
+                    + "return b2 ? g() : h();");
   }
 
   // Empty Block.
   // Similar to test01() and test02().
   @Test public void test03() {
-    trimmingOf("if(b1){"//
+    trimmingOf("" //
+        + "if(b1){"//
         + "x=13.5;"//
         + "{}"//
         + "}" //

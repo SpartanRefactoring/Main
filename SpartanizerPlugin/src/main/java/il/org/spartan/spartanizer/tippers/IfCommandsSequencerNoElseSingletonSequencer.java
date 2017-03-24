@@ -30,13 +30,14 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !iz.sequencer(then(s)) && !iz.block(then(s)))
+    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement))
       return null;
-    final IfStatement asVirtualIf = subject.pair( //
-        !iz.block(then(s)) || wizard.endsWithSequencer(then(s)) ? then(s)
-            : subject.ss(extract.statements(az.block(then(s)))).add(copy.of(nextStatement)).toBlock(), //
-        nextStatement //
-    ).toIf(s.getExpression());
+    final Statement thenS = then(s);
+    if (!iz.sequencer(thenS) && !iz.block(thenS))
+      return null;
+    final IfStatement asVirtualIf = normalized(thenS, nextStatement, s.getExpression());
+    if (asVirtualIf == null)
+      return null;
     if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
       $.replace(s, then(asVirtualIf), g);
       $.remove(nextStatement, g);
@@ -57,5 +58,13 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
       lr.remove(nextStatement, g);
     }
     return $;
+  }
+
+  private static IfStatement normalized(final Statement $, final Statement nextStatement, final Expression x) {
+    if (!iz.block($) || wizard.endsWithSequencer($))
+      return subject.pair($, nextStatement).toIf(x);
+    final List<Statement> ss = extract.statements($);
+    return ss.size() < 2 ? null : //
+        subject.pair(subject.ss(ss).add(copy.of(nextStatement)).toBlock(), nextStatement).toIf(x);
   }
 }
