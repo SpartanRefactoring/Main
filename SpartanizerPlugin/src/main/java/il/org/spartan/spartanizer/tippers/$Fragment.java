@@ -25,7 +25,6 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = 6120092571084023313L;
 
   public $Fragment() {
-    System.err.println("Constructing " + myClass());
   }
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
