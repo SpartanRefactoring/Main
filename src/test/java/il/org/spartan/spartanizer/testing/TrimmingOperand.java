@@ -75,7 +75,7 @@ public class TrimmingOperand extends Wrapper<String> {
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
     if (!$.equals(peeled) && !trivia.essence(peeled).equals(trivia.essence($))) {
-      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
+      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
           trivia.escapeQuotes(trivia.essence(peeled)), //
           trivia.escapeQuotes(trivia.essence($)));
       azzert.that(trivia.essence(peeled), is(trivia.essence($)));
@@ -86,7 +86,7 @@ public class TrimmingOperand extends Wrapper<String> {
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + anonymize.makeTipperUnitTest(get()));
+    System.err.println(NEW_UNIT_TEST + TestCaseFacotry.makeTipperUnitTest(get()));
   }
 
   /** Check whether one of the code options is correct

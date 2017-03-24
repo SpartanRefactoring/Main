@@ -87,9 +87,9 @@ public enum SentenceTestTemplate {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
 
-    @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration first;
-    @Parameter(0) public String name;
-    @Parameter(2) @SuppressWarnings("CanBeFinal") public MethodDeclaration second;
+    @Parameter(0) @SuppressWarnings("CanBeFinal") public String _0name;
+    @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration _1first;
+    @Parameter(2) @SuppressWarnings("CanBeFinal") public MethodDeclaration _2second;
 
     @Test public void chagesTo() {
       final String peeled = WrapIntoComilationUnit.Method.off(trim.apply(trimmer, WrapIntoComilationUnit.Method.on(firstBody()))), to = secondBody();
@@ -98,19 +98,19 @@ public enum SentenceTestTemplate {
     }
 
     String firstBody() {
-      return (first + "").replace(disabling.ByComment.disabler, "");
+      return (_1first + "").replace(disabling.ByComment.disabler, "");
     }
 
     @NotNull CharSequence firstName() {
-      return first.getName() + "";
+      return _1first.getName() + "";
     }
 
     String secondBody() {
-      return (second + "").replace(secondName(), firstName()).replace(disabling.ByComment.disabler, "");
+      return (_2second + "").replace(secondName(), firstName()).replace(disabling.ByComment.disabler, "");
     }
 
     @NotNull CharSequence secondName() {
-      return second.getName() + "";
+      return _2second.getName() + "";
     }
   }
 

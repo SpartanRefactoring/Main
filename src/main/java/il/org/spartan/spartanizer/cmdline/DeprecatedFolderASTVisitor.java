@@ -155,7 +155,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       ++total;
       if (interesting(d)) {
         ++interesting;
-        @NotNull final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
+        @NotNull final String summary = squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(d + "")))) + "\n";
         System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
         try {
           out.write(summary);
