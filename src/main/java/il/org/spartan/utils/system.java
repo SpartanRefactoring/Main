@@ -175,7 +175,7 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
-  @SuppressWarnings("boxing") static boolean isBalanced(final String s) {
+  @SuppressWarnings({ "boxing", "incomplete-switch" }) static boolean isBalanced(final String s) {
     final Stack<Character> $ = new Stack<>();
     for (final char ¢ : s.toCharArray())
       switch (¢) {

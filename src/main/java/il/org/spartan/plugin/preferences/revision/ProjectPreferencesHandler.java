@@ -39,7 +39,7 @@ import il.org.spartan.utils.Example.*;
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
   private static final boolean REFRESH_OPENS_DIALOG = false;
-  private static CodeFormatter formatter;
+  private static final lazy<CodeFormatter> formatter = lazy.get(()->ToolFactory.createCodeFormatter(null));
 
   /* (non-Javadoc)
    *
@@ -342,9 +342,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   }
 
   static String prettify(@NotNull final String code) {
-    if (formatter == null)
-      formatter = ToolFactory.createCodeFormatter(null);
-    final TextEdit e = formatter.format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
+    final TextEdit e = formatter.get().format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
       return code;
     @NotNull final IDocument $ = new Document(code);

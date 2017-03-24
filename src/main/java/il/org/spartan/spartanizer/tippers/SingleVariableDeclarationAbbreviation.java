@@ -30,6 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = -2709826205107840171L;
+  private static String[] shortNames = { "lst", "integer", "list"};
 
   static void fixJavadoc(@NotNull final MethodDeclaration d, @NotNull final SimpleName oldName, final String newName, @NotNull final ASTRewrite r,
       final TextEditGroup g) {
@@ -57,15 +58,20 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   }
 
   private static boolean isShort(@NotNull final SingleVariableDeclaration ¢) {
+    String identifier = ¢.getName().getIdentifier();
+    if (iz.in(identifier, shortNames))
+      return true;
     final String $ = namer.shorten(¢.getType());
-    return $ != null && ($ + pluralVariadic(¢)).equals(¢.getName().getIdentifier());
+    return $ != null && ($ + pluralVariadic(¢)).equals(identifier);
   }
 
   private static boolean legal(@NotNull final SingleVariableDeclaration $, @NotNull final MethodDeclaration d) {
-    return namer.shorten($.getType()) != null
-        && new MethodExplorer(d).localVariables().stream().noneMatch(λ -> λ.getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-        && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(namer.shorten($.getType()) + pluralVariadic($)))
-        && !d.getName().getIdentifier().equalsIgnoreCase(namer.shorten($.getType()) + pluralVariadic($));
+    List<SimpleName> localVariables = new MethodExplorer(d).localVariables();
+    String shortName = namer.shorten($.getType());
+    return shortName != null
+        && localVariables.stream().noneMatch(λ -> λ.getIdentifier().equals(shortName + pluralVariadic($)))
+        && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(shortName + pluralVariadic($)))
+        && !d.getName().getIdentifier().equalsIgnoreCase(shortName + pluralVariadic($));
   }
 
   @NotNull private static String pluralVariadic(@NotNull final SingleVariableDeclaration ¢) {
