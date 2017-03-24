@@ -72,13 +72,9 @@ public enum Tippers {
     return $;
   }
 
-  public static IfStatement invert(@NotNull final IfStatement ¢) {
-    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
-  }
-
   public static IfStatement makeShorterIf(@NotNull final IfStatement s) {
     @NotNull final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
-    final IfStatement $ = invert(s);
+    final IfStatement $ = wizard.invert(s);
     if (then.isEmpty())
       return $;
     final IfStatement main = copy.of(s);
@@ -144,8 +140,8 @@ public enum Tippers {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = invert(s);
-    return positivePrefixLength($) >= positivePrefixLength(invert($));
+    final IfStatement $ = wizard.invert(s);
+    return positivePrefixLength($) >= positivePrefixLength(wizard.invert($));
   }
 
   private static int positivePrefixLength(@NotNull final IfStatement $) {
@@ -154,13 +150,5 @@ public enum Tippers {
 
   private static int sequencerRank(@NotNull final ASTNode ¢) {
     return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
-  }
-
-  public static void remove(@NotNull final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
-  }
-
-  public static <T> void removeLast(@NotNull final List<T> ¢) {
-    ¢.remove(¢.size() - 1);
   }
 }

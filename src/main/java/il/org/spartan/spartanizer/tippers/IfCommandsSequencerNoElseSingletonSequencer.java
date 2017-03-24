@@ -40,7 +40,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     }
     if (!shoudlInvert(asVirtualIf))
       return null;
-    final IfStatement canonicalIf = invert(asVirtualIf);
+    final IfStatement canonicalIf = wizard.invert(asVirtualIf);
     @NotNull final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {

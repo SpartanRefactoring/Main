@@ -22,18 +22,6 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x7B0F45FEAE8DEEA5L;
 
-  private static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setBody(copy.of(body(¢)));
-    $.setExpression(pullInitializersFromExpression(copy.ofWhileExpression(¢), parent(f)));
-    initializers($).add(Initializers(f));
-    return $;
-  }
-
-  private static boolean fitting(final VariableDeclarationStatement s, final WhileStatement ¢) {
-    return fragmentsUseFitting(s, ¢);
-  }
-
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {
     return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
@@ -42,32 +30,25 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return fragments(vds).stream()
-        .allMatch(λ -> variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
+        .allMatch(λ -> collect.variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  @Nullable private static Expression Initializers(final VariableDeclarationFragment ¢) {
+  @Nullable
+  public static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  @Nullable private static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  @Nullable
+  public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
-  @NotNull private static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  @NotNull
+  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
                 ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
-  }
-
-  /** Determines whether a specific SimpleName was used in a
-   * {@link ForStatement}.
-   * @param s JD
-   * @param n JD
-   * @return whether the SimpleName is used in a ForStatement's condition,
-   *         updaters, or body. */
-  private static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
-    return !collect.usesOf(n).in(condition(s), body(s)).isEmpty();
   }
 
   @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
@@ -82,11 +63,11 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     if (vds == null)
       return null;
     @Nullable final WhileStatement s = az.whileStatement(nextStatement);
-    if (s == null || !fitting(vds, s))
+    if (s == null || !fragmentsUseFitting(vds, s))
       return null;
     exclude.excludeAll(fragments(vds));
     $.remove(vds, g);
-    $.replace(s, buildForStatement(f, s), g);
+    $.replace(s, wizard.buildForStatement(f, s), g);
     return $;
   }
 }
