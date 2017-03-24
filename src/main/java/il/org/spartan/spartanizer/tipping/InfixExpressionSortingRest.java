@@ -23,7 +23,7 @@ public abstract class InfixExpressionSortingRest extends InfixExpressionSorting 
     if (!suitable(¢))
       return false;
     @Nullable final List<Expression> $ = extract.allOperands(¢);
-    return $.size() > 2 && !Tippers.mixedLiteralKind($) && sort(chop($));
+    return $.size() > 2 && !Tricks.mixedLiteralKind($) && sort(chop($));
   }
 
   @Override public final Expression replacement(@NotNull final InfixExpression $) {

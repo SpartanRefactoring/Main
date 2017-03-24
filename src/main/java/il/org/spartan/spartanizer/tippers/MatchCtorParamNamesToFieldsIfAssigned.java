@@ -71,7 +71,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
       final List<SimpleName> nn = new ArrayList<>(newNames);
 
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(first(on), first(nn), d, r, g);
+        Tricks.rename(first(on), first(nn), d, r, g);
       }
     };
   }
