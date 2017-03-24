@@ -26,13 +26,17 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
   private static final long serialVersionUID = -5423686618924537619L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Invert conditional and use next statement)";
+    return "Invert conditional and use next statement";
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !wizard.endsWithSequencer(then(s)))
+    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !iz.sequencer(then(s)) && !iz.block(then(s)))
       return null;
-    final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
+    final IfStatement asVirtualIf = subject.pair( //
+        !(then(s) instanceof Block) || wizard.endsWithSequencer(then(s)) ? then(s)
+            : subject.ss(extract.statements(az.block(then(s)))).add(copy.of(nextStatement)).toBlock(), //
+        nextStatement //
+    ).toIf(s.getExpression());
     if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
       $.replace(s, then(asVirtualIf), g);
       $.remove(nextStatement, g);
