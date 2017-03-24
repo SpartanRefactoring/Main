@@ -175,6 +175,31 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
+  @SuppressWarnings("boxing") static boolean isBalanced(String s) {
+    Stack<Character> $ = new Stack<>();
+    for (char ¢ : s.toCharArray())
+      switch (¢) {
+        case '(':
+        case '[':
+        case '{':
+          $.push(¢);
+          continue;
+        case ')':
+          if ($.isEmpty() || $.pop() != '(')
+            return false;
+          continue;
+        case ']':
+          if ($.isEmpty() || $.pop() != '[')
+            return false;
+          continue;
+        case '}':
+          if ($.isEmpty() || $.pop() != '{')
+            return false;
+          continue;
+      }
+    return $.isEmpty();
+  }
+
   interface Extension {
     @NotNull File dot(String extentsion);
   }

@@ -53,7 +53,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
       scope.push(m);
       methods.get(key).add(m);
       @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-          .in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+          .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
     } catch (@NotNull final AssertionError __) {

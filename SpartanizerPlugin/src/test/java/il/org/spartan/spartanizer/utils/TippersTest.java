@@ -33,7 +33,7 @@ public final class TippersTest {
   @Test public void countInEnhancedFor() {
     @NotNull final String input = "int f() { for (int a: as) return a; }";
     @NotNull final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class)
-        .in(makeAST.COMPILATION_UNIT.from(Wrap.Method.intoDocument(input)));
+        .in(makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Method.intoDocument(input)));
     azzert.that(m, iz(input));
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(body(m)))).getParameter();
     assert p != null;
@@ -46,7 +46,7 @@ public final class TippersTest {
   @Test public void inlineExpressionWithSideEffect() {
     assert !sideEffects.free(e("f()"));
     @NotNull final VariableDeclarationFragment f = findFirst
-        .variableDeclarationFragment(Wrap.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
+        .variableDeclarationFragment(WrapIntoComilationUnit.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
     azzert.that(n, iz("a"));
@@ -87,7 +87,7 @@ public final class TippersTest {
 
   @Test public void renameInEnhancedFor() throws Exception {
     @NotNull final String input = "int f() { for (int a: as) return a; }";
-    @NotNull final Document d = Wrap.Method.intoDocument(input);
+    @NotNull final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
     @NotNull final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     @NotNull final Block b = body(m);
@@ -97,14 +97,14 @@ public final class TippersTest {
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     rename(n, n.getAST().newSimpleName("$"), m, r, null);
     r.rewriteAST(d, null).apply(d);
-    final String output = Wrap.Method.off(d.get());
+    final String output = WrapIntoComilationUnit.Method.off(d.get());
     assert output != null;
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
 
   @Test public void renameintoDoWhile() throws Exception {
     @NotNull final String input = "void f() { int b = 3; do ; while(b != 0); }";
-    @NotNull final Document d = Wrap.Method.intoDocument(input);
+    @NotNull final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
     @NotNull final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     @NotNull final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
@@ -114,6 +114,6 @@ public final class TippersTest {
     final ASTRewrite r = ASTRewrite.create(b.getAST());
     rename(b, b.getAST().newSimpleName("c"), m, r, null);
     r.rewriteAST(d, null).apply(d);
-    azzert.that(Wrap.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
+    azzert.that(WrapIntoComilationUnit.Method.off(d.get()), iz("void f() { int c = 3; do ; while(c != 0); }"));
   }
 }

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.utils.*;
 @SuppressWarnings("javadoc")
 public final class OccurrencesTest {
   private final String from = "int a = 2,b; if (a+b) a =3;";
-  private final String wrap = Wrap.Statement.on(from);
+  private final String wrap = WrapIntoComilationUnit.Statement.on(from);
   private final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
   private final SimpleName a = findFirst.variableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
