@@ -48,7 +48,7 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         npStatistics
-            .logNode(findFirst.instanceOf(MethodDeclaration.class).in(ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on($ + ""))))));
+            .logNode(findFirst.instanceOf(MethodDeclaration.class).in(ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
       } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@NotNull @SuppressWarnings("unused") final NullPointerException ¢) {

@@ -50,7 +50,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       @NotNull final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      spartanalyzer.fixedPoint(Wrap.Method.on(¢ + ""));
+      spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + ""));
     } catch (@NotNull final AssertionError __) {
       ___.unused(__);
     }

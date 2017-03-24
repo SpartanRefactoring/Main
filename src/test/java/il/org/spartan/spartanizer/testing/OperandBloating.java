@@ -43,7 +43,7 @@ public class OperandBloating extends TrimmingOperand {
   }
 
   public static String bloat(@NotNull final String source) {
-    @NotNull final Wrap w = Wrap.find(source);
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(source);
     @NotNull final String wrap = w.on(source);
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -59,7 +59,7 @@ public class OperandBloating extends TrimmingOperand {
 
   @Override public OperandBloating gives(final String $) {
     assert $ != null;
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get());
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -67,7 +67,7 @@ public class OperandBloating extends TrimmingOperand {
     try {
       @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       final String peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
       if (peeled1.equals(get()))
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
@@ -93,7 +93,7 @@ public class OperandBloating extends TrimmingOperand {
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       @NotNull final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
@@ -177,7 +177,7 @@ public class OperandBloating extends TrimmingOperand {
   private void checkSame() {
     if (get().isEmpty())
       return;
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get());
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());

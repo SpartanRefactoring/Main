@@ -49,7 +49,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   @Override public boolean visit(final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
-        spartanalyzer.fixedPoint(Wrap.Method.on($ + ""));
+        spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""));
       } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException __) {
