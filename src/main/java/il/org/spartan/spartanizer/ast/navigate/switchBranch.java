@@ -139,9 +139,12 @@ public class switchBranch {
       if (!iz.sequencerComplex(lisp.last(l)))
         s.add(n.getAST().newBreakStatement());
     } else {
-      if (!s.isEmpty())
+      if (!nextBranch)
+        s.add(lisp.last(l));
+      else {
         $.add(new switchBranch(c = new ArrayList<>(), s = new ArrayList<>()));
-      c.add(az.switchCase(lisp.last(l)));
+        c.add(az.switchCase(lisp.last(l)));
+      }
       s.add(n.getAST().newBreakStatement());
     }
     return $;
