@@ -97,7 +97,7 @@ public enum LogToTest {
 
   private static void buildTest(@NotNull final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
       final String errorName, final String fileName, final String errorCode, @NotNull final String rawCode, final String errorLocationFileUnclean) {
-    ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, TestCaseFacotry.unWrapedTestCase(rawCode),
+    ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, JUnitTestMethodFacotry.unWrapedTestCase(rawCode),
         errorLocationFileUnclean));
   }
 

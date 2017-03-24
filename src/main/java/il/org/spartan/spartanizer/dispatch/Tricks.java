@@ -100,9 +100,8 @@ public enum Tricks {
     return false;
   }
 
-  public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
-    new Inliner(oldName, r, g).byValue(newName)//
-        .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[0]));
+  public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
+    new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
 
   @NotNull public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by,

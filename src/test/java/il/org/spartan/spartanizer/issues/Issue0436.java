@@ -17,6 +17,6 @@ import il.org.spartan.spartanizer.leonidas.*;
 @SuppressWarnings("static-method")
 public class Issue0436 {
   @Test public void testRenamingWithQualified() {
-    azzert.that(TestCaseFacotry.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear.foo());"), is("if(a == A) return b(a, B());"));
+    azzert.that(JUnitTestMethodFacotry.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear.foo());"), is("if(a == A) return b(a, B());"));
   }
 }

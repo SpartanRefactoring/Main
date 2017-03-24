@@ -38,7 +38,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         && !iz.containsContinueStatement(step.body(¢))//
         && hasFittingUpdater(¢)//
         && cantTip.declarationInitializerStatementTerminatingScope(¢)//
-        && cantTip.forRenameInitializerToCent(¢)//
+        && cantTip.forRenameInitializerToIt(¢)//
         && cantTip.declarationRedundantInitializer(¢)//
         && cantTip.remvoeRedundantIf(¢);
   }

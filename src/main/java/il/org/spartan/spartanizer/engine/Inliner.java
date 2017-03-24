@@ -157,8 +157,8 @@ public final class Inliner {
       assert replacement !=null;
       try {
       rewriter.replace(oldExpression, newExpression, editGroup);
-      } catch (NullPointerException x) {
-       System.out.println(x); 
+      } catch (NullPointerException ¢) {
+       System.out.println(¢); 
       }
       collect.usesOf(name).in(newExpression).stream().filter(Objects::nonNull).forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
       n.set(newExpression);
