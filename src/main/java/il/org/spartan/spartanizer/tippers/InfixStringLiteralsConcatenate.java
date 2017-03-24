@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** concate same line string literal
+/** Concatenate same line string literal
  * @author Doron Mehsulam {@code doronmmm@hotmail.com}
  * @author Niv Shalmon {@code shalmon.niv@gmail.com}
  * @since 2017-03-22 */
@@ -60,6 +60,6 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
   }
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return "concate same line string literal";
+    return "Replace concatenated string literals with one";
   }
 }

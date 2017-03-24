@@ -39,10 +39,10 @@ public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
 
   public static boolean prune(@Nullable final Tip r, @NotNull final List<Tip> rs) {
-    if (r != null) {
-      r.pruneIncluders(rs);
-      rs.add(r);
-    }
+    if (r == null)
+      return true;
+    r.pruneIncluders(rs);
+    rs.add(r);
     return true;
   }
 
@@ -91,10 +91,10 @@ public class Trimmer extends AbstractGUIApplicator {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }
-        if (s != null) {
-          i.step();
-          TrimmerLog.application(r, s);
-        }
+        if (s == null)
+          return true;
+        i.step();
+        TrimmerLog.application(r, s);
         return true;
       }
 

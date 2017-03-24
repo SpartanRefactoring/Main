@@ -47,11 +47,9 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
 
   @Override public boolean prerequisite(@NotNull final ForStatement ¢) {
     final Statement s = extract.lastStatement(¢);
-    if (iz.continueStatement(s)) {
-      @NotNull final SimpleName n = label(az.continueStatement(s));
-      if (n == null || iz.labeledStatement(parent(¢)) && n.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier()))
-        return true;
-    }
-    return false;
+    if (!iz.continueStatement(s))
+      return false;
+    @NotNull final SimpleName $ = label(az.continueStatement(s));
+    return $ == null || iz.labeledStatement(parent(¢)) && $.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier());
   }
 }

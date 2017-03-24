@@ -35,9 +35,9 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   private static final long serialVersionUID = 0x16FBB28C0081E600L;
 
   /** Consider an expression {@code
-                                               * a ? b : c
-                                               * } in a sense it is the same as
-   * {@code
+                                                 * a ? b : c
+                                                 * } in a sense it is the same
+   * as {@code
   * (a && b) || (!a && c)
   * }
    * <ol>

@@ -77,8 +77,6 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     int $ = -1;
     @Nullable NumberLiteral l = az.throwing.negativeLiteral(x);
     if (l == null) {
-      /* should be unnecessary since validTypes uses isNumber so n is either a
-       * NumberLiteral or an PrefixExpression which is a negative number */
       l = az.numberLiteral(x);
       if (l == null)
         return null;
@@ -87,20 +85,16 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     @NotNull final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
-    /* In case binding is available, uses it to ensure that isEmpty() is
-     * accessible from current scope. Currently untested */
-    if (i.getAST().hasResolvedBindings()) {
-      @Nullable final CompilationUnit u = containing.compilationUnit(x);
-      if (u == null)
-        return null;
-      @Nullable final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
-      if (b == null)
-        return null;
-      final ITypeBinding t = b.getReturnType();
-      if (!"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()))
-        return null;
-    }
-    return replacement(o, $, l, receiver);
+    if (!i.getAST().hasResolvedBindings())
+      return replacement(o, $, l, receiver);
+    @Nullable final CompilationUnit u = containing.compilationUnit(x);
+    if (u == null)
+      return null;
+    @Nullable final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
+    if (b == null)
+      return null;
+    final ITypeBinding t = b.getReturnType();
+    return !"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()) ? null : replacement(o, $, l, receiver);
   }
 
   private static boolean validTypes(@NotNull final Expression ¢1, @NotNull final Expression ¢2) {
