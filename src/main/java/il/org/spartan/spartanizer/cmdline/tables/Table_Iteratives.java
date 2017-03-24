@@ -83,7 +83,7 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
   }
 
   private static String spartanalyze(final String ¢) {
-    return spartanalyzer.fixedPoint(Wrap.Method.on(¢));
+    return spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢));
   }
 
   @Override protected void done(final String path) {

@@ -73,7 +73,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       @NotNull final ClassRecord c = new ClassRecord($);
       classRecords.push(c);
       classStatistics.get(key).add(c);
-      findFirst.instanceOf(TypeDeclaration.class).in(ast(Wrap.OUTER.off(spartanalyzer.fixedPoint(Wrap.OUTER.on($ + "")))));
+      findFirst.instanceOf(TypeDeclaration.class).in(ast(WrapIntoComilationUnit.OUTER.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.OUTER.on($ + "")))));
     } catch (@NotNull final AssertionError __) {
       System.err.print("X");
     } catch (@NotNull final NullPointerException __) {

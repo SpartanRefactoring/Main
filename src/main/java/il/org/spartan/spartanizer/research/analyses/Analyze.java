@@ -132,7 +132,7 @@ public enum Analyze {
           try {
             Count.before(¢);
             @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-                .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+                .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
           } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
@@ -200,7 +200,7 @@ public enum Analyze {
                 .forEach(¢ -> {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
-                        .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
+                        .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))))));
                   } catch (@NotNull final AssertionError __) {
                     ___.unused(__);
                     //

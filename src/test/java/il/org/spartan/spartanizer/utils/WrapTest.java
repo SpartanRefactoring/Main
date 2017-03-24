@@ -21,7 +21,7 @@ public final class WrapTest {
   }
 
   @Test public void dealWithComment() {
-    azzert.that(Wrap.find("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), is(Wrap.Statement));
+    azzert.that(WrapIntoComilationUnit.find("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), is(WrapIntoComilationUnit.Statement));
   }
 
   @Test public void essenceTest() {
@@ -29,51 +29,51 @@ public final class WrapTest {
   }
 
   @Test public void expression() {
-    azzert.that(Wrap.Expression.off(Wrap.Expression.on("a+b")), is("a+b"));
+    azzert.that(WrapIntoComilationUnit.Expression.off(WrapIntoComilationUnit.Expression.on("a+b")), is("a+b"));
   }
 
   @Test public void findAddition() {
-    azzert.that(Wrap.find("a+b"), is(Wrap.Expression));
+    azzert.that(WrapIntoComilationUnit.find("a+b"), is(WrapIntoComilationUnit.Expression));
   }
 
   @Test public void findDivision() {
-    azzert.that(Wrap.find("a/b"), is(Wrap.Expression));
+    azzert.that(WrapIntoComilationUnit.find("a/b"), is(WrapIntoComilationUnit.Expression));
   }
 
   @Test public void findDivisionOfExpressions() {
-    azzert.that(Wrap.find("(a+b)/++b"), is(Wrap.Expression));
+    azzert.that(WrapIntoComilationUnit.find("(a+b)/++b"), is(WrapIntoComilationUnit.Expression));
   }
 
   @Test public void findEmptyBlock() {
-    azzert.that(Wrap.find("{}"), is(Wrap.Statement));
+    azzert.that(WrapIntoComilationUnit.find("{}"), is(WrapIntoComilationUnit.Statement));
   }
 
   @Test(expected = AssertionError.class) public void findError() {
-    azzert.that(Wrap.find("}} f() { a();} b();}"), is(nullValue()));
+    azzert.that(WrapIntoComilationUnit.find("}} f() { a();} b();}"), is(nullValue()));
   }
 
   @Test public void findExpression() {
-    azzert.that(Wrap.find("i++"), is(Wrap.Expression));
+    azzert.that(WrapIntoComilationUnit.find("i++"), is(WrapIntoComilationUnit.Expression));
   }
 
   @Test public void findMethod() {
-    azzert.that(Wrap.find("f() { a(); b();}"), is(Wrap.Method));
+    azzert.that(WrapIntoComilationUnit.find("f() { a(); b();}"), is(WrapIntoComilationUnit.Method));
   }
 
   @Test public void findStatement() {
-    azzert.that(Wrap.find("for(;;);"), is(Wrap.Statement));
+    azzert.that(WrapIntoComilationUnit.find("for(;;);"), is(WrapIntoComilationUnit.Statement));
   }
 
   @Test public void findTwoStatements() {
-    azzert.that(Wrap.find("a(); b();"), is(Wrap.Statement));
+    azzert.that(WrapIntoComilationUnit.find("a(); b();"), is(WrapIntoComilationUnit.Statement));
   }
 
   @Test public void intMethod() {
-    azzert.that(Wrap.find("int f() { int s = 0; for (int i = 0; i <10; ++i) s += i; return s;}"), is(Wrap.Method));
+    azzert.that(WrapIntoComilationUnit.find("int f() { int s = 0; for (int i = 0; i <10; ++i) s += i; return s;}"), is(WrapIntoComilationUnit.Method));
   }
 
   @Test public void intoCompilationUnit() {
-    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
     @NotNull final String codeFragment = "a + b * c";
     @NotNull final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
@@ -81,7 +81,7 @@ public final class WrapTest {
   }
 
   @Test public void intoDocument() {
-    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
     @NotNull final String codeFragment = "a + b * c";
     @NotNull final Document d = w.intoDocument(codeFragment);
     assert d != null;
@@ -89,11 +89,11 @@ public final class WrapTest {
   }
 
   @Test public void method() {
-    azzert.that(Wrap.Method.off(Wrap.Method.on("int f() { return a; }")), is("int f() { return a; }"));
+    azzert.that(WrapIntoComilationUnit.Method.off(WrapIntoComilationUnit.Method.on("int f() { return a; }")), is("int f() { return a; }"));
   }
 
   @Test public void offDivision() {
-    azzert.that("a/b", is(Wrap.Expression.off(Wrap.Expression.on("a/b"))));
+    azzert.that("a/b", is(WrapIntoComilationUnit.Expression.off(WrapIntoComilationUnit.Expression.on("a/b"))));
   }
 
   @Test public void removeComments() {
@@ -105,6 +105,6 @@ public final class WrapTest {
   }
 
   @Test public void statement() {
-    azzert.that(Wrap.Statement.off(Wrap.Statement.on("int a;")), is("int a;"));
+    azzert.that(WrapIntoComilationUnit.Statement.off(WrapIntoComilationUnit.Statement.on("int a;")), is("int a;"));
   }
 }
