@@ -24,8 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
 abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = 6120092571084023313L;
 
-  public $Fragment() {
-  }
+  public $Fragment() {}
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
     if (haz.annotation(¢) || ¢ == null)
