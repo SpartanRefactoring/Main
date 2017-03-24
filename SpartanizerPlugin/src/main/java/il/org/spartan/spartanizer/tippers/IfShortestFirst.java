@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.dispatch.Tippers.*;
+import static il.org.spartan.spartanizer.dispatch.Tricks.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;

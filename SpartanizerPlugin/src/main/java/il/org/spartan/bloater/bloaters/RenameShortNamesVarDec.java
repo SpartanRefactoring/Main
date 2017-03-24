@@ -60,7 +60,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
           for (final SimpleName ¢ : prev) {
-            Tippers.rename(¢, after.get(counter), s.getParent(), r, g);
+            Tricks.rename(¢, after.get(counter), s.getParent(), r, g);
             ++counter;
           }
         }
