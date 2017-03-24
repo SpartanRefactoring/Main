@@ -84,8 +84,7 @@ public interface disabling {
   @SuppressWarnings("unchecked") static boolean hasAnnotation(final BodyDeclaration d, final String... as) {
     return Optional.ofNullable(d).map(λ -> λ.modifiers()) //
         .map(ms -> Boolean.valueOf(ms.stream() //
-            .filter(λ -> λ instanceof Annotation && //
-                contains(extract.name(((Annotation) λ).getTypeName()), as))
+            .filter(λ -> λ instanceof Annotation).map(λ -> (Annotation) λ).filter(λ -> contains(extract.name(((Annotation) λ).getTypeName()), as))
             .count() > 0)) //
         .orElse(Boolean.FALSE).booleanValue();
   }
@@ -97,12 +96,10 @@ public interface disabling {
   interface ByComment extends disabling {
     /** Disable spartanization tips, used to indicate that no spartanization
      * should be made to node */
-    String[] disablers = { "[[SuppressWarningsSpartan]]", //
-    };
-    /** Enable spartanization identifier, overriding a disabler */
-    String[] enablers = { "[[EnableWarningsSpartan]]", //
-    };
+    String[] disablers = { "[[SuppressWarningsSpartan]]", };
     String disabler = disablers[0];
+    /** Enable spartanization identifier, overriding a disabler */
+    String[] enablers = { "[[EnableWarningsSpartan]]", };
 
     static boolean specificallyDisabled(final BodyDeclaration ¢) {
       return disabling.hasJavaDocIdentifier(¢, disablers);
@@ -114,8 +111,7 @@ public interface disabling {
   }
 
   interface ByAnnotation extends disabling {
-    String[] disablers = { "UnderConstruction", //
-    };
+    String[] disablers = { "UnderConstruction" };
     String disabler = disablers[0];
 
     static boolean specificallyDisabled(final BodyDeclaration ¢) {
