@@ -86,10 +86,10 @@ public class CompilationUnitRecord {
     // noinspection SameReturnValue
     cu.accept(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final AnnotationTypeDeclaration node) {
-        if (node.getName().getFullyQualifiedName() == "Test") {
-          System.out.println(node.getName().getFullyQualifiedName());
-          hasTestAnnotation = true;
-        }
+        if (node.getName().getFullyQualifiedName() != "Test")
+          return true;
+        System.out.println(node.getName().getFullyQualifiedName());
+        hasTestAnnotation = true;
         return true;
       }
     });

@@ -37,13 +37,13 @@ public class Augmenter implements Application {
       @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
-      if (rewrite(r, getSelection(u.compilationUnit, getTextSelection(u.compilationUnit, s.textSelection)), null)
-          && checkServiceAvailableAfterCalculation(s)) {
-        addCollateralImport(r, u.compilationUnit, null);
-        textChange.setEdit(r.rewriteAST());
-        if (textChange.getEdit().getLength() != 0)
-          textChange.perform(npm);
-      }
+      if (!rewrite(r, getSelection(u.compilationUnit, getTextSelection(u.compilationUnit, s.textSelection)), null)
+          || !checkServiceAvailableAfterCalculation(s))
+        return Integer.valueOf(0);
+      addCollateralImport(r, u.compilationUnit, null);
+      textChange.setEdit(r.rewriteAST());
+      if (textChange.getEdit().getLength() != 0)
+        textChange.perform(npm);
       return Integer.valueOf(0);
     } catch (@NotNull final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);

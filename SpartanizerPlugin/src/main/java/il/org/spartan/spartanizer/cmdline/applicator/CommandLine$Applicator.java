@@ -203,23 +203,19 @@ public class CommandLine$Applicator extends Generic$Applicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
         }
-        if (s != null) {
-          ++tippersAppliedOnCurrentObject;
-          @Nullable final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
-          ReportGenerator.report("tips").put("including Class", includingClass.getName());
-          ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
-          ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
-          @Nullable final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
-          ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
-          ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
-          ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
-          ReportGenerator.writeTipsLine(n, s, "tips");
-          // tick2(tipper); // save coverage info
-          TrimmerLog.application(r, s);
-        }
-        // else {
-        // ReportGenerator.emptyTipsLine();
-        // }
+        if (s == null)
+          return true;
+        ++tippersAppliedOnCurrentObject;
+        @Nullable final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
+        ReportGenerator.report("tips").put("including Class", includingClass.getName());
+        ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
+        ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
+        @Nullable final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
+        ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
+        ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
+        ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
+        ReportGenerator.writeTipsLine(n, s, "tips");
+        TrimmerLog.application(r, s);
         return true;
       }
 
@@ -255,11 +251,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
         }
-        if (s != null) {
-          ++tippersAppliedOnCurrentObject;
-          tick2(n, tipper); // save coverage info
-          TrimmerLog.application(r, s);
-        }
+        if (s == null)
+          return true;
+        ++tippersAppliedOnCurrentObject;
+        tick2(n, tipper);
+        TrimmerLog.application(r, s);
         return true;
       }
 

@@ -74,12 +74,11 @@ public class TrimmingOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    if (!$.equals(peeled) && !trivia.essence(peeled).equals(trivia.essence($))) {
-      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
-          trivia.escapeQuotes(trivia.essence(peeled)), //
-          trivia.escapeQuotes(trivia.essence($)));
-      azzert.that(trivia.essence(peeled), is(trivia.essence($)));
-    }
+    if ($.equals(peeled) || trivia.essence(peeled).equals(trivia.essence($)))
+      return new TrimmingOperand($);
+    copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled)),
+        trivia.escapeQuotes(trivia.essence($)));
+    azzert.that(trivia.essence(peeled), is(trivia.essence($)));
     return new TrimmingOperand($);
   }
 

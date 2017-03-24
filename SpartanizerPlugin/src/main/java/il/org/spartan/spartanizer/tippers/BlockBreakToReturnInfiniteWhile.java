@@ -40,29 +40,25 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     if (ifStatement == null)
       return null;
     final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
-    if (then != null) {
-      if (iz.breakStatement(then))
-        return then;
-      if (iz.block(then)) {
-        @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
-        if ($ != null)
-          return $;
-      }
-      if (iz.ifStatement(then))
-        return handleIf(az.ifStatement(then), nextReturn);
-      if (elze != null) {
-        if (iz.breakStatement(elze))
-          return elze;
-        if (iz.block(elze)) {
-          @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
-          if ($ != null)
-            return $;
-        }
-        if (iz.ifStatement(elze))
-          return handleIf(az.ifStatement(elze), nextReturn);
-      }
+    if (then == null)
+      return null;
+    if (iz.breakStatement(then))
+      return then;
+    if (iz.block(then)) {
+      @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
+      if ($ != null)
+        return $;
     }
-    return null;
+    if (iz.ifStatement(then))
+      return handleIf(az.ifStatement(then), nextReturn);
+    if (elze == null)
+      return null;
+    if (iz.breakStatement(elze))
+      return elze;
+    if (!iz.block(elze))
+      return !iz.ifStatement(elze) ? null : handleIf(az.ifStatement(elze), nextReturn);
+    @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
+    return $ != null ? $ : !iz.ifStatement(elze) ? null : handleIf(az.ifStatement(elze), nextReturn);
   }
 
   private static boolean isInfiniteLoop(@NotNull final WhileStatement ¢) {

@@ -158,11 +158,10 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
         }
-        if (s != null) {
-          ++tippersAppliedOnCurrentObject;
-          // tick2(tipper); // save coverage info
-          TrimmerLog.application(r, s);
-        }
+        if (s == null)
+          return true;
+        ++tippersAppliedOnCurrentObject;
+        TrimmerLog.application(r, s);
         return true;
       }
 
@@ -210,11 +209,10 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
         }
-        if (s != null) {
-          ++tippersAppliedOnCurrentObject;
-          // tick2(tipper); // save coverage info
-          TrimmerLog.application(r, s);
-        }
+        if (s == null)
+          return true;
+        ++tippersAppliedOnCurrentObject;
+        TrimmerLog.application(r, s);
         return true;
       }
 

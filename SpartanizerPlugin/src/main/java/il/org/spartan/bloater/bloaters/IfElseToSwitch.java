@@ -40,14 +40,13 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       ss.add(create.newBreakStatement());
       ++i;
     }
-    if (xs.size() != bs.size()) {
-      // Meaning - there was a finishing else statement
-      final SwitchCase sc = create.newSwitchCase();
-      sc.setExpression(null);
-      ss.add(sc);
-      statements(bs.get(i)).forEach(λ -> ss.add(copy.of(λ)));
-      ss.add(create.newBreakStatement());
-    }
+    if (xs.size() == bs.size())
+      return $;
+    final SwitchCase sc = create.newSwitchCase();
+    sc.setExpression(null);
+    ss.add(sc);
+    statements(bs.get(i)).forEach(λ -> ss.add(copy.of(λ)));
+    ss.add(create.newBreakStatement());
     return $;
   }
 

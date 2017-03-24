@@ -71,10 +71,10 @@ public class ASTTrotter extends ASTVisitor {
 
   @Override public boolean visit(final ExpressionStatement ¢) {
     ++total;
-    if (interesting(¢)) {
-      ++interesting;
-      record(squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(¢ + "")))) + "\n");
-    }
+    if (!interesting(¢))
+      return true;
+    ++interesting;
+    record(squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(¢ + "")))) + "\n");
     return true;
   }
 
@@ -84,19 +84,19 @@ public class ASTTrotter extends ASTVisitor {
 
   private boolean process(final ASTNode ¢) {
     ++total;
-    if (interesting(¢)) {
-      ++interesting;
-      record(squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(¢ + "")))) + "\n");
-    }
+    if (!interesting(¢))
+      return true;
+    ++interesting;
+    record(squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(¢ + "")))) + "\n");
     return true;
   }
 
   @Override public boolean visit(final MethodDeclaration ¢) {
     ++total;
-    if (interesting(¢)) {
-      ++interesting;
-      record(squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(¢ + "")))) + "\n");
-    }
+    if (!interesting(¢))
+      return true;
+    ++interesting;
+    record(squeeze(theSpartanizer.repetitively(removeComments(TestCaseFacotry.code(¢ + "")))) + "\n");
     return true;
   }
 

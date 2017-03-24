@@ -145,8 +145,8 @@ public class Issue0251 {
   }
 
   @Test public void t22() {
-    trimmingOf("for(;b==q;){g();if(tipper==q){int i;int j;}}")//;
-        .gives("while (b==q) {g();if(tipper==q){int i;int j;}}")//;
+    trimmingOf("for(;b==q;){g();if(tipper==q){int i;int j;}}")// ;
+        .gives("while (b==q) {g();if(tipper==q){int i;int j;}}")// ;
         .gives("while(b==q){g();{}}")//
         .gives("while(b==q)g();")//
         .stays();
