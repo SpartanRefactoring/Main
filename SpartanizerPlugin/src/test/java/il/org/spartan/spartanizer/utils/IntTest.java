@@ -1,8 +1,3 @@
-/* TODO: YuvalSimon <yuvaltechnion@gmail.com> please add a description
- *
- * @author YuvalSimon <yuvaltechnion@gmail.com>
- *
- * @since Nov 13, 2016 */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
@@ -12,7 +7,10 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-
+/** Test case for class {@link Int}
+ * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
+ * @since Nov 13, 2016
+ */
 @SuppressWarnings("static-method")
 public class IntTest {
   @Test public void testInner() {
