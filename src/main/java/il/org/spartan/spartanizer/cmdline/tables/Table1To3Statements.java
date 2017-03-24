@@ -55,7 +55,8 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
       @NotNull final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
+      findFirst.instanceOf(MethodDeclaration.class)
+          .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
     } catch (@NotNull final AssertionError __) {
       ___.unused(__);
     }

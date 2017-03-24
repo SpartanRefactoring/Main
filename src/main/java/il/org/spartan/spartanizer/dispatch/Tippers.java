@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
 public enum Tippers {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void addAllReplacing(final Collection<Statement> to, @NotNull final Iterable<Statement> from, final Statement substitute,
       final Statement by1, final Iterable<Statement> by2) {
     for (final Statement ¢ : from)

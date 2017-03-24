@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum associativity {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Determine whether associativity is left-to-right
    * @param o JD
    * @return whether the associativity of the parameter is left-to-right. */

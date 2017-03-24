@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public enum flatten {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Flatten the list of arguments to an {@link InfixExpression}, e.g., convert
    * an expression such as {@code (a + b) + c} whose inner form is roughly
    * "+(+(a,b),c)", into {@code a + b + c}, whose inner form is (roughly)

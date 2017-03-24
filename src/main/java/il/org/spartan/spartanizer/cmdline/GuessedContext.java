@@ -159,8 +159,6 @@ public enum GuessedContext {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
 
-
-
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
