@@ -14,13 +14,11 @@ import il.org.spartan.bloater.bloaters.*;
 public class Issue0976 {
   @Test public void a() {
     bloatingOf("if(a==b && c==d) { t=5; }")//
-        .gives("if(a==b) { if(c==d) t=5; }")//
-        .gives("if(a==b) { if(c==d) { t=5; } }");//
+        .gives("if(a==b) { if(c==d) t=5; }");
   }
 
   @Test public void a1() {
-    bloatingOf("if(a==b && c==d) t=5;")//
-        .gives("if(a==b && c==d) { t=5; }")//
+    bloatingOf("if(a==b && c==d) { t=5; }")//
         .gives("if(a==b) { if(c==d) t=5; }");
   }
 
