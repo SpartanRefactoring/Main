@@ -33,7 +33,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !iz.sequencer(then(s)) && !iz.block(then(s)))
       return null;
     final IfStatement asVirtualIf = subject.pair( //
-        !(then(s) instanceof Block) || wizard.endsWithSequencer(then(s)) ? then(s)
+        !iz.block(then(s)) || wizard.endsWithSequencer(then(s)) ? then(s)
             : subject.ss(extract.statements(az.block(then(s)))).add(copy.of(nextStatement)).toBlock(), //
         nextStatement //
     ).toIf(s.getExpression());
