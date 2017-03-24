@@ -12,7 +12,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0914 {
   @Test public void actualBug() {
-    trimmingOf("  private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {ASTNode $ = ¢;"
+    trimmingOf(" private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {ASTNode $ = ¢;"
         + "while (!iz.methodDeclaration($) && $ != null)$ = $.getParent();return az.methodDeclaration($);}")//
             .stays();
   }

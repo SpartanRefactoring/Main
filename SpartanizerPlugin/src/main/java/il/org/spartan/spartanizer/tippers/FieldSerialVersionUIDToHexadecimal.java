@@ -18,17 +18,21 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
+/** See {@link #examples()} for documentation
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-03-24 */
 public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -8591656423892977180L;
   private static final String SERIAL_VERSION_UID = "serialVersionUID";
-  private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
+  // private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
   @Nullable private VariableDeclarationFragment fragment;
   @Nullable NumberLiteral initializer;
   long replacement;
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //
-        convert("private long " + SERIAL_VERSION_UID + " = 12345677899L;")//
-            .to("private long " + SERIAL_VERSION_UID + " = 1234567799;"),
+        convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
+            .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;"),
         ignores("private long a = 3;"), //
         ignores("private static long a = 3;"), //
         ignores("long a = 3;"), //

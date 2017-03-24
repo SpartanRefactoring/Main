@@ -43,7 +43,7 @@ public class Issue1012 {
 
   @Test public void g() {
     trimmingOf("final int a = 0;final int b = 8;f();g();")//
-        .gives(" final int a = 0, b = 8;f();g();")//
+        .gives("final int a = 0, b = 8;f();g();")//
         .stays();
   }
 }

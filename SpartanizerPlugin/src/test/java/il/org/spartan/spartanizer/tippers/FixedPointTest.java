@@ -29,13 +29,13 @@ public final class FixedPointTest {
     assertWrappedTranslation(from, expected, WrapIntoComilationUnit.Expression);
   }
 
-  private static void assertWrappedTranslation(@NotNull final String from, @NotNull final String expected, @NotNull final WrapIntoComilationUnit w) {
-    @NotNull final String wrap = w.on(from);
-    azzert.that(w.off(wrap), is(from));
+  private static void assertWrappedTranslation(@NotNull final String from, @NotNull final String expected, @NotNull final WrapIntoComilationUnit u) {
+    @NotNull final String wrap = u.on(from);
+    azzert.that(u.off(wrap), is(from));
     final String unpeeled = new InteractiveSpartanizer().fixedPoint(wrap);
     if (wrap.equals(unpeeled))
       fail("Nothing done on " + from);
-    final String peeled = w.off(unpeeled);
+    final String peeled = u.off(unpeeled);
     if (peeled.equals(from))
       assertNotEquals("No similification of " + from, from, peeled);
     if (tide.clean(peeled).equals(tide.clean(from)))

@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ForEachTest {
   @Test public void a() {
-    trimmingOf("  for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
+    trimmingOf(" for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
     ;
@@ -37,7 +37,7 @@ public class ForEachTest {
   }
 
   @Test public void d() {
-    trimmingOf("  for (final Statement k : ss)    $.append(k);")//
+    trimmingOf(" for (final Statement k : ss)    $.append(k);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("ss.forEach(k -> $.append(k));")//
     ;
