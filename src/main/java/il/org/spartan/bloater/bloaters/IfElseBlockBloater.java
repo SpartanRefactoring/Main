@@ -29,11 +29,11 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
       statements(b).add(copy.of(then(s)));
       $.setThenStatement(b);
     }
-    if (elze(s) != null && !iz.block(elze(s))) {
-      final Block b = s.getAST().newBlock();
-      statements(b).add(copy.of(elze(s)));
-      $.setElseStatement(b);
-    }
+    if (elze(s) == null || iz.block(elze(s)))
+      return $;
+    final Block b = s.getAST().newBlock();
+    statements(b).add(copy.of(elze(s)));
+    $.setElseStatement(b);
     return $;
   }
 

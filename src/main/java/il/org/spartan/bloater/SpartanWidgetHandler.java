@@ -25,10 +25,10 @@ public class SpartanWidgetHandler extends AbstractHandler {
   static final AtomicBoolean active = new AtomicBoolean(false);
 
   @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    if (!active.get()) {
-      active.set(true);
-      launchWidget(λ -> new Point(λ.x - R, λ.y - R));
-    }
+    if (active.get())
+      return null;
+    active.set(true);
+    launchWidget(λ -> new Point(λ.x - R, λ.y - R));
     return null;
   }
 
