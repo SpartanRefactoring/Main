@@ -30,7 +30,7 @@ import il.org.spartan.utils.range.*;
  * @since 2015-07-28 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */

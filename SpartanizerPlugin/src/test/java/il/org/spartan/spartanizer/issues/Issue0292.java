@@ -36,14 +36,14 @@ public class Issue0292 {
             "}"//
     //
     )//
-    .gives( //
-        "A a() {" + //
-            " final B $ = new B();" + //
-            " for (A c = d.e();;$.f(c))" + //
-            "   if (c == null)" + //
-            "     return $ + \"\";" + //
-            "}"//
-    )//
-    .stays();
+        .gives( //
+            "A a() {" + //
+                " final B $ = new B();" + //
+                " for (A c = d.e();;$.f(c))" + //
+                "   if (c == null)" + //
+                "     return $ + \"\";" + //
+                "}"//
+        )//
+        .stays();
   }
 }

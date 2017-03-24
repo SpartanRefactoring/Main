@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
  * @since Jan 21, 2017 */
 public enum SpartanizationComparator {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   @External(alias = "i", value = "input folder") @NotNull static String inputFolder = system.windows() ? "" : ".";
   @External(alias = "o", value = "output folder") static final String outputFolder = "/tmp";
   static String presentSourcePath;

@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Vivian Shehadeh
  * @since 2016 */
 public enum analyze {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   @NotNull public static Collection<String> dependencies(@NotNull final ASTNode n) {
     @NotNull final Collection<String> $ = new HashSet<>();
     // noinspection SameReturnValue,SameReturnValue

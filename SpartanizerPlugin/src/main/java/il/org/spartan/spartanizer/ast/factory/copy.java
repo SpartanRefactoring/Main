@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-21 */
 public enum copy {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   @NotNull static Iterable<Expression> adjust(final Operator o, @NotNull final Collection<Expression> xs) {
     return o != wizard.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(wizard.MINUS1)).collect(toList());
   }

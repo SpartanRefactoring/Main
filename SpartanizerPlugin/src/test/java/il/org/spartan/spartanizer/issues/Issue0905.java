@@ -29,7 +29,9 @@ public class Issue0905 {
   @Test public void t15() {
     trimmingOf("if(b==q()){int i;}")//
         .gives("if(b==q()){}")//
-        .stays();
+        .gives("q();")//
+        .stays() //
+    ;
   }
 
   @Test public void t17() {

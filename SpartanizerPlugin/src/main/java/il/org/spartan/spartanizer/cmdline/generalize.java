@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @since Nov 13, 2016 */
 public enum generalize {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static String code(@NotNull final String code) {
     finish();
     return generalizeIdentifiers(code);
