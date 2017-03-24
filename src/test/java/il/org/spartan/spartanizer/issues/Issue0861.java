@@ -28,14 +28,8 @@ public class Issue0861 {
         .gives("switch(x) {case 8:x=2;break;case 6:case 7:x=7;break;default:y=4;break;case 9:y=9;case 10:x=5;break;")
         .gives("switch(x) {case 8:x=2;break;case 6:case 7:x=7;break;case 9:y=9;case 10:x=5;break;default:y=4;break;").stays();
   }
-  
+
   @Test public void t3() {
-    trimmingOf("switch (state) {"
-        + "case DONE:"
-        + "return false;"
-        + "case READY:"
-        + "return true;"
-        + "default:"
-        + "}").stays();
+    trimmingOf("switch (state) {" + "case DONE:" + "return false;" + "case READY:" + "return true;" + "default:" + "}").stays();
   }
 }

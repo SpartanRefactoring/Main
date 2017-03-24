@@ -374,7 +374,7 @@ public enum subject {
 
     /** Adds a statement to these statements.
      * @return these several statements */
-    public SeveralStatements add(Statement ¢) {
+    public SeveralStatements add(final Statement ¢) {
       inner.add(¢);
       return this;
     }

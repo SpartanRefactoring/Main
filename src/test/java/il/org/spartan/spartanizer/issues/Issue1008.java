@@ -10,23 +10,8 @@ import il.org.spartan.spartanizer.meta.*;
 public class Issue1008 extends MetaFixture {
   @NotNull AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
     /** [[SuppressWarningsSpartan]] */
-    @Override @SuppressWarnings({ "All", "unused" }) protected void startingWith() {
-      class A {
-        int a;
+    @Override @SuppressWarnings({ "All", "unused" }) protected void startingWith() {}
 
-        A() {
-          a = 0;
-        }
-      }
-    }
-
-    /** [[SuppressWarningsSpartan]] */
-    @Override @SuppressWarnings({ "All", "unused" }) protected void trimmingStopsAt() {
-      class A {
-        int a;
-
-        A() {}
-      }
-    }
+    @Override @SuppressWarnings({ "All", "unused" }) protected void trimmingStopsAt() {}
   };
 }
