@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * {@link RemoveRedundantSwitchContinue}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-15 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue1070 {
   @Test public void b1() {
