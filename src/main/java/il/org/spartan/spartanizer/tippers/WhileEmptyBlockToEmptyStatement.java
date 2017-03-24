@@ -32,10 +32,8 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
 
   @Override @NotNull public Example[] examples() {
     return new Example[] {
-        convert("while(x()){}y();z()){}")//
-            .to("while(x());y();z());"), //
-        Example.ignores("while(x()){y();z())}f();g();}"), //
-        Example.ignores("while(x()){;y();z()};}")//
+        convert("while(x()){}").to("while(x());"), //
+        ignores("while(x()){y();z();}")//
     };
   }
 

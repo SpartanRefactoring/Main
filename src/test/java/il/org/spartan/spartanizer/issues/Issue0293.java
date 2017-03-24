@@ -15,17 +15,17 @@ import org.junit.runners.*;
 public class Issue0293 {
   @Test public void t1() {
     trimmingOf("/* * This is a comment */ int i = 6; int j = 2; int k = i+2; S.x.f(i-j+k); ")
-        .gives(" /* * This is a comment */ int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
+        .gives("/* * This is a comment */ int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
   }
 
   @Test public void t2() {
     trimmingOf("/* * This is a comment */ int i = 6, h = 7; int j = 2; int k = i+2; S.x.f(i-j+k); ")
-        .gives(" /* * This is a comment */ int h = 7; int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
+        .gives("/* * This is a comment */ int h = 7; int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
   }
 
   @Test public void t3() {
     trimmingOf("/* * This is a comment */ int i = 6; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); y(i); y(i+m); ")
-        .gives(" /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); int i = 6; y(i); y(i+m); ");
+        .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); int i = 6; y(i); y(i+m); ");
   }
 
   @Test public void t4() {
@@ -37,12 +37,12 @@ public class Issue0293 {
 
   @Test public void t5() {
     trimmingOf("/* * This is a comment */ int i = y(0); int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
-        .gives(" /* * This is a comment */ int j = 3; int k = j+2; int i = y(0); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
+        .gives("/* * This is a comment */ int j = 3; int k = j+2; int i = y(0); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
   }
 
   @Test public void t6() {
-    trimmingOf(" /* * This is a comment */ int i = y(0); int h = 8; int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
-        .gives(" /* * This is a comment */ int h = 8; int i = y(0); int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
+    trimmingOf("/* * This is a comment */ int i = y(0); int h = 8; int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
+        .gives("/* * This is a comment */ int h = 8; int i = y(0); int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
   }
 
   @Test public void t7() {

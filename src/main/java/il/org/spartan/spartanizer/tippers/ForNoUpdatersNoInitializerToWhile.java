@@ -21,8 +21,11 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
   }
 
   @Override public Example[] examples() {
-    return new Example[] { Example.convert("for(;c;)f();").to("while(c)f();"), Example.ignores("for(g();c;)f();"),
-        Example.ignores("for(;c;g())f();"), };
+    return new Example[] { //
+        Example.convert("for(;c;)f();").to("while(c)f();"), //
+        Example.ignores("for(g();c;)f();"), //
+        Example.ignores("for(;c;g())f();"), //
+        };
   }
 
   @Override @NotNull public String description(final ForStatement ¢) {
