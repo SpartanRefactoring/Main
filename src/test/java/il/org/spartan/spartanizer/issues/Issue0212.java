@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link ForRenameInitializerToCent}
+/** Unit tests for {@link ForRenameInitializerToIt}
  * @author YossiGil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

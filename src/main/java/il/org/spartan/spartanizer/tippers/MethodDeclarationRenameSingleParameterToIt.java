@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09 */
-public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration>//
+public final class MethodDeclarationRenameSingleParameterToIt extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x5583F2C8E00B4000L;
 
