@@ -67,7 +67,7 @@ public enum into {
    *         parameter. */
   @NotNull public static MethodDeclaration d(@NotNull final String methodDelclaration) {
     assert methodDelclaration != null;
-    return findFirst.instanceOf(MethodDeclaration.class).in(Wrap.Method.intoCompilationUnit(methodDelclaration));
+    return findFirst.instanceOf(MethodDeclaration.class).in(WrapIntoComilationUnit.Method.intoCompilationUnit(methodDelclaration));
   }
 
   /** Convert a given {@link String} into an {@link Expression}, or fail the

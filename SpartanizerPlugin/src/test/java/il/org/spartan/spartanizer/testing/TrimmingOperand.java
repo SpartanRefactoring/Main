@@ -33,7 +33,7 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   void checkExpected(@NotNull final String expected) {
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
@@ -59,11 +59,11 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   String apply() {
-    return trim.apply(trimmer, Wrap.find(get()).on(get()));
+    return trim.apply(trimmer, WrapIntoComilationUnit.find(get()).on(get()));
   }
 
   @Nullable public TrimmingOperand gives(@NotNull final String $) {
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
       copyPasteReformat("  .stays()//\n  ;\n");
@@ -96,7 +96,7 @@ public class TrimmingOperand extends Wrapper<String> {
    * @since 09-12-2016 */
   @Nullable public TrimmingOperand givesEither(@NotNull final String... options) {
     assert options != null;
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
@@ -113,7 +113,7 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   public void stays() {
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       return;

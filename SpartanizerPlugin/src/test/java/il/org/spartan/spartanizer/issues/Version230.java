@@ -38,7 +38,7 @@ public final class Version230 {
 
   @Test public void actualExampleForSortAdditionInContext() {
     @NotNull final String from = "2 + a<b";
-    @NotNull final Wrap w = Wrap.Expression;
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
     @NotNull final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
     final String unpeeled = trim.apply(new Trimmer(), wrap);
@@ -2996,7 +2996,7 @@ public final class Version230 {
   }
 
   @Test public void shortestIfBranchFirst02c() {
-    @NotNull final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(Wrap.Statement
+    @NotNull final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(WrapIntoComilationUnit.Statement
         .intoCompilationUnit(" int u=0;for(int i=0;i<s.length();++i)if(s.charAt(i)=='a')   u +=2;else if(s.charAt(i)=='d')u -=1;return u; "));
     assert f != null;
     azzert.that(f, iz(" u=0"));
@@ -3628,7 +3628,7 @@ public final class Version230 {
   }
 
   @Test public void testPeel() {
-    azzert.that(Wrap.Expression.off(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge")),
+    azzert.that(WrapIntoComilationUnit.Expression.off(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge")),
         is("on * notion * of * no * nothion !=the * plain + kludge"));
   }
 
@@ -3639,9 +3639,9 @@ public final class Version230 {
 
   @Test public void twoOpportunityExample() {
     azzert.that(countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
     azzert.that(countOpportunities(new Trimmer(),
-        (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
+        (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
   }
 
   @Test public void unsafeBlockSimlify() {

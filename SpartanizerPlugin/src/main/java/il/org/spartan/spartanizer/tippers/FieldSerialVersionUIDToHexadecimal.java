@@ -27,7 +27,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //
-        convert("private long " + SERIAL_VERSION_UID + " = 1234567799L;")//
+        convert("private long " + SERIAL_VERSION_UID + " = 12345677899L;")//
             .to("private long " + SERIAL_VERSION_UID + " = 1234567799;"),
         ignores("private long a = 3;"), //
         ignores("private static long a = 3;"), //
