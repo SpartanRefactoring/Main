@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
 
 /** Replace a variable with an expression
  * @year 2015
