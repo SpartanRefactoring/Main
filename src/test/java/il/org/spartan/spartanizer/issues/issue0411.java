@@ -45,10 +45,10 @@ public class issue0411 {
   }
 
   @Test public void B01() {
-    trimmingOf("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
+    trimmingOf(" public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
         + "List<VariableDeclarationFragment> lst =  fragments(s); for (VariableDeclarationFragment ¢ : lst) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
-            .gives("  public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
+            .gives(" public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
                 + "for (VariableDeclarationFragment ¢ :  fragments(s);) "
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();

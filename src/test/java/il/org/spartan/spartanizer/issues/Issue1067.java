@@ -30,7 +30,7 @@ public class Issue1067 {
 
   static class Issue0856 {
     @Test public void e() {
-      trimmingOf("  final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
+      trimmingOf(" final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
           "il.finalize(); " + //
           "return 0;")//
               .gives(//

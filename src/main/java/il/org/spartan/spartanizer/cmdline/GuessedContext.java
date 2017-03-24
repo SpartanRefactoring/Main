@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
-import java.util.Stack;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -43,7 +42,7 @@ public enum GuessedContext {
           + "\n\t\t\t public Object masdf767() { /* BEGIN Public function m */\n" //
       , " }" + METHOD_LOOK_ALIKE.after), EXPRESSION_LOOK_ALIKE(//
           STATEMENTS_LOOK_ALIKE.before + //
-              "\n\t\t\t\t if (foo("//
+              "\n\t\t\t\t if (foo235rt("//
           , //
           ",0)) return g();\n" //
               + STATEMENTS_LOOK_ALIKE.after //
@@ -72,7 +71,7 @@ public enum GuessedContext {
       not_statement_may_occur_in_static_initializer_block, //
   };
 
-  /** Finds the most appropriate Guess for a given code fragment
+  /** Finds the most appropriate guess for a given code fragment
    * @param codeFragment JD
    * @return most appropriate Guess, or null, if the parameter could not be
    *         parsed appropriately. */

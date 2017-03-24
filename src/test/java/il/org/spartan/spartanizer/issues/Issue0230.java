@@ -36,7 +36,7 @@ public class Issue0230 {
   }
 
   @Test public void a2() {
-    trimmingOf(" private T value = null;")//
+    trimmingOf("private T value = null;")//
         .stays();
   }
 
