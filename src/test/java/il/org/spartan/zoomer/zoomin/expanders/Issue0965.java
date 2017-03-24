@@ -21,10 +21,10 @@ public class Issue0965 {
   }
 
   static class TestClass extends MetaFixture {
-    final List<Integer> lst = new ArrayList<>();
+    final List<Integer> is = new ArrayList<>();
 
     @NotNull public String check1() {
-      return lst + "";
+      return is + "";
     }
 
     public void check2() {
