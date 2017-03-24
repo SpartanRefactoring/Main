@@ -462,6 +462,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     </menu>
     <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
+    <command commandId="il.org.spartan.CharacterShortcut" style="push" mnemonic="C" label="¢" />
   </menu>
 </menuContribution>
 
