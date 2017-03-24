@@ -56,10 +56,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   }
 
   static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
-    for (@NotNull final VariableDeclarationFragment $ : fragments(¢))
-      if (($.getName() + "").equals(SERIAL_VERSION_UID))
-        return $;
-    return null;
+      return fragments(¢).stream().filter($ -> ($.getName() + "").equals(SERIAL_VERSION_UID)).findFirst().orElse(null);
   }
 
   @Override public boolean canTip(final FieldDeclaration d) {
