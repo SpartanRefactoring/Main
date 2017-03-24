@@ -371,6 +371,13 @@ public enum subject {
           return toBlock();
       }
     }
+
+    /** Adds a statement to these statements.
+     * @return these several statements */
+    public SeveralStatements add(Statement ¢) {
+      inner.add(¢);
+      return this;
+    }
   }
 
   /** A pair of sideEffects */
