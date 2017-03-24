@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert {@code switch (x) { case a: } switch(x) { default: (some commands) }
  * } into {@code
  * (some commands)
- * } . Tested in {@link Issue233}
+ * } . Tested in {@link Issue0233}
  * @author Yuval Simon
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//

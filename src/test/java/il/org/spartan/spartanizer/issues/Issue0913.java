@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * to {@link Issue880}
  * @author Yuval Simon
  * @since 2016-12-09 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0913 {
   @Test public void a() {
