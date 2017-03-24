@@ -39,7 +39,7 @@ public class OperandBloating extends TrimmingOperand {
   @Override protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + anonymize.makeBloaterUnitTest(get()));
+    System.err.println(NEW_UNIT_TEST + TestCaseFacotry.makeBloaterUnitTest(get()));
   }
 
   public static String bloat(@NotNull final String source) {
