@@ -103,10 +103,7 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   }
 
   protected boolean usedInSubsequentInitializers() {
-    for (@NotNull final VariableDeclarationFragment ¢ : youngerSiblings())
-      if (!collect.usesOf(name()).in(¢.getInitializer()).isEmpty())
-        return true;
-    return false;
+      return youngerSiblings().stream().anyMatch(¢ -> !collect.usesOf(name()).in(¢.getInitializer()).isEmpty());
   }
 
   @NotNull protected final Collection<VariableDeclarationFragment> youngerSiblings() {
