@@ -140,7 +140,7 @@ public class switchBranch {
         s.add(n.getAST().newBreakStatement());
     } else {
       if (!s.isEmpty())
-        $.add(new switchBranch(new ArrayList<>(), new ArrayList<>()));
+        $.add(new switchBranch(c = new ArrayList<>(), s = new ArrayList<>()));
       c.add(az.switchCase(lisp.last(l)));
       s.add(n.getAST().newBreakStatement());
     }
