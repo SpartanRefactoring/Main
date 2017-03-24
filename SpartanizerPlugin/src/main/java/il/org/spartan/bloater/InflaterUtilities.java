@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 8-12-16 */
 public enum InflaterUtilities {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Main function of the application.
    * @param r JD
    * @param ns list of statements and expression in the selected code which for

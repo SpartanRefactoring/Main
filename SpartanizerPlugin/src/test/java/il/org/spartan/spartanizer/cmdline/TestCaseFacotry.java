@@ -130,14 +130,12 @@ public enum TestCaseFacotry {
     }
   }
 
-  @NotNull
-  public static String makeTipperUnitTest(@NotNull final String codeFragment) {
+  @NotNull public static String makeTipperUnitTest(@NotNull final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("  @Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
   }
 
-  @NotNull
-  public static String makeBloaterUnitTest(@NotNull final String codeFragment) {
+  @NotNull public static String makeBloaterUnitTest(@NotNull final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
   }

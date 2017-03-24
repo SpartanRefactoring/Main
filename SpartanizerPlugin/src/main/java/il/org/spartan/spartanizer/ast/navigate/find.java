@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-22 */
 public enum find {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   @NotNull public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
     return new Operand<N>() {
       @Override public N under(final ASTNode ¢) {

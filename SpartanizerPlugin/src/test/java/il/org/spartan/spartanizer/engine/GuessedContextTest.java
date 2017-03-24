@@ -277,9 +277,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void statement3() {
-    azzert.that(
-        GuessedContext.find(//
-            "r ? ls : I.m().s().e(¢ -> l.s(e))"),
-        is(EXPRESSION_LOOK_ALIKE));
+    azzert.that(GuessedContext.find(//
+        "r ? ls : I.m().s().e(¢ -> l.s(e))"), is(EXPRESSION_LOOK_ALIKE));
   }
 }

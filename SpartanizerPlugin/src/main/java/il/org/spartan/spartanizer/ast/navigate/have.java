@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum have {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Determine whether a boolean literal is present
    * @param ¢ JD
    * @return whether one or more of the elements that is a boolean literal. */

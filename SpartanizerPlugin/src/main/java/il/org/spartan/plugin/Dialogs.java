@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @since 2.6 */
 public enum Dialogs {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Title used for dialogs. */
   private static final String NAME = "Laconic";
   /** Id for run in background button. */

@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
  * @author Daniel Mittelman
  * @since Jan 11, 2017 */
 public enum PreferencesResources {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartanizer plug-in";
   /** General preferences **/

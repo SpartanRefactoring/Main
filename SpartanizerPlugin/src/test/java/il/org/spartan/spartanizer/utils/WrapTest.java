@@ -69,7 +69,8 @@ public final class WrapTest {
   }
 
   @Test public void intMethod() {
-    azzert.that(WrapIntoComilationUnit.find("int f() { int s = 0; for (int i = 0; i <10; ++i) s += i; return s;}"), is(WrapIntoComilationUnit.Method));
+    azzert.that(WrapIntoComilationUnit.find("int f() { int s = 0; for (int i = 0; i <10; ++i) s += i; return s;}"),
+        is(WrapIntoComilationUnit.Method));
   }
 
   @Test public void intoCompilationUnit() {

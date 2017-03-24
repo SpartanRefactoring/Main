@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016-04-24 */
 @SuppressWarnings("restriction")
 public enum BindingUtils {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** @param pattern an {@link ASTNode}
    * @return type in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {

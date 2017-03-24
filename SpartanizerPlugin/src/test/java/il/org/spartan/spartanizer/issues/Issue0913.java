@@ -15,8 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue0913 {
   @Test public void a() {
     trimmingOf("switch(GuessedContex.find(p)) {case VLOCK_LOOK_ALIKE:return into.cu(p);case EXPRESSION_LOOK_ALIKE:return into.e(p);default:break;}")//
-        .gives(
-            "switch(GuessedContex.find(p)){case EXPRESSION_LOOK_ALIKE:return into.e(p);case VLOCK_LOOK_ALIKE:return into.cu(p);default:break;}")
+        .gives("switch(GuessedContex.find(p)){case EXPRESSION_LOOK_ALIKE:return into.e(p);case VLOCK_LOOK_ALIKE:return into.cu(p);default:break;}")
         .stays();
   }
 }

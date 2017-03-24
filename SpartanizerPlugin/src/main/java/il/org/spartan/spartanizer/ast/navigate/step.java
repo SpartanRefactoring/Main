@@ -17,7 +17,7 @@ import il.org.spartan.utils.range.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
 public enum step {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Expose the list of arguments in a {@link ClassInstanceCreation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
