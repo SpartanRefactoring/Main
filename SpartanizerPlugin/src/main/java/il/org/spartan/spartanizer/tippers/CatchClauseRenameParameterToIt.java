@@ -19,15 +19,16 @@ import il.org.spartan.utils.*;
 /** Use {@link #examples()} for documentation
  * @author Dor Ma'ayan
  * @since 22-11-2016 */
-public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchClause>//
+public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClause>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -6638105215049141624L;
 
   @Override @NotNull public String description(@NotNull final CatchClause ¢) {
-    return  String.format("Rename caught %s (%s) to %s",
+    return String.format("Rename caught %s (%s) to %s", //
         ¢.getException().getName(), //
-        ¢.getException().getType(), // 
-       namer.lambda); 
+        ¢.getException().getType(), //
+        namer.it //
+    );
   }
 
   @Override @NotNull public Example[] examples() {
@@ -39,10 +40,10 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
   }
 
   @Override public Tip tip(@NotNull final CatchClause c, @Nullable final ExclusionManager m) {
-    final SingleVariableDeclaration parameter = c.getException();
-    if (!JohnDoe.property(parameter))
+    final SingleVariableDeclaration d = c.getException();
+    if (!JohnDoe.property(d))
       return null;
-    final SimpleName $ = parameter.getName();
+    final SimpleName $ = d.getName();
     if (namer.isSpecial($))
       return null;
     @NotNull final Block b = body(c);
@@ -50,10 +51,9 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
       return null;
     if (m != null)
       m.exclude(c);
-    final SimpleName ¢ = namer.newCurrent(c);
     return new Tip(description(c), c.getException().getName(), getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tricks.rename($, ¢, c, r, g);
+        Tricks.rename($, namer.newCurrent($), c, r, g);
       }
     };
   }

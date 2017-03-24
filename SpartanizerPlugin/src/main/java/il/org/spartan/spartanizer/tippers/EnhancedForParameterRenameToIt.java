@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Doron Meshulam
  * @since 2016-09 */
-public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
+public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedForStatement>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3945693304397811549L;
 

@@ -52,7 +52,7 @@ public final class Version300 {
   }
 
   @Test public void myClassName() {
-    azzert.that(system.callingClassName(), is(getClass().getCanonicalName()));
+    azzert.that(system.callingClassFullName(), is(getClass().getCanonicalName()));
   }
 
   @Test public void abcd() {

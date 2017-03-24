@@ -33,7 +33,7 @@ public interface system {
   }
 
   /** @return the name of the class from which this method was called. */
-  static String callingClassName() {
+  static String callingClassFullName() {
     final StackTraceElement[] $ = new Throwable().getStackTrace();
     for (int ¢ = 1; ¢ < $.length; ++¢)
       if (!$[¢].getClassName().equals($[0].getClassName()))
@@ -102,7 +102,7 @@ public interface system {
 
   static BufferedWriter callingClassUniqueWriter() {
     try {
-      return new BufferedWriter(new FileWriter(ephemeral(callingClassName()).dot("txt")));
+      return new BufferedWriter(new FileWriter(ephemeral(callingClassFullName()).dot("txt")));
     } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢);
     }
@@ -202,5 +202,9 @@ public interface system {
 
   interface Extension {
     @NotNull File dot(String extentsion);
+  }
+
+  static String callinClassLastName() {
+    return callingClassFullName().replaceAll("[a-z0-9A-Z]*\\.", "");
   }
 }

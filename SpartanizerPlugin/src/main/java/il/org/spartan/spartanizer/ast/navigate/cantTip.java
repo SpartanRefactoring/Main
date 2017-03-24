@@ -34,9 +34,9 @@ public enum cantTip {
     return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().check(λ));
   }
 
-  public static boolean forRenameInitializerToCent(final ForStatement ¢) {
+  public static boolean forRenameInitializerToIt(final ForStatement ¢) {
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
-    return $ == null || new ForRenameInitializerToCent().cantTip($);
+    return $ == null || new ForRenameInitializerToIt().cantTip($);
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {

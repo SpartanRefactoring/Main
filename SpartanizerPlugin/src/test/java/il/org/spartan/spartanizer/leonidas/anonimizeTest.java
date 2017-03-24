@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.cmdline.*;
 @SuppressWarnings("static-method") //
 public class anonimizeTest {
   @Test public void a() {
-    azzert.that(TestCaseFacotry.code("a.x.c.d.e()"), is("a.h()"));
+    azzert.that(JUnitTestMethodFacotry.code("a.x.c.d.e()"), is("a.h()"));
   }
 
   @Test public void testRenaming() {
-    azzert.that(TestCaseFacotry.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"), is("if(a == b) return c(a, d());"));
+    azzert.that(JUnitTestMethodFacotry.shortenIdentifiers("if(omg == val) return oomph(omg, dear());"), is("if(a == b) return c(a, d());"));
   }
 
   @Test public void testRenamingWithCapital() {
-    azzert.that(TestCaseFacotry.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"), is("if(a == A) return b(a, B());"));
+    azzert.that(JUnitTestMethodFacotry.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear());"), is("if(a == A) return b(a, B());"));
   }
 }

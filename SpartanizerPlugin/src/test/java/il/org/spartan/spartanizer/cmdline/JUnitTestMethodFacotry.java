@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
  * @author Ori Marcovitch
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-24 */
-public enum TestCaseFacotry {
+public enum JUnitTestMethodFacotry {
   ;
   static String from(final String name, @NotNull final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
@@ -126,7 +126,7 @@ public enum TestCaseFacotry {
       System.out.println("twice: " + theSpartanizer.twice(s));
       System.out.println("thrice: " + theSpartanizer.thrice(s));
       System.out.println("fixed: " + theSpartanizer.repetitively(s));
-      System.out.println(TestCaseFacotry.from(namer.signature(s), s));
+      System.out.println(JUnitTestMethodFacotry.from(namer.signature(s), s));
     }
   }
 
@@ -141,10 +141,12 @@ public enum TestCaseFacotry {
   }
 
   static String comment() {
-    return format("/** Introduced by %s on %s \n(code automatically in class '%s')*/\n", //
+    return format(
+        "/** Introduced by %s on %s \n" + //
+            "(code automatically in class '%s')*/\n", //
         system.userName(), //
         system.now(), //
-        system.callingClassName().replaceAll("[a-z0-9A-Z]*\\.", "") //
+        system.callinClassLastName() 
     );
   }
 
