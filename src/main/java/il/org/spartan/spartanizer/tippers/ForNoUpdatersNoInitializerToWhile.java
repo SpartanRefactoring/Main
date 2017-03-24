@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -40,8 +41,8 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
 
   @Override @NotNull public WhileStatement replacement(final ForStatement ¢) {
     final WhileStatement $ = ¢.getAST().newWhileStatement();
-    $.setExpression(¢.getExpression());
-    $.setBody(¢.getBody());
+    $.setExpression(copy.of(¢.getExpression()));
+    $.setBody(copy.of(¢.getBody()));
     return $;
   }
 }

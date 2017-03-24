@@ -149,6 +149,7 @@ public class Toolbox {
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
         .add(ForStatement.class, //
+            new ForNoUpdatersNoInitializerToWhile(), //
             new ForDeadRemove(), //
             new ContinueCoditinalInForEliminate(), //
             new BlockBreakToReturnInfiniteFor(), //
@@ -173,14 +174,9 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
-            // new RemoveRedundantSwitchReturn(), //
-            // new RemoveRedundantSwitchContinue(), //
-            // new SwitchWithOneCaseToIf(), //
-            // new SwitchBranchSort(), //
             null)
         .add(SwitchCase.class, //
             new RemoveRedundantSwitchCases(), //
-            // new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignmentOfSameValue(), //
