@@ -6,15 +6,15 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-// TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
-// XXX: Description added by Ori Roth
 /** Test for {@link IfCommandsSequencerNoElseSingletonSequencer}. Examine cases
  * where the last statement in the if statement then section is not an immediate
  * sequencer, or not a sequencer at all.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Ori Roth
  * @since Jan 6, 2017 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public final class Issue0194 {
+  // TODO Ori convert to java doc --yg
   // Couple of tests to check that the tipper is safe with empty values, etc.
   // Empty "then".
   // There is some tipper that eliminates the empty "then", so the result is not
@@ -44,6 +44,7 @@ public final class Issue0194 {
                 + "return h();");
   }
 
+  // TODO Ori convert to java doc --yg
   // Empty "else".
   // Similar to test01().
   @Test public void test02() {
@@ -74,6 +75,7 @@ public final class Issue0194 {
                     + "return b2 ? g() : h();");
   }
 
+  // TODO Ori convert to java doc --yg
   // Empty Block.
   // Similar to test01() and test02().
   @Test public void test03() {
@@ -88,6 +90,7 @@ public final class Issue0194 {
                 + "return h();");
   }
 
+  // TODO Ori convert to java doc --yg
   // Don'tipper do anything if there is more than return sideEffects after the
   // ifstatement.
   @Test public void test04() {
