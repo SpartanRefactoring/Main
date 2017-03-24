@@ -52,8 +52,10 @@ public class Table_RawNanoStatistics extends NanoTable {
       }
 
       void initializeWriter() {
-        if (table == null)
-          table = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
+        synchronized (table) {
+          if (table == null)
+            table = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics.class) + "-" + corpus, outputFolder);
+        }
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(@NotNull final CompilationUnit $) {
