@@ -29,7 +29,25 @@ public class switchBranch {
   private int depth;
   private int sequencerLevel;
   public static final int MAX_CASES_FOR_SPARTANIZATION = 10;
-
+  final Comparator<switchBranch>[] priorityOrder = as.array(
+      Comparators.byDefault,
+      Comparators.bySequencerLevel,
+      Comparators.byDepth,
+      Comparators.byStatementsNum,
+      Comparators.byNodesNum,
+      Comparators.byCasesNum
+  );
+  
+  static final class Comparators {
+    static final Comparator<switchBranch> byDefault = (switchBranch o1, switchBranch o2) -> o1.hasDefault() ? -1 : o2.hasDefault() ? 1 : 0;
+    static final Comparator<switchBranch> bySequencerLevel = (switchBranch o1,
+        switchBranch o2) -> o1.sequencerLevel() == 0 || o2.sequencerLevel() == 0 ? 0 : o2.sequencerLevel() - o1.sequencerLevel();
+    static final Comparator<switchBranch> byDepth = (switchBranch o1, switchBranch o2) -> o2.depth() - o1.depth();
+    static final Comparator<switchBranch> byStatementsNum = (switchBranch o1, switchBranch o2) -> o2.statementsNum() - o1.statementsNum();
+    static final Comparator<switchBranch> byNodesNum = (switchBranch o1, switchBranch o2) -> o2.nodesNum() - o1.nodesNum();
+    static final Comparator<switchBranch> byCasesNum = (switchBranch o1, switchBranch o2) -> o2.casesNum() - o1.casesNum();
+  }
+  
   public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
     this.statements = statements;
@@ -80,17 +98,12 @@ public class switchBranch {
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
   private boolean compare(@NotNull final switchBranch ¢) {
-    if (hasDefault())
-      return false;
-    if (¢.hasDefault())
-      return true;
-    if (sequencerLevel() > 0 && ¢.sequencerLevel() > 0) {
-      if (sequencerLevel() > ¢.sequencerLevel())
-        return false;
-      if (sequencerLevel() < ¢.sequencerLevel())
-        return true;
+    for(Comparator<switchBranch> c : priorityOrder) {
+      int $ = c.compare(this,¢);
+      if($ != 0)
+        return $ > 0;
     }
-    return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
+    return false;
   }
 
   public boolean compareTo(@NotNull final switchBranch ¢) {
@@ -113,8 +126,8 @@ public class switchBranch {
     addAll(step.statements($), bs);
     return $;
   }
-
-  // TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
+  
+  //TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
   @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
     @NotNull final List<Statement> l = step.statements(n);
@@ -129,7 +142,7 @@ public class switchBranch {
         s = new ArrayList<>();
         $.add(new switchBranch(c, s));
         nextBranch = false;
-        // TODO: Yuval = make this into a decent for loop --yg
+     // TODO: Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)
@@ -169,9 +182,9 @@ public class switchBranch {
   public boolean hasFallThrough() {
     return statements.stream().anyMatch(iz::switchCase);
   }
-
+  
   @Nullable public static Statement removeBreakSequencer(@Nullable final Statement s) {
-    if (s == null)
+    if(s == null)
       return null;
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
@@ -179,7 +192,8 @@ public class switchBranch {
     @Nullable Statement $ = null;
     if (iz.ifStatement(s)) {
       @Nullable final IfStatement t = az.ifStatement(s);
-      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t))).toIf(copy.of(step.expression(t)));
+      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t)))
+          .toIf(copy.of(step.expression(t)));
     } else if (!iz.block(s)) {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
         $ = a.newEmptyStatement();
