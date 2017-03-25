@@ -205,7 +205,7 @@ public interface findFirst {
     return instanceOf(Name.class).in(¢);
   }
 
-  @NotNull static ASTNode variableDeclarationStatement(final ASTNode ¢) {
+  @NotNull static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
     return instanceOf(VariableDeclarationStatement.class).in(¢);
   }
 
