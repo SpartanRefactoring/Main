@@ -61,9 +61,9 @@ public class Binding {
     hiding = null;
     type = null;
   }
-  
-  public boolean isNumeric(){
-    return this.type.isNumeric();
+
+  public boolean isNumeric() {
+    return type.isNumeric();
   }
 
   private boolean equals(@NotNull final Binding ¢) {

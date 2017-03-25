@@ -64,62 +64,48 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
 
-  
-  public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) 
-  {
-      Map<Object, Boolean> $ = new ConcurrentHashMap<>();
-      return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
+  public static <T> Predicate<T> distinctByKey(final Function<? super T, Object> keyExtractor) {
+    final Map<Object, Boolean> $ = new ConcurrentHashMap<>();
+    return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
   }
-  
+
   private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
-    return ¢.stream().filter(distinctByKey( λ -> identifier(typeName(az.annotation(λ))) )).sorted(comp).collect(toList());
+    return ¢.stream().filter(distinctByKey(λ -> identifier(typeName(az.annotation(λ))))).sorted(comp).collect(toList());
   }
-  
-  
+
   @Override public ASTNode replacement(final N d) {
-    N $ = copy.of(d);
+    final N $ = copy.of(d);
     final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($))), ms = new ArrayList<>(extract.modifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
     return !wizard.same($, d) ? $ : null;
   }
-  
-  
-/*
-  @Override @Nullable public Tip tip(@NotNull final N n) {
-    final List<Annotation> $ = extract.annotations(n);
-    if ($ == null || $.isEmpty())
-      return null;
-    @NotNull List<Annotation> myCopy = (List<Annotation>) sort(new ArrayList<>($));
 
-    return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
-        
-        for (int i = 0; i < $.size(); ++i) {
-          List<Annotation> sorted = (List<Annotation>) copy.of(myCopy);
-          final ASTNode oldNode ;
-          final ASTNode newNode ;
-          
-          oldNode = $.get(i);
-          if(i < myCopy.size()){
-              newNode = sorted.get(i);
-              if (!wizard.same(oldNode,newNode)) {
-                  l.replace(oldNode, newNode, g);
-              }
-          }
-          else{
-            l.remove(oldNode, g);
-            
-          }
-          
-          
-        }
-      }
-    };
-  }
-*/
+  /* @Override @Nullable public Tip tip(@NotNull final N n) { final
+   * List<Annotation> $ = extract.annotations(n); if ($ == null || $.isEmpty())
+   * return null;
+   *
+   * @NotNull List<Annotation> myCopy = (List<Annotation>) sort(new
+   * ArrayList<>($));
+   *
+   * return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
+   *
+   * @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup
+   * g) { final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+   *
+   * for (int i = 0; i < $.size(); ++i) { List<Annotation> sorted =
+   * (List<Annotation>) copy.of(myCopy); final ASTNode oldNode ; final ASTNode
+   * newNode ;
+   *
+   * oldNode = $.get(i); if(i < myCopy.size()){ newNode = sorted.get(i); if
+   * (!wizard.same(oldNode,newNode)) { l.replace(oldNode, newNode, g); } } else{
+   * l.remove(oldNode, g);
+   *
+   * }
+   *
+   *
+   * } } }; } */
   @Override @NotNull public String description(@NotNull final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";

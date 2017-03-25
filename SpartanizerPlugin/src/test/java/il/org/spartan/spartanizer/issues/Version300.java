@@ -54,22 +54,22 @@ public final class Version300 {
       assert statements(kill(e)) != null;
     }
     kill("int _ = f();", "{f();}");
-    kill("int _ = 3 + f();","{f();}");
-    kill("int _ = g() + f();","{g();f();}");
-    kill("int _ = i++ + f();","{i++;f();}");
-    kill("int _ = i++ + i--;","{i++;i--;}");
-    kill("int _ = ++i + i--;","{++i;i--;}");
-    kill("int _ = -i + i--;","{i--;}");
-    kill("int _ = b==q();","{q();}");
-    kill("int _ = (a=b);","{a=b;}");
-    kill("int _ = (a=b++);","{a=b++;}");
-    kill("int _ = new A();","{new A();}");
-    kill("int _ = new A(){};","{new A(){};}");
-    kill("int _ = super.f();","{super.f();}");
-    kill("int _ = new int[2];","{new int[2];}");
+    kill("int _ = 3 + f();", "{f();}");
+    kill("int _ = g() + f();", "{g();f();}");
+    kill("int _ = i++ + f();", "{i++;f();}");
+    kill("int _ = i++ + i--;", "{i++;i--;}");
+    kill("int _ = ++i + i--;", "{++i;i--;}");
+    kill("int _ = -i + i--;", "{i--;}");
+    kill("int _ = b==q();", "{q();}");
+    kill("int _ = (a=b);", "{a=b;}");
+    kill("int _ = (a=b++);", "{a=b++;}");
+    kill("int _ = new A();", "{new A();}");
+    kill("int _ = new A(){};", "{new A(){};}");
+    kill("int _ = super.f();", "{super.f();}");
+    kill("int _ = new int[2];", "{new int[2];}");
   }
 
-  public void kill(String from, String to) {
+  public void kill(final String from, final String to) {
     azzert.that(kill(make(from)), iz(to));
   }
 

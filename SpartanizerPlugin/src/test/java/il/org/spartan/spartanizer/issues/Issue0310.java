@@ -77,22 +77,23 @@ public class Issue0310 {
         .using(Block.class, new BlockSingleton()) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
         .stays() //
- ;
-}
-
-  /** Introduced by Yossi on Sat-Mar-25-05:13:22-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTrueIfedcReturnTrueccfReturnFalse() {
-       trimmingOf("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; if (e.d(c)) return true; c = c.f(); } return false; }") //
-           .using(ForStatement.class, new ForToForUpdaters()) //
-           .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c))return true;if(e.d(c))return true;}return false;}") //
-           .using(IfStatement.class, new IfFooSequencerIfFooSameSequencer()) //
-           .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c)||e.d(c))return true;}return false;}") //
-           .using(Block.class, new BlockSingleton()) //
-           .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f())if(B.d(c)||e.d(c))return true;return false;}") //
-           .stays() //
     ;
   }
+
+  /** Introduced by Yossi on Sat-Mar-25-05:13:22-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTrueIfedcReturnTrueccfReturnFalse() {
+    trimmingOf("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; if (e.d(c)) return true; c = c.f(); } return false; }") //
+        .using(ForStatement.class, new ForToForUpdaters()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c))return true;if(e.d(c))return true;}return false;}") //
+        .using(IfStatement.class, new IfFooSequencerIfFooSameSequencer()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c)||e.d(c))return true;}return false;}") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f())if(B.d(c)||e.d(c))return true;return false;}") //
+        .stays() //
+    ;
+  }
+
   @Test public void updaters_while_3() {
     trimmingOf("boolean k(final N n){N p=n;while(p!=null){if(Z.z(p))return true;f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;f();}return false;}")//
