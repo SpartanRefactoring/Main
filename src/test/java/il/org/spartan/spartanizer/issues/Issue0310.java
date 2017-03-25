@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO: Alex Kopzon please add a description
  * @author Alex Kopzon
@@ -67,19 +70,29 @@ public class Issue0310 {
         .stays();
   }
 
-  @Test public void updaters_while_1() {
-    trimmingOf("boolean k(final N n){N p=n;while(p!=null){if(Z.z(p))return true;p=p.f();}return false;}")
-        .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")//
-        .stays();
-  }
+  @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTruecceReturnFalse() {
+    trimmingOf("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
+        .using(ForStatement.class, new ForToForUpdaters()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e()){if(B.d(c))return true;}return false;}") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
+        .stays() //
+ ;
+}
 
-  @Test public void updaters_while_2() {
-    trimmingOf("boolean k(final N n){N p=n;while(p!=null){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
-        .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
-        .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p)|| ens.z(p))return true;p=p.f();}return false;}")//
-        .stays();
+  /** Introduced by Yossi on Sat-Mar-25-05:13:22-IDT-2017 
+  (code automatically in class 'JUnitTestMethodFacotry')*/
+    @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTrueIfedcReturnTrueccfReturnFalse() {
+       trimmingOf("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; if (e.d(c)) return true; c = c.f(); } return false; }") //
+           .using(ForStatement.class, new ForToForUpdaters()) //
+           .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c))return true;if(e.d(c))return true;}return false;}") //
+           .using(IfStatement.class, new IfFooSequencerIfFooSameSequencer()) //
+           .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c)||e.d(c))return true;}return false;}") //
+           .using(Block.class, new BlockSingleton()) //
+           .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f())if(B.d(c)||e.d(c))return true;return false;}") //
+           .stays() //
+    ;
   }
-
   @Test public void updaters_while_3() {
     trimmingOf("boolean k(final N n){N p=n;while(p!=null){if(Z.z(p))return true;f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;f();}return false;}")//
