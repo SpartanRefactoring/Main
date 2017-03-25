@@ -12,6 +12,7 @@ import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -78,9 +79,13 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
         for (int i = 0; i < $.size(); ++i) {
-          final ASTNode oldNode = $.get(i), newNode = myCopy.get(i);
-          if (oldNode != newNode)
-            l.replace(oldNode, r.createMoveTarget(newNode), g);
+          List<Annotation> sorted = (List<Annotation>) copy.of(myCopy);
+          final ASTNode oldNode = $.get(i), newNode = sorted.get(i);
+          if (!wizard.same(oldNode,newNode)) {
+            l.replace(oldNode, newNode, g);
+//            l.replace(newNode, copy.of(oldNode), g);
+//            break;
+          }
         }
       }
     };
