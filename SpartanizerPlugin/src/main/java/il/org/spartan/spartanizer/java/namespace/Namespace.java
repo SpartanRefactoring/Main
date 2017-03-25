@@ -315,8 +315,8 @@ public final class Namespace implements Environment {
     put(key, new Binding(key, type.baptize(trivia.condense(t))));
     return this;
   }
-  
-  @NotNull public boolean isNumeric(String identifier){
+
+  @NotNull public boolean isNumeric(final String identifier) {
     return flat.get(identifier).isNumeric();
   }
 
