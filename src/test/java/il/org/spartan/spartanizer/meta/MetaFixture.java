@@ -43,12 +43,27 @@ public abstract class MetaFixture {
       new KnowsTest(null, null, null), //
   };
 
+  /**
+   * Returns a string of a list of n's ancestors in the AST.
+   * For each ancestor a partial path will appear.
+   * @param n AST node
+   * @return a string as described
+   */
   public static String ancestry(final ASTNode n) {
     @NotNull final Int $ = new Int();
     return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
 
+  /**
+   * Looks for all the annotees of annotationName in all the metafixtures in fs and collects information in an array for each of them
+   * Each array is in the next format:
+   * [<the name of the annotee>, <the annotation value>, < <name of the metafixture class>:<full path of the annotee> >]
+   * 
+   * @param annotationName the wanted annotation
+   * @param fs the metafixtures to search
+   * @return a collection of arrays as described
+   */
   @NotNull protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
     @NotNull @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
     for (@Nullable @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
@@ -60,7 +75,12 @@ public abstract class MetaFixture {
                 $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
     return $;
   }
-
+  
+  /**
+   * Returns the path of ¢'s src directory.
+   * @param ¢ a File
+   * @return the path of its source directory
+   */
   private static IPath getSrcPath(@NotNull final File ¢) {
     IPath $ = new Path(¢.getAbsolutePath());
     while (!$.isEmpty() && !"src".equals($.lastSegment()))
@@ -68,6 +88,11 @@ public abstract class MetaFixture {
     return $;
   }
 
+  /**
+   * Finds the wanted file in current directory and creates a cu out of its content
+   * @param fileName the name of the wanted file
+   * @return the created cu or null if the wanted file wasn't found
+   */
   private static CompilationUnit loadAST(@NotNull final String fileName) {
     for (@NotNull final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
@@ -80,6 +105,11 @@ public abstract class MetaFixture {
     return null;
   }
 
+  /**
+   * Finds the wanted file in current directory and creates a string that contains its content
+   * @param fileName the wanted file
+   * @return a string of this file's content
+   */
   private static String loadText(@NotNull final String fileName) {
     for (@NotNull final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
@@ -87,35 +117,76 @@ public abstract class MetaFixture {
     return null;
   }
 
+  /**
+   * Gets the value of the parameter in the annotation ¢ as an integer
+   * @param ¢ the single member annotation
+   * @return the value in the parameter, if the value isn't an integer an exception will be raised
+   */
   public static int value(@NotNull final SingleMemberAnnotation ¢) {
     return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
 
+  /**
+   * Converts an array initializer to the strings corresponding to its expressions
+   * @param ¢ array initializer
+   * @return a string array as described
+   */
   private static String[] values(final ArrayInitializer ¢) {
     return values(step.expressions(¢));
   }
 
+  /**
+   * Converts a collection of expressions to an array of the corresponding strings
+   * @param xs a collection of expressions
+   * @return a string array with the expressions as strings
+   */
   private static String[] values(@NotNull final Collection<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
+  /**
+   * Converts an expression to a string array containing the corresponding string
+   * @param $ an expression
+   * @return a string array as described if $ is a string literal or an array initializer,
+   *         otherwise an empty string array
+   */
   @NotNull private static String[] values(@Nullable final Expression $) {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
 
+  /**
+   * Converts a single member annotation to a string array corresponding to its value 
+   * @param ¢ a single member annotation
+   * @return a string array as described
+   */
   protected static String[] values(@NotNull final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
 
+  /**
+   * Converts a string literal to an array that contains the corresponding string
+   * @param ¢ a string literal
+   * @return an array as described
+   */
   private static String[] values(@NotNull final StringLiteral ¢) {
     return as.array(¢.getLiteralValue());
   }
-
+  
+  /**
+   * Gets all the annotations from current runtime class's cu
+   * @return an iterable of these annotations
+   */
   @NotNull public Iterable<Annotation> annotations() {
     return descendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
 
+  /**
+   * Creates a vocabulary (map) that maps strings to method declarations. The strings are 
+   * the name of the method and the number of parameters it gets
+   * @param cd anonymous class declaration
+   * @return a vocabulary as described
+   */
   @NotNull public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
     @NotNull final Vocabulary $ = new Vocabulary();
@@ -125,15 +196,29 @@ public abstract class MetaFixture {
     }
     return $;
   }
-
+  
+  /**
+   * Finds the first element of type ¢ in current runtime class's cu
+   * @param ¢ the wanted class
+   * @return the first element of this type
+   */
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
     return first(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
   }
 
+  /**
+   * Gets the name of the most outer class of the current one
+   * @return returns this name
+   */
   public String name() {
     return extract.name(types(reflectedCompilationUnit()).stream().filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get());
   }
 
+  /**
+   * If a mapping of this runtime class to a cu exists returns it, otherwise adds a 
+   * mapping to cu of this class or of its containing class if exists
+   * @return the new cu or the existing mapping
+   */
   public final CompilationUnit reflectedCompilationUnit() {
     final Class<? extends MetaFixture> c = getClass();
     final CompilationUnit $ = classToASTCompilationUnit.get(c);
@@ -143,6 +228,11 @@ public abstract class MetaFixture {
     return classToASTCompilationUnit.get(c);
   }
 
+  /**
+   * If a mapping of this runtime class to a string exists returns it, otherwise adds a 
+   * mapping to a string of this class or of its containing class if exists
+   * @return the new string or the existing mapping
+   */
   public final String reflectedCompilationUnitText() {
     final Class<? extends MetaFixture> c = getClass();
     final String $ = classToText.get(c);
@@ -151,7 +241,11 @@ public abstract class MetaFixture {
     classToText.put(c, loadText((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
     return classToText.get(c);
   }
-
+  
+  /**
+   * Gets all the single member annotations from current runtime class's cu
+   * @return an iterable of these annotations
+   */
   @NotNull public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return descendants.whoseClassIs(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
