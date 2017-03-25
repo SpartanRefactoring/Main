@@ -4,21 +4,16 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import static il.org.spartan.utils.English.*;
-import static org.eclipse.jdt.core.dom.PostfixExpression.Operator.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
-import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
@@ -58,51 +53,30 @@ public final class Version300 {
       azzert.that(statements(kill(e)), not(empty()));
       assert statements(kill(e)) != null;
     }
-    azzert.that(kill(make("int _ = f();")), iz("{f();}"));
-    azzert.that(kill(make("int _ = 3 + f();")), iz("{f();}"));
-    azzert.that(kill(make("int _ = g() + f();")), iz("{g();f();}"));
-    azzert.that(kill(make("int _ = i++ + f();")), iz("{i++;f();}"));
-    azzert.that(kill(make("int _ = i++ + i--;")), iz("{i++;i--;}"));
-    azzert.that(kill(make("int _ = ++i + i--;")), iz("{++i;i--;}"));
-    azzert.that(kill(make("int _ = -i + i--;")), iz("{i--;}"));
-    azzert.that(kill(make("int _ = b==q();")), iz("{q();}"));
-    azzert.that(kill(make("int _ = (a=b);")), iz("{a=b;}"));
-    azzert.that(kill(make("int _ = (a=b++);")), iz("{a=b++;}"));
+    kill("int _ = f();", "{f();}");
+    kill("int _ = 3 + f();","{f();}");
+    kill("int _ = g() + f();","{g();f();}");
+    kill("int _ = i++ + f();","{i++;f();}");
+    kill("int _ = i++ + i--;","{i++;i--;}");
+    kill("int _ = ++i + i--;","{++i;i--;}");
+    kill("int _ = -i + i--;","{i--;}");
+    kill("int _ = b==q();","{q();}");
+    kill("int _ = (a=b);","{a=b;}");
+    kill("int _ = (a=b++);","{a=b++;}");
+    kill("int _ = new A();","{new A();}");
+    kill("int _ = new A(){};","{new A(){};}");
+    kill("int _ = super.f();","{super.f();}");
+    kill("int _ = new int[2];","{new int[2];}");
+  }
+
+  public void kill(String from, String to) {
+    azzert.that(kill(make(from)), iz(to));
   }
 
   @UnderConstruction(value = "") private Block kill(final Expression e) {
     final Block $ = e.getAST().newBlock();
-    statements($).addAll(decompose(e));
+    statements($).addAll(wizard.decompose(e));
     return $;
-  }
-
-  public List<Statement> pack(final Expression ¢) {
-    return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
-  }
-
-  private List<Statement> decompose(final Expression x) {
-    return new ExpressionMapReducer<List<Statement>>() {
-      @Override protected List<Statement> map(final PostfixExpression ¢) {
-        return pack(¢);
-      }
-
-      @Override protected List<Statement> map(final PrefixExpression ¢) {
-        return not.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : pack(¢);
-      }
-
-      @Override protected List<Statement> map(final MethodInvocation ¢) {
-        return pack(¢);
-      }
-
-      @Override public List<Statement> reduce() {
-        return new ArrayList<>();
-      }
-
-      @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
-        $.addAll(ss);
-        return $;
-      }
-    }.map(x);
   }
 
   public Expression make(final String statement) {
