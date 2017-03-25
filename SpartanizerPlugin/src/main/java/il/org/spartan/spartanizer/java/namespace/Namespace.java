@@ -315,6 +315,10 @@ public final class Namespace implements Environment {
     put(key, new Binding(key, type.baptize(trivia.condense(t))));
     return this;
   }
+  
+  @NotNull public boolean isNumeric(String identifier){
+    return flat.get(identifier).isNumeric();
+  }
 
   @NotNull protected Namespace put(@NotNull final TypeDeclaration ¢) {
     @NotNull @knows("¢") final String key = "type " + step.name(¢);
