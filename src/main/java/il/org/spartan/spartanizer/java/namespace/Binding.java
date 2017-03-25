@@ -61,6 +61,10 @@ public class Binding {
     hiding = null;
     type = null;
   }
+  
+  public boolean isNumeric(){
+    return this.type.isNumeric();
+  }
 
   private boolean equals(@NotNull final Binding ¢) {
     return eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
