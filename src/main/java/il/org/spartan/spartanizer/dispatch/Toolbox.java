@@ -326,7 +326,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new FragmentInitializerDead(), //
+            new FieldFragmentInitializerDefaultValue(), //
             new FragmentNoInitializerAssignment(), //
             new FragmentInitialiazerUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
@@ -341,7 +341,7 @@ public class Toolbox {
             new FragmentInitializerWhile(), //
             new FragmentInitializerToForInitializers(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new FragmentNoInitializerRemoveUnused(), //
+            new FragmentVariablleInitializedRemoveUnused(), //
             null) //
     ;
   }
