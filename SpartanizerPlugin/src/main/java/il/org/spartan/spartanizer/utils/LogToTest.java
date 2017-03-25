@@ -49,7 +49,7 @@ public enum LogToTest {
       try (@NotNull BufferedReader r = new BufferedReader(new FileReader(f))) {
         @NotNull final List<String> es = new ArrayList<>();
         es.add("");
-        for (String l = r.readLine(); l != null;) {
+        for (String l = r.readLine(); l != null; l = r.readLine())
           if (l.equals(monitor.FILE_SEPARATOR.trim())) {
             analyze(xs, ts, nu, es);
             es.clear();
@@ -58,8 +58,6 @@ public enum LogToTest {
             es.add("");
           else
             es.set(es.size() - 1, last(es) + "\n" + l);
-          l = r.readLine();
-        }
       } catch (@NotNull final IOException ¢) {
         monitor.infoIOException(¢, f + "");
         return;

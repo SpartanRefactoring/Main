@@ -153,14 +153,15 @@ public final class Inliner {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(oldExpression);
       assert oldExpression != null;
       final Expression replacement = get();
-      assert rewriter !=null;
-      assert replacement !=null;
+      assert rewriter != null;
+      assert replacement != null;
       try {
-      rewriter.replace(oldExpression, newExpression, editGroup);
-      } catch (NullPointerException ¢) {
-       System.out.println(¢); 
+        rewriter.replace(oldExpression, newExpression, editGroup);
+      } catch (final NullPointerException ¢) {
+        System.out.println(¢);
       }
-      collect.usesOf(name).in(newExpression).stream().filter(Objects::nonNull).forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
+      collect.usesOf(name).in(newExpression).stream().filter(Objects::nonNull)
+          .forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
       n.set(newExpression);
     }
 

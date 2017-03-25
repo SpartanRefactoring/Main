@@ -39,6 +39,8 @@ public class Issue1125 {
 
   @Test public void whileLoop2() {
     trimmingOf("while(x()){f();g();}")//
+        .gives("for(;x(); g()){f();}")//
+        .gives("for(;x(); g())f();")//
         .stays()//
     ;
   }

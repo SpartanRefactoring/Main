@@ -1,14 +1,24 @@
 package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import static il.org.spartan.utils.English.*;
+import static org.eclipse.jdt.core.dom.PostfixExpression.Operator.*;
+import static org.hamcrest.collection.IsEmptyCollection.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
@@ -25,6 +35,78 @@ public final class Version300 {
         .using(PrefixExpression.class, new PrefixNotPushdown())//
         .gives("a=b?!c:!d") //
     ;
+  }
+
+  @Test public void killer() {
+    {
+      final Expression e = make("int i = 3;");
+      kill(e);
+      (kill(e) + "").hashCode();
+      azzert.that(kill(e), instanceOf(Block.class));
+      assert kill(e) != null;
+      assert kill(e).statements() != null;
+      assert statements(kill(e)) != null;
+      azzert.that(statements(kill(e)), is(empty()));
+    }
+    {
+      final Expression e = make("int i = f();");
+      kill(e);
+      (kill(e) + "").hashCode();
+      azzert.that(kill(e), instanceOf(Block.class));
+      assert kill(e) != null;
+      assert kill(e).statements() != null;
+      azzert.that(statements(kill(e)), not(empty()));
+      assert statements(kill(e)) != null;
+    }
+    azzert.that(kill(make("int _ = f();")), iz("{f();}"));
+    azzert.that(kill(make("int _ = 3 + f();")), iz("{f();}"));
+    azzert.that(kill(make("int _ = g() + f();")), iz("{g();f();}"));
+    azzert.that(kill(make("int _ = i++ + f();")), iz("{i++;f();}"));
+    azzert.that(kill(make("int _ = i++ + i--;")), iz("{i++;i--;}"));
+    azzert.that(kill(make("int _ = ++i + i--;")), iz("{++i;i--;}"));
+    azzert.that(kill(make("int _ = -i + i--;")), iz("{i--;}"));
+    azzert.that(kill(make("int _ = b==q();")), iz("{q();}"));
+    azzert.that(kill(make("int _ = (a=b);")), iz("{a=b;}"));
+    azzert.that(kill(make("int _ = (a=b++);")), iz("{a=b++;}"));
+  }
+
+  @UnderConstruction(value = "") private Block kill(final Expression e) {
+    final Block $ = e.getAST().newBlock();
+    statements($).addAll(decompose(e));
+    return $;
+  }
+
+  public List<Statement> pack(final Expression ¢) {
+    return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
+  }
+
+  private List<Statement> decompose(final Expression x) {
+    return new ExpressionMapReducer<List<Statement>>() {
+      @Override protected List<Statement> map(final PostfixExpression ¢) {
+        return pack(¢);
+      }
+
+      @Override protected List<Statement> map(final PrefixExpression ¢) {
+        return not.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : pack(¢);
+      }
+
+      @Override protected List<Statement> map(final MethodInvocation ¢) {
+        return pack(¢);
+      }
+
+      @Override public List<Statement> reduce() {
+        return new ArrayList<>();
+      }
+
+      @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
+        $.addAll(ss);
+        return $;
+      }
+    }.map(x);
+  }
+
+  public Expression make(final String statement) {
+    return findFirst.instanceOf(VariableDeclarationFragment.class).in(s(statement)).getInitializer();
   }
 
   @Ignore @Test public void inlineArrayInitialization1() {
