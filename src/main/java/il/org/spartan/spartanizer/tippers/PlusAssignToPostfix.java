@@ -10,22 +10,19 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** 
- * Expend :  {@code a+=1;} To: {@code a++;} Important : Works only in cases where binding exists, otherwise doesnothing Tested in  {@link Issue096}
+/** Expend : {@code a+=1;} To: {@code a++;} Important : Works only in cases
+ * where binding exists, otherwise doesnothing Tested in {@link Issue096}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
- * @since 2017-3-23 
- * [[SuppressWarningsSpartan]]
- */
+ * @since 2017-3-23 [[SuppressWarningsSpartan]] */
 public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
-    implements TipperCategory.Arithmetic{
+    implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
   @Override @Nullable public ASTNode replacement(@NotNull final Assignment ¢) {
     @Nullable final Namespace n = Environment.of(¢);
-    if(!n.isNumeric((¢.getLeftHandSide() + "")))
-        return null;
-    return ¢.getOperator() != Operator.PLUS_ASSIGN ||
-         !¢.getLeftHandSide().resolveTypeBinding().isPrimitive()
+    if (!n.isNumeric(¢.getLeftHandSide() + ""))
+      return null;
+    return ¢.getOperator() != Operator.PLUS_ASSIGN || !¢.getLeftHandSide().resolveTypeBinding().isPrimitive()
         || !iz.numberLiteral(¢.getRightHandSide()) || !"1".equals(az.numberLiteral(¢.getRightHandSide()).getToken()) ? null
             : subject.operand(¢.getLeftHandSide()).to(PostfixExpression.Operator.INCREMENT);
   }

@@ -969,35 +969,35 @@ public interface wizard {
       @Override protected List<Statement> map(final Assignment ¢) {
         return pack(¢);
       }
-  
+
       @Override protected List<Statement> map(final PostfixExpression ¢) {
         return pack(¢);
       }
-  
+
       @Override protected List<Statement> map(final PrefixExpression ¢) {
         return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? pack(¢) : reduce();
       }
-  
+
       @Override protected List<Statement> map(final ArrayCreation ¢) {
         return pack(¢);
       }
-  
+
       @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
         return pack(¢);
       }
-  
+
       @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
         return pack(¢);
       }
-  
+
       @Override protected List<Statement> map(final MethodInvocation ¢) {
         return pack(¢);
       }
-  
+
       @Override public List<Statement> reduce() {
         return new ArrayList<>();
       }
-  
+
       @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
         $.addAll(ss);
         return $;
