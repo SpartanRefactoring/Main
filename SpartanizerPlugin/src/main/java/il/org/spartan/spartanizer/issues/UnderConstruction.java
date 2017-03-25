@@ -6,5 +6,5 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-22 */
 public @interface UnderConstruction {
-  @NotNull String value();
+  @NotNull String value() default "";
 }
