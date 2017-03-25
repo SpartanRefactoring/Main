@@ -29,18 +29,35 @@ public class switchBranch {
   private int depth;
   private int sequencerLevel;
   public static final int MAX_CASES_FOR_SPARTANIZATION = 10;
-  final Comparator<switchBranch>[] priorityOrder = as.array(Comparators.byDefault, Comparators.bySequencerLevel, Comparators.byDepth,
-      Comparators.byStatementsNum, Comparators.byNodesNum, Comparators.byCasesNum);
+  final Comparator<switchBranch>[] priorityOrder = as.array(Comparators.byDefault, Comparators.byNumericOrder, Comparators.bySequencerLevel, 
+      Comparators.byDepth, Comparators.byStatementsNum, Comparators.byNodesNum, Comparators.byCasesNum);
 
   static final class Comparators {
-    static final Comparator<switchBranch> byDefault = (final switchBranch o1, final switchBranch o2) -> o1.hasDefault() ? -1
-        : o2.hasDefault() ? 1 : 0;
+    private static final Comparator<Expression> numericOrder = new Comparator<Expression>() {
+      @Override public int compare(Expression e1, Expression e2) {
+        return e1 == null ? 1
+            : e2 == null ? -1
+                : !iz.intType(e1) ? iz.intType(e2) ? 1 : 0 : !iz.intType(e2) ? -1 : Integer.parseInt(e1 + "") - Integer.parseInt(e2 + "");
+      }      
+    };
+    
+    static final Comparator<switchBranch> byDefault = (final switchBranch o1, final switchBranch o2) -> o1.hasDefault() ? 1
+        : o2.hasDefault() ? -1 : 0;
     static final Comparator<switchBranch> bySequencerLevel = (final switchBranch o1,
-        final switchBranch o2) -> o1.sequencerLevel() == 0 || o2.sequencerLevel() == 0 ? 0 : o2.sequencerLevel() - o1.sequencerLevel();
-    static final Comparator<switchBranch> byDepth = (final switchBranch o1, final switchBranch o2) -> o2.depth() - o1.depth();
-    static final Comparator<switchBranch> byStatementsNum = (final switchBranch o1, final switchBranch o2) -> o2.statementsNum() - o1.statementsNum();
-    static final Comparator<switchBranch> byNodesNum = (final switchBranch o1, final switchBranch o2) -> o2.nodesNum() - o1.nodesNum();
-    static final Comparator<switchBranch> byCasesNum = (final switchBranch o1, final switchBranch o2) -> o2.casesNum() - o1.casesNum();
+        final switchBranch o2) -> o1.sequencerLevel() == 0 || o2.sequencerLevel() == 0 ? 0 : o1.sequencerLevel() - o2.sequencerLevel();
+    static final Comparator<switchBranch> byDepth = (final switchBranch o1, final switchBranch o2) -> o1.depth() - o2.depth();
+    static final Comparator<switchBranch> byStatementsNum = (final switchBranch o1, final switchBranch o2) -> o1.statementsNum() - o2.statementsNum();
+    static final Comparator<switchBranch> byNodesNum = (final switchBranch o1, final switchBranch o2) -> o1.nodesNum() - o2.nodesNum();
+    static final Comparator<switchBranch> byCasesNum = (final switchBranch o1, final switchBranch o2) -> o1.casesNum() - o2.casesNum();
+    static final Comparator<switchBranch> byNumericOrder = (final switchBranch o1, final switchBranch o2) -> numericOrder.compare(lowestLexicoCase(o1), lowestLexicoCase(o2));
+    
+    private static Expression lowestLexicoCase(switchBranch b) {
+      Expression $ = expression(first(b.cases()));
+      for(SwitchCase ¢ : b.cases())
+        if(numericOrder.compare(expression(¢), $) < 0)
+          $ = expression(¢);
+      return $;
+    }
   }
 
   public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
@@ -48,7 +65,11 @@ public class switchBranch {
     this.statements = statements;
     hasDefault = numOfNodes = numOfStatements = depth = sequencerLevel = -1;
   }
-
+  
+  public List<SwitchCase> cases() {
+    return cases;
+  }
+  
   @SuppressWarnings("boxing") public boolean hasDefault() {
     if (hasDefault == -1)
       hasDefault = cases.stream().filter(SwitchCase::isDefault).map(λ -> 1).findFirst().orElse(hasDefault);
@@ -57,7 +78,7 @@ public class switchBranch {
 
   public int depth() {
     if (depth < 0)
-      depth = metrics.height(statements, 0);
+      depth = metrics.depth(statements);
     return depth;
   }
 
@@ -95,7 +116,7 @@ public class switchBranch {
     for (final Comparator<switchBranch> c : priorityOrder) {
       final int $ = c.compare(this, ¢);
       if ($ != 0)
-        return $ > 0;
+        return $ < 0;
     }
     return false;
   }

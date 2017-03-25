@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Sorts switch branches according to the metrics: 1. Depth - height of ast 2.
  * Length measured in statements 3. Length measured in nodes 4. Sequencer level
- * 5. Number of case that use the branch Test case is {@link Issue0861}
+ * 5. Number of case that use the branch Test case is {@link Issue0861} and {@link Issue1147}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-11 */
 public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//

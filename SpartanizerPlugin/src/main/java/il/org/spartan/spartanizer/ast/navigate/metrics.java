@@ -94,6 +94,27 @@ public interface metrics {
     ss.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
+  
+  static int depth(@NotNull final List<Statement> ss) {
+    @NotNull final Int $ = new Int();
+    ss.forEach(λ -> $.inner = Integer.max($.inner, depth(λ)));
+    return $.inner;
+  }
+  
+  @SuppressWarnings("boxing")
+  static int depth(final ASTNode ¢) {
+    ¢.accept(new ASTVisitor() {
+      @Override public void preVisit(@SuppressWarnings("hiding") ASTNode ¢) {
+        if(¢ != null)
+          ¢.setProperty("Depth", Integer.valueOf(1));
+      }
+      @Override public void postVisit(ASTNode n) {
+        if (n != null && n.getParent() != null && n != ¢)
+          n.getParent().setProperty("Depth", Integer.max((Integer) n.getParent().getProperty("Depth"), (Integer) n.getProperty("Depth") + 1));
+      }
+    });
+    return (Integer) ¢.getProperty("Depth");
+  }
 
   /** @param n JD
    * @return The total number of internal nodes in the AST */
