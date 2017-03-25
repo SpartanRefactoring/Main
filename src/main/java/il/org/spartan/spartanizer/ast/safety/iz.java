@@ -576,8 +576,8 @@ public interface iz {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
-      case EXPRESSION_STATEMENT:
       case ASSIGNMENT:
+      case EXPRESSION_STATEMENT:
         return true;
       case POSTFIX_EXPRESSION:
         return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
