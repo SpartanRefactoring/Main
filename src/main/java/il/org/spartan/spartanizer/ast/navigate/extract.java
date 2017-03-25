@@ -562,14 +562,8 @@ public enum extract {
     return $ != null ? $ : new ArrayList<>();
   }
 
-  @NotNull private static List<Annotation> annotations(@NotNull final Iterable<IExtendedModifier> ms) {
-    @NotNull final List<Annotation> $ = new ArrayList<>();
-    for (final IExtendedModifier ¢ : ms) {
-      @Nullable final Annotation a = az.annotation(¢);
-      if (a != null)
-        $.add(a);
-    }
-    return $;
+  @NotNull private static List<Annotation> annotations(@NotNull final List<IExtendedModifier> ¢) {
+    return ¢.stream().map(az::annotation).filter(Objects::nonNull).collect(toList());
   }
 
   @Nullable private static ReturnStatement asReturn(final Statement ¢) {

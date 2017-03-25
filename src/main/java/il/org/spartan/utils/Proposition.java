@@ -210,4 +210,8 @@ public interface Proposition extends BooleanSupplier {
       return new Or(this, s, cs);
     }
   }
+  interface Operator1 extends Function<BooleanSupplier, BooleanSupplier>{
+
+    
+  }
 }

@@ -960,38 +960,38 @@ public interface wizard {
     ¢.remove(¢.size() - 1);
   }
 
-  static List<Statement> pack(final Expression ¢) {
+  static List<Statement> listMe(final Expression ¢) {
     return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
   }
 
   static List<Statement> decompose(final Expression x) {
     return new ExpressionMapReducer<List<Statement>>() {
       @Override protected List<Statement> map(final Assignment ¢) {
-        return pack(¢);
+        return listMe(¢);
       }
 
       @Override protected List<Statement> map(final PostfixExpression ¢) {
-        return pack(¢);
+        return listMe(¢);
       }
 
       @Override protected List<Statement> map(final PrefixExpression ¢) {
-        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? pack(¢) : reduce();
+        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? listMe(¢) : reduce();
       }
 
       @Override protected List<Statement> map(final ArrayCreation ¢) {
-        return pack(¢);
+        return listMe(¢);
       }
 
       @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
-        return pack(¢);
+        return listMe(¢);
       }
 
       @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
-        return pack(¢);
+        return listMe(¢);
       }
 
       @Override protected List<Statement> map(final MethodInvocation ¢) {
-        return pack(¢);
+        return listMe(¢);
       }
 
       @Override public List<Statement> reduce() {
