@@ -132,17 +132,18 @@ public class Issue0251 {
     assert !sideEffects.free(into.s("while(b==q){if(tipper==q()){int i;}}"));
   }
 
-  /** Introduced by Yossi on Sat-Mar-25-05:15:04-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_whileabc() {
-       trimmingOf("while (a == b) { c(); { } }") //
-           .using(WhileStatement.class, new WhileToForUpdaters()) //
-           .gives("for(;a==b;c()){c();}") //
-           .using(Block.class, new BlockSingleton()) //
-           .gives("for(;a==b;c())c();") //
-           .stays() //
+  /** Introduced by Yossi on Sat-Mar-25-05:15:04-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_whileabc() {
+    trimmingOf("while (a == b) { c(); { } }") //
+        .using(WhileStatement.class, new WhileToForUpdaters()) //
+        .gives("for(;a==b;c()){c();}") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("for(;a==b;c())c();") //
+        .stays() //
     ;
   }
+
   @Test public void t21() {
     trimmingOf("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){int i;}")//
@@ -150,15 +151,15 @@ public class Issue0251 {
         .stays();
   }
 
-  /** Introduced by Yossi on Sat-Mar-25-05:16:02-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void whileabc() {
-       trimmingOf("while (a == b) { c(); { } }") //
-           .using(WhileStatement.class, new WhileToForUpdaters()) //
-           .gives("for(;a==b;c()){c();}") //
-           .using(Block.class, new BlockSingleton()) //
-           .gives("for(;a==b;c())c();") //
-           .stays() //
+  /** Introduced by Yossi on Sat-Mar-25-05:16:02-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void whileabc() {
+    trimmingOf("while (a == b) { c(); { } }") //
+        .using(WhileStatement.class, new WhileToForUpdaters()) //
+        .gives("for(;a==b;c()){c();}") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("for(;a==b;c())c();") //
+        .stays() //
     ;
   }
 

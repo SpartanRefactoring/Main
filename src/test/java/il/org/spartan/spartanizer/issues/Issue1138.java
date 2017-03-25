@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.issues;
 
-import static org.junit.Assert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
