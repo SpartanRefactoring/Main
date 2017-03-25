@@ -9,8 +9,6 @@ import java.util.concurrent.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
@@ -18,7 +16,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO: kobybs please add a description
@@ -70,19 +67,18 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
   
   public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) 
   {
-      Map<Object, Boolean> map = new ConcurrentHashMap<>();
-      return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+      Map<Object, Boolean> $ = new ConcurrentHashMap<>();
+      return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
   }
   
   private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
-    return ¢.stream().filter(distinctByKey( p -> identifier(typeName(az.annotation(p))) )).sorted(comp).collect(toList());
+    return ¢.stream().filter(distinctByKey( λ -> identifier(typeName(az.annotation(λ))) )).sorted(comp).collect(toList());
   }
   
   
   @Override public ASTNode replacement(final N d) {
     N $ = copy.of(d);
-    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
-    final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
+    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($))), ms = new ArrayList<>(extract.modifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
