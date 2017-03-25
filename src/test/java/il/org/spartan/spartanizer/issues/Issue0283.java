@@ -13,18 +13,14 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
-
 public class Issue0283 {
-  
   @Test public void a() {
     trimmingOf(
         "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited @Nullable @Deprecated public void test0() { }}")
-            .gives(
-                "@Ignore class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3) @Nullable public void test0(){}}") //
+            .gives("@Ignore class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3) @Nullable public void test0(){}}") //
             .stays();
   }
-  
-  
+
   /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
    * Yossi */
   @Test public void err1() {
@@ -35,16 +31,13 @@ public class Issue0283 {
     ;
   }
 
-  
   @Test public void duplication() {
     trimmingOf("@A @D1(3)@E @D(3)@E @F public void a(){}") //
         .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
         .gives("@A @D(3) @D1(3) @E @F public void a(){}") //
         .stays();
-    ;
   }
 
-  
   /** Introduced by Yogi on Thu-Mar-23-19:55:44-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aBClassCAD3EF3GPublicVoida() {
@@ -55,7 +48,6 @@ public class Issue0283 {
     ;
   }
 
-  
   /** Automatically generated */
   @Test public void err4() {
     trimmingOf("@A @B class C{@A @D1(3)@E @D(3) @F public void a(){}}") //
@@ -63,7 +55,6 @@ public class Issue0283 {
         .stays();
   }
 
-  
   /** Introduced by Yogi on Thu-Mar-23-20:04:01-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_BClassCAD3EF3GPublicVoida() {
@@ -74,7 +65,6 @@ public class Issue0283 {
     ;
   }
 
-  
   @Test public void test0() {
     trimmingOf("@SuppressWarnings(\"unused\") " //
         + "@Deprecated " //
@@ -99,7 +89,6 @@ public class Issue0283 {
     azzert.that(AnnotationSort.compare("SupportedSourceVersion", "WebServiceProvider"), lessThan(0));
   }
 
- 
   @Test public void test2() {
     trimmingOf("public class Point {" //
         + "@ConstructorProperties({\"x\", \"y\"}) @Deprecated " //
@@ -116,27 +105,22 @@ public class Issue0283 {
             .stays();
   }
 
-  
   @Test public void test31() {
     trimmingOf("class Test123 {@Test @Nullable @Deprecated public void test0() { }}")
         .gives("class Test123 {@Deprecated @Test @Nullable public void test0() { }}");
-        
   }
-  
+
   @Test public void test32() {
     trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ 3 }) @Nullable @Deprecated public void test0() { }}")
         .gives("@Ignore class Test123 {@Deprecated @Test @SuppressWarnings({ 3 }) @Nullable public void test0() { }}");
-        
   }
-  
-  
+
   @Test public void test3() {
     trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ 3, 4 }) @Inherited @Nullable @Deprecated public void test0() { }}")
         .gives("@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings({ 3, 4 }) @Nullable public void test0(){}}") //
         .stays();
   }
 
-  
   /** Introduced by Yogi on Thu-Mar-23-20:01:54-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aClassBCDE3E3FPublicVoida() {
@@ -145,7 +129,6 @@ public class Issue0283 {
     ;
   }
 
-  
   @Test public void test5() {
     trimmingOf("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings(3) @Inherited @Nullable @Deprecated public void test0(){}}")
         .gives("@Deprecated @Ignore class Test123{@Test @SuppressWarnings(3) @Inherited @Nullable @Deprecated public void test0(){}}") //
