@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.meta.*;
 public class Issue0965 {
   @Test public void test0() {
     bloatingOf(new TestClass()) //
-        .givesWithBinding("public String check1(){return lst.toString();}", "check1")//
+        .givesWithBinding("@NotNull public String check1(){return lst.toString();}", "check1")//
         .staysWithBinding();
   }
 

@@ -26,12 +26,12 @@ public class Issue0230 {
   }
 
   @Test public void a11() {
-    trimmingOf("class A{@UserDefined1 @UserDefined1 int a;}")//
+    trimmingOf("class A{@UserDefined1 int a;}")//
         .stays();
   }
 
   @Test public void a111() {
-    trimmingOf("class A{@Deprecated @Deprecated int a;}")//
+    trimmingOf("class A{@Deprecated int a;}")//
         .stays();
   }
 
@@ -78,6 +78,6 @@ public class Issue0230 {
   }
 
   @Test public void i() {
-    trimmingOf("public @interface hand_made { String[] value(); }final @hand_made({}) String s = \"a\";").stays();
+    trimmingOf("public @interface hand_made { String[] value(); }@hand_made({}) final  String s = \"a\";").stays();
   }
 }
