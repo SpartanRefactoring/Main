@@ -73,9 +73,9 @@ public final class Version300 {
     azzert.that(kill(make(from)), iz(to));
   }
 
-  @UnderConstruction(value = "") private Block kill(final Expression e) {
-    final Block $ = e.getAST().newBlock();
-    statements($).addAll(wizard.decompose(e));
+  @UnderConstruction("") private Block kill(final Expression ¢) {
+    final Block $ = ¢.getAST().newBlock();
+    statements($).addAll(wizard.decompose(¢));
     return $;
   }
 
