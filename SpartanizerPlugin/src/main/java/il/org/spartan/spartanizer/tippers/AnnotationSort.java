@@ -5,6 +5,8 @@ import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -23,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author kobybs
  * @author Dan Abramovich
  * @since 20-11-2016 */
-public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
+public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNode<N>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -3384979771292763464L;
   private static final HashSet<String>[] rankTable = as.array(//
@@ -65,32 +67,63 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
 
-  private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
-    return ¢.stream().sorted(comp).collect(toList());
+  
+  public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) 
+  {
+      Map<Object, Boolean> map = new ConcurrentHashMap<>();
+      return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
   }
-
+  
+  private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
+    return ¢.stream().filter(distinctByKey( p -> identifier(typeName(az.annotation(p))) )).sorted(comp).collect(toList());
+  }
+  
+  
+  @Override public ASTNode replacement(final N d) {
+    N $ = copy.of(d);
+    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($)));
+    final List<IExtendedModifier> ms = new ArrayList<>(extract.modifiers($));
+    extendedModifiers($).clear();
+    extendedModifiers($).addAll(as);
+    extendedModifiers($).addAll(ms);
+    return !wizard.same($, d) ? $ : null;
+  }
+  
+  
+/*
   @Override @Nullable public Tip tip(@NotNull final N n) {
     final List<Annotation> $ = extract.annotations(n);
     if ($ == null || $.isEmpty())
       return null;
-    @NotNull final List<Annotation> myCopy = new ArrayList<>($);
-    myCopy.sort(comp);
+    @NotNull List<Annotation> myCopy = (List<Annotation>) sort(new ArrayList<>($));
+
     return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+        
         for (int i = 0; i < $.size(); ++i) {
           List<Annotation> sorted = (List<Annotation>) copy.of(myCopy);
-          final ASTNode oldNode = $.get(i), newNode = sorted.get(i);
-          if (!wizard.same(oldNode,newNode)) {
-            l.replace(oldNode, newNode, g);
-//            l.replace(newNode, copy.of(oldNode), g);
-//            break;
+          final ASTNode oldNode ;
+          final ASTNode newNode ;
+          
+          oldNode = $.get(i);
+          if(i < myCopy.size()){
+              newNode = sorted.get(i);
+              if (!wizard.same(oldNode,newNode)) {
+                  l.replace(oldNode, newNode, g);
+              }
           }
+          else{
+            l.remove(oldNode, g);
+            
+          }
+          
+          
         }
       }
     };
   }
-
+*/
   @Override @NotNull public String description(@NotNull final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
