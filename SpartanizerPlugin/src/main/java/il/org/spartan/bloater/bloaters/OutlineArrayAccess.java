@@ -59,7 +59,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
   @Override protected boolean prerequisite(@NotNull final ArrayAccess a) {
     final Expression e = a.getIndex();
     @Nullable final Statement b = extract.containingStatement(a);
-    if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.incrementOrDecrement(e) || iz.assignment(e))
+    if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.updating(e) || iz.assignment(e))
       return false;
     final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
     if (n == null)

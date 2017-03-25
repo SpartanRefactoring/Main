@@ -32,7 +32,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
   }
 
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
-    return az.block(body(¢)) != null && iz.incrementOrDecrement(lastStatement(¢)) && statements(az.block(body(¢))).size() >= 2
+    return az.block(body(¢)) != null && iz.updating(lastStatement(¢)) && statements(az.block(body(¢))).size() >= 2
         && !ForToForUpdaters.bodyDeclaresElementsOf(lastStatement(¢));
   }
 

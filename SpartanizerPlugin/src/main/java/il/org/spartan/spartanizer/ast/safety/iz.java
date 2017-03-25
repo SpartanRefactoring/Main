@@ -572,15 +572,13 @@ public interface iz {
    *         Expression with ++ or -- operator false if node is not an
    *         Expression Statement or its a Post or Pre fix expression that its
    *         operator is not ++ or -- */
-  static boolean incrementOrDecrement(@Nullable final ASTNode ¢) {
+  static boolean updating(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
       case EXPRESSION_STATEMENT:
-        return incrementOrDecrement(step.expression(¢));
       case ASSIGNMENT:
-        return in(az.assignment(¢).getOperator(), PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
-            BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN);
+        return true;
       case POSTFIX_EXPRESSION:
         return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
       case PREFIX_EXPRESSION:
