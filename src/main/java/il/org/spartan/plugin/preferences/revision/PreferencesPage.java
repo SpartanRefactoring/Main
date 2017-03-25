@@ -73,9 +73,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     return $;
   }
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(TipperGroup.store());
     setDescription(PAGE_DESCRIPTION);

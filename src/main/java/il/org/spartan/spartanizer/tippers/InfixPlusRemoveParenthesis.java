@@ -57,10 +57,8 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
       isString |= !type.isNotString(es.get(ii));
       if (iz.parenthesizedExpression(es.get(ii))) {
         @NotNull Expression ¢ = extract.core(es.get(ii));
-        while (iz.parenthesizedExpression(¢)) {
+        for (; iz.parenthesizedExpression(¢); replace(es, ¢, ii))
           ¢ = expression(az.parenthesizedExpression(¢));
-          replace(es, ¢, ii);
-        }
         if (iz.infixExpression(¢) && ii != 0 && b && !canRemove(az.infixExpression(¢)) || iz.conditionalExpression(¢) || iz.lambdaExpression(¢))
           continue;
         replace(es, ¢, ii);

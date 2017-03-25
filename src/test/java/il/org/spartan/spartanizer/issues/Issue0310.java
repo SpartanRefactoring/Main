@@ -18,12 +18,14 @@ public class Issue0310 {
         .stays();
   }
 
+  @Ignore // TODO Yossi Gil
   @Test public void updaters_for_1() {
     trimmingOf("boolean k(final N n){N p=n;for(;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")//
         .stays();
   }
 
+  @Ignore // TODO Yossi Gil
   @Test public void updaters_for_2() {
     trimmingOf("boolean k(final N n){N p=n;for(;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
