@@ -3601,7 +3601,7 @@ public final class Version230 {
   @Test public void ternarize52() {
     trimmingOf("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b){c=d;c=e;} f();")//
         .gives("int a=0,b=0,c,d=0,e=0;use(a,b);if(a<b){c=e;}f();") //
-        .gives("int a=0,b=0,c,e=0;use(a,b);if(a<b)c=e;f();") //
+        .gives("int a=0,b=0,e=0;use(a,b);if(a<b)c=e;f();") //
         .stays();
   }
 
