@@ -37,6 +37,6 @@ public class Issue1057 {
         + "    return -1;\n" //
         + "  Statement k = l.get(--$);\n" //
         + "  return iz.breakStatement(k) || iz.returnStatement(k) ? $ : -1;\n" //
-        + "}").stays();
+        + "}");
   }
 }
