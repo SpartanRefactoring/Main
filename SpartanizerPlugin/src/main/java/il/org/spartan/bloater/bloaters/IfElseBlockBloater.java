@@ -9,7 +9,10 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+
+import static il.org.spartan.utils.Example.*;
 
 /** Convert : {@code
  * if(condition) block1 else block2
@@ -35,6 +38,18 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     statements(b).add(copy.of(elze(s)));
     $.setElseStatement(b);
     return $;
+  }
+  
+  @Override public Example[] examples() {
+    return new Example[] {
+        convert("if(f()) g();")//
+        .to("if(f()) {g();}"),
+        convert("if(f()) g(); else h();")//
+          .to("if(f()) {g();} else {h();}"),
+        convert("if(x) {a();b();} else h()")//
+          .to("if(x) {a();b();} else {h()}")
+    }
+    ;
   }
 
   @Override @Nullable public String description(@SuppressWarnings("unused") final IfStatement __) {
