@@ -188,7 +188,7 @@ public class PropositionTest {
     assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
     assert NOT(F).and(NOT(F)).or(T).eval();
     assert NOT(F).and(NOT(F)).or(T).or(X).eval();
-     final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
+    final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
     assert or.eval();
     // Check precedence: A || B && C
     assert Proposition.of(F).or(T).and(T).eval();
@@ -200,7 +200,7 @@ public class PropositionTest {
 
   @Test public void z() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @Override  protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
         return "";
       }
     }), is(""));
@@ -226,9 +226,11 @@ public class PropositionTest {
     assert !hasCycles(T_AND_F_AND_X);
     assert !hasCycles(T_OR_F_OR_X);
   }
+
   @Test public void b31() {
     assert !hasCycles(T.or(T));
   }
+
   @Test public void b32() {
     assert !hasCycles(T.and(T));
   }
@@ -283,7 +285,7 @@ public class PropositionTest {
 
   @Test public void d1() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @Override  protected String map(final BooleanSupplier ¢) {
+      @Override protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
     }), is("T_OR_F_OR_X"));
@@ -311,9 +313,9 @@ public class PropositionTest {
   private boolean hasCycles(final BooleanSupplier s) {
     final Stack<BooleanSupplier> path = new Stack<>();
     path.add(s);
-    Queue<BooleanSupplier> todo = new LinkedList<>(); 
+    final Queue<BooleanSupplier> todo = new LinkedList<>();
     do {
-      final BooleanSupplier current = todo.isEmpty() ?  path.pop() : todo.remove();
+      final BooleanSupplier current = todo.isEmpty() ? path.pop() : todo.remove();
       if (path.contains(current))
         return true;
       if (current instanceof Proposition.Some) {

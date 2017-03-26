@@ -10,35 +10,35 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
     super(new ReduceStringConcatenate());
   }
 
-  @Override  protected final String ante( final Proposition.Not ¢) {
+  @Override protected final String ante(final Proposition.Not ¢) {
     return negation() + (¢.inner instanceof Proposition.Some ? open() : empty());
   }
 
-  @Override  protected final String ante( final Proposition.Singleton ¢) {
+  @Override protected final String ante(final Proposition.Singleton ¢) {
     return ¢.inner instanceof Proposition.Some ? open() : empty();
   }
 
-   protected abstract String close();
+  protected abstract String close();
 
-   protected abstract String empty();
+  protected abstract String empty();
 
-  @Override  protected abstract String inter(Proposition.And a);
+  @Override protected abstract String inter(Proposition.And a);
 
-  @Override  protected abstract String inter(Proposition.Or o);
+  @Override protected abstract String inter(Proposition.Or o);
 
-  @Override  protected String map(final BooleanSupplier ¢) {
+  @Override protected String map(final BooleanSupplier ¢) {
     return ¢ + "";
   }
 
-   protected abstract String negation();
+  protected abstract String negation();
 
-   protected abstract String open();
+  protected abstract String open();
 
-  @Override  protected final String post( final Proposition.Not ¢) {
+  @Override protected final String post(final Proposition.Not ¢) {
     return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
 
-  @Override  protected String post( final Proposition.Singleton ¢) {
+  @Override protected String post(final Proposition.Singleton ¢) {
     return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
 }
