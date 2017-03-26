@@ -5,7 +5,9 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -15,10 +17,10 @@ import il.org.spartan.utils.*;
 /** Remove unused variable
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-23 */
-public final class FragmentVariablleInitializedRemoveUnused extends LocalVariableInitialized implements TipperCategory.Deadcode {
+public final class LocalVariableInitializedUnusedRemove extends LocalVariableInitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -855471283048149285L;
 
-  public FragmentVariablleInitializedRemoveUnused() {
+  public LocalVariableInitializedUnusedRemove() {
     andAlso(Proposition.of("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
   }
 
@@ -31,6 +33,13 @@ public final class FragmentVariablleInitializedRemoveUnused extends LocalVariabl
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    Block b = az.block(parent().getParent());
+    if (b == null)
+      return r;
+    final ListRewrite l = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+    for (Statement s: wizard.decompose(initializer())) { 
+      l.insertBefore(copy.of(s), parent(), g);
+    }
     wizard.eliminate(object(), r, g);
     return r;
   }
