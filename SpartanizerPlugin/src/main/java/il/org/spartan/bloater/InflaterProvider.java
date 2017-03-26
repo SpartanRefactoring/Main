@@ -6,10 +6,10 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** holds the new toolbox for the expanders and returns them
@@ -72,7 +72,7 @@ public class InflaterProvider extends OperationsProvider {
             new ForEachBlockBloater()) //
         .add(ForStatement.class, //
             new ForBlockBloater() //
-            ) //
+        ) //
         .add(WhileStatement.class, //
             new WhileBlockBloater()) //
         .add(IfStatement.class, //
@@ -87,7 +87,7 @@ public class InflaterProvider extends OperationsProvider {
     return toolbox.firstTipper(¢);
   }
 
-  @Override  public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+  @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(first(λ));
   }
 }

@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.tippers.TernaryPushdown.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -28,14 +29,14 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
     return "Consolidate two branches of 'if' into a ternary exrpession";
   }
 
-  @Override public Statement replacement( final IfStatement s) {
-     final Expression then = expression(extract.expressionStatement(then(s)));
+  @Override public Statement replacement(final IfStatement s) {
+    final Expression then = expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-     final Expression elze = expression(extract.expressionStatement(elze(s)));
+    final Expression elze = expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
-     final Expression $ = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
+    final Expression $ = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));
     return $ == null ? null : subject.operand($).toStatement();
   }
 }

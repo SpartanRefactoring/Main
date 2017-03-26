@@ -5,6 +5,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,10 +21,10 @@ public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     return "Remove redundant return statement";
   }
 
-  @Override public boolean prerequisite( final ReturnStatement ¢) {
+  @Override public boolean prerequisite(final ReturnStatement ¢) {
     if (¢.getExpression() != null)
       return false;
-     final Block $ = az.block(¢.getParent());
+    final Block $ = az.block(¢.getParent());
     return $ != null && lastIn(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 }

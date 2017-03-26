@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.utils.tdd;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -16,10 +17,10 @@ public enum enumerate {
   /** @author Ori Marcovitch
    * @param n node
    * @since Oct 28, 2016 */
-  public static int expressions( final ASTNode n) {
+  public static int expressions(final ASTNode n) {
     if (n == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     $.inner = 0;
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -34,10 +35,10 @@ public enum enumerate {
    * @author Noam Yefet
    * @param ¢
    * @since Nov 1, 2016 */
-  public static int statements( final ASTNode n) {
+  public static int statements(final ASTNode n) {
     if (n == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
@@ -52,10 +53,10 @@ public enum enumerate {
    * @param ¢ the CompilationUnit its methods are counted
    * @return the amount of methods the given CompilationUnit has
    * @since Nov 2, 2016 */
-  public static int methods( final CompilationUnit ¢) {
+  public static int methods(final CompilationUnit ¢) {
     if (¢ == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
@@ -69,10 +70,10 @@ public enum enumerate {
   /** @author Ori Marcovitch
    * @param ¢
    * @return */
-  public static int methodsWithBody( final ASTNode ¢) {
+  public static int methodsWithBody(final ASTNode ¢) {
     if (¢ == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration node) {
@@ -89,8 +90,8 @@ public enum enumerate {
    * @author Osher Hajaj
    * @since 16-11-07 */
   @SuppressWarnings("boxing") public static int blockTypes(final MethodDeclaration d) {
-     final List<?> l = step.statements(step.body(d));
-     final boolean[] arr = new boolean[10];
+    final List<?> l = step.statements(step.body(d));
+    final boolean[] arr = new boolean[10];
     range.to(arr.length).forEach(λ -> arr[λ] = false);
     int $ = 0;
     final int LAMBDA = 7, TRY = 7, SYNC = 6, DOSTATE = 5, SWITCHSTATE = 4, WHILESTATE = 3, FORSTATE = 2, IFSTATE = 1, BLOCK = 0;
@@ -127,10 +128,10 @@ public enum enumerate {
   }
   // For you to implement! Let's TDD and get it on!
 
-  public static int ifStatements( final ASTNode ¢) {
+  public static int ifStatements(final ASTNode ¢) {
     if (¢ == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
@@ -141,10 +142,10 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int loops( final ASTNode n) {
+  public static int loops(final ASTNode n) {
     if (n == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final WhileStatement ¢) {
@@ -171,10 +172,10 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int ternaries( final ASTNode ¢) {
+  public static int ternaries(final ASTNode ¢) {
     if (¢ == null)
       return 0;
-     final Int $ = new Int();
+    final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {

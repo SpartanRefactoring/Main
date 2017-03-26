@@ -47,7 +47,7 @@ public class Issue0753 {
   }
 
   @Test public void f() {
-     final List<MethodDeclaration> res2 = getAll.methods(az.compilationUnit(
+    final List<MethodDeclaration> res2 = getAll.methods(az.compilationUnit(
         wizard.ast("public class B { double elite(int arg1){ class InnerElite{ void innerfunc(){} } return 0.0; }  int anotherFunc(){} }")));
     azzert.that("foo",
         is(first(getAll.methods(az.compilationUnit(wizard.ast("public class A {void foo(/*lololo*/ ){            } }")))).getName().getIdentifier()));

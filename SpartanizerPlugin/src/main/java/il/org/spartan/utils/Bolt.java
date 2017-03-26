@@ -3,15 +3,15 @@ package il.org.spartan.utils;
 import java.util.stream.*;
 
 public interface Bolt<T> {
-   default T self() {
+  default T self() {
     return null;
   }
 
-   default Compounder<T> compounder() {
+  default Compounder<T> compounder() {
     return Compounder.empty();
   }
 
-   default Stream<T> streamSelf() {
+  default Stream<T> streamSelf() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
 
@@ -20,13 +20,13 @@ public interface Bolt<T> {
   }
 
   interface Atomic<@¢ T> extends Bolt<T> {
-    @Override  default Stream<T> stream() {
+    @Override default Stream<T> stream() {
       return streamSelf();
     }
   }
 
   interface Compound<@¢ T> extends Bolt<T> {
-     Iterable<? extends Bolt<T>> next();
+    Iterable<? extends Bolt<T>> next();
 
     @Override default Stream<T> stream() {
       return compounder().compound(self(), next());
@@ -35,9 +35,9 @@ public interface Bolt<T> {
 
   @FunctionalInterface
   interface Compounder<T> {
-     Stream<T> compound(T self, Iterable<? extends Bolt<T>> others);
+    Stream<T> compound(T self, Iterable<? extends Bolt<T>> others);
 
-     static <T> Compounder<T> empty() {
+    static <T> Compounder<T> empty() {
       return (self, others) -> Stream.empty();
     }
   }

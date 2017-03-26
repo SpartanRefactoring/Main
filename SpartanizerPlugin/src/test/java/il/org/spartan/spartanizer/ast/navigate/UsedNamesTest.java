@@ -35,7 +35,7 @@ public class UsedNamesTest {
   }
 
   @Test public void f() {
-     final List<String> usedNames = extract.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
+    final List<String> usedNames = extract.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
     azzert.that(usedNames + "", usedNames.size(), is(0));
   }
 }

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,25 +32,25 @@ public enum InflaterUtilities {
    *         more expanders should be added to the change ASTNode in a "for
    *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
    *         infrastructure when we have more expanders */
-  static boolean rewrite(final ASTRewrite r,  final Iterable<ASTNode> ns, final TextEditGroup g) {
+  static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup g) {
     boolean $ = false;
     for (final ASTNode statement : ns) {
-       final ReturnTernaryExpander cc = new ReturnTernaryExpander();
+      final ReturnTernaryExpander cc = new ReturnTernaryExpander();
       if (statement instanceof ReturnStatement && cc.check(az.returnStatement(statement))) {
         cc.tip(az.returnStatement(statement)).go(r, g);
         $ = true;
       } else {
-         final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
+        final VariableDeclarationStatementSplit s = new VariableDeclarationStatementSplit();
         if (statement instanceof VariableDeclarationStatement && s.check(az.variableDeclarationStatement(statement))) {
           s.tip(az.variableDeclarationStatement(statement)).go(r, g);
           $ = true;
         } else {
-           final CasesSplit x = new CasesSplit();
+          final CasesSplit x = new CasesSplit();
           if (statement instanceof SwitchStatement && x.check((SwitchStatement) statement)) {
             x.tip((SwitchStatement) statement).go(r, g);
             $ = true;
           } else {
-             final DeclarationWithInitializerBloater s1 = new DeclarationWithInitializerBloater();
+            final DeclarationWithInitializerBloater s1 = new DeclarationWithInitializerBloater();
             if (statement instanceof VariableDeclarationStatement && s1.check(az.variableDeclarationStatement(statement))) {
               s1.tip(az.variableDeclarationStatement(statement)).go(r, g);
               $ = true;
@@ -64,9 +65,9 @@ public enum InflaterUtilities {
   /** @param u - the WrappedCompilationUnit which is bloated
    * @param ns - the list of statements which were selected and might be
    *        changed */
-  static void commitChanges( final WrappedCompilationUnit u,  final Iterable<ASTNode> ns) {
+  static void commitChanges(final WrappedCompilationUnit u, final Iterable<ASTNode> ns) {
     try {
-       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
       if (rewrite(r, ns, null)) {
@@ -74,7 +75,7 @@ public enum InflaterUtilities {
         if (textChange.getEdit().getLength() != 0)
           textChange.perform(new NullProgressMonitor());
       }
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.log(¢);
     }
   }
@@ -85,8 +86,8 @@ public enum InflaterUtilities {
    *         when we have a lot of statements) from compilationUnit - only kind
    *         of statements we might need for the Bloater SHOULD BE CHANGED when
    *         we add more expanders */
-   static List<ASTNode> getStatements( final WrappedCompilationUnit u) {
-     final List<ASTNode> $ = new ArrayList<>();
+  static List<ASTNode> getStatements(final WrappedCompilationUnit u) {
+    final List<ASTNode> $ = new ArrayList<>();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
     u.compilationUnit.accept(new ASTVisitor(true) {
@@ -95,7 +96,7 @@ public enum InflaterUtilities {
         return true;
       }
 
-      @Override public boolean visit( final ExpressionStatement node) {
+      @Override public boolean visit(final ExpressionStatement node) {
         if (az.assignment(node.getExpression()) != null)
           $.add(node);
         return true;
@@ -126,12 +127,12 @@ public enum InflaterUtilities {
 
   /** @param ns ASTNodes in compilation unit which might be relevant
    * @return list of selected ASTNodes */
-  static List<ASTNode> selectedStatements( final Collection<ASTNode> ns) {
+  static List<ASTNode> selectedStatements(final Collection<ASTNode> ns) {
     return ns.stream().filter(λ -> intervalsIntersect(λ.getStartPosition(), λ.getLength(), Selection.Util.current().textSelection.getOffset(),
         Selection.Util.current().textSelection.getLength())).collect(toList());
   }
 
-  public static void aux_go( final CompilationUnit u, final OperationsProvider p) {
+  public static void aux_go(final CompilationUnit u, final OperationsProvider p) {
     SingleFlater.in(u).from(p).go(ASTRewrite.create(u.getAST()), null);
   }
 }

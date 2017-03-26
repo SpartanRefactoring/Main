@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.utils.*;
 
 /** Class to count statement inside a method before and after refactoring +
@@ -17,12 +18,12 @@ public abstract class IntegerMetricalAnalyzer extends MetricalAnalyzer<Int> {
     ++getSafe(afterHistogram, Integer(metric(after))).inner;
   }
 
-  private static Int getSafe( final Map<Integer, Int> m, final Integer i) {
+  private static Int getSafe(final Map<Integer, Int> m, final Integer i) {
     m.putIfAbsent(i, new Int());
     return m.get(i);
   }
 
-  @Override protected double enumElement( final Int ¢) {
+  @Override protected double enumElement(final Int ¢) {
     return ¢.inner;
   }
 }

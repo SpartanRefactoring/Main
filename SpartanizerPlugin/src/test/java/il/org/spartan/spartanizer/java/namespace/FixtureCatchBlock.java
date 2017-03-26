@@ -11,15 +11,15 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("InfiniteRecursion")
 public class FixtureCatchBlock extends MetaFixture {
   @knows("f/0") private int f() {
-    try ( @knows("fileReader") FileReader fileReader = new FileReader(toString())) {
-      try ( @knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
+    try (@knows("fileReader") FileReader fileReader = new FileReader(toString())) {
+      try (@knows({ "b", "fileReader" }) FileReader b = new FileReader(toString())) {
         if (f() == 3)
           return fileReader.hashCode();
-        try ( @knows({ "c", "b", "fileReader" }) FileReader c = new FileReader(toString())) {
-          try ( @knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
+        try (@knows({ "c", "b", "fileReader" }) FileReader c = new FileReader(toString())) {
+          try (@knows({ "f/0", "c", "b", "fileReader", "d" }) FileReader d = new FileReader(toString())) {
             if (f() == 3)
               return c.hashCode();
-          } catch ( @foreign("d") @knows({ "y", "fileReader" }) final IOException y) {
+          } catch (@foreign("d") @knows({ "y", "fileReader" }) final IOException y) {
             y.printStackTrace();
             @foreign({ "x", "d" }) final int a = hashCode() * y.hashCode();
             @knows({ "a", "y", "$" }) final int $ = a * a;
@@ -29,7 +29,7 @@ public class FixtureCatchBlock extends MetaFixture {
           }
           if (f() == 3)
             return c.hashCode();
-        } catch ( @foreign("d") @knows("x") final IOException x) {
+        } catch (@foreign("d") @knows("x") final IOException x) {
           for (@foreign("resourceInTry") @knows({ "x", "water", "wine" }) @ScopeSize(3) @for¢ int water = new Object() {
             @Override public int hashCode() {
               return super.hashCode();
@@ -45,7 +45,7 @@ public class FixtureCatchBlock extends MetaFixture {
         }
       }
       return fileReader.hashCode();
-    } catch ( @foreign("$") final IOException x) {
+    } catch (@foreign("$") final IOException x) {
       @foreign("$") final int a = hashCode() * x.hashCode();
       @knows("a") final int y = a * a;
       f(y + a * y + x.hashCode());
@@ -66,12 +66,12 @@ public class FixtureCatchBlock extends MetaFixture {
   }
 
   void simple() {
-    try ( FileReader r = new FileReader(toString())) {
+    try (FileReader r = new FileReader(toString())) {
       r.read();
-    } catch ( final FileNotFoundException x) {
+    } catch (final FileNotFoundException x) {
       @foreign("r") final int a1 = hashCode() * hashCode() * x.hashCode();
       f(a1 * a1 * a1);
-    } catch ( final IOException x) {
+    } catch (final IOException x) {
       @knows({ "a2", "x" }) @foreign("r") final int a2 = hashCode() * hashCode();
       f(a2 * x.hashCode());
       @knows({ "a2", "x" }) final int r = hashCode();

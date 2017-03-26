@@ -140,25 +140,24 @@ public final class Issue0223 {
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
-   private ClassInstanceCreation findMe(final Statement c) {
+  private ClassInstanceCreation findMe(final Statement c) {
     return findFirst.instanceOf(SUBJECT_CLASS).in(c);
   }
 
-   private ClassInstanceCreationValueTypes makeTipper() {
+  private ClassInstanceCreationValueTypes makeTipper() {
     return new ClassInstanceCreationValueTypes();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);")//
-        .gives(" Integer.valueOf(1+9);")//
-        .gives(" Integer.valueOf(10);")//
+        .gives("Integer.valueOf(1+9);")//
+        .gives("Integer.valueOf(10);")//
         .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
     trimmingOf("String x = new String(f());")//
-        .gives("new String(f());") 
-        .gives("String.valueOf(f());");
+        .gives("new String(f());").gives("String.valueOf(f());");
   }
 
   @Test public void vanilla() {
@@ -173,19 +172,19 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla02() {
-     final TrimmingOperand a = trimmingOf("new Integer(3)");
+    final TrimmingOperand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
-     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
+    final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
     if (wrap.equals(trim.apply(new Trimmer(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
   @Test public void vanilla03() {
-     final TrimmingOperand a = trimmingOf("new Integer(3)");
-     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final TrimmingOperand a = trimmingOf("new Integer(3)");
+    final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-     final Document d = new Document(wrap);
+    final Document d = new Document(wrap);
     assert d != null;
     final Document $ = trim.rewrite(new Trimmer(), u, d);
     assert $ != null;
@@ -194,16 +193,16 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla04() {
-     final TrimmingOperand o = trimmingOf("new Integer(3)");
-     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final TrimmingOperand o = trimmingOf("new Integer(3)");
+    final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-     final IDocument d = new Document(wrap);
+    final IDocument d = new Document(wrap);
     assert d != null;
-     final Trimmer a = new Trimmer();
+    final Trimmer a = new Trimmer();
     try {
       a.createRewrite(u).rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
@@ -212,21 +211,21 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla05() {
-     final TrimmingOperand o = trimmingOf("new Integer(3)");
-     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final TrimmingOperand o = trimmingOf("new Integer(3)");
+    final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-     final IDocument d = new Document(wrap);
+    final IDocument d = new Document(wrap);
     assert d != null;
-     final Trimmer a = new Trimmer();
+    final Trimmer a = new Trimmer();
     try {
-       final IProgressMonitor pm = wizard.nullProgressMonitor;
+      final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;

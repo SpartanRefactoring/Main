@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.utils.Example.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -23,12 +24,12 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     return $;
   }
 
-  @Override protected boolean prerequisite( final DoStatement ¢) {
+  @Override protected boolean prerequisite(final DoStatement ¢) {
     final Statement $ = ¢.getBody();
     return iz.block($) && iz.emptyBlock(az.block($));
   }
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] {
         convert("do{}while(x());y();z();")//
             .to("do;while(x());y();z();"), //
@@ -37,7 +38,7 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     };
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final DoStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final DoStatement __) {
     return "replaces a do statment followed by an empty block with a for statment followed by a semicolon";
   }
 }

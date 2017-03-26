@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -17,25 +18,25 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -875185107180196417L;
 
-   private static String asString( final BooleanLiteral ¢) {
+  private static String asString(final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
 
-   private static Expression replacement(final Expression x,  final BooleanLiteral l) {
+  private static Expression replacement(final Expression x, final BooleanLiteral l) {
     return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
 
-   private static Expression replacement( final Expression x, final Expression $) {
+  private static Expression replacement(final Expression x, final Expression $) {
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 
-  @Override  public String description(final MethodInvocation ¢) {
+  @Override public String description(final MethodInvocation ¢) {
     return "Replace valueOf (" + onlyArgument(¢) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(¢)));
   }
 
   @Override public Expression replacement(final MethodInvocation ¢) {
     if (iz.statement(¢.getParent()))
-        return null;
+      return null;
     return !"valueOf".equals(step.name(¢).getIdentifier()) ? null : replacement(step.receiver(¢), onlyArgument(¢));
   }
 }

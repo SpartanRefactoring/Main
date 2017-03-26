@@ -10,6 +10,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -35,14 +36,14 @@ public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<If
     return "Consolidate two 'if' statements with identical body";
   }
 
-  @Override protected ASTRewrite go( final ASTRewrite r,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-     final IfStatement $ = az.ifStatement(nextStatement);
+    final IfStatement $ = az.ifStatement(nextStatement);
     if ($ == null || !iz.vacuousElse($))
       return null;
-     final Statement then = then(s);
-     final List<Statement> ss1 = extract.statements(then);
+    final Statement then = then(s);
+    final List<Statement> ss1 = extract.statements(then);
     return !wizard.same(ss1, extract.statements(then($))) || !iz.sequencer(last(ss1)) ? null
         : Tricks.replaceTwoStatements(r, s,
             make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), $.getExpression()).to(CONDITIONAL_OR)),

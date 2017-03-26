@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -28,9 +29,9 @@ public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
     return iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 
-  @Override  public Tip tip( final IfStatement s) {
+  @Override public Tip tip(final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         s.setElseStatement(null);
         r.remove(s, g);
       }

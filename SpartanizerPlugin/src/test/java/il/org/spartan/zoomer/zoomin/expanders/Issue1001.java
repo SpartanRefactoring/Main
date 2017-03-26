@@ -80,7 +80,7 @@ public class Issue1001 {
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings({ "unused", "TooBroadScope" })
   public static class Issue1001Aux extends MetaFixture {
-     public static Issue1001Aux instance() {
+    public static Issue1001Aux instance() {
       return new Issue1001Aux();
     }
 

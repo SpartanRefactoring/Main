@@ -10,6 +10,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,7 +32,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return whether the parenthesis can be removed and false otherwise */
-  private static boolean canRemove( final InfixExpression x) {
+  private static boolean canRemove(final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
         || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
@@ -40,21 +41,21 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return "Remove redundant parenthesis";
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return description() + " around " + trivia.gist(¢);
   }
 
-  @Override public Expression replacement( final InfixExpression x) {
+  @Override public Expression replacement(final InfixExpression x) {
     if (operator(x) != wizard.PLUS2)
       return null;
-     final List<Expression> es = hop.operands(x);
+    final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for ( final Integer i : range.to(es.size())) {
+    for (final Integer i : range.to(es.size())) {
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
       if (iz.parenthesizedExpression(es.get(ii))) {
-         Expression ¢ = extract.core(es.get(ii));
+        Expression ¢ = extract.core(es.get(ii));
         for (; iz.parenthesizedExpression(¢); replace(es, ¢, ii))
           ¢ = expression(az.parenthesizedExpression(¢));
         if (iz.infixExpression(¢) && ii != 0 && b && !canRemove(az.infixExpression(¢)) || iz.conditionalExpression(¢) || iz.lambdaExpression(¢))

@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.engine.type.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-30 */
 public final class NumericLiteralClassifier {
-   public static Primitive.Certain of( final String literal) {
+  public static Primitive.Certain of(final String literal) {
     return literal == null ? null : new NumericLiteralClassifier(literal).type();
   }
 
@@ -21,7 +21,7 @@ public final class NumericLiteralClassifier {
 
   /** @return the type of this literal.
    * @see PrudentType */
-   public Primitive.Certain type() {
+  public Primitive.Certain type() {
     if (inner.charAt(0) == '\'')
       return Primitive.Certain.CHAR;
     switch (inner.charAt(inner.length() - 1)) {

@@ -1,16 +1,17 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
-
-import static il.org.spartan.utils.Example.*;
 
 /** Convert : {@code
  * if(condition) block1 else block2
@@ -21,7 +22,7 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3459237093161980438L;
 
-  @Override  public ASTNode replacement( final IfStatement s) {
+  @Override public ASTNode replacement(final IfStatement s) {
     if (s == null || iz.block(then(s)) && elze(s) == null || iz.block(then(s)) && elze(s) != null && iz.block(elze(s)))
       return null;
     final IfStatement $ = copy.of(s);
@@ -37,20 +38,18 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     $.setElseStatement(b);
     return $;
   }
-  
+
   @Override public Example[] examples() {
     return new Example[] {
         convert("if(f()) g();")//
-        .to("if(f()) {g();}"),
+            .to("if(f()) {g();}"),
         convert("if(f()) g(); else h();")//
-          .to("if(f()) {g();} else {h();}"),
+            .to("if(f()) {g();} else {h();}"),
         convert("if(x) {a();b();} else h()")//
-          .to("if(x) {a();b();} else {h()}")
-    }
-    ;
+            .to("if(x) {a();b();} else {h()}") };
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return null;
   }
 }
