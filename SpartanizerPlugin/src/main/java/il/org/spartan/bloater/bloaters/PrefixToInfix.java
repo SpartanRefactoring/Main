@@ -1,5 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -11,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert {@code
@@ -25,6 +28,13 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x3465E06532ABDE60L;
 
+  @Override @NotNull public Example[] examples() {
+    return new Example[] { 
+        convert("++i;").to("i += 1;"),
+        convert("--i;").to("i -= 1"),
+    };
+  }
+  
   @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
