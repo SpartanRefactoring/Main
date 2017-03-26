@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -14,7 +13,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("static-method")
 public class IntTest {
   @Test public void testInner() {
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     $.inner = 4;
     assert $.inner() == Integer.valueOf(4);
     $.inner += 3;

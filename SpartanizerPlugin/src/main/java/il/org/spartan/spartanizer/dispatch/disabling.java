@@ -4,8 +4,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -36,10 +34,10 @@ public interface disabling {
    * @param n an {@link ASTNode}
    * @author Ori Roth
    * @since 2016/05/13 */
-  static void scan(@NotNull final ASTNode n) {
+  static void scan( final ASTNode n) {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        @Nullable final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
+         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.specificallyDisabled(¢2))
           return true;
         disabling.disable(¢2);
@@ -51,7 +49,7 @@ public interface disabling {
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
    * @param d disabled {@link BodyDeclaration} */
-  static void disable(@NotNull final BodyDeclaration d) {
+  static void disable( final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (¢ instanceof BodyDeclaration && disabling.specificallyEnabled((BodyDeclaration) ¢)) {
@@ -77,7 +75,7 @@ public interface disabling {
     return !disabling.ByComment.specificallyDisabled(¢) && disabling.ByComment.specificallyEnabled(¢);
   }
 
-  static boolean hasJavaDocIdentifier(@Nullable final BodyDeclaration d, final String... ids) {
+  static boolean hasJavaDocIdentifier( final BodyDeclaration d, final String... ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 
@@ -89,7 +87,7 @@ public interface disabling {
         .orElse(Boolean.FALSE).booleanValue();
   }
 
-  static boolean contains(@NotNull final String s, final String... ids) {
+  static boolean contains( final String s, final String... ids) {
     return Stream.of(ids).anyMatch(s::contains);
   }
 

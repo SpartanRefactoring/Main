@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,11 +26,11 @@ public class Issue1153 {
   }
 
   @Test public void b2() {
-    @NotNull final Class<FieldDeclaration> c = FieldDeclaration.class;
+     final Class<FieldDeclaration> c = FieldDeclaration.class;
     assert c != null;
-    @NotNull final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
+     final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
     assert x != null;
-    @NotNull final Toolbox toolbox = new Toolbox();
+     final Toolbox toolbox = new Toolbox();
     assert toolbox != null;
     toolbox.add(c, x);
   }

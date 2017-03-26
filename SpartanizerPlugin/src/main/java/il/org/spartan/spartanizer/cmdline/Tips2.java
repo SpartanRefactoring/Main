@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.*;
 import java.util.stream.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -60,7 +58,7 @@ public final class Tips2 {
 
   /** @param name the name of the applicator
    * @return an instance of the class */
-  public static AbstractGUIApplicator get(@NotNull final String name) {
+  public static AbstractGUIApplicator get( final String name) {
     assert name != null;
     return map.get(name);
   }

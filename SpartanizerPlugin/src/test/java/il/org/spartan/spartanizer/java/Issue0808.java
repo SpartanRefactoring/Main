@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.java;
 import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -18,7 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 16-11-9 * */
 public class Issue0808 {
   @Test @SuppressWarnings("static-method") public void test01() {
-    @Nullable final Expression ex = az.numberLiteral(wizard.ast("5"));
+     final Expression ex = az.numberLiteral(wizard.ast("5"));
     assertNotEquals(ex, new Term(true, copy.of(ex)).asExpression());
   }
 

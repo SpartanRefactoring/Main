@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -17,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class Constant extends NanoPatternTipper<FieldDeclaration> {
   private static final long serialVersionUID = 0x2564816B91861EE6L;
 
-  @Override public boolean canTip(@NotNull final FieldDeclaration ¢) {
+  @Override public boolean canTip( final FieldDeclaration ¢) {
     return iz.constant(¢)//
         && (iz.primitiveType(type(¢))//
             || iz.stringType(type(¢))//
@@ -25,9 +23,9 @@ public final class Constant extends NanoPatternTipper<FieldDeclaration> {
     ;
   }
 
-  @Override @NotNull public Tip pattern(@NotNull final FieldDeclaration ¢) {
+  @Override  public Tip pattern( final FieldDeclaration ¢) {
     return new Tip(description(), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.remove(¢, g);
       }
     };

@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,7 +21,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -5815591308727978558L;
 
-  @NotNull private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
+   private static ForStatement buildForWhithoutFirstLastStatement( final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
     return $;
@@ -33,7 +31,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return copy.of(body(¢));
   }
 
-  private static boolean fitting(@Nullable final ForStatement ¢) {
+  private static boolean fitting( final ForStatement ¢) {
     return ¢ != null//
         && !iz.containsContinueStatement(step.body(¢))//
         && hasFittingUpdater(¢)//
@@ -44,21 +42,21 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
-    @Nullable final Block bodyBlock = az.block(step.body(¢));
+     final Block bodyBlock = az.block(step.body(¢));
     if (!iz.updating(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2 || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
-    @Nullable final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
+     final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
-    @NotNull final Expression e = expression(updater);
+     final Expression e = expression(updater);
     final PrefixExpression $ = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
-    @Nullable final Assignment a = az.assignment(e);
+     final Assignment a = az.assignment(e);
     return updaterDeclaredInFor(¢,
         $ != null ? az.simpleName(operand($)) : post != null ? az.simpleName(operand(post)) : a != null ? az.simpleName(left(a)) : null);
   }
 
-  public static boolean bodyDeclaresElementsOf(@NotNull final ASTNode n) {
-    @Nullable final Block $ = az.block(n.getParent());
+  public static boolean bodyDeclaresElementsOf( final ASTNode n) {
+     final Block $ = az.block(n.getParent());
     return $ != null && extract.fragments($).stream().anyMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
   }
 
@@ -67,7 +65,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static void setUpdaters(final ForStatement $) {
-    @NotNull final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
+     final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
     updaters($).clear();
     updaters($).add(updaterFromBody($));
     updaters($).addAll(oldUpdaters);
@@ -81,15 +79,15 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return copy.of(expression(az.expressionStatement(lastStatement(¢))));
   }
 
-  @Override @NotNull public String description(final ForStatement ¢) {
+  @Override  public String description(final ForStatement ¢) {
     return "Convert loop: 'for(?;" + expression(¢) + ";?)' to something else (buggy)";
   }
 
-  @Override public boolean prerequisite(@Nullable final ForStatement ¢) {
+  @Override public boolean prerequisite( final ForStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
-  @Override @Nullable public ASTNode replacement(final ForStatement ¢) {
+  @Override  public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
   }
 }

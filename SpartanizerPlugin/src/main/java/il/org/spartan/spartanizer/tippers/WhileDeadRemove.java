@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -16,15 +14,15 @@ public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.EmptyCycles {
   private static final long serialVersionUID = -1440560931678543445L;
 
-  @Override protected boolean prerequisite(@NotNull final WhileStatement ¢) {
+  @Override protected boolean prerequisite( final WhileStatement ¢) {
     return sideEffects.free(¢);
   }
 
-  @Override @NotNull public String description(final WhileStatement ¢) {
+  @Override  public String description(final WhileStatement ¢) {
     return "Remove :" + trivia.gist(¢);
   }
 
-  @Override public ASTNode replacement(@NotNull final WhileStatement ¢) {
+  @Override public ASTNode replacement( final WhileStatement ¢) {
     return ¢.getAST().newBlock();
   }
 }

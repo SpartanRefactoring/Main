@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -18,7 +16,7 @@ public class PojoConstructor extends JavadocMarkerNanoPattern {
         && notEmpty(¢);
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return "Pojo";
   }
 }

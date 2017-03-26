@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
@@ -50,7 +48,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
         .containsAll(parametersNames(¢));
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return "DefaultArguments";
   }
 }

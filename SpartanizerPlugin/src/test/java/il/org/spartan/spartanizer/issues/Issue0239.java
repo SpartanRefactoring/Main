@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -82,20 +81,20 @@ public class Issue0239 {
   }
 
   @Test public void a$04() {
-    @Nullable final Block block = az.block(into.s( //
+     final Block block = az.block(into.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //
             "  f1(i1,i2);\n"//
     )); //
     assert block != null;
     assert count.nodes(block) > 10;
-    @NotNull final List<Statement> statements = statements(block);
+     final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;
-    @NotNull final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
+     final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
     assert lastIn(nextStatement, statements);
-    @NotNull final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
+     final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
     assert f != null;
-    @Nullable final Statement currentStatement = extract.containingStatement(f);
+     final Statement currentStatement = extract.containingStatement(f);
     assert currentStatement != null;
     assert penultimateIn(currentStatement, statements);
     final SimpleName name = f.getName();

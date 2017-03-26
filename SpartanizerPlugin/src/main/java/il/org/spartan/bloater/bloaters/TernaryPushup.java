@@ -3,8 +3,6 @@ package il.org.spartan.bloater.bloaters;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -26,24 +24,24 @@ public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
   private static final long serialVersionUID = -3885811005387698058L;
 
   @Override public ASTNode replacement(final InfixExpression x) {
-    @Nullable final Expression l = extract.core(left(x)), r = extract.core(right(x));
+     final Expression l = extract.core(left(x)), r = extract.core(right(x));
     if (iz.conditionalExpression(r)) {
-      @Nullable final ConditionalExpression $ = az.conditionalExpression(r);
+       final ConditionalExpression $ = az.conditionalExpression(r);
       return subject.pair(subject.pair(l, then($)).to(operator(x)), subject.pair(l, elze($)).to(operator(x))).toCondition(expression($));
     }
-    @Nullable final ConditionalExpression ll = az.conditionalExpression(l);
+     final ConditionalExpression ll = az.conditionalExpression(l);
     return subject.pair(subject.pair(then(ll), r).to(operator(x)), subject.pair(elze(ll), r).to(operator(x))).toCondition(expression(ll));
   }
 
-  @Override protected boolean prerequisite(@Nullable final InfixExpression x) {
+  @Override protected boolean prerequisite( final InfixExpression x) {
     if (x == null)
       return false;
-    @Nullable final Expression $ = extract.core(left(x)), r = extract.core(right(x));
+     final Expression $ = extract.core(left(x)), r = extract.core(right(x));
     return iz.conditionalExpression(r) && !haz.sideEffects(expression(az.conditionalExpression(r)))
         || iz.conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override  public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "";
   }
 }
