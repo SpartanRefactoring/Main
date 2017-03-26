@@ -186,8 +186,7 @@ public class Toolbox {
             new AssignmentToPrefixIncrement(), //
             new AssignmentUpdateAndSameUpdate(), //
             new AssignmentAndAssignmentOfSameVariable(), //
-            new PlusAssignToPostfix(),
-            null) //
+            new PlusAssignToPostfix(), null) //
         .add(Block.class, //
             new BlockSimplify(), //
             new BlockSingleton(), //

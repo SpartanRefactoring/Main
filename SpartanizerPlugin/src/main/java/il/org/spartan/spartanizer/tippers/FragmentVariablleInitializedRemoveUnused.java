@@ -30,7 +30,7 @@ public final class FragmentVariablleInitializedRemoveUnused extends LocalVariabl
     return "Remove unused variable: " + trivia.gist(¢);
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     wizard.eliminate(object(), r, g);
     return r;
   }
