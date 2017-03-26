@@ -423,7 +423,7 @@ public final class EnvironmentTests {
           /**/}
       }
 
-      @Override @Nullable public Iterator<Type> iterator() {
+      @Override  public Iterator<Type> iterator() {
         return new Iterator<Type>() {
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
 
@@ -458,7 +458,7 @@ public final class EnvironmentTests {
         l: for (;;)
           for (;;)
             if (new Oompa_Loompa(l) {
-              @Override Oompa_Loompa Oompa_Loompa(@Nullable final Oompa_Loompa ¢) {
+              @Override Oompa_Loompa Oompa_Loompa( final Oompa_Loompa ¢) {
                 return ¢ != null ? super.Oompa_Loompa(¢) : Oompa_Loompa.this.Oompa_Loompa(¢);
               }
             }.Oompa_Loompa(l) != null)

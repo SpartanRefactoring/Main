@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -116,8 +114,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
 
   private static InfixExpression replacePrefix( final InfixExpression x, final int i) {
     assert x.getOperator() == PLUS2;
-    @Nullable final List<Expression> $ = extract.allOperands(x);
-    @Nullable final StringLiteral l = az.stringLiteral(first($));
+     final List<Expression> $ = extract.allOperands(x);
+     final StringLiteral l = az.stringLiteral(first($));
     assert l != null;
     assert l.getLiteralValue().length() >= i;
     replaceFirst($, getSuffix(l.getLiteralValue(), i, x));
@@ -126,8 +124,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
 
   private static InfixExpression replaceSuffix( final InfixExpression x, final int i) {
     assert x.getOperator() == PLUS2;
-    @Nullable final List<Expression> $ = extract.allOperands(x);
-    @Nullable final StringLiteral l = az.stringLiteral(last($));
+     final List<Expression> $ = extract.allOperands(x);
+     final StringLiteral l = az.stringLiteral(last($));
     assert l != null;
     assert l.getLiteralValue().length() >= i : fault.dump() + //
         "\n x = " + x + //
@@ -158,7 +156,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static Expression simplify( final Expression condition,  final StringLiteral then,  final InfixExpression elze) {
     final String $ = then.getLiteralValue();
     assert elze.getOperator() == PLUS2;
-    @Nullable final List<Expression> elzeOperands = extract.allOperands(elze);
+     final List<Expression> elzeOperands = extract.allOperands(elze);
     if (iz.stringLiteral(first(elzeOperands))) {
       final int commonPrefixIndex = firstDifference($, az.stringLiteral(first(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
@@ -187,9 +185,9 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static Expression simplifyStrings( final InfixExpression then,  final InfixExpression elze,
        final Expression condition) {
     assert then.getOperator() == PLUS2;
-    @Nullable final List<Expression> thenOperands = extract.allOperands(then);
+     final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == PLUS2;
-    @Nullable final List<Expression> elzeOperands = extract.allOperands(elze);
+     final List<Expression> elzeOperands = extract.allOperands(elze);
     if (iz.stringLiteral(first(thenOperands)) && iz.stringLiteral(first(elzeOperands))) {
       final String $ = az.stringLiteral(first(thenOperands)).getLiteralValue();
       final int commonPrefixIndex = firstDifference($, az.stringLiteral(first(elzeOperands)).getLiteralValue());
@@ -216,7 +214,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     return "Replace ternarization with more clever one";
   }
 
-  @Override @Nullable public Expression replacement(final ConditionalExpression ¢) {
+  @Override  public Expression replacement(final ConditionalExpression ¢) {
     return replacement(expression(¢), then(¢), elze(¢));
   }
 }

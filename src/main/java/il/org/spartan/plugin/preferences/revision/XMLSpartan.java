@@ -13,7 +13,6 @@ import javax.xml.transform.stream.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -60,7 +59,7 @@ public class XMLSpartan {
    * @return enabled tippers for the project */
    public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
      final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
-    @Nullable final Document d = getFile(p);
+     final Document d = getFile(p);
     if (d == null)
       return $;
     final NodeList ns = d.getElementsByTagName(TIPPER);
@@ -93,7 +92,7 @@ public class XMLSpartan {
    * corrupted XML file), full tippers collection is returned.
    * @param p JD
    * @return enabled tippers for project */
-  @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(@Nullable final IProject p) {
+  @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers( final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
         .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
@@ -110,7 +109,7 @@ public class XMLSpartan {
    * @param p JD
    * @param ss enabled tippers by name */
   public static void updateEnabledTippers( final IProject p,  final Collection<String> ss) {
-    @Nullable final Document d = getFile(p);
+     final Document d = getFile(p);
     if (d == null)
       return;
     final NodeList l = d.getElementsByTagName(TIPPER);
@@ -144,7 +143,7 @@ public class XMLSpartan {
    * @throws IOException
    * @throws CoreException
    * @return XML file for project */
-  @Nullable private static Document getFileInner(@Nullable final IProject p)
+   private static Document getFileInner( final IProject p)
       throws CoreException, ParserConfigurationException, SAXException, IOException {
     if (p == null || !p.exists() || !p.isOpen())
       return null;
@@ -158,14 +157,14 @@ public class XMLSpartan {
     if (b == null)
       return null;
     if (!fl.exists()) {
-      @Nullable final Document i = initialize(b.newDocument());
+       final Document i = initialize(b.newDocument());
       if (i == null)
         return null;
       fl.create(new ByteArrayInputStream("".getBytes()), true, new NullProgressMonitor());
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-    @Nullable Document $ = b.parse(fl.getContents());
+     Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
@@ -184,7 +183,7 @@ public class XMLSpartan {
    * tippers.
    * @param d JD
    * @return given document */
-  @Nullable private static Document initialize(@Nullable final Document $) {
+   private static Document initialize( final Document $) {
     if ($ == null)
       return null;
     if ($.getElementById(BASE) != null)
@@ -204,8 +203,8 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
-  private static void createEnabledNodeChild(@Nullable final Document d, @Nullable final Tipper<?> t, @Nullable final Collection<String> seen,
-      @Nullable final Node e) {
+  private static void createEnabledNodeChild( final Document d,  final Tipper<?> t,  final Collection<String> seen,
+       final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
      final String n = t.nanoName();

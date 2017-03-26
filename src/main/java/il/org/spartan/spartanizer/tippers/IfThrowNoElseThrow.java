@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,7 +25,7 @@ public final class IfThrowNoElseThrow extends GoToNextStatement<IfStatement>//
   private static final long serialVersionUID = 0x7B2F65029551C18BL;
 
   static Expression getThrowExpression(final Statement ¢) {
-    @Nullable final ThrowStatement $ = extract.throwStatement(¢);
+     final ThrowStatement $ = extract.throwStatement(¢);
     return $ == null ? null : extract.core($.getExpression());
   }
 

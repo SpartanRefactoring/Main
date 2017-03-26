@@ -4,8 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,14 +20,14 @@ import il.org.spartan.utils.*;
 public interface theSpartanizer {
   static Tipper<?> firstTipper( final String from) {
      final Wrapper<Tipper<?>> $ = new Wrapper<>();
-    @Nullable final ASTNode n = wizard.ast(from);
+     final ASTNode n = wizard.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
           return searching && go(toolbox.firstTipper(¢));
         }
 
-        <N extends ASTNode> boolean go(@Nullable final Tipper<N> ¢) {
+        <N extends ASTNode> boolean go( final Tipper<N> ¢) {
           if (¢ == null)
             return true;
           $.set(¢);
@@ -48,16 +46,16 @@ public interface theSpartanizer {
   @SuppressWarnings("hiding") static String once( final String from) {
      final Trimmer trimmer = new Trimmer(toolbox);
      final IDocument $ = new Document(from);
-    @Nullable final ASTNode root = wizard.ast(from);
+     final ASTNode root = wizard.ast(from);
     if (root != null)
       root.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go( final N n) {
           if (!searching)
             return false;
-          @Nullable final Tipper<N> t = safeFirstTipper(n);
+           final Tipper<N> t = safeFirstTipper(n);
           if (t == null)
             return true;
-          @Nullable final Tip $ = t.tip(n);
+           final Tip $ = t.tip(n);
           if ($ == null)
             return true;
           apply($, n);
@@ -89,7 +87,7 @@ public interface theSpartanizer {
     }
   }
 
-  @Nullable static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
+   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
     } catch ( final Exception ¢) {
@@ -97,7 +95,7 @@ public interface theSpartanizer {
     }
   }
 
-  static boolean same(@Nullable final String s1, @Nullable final String s2) {
+  static boolean same( final String s1,  final String s2) {
     return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 

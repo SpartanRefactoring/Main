@@ -10,8 +10,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -36,7 +34,7 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
   // TODO: Yuval Simon: this is one of the worst bits of code I have seen.
   // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
   // transformation --yg
-  @Override @Nullable public ASTNode replacement( final SwitchStatement s) {
+  @Override  public ASTNode replacement( final SwitchStatement s) {
      final List<switchBranch> bs = switchBranch.intoBranches(s);
     if (bs.size() != 2)
       return null;
@@ -58,8 +56,8 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     return $;
   }
 
-  @Nullable private static InfixExpression makeFrom(final SwitchStatement s,  final Iterable<SwitchCase> cs) {
-    @Nullable InfixExpression $ = null;
+   private static InfixExpression makeFrom(final SwitchStatement s,  final Iterable<SwitchCase> cs) {
+     InfixExpression $ = null;
     for ( final SwitchCase c : cs) {
       if (c.isDefault())
         continue;

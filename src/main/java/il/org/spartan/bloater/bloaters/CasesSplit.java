@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -50,7 +48,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
-    @Nullable SwitchCase $ = null;
+     SwitchCase $ = null;
     for (final Statement ¢ : statements(x)) // TOUGH
       if (iz.sequencerComplex(¢))
         $ = null;

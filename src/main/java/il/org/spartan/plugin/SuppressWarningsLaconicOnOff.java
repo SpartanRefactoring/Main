@@ -15,8 +15,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -100,7 +98,7 @@ public enum SuppressWarningsLaconicOnOff {
 
   /** @param j a {@link JavaDoc}
    * @return comment's text, without eneblers identifiers. */
-  static String enablersRemoved(@Nullable final Javadoc j) {
+  static String enablersRemoved( final Javadoc j) {
     String $ = j == null ? "/***/" : (j + "").trim();
     for ( final String e : getEnablers($)) {
        final String qe = Pattern.quote(e);
@@ -177,7 +175,7 @@ public enum SuppressWarningsLaconicOnOff {
     });
   }
 
-  private static void unEnable( final ASTRewrite $, @Nullable final Javadoc j) {
+  private static void unEnable( final ASTRewrite $,  final Javadoc j) {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);
   }

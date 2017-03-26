@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -68,7 +66,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢) || iz.arrayInitializer(¢) && suppressing(az.arrayInitializer(¢));
   }
 
-  private static boolean suppressing(@Nullable final NormalAnnotation a) {
+  private static boolean suppressing( final NormalAnnotation a) {
     return a != null && values(a).stream().anyMatch(λ -> iz.identifier("value", λ.getName()) && isUnused(λ.getValue()));
   }
 
@@ -84,12 +82,12 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Override @Nullable public ASTNode replacement( final SingleVariableDeclaration ¢) {
+  @Override  public ASTNode replacement( final SingleVariableDeclaration ¢) {
     return replacement(¢, null);
   }
 
-  @Override @SuppressWarnings("unused") public ASTNode replacement( final SingleVariableDeclaration $, @Nullable final ExclusionManager m) {
-    @Nullable final MethodDeclaration method = getMethod($);
+  @Override @SuppressWarnings("unused") public ASTNode replacement( final SingleVariableDeclaration $,  final ExclusionManager m) {
+     final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)
       return null;
     for ( final SingleVariableDeclaration ¢ : parameters(method))

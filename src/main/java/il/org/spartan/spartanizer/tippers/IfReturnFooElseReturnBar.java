@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -28,7 +26,7 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     return "Replace if with a return of a conditional statement";
   }
 
-  @Override public boolean prerequisite(@Nullable final IfStatement ¢) {
+  @Override public boolean prerequisite( final IfStatement ¢) {
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 

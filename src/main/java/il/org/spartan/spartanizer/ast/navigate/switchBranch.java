@@ -10,8 +10,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -142,8 +140,8 @@ public class switchBranch {
    @SuppressWarnings("null") public static List<switchBranch> intoBranches( final SwitchStatement n) {
      final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
-    @Nullable List<SwitchCase> c = null;
-    @Nullable List<Statement> s = null;
+     List<SwitchCase> c = null;
+     List<Statement> s = null;
      final List<switchBranch> $ = new ArrayList<>();
     boolean nextBranch = true;
     for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
@@ -193,15 +191,15 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
 
-  @Nullable public static Statement removeBreakSequencer(@Nullable final Statement s) {
+   public static Statement removeBreakSequencer( final Statement s) {
     if (s == null)
       return null;
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
     final AST a = s.getAST();
-    @Nullable Statement $ = null;
+     Statement $ = null;
     if (iz.ifStatement(s)) {
-      @Nullable final IfStatement t = az.ifStatement(s);
+       final IfStatement t = az.ifStatement(s);
       $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t))).toIf(copy.of(step.expression(t)));
     } else if (!iz.block(s)) {
       if (iz.breakStatement(s) && iz.block(s.getParent()))
@@ -217,7 +215,7 @@ public class switchBranch {
    public static List<Statement> removeBreakSequencer( final Iterable<Statement> ss) {
      final List<Statement> $ = new ArrayList<>();
     for ( final Statement ¢ : ss) {
-      @Nullable final Statement s = removeBreakSequencer(¢);
+       final Statement s = removeBreakSequencer(¢);
       if (s != null)
         $.add(s);
     }

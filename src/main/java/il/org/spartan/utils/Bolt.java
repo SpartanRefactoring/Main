@@ -2,10 +2,8 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
-import org.jetbrains.annotations.*;
-
 public interface Bolt<T> {
-  @Nullable default T self() {
+   default T self() {
     return null;
   }
 

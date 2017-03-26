@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
@@ -17,12 +15,12 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class StatementBottomUp<R> extends Reduce<R> {
-  @Nullable protected R map( final AssertStatement ¢) {
+   protected R map( final AssertStatement ¢) {
     return atomic(¢.getExpression(), ¢.getMessage());
   }
 
-  @Nullable protected R map(final Block b) {
-    @Nullable R $ = reduce();
+   protected R map(final Block b) {
+     R $ = reduce();
     for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
@@ -32,7 +30,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return atomic(¢.getLabel());
   }
 
-  @Nullable protected R map(final ConstructorInvocation ¢) {
+   protected R map(final ConstructorInvocation ¢) {
     return reduceExpressions(arguments(¢));
   }
 
@@ -44,7 +42,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return map(¢.getBody());
   }
 
-  @Nullable protected R map(@SuppressWarnings("unused") final EmptyStatement __) {
+   protected R map(@SuppressWarnings("unused") final EmptyStatement __) {
     return atomic();
   }
 
@@ -52,7 +50,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return map(¢.getBody());
   }
 
-  @Nullable protected R map(@SuppressWarnings("unused") final Expression __) {
+   protected R map(@SuppressWarnings("unused") final Expression __) {
     return reduce();
   }
 
@@ -60,11 +58,11 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return atomic(¢.getExpression());
   }
 
-  @Nullable protected R map(final IfStatement ¢) {
+   protected R map(final IfStatement ¢) {
     return reduce(map(expression(¢)), map(then(¢)), map(elze(¢)));
   }
 
-  @Nullable protected R map( final LabeledStatement ¢) {
+   protected R map( final LabeledStatement ¢) {
     return reduce(map(¢.getLabel()), map(¢.getBody()));
   }
 
@@ -72,7 +70,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return atomic(¢.getExpression());
   }
 
-  @Nullable public final R map(@Nullable final Statement ¢) {
+   public final R map( final Statement ¢) {
     if (¢ == null)
       return reduce();
     switch (¢.getNodeType()) {
@@ -124,27 +122,27 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce(fragments(¢));
   }
 
-  @Nullable protected R map( final SuperConstructorInvocation ¢) {
+   protected R map( final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  @Nullable protected R map(final SuperMethodInvocation ¢) {
+   protected R map(final SuperMethodInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
-  @Nullable protected R reduceExpressions(@Nullable final Iterable<Expression> xs) {
-    @Nullable R $ = reduce();
+   protected R reduceExpressions( final Iterable<Expression> xs) {
+     R $ = reduce();
     if (xs != null)
       for (final Expression ¢ : xs)
         $ = reduce($, map(¢));
     return $;
   }
 
-  @Nullable protected R map( final SynchronizedStatement ¢) {
+   protected R map( final SynchronizedStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 
-  @Nullable protected R map( final TryStatement ¢) {
+   protected R map( final TryStatement ¢) {
     return reduce(//
         reduceResources(¢), //
         map(¢.getBody()), //
@@ -173,7 +171,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce();
   }
 
-  @Nullable protected R map( final WhileStatement ¢) {
+   protected R map( final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
 
@@ -181,7 +179,7 @@ public abstract class StatementBottomUp<R> extends Reduce<R> {
     return reduce();
   }
 
-  @Nullable protected R atomic(final Expression... ¢) {
+   protected R atomic(final Expression... ¢) {
     return reduce(atom(), reduceExpressions(as.list(¢)));
   }
 }

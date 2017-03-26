@@ -11,7 +11,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -1386,7 +1385,7 @@ public final class Version230 {
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
-    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d,e)"));
   }
@@ -1406,7 +1405,7 @@ public final class Version230 {
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
-    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
+     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) s).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("f(a,b,c) * f(a,b,c,d)"));
   }
@@ -2890,7 +2889,7 @@ public final class Version230 {
     assert w != null;
     assert w.check(e);
     assert w.check(e);
-    @Nullable final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
+     final ASTNode replacement = ((ReplaceCurrentNode<InfixExpression>) w).replacement(e);
     assert replacement != null;
     azzert.that(replacement + "", is("a != null"));
   }

@@ -5,8 +5,6 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -88,9 +86,9 @@ public final class Builder extends IncrementalProjectBuilder {
     for (final AbstractGUIApplicator s : Tips.all()) {
       if (s instanceof Trimmer)
         ((Trimmer) s).useProjectPreferences();
-      for (@Nullable final Tip ¢ : s.collectSuggestions(u)) // NANO
+      for ( final Tip ¢ : s.collectSuggestions(u)) // NANO
         if (¢ != null) {
-          @Nullable final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
+           final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
         }
     }
@@ -100,7 +98,7 @@ public final class Builder extends IncrementalProjectBuilder {
     return SPARTANIZATION_SHORT_PREFIX;
   }
 
-  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, @Nullable final IProgressMonitor m)
+  @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __,  final IProgressMonitor m)
       throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);

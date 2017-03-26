@@ -8,8 +8,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -118,9 +116,9 @@ public enum collect {
     };
   }
 
-  @Nullable public static Collector usesOf(final String s) {
+   public static Collector usesOf(final String s) {
     return new Collector(s) {
-      @Override @Nullable public List<SimpleName> in(@SuppressWarnings("unused") final ASTNode... __) {
+      @Override  public List<SimpleName> in(@SuppressWarnings("unused") final ASTNode... __) {
         return null;
       }
 
@@ -463,7 +461,7 @@ public enum collect {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2015-09-06 */
   public abstract static class Collector {
-    @Nullable final SimpleName name;
+     final SimpleName name;
     final String stringName;
 
     Collector(final SimpleName name) {
@@ -484,7 +482,7 @@ public enum collect {
       stringName = name;
     }
 
-    @Nullable public abstract List<SimpleName> in(ASTNode... ns);
+     public abstract List<SimpleName> in(ASTNode... ns);
   }
 
   /** An auxiliary class which makes it possible to use an easy invocation

@@ -10,8 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -49,7 +47,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   @Override public Expression replacement( final InfixExpression x) {
     if (operator(x) != wizard.PLUS2)
       return null;
-    @Nullable final List<Expression> es = hop.operands(x);
+     final List<Expression> es = hop.operands(x);
     boolean isString = false;
     for ( final Integer i : range.to(es.size())) {
       final int ii = i.intValue();

@@ -5,7 +5,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 /** A class to search in the descendants of a given node. Based on
  * {@link yieldAncestors}
@@ -55,7 +54,7 @@ public abstract class descendants<N extends ASTNode> {
       return $;
     }
 
-    @Override  public List<N> inclusiveFrom(@Nullable final ASTNode n) {
+    @Override  public List<N> inclusiveFrom( final ASTNode n) {
        final List<N> $ = new ArrayList<>();
       if (n == null)
         return $;

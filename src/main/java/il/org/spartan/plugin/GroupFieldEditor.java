@@ -7,8 +7,6 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
@@ -39,7 +37,7 @@ public final class GroupFieldEditor extends FieldEditor {
    *        no label, pass {@code null}
    * @param fieldEditorParent the widget's parent, usually
    *        {@link FieldEditorPreferencePage#getFieldEditorParent()} */
-  public GroupFieldEditor(@Nullable final String labelText, final Composite fieldEditorParent) {
+  public GroupFieldEditor( final String labelText, final Composite fieldEditorParent) {
      final String title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
     numColumns = 0;

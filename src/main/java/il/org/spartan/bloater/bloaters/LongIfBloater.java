@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,10 +20,10 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1472927802038098123L;
 
-  @Override @Nullable public ASTNode replacement( final IfStatement ¢) {
+  @Override  public ASTNode replacement( final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
-    @Nullable final InfixExpression $ = az.infixExpression(¢.getExpression());
+     final InfixExpression $ = az.infixExpression(¢.getExpression());
     final IfStatement newThen = subject.pair(then(¢), null).toIf(!$.hasExtendedOperands() ? $.getRightOperand() : getReducedIEFromIEWithExtOp($));
     final Statement oldElse = ¢.getElseStatement();
     if (oldElse == null)

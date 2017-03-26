@@ -11,8 +11,6 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -50,11 +48,11 @@ public enum Analyze {
     summarizeMethodStatistics(outputDir);
   }
 
-  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
+   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
@@ -68,7 +66,7 @@ public enum Analyze {
   }
 
   private static void summarizeMethodStatistics(final String outputDir) {
-    @Nullable final CSVStatistics report = openMethodSummaryFile(outputDir);
+     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
     double sumSratio = 0, sumEratio = 0;
@@ -124,7 +122,7 @@ public enum Analyze {
   private static void spartanizeMethodsAndSort() {
      final List<MethodDeclaration> methods = new ArrayList<>();
     for ( final File f : inputFiles()) {
-      @Nullable final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);

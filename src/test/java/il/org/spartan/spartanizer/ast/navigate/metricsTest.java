@@ -6,7 +6,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -56,7 +55,7 @@ public final class metricsTest {
 
   @Test public void horizontalComplexityTest() {
     // Test a null list and a null Statement
-    @Nullable final Statement s = null;
+     final Statement s = null;
     azzert.that(metrics.horizontalComplexity(0, s), is(0));
     azzert.that(metrics.horizontalComplexity(0, (List<Statement>) null), is(0));
     // Test a list with one null statement

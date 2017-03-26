@@ -12,8 +12,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -29,12 +27,12 @@ public class SpartanMovie extends AbstractHandler {
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
-  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override  public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-    @Nullable final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
-    @Nullable final IWorkbenchPage page = window == null ? null : window.getActivePage();
-    @Nullable final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
+     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
+     final IWorkbenchPage page = window == null ? null : window.getActivePage();
+     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
      final Trimmer trimmer = new Trimmer();
     if (compilationUnits == null || page == null || progressService == null)
       return null;
@@ -146,7 +144,7 @@ public class SpartanMovie extends AbstractHandler {
   }
 
   static void moveProgressDialog() {
-    @Nullable final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+     final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(),
         parentShell = shell == null ? null : shell.getParent().getShell();
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);

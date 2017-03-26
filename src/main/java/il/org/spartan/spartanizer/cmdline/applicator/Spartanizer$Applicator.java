@@ -6,8 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
@@ -42,7 +40,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @param forTrueConditionRemove
    * @return */
   public boolean apply( final AbstractSelection<?> __) {
-    @Nullable final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
+     final List<WrappedCompilationUnit> list = ((CommandLineSelection) __).get();
     for ( final WrappedCompilationUnit w : list) {
       assert w != null;
       assert w.compilationUnit != null;
@@ -143,7 +141,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        @Nullable Tipper<N> tipper = null;
+         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch ( final Exception ¢) {
@@ -151,7 +149,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);
@@ -194,7 +192,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        @Nullable Tipper<N> tipper = null;
+         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch ( final Exception ¢) {
@@ -202,7 +200,7 @@ public class Spartanizer$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);

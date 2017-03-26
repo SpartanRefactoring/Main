@@ -9,8 +9,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -127,7 +125,7 @@ public final class Application implements IApplication {
     int done = 0, failed = 0;
      final Collection<FileStats> fileStats = new ArrayList<>();
     for ( final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
-      @Nullable ICompilationUnit u = null;
+       ICompilationUnit u = null;
       try {
         u = openCompilationUnit(f);
         fileStats.add(process(f, u));
@@ -198,7 +196,7 @@ public final class Application implements IApplication {
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
 
-  private boolean parseArguments(@Nullable final Collection<String> args) {
+  private boolean parseArguments( final Collection<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
       return true;

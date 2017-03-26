@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -25,8 +23,8 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   private static final long serialVersionUID = -8591656423892977180L;
   private static final String SERIAL_VERSION_UID = "serialVersionUID";
   // private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
-  @Nullable private VariableDeclarationFragment fragment;
-  @Nullable NumberLiteral initializer;
+   private VariableDeclarationFragment fragment;
+   NumberLiteral initializer;
   long replacement;
 
   @Override  public Example[] examples() {

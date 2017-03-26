@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -54,8 +52,8 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   }
 
    public static Expression handleParenthesizedCondition( final ParenthesizedExpression from, final VariableDeclarationStatement s) {
-    @Nullable final Assignment $ = az.assignment(from.getExpression());
-    @Nullable final InfixExpression e = az.infixExpression(extract.core(from));
+     final Assignment $ = az.assignment(from.getExpression());
+     final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
   }
 
@@ -91,14 +89,14 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
-  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
-      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,
+       final Statement nextStatement, final TextEditGroup g,  final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    @Nullable final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
+     final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
     if (declarationStatement == null)
       return null;
-    @Nullable final ForStatement forStatement = az.forStatement(nextStatement);
+     final ForStatement forStatement = az.forStatement(nextStatement);
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
     exclude.excludeAll(fragments(declarationStatement));

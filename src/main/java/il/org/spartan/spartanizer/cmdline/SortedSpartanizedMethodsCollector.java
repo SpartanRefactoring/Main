@@ -9,8 +9,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -107,7 +105,7 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
   }
 
   @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics() {
-    @Nullable final CSVStatistics report = openMethodSummaryFile(outputFolder);
+     final CSVStatistics report = openMethodSummaryFile(outputFolder);
     if (report == null)
       return;
     int statementsTotal = 0, methodsTotal = 0;
@@ -153,11 +151,11 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
+   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
@@ -179,7 +177,7 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
   }
 
   public void summarizeNPStatistics() {
-    @Nullable final CSVStatistics report = openNPSummaryFile(outputFolder);
+     final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
       return;
     npStatistics.keySet().stream()

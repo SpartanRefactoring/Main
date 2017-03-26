@@ -9,8 +9,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -151,11 +149,11 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable private static CSVStatistics openNPSummaryFile(final String outputDir) {
+   private static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
@@ -177,7 +175,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
   }
 
   private void summarizeNPStatistics() {
-    @Nullable final CSVStatistics report = openNPSummaryFile(outputFolder);
+     final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
       return;
     npStatistics.keySet().stream()

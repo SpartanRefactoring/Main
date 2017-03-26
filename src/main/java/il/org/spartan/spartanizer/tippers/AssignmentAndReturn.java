@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -32,10 +30,10 @@ public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
   }
 
   @Override public ASTRewrite go( final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    @Nullable final Statement parent = az.statement(parent(a));
+     final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;
-    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
+     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(to(a), core(expression(s))))
       return null;
     $.remove(parent, g);

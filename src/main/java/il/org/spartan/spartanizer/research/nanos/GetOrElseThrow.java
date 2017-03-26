@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,14 +31,14 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
     ;
   }
 
-  @Nullable static Statement next(final IfStatement ¢) {
+   static Statement next(final IfStatement ¢) {
     return extract.nextStatement(¢);
   }
 
-  @Override @Nullable public Tip pattern( final IfStatement ¢) {
+  @Override  public Tip pattern( final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final Statement next = next(¢);
+         final Statement next = next(¢);
         r.remove(next, g);
         r.replace(¢, extract.singleStatement(ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }

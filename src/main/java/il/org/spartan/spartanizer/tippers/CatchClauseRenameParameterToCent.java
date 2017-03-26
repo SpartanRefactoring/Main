@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -35,7 +33,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
         Example.ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
   }
 
-  @Override public Tip tip( final CatchClause c, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final CatchClause c,  final ExclusionManager m) {
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))
       return null;

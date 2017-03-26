@@ -19,8 +19,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -86,15 +84,15 @@ public interface type {
   }
 
   // TODO Matteo: Nano-pattern of values: not implemented
-  @SuppressWarnings("synthetic-access") @Nullable static type of( final Expression ¢) {
+  @SuppressWarnings("synthetic-access")  static type of( final Expression ¢) {
     return inner.get(¢);
   }
 
-  @Nullable default Certain asPrimitiveCertain() {
+   default Certain asPrimitiveCertain() {
     return null;
   }
 
-  @Nullable default Uncertain asPrimitiveUncertain() {
+   default Uncertain asPrimitiveUncertain() {
     return null;
   }
 
@@ -195,7 +193,7 @@ public interface type {
     /** All type that were ever born , as well as all primitive types */
     static final Map<String, implementation> types = new LinkedHashMap<>();
 
-    @Nullable private static implementation get( final Expression ¢) {
+     private static implementation get( final Expression ¢) {
       return (implementation) (property.has(¢, propertyName) ? property.get(¢, propertyName) : property.set(¢, propertyName, lookUp(¢, lookDown(¢))));
     }
 
@@ -206,8 +204,8 @@ public interface type {
       return $ < Short.MAX_VALUE && $ > Short.MIN_VALUE;
     }
 
-    @Nullable private static implementation lookDown(final Assignment x) {
-      @Nullable final implementation $ = get(to(x));
+     private static implementation lookDown(final Assignment x) {
+       final implementation $ = get(to(x));
       return !$.isNoInfo() ? $ : get(from(x)).isNumeric() ? NUMERIC : get(from(x));
     }
 
@@ -220,7 +218,7 @@ public interface type {
     }
 
      private static implementation lookDown(final ConditionalExpression x) {
-      @Nullable final implementation $ = get(then(x)), ¢ = get(elze(x));
+       final implementation $ = get(then(x)), ¢ = get(elze(x));
       return $ == ¢ ? $
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
@@ -230,7 +228,7 @@ public interface type {
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
      *         decide. Will never return null */
-    @Nullable private static implementation lookDown( final Expression ¢) {
+     private static implementation lookDown( final Expression ¢) {
       switch (¢.getNodeType()) {
         case BOOLEAN_LITERAL:
           return BOOLEAN;
@@ -267,10 +265,10 @@ public interface type {
       }
     }
 
-    @Nullable private static implementation lookDown(final InfixExpression x) {
+     private static implementation lookDown(final InfixExpression x) {
        final InfixExpression.Operator o = operator(x);
-      @Nullable final List<Expression> es = hop.operands(x);
-      @Nullable implementation $ = get(first(es));
+       final List<Expression> es = hop.operands(x);
+       implementation $ = get(first(es));
       for ( final Expression ¢ : rest(es))
         $ = $.underBinaryOperator(o, get(¢));
       return $;
@@ -284,7 +282,7 @@ public interface type {
       return new NumericLiteralClassifier(token(¢)).type();
     }
 
-    @Nullable private static implementation lookDown(final ParenthesizedExpression ¢) {
+     private static implementation lookDown(final ParenthesizedExpression ¢) {
       return get(core(¢));
     }
 
@@ -546,7 +544,7 @@ public interface type {
       final String description;
       final String key;
 
-      Certain(final String key, final String description, @Nullable final String s) {
+      Certain(final String key, final String description,  final String s) {
         this.key = key;
         this.description = description;
         inner.types.put(key, this);

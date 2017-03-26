@@ -11,8 +11,6 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -57,14 +55,14 @@ public final class Inliner {
   public static boolean isArrayInitWithUnmatchingTypes( final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
-    @Nullable final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
+     final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
     if (!(f.getInitializer() instanceof ArrayCreation))
       return false;
-    @Nullable final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
+     final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  @Nullable public static String getElTypeNameFromArrayType(final Type t) {
+   public static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
     final Type et = ((ArrayType) t).getElementType();
@@ -95,7 +93,7 @@ public final class Inliner {
   }
 
   public static boolean variableNotUsedAfterStatement( final Statement s, final SimpleName n) {
-    @Nullable final Block b = az.block(s.getParent());
+     final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is not a block";
      final List<Statement> statements = statements(b);
     boolean passedFor = false;
@@ -165,11 +163,11 @@ public final class Inliner {
       n.set(newExpression);
     }
 
-    @Nullable private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
+     private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    @Nullable private Collection<SimpleName> uses(final ASTNode... ¢) {
+     private Collection<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

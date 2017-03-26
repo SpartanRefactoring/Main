@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,19 +25,19 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
 
-  @Override @Nullable public ASTNode replacement(final ExpressionStatement ¢) {
+  @Override  public ASTNode replacement(final ExpressionStatement ¢) {
     return replacement(az.methodInvocation(expression(¢)));
   }
 
-  @Nullable private static ASTNode replacement(@Nullable final MethodInvocation ¢) {
+   private static ASTNode replacement( final MethodInvocation ¢) {
     if (¢ == null)
       return null;
      final List<Expression> $ = arguments(¢);
     return replacement(¢, first($), second($));
   }
 
-  @Nullable public static ASTNode replacement( final MethodInvocation i, final Expression first, @Nullable final Expression second) {
-    @Nullable final Expression message = second == null ? null : first, condition = second == null ? first : second;
+   public static ASTNode replacement( final MethodInvocation i, final Expression first,  final Expression second) {
+     final Expression message = second == null ? null : first, condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
     if (message != null)
       $.setMessage(copy.of(message));

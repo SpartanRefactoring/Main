@@ -15,8 +15,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
@@ -126,8 +124,8 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     }
   }
 
-  @Nullable public Listener find( final Iterable<Listener> ls) {
-    @Nullable TypedListener $ = null;
+   public Listener find( final Iterable<Listener> ls) {
+     TypedListener $ = null;
     for (final Listener ¢ : ls)
       if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
         $ = (TypedListener) ¢;

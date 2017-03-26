@@ -8,8 +8,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -84,12 +82,12 @@ public class Toolbox {
     return $;
   }
 
-  @Nullable public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
+   public static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
      @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return extractTip(n, $);
   }
 
-  @Nullable public static Tip extractTip(final ASTNode n,  final Tipper<ASTNode> t) {
+   public static Tip extractTip(final ASTNode n,  final Tipper<ASTNode> t) {
     return t.tip(n);
   }
 
@@ -402,7 +400,7 @@ public class Toolbox {
   }
 
   @SafeVarargs  public final <N extends ASTNode> Toolbox add( final Integer nodeType,  final Tipper<N>... ts) {
-    for (@Nullable final Tipper<N> ¢ : ts) {
+    for ( final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : fault.specifically(//
@@ -483,7 +481,7 @@ public class Toolbox {
     return ¢.getSimpleName();
   }
 
-   public static List<String> get(@Nullable final TipperGroup ¢) {
+   public static List<String> get( final TipperGroup ¢) {
      final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;

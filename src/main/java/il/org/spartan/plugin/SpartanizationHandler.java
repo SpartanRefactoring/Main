@@ -12,8 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
@@ -27,7 +25,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   public static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
-  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override  public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
      final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();

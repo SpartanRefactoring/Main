@@ -5,8 +5,6 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -18,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since 2015/07/25 */
 public final class TipperApplicator extends AbstractGUIApplicator {
    final Tipper<ASTNode> tipper;
-  @Nullable final Class<? extends ASTNode> clazz;
+   final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
@@ -42,7 +40,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     });
   }
 
-  @Override @Nullable protected ASTVisitor makeTipsCollector( final List<Tip> $) {
+  @Override  protected ASTVisitor makeTipsCollector( final List<Tip> $) {
     return new ASTVisitor(true) {
       @Override public void preVisit( final ASTNode ¢) {
         super.preVisit(¢);

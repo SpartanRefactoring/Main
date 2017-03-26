@@ -8,8 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 
 /** Expands terms of * or / expressions without reordering.
@@ -67,7 +65,7 @@ enum FactorsExpander {
    * @param fs a list
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-   private static Expression recurse( final Expression $, @Nullable final List<Factor> fs) {
+   private static Expression recurse( final Expression $,  final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -75,7 +73,7 @@ enum FactorsExpander {
     return recurse((InfixExpression) $, fs);
   }
 
-   private static Expression recurse( final InfixExpression $, @Nullable final List<Factor> fs) {
+   private static Expression recurse( final InfixExpression $,  final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;

@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,8 +31,8 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
     };
   }
 
-  @Nullable private static Expression extractRight(final Assignment ¢) {
-    @Nullable final Expression $ = from(¢);
+   private static Expression extractRight(final Assignment ¢) {
+     final Expression $ = from(¢);
     return !iz.assignment($) || operator(az.assignment($)) != ASSIGN ? $ : extractRight(az.assignment($));
   }
 
@@ -50,13 +48,13 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
      final ASTNode parent = parent(a);
     if (!iz.statement(parent))
       return null;
-    @Nullable final Expression right = getRight(a);
+     final Expression right = getRight(a);
     if (right == null || nodeType(right) == NULL_LITERAL)
       return null;
-    @Nullable final Assignment a1 = extract.assignment(nextStatement);
+     final Assignment a1 = extract.assignment(nextStatement);
     if (a1 == null)
       return null;
-    @Nullable final Expression right1 = getRight(a1);
+     final Expression right1 = getRight(a1);
     if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
       return null;
     $.remove(parent, g);

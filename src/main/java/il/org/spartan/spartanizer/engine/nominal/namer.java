@@ -10,8 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -66,7 +64,7 @@ public interface namer {
     return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
   }
 
-  @Nullable static String shorten(final Name ¢) {
+   static String shorten(final Name ¢) {
     return ¢ instanceof SimpleName ? shorten(¢ + "") //
         : ¢ instanceof QualifiedName ? shorten(((QualifiedName) ¢).getName()) //
             : null;
@@ -103,7 +101,7 @@ public interface namer {
     return JavaTypeNameParser.make(¢).shortName();
   }
 
-  @Nullable static String shorten(final Type ¢) {
+   static String shorten(final Type ¢) {
     return ¢ instanceof NameQualifiedType ? shorten((NameQualifiedType) ¢)
         : ¢ instanceof PrimitiveType ? shorten((PrimitiveType) ¢)
             : ¢ instanceof QualifiedType ? shorten((QualifiedType) ¢)
@@ -115,7 +113,7 @@ public interface namer {
                                     : ¢ instanceof UnionType ? shortName((UnionType) ¢) : null;
   }
 
-  @Nullable static String shortName(@SuppressWarnings("unused") final UnionType __) {
+   static String shortName(@SuppressWarnings("unused") final UnionType __) {
     return null;
   }
 

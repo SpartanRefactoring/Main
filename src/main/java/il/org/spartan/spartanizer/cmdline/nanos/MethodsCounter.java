@@ -7,8 +7,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -70,7 +68,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
   }
 
   public void summarizeNumbers() {
-    @Nullable final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
+     final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
     if (report == null)
       return;
     methods.keySet().forEach(λ -> {

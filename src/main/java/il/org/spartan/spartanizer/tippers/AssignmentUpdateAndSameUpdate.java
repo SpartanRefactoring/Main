@@ -12,8 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -46,10 +44,10 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
      final ASTNode parent = parent(a1);
     if (!iz.statement(parent))
       return null;
-    @Nullable final Assignment a2 = extract.assignment(nextStatement);
+     final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a1) != operator(a2))
       return null;
-    @Nullable final Expression to = to(a1);
+     final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.remove(parent, g);

@@ -2,8 +2,6 @@ package il.org.spartan.plugin;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 /** Listen to events, with an optional additional object. The events are defined
  * in received enum class.
  * @author Ori Roth
@@ -32,7 +30,7 @@ public abstract class EventListener<E extends Enum<?>> implements Listener {
     return enumClass.getEnumConstants();
   }
 
-  @Override @SuppressWarnings("unchecked") public void tick(@Nullable final Object... ¢) {
+  @Override @SuppressWarnings("unchecked") public void tick( final Object... ¢) {
     if (¢ != null && enumClass.isInstance(¢[0]))
       if (¢.length == 1)
         tick((E) ¢[0]);

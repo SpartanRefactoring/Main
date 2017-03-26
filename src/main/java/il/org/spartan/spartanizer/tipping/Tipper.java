@@ -7,8 +7,6 @@ import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
@@ -50,11 +48,11 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return (Class<N>) c2;
   }
 
-  @Override @Nullable public String description() {
+  @Override  public String description() {
     return super.description();
   }
 
-  @Nullable public abstract String description(N n);
+   public abstract String description(N n);
 
   @Override public boolean equals( final Object ¢) {
     return getClass().equals(¢.getClass());
@@ -64,12 +62,12 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return new Example[] {};
   }
 
-  @Override @Nullable public final Tip fire() {
+  @Override  public final Tip fire() {
     return tip(object());
   }
 
    private Class<N> initializeMyOperandsClass() {
-    @Nullable Class<N> $ = null;
+     Class<N> $ = null;
     for ( final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
         $ = lowest($, ¢.getParameterTypes()[0]);
@@ -80,7 +78,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return ¢.getDeclaringClass() == getClass();
   }
 
-   private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
+   private Class<N> lowest( final Class<N> c1,  final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
@@ -90,7 +88,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
-  @Nullable public Class<N> myActualOperandsClass() {
+   public Class<N> myActualOperandsClass() {
      final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
@@ -106,14 +104,14 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   /** A wrapper function without ExclusionManager.
    * @param ¢ The ASTNode object on which we deduce the tip.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Tip tip(final N ¢) {
+   public Tip tip(final N ¢) {
     return tip(¢, null);
   }
 
   /** @param n an ASTNode
    * @param m exclusion manager guarantees this tip to be given only once.
    * @return a tip given for the ASTNode ¢. */
-  @Nullable public Tip tip(final N n, @Nullable final ExclusionManager m) {
+   public Tip tip(final N n,  final ExclusionManager m) {
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 

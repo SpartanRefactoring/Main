@@ -13,8 +13,6 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
 
@@ -34,7 +32,7 @@ public enum LogToTest {
       System.out.println("First create a 'logs' directory and run some tests to create a log file.");
       return;
     }
-    @Nullable final File[] fs = d.listFiles();
+     final File[] fs = d.listFiles();
      final Int fc = new Int();
     Stream.of(fs).filter(λ -> λ.isFile() && λ.getName().startsWith("log_spartan")).forEach(λ -> ++fc.inner);
     if (fc.inner == 0) {

@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,7 +28,7 @@ public final class FieldFragmentInitializerDefaultValue extends ReplaceCurrentNo
   }
 
   @Override public VariableDeclarationFragment replacement( final VariableDeclarationFragment f) {
-    @Nullable final FieldDeclaration parent = az.fieldDeclaration(parent(f));
+     final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;
     final Expression e = f.getInitializer();
