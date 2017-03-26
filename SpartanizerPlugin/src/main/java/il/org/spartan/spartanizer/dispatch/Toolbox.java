@@ -336,6 +336,7 @@ public class Toolbox {
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
             new FragmentInitialiazerAssignment(), //
+            new LocalVariableUninitializedDead(), // 
             new FragmentInitializerInlineIntoNext(), //
             new FragmentInitializerWhile(), //
             new FragmentInitializerToForInitializers(), //
