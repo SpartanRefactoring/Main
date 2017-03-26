@@ -51,8 +51,6 @@ public final class Version300 {
   interface Replace extends Find {
     void replace();
   }
-  
- 
 
   Replace xxx = new Replace() {
     {

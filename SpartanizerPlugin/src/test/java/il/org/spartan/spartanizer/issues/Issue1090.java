@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
 import org.jetbrains.annotations.*;
-import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 
