@@ -39,7 +39,7 @@ public final class Namespace implements Environment {
     this.name = name;
   }
 
-  /** add all the given itrable of BodyDeclarations to our NameSpace */
+  /** add all the given iterable of BodyDeclarations to our NameSpace */
   @NotNull Namespace addAll(@NotNull final Iterable<BodyDeclaration> ¢) {
     ¢.forEach(this::put);
     return this;

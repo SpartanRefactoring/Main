@@ -6,7 +6,6 @@ import static il.org.spartan.utils.Proposition.*;
 import java.util.*;
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -16,8 +15,8 @@ import il.org.spartan.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore("Under construction")
 @SuppressWarnings("static-method")
+@Ignore
 public class PropositionTest {
   private static boolean ignoreNext() {
     return true;
@@ -190,7 +189,7 @@ public class PropositionTest {
     assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
     assert NOT(F).and(NOT(F)).or(T).eval();
     assert NOT(F).and(NOT(F)).or(T).or(X).eval();
-    @NotNull final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
+    final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
     assert or.eval();
     // Check precedence: A || B && C
     assert Proposition.of(F).or(T).and(T).eval();
@@ -202,7 +201,7 @@ public class PropositionTest {
 
   @Test public void z() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @Override @NotNull protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
+      @Override protected String map(@SuppressWarnings("unused") final BooleanSupplier __) {
         return "";
       }
     }), is(""));
@@ -223,7 +222,7 @@ public class PropositionTest {
     assert !hasCycles(N);
     assert !hasCycles(T.and(F));
     assert !hasCycles(F.and(T));
-    assert !hasCycles(T.or(T));
+    assert !hasCycles(T.and(T));
     assert !hasCycles(T.or(T));
     assert !hasCycles(T_AND_F_AND_X);
     assert !hasCycles(T_OR_F_OR_X);
@@ -231,6 +230,10 @@ public class PropositionTest {
 
   @Test public void b31() {
     assert !hasCycles(T.or(T));
+  }
+
+  @Test public void b32() {
+    assert !hasCycles(T.and(T));
   }
 
   @Test public void b4() {
@@ -246,6 +249,9 @@ public class PropositionTest {
   }
 
   @Test public void b9() {
+    azzert.that(X.reduce(java), instanceOf(String.class));
+    azzert.that(X.reduce(java), is("X"));
+    azzert.that(T.reduce(java), is("T"));
     azzert.that(T.or(X).reduce(java), is("T || X"));
   }
 
@@ -280,7 +286,7 @@ public class PropositionTest {
 
   @Test public void d1() {
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
-      @Override @NotNull protected String map(final BooleanSupplier ¢) {
+      @Override protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
     }), is("T_OR_F_OR_X"));
@@ -306,19 +312,20 @@ public class PropositionTest {
   }
 
   private boolean hasCycles(final BooleanSupplier s) {
-    @NotNull final Stack<BooleanSupplier> stack = new Stack<>();
-    stack.add(s);
+    final Stack<BooleanSupplier> path = new Stack<>();
+    path.add(s);
+    final Queue<BooleanSupplier> todo = new LinkedList<>();
     do {
-      final BooleanSupplier current = stack.pop();
-      if (stack.contains(current))
+      final BooleanSupplier current = todo.isEmpty() ? path.pop() : todo.remove();
+      if (path.contains(current))
         return true;
-      if (current instanceof Proposition.C) {
-        stack.addAll(((Proposition.C) current).inner);
+      if (current instanceof Proposition.Some) {
+        todo.addAll(((Proposition.Some) current).inner);
         continue;
       }
-      if (current instanceof Proposition.P)
-        stack.push(((Proposition.P) current).inner);
-    } while (!stack.isEmpty());
+      if (current instanceof Proposition.Singleton)
+        path.push(((Proposition.Singleton) current).inner);
+    } while (!path.isEmpty());
     return false;
   }
 

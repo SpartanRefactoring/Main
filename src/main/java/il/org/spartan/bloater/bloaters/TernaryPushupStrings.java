@@ -26,14 +26,11 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -5602484588967209664L;
-  
+
   @Override @NotNull public Example[] examples() {
-    return new Example[] {
-        convert("s = \"abc\" + (condition ? \"123\" : \"456\");")
-        .to("s = condition ? \"abc123\" : \"abc456\";")
-    };
+    return new Example[] { convert("s = \"abc\" + (condition ? \"123\" : \"456\");").to("s = condition ? \"abc123\" : \"abc456\";") };
   }
-  
+
   @Override public ASTNode replacement(@NotNull final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
