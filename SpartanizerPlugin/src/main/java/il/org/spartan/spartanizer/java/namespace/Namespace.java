@@ -317,7 +317,7 @@ public final class Namespace implements Environment {
   }
 
   @NotNull public boolean isNumeric(final String identifier) {
-    return flat.get(identifier).isNumeric();
+    return flat.get(identifier) != null && flat.get(identifier).isNumeric();
   }
 
   @NotNull protected Namespace put(@NotNull final TypeDeclaration ¢) {
