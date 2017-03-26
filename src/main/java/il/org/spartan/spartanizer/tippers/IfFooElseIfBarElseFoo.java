@@ -42,9 +42,13 @@ public class IfFooElseIfBarElseFoo extends ReplaceCurrentNode<IfStatement> //
     if(p == null || s.getLocationInParent() == IfStatement.ELSE_STATEMENT_PROPERTY)
       return $;
     Block bl = subject.statement($).toBlock();
+    boolean b;
+    try{
     p.setThenStatement(bl);
-    boolean b = iz.blockEssential(extract.statements(bl).get(0));
-    p.setThenStatement(s);
+    b = iz.blockEssential(extract.statements(bl).get(0));
+    }finally{
+      p.setThenStatement(s);
+    }
     return !b ? $ : subject.statement($).toBlock();
   }
 
