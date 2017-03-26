@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-14 */
 @SuppressWarnings("static-method")
+@Ignore("Yuval Simon") // TODO: Yuval Simon, please add trimming.of.using. and enable this test
 public class Issue0861 {
   @Test public void t1() {
     trimmingOf("switch(x) {case a:x=2;y=1;z=3;break;case b:y=1;break;case c:y=2;throw new Exception();case d:y=3;continue;case e:y=1+x+y+z;break;")
