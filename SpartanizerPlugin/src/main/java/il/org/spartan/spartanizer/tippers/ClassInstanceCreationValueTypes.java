@@ -9,6 +9,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -27,6 +28,8 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
   }
 
   @Override public ASTNode replacement(@NotNull final ClassInstanceCreation c) {
+    if (!iz.statement(c.getParent()))
+      return null;
     final Expression e = onlyOne(arguments(c));
     if (e == null)
       return null;
