@@ -1,5 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -9,7 +11,9 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Convert (a=b=??;) to (a=3;b=??;) Tested in {@link Issue0999}
@@ -45,5 +49,9 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
             return $;
       }
     };
+  }
+  
+  @Override public Example[] examples() {
+    return new Example[] { convert("a=b=5;").to("b=5; a=b"), convert("a+=b+=3;").to("b += 3; a += b;")};
   }
 }
