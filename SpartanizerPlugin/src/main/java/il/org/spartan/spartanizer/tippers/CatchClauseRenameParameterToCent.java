@@ -24,7 +24,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
   private static final long serialVersionUID = -6638105215049141624L;
 
   @Override @NotNull public String description(@NotNull final CatchClause ¢) {
-    return "Rename exception " + ¢.getException().getNodeType() + " caught in catch clause here to ¢";
+    return "Rename exception " + system.className(¢.getException()) + " caught in catch clause here to ¢";
   }
 
   @Override @NotNull public Example[] examples() {
